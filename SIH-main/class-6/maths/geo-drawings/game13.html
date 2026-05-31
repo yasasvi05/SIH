@@ -1,0 +1,2435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometry Artist - STEM Learn Odisha</title>
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* BASE STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background-color: #f0f7ff;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+       
+        /* MODAL STYLES */
+        .game-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        .modal-title {
+            color: #1a365d;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        .modal-text {
+            font-size: 1rem;
+            color: #4a5568;
+            margin-bottom: 25px;
+        }
+        .modal-btn {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .modal-btn:hover {
+            background: #3182ce;
+        }
+        .modal-btn:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+        }
+
+        /* HEADER & NAVIGATION */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+       
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-icon {
+            font-size: 2.2rem;
+            background: white;
+            color: #2a69ac;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .logo-text span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+       
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            white-space: nowrap;
+        }
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* LANGUAGE TOGGLE */
+        .language-switcher {
+            display: flex;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .lang-btn {
+            padding: 6px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: white;
+        }
+        .lang-btn.active {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+        .lang-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.6rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            margin-left: 20px;
+        }
+
+        /* GAME HEADER */
+        .game-header {
+            background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9));
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        /* GAME STATS */
+        #game-stats-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px 25px;
+            margin: -30px auto 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+            max-width: 95%;
+        }
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .score-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .score, .level-info {
+            background: #f7fafc;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border-left: 4px solid #4299e1;
+            min-width: 180px;
+        }
+        .level-info {
+            border-left-color: #38a169;
+        }
+        .score-value, .level-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1a365d;
+            display: block;
+            margin-top: 5px;
+        }
+        .score-label, .level-label {
+            font-size: 0.9rem;
+            color: #4a5568;
+            font-weight: 500;
+            display: block;
+        }
+        .progress-container {
+            width: 100%;
+            background: #e2e8f0;
+            border-radius: 10px;
+            height: 12px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            background: linear-gradient(to right, #4299e1, #38a169);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* LEVEL SELECTION */
+        .level-selection {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 40px 0;
+            flex-wrap: wrap;
+        }
+        .level-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 250px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            border: 3px solid #3182ce;
+            position: relative;
+        }
+        .level-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        .level-card h3 {
+            margin-bottom: 5px;
+            color: #1a365d;
+        }
+        .level-card p {
+            flex-grow: 1;
+            margin-bottom: 20px;
+            color: #4a5568;
+            line-height: 1.5;
+        }
+        .level-card.locked {
+            opacity: 0.8;
+            cursor: not-allowed;
+            border-color: #e2e8f0;
+        }
+        .lock-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: #a0aec0;
+            z-index: 10;
+            pointer-events: none;
+        }
+       
+        .level-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            min-height: 500px;
+        }
+        .feedback {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 15px;
+            padding: 10px 20px;
+            border-radius: 8px;
+        }
+        .feedback.correct {
+            color: #38a169;
+            background: #f0fff4;
+        }
+        .feedback.wrong {
+            color: #e53e3e;
+            background: #fff5f5;
+        }
+        .target-box {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            border: 2px dashed #4299e1;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        /* LEVEL 1: SHAPE BUILDER */
+        .drawing-container {
+            width: 100%;
+            max-width: 900px;
+            height: 500px;
+            background: white;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+       
+        #drawing-canvas {
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+            background: #f8fafc;
+        }
+       
+        .tools-panel {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            width: 100%;
+            max-width: 900px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+        }
+       
+        .tool-btn {
+            padding: 10px 20px;
+            border: 2px solid #4299e1;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+       
+        .tool-btn:hover {
+            background: #ebf8ff;
+        }
+       
+        .tool-btn.active {
+            background: #4299e1;
+            color: white;
+        }
+       
+        .shape-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+       
+        .shape-btn {
+            padding: 8px 15px;
+            border: 2px solid #38a169;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+       
+        .shape-btn:hover {
+            background: #f0fff4;
+        }
+       
+        .shape-btn.active {
+            background: #38a169;
+            color: white;
+        }
+       
+        .instructions-panel {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            width: 100%;
+            max-width: 900px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+       
+        .snap-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image:
+                linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+                linear-gradient(to bottom, #e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+       
+        .snap-point {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #4299e1;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+       
+        .question-box {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            width: 100%;
+            max-width: 900px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+       
+        .question {
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 8px;
+        }
+       
+        .answer-input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 1rem;
+            margin-top: 5px;
+            transition: border-color 0.3s ease;
+        }
+       
+        .answer-input:focus {
+            outline: none;
+            border-color: #4299e1;
+        }
+       
+        select.answer-input {
+            cursor: pointer;
+        }
+       
+        /* LEVEL 2: SYMMETRY MIRROR */
+        .symmetry-container {
+            width: 100%;
+            max-width: 900px;
+            height: 500px;
+            background: white;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+       
+        #symmetry-canvas {
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+            background: #f8fafc;
+        }
+       
+        .symmetry-line {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, #4299e1, transparent);
+            pointer-events: none;
+            transform: translateX(-50%);
+        }
+       
+        .mirror-btn {
+            background: #9f7aea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+       
+        .mirror-btn:hover {
+            background: #805ad5;
+        }
+       
+        /* LEVEL 3: ANGLE ARCHITECT */
+        .construction-container {
+            width: 100%;
+            max-width: 900px;
+            height: 500px;
+            background: white;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+       
+        #construction-canvas {
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+            background: #f8fafc;
+        }
+       
+        .protractor {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border: 2px solid #4299e1;
+            border-radius: 50%;
+            pointer-events: none;
+            display: none;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.9);
+        }
+       
+        .protractor-line {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100px;
+            height: 2px;
+            background: #4299e1;
+            transform-origin: left center;
+            transform: rotate(var(--angle, 0deg));
+        }
+       
+        .angle-display {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            z-index: 100;
+        }
+       
+        .compass-tool {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border: 2px dashed #38a169;
+            border-radius: 50%;
+            pointer-events: none;
+            display: none;
+            z-index: 100;
+        }
+       
+        /* FOOTER */
+        footer {
+            background: #1a365d;
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+        .copyright {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            nav {
+                display: none;
+            }
+            nav.active {
+                display: block;
+            }
+            .level-card {
+                width: 100%;
+                max-width: 350px;
+            }
+            .game-stats {
+                flex-direction: column;
+                gap: 15px;
+                align-items: stretch;
+            }
+            .score-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .score, .level-info {
+                width: 100%;
+                min-width: auto;
+            }
+            .drawing-container,
+            .symmetry-container,
+            .construction-container {
+                height: 400px;
+            }
+            .tools-panel {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+       
+        @media (max-width: 480px) {
+            .drawing-container,
+            .symmetry-container,
+            .construction-container {
+                height: 350px;
+            }
+            .tool-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            .shape-btn {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+               
+                <div class="logo">
+                    <div class="logo-icon"><i class="fas fa-drafting-compass"></i></div>
+                    <div class="logo-text">Geometry <span style="color: #38b2ac;">Artist</span></div>
+                </div>
+
+                <div class="nav-container">
+                    <nav>
+                        <ul>
+                            <li><a href="#" data-i18n="nav_dashboard">Dashboard</a></li>
+                            <li><a href="#" data-i18n="nav_about">About</a></li>
+                            <li><a href="#" data-i18n="nav_contact">Contact</a></li>
+                        </ul>
+                    </nav>
+
+                    <div class="language-switcher">
+                        <button class="lang-btn active" data-lang="en">English</button>
+                        <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+                    </div>
+
+                    <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+                </div>
+            </div>
+        </div>
+    </header>
+   
+    <!-- COMPLETION MODAL -->
+    <div class="game-modal" id="completion-modal">
+        <div class="modal-content">
+            <h2 class="modal-title" data-i18n="modal_complete_title">Level Complete!</h2>
+            <p class="modal-text" data-i18n="modal_complete_text">Congratulations! You earned points and unlocked the next challenge.</p>
+            <button class="modal-btn" id="next-level-btn" data-i18n="btn_next_level">Go to Level Selection</button>
+        </div>
+    </div>
+   
+    <!-- GAME OVER MODAL -->
+    <div class="game-modal" id="game-over-modal">
+        <div class="modal-content">
+            <i class="fas fa-trophy" style="font-size: 3rem; color: #38a169; margin-bottom: 15px;"></i>
+            <h2 class="modal-title" data-i18n="modal_gameover_title">Quest Complete!</h2>
+            <p class="modal-text">
+                <span data-i18n="modal_gameover_text">You have mastered all three levels of the Geometry Artist Challenge! Your final score is </span>
+                <span id="final-score" style="font-weight: 700; color: #1a365d;">0</span>.
+            </p>
+            <button class="modal-btn" onclick="location.reload()" data-i18n="btn_start_over">Start Over</button>
+        </div>
+    </div>
+   
+    <!-- GAME HEADER -->
+    <section class="game-header" id="game-header">
+        <div class="container">
+            <h1 data-i18n="title_header">Geometry Artist Challenge: Class 6</h1>
+            <p data-i18n="subtitle_header">Master geometric drawing, symmetry, and angle construction through fun challenges!</p>
+        </div>
+    </section>
+
+    <!-- GAME STATS -->
+    <div class="container" id="game-stats-container">
+        <div class="game-stats">
+            <div class="score-container">
+                <div class="score">
+                    <span class="score-label" data-i18n="score_label">Score</span>
+                    <span id="score" class="score-value">0</span>
+                </div>
+                <div class="level-info">
+                    <span class="level-label" data-i18n="level_label">Level</span>
+                    <span id="level-display" class="level-value" data-i18n="level_1">Select a Level</span>
+                </div>
+            </div>
+            <div style="flex-grow: 1; margin-left: 30px;">
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar" style="width: 0%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LEVEL SELECTION -->
+    <div class="container level-selection" id="level-selection-container">
+        <div class="level-card" id="level-card-1">
+            <h3 data-i18n="level1_title">Level 1: Shape Builder</h3>
+            <p data-i18n="level1_desc">Draw basic shapes using given side lengths. Learn lines, triangles, rectangles, circles!</p>
+            <button class="start-btn modal-btn" onclick="startLevel(1)" data-i18n="btn_start_level1">Start Level 1</button>
+        </div>
+        <div class="level-card locked" id="level-card-2">
+            <div class="lock-icon"><i class="fas fa-lock"></i></div>
+            <h3 data-i18n="level2_title">Level 2: Symmetry Mirror</h3>
+            <p data-i18n="level2_desc">Complete shapes using line symmetry. Learn reflections and accuracy!</p>
+            <button class="start-btn modal-btn" disabled data-i18n="btn_locked">Locked</button>
+        </div>
+        <div class="level-card locked" id="level-card-3">
+            <div class="lock-icon"><i class="fas fa-lock"></i></div>
+            <h3 data-i18n="level3_title">Level 3: Angle Architect</h3>
+            <p data-i18n="level3_desc">Construct angles and complex shapes using protractor and compass tools!</p>
+            <button class="start-btn modal-btn" disabled data-i18n="btn_locked">Locked</button>
+        </div>
+    </div>
+
+    <!-- LEVEL 1: SHAPE BUILDER -->
+    <div class="container level-container" id="level-1-container">
+        <h2 style="margin-bottom: 15px;" data-i18n="level1_h2">Level 1: Shape Builder (Beginner)</h2>
+       
+        <div class="target-box">
+            <h3 id="level1-instructions-text">Draw a triangle with side lengths: AB = 5cm, BC = 4cm</h3>
+            <p data-i18n="level1_goal">Drag to draw the missing sides. Use snap points to help!</p>
+        </div>
+
+        <!-- DRAWING AREA -->
+        <div class="drawing-container">
+            <canvas id="drawing-canvas"></canvas>
+            <div class="snap-grid"></div>
+            <div id="snap-points"></div>
+        </div>
+
+        <!-- TOOLS -->
+        <div class="tools-panel">
+            <div class="tool-btn active" id="line-tool">
+                <i class="fas fa-pencil-alt"></i>
+                <span data-i18n="tool_line">Draw Line</span>
+            </div>
+            <div class="tool-btn" id="select-tool">
+                <i class="fas fa-mouse-pointer"></i>
+                <span data-i18n="tool_select">Select</span>
+            </div>
+            <div class="tool-btn" id="clear-tool">
+                <i class="fas fa-eraser"></i>
+                <span data-i18n="tool_clear">Clear</span>
+            </div>
+           
+            <div style="margin-left: 20px;">
+                <span data-i18n="shape_select">Select Shape:</span>
+                <div class="shape-options">
+                    <div class="shape-btn active" data-shape="triangle">Triangle</div>
+                    <div class="shape-btn" data-shape="rectangle">Rectangle</div>
+                    <div class="shape-btn" data-shape="circle">Circle</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INSTRUCTIONS -->
+        <div class="instructions-panel">
+            <h4 data-i18n="instructions_title">Instructions:</h4>
+            <p data-i18n="level1_instructions">1. Click and drag to draw lines between snap points</p>
+            <p data-i18n="level1_instructions2">2. Complete the shape by connecting all points</p>
+            <p data-i18n="level1_instructions3">3. When complete, the shape will become colorful!</p>
+        </div>
+
+        <!-- QUESTIONS -->
+        <div class="question-box">
+            <h3 style="color: #1a365d; margin-bottom: 15px;" data-i18n="level1_questions">Geometry Questions</h3>
+            <div id="level1-questions-container">
+                <div class="question" data-i18n="level1_q1">1. How many sides does a triangle have?</div>
+                <input type="number" class="answer-input" id="l1-q1-answer" placeholder="Enter number">
+               
+                <div class="question" style="margin-top: 15px;" data-i18n="level1_q2">2. What is the sum of angles in a triangle?</div>
+                <input type="number" class="answer-input" id="l1-q2-answer" placeholder="Enter degrees">
+               
+                <div class="question" style="margin-top: 15px;" data-i18n="level1_q3">3. How many right angles can a triangle have at most?</div>
+                <input type="number" class="answer-input" id="l1-q3-answer" placeholder="Enter number">
+            </div>
+        </div>
+
+        <p id="level-1-feedback" class="feedback" style="margin-top: 20px;"></p>
+        <button class="modal-btn" onclick="checkLevel1()" style="margin-top: 20px;" data-i18n="btn_check">Check Answers & Complete Shape</button>
+    </div>
+
+    <!-- LEVEL 2: SYMMETRY MIRROR -->
+    <div class="container level-container" id="level-2-container">
+        <h2 style="margin-bottom: 15px;" data-i18n="level2_h2">Level 2: Symmetry Mirror (Intermediate)</h2>
+       
+        <div class="target-box">
+            <h3 id="level2-instructions-text">Complete the butterfly using line symmetry</h3>
+            <p data-i18n="level2_goal">Draw the mirror image on the right side of the line!</p>
+        </div>
+
+        <!-- SYMMETRY AREA -->
+        <div class="symmetry-container">
+            <canvas id="symmetry-canvas"></canvas>
+            <div class="symmetry-line"></div>
+            <div class="snap-grid"></div>
+        </div>
+
+        <!-- TOOLS -->
+        <div class="tools-panel">
+            <div class="tool-btn active" id="symmetry-line-tool">
+                <i class="fas fa-pencil-alt"></i>
+                <span data-i18n="tool_draw">Draw</span>
+            </div>
+            <div class="tool-btn" id="symmetry-clear-tool">
+                <i class="fas fa-eraser"></i>
+                <span data-i18n="tool_clear">Clear</span>
+            </div>
+           
+            <button class="mirror-btn" id="mirror-btn" data-i18n="btn_mirror">Show Mirror Effect</button>
+           
+            <div style="margin-left: 20px;">
+                <span data-i18n="pattern_select">Select Pattern:</span>
+                <div class="shape-options">
+                    <div class="shape-btn active" data-pattern="butterfly">Butterfly</div>
+                    <div class="shape-btn" data-pattern="house">House</div>
+                    <div class="shape-btn" data-pattern="kite">Kite</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INSTRUCTIONS -->
+        <div class="instructions-panel">
+            <h4 data-i18n="instructions_title">Instructions:</h4>
+            <p data-i18n="level2_instructions">1. Draw on the right side to complete the symmetric shape</p>
+            <p data-i18n="level2_instructions2">2. Each point should mirror the corresponding point on the left</p>
+            <p data-i18n="level2_instructions3">3. Click "Show Mirror Effect" to see your symmetry accuracy</p>
+        </div>
+
+        <!-- QUESTIONS -->
+        <div class="question-box">
+            <h3 style="color: #1a365d; margin-bottom: 15px;" data-i18n="level2_questions">Symmetry Questions</h3>
+            <div id="level2-questions-container">
+                <div class="question" data-i18n="level2_q1">1. How many lines of symmetry does a square have?</div>
+                <input type="number" class="answer-input" id="l2-q1-answer" placeholder="Enter number">
+               
+                <div class="question" style="margin-top: 15px;" data-i18n="level2_q2">2. What is line symmetry also called?</div>
+                <select class="answer-input" id="l2-q2-answer">
+                    <option value="">Select</option>
+                    <option value="Reflection">Reflection symmetry</option>
+                    <option value="Rotation">Rotation symmetry</option>
+                    <option value="Translation">Translation symmetry</option>
+                </select>
+               
+                <div class="question" style="margin-top: 15px;" data-i18n="level2_q3">3. How many lines of symmetry does an equilateral triangle have?</div>
+                <input type="number" class="answer-input" id="l2-q3-answer" placeholder="Enter number">
+            </div>
+        </div>
+
+        <p id="level-2-feedback" class="feedback" style="margin-top: 20px;"></p>
+        <button class="modal-btn" onclick="checkLevel2()" style="margin-top: 20px;" data-i18n="btn_check">Check Answers & Verify Symmetry</button>
+    </div>
+
+    <!-- LEVEL 3: ANGLE ARCHITECT -->
+    <div class="container level-container" id="level-3-container">
+        <h2 style="margin-bottom: 15px;" data-i18n="level3_h2">Level 3: Angle Architect (Advanced)</h2>
+       
+        <div class="target-box">
+            <h3 id="level3-instructions-text">Construct a 60° angle using protractor</h3>
+            <p data-i18n="level3_goal">Use the tools to draw precise angles and shapes!</p>
+        </div>
+
+        <!-- CONSTRUCTION AREA -->
+        <div class="construction-container">
+            <canvas id="construction-canvas"></canvas>
+            <div class="snap-grid"></div>
+            <div class="protractor" id="protractor"></div>
+            <div class="compass-tool" id="compass-tool"></div>
+            <div class="angle-display" id="angle-display">Angle: 0°</div>
+        </div>
+
+        <!-- TOOLS -->
+        <div class="tools-panel">
+            <div class="tool-btn active" id="angle-tool">
+                <i class="fas fa-drafting-compass"></i>
+                <span data-i18n="tool_angle">Draw Angle</span>
+            </div>
+            <div class="tool-btn" id="protractor-tool">
+                <i class="fas fa-circle"></i>
+                <span data-i18n="tool_protractor">Protractor</span>
+            </div>
+            <div class="tool-btn" id="compass-btn">
+                <i class="fas fa-circle-notch"></i>
+                <span data-i18n="tool_compass">Compass</span>
+            </div>
+            <div class="tool-btn" id="construction-clear">
+                <i class="fas fa-eraser"></i>
+                <span data-i18n="tool_clear">Clear</span>
+            </div>
+           
+            <div style="margin-left: 20px;">
+                <span data-i18n="task_select">Select Task:</span>
+                <div class="shape-options">
+                    <div class="shape-btn active" data-task="angle60">60° Angle</div>
+                    <div class="shape-btn" data-task="triangle">Triangle</div>
+                    <div class="shape-btn" data-task="hexagon">Hexagon</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INSTRUCTIONS -->
+        <div class="instructions-panel">
+            <h4 data-i18n="instructions_title">Instructions:</h4>
+            <p data-i18n="level3_instructions">1. Click and drag to create base line for angle</p>
+            <p data-i18n="level3_instructions2">2. Use protractor tool to measure precise angles</p>
+            <p data-i18n="level3_instructions3">3. Use compass tool to draw arcs and circles</p>
+        </div>
+
+        <!-- QUESTIONS -->
+        <div class="question-box">
+            <h3 style="color: #1a365d; margin-bottom: 15px;" data-i18n="level3_questions">Angle Questions</h3>
+            <div id="level3-questions-container">
+                <div class="question" data-i18n="level3_q1">1. How many degrees in a right angle?</div>
+                <input type="number" class="answer-input" id="l3-q1-answer" placeholder="Enter degrees">
+               
+                <div class="question" style="margin-top: 15px;" data-i18n="level3_q2">2. What is the sum of angles in a hexagon?</div>
+                <input type="number" class="answer-input" id="l3-q2-answer" placeholder="Enter degrees">
+               
+                <div class="question" style="margin-top: 15px;" data-i18n="level3_q3">3. How many sides does a hexagon have?</div>
+                <input type="number" class="answer-input" id="l3-q3-answer" placeholder="Enter number">
+               
+                <div class="question" style="margin-top: 15px;" data-i18n="level3_q4">4. What angle is formed by perpendicular lines?</div>
+                <select class="answer-input" id="l3-q4-answer">
+                    <option value="">Select</option>
+                    <option value="90">90° (Right angle)</option>
+                    <option value="180">180° (Straight angle)</option>
+                    <option value="45">45° (Acute angle)</option>
+                </select>
+            </div>
+        </div>
+
+        <p id="level-3-feedback" class="feedback" style="margin-top: 20px;"></p>
+        <button class="modal-btn" onclick="checkLevel3()" style="margin-top: 20px;" data-i18n="btn_check">Check Answers & Verify Construction</button>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="copyright">
+                &copy; 2024 STEM Learn Odisha. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- GAME VARIABLES ---
+        let score = 0;
+        let currentLevel = 0;
+       
+        // Canvas contexts
+        let ctx1, ctx2, ctx3;
+        let canvas1, canvas2, canvas3;
+       
+        // Drawing variables
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+        let currentTool = 'line';
+        let currentShape = 'triangle';
+        let currentPattern = 'butterfly';
+        let currentTask = 'angle60';
+       
+        // Level 1 variables
+        let level1Shapes = [];
+        let level1SnapPoints = [];
+        let level1Completed = false;
+       
+        // Level 2 variables
+        let level2Drawing = [];
+        let level2MirrorDrawing = [];
+        let level2Completed = false;
+       
+        // Level 3 variables
+        let level3Lines = [];
+        let level3Angles = [];
+        let currentAngle = 0;
+        let showProtractor = false;
+        let showCompass = false;
+        let level3Completed = false;
+
+        // --- LANGUAGE TRANSLATIONS ---
+        const translations = {
+            'en': {
+                'nav_dashboard': 'Dashboard',
+                'nav_about': 'About',
+                'nav_contact': 'Contact',
+                'title_header': 'Geometry Artist Challenge: Class 6',
+                'subtitle_header': 'Master geometric drawing, symmetry, and angle construction through fun challenges!',
+                'score_label': 'Score',
+                'level_label': 'Level',
+                'level_1': 'Select a Level',
+                'level_1_number': 'Level 1',
+                'level_2_number': 'Level 2',
+                'level_3_number': 'Level 3',
+                'btn_start_level1': 'Start Level 1',
+                'btn_start_level2': 'Start Level 2',
+                'btn_start_level3': 'Start Level 3',
+                'btn_locked': 'Locked',
+                'btn_check': 'Check Answers',
+                'btn_mirror': 'Show Mirror Effect',
+                'btn_next_level': 'Go to Level Selection',
+                'btn_start_over': 'Start Over',
+                'level1_title': 'Level 1: Shape Builder',
+                'level1_desc': 'Draw basic shapes using given side lengths. Learn lines, triangles, rectangles, circles!',
+                'level2_title': 'Level 2: Symmetry Mirror',
+                'level2_desc': 'Complete shapes using line symmetry. Learn reflections and accuracy!',
+                'level3_title': 'Level 3: Angle Architect',
+                'level3_desc': 'Construct angles and complex shapes using protractor and compass tools!',
+                'level1_h2': 'Level 1: Shape Builder (Beginner)',
+                'level1_goal': 'Drag to draw the missing sides. Use snap points to help!',
+                'level2_h2': 'Level 2: Symmetry Mirror (Intermediate)',
+                'level2_goal': 'Draw the mirror image on the right side of the line!',
+                'level3_h2': 'Level 3: Angle Architect (Advanced)',
+                'level3_goal': 'Use the tools to draw precise angles and shapes!',
+                'tool_line': 'Draw Line',
+                'tool_select': 'Select',
+                'tool_clear': 'Clear',
+                'tool_draw': 'Draw',
+                'tool_angle': 'Draw Angle',
+                'tool_protractor': 'Protractor',
+                'tool_compass': 'Compass',
+                'shape_select': 'Select Shape:',
+                'pattern_select': 'Select Pattern:',
+                'task_select': 'Select Task:',
+                'instructions_title': 'Instructions:',
+                'level1_instructions': '1. Click and drag to draw lines between snap points',
+                'level1_instructions2': '2. Complete the shape by connecting all points',
+                'level1_instructions3': '3. When complete, the shape will become colorful!',
+                'level2_instructions': '1. Draw on the right side to complete the symmetric shape',
+                'level2_instructions2': '2. Each point should mirror the corresponding point on the left',
+                'level2_instructions3': '3. Click "Show Mirror Effect" to see your symmetry accuracy',
+                'level3_instructions': '1. Click and drag to create base line for angle',
+                'level3_instructions2': '2. Use protractor tool to measure precise angles',
+                'level3_instructions3': '3. Use compass tool to draw arcs and circles',
+                'level1_questions': 'Geometry Questions',
+                'level1_q1': '1. How many sides does a triangle have?',
+                'level1_q2': '2. What is the sum of angles in a triangle?',
+                'level1_q3': '3. How many right angles can a triangle have at most?',
+                'level2_questions': 'Symmetry Questions',
+                'level2_q1': '1. How many lines of symmetry does a square have?',
+                'level2_q2': '2. What is line symmetry also called?',
+                'level2_q3': '3. How many lines of symmetry does an equilateral triangle have?',
+                'level3_questions': 'Angle Questions',
+                'level3_q1': '1. How many degrees in a right angle?',
+                'level3_q2': '2. What is the sum of angles in a hexagon?',
+                'level3_q3': '3. How many sides does a hexagon have?',
+                'level3_q4': '4. What angle is formed by perpendicular lines?',
+                'modal_complete_title': 'Level Complete!',
+                'modal_complete_text': 'Congratulations! You earned points and unlocked the next challenge.',
+                'modal_gameover_title': 'Quest Complete!',
+                'modal_gameover_text': 'You have mastered all three levels of the Geometry Artist Challenge! Your final score is '
+            },
+            'or': {
+                'nav_dashboard': 'ଡ୍ୟାଶବୋର୍ଡ',
+                'nav_about': 'ବିଷୟରେ',
+                'nav_contact': 'ଯୋଗାଯୋଗ',
+                'title_header': 'ଜ୍ୟାମିତି ଆର୍ଟିଷ୍ଟ ଚ୍ୟାଲେଞ୍ଜ: ଷଷ୍ଠ ଶ୍ରେଣୀ',
+                'subtitle_header': 'ମଜାଦାର ଚ୍ୟାଲେଞ୍ଜଗୁଡ଼ିକ ମାଧ୍ୟମରେ ଜ୍ୟାମିତି ଚିତ୍ରଣ, ସମମିତି ଏବଂ କୋଣ ନିର୍ମାଣ ଆୟତ୍ତ କରନ୍ତୁ!',
+                'score_label': 'ସ୍କୋର',
+                'level_label': 'ସ୍ତର',
+                'level_1': 'ଏକ ସ୍ତର ବାଛନ୍ତୁ',
+                'level_1_number': 'ସ୍ତର ୧',
+                'level_2_number': 'ସ୍ତର ୨',
+                'level_3_number': 'ସ୍ତର ୩',
+                'btn_start_level1': 'ସ୍ତର ୧ ଆରମ୍ଭ କରନ୍ତୁ',
+                'btn_start_level2': 'ସ୍ତର ୨ ଆରମ୍ଭ କରନ୍ତୁ',
+                'btn_start_level3': 'ସ୍ତର ୩ ଆରମ୍ଭ କରନ୍ତୁ',
+                'btn_locked': 'ବନ୍ଦ',
+                'btn_check': 'ଉତ୍ତର ଯାଞ୍ଚ କରନ୍ତୁ',
+                'btn_mirror': 'ମିରର ପ୍ରଭାବ ଦେଖନ୍ତୁ',
+                'btn_next_level': 'ସ୍ତର ଚୟନକୁ ଯାଆନ୍ତୁ',
+                'btn_start_over': 'ପୁଣି ଆରମ୍ଭ କରନ୍ତୁ',
+                'level1_title': 'ସ୍ତର ୧: ଆକୃତି ବିଲଡର୍',
+                'level1_desc': 'ଦିଆଯାଇଥିବା ପାର୍ଶ୍ୱ ଦୈର୍ଘ୍ୟ ବ୍ୟବହାର କରି ମୌଳିକ ଆକୃତି ଅଙ୍କନ କରନ୍ତୁ। ରେଖା, ତ୍ରିଭୁଜ, ଆୟତ, ବୃତ୍ତ ଶିଖନ୍ତୁ!',
+                'level2_title': 'ସ୍ତର ୨: ସମମିତି ମିରର',
+                'level2_desc': 'ରେଖା ସମମିତି ବ୍ୟବହାର କରି ଆକୃତି ସମ୍ପୂର୍ଣ୍ଣ କରନ୍ତୁ। ପ୍ରତିଫଳନ ଏବଂ ସଠିକ୍ ତା ଶିଖନ୍ତୁ!',
+                'level3_title': 'ସ୍ତର ୩: କୋଣ ଆର୍କିଟେକ୍ଟ',
+                'level3_desc': 'ପ୍ରୋଟ୍ରାକ୍ଟର ଏବଂ କମ୍ପାସ ଉପକରଣ ବ୍ୟବହାର କରି କୋଣ ଏବଂ ଜଟିଳ ଆକୃତି ନିର୍ମାଣ କରନ୍ତୁ!',
+                'level1_h2': 'ସ୍ତର ୧: ଆକୃତି ବିଲଡର୍ (ଆରମ୍ଭିକ)',
+                'level1_goal': 'ହରାଇଥିବା ପାର୍ଶ୍ୱଗୁଡ଼ିକୁ ଅଙ୍କନ କରିବା ପାଇଁ ଡ୍ରାଗ୍ କରନ୍ତୁ। ସାହାଯ୍ୟ ପାଇଁ ସ୍ନାପ୍ ପଏଣ୍ଟ୍ ବ୍ୟବହାର କରନ୍ତୁ!',
+                'level2_h2': 'ସ୍ତର ୨: ସମମିତି ମିରର (ମଧ୍ୟମ)',
+                'level2_goal': 'ରେଖାର ଡାହାଣ ପାର୍ଶ୍ୱରେ ପ୍ରତିବିମ୍ବ ଛବି ଅଙ୍କନ କରନ୍ତୁ!',
+                'level3_h2': 'ସ୍ତର ୩: କୋଣ ଆର୍କିଟେକ୍ଟ (ଉନ୍ନତ)',
+                'level3_goal': 'ସଠିକ୍ କୋଣ ଏବଂ ଆକୃତି ଅଙ୍କନ କରିବା ପାଇଁ ଉପକରଣଗୁଡ଼ିକ ବ୍ୟବହାର କରନ୍ତୁ!',
+                'tool_line': 'ରେଖା ଅଙ୍କନ କରନ୍ତୁ',
+                'tool_select': 'ବାଛନ୍ତୁ',
+                'tool_clear': 'ସଫା କରନ୍ତୁ',
+                'tool_draw': 'ଅଙ୍କନ କରନ୍ତୁ',
+                'tool_angle': 'କୋଣ ଅଙ୍କନ କରନ୍ତୁ',
+                'tool_protractor': 'ପ୍ରୋଟ୍ରାକ୍ଟର',
+                'tool_compass': 'କମ୍ପାସ',
+                'shape_select': 'ଆକୃତି ବାଛନ୍ତୁ:',
+                'pattern_select': 'ନକସା ବାଛନ୍ତୁ:',
+                'task_select': 'କାର୍ଯ୍ୟ ବାଛନ୍ତୁ:',
+                'instructions_title': 'ନିର୍ଦ୍ଦେଶାବଳୀ:',
+                'level1_instructions': '୧. ସ୍ନାପ୍ ପଏଣ୍ଟ୍ ମଧ୍ୟରେ ରେଖା ଅଙ୍କନ କରିବା ପାଇଁ କ୍ଲିକ୍ ଏବଂ ଡ୍ରାଗ୍ କରନ୍ତୁ',
+                'level1_instructions2': '୨. ସମସ୍ତ ପଏଣ୍ଟ୍ ସଂଯୋଗ କରି ଆକୃତି ସମ୍ପୂର୍ଣ୍ଣ କରନ୍ତୁ',
+                'level1_instructions3': '୩. ସମ୍ପୂର୍ଣ୍ଣ ହେବା ପରେ, ଆକୃତିଟି ରଙ୍ଗୀନ ହେବ!',
+                'level2_instructions': '୧. ସମମିତି ଆକୃତି ସମ୍ପୂର୍ଣ୍ଣ କରିବା ପାଇଁ ଡାହାଣ ପାର୍ଶ୍ୱରେ ଅଙ୍କନ କରନ୍ତୁ',
+                'level2_instructions2': '୨. ପ୍ରତ୍ୟେକ ପଏଣ୍ଟ୍ ବାମ ପାର୍ଶ୍ୱରେ ସଂଗତ ପଏଣ୍ଟ୍ ସହିତ ପ୍ରତିଫଳିତ ହେବା ଉଚିତ୍',
+                'level2_instructions3': '୩. ଆପଣଙ୍କର ସମମିତି ସଠିକ୍ ତା ଦେଖିବା ପାଇଁ "ମିରର ପ୍ରଭାବ ଦେଖନ୍ତୁ" କ୍ଲିକ୍ କରନ୍ତୁ',
+                'level3_instructions': '୧. କୋଣ ପାଇଁ ଆଧାର ରେଖା ସୃଷ୍ଟି କରିବା ପାଇଁ କ୍ଲିକ୍ ଏବଂ ଡ୍ରାଗ୍ କରନ୍ତୁ',
+                'level3_instructions2': '୨. ସଠିକ୍ କୋଣ ମାପିବା ପାଇଁ ପ୍ରୋଟ୍ରାକ୍ଟର ଉପକରଣ ବ୍ୟବହାର କରନ୍ତୁ',
+                'level3_instructions3': '୩. ଚାପ ଏବଂ ବୃତ୍ତ ଅଙ୍କନ କରିବା ପାଇଁ କମ୍ପାସ ଉପକରଣ ବ୍ୟବହାର କରନ୍ତୁ',
+                'level1_questions': 'ଜ୍ୟାମିତି ପ୍ରଶ୍ନ',
+                'level1_q1': '୧. ଏକ ତ୍ରିଭୁଜର କେତୋଟି ପାର୍ଶ୍ୱ ଅଛି?',
+                'level1_q2': '୨. ଏକ ତ୍ରିଭୁଜର କୋଣଗୁଡ଼ିକର ସମଷ୍ଟି କେତେ?',
+                'level1_q3': '୩. ଏକ ତ୍ରିଭୁଜରେ ସର୍ବାଧିକ କେତୋଟି ସମକୋଣ ରହିପାରେ?',
+                'level2_questions': 'ସମମିତି ପ୍ରଶ୍ନ',
+                'level2_q1': '୧. ଏକ ବର୍ଗର କେତୋଟି ସମମିତି ରେଖା ଅଛି?',
+                'level2_q2': '୨. ରେଖା ସମମିତିକୁ ଆଉ କଣ କୁହାଯାଏ?',
+                'level2_q3': '୩. ଏକ ସମବାହୁ ତ୍ରିଭୁଜର କେତୋଟି ସମମିତି ରେଖା ଅଛି?',
+                'level3_questions': 'କୋଣ ପ୍ରଶ୍ନ',
+                'level3_q1': '୧. ଏକ ସମକୋଣରେ କେତେ ଡିଗ୍ରୀ ଅଛି?',
+                'level3_q2': '୨. ଏକ ଷଡ୍ଭୁଜରେ କୋଣଗୁଡ଼ିକର ସମଷ୍ଟି କେତେ?',
+                'level3_q3': '୩. ଏକ ଷଡ୍ଭୁଜର କେତୋଟି ପାର୍ଶ୍ୱ ଅଛି?',
+                'level3_q4': '୪. ଲମ୍ବ ରେଖାଦ୍ୱାରା କେଉଁ କୋଣ ଗଠିତ ହୁଏ?',
+                'modal_complete_title': 'ସ୍ତର ସମାପ୍ତ!',
+                'modal_complete_text': 'ଅଭିନନ୍ଦନ! ଆପଣ ପଏଣ୍ଟ ହାସଲ କରି ପରବର୍ତ୍ତୀ ଚ୍ୟାଲେଞ୍ଜ୍ ଅନଲକ୍ କଲେ।',
+                'modal_gameover_title': 'ଅନୁସନ୍ଧାନ ସମାପ୍ତ!',
+                'modal_gameover_text': 'ଆପଣ ଜ୍ୟାମିତି ଆର୍ଟିଷ୍ଟ ଚ୍ୟାଲେଞ୍ଜର ତିନୋଟି ସ୍ତରରେ ମାଷ୍ଟର ହୋଇଛନ୍ତି! ଆପଣଙ୍କର ଚୂଡ଼ାନ୍ତ ସ୍କୋର '
+            }
+        };
+
+        let currentLang = 'en';
+
+        // --- GAME FUNCTIONS ---
+        function updateLanguage(lang) {
+            currentLang = lang;
+           
+            // Update all text elements with data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+           
+            // Update language buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.lang-btn[data-lang="${lang}"]`).classList.add('active');
+           
+            // Update dynamic content
+            updateLevelDisplays();
+        }
+
+        function updateLevelDisplays() {
+            // Update score display
+            document.getElementById('score').textContent = score;
+           
+            // Update level display
+            if (currentLevel === 0) {
+                document.getElementById('level-display').textContent = translations[currentLang]['level_1'];
+            } else {
+                document.getElementById('level-display').textContent = `${translations[currentLang][`level_${currentLevel}_number`] || `Level ${currentLevel}`}`;
+            }
+        }
+
+        function updateScore(points) {
+            score += points;
+            document.getElementById('score').textContent = score;
+        }
+
+        function showLevelSelection() {
+            document.getElementById('level-1-container').style.display = 'none';
+            document.getElementById('level-2-container').style.display = 'none';
+            document.getElementById('level-3-container').style.display = 'none';
+            document.getElementById('level-selection-container').style.display = 'flex';
+            currentLevel = 0;
+            document.getElementById('level-display').textContent = translations[currentLang]['level_1'];
+        }
+
+        function startLevel(level) {
+            currentLevel = level;
+            document.getElementById('level-selection-container').style.display = 'none';
+           
+            if (level === 1) {
+                document.getElementById('level-1-container').style.display = 'flex';
+                loadLevel1();
+            } else if (level === 2) {
+                document.getElementById('level-2-container').style.display = 'flex';
+                loadLevel2();
+            } else if (level === 3) {
+                document.getElementById('level-3-container').style.display = 'flex';
+                loadLevel3();
+            }
+           
+            document.getElementById('level-display').textContent = `${translations[currentLang][`level_${level}_number`] || `Level ${level}`}`;
+        }
+
+        // --- LEVEL 1: SHAPE BUILDER ---
+        function loadLevel1() {
+            // Initialize canvas
+            canvas1 = document.getElementById('drawing-canvas');
+            ctx1 = canvas1.getContext('2d');
+           
+            // Set canvas dimensions
+            canvas1.width = canvas1.offsetWidth;
+            canvas1.height = canvas1.offsetHeight;
+           
+            // Clear canvas
+            clearCanvas1();
+           
+            // Setup snap points based on current shape
+            setupSnapPoints();
+           
+            // Draw initial shape
+            drawInitialShape();
+           
+            // Setup event listeners
+            setupDrawingEvents();
+           
+            // Setup tool buttons
+            setupToolButtons();
+           
+            // Setup shape buttons
+            setupShapeButtons();
+           
+            // Reset completion flag
+            level1Completed = false;
+        }
+
+        function clearCanvas1() {
+            ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+            // Draw grid background
+            drawGrid(ctx1, canvas1.width, canvas1.height);
+        }
+
+        function drawGrid(ctx, width, height) {
+            const gridSize = 20;
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.lineWidth = 1;
+           
+            // Vertical lines
+            for (let x = 0; x <= width; x += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, height);
+                ctx.stroke();
+            }
+           
+            // Horizontal lines
+            for (let y = 0; y <= height; y += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(width, y);
+                ctx.stroke();
+            }
+        }
+
+        function setupSnapPoints() {
+            level1SnapPoints = [];
+            const centerX = canvas1.width / 2;
+            const centerY = canvas1.height / 2;
+           
+            switch(currentShape) {
+                case 'triangle':
+                    // Triangle points
+                    level1SnapPoints.push({x: centerX - 100, y: centerY + 100}); // Bottom left
+                    level1SnapPoints.push({x: centerX + 100, y: centerY + 100}); // Bottom right
+                    level1SnapPoints.push({x: centerX, y: centerY - 100}); // Top
+                    break;
+                case 'rectangle':
+                    // Rectangle points
+                    level1SnapPoints.push({x: centerX - 120, y: centerY - 80}); // Top left
+                    level1SnapPoints.push({x: centerX + 120, y: centerY - 80}); // Top right
+                    level1SnapPoints.push({x: centerX + 120, y: centerY + 80}); // Bottom right
+                    level1SnapPoints.push({x: centerX - 120, y: centerY + 80}); // Bottom left
+                    break;
+                case 'circle':
+                    // Circle center and radius point
+                    level1SnapPoints.push({x: centerX, y: centerY}); // Center
+                    level1SnapPoints.push({x: centerX + 80, y: centerY}); // Radius point
+                    break;
+            }
+           
+            // Draw snap points
+            drawSnapPoints();
+        }
+
+        function drawSnapPoints() {
+            const snapPointsContainer = document.getElementById('snap-points');
+            snapPointsContainer.innerHTML = '';
+           
+            level1SnapPoints.forEach((point, index) => {
+                const snapPoint = document.createElement('div');
+                snapPoint.className = 'snap-point';
+                snapPoint.style.left = `${point.x}px`;
+                snapPoint.style.top = `${point.y}px`;
+                snapPointsContainer.appendChild(snapPoint);
+            });
+        }
+
+        function drawInitialShape() {
+            ctx1.strokeStyle = '#4299e1';
+            ctx1.lineWidth = 3;
+            ctx1.setLineDash([5, 5]); // Dashed lines for incomplete shape
+           
+            switch(currentShape) {
+                case 'triangle':
+                    // Draw two sides of triangle
+                    ctx1.beginPath();
+                    ctx1.moveTo(level1SnapPoints[0].x, level1SnapPoints[0].y);
+                    ctx1.lineTo(level1SnapPoints[1].x, level1SnapPoints[1].y);
+                    ctx1.stroke();
+                   
+                    ctx1.beginPath();
+                    ctx1.moveTo(level1SnapPoints[1].x, level1SnapPoints[1].y);
+                    ctx1.lineTo(level1SnapPoints[2].x, level1SnapPoints[2].y);
+                    ctx1.stroke();
+                    break;
+                case 'rectangle':
+                    // Draw two adjacent sides of rectangle
+                    ctx1.beginPath();
+                    ctx1.moveTo(level1SnapPoints[0].x, level1SnapPoints[0].y);
+                    ctx1.lineTo(level1SnapPoints[1].x, level1SnapPoints[1].y);
+                    ctx1.stroke();
+                   
+                    ctx1.beginPath();
+                    ctx1.moveTo(level1SnapPoints[1].x, level1SnapPoints[1].y);
+                    ctx1.lineTo(level1SnapPoints[2].x, level1SnapPoints[2].y);
+                    ctx1.stroke();
+                    break;
+                case 'circle':
+                    // Draw center point only
+                    ctx1.beginPath();
+                    ctx1.arc(level1SnapPoints[0].x, level1SnapPoints[0].y, 5, 0, Math.PI * 2);
+                    ctx1.fillStyle = '#4299e1';
+                    ctx1.fill();
+                    break;
+            }
+           
+            ctx1.setLineDash([]); // Reset to solid lines
+        }
+
+        function setupDrawingEvents() {
+            // Remove existing event listeners
+            canvas1.removeEventListener('mousedown', startDrawing);
+            canvas1.removeEventListener('mousemove', draw);
+            canvas1.removeEventListener('mouseup', stopDrawing);
+            canvas1.removeEventListener('mouseout', stopDrawing);
+           
+            // Add new event listeners
+            canvas1.addEventListener('mousedown', startDrawing);
+            canvas1.addEventListener('mousemove', draw);
+            canvas1.addEventListener('mouseup', stopDrawing);
+            canvas1.addEventListener('mouseout', stopDrawing);
+        }
+
+        function startDrawing(e) {
+            if (currentTool !== 'line') return;
+           
+            isDrawing = true;
+            const rect = canvas1.getBoundingClientRect();
+            lastX = e.clientX - rect.left;
+            lastY = e.clientY - rect.top;
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+           
+            const rect = canvas1.getBoundingClientRect();
+            const currentX = e.clientX - rect.left;
+            const currentY = e.clientY - rect.top;
+           
+            // Find nearest snap point
+            const endPoint = findNearestSnapPoint(currentX, currentY);
+            const startPoint = findNearestSnapPoint(lastX, lastY);
+           
+            if (startPoint && endPoint && startPoint !== endPoint) {
+                // Clear and redraw
+                clearCanvas1();
+                drawInitialShape();
+               
+                // Draw the new line
+                ctx1.strokeStyle = '#38a169';
+                ctx1.lineWidth = 3;
+                ctx1.beginPath();
+                ctx1.moveTo(startPoint.x, startPoint.y);
+                ctx1.lineTo(endPoint.x, endPoint.y);
+                ctx1.stroke();
+               
+                // Store the drawn line
+                level1Shapes.push({
+                    type: 'line',
+                    start: startPoint,
+                    end: endPoint
+                });
+               
+                // Check if shape is complete
+                checkShapeCompletion();
+            }
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        function findNearestSnapPoint(x, y, threshold = 30) {
+            for (const point of level1SnapPoints) {
+                const distance = Math.sqrt(Math.pow(point.x - x, 2) + Math.pow(point.y - y, 2));
+                if (distance < threshold) {
+                    return point;
+                }
+            }
+            return null;
+        }
+
+        function checkShapeCompletion() {
+            let isComplete = false;
+           
+            switch(currentShape) {
+                case 'triangle':
+                    // Need 3 lines connecting all 3 points
+                    if (level1Shapes.length >= 1) {
+                        isComplete = true;
+                        // Draw the complete triangle with color
+                        ctx1.fillStyle = 'rgba(56, 161, 105, 0.3)';
+                        ctx1.beginPath();
+                        ctx1.moveTo(level1SnapPoints[0].x, level1SnapPoints[0].y);
+                        ctx1.lineTo(level1SnapPoints[1].x, level1SnapPoints[1].y);
+                        ctx1.lineTo(level1SnapPoints[2].x, level1SnapPoints[2].y);
+                        ctx1.closePath();
+                        ctx1.fill();
+                    }
+                    break;
+                case 'rectangle':
+                    if (level1Shapes.length >= 2) {
+                        isComplete = true;
+                        // Draw the complete rectangle with color
+                        ctx1.fillStyle = 'rgba(56, 161, 105, 0.3)';
+                        ctx1.beginPath();
+                        ctx1.moveTo(level1SnapPoints[0].x, level1SnapPoints[0].y);
+                        ctx1.lineTo(level1SnapPoints[1].x, level1SnapPoints[1].y);
+                        ctx1.lineTo(level1SnapPoints[2].x, level1SnapPoints[2].y);
+                        ctx1.lineTo(level1SnapPoints[3].x, level1SnapPoints[3].y);
+                        ctx1.closePath();
+                        ctx1.fill();
+                    }
+                    break;
+                case 'circle':
+                    if (level1Shapes.length >= 1) {
+                        isComplete = true;
+                        // Draw the complete circle with color
+                        const center = level1SnapPoints[0];
+                        const radiusPoint = level1SnapPoints[1];
+                        const radius = Math.sqrt(
+                            Math.pow(radiusPoint.x - center.x, 2) +
+                            Math.pow(radiusPoint.y - center.y, 2)
+                        );
+                        ctx1.fillStyle = 'rgba(56, 161, 105, 0.3)';
+                        ctx1.beginPath();
+                        ctx1.arc(center.x, center.y, radius, 0, Math.PI * 2);
+                        ctx1.fill();
+                    }
+                    break;
+            }
+           
+            if (isComplete && !level1Completed) {
+                level1Completed = true;
+                document.getElementById('level-1-feedback').textContent = currentLang === 'or' ?
+                    '✅ ଆକୃତି ସମ୍ପୂର୍ଣ୍ଣ! ରଙ୍ଗୀନ ହେଲା!' :
+                    '✅ Shape complete! It became colorful!';
+                document.getElementById('level-1-feedback').className = 'feedback correct';
+            }
+        }
+
+        function setupToolButtons() {
+            // Line tool
+            document.getElementById('line-tool').addEventListener('click', function() {
+                document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                currentTool = 'line';
+            });
+           
+            // Select tool
+            document.getElementById('select-tool').addEventListener('click', function() {
+                document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                currentTool = 'select';
+            });
+           
+            // Clear tool
+            document.getElementById('clear-tool').addEventListener('click', function() {
+                level1Shapes = [];
+                level1Completed = false;
+                clearCanvas1();
+                drawInitialShape();
+                document.getElementById('level-1-feedback').textContent = '';
+            });
+        }
+
+        function setupShapeButtons() {
+            document.querySelectorAll('.shape-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.shape-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentShape = this.dataset.shape;
+                   
+                    // Update instructions
+                    let instruction = '';
+                    switch(currentShape) {
+                        case 'triangle':
+                            instruction = currentLang === 'or' ?
+                                '5 ସେ.ମି. ଏବଂ 4 ସେ.ମି. ପାର୍ଶ୍ୱ ଦୈର୍ଘ୍ୟ ସହିତ ତ୍ରିଭୁଜ ଅଙ୍କନ କରନ୍ତୁ: AB = 5cm, BC = 4cm' :
+                                'Draw a triangle with side lengths: AB = 5cm, BC = 4cm';
+                            break;
+                        case 'rectangle':
+                            instruction = currentLang === 'or' ?
+                                '8 ସେ.ମି. ଲମ୍ବା ଏବଂ 6 ସେ.ମି. ପ୍ରସ୍ଥ ବିଶିଷ୍ଟ ଆୟତ ଅଙ୍କନ କରନ୍ତୁ' :
+                                'Draw a rectangle with length = 8cm, width = 6cm';
+                            break;
+                        case 'circle':
+                            instruction = currentLang === 'or' ?
+                                '4 ସେ.ମି. ବ୍ୟାସାର୍ଦ୍ଧ ବିଶିଷ୍ଟ ବୃତ୍ତ ଅଙ୍କନ କରନ୍ତୁ' :
+                                'Draw a circle with radius = 4cm';
+                            break;
+                    }
+                    document.getElementById('level1-instructions-text').textContent = instruction;
+                   
+                    // Reset and reload level with new shape
+                    level1Shapes = [];
+                    level1Completed = false;
+                    clearCanvas1();
+                    setupSnapPoints();
+                    drawInitialShape();
+                    document.getElementById('level-1-feedback').textContent = '';
+                });
+            });
+        }
+
+        function checkLevel1() {
+            const q1 = parseInt(document.getElementById('l1-q1-answer').value);
+            const q2 = parseInt(document.getElementById('l1-q2-answer').value);
+            const q3 = parseInt(document.getElementById('l1-q3-answer').value);
+            const feedbackEl = document.getElementById('level-1-feedback');
+           
+            let correctAnswers = 0;
+            let feedbackMessage = '';
+           
+            // Check answers
+            if (q1 === 3) correctAnswers++;
+            if (q2 === 180) correctAnswers++;
+            if (q3 === 1) correctAnswers++;
+           
+            if (correctAnswers === 3 && level1Completed) {
+                // All correct
+                feedbackMessage = currentLang === 'or' ?
+                    '✅ ସମସ୍ତ ଉତ୍ତର ସଠିକ୍ ଏବଂ ଆକୃତି ସମ୍ପୂର୍ଣ୍ଣ! ଆପଣ 50 ପଏଣ୍ଟ ହାସଲ କଲେ!' :
+                    '✅ All answers correct and shape complete! You earned 50 points!';
+                feedbackEl.className = 'feedback correct';
+               
+                // Update score
+                updateScore(50);
+               
+                // Unlock next level
+                document.getElementById('level-card-2').classList.remove('locked');
+                document.getElementById('level-card-2').querySelector('.lock-icon').style.display = 'none';
+                document.getElementById('level-card-2').querySelector('.start-btn').disabled = false;
+                document.getElementById('level-card-2').querySelector('.start-btn').textContent =
+                    translations[currentLang]['btn_start_level2'];
+                document.getElementById('level-card-2').querySelector('.start-btn').onclick = function() { startLevel(2); };
+               
+                // Update progress bar
+                document.getElementById('progress-bar').style.width = '33%';
+               
+                // Show completion modal
+                setTimeout(() => {
+                    document.getElementById('completion-modal').style.display = 'flex';
+                }, 500);
+               
+            } else {
+                // Something wrong
+                feedbackMessage = currentLang === 'or' ?
+                    `⚠️ ${correctAnswers}/3 ଉତ୍ତର ସଠିକ୍. ${level1Completed ? '' : 'ଆକୃତି ସମ୍ପୂର୍ଣ୍ଣ କରନ୍ତୁ.'}` :
+                    `⚠️ ${correctAnswers}/3 answers correct. ${level1Completed ? '' : 'Complete the shape.'}`;
+                feedbackEl.className = 'feedback wrong';
+            }
+           
+            feedbackEl.textContent = feedbackMessage;
+        }
+
+        // --- LEVEL 2: SYMMETRY MIRROR ---
+        function loadLevel2() {
+            canvas2 = document.getElementById('symmetry-canvas');
+            ctx2 = canvas2.getContext('2d');
+           
+            canvas2.width = canvas2.offsetWidth;
+            canvas2.height = canvas2.offsetHeight;
+           
+            clearCanvas2();
+            drawSymmetryGrid();
+            drawLeftHalf();
+           
+            setupSymmetryEvents();
+            setupSymmetryButtons();
+            setupPatternButtons();
+           
+            level2Drawing = [];
+            level2MirrorDrawing = [];
+            level2Completed = false;
+        }
+
+        function clearCanvas2() {
+            ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+            drawGrid(ctx2, canvas2.width, canvas2.height);
+           
+            // Draw symmetry line
+            const centerX = canvas2.width / 2;
+            ctx2.strokeStyle = '#4299e1';
+            ctx2.lineWidth = 2;
+            ctx2.setLineDash([5, 3]);
+            ctx2.beginPath();
+            ctx2.moveTo(centerX, 0);
+            ctx2.lineTo(centerX, canvas2.height);
+            ctx2.stroke();
+            ctx2.setLineDash([]);
+        }
+
+        function drawSymmetryGrid() {
+            drawGrid(ctx2, canvas2.width, canvas2.height);
+        }
+
+        function drawLeftHalf() {
+            const centerX = canvas2.width / 2;
+           
+            switch(currentPattern) {
+                case 'butterfly':
+                    // Draw left half of butterfly
+                    ctx2.strokeStyle = '#9f7aea';
+                    ctx2.lineWidth = 3;
+                    ctx2.fillStyle = 'rgba(159, 122, 234, 0.2)';
+                   
+                    // Butterfly wing pattern
+                    ctx2.beginPath();
+                    ctx2.moveTo(centerX - 80, canvas2.height / 2);
+                    ctx2.bezierCurveTo(
+                        centerX - 150, canvas2.height / 2 - 50,
+                        centerX - 120, canvas2.height / 2 - 150,
+                        centerX - 50, canvas2.height / 2 - 100
+                    );
+                    ctx2.bezierCurveTo(
+                        centerX - 30, canvas2.height / 2 - 70,
+                        centerX - 60, canvas2.height / 2 - 30,
+                        centerX - 80, canvas2.height / 2
+                    );
+                    ctx2.closePath();
+                    ctx2.stroke();
+                    ctx2.fill();
+                    break;
+                   
+                case 'house':
+                    // Draw left half of house
+                    ctx2.strokeStyle = '#3182ce';
+                    ctx2.lineWidth = 3;
+                    ctx2.fillStyle = 'rgba(49, 130, 206, 0.2)';
+                   
+                    // Left half of house
+                    ctx2.beginPath();
+                    ctx2.moveTo(centerX, canvas2.height / 2 + 80); // Bottom center
+                    ctx2.lineTo(centerX - 100, canvas2.height / 2 + 80); // Bottom left
+                    ctx2.lineTo(centerX - 100, canvas2.height / 2 - 40); // Top left wall
+                    ctx2.lineTo(centerX - 60, canvas2.height / 2 - 80); // Roof point
+                    ctx2.lineTo(centerX, canvas2.height / 2 - 40); // Top center
+                    ctx2.closePath();
+                    ctx2.stroke();
+                    ctx2.fill();
+                    break;
+                   
+                case 'kite':
+                    // Draw left half of kite
+                    ctx2.strokeStyle = '#38a169';
+                    ctx2.lineWidth = 3;
+                    ctx2.fillStyle = 'rgba(56, 161, 105, 0.2)';
+                   
+                    // Left half of kite
+                    ctx2.beginPath();
+                    ctx2.moveTo(centerX, canvas2.height / 2 - 100); // Top center
+                    ctx2.lineTo(centerX - 80, canvas2.height / 2 - 30); // Left wing
+                    ctx2.lineTo(centerX, canvas2.height / 2 + 40); // Bottom center
+                    ctx2.closePath();
+                    ctx2.stroke();
+                    ctx2.fill();
+                    break;
+            }
+        }
+
+        function setupSymmetryEvents() {
+            canvas2.removeEventListener('mousedown', startSymmetryDrawing);
+            canvas2.removeEventListener('mousemove', symmetryDraw);
+            canvas2.removeEventListener('mouseup', stopSymmetryDrawing);
+           
+            canvas2.addEventListener('mousedown', startSymmetryDrawing);
+            canvas2.addEventListener('mousemove', symmetryDraw);
+            canvas2.addEventListener('mouseup', stopSymmetryDrawing);
+        }
+
+        function startSymmetryDrawing(e) {
+            isDrawing = true;
+            const rect = canvas2.getBoundingClientRect();
+            lastX = e.clientX - rect.left;
+            lastY = e.clientY - rect.top;
+           
+            // Only allow drawing on right side
+            if (lastX < canvas2.width / 2) {
+                isDrawing = false;
+                return;
+            }
+        }
+
+        function symmetryDraw(e) {
+            if (!isDrawing) return;
+           
+            const rect = canvas2.getBoundingClientRect();
+            const currentX = e.clientX - rect.left;
+            const currentY = e.clientY - rect.top;
+           
+            // Draw on right side
+            ctx2.strokeStyle = '#e53e3e';
+            ctx2.lineWidth = 3;
+            ctx2.lineCap = 'round';
+           
+            ctx2.beginPath();
+            ctx2.moveTo(lastX, lastY);
+            ctx2.lineTo(currentX, currentY);
+            ctx2.stroke();
+           
+            // Store the drawing
+            level2Drawing.push({
+                x1: lastX, y1: lastY,
+                x2: currentX, y2: currentY
+            });
+           
+            // Create mirror drawing
+            const centerX = canvas2.width / 2;
+            const mirrorX1 = centerX - (lastX - centerX);
+            const mirrorX2 = centerX - (currentX - centerX);
+           
+            ctx2.strokeStyle = 'rgba(159, 122, 234, 0.5)';
+            ctx2.beginPath();
+            ctx2.moveTo(mirrorX1, lastY);
+            ctx2.lineTo(mirrorX2, currentY);
+            ctx2.stroke();
+           
+            level2MirrorDrawing.push({
+                x1: mirrorX1, y1: lastY,
+                x2: mirrorX2, y2: currentY
+            });
+           
+            lastX = currentX;
+            lastY = currentY;
+           
+            // Check completion
+            if (level2Drawing.length > 5) {
+                checkSymmetryCompletion();
+            }
+        }
+
+        function stopSymmetryDrawing() {
+            isDrawing = false;
+        }
+
+        function checkSymmetryCompletion() {
+            if (!level2Completed && level2Drawing.length > 10) {
+                level2Completed = true;
+                const feedbackEl = document.getElementById('level-2-feedback');
+                feedbackEl.textContent = currentLang === 'or' ?
+                    '✅ ସମମିତି ଚିତ୍ରଣ ସମ୍ପୂର୍ଣ୍ଣ! ମିରର ପ୍ରଭାବ ଦେଖନ୍ତୁ!' :
+                    '✅ Symmetry drawing complete! Check the mirror effect!';
+                feedbackEl.className = 'feedback correct';
+            }
+        }
+
+        function setupSymmetryButtons() {
+            // Draw tool
+            document.getElementById('symmetry-line-tool').addEventListener('click', function() {
+                document.querySelectorAll('#level-2-container .tool-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+            });
+           
+            // Clear tool
+            document.getElementById('symmetry-clear-tool').addEventListener('click', function() {
+                level2Drawing = [];
+                level2MirrorDrawing = [];
+                level2Completed = false;
+                clearCanvas2();
+                drawLeftHalf();
+                document.getElementById('level-2-feedback').textContent = '';
+            });
+           
+            // Mirror button
+            document.getElementById('mirror-btn').addEventListener('click', function() {
+                if (level2Completed) {
+                    // Animate the mirror effect
+                    const centerX = canvas2.width / 2;
+                    ctx2.strokeStyle = 'rgba(66, 153, 225, 0.7)';
+                    ctx2.lineWidth = 4;
+                    ctx2.setLineDash([10, 5]);
+                   
+                    // Draw mirror lines
+                    for (let i = 0; i < 3; i++) {
+                        const y = canvas2.height / 4 * (i + 1);
+                        ctx2.beginPath();
+                        ctx2.moveTo(centerX - 50, y);
+                        ctx2.lineTo(centerX + 50, y);
+                        ctx2.stroke();
+                    }
+                   
+                    ctx2.setLineDash([]);
+                   
+                    // Flash effect
+                    canvas2.style.boxShadow = '0 0 30px rgba(159, 122, 234, 0.7)';
+                    setTimeout(() => {
+                        canvas2.style.boxShadow = 'none';
+                    }, 1000);
+                }
+            });
+        }
+
+        function setupPatternButtons() {
+            document.querySelectorAll('#level-2-container .shape-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('#level-2-container .shape-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentPattern = this.dataset.pattern;
+                   
+                    // Update instructions
+                    let instruction = '';
+                    switch(currentPattern) {
+                        case 'butterfly':
+                            instruction = currentLang === 'or' ?
+                                'ରେଖା ସମମିତି ବ୍ୟବହାର କରି ପ୍ରଜାପତି ସମ୍ପୂର୍ଣ୍ଣ କରନ୍ତୁ' :
+                                'Complete the butterfly using line symmetry';
+                            break;
+                        case 'house':
+                            instruction = currentLang === 'or' ?
+                                'ରେଖା ସମମିତି ବ୍ୟବହାର କରି ଘର ସମ୍ପୂର୍ଣ୍ଣ କରନ୍ତୁ' :
+                                'Complete the house using line symmetry';
+                            break;
+                        case 'kite':
+                            instruction = currentLang === 'or' ?
+                                'ରେଖା ସମମିତି ବ୍ୟବହାର କରି ଗୁଡ଼ିଆ ସମ୍ପୂର୍ଣ୍ଣ କରନ୍ତୁ' :
+                                'Complete the kite using line symmetry';
+                            break;
+                    }
+                    document.getElementById('level2-instructions-text').textContent = instruction;
+                   
+                    // Reset canvas
+                    level2Drawing = [];
+                    level2MirrorDrawing = [];
+                    level2Completed = false;
+                    clearCanvas2();
+                    drawLeftHalf();
+                    document.getElementById('level-2-feedback').textContent = '';
+                });
+            });
+        }
+
+        function checkLevel2() {
+            const q1 = parseInt(document.getElementById('l2-q1-answer').value);
+            const q2 = document.getElementById('l2-q2-answer').value;
+            const q3 = parseInt(document.getElementById('l2-q3-answer').value);
+            const feedbackEl = document.getElementById('level-2-feedback');
+           
+            let correctAnswers = 0;
+            let feedbackMessage = '';
+           
+            // Check answers
+            if (q1 === 4) correctAnswers++;
+            if (q2 === 'Reflection') correctAnswers++;
+            if (q3 === 3) correctAnswers++;
+           
+            if (correctAnswers === 3 && level2Completed) {
+                // All correct
+                feedbackMessage = currentLang === 'or' ?
+                    '✅ ସମସ୍ତ ଉତ୍ତର ସଠିକ୍ ଏବଂ ସମମିତି ସଠିକ୍! ଆପଣ 75 ପଏଣ୍ଟ ହାସଲ କଲେ!' :
+                    '✅ All answers correct and symmetry perfect! You earned 75 points!';
+                feedbackEl.className = 'feedback correct';
+               
+                // Update score
+                updateScore(75);
+               
+                // Unlock next level
+                document.getElementById('level-card-3').classList.remove('locked');
+                document.getElementById('level-card-3').querySelector('.lock-icon').style.display = 'none';
+                document.getElementById('level-card-3').querySelector('.start-btn').disabled = false;
+                document.getElementById('level-card-3').querySelector('.start-btn').textContent =
+                    translations[currentLang]['btn_start_level3'];
+                document.getElementById('level-card-3').querySelector('.start-btn').onclick = function() { startLevel(3); };
+               
+                // Update progress bar
+                document.getElementById('progress-bar').style.width = '66%';
+               
+                // Show completion modal
+                setTimeout(() => {
+                    document.getElementById('completion-modal').style.display = 'flex';
+                }, 500);
+               
+            } else {
+                // Something wrong
+                feedbackMessage = currentLang === 'or' ?
+                    `⚠️ ${correctAnswers}/3 ଉତ୍ତର ସଠିକ୍. ${level2Completed ? '' : 'ସମମିତି ଚିତ୍ରଣ ସମ୍ପୂର୍ଣ୍ଣ କରନ୍ତୁ.'}` :
+                    `⚠️ ${correctAnswers}/3 answers correct. ${level2Completed ? '' : 'Complete the symmetry drawing.'}`;
+                feedbackEl.className = 'feedback wrong';
+            }
+           
+            feedbackEl.textContent = feedbackMessage;
+        }
+
+        // --- LEVEL 3: ANGLE ARCHITECT ---
+        function loadLevel3() {
+            canvas3 = document.getElementById('construction-canvas');
+            ctx3 = canvas3.getContext('2d');
+           
+            canvas3.width = canvas3.offsetWidth;
+            canvas3.height = canvas3.offsetHeight;
+           
+            clearCanvas3();
+            drawConstructionGrid();
+           
+            setupConstructionEvents();
+            setupConstructionButtons();
+            setupTaskButtons();
+           
+            level3Lines = [];
+            level3Angles = [];
+            level3Completed = false;
+            showProtractor = false;
+            showCompass = false;
+           
+            // Hide tools initially
+            document.getElementById('protractor').style.display = 'none';
+            document.getElementById('compass-tool').style.display = 'none';
+        }
+
+        function clearCanvas3() {
+            ctx3.clearRect(0, 0, canvas3.width, canvas3.height);
+            drawGrid(ctx3, canvas3.width, canvas3.height);
+            document.getElementById('angle-display').textContent = 'Angle: 0°';
+        }
+
+        function drawConstructionGrid() {
+            drawGrid(ctx3, canvas3.width, canvas3.height);
+        }
+
+        function setupConstructionEvents() {
+            canvas3.removeEventListener('mousedown', startConstruction);
+            canvas3.removeEventListener('mousemove', constructionDraw);
+            canvas3.removeEventListener('mouseup', stopConstruction);
+           
+            canvas3.addEventListener('mousedown', startConstruction);
+            canvas3.addEventListener('mousemove', constructionDraw);
+            canvas3.addEventListener('mouseup', stopConstruction);
+        }
+
+        function startConstruction(e) {
+            isDrawing = true;
+            const rect = canvas3.getBoundingClientRect();
+            lastX = e.clientX - rect.left;
+            lastY = e.clientY - rect.top;
+           
+            // Start a new line
+            level3Lines.push({
+                points: [{x: lastX, y: lastY}],
+                type: currentTool
+            });
+        }
+
+        function constructionDraw(e) {
+            if (!isDrawing) return;
+           
+            const rect = canvas3.getBoundingClientRect();
+            const currentX = e.clientX - rect.left;
+            const currentY = e.clientY - rect.top;
+           
+            // Clear and redraw
+            clearCanvas3();
+            drawConstructionGrid();
+           
+            // Draw existing lines
+            level3Lines.forEach(line => {
+                ctx3.strokeStyle = '#1a365d';
+                ctx3.lineWidth = 3;
+                ctx3.beginPath();
+                ctx3.moveTo(line.points[0].x, line.points[0].y);
+                for (let i = 1; i < line.points.length; i++) {
+                    ctx3.lineTo(line.points[i].x, line.points[i].y);
+                }
+                ctx3.stroke();
+            });
+           
+            // Draw current line
+            const currentLine = level3Lines[level3Lines.length - 1];
+            currentLine.points.push({x: currentX, y: currentY});
+           
+            ctx3.strokeStyle = '#e53e3e';
+            ctx3.lineWidth = 3;
+            ctx3.beginPath();
+            ctx3.moveTo(currentLine.points[0].x, currentLine.points[0].y);
+            ctx3.lineTo(currentX, currentY);
+            ctx3.stroke();
+           
+            // Calculate angle if we have two lines
+            if (level3Lines.length >= 2) {
+                const line1 = level3Lines[level3Lines.length - 2];
+                const line2 = level3Lines[level3Lines.length - 1];
+               
+                if (line1.points.length > 1 && line2.points.length > 1) {
+                    const startX = line1.points[0].x;
+                    const startY = line1.points[0].y;
+                    const end1X = line1.points[line1.points.length - 1].x;
+                    const end1Y = line1.points[line1.points.length - 1].y;
+                    const end2X = line2.points[line2.points.length - 1].x;
+                    const end2Y = line2.points[line2.points.length - 1].y;
+                   
+                    // Calculate angle between two lines
+                    const angle = calculateAngle(startX, startY, end1X, end1Y, end2X, end2Y);
+                    currentAngle = Math.round(angle);
+                   
+                    // Update angle display
+                    document.getElementById('angle-display').textContent = `Angle: ${currentAngle}°`;
+                   
+                    // Draw angle arc
+                    drawAngleArc(startX, startY, end1X, end1Y, end2X, end2Y, angle);
+                   
+                    // Check if target angle is achieved
+                    checkAngleCompletion(angle);
+                }
+            }
+           
+            // Update protractor position if visible
+            if (showProtractor) {
+                updateProtractor(currentX, currentY);
+            }
+           
+            // Update compass if visible
+            if (showCompass) {
+                updateCompass(currentX, currentY);
+            }
+           
+            lastX = currentX;
+            lastY = currentY;
+        }
+
+        function stopConstruction() {
+            isDrawing = false;
+        }
+
+        function calculateAngle(x1, y1, x2, y2, x3, y3) {
+            // Calculate vectors
+            const v1x = x2 - x1;
+            const v1y = y2 - y1;
+            const v2x = x3 - x1;
+            const v2y = y3 - y1;
+           
+            // Calculate dot product
+            const dot = v1x * v2x + v1y * v2y;
+           
+            // Calculate magnitudes
+            const mag1 = Math.sqrt(v1x * v1x + v1y * v1y);
+            const mag2 = Math.sqrt(v2x * v2x + v2y * v2y);
+           
+            // Calculate angle in radians
+            const angleRad = Math.acos(dot / (mag1 * mag2));
+           
+            // Convert to degrees
+            return angleRad * (180 / Math.PI);
+        }
+
+        function drawAngleArc(x1, y1, x2, y2, x3, y3, angle) {
+            const radius = 40;
+            const startAngle = Math.atan2(y2 - y1, x2 - x1);
+            const endAngle = Math.atan2(y3 - y1, x3 - x1);
+           
+            ctx3.strokeStyle = '#38a169';
+            ctx3.lineWidth = 2;
+            ctx3.beginPath();
+            ctx3.arc(x1, y1, radius, startAngle, endAngle);
+            ctx3.stroke();
+           
+            // Draw angle text
+            ctx3.fillStyle = '#1a365d';
+            ctx3.font = '16px Arial';
+            ctx3.fillText(`${Math.round(angle)}°`, x1 + 50, y1 + 50);
+        }
+
+        function checkAngleCompletion(angle) {
+            let targetAngle = 60; // Default target
+           
+            switch(currentTask) {
+                case 'angle60':
+                    targetAngle = 60;
+                    break;
+                case 'triangle':
+                    targetAngle = 60; // For equilateral triangle
+                    break;
+                case 'hexagon':
+                    targetAngle = 120; // Internal angle of hexagon
+                    break;
+            }
+           
+            if (Math.abs(angle - targetAngle) < 5 && !level3Completed) {
+                level3Completed = true;
+                const feedbackEl = document.getElementById('level-3-feedback');
+                feedbackEl.textContent = currentLang === 'or' ?
+                    `✅ ${targetAngle}° କୋଣ ସଠିକ୍ ଭାବରେ ନିର୍ମିତ!` :
+                    `✅ ${targetAngle}° angle constructed correctly!`;
+                feedbackEl.className = 'feedback correct';
+               
+                // Draw a celebration effect
+                drawCelebration();
+            }
+        }
+
+        function drawCelebration() {
+            const centerX = canvas3.width / 2;
+            const centerY = canvas3.height / 2;
+           
+            // Draw sparkles
+            for (let i = 0; i < 20; i++) {
+                const x = centerX + (Math.random() - 0.5) * 200;
+                const y = centerY + (Math.random() - 0.5) * 200;
+                const radius = Math.random() * 5 + 2;
+                const hue = Math.random() * 360;
+               
+                ctx3.fillStyle = `hsl(${hue}, 100%, 60%)`;
+                ctx3.beginPath();
+                ctx3.arc(x, y, radius, 0, Math.PI * 2);
+                ctx3.fill();
+            }
+        }
+
+        function updateProtractor(x, y) {
+            const protractor = document.getElementById('protractor');
+            protractor.style.display = 'block';
+            protractor.style.left = `${x - 100}px`;
+            protractor.style.top = `${y - 100}px`;
+           
+            // Create protractor line if it doesn't exist
+            if (!document.querySelector('.protractor-line')) {
+                const line = document.createElement('div');
+                line.className = 'protractor-line';
+                protractor.appendChild(line);
+            }
+           
+            // Update protractor line angle
+            const line = document.querySelector('.protractor-line');
+            if (line) {
+                const angle = currentAngle;
+                line.style.setProperty('--angle', `${angle}deg`);
+            }
+        }
+
+        function updateCompass(x, y) {
+            const compass = document.getElementById('compass-tool');
+            compass.style.display = 'block';
+            compass.style.left = `${x - 50}px`;
+            compass.style.top = `${y - 50}px`;
+        }
+
+        function setupConstructionButtons() {
+            // Angle tool
+            document.getElementById('angle-tool').addEventListener('click', function() {
+                document.querySelectorAll('#level-3-container .tool-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                currentTool = 'angle';
+                showProtractor = false;
+                showCompass = false;
+                document.getElementById('protractor').style.display = 'none';
+                document.getElementById('compass-tool').style.display = 'none';
+            });
+           
+            // Protractor tool
+            document.getElementById('protractor-tool').addEventListener('click', function() {
+                document.querySelectorAll('#level-3-container .tool-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                currentTool = 'protractor';
+                showProtractor = true;
+                showCompass = false;
+                document.getElementById('protractor').style.display = 'block';
+                document.getElementById('compass-tool').style.display = 'none';
+               
+                // Position protractor at center
+                const centerX = canvas3.width / 2;
+                const centerY = canvas3.height / 2;
+                updateProtractor(centerX, centerY);
+            });
+           
+            // Compass tool
+            document.getElementById('compass-btn').addEventListener('click', function() {
+                document.querySelectorAll('#level-3-container .tool-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                currentTool = 'compass';
+                showProtractor = false;
+                showCompass = true;
+                document.getElementById('protractor').style.display = 'none';
+                document.getElementById('compass-tool').style.display = 'block';
+               
+                // Position compass at center
+                const centerX = canvas3.width / 2;
+                const centerY = canvas3.height / 2;
+                updateCompass(centerX, centerY);
+            });
+           
+            // Clear tool
+            document.getElementById('construction-clear').addEventListener('click', function() {
+                level3Lines = [];
+                level3Angles = [];
+                level3Completed = false;
+                currentAngle = 0;
+                clearCanvas3();
+                document.getElementById('level-3-feedback').textContent = '';
+                document.getElementById('protractor').style.display = 'none';
+                document.getElementById('compass-tool').style.display = 'none';
+            });
+        }
+
+        function setupTaskButtons() {
+            document.querySelectorAll('#level-3-container .shape-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('#level-3-container .shape-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentTask = this.dataset.task;
+                   
+                    // Update instructions
+                    let instruction = '';
+                    switch(currentTask) {
+                        case 'angle60':
+                            instruction = currentLang === 'or' ?
+                                'ପ୍ରୋଟ୍ରାକ୍ଟର ବ୍ୟବହାର କରି 60° କୋଣ ନିର୍ମାଣ କରନ୍ତୁ' :
+                                'Construct a 60° angle using protractor';
+                            break;
+                        case 'triangle':
+                            instruction = currentLang === 'or' ?
+                                'କମ୍ପାସ ବ୍ୟବହାର କରି ସମବାହୁ ତ୍ରିଭୁଜ ନିର୍ମାଣ କରନ୍ତୁ' :
+                                'Construct an equilateral triangle using compass';
+                            break;
+                        case 'hexagon':
+                            instruction = currentLang === 'or' ?
+                                'କମ୍ପାସ ବ୍ୟବହାର କରି ଷଡ୍ଭୁଜ ନିର୍ମାଣ କରନ୍ତୁ' :
+                                'Construct a hexagon using compass';
+                            break;
+                    }
+                    document.getElementById('level3-instructions-text').textContent = instruction;
+                   
+                    // Reset canvas
+                    level3Lines = [];
+                    level3Angles = [];
+                    level3Completed = false;
+                    currentAngle = 0;
+                    clearCanvas3();
+                    document.getElementById('level-3-feedback').textContent = '';
+                });
+            });
+        }
+
+        function checkLevel3() {
+            const q1 = parseInt(document.getElementById('l3-q1-answer').value);
+            const q2 = parseInt(document.getElementById('l3-q2-answer').value);
+            const q3 = parseInt(document.getElementById('l3-q3-answer').value);
+            const q4 = document.getElementById('l3-q4-answer').value;
+            const feedbackEl = document.getElementById('level-3-feedback');
+           
+            let correctAnswers = 0;
+            let feedbackMessage = '';
+           
+            // Check answers
+            if (q1 === 90) correctAnswers++;
+            if (q2 === 720) correctAnswers++;
+            if (q3 === 6) correctAnswers++;
+            if (q4 === '90') correctAnswers++;
+           
+            if (correctAnswers === 4 && level3Completed) {
+                // All correct
+                feedbackMessage = currentLang === 'or' ?
+                    '✅ ସମସ୍ତ ଉତ୍ତର ସଠିକ୍ ଏବଂ ନିର୍ମାଣ ସଠିକ୍! ଆପଣ 100 ପଏଣ୍ଟ ହାସଲ କଲେ!' :
+                    '✅ All answers correct and construction perfect! You earned 100 points!';
+                feedbackEl.className = 'feedback correct';
+               
+                // Update score
+                updateScore(100);
+               
+                // Update progress bar
+                document.getElementById('progress-bar').style.width = '100%';
+               
+                // Show game over modal
+                setTimeout(() => {
+                    document.getElementById('final-score').textContent = score;
+                    document.getElementById('game-over-modal').style.display = 'flex';
+                }, 500);
+               
+            } else {
+                // Something wrong
+                feedbackMessage = currentLang === 'or' ?
+                    `⚠️ ${correctAnswers}/4 ଉତ୍ତର ସଠିକ୍. ${level3Completed ? '' : 'କୋଣ ନିର୍ମାଣ ସମ୍ପୂର୍ଣ୍ଣ କରନ୍ତୁ.'}` :
+                    `⚠️ ${correctAnswers}/4 answers correct. ${level3Completed ? '' : 'Complete the angle construction.'}`;
+                feedbackEl.className = 'feedback wrong';
+            }
+           
+            feedbackEl.textContent = feedbackMessage;
+        }
+
+        // --- EVENT LISTENERS ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize language
+            updateLanguage('en');
+           
+            // Language switcher
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const lang = this.dataset.lang;
+                    updateLanguage(lang);
+                });
+            });
+           
+            // Mobile menu
+            document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+                document.querySelector('nav').classList.toggle('active');
+            });
+           
+            // Modal close buttons
+            document.getElementById('next-level-btn').addEventListener('click', function() {
+                document.getElementById('completion-modal').style.display = 'none';
+                showLevelSelection();
+            });
+           
+            // Close modals when clicking outside
+            document.querySelectorAll('.game-modal').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.style.display = 'none';
+                    }
+                });
+            });
+           
+            // Initialize level selection
+            showLevelSelection();
+           
+            // Setup initial progress bar
+            document.getElementById('progress-bar').style.width = '0%';
+           
+            // Set initial level button actions
+            document.querySelector('#level-card-1 .start-btn').onclick = function() { startLevel(1); };
+        });
+
+        // --- RESIZE HANDLER ---
+        window.addEventListener('resize', function() {
+            if (currentLevel === 1 && canvas1) {
+                canvas1.width = canvas1.offsetWidth;
+                canvas1.height = canvas1.offsetHeight;
+                clearCanvas1();
+                setupSnapPoints();
+                drawInitialShape();
+            } else if (currentLevel === 2 && canvas2) {
+                canvas2.width = canvas2.offsetWidth;
+                canvas2.height = canvas2.offsetHeight;
+                clearCanvas2();
+                drawLeftHalf();
+            } else if (currentLevel === 3 && canvas3) {
+                canvas3.width = canvas3.offsetWidth;
+                canvas3.height = canvas3.offsetHeight;
+                clearCanvas3();
+                drawConstructionGrid();
+            }
+        });
+    </script>
+</body>
+</html>

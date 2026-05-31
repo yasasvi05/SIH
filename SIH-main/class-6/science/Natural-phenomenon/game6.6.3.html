@@ -1,0 +1,2125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural Disaster Mystery Game - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f7ff;
+            color: #1e293b;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(15, 23, 42, 0.85);
+            border-radius: 25px;
+            padding: 6px;
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: flex;
+            gap: 5px;
+        }
+
+        .lang-btn {
+            padding: 6px 12px;
+            border: none;
+            background: transparent;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: white;
+            white-space: nowrap;
+        }
+
+        .lang-btn.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .lang-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        /* Indic font helper */
+        .indic-text {
+            font-family: 'Nirmala UI', 'Kalinga', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            gap: 16px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+            background: white;
+            color: #2a69ac;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo-text span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 24px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-size: 0.98rem;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.6rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(
+                    rgba(14, 42, 71, 0.85),
+                    rgba(26, 54, 93, 0.9)
+                ),
+                url('https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.4rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-header p {
+            font-size: 1.05rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: 12px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+        }
+
+        .breadcrumb-content {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb a {
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #3182ce;
+        }
+
+        .breadcrumb span {
+            color: #64748b;
+        }
+
+        /* Instructions Modal */
+        .instructions-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1500;
+        }
+
+        .instructions-content {
+            background: white;
+            border-radius: 18px;
+            padding: 24px 22px 26px;
+            max-width: 650px;
+            width: 92%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .instructions-title {
+            font-size: 1.6rem;
+            color: #1a365d;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .instructions-subtitle {
+            font-size: 0.95rem;
+            color: #64748b;
+            margin-bottom: 14px;
+        }
+
+        .instructions-list {
+            margin-left: 18px;
+            margin-bottom: 14px;
+            font-size: 0.93rem;
+            color: #4b5563;
+        }
+
+        .instructions-list li {
+            margin-bottom: 6px;
+        }
+
+        .instructions-highlight {
+            background: #eff6ff;
+            border-radius: 10px;
+            padding: 10px 10px;
+            font-size: 0.9rem;
+            color: #1d4ed8;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .instructions-highlight i {
+            margin-top: 2px;
+        }
+
+        .start-btn {
+            margin-top: 6px;
+            padding: 10px 22px;
+            border-radius: 999px;
+            border: none;
+            background: #2563eb;
+            color: white;
+            font-size: 0.98rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .start-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        /* Main Game Section */
+        .main-game-section {
+            padding: 32px 0 60px;
+        }
+
+        .game-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 24px 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            font-size: 1rem;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .score-board div {
+            background: rgba(255,255,255,0.18);
+            padding: 6px 12px;
+            border-radius: 999px;
+        }
+
+        .content {
+            padding: 24px 30px 30px;
+        }
+
+        .guess-phase {
+            text-align: center;
+        }
+
+        /* Situation description - the only text players see */
+        .situation-container {
+            margin: 20px 0;
+            padding: 25px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-left: 8px solid #667eea;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: left;
+        }
+
+        .situation-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: #4c51bf;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .situation-icon {
+            font-size: 1.8rem;
+            color: #667eea;
+        }
+
+        .situation-text {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #2d3748;
+            border: 1px solid #e2e8f0;
+            font-style: normal;
+        }
+
+        .guess-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin: 24px 0 10px;
+        }
+
+        .guess-card {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 16px 18px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            font-size: 1.05em;
+            font-weight: 600;
+        }
+
+        .guess-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-color: #667eea;
+        }
+
+        .guess-card.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #764ba2;
+        }
+
+        .guess-card.correct {
+            background: linear-gradient(135deg, #4caf50 0%, #8bc34a 100%);
+            color: white;
+            animation: pulse 0.5s;
+        }
+
+        .guess-card.wrong {
+            background: linear-gradient(135deg, #f44336 0%, #e91e63 100%);
+            color: white;
+            animation: shake 0.5s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        .game-phase {
+            display: none;
+        }
+
+        .game-phase.active {
+            display: block;
+        }
+
+        .phase-selector {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .phase-btn {
+            padding: 10px 22px;
+            font-size: 0.95em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.18);
+        }
+
+        .phase-btn.before {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .phase-btn.during {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+        }
+
+        .phase-btn.after {
+            background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+            color: white;
+        }
+
+        .phase-btn.active {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+        }
+
+        .phase-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+
+        .phase-btn:disabled {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .action-card {
+            background: #f8f9fa;
+            padding: 18px;
+            border-radius: 15px;
+            cursor: grab;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            font-size: 0.98em;
+        }
+
+        .action-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .action-card.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+        }
+
+        .drop-zones {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .drop-zone {
+            min-height: 200px;
+            border: 3px dashed #ccc;
+            border-radius: 15px;
+            padding: 16px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .drop-zone.do {
+            background: linear-gradient(135deg, #e0f7e0 0%, #c8e6c9 100%);
+        }
+
+        .drop-zone.dont {
+            background: linear-gradient(135deg, #ffe0e0 0%, #ffcdd2 100%);
+        }
+
+        .drop-zone h3 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .drop-zone.do h3 {
+            color: #2e7d32;
+        }
+
+        .drop-zone.dont h3 {
+            color: #c62828;
+        }
+
+        .drop-zone.drag-over {
+            border-color: #667eea;
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .dropped-item {
+            background: white;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            font-size: 0.96em;
+            cursor: pointer; /* click to remove back to grid */
+        }
+
+        .dropped-item.correct {
+            border-left-color: #4caf50;
+            background: #e0f7e0;
+        }
+
+        .dropped-item.wrong {
+            border-left-color: #f44336;
+            background: #ffe0e0;
+            animation: shake 0.5s;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin-top: 22px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 26px;
+            font-size: 0.98em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-check {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 0.98em;
+            font-weight: 600;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+            display: block;
+        }
+
+        .revealed-name {
+            font-size: 1.5em;
+            color: #667eea;
+            margin: 10px 0 16px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        @keyframes celebrate {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-3deg) scale(1.03); }
+            75% { transform: rotate(3deg) scale(1.03); }
+        }
+
+        .celebrating {
+            animation: celebrate 0.5s ease infinite;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 32px 0 16px;
+            margin-top: 20px;
+        }
+        /* ---- Top stats bar & game header like Shadow Lab ---- */
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+            background: transparent;
+            color: #1e293b;
+            padding: 0;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+        }
+
+        .timer-box {
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #fee2e2;
+            color: #b91c1c;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .score-box {
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #ecfeff;
+            color: #155e75;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .game-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .game-title-block {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .game-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1a365d;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .game-subtitle {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .badge-level {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            background: #fef2f2;
+            color: #b91c1c;
+            font-weight: 600;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-bottom: 18px;
+        }
+
+        .footer-about {
+            padding-right: 10px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.6rem;
+            background: #38b2ac;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 12px;
+            color: #38b2ac;
+            font-size: 1rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 10px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.8rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+
+            .action-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .drop-zones {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                gap: 10px;
+                background: #0f172a;
+                position: absolute;
+                top: 55px;
+                right: 10px;
+                padding: 10px 12px;
+                border-radius: 10px;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+                min-width: 150px;
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .situation-container {
+                padding: 20px;
+            }
+
+            .situation-text {
+                padding: 15px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button class="lang-btn active" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+        <button class="lang-btn" data-lang="hi">हिन्दी</button>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-globe-asia"></i>
+                    </div>
+                    <div class="logo-text">STEM <span>Learn</span> Odisha</div>
+                </div>
+
+                <nav>
+                    <ul>
+                        <li><a href="student-dashboard.html" data-i18n="nav-dashboard">Dashboard</a></li>
+                        <li><a href="about.html" data-i18n="nav-about">About</a></li>
+                        <li><a href="contact.html" data-i18n="nav-contact">Contact</a></li>
+                    </ul>
+                </nav>
+
+                <button class="mobile-menu-btn" aria-label="Toggle navigation menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 data-i18n="page-title">Natural Disaster Mystery Game</h1>
+            <p data-i18n="page-desc">
+                Read the situation description and guess the disaster, then sort DOs and DON'Ts for each phase: BEFORE, DURING and AFTER. Can you complete all 5 challenges in 25 minutes and score high out of 150?
+            </p>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <a href="student-dashboard.html" data-i18n="breadcrumb-dashboard">Dashboard</a>
+                <span>/</span>
+                <span data-i18n="breadcrumb-section">Disaster Preparedness</span>
+                <span>/</span>
+                <span data-i18n="breadcrumb-game">Natural Disaster Mystery Game</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instructions Modal -->
+    <div class="instructions-modal" id="instructions-modal">
+        <div class="instructions-content">
+            <h2 class="instructions-title" data-i18n="instr-title">How to Play – Natural Disaster Mystery</h2>
+            <p class="instructions-subtitle" data-i18n="instr-subtitle">
+                This is a hard-level preparedness game with 5 different disasters. Read these steps before you begin.
+            </p>
+            <ul class="instructions-list">
+                <li data-i18n="instr-1">You will play through 5 mystery challenges. Each one describes a real-life disaster scene.</li>
+                <li data-i18n="instr-2">First, read the situation description carefully to guess which disaster is happening.</li>
+                <li data-i18n="instr-3">Next, sort actions into DO and DON'T for the phases: BEFORE, DURING and AFTER.</li>
+                <li data-i18n="instr-4">Drag each action card into the correct bucket. Place all cards before checking.</li>
+                <li data-i18n="instr-5">Total game time is 25 minutes and you can score up to 150 points.</li>
+            </ul>
+            <div class="instructions-highlight">
+                <i class="fas fa-lightbulb"></i>
+                <span data-i18n="instr-tip">
+                    Tip: Think like a safety officer. Even if something looks brave or exciting, it might still be a big DON'T in a real disaster!
+                </span>
+            </div>
+            <button class="start-btn" id="start-btn">
+                <i class="fas fa-play-circle"></i>
+                <span data-i18n="instr-start-btn">Start Game</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Game Section -->
+    <section class="main-game-section">
+        <div class="container">
+            <div class="game-container">
+                <div class="game-container">
+                    <!-- New top stats bar (like Shadow Lab) -->
+                    <div class="content" style="padding: 18px 24px 6px;">
+                        <div class="stats-bar">
+                            <div class="stat-item">
+                                <div class="timer-box">
+                                    <i class="fas fa-clock"></i>
+                                    <span>Time left:</span>
+                                    <span id="gameTime">25:00</span>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="score-box">
+                                    <i class="fas fa-star"></i>
+                                    <span>Score:</span>
+                                    <span id="score">0</span>/150
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <span>Challenges solved:</span>
+                                <span id="level">1</span> / <span>5</span>
+                            </div>
+                            <div class="stat-item">
+                                <div class="badge-level">
+                                    <i class="fas fa-bolt"></i>
+                                    <span>Hard</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Game title row (like Shadow Lab) -->
+                        <div class="game-header-row">
+                            <div class="game-title-block">
+                                <div class="game-title">
+                                    <i class="fas fa-mountain"></i>
+                                    <span>Natural Disaster Mystery Game</span>
+                                </div>
+                                <div class="game-subtitle">
+                                    Read the situation, spot the disaster, then sort DO and DON'T actions.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content">
+                        <!-- Guess Phase -->
+                        <div id="guessPhase" class="guess-phase active">
+                            <h2 style="text-align: center; color: #667eea; margin-bottom: 20px;" data-i18n="guess-title">
+                                🤔 What disaster is happening?
+                            </h2>
+                           
+                            <!-- Situation description container -->
+                            <div class="situation-container">
+                                <div class="situation-header">
+                                    <i class="fas fa-scroll situation-icon"></i>
+                                    <span data-i18n="situation-header">SITUATION DESCRIPTION:</span>
+                                </div>
+                                <div class="situation-text" id="situationText"></div>
+                            </div>
+                           
+                            <div class="guess-options" id="guessOptions"></div>
+                           
+                            <div class="buttons">
+                                <button class="btn btn-primary" id="submitGuess" disabled>
+                                    <span data-i18n="submit-guess">Submit Guess</span>
+                                </button>
+                            </div>
+                           
+                            <div class="feedback" id="guessFeedback"></div>
+                        </div>
+
+                        <!-- Action Phase -->
+                        <div id="gamePhase" class="game-phase">
+                            <div class="revealed-name" id="revealedName"></div>
+
+                            <div class="phase-selector">
+                                <button class="phase-btn before" data-phase="before" disabled data-i18n="phase-before">📋 BEFORE</button>
+                                <button class="phase-btn during" data-phase="during" disabled data-i18n="phase-during">⚡ DURING</button>
+                                <button class="phase-btn after" data-phase="after" disabled data-i18n="phase-after">🔧 AFTER</button>
+                            </div>
+
+                            <div class="action-grid" id="actionGrid"></div>
+
+                            <div class="drop-zones">
+                                <div class="drop-zone do" data-zone="do">
+                                    <h3 data-i18n="do-title">✅ DO</h3>
+                                    <div id="doZone"></div>
+                                </div>
+                                <div class="drop-zone dont" data-zone="dont">
+                                    <h3 data-i18n="dont-title">🚫 DON'T</h3>
+                                    <div id="dontZone"></div>
+                                </div>
+                            </div>
+
+                            <div class="buttons">
+                                <button class="btn btn-check" id="checkBtn">Check Answers</button>
+                                <button class="btn btn-next" id="nextBtn" style="display:none;">Next Phase</button>
+                            </div>
+
+                            <div class="feedback" id="feedback"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <div class="footer-logo-text">STEM Learn Odisha</div>
+                    </div>
+                    <p data-i18n="footer-desc">
+                        Making Science and Mathematics education engaging and relevant for students in Odisha
+                        through localized content and interactive learning experiences.
+                    </p>
+                </div>
+
+                <div class="footer-links">
+                    <h3 data-i18n="quick-links">Quick Links</h3>
+                    <ul>
+                        <li>
+                            <a href="student-dashboard.html">
+                                <i class="fas fa-home"></i>
+                                <span data-i18n="nav-dashboard">Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="about.html">
+                                <i class="fas fa-info-circle"></i>
+                                <span data-i18n="nav-about">About</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="contact.html">
+                                <i class="fas fa-envelope"></i>
+                                <span data-i18n="nav-contact">Contact</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright" data-i18n="copyright">
+                © 2023 STEM Learn Odisha. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /* ====== LANGUAGE & TRANSLATIONS ====== */
+        let currentLanguage = 'en';
+
+        const translations = {
+            en: {
+                'nav-dashboard': 'Dashboard',
+                'nav-about': 'About',
+                'nav-contact': 'Contact',
+                'page-title': 'Natural Disaster Mystery Game',
+                'page-desc': 'Read the situation description and guess the disaster, then sort DOs and DON\'Ts for each phase: BEFORE, DURING and AFTER. Can you complete all 5 challenges in 25 minutes and score high out of 150?',
+                'breadcrumb-dashboard': 'Dashboard',
+                'breadcrumb-section': 'Disaster Preparedness',
+                'breadcrumb-game': 'Natural Disaster Mystery Game',
+
+                'instr-title': 'How to Play – Natural Disaster Mystery',
+                'instr-subtitle': 'This is a hard-level preparedness game with 5 different disasters. Read these steps before you begin.',
+                'instr-1': 'You will play through 5 mystery challenges. Each one describes a real-life disaster scene.',
+                'instr-2': 'First, read the situation description carefully to guess which disaster is happening.',
+                'instr-3': 'Next, sort actions into DO and DON\'T for the phases: BEFORE, DURING and AFTER.',
+                'instr-4': 'Drag each action card into the correct bucket. Place all cards before checking.',
+                'instr-5': 'Total game time is 25 minutes and you can score up to 150 points.',
+                'instr-tip': 'Tip: Think like a safety officer. Even if something looks brave or exciting, it might still be a big DON\'T in a real disaster!',
+                'instr-start-btn': 'Start Game',
+
+                'guess-title': '🤔 What disaster is happening?',
+                'situation-header': 'SITUATION DESCRIPTION:',
+                'submit-guess': 'Submit Guess',
+
+                'phase-before': '📋 BEFORE',
+                'phase-during': '⚡ DURING',
+                'phase-after': '🔧 AFTER',
+
+                'do-title': '✅ DO',
+                'dont-title': '🚫 DON\'T',
+
+                'footer-desc': 'Making Science and Mathematics education engaging and relevant for students in Odisha through localized content and interactive learning experiences.',
+                'quick-links': 'Quick Links',
+                'copyright': '© 2023 STEM Learn Odisha. All rights reserved.'
+            },
+            or: {
+                'nav-dashboard': 'ଡ୍ୟାଶବୋର୍ଡ',
+                'nav-about': 'ଆମ ବିଷୟରେ',
+                'nav-contact': 'ଯୋଗାଯୋଗ',
+                'page-title': 'ପ୍ରାକୃତିକ ବିପଦ ରହସ୍ୟ ଖେଳ',
+                'page-desc': 'ପରିସ୍ଥିତି ବର୍ଣ୍ଣନା ପଢ଼ି ବିପଦଟି ଚିହ୍ନଟ କରନ୍ତୁ, ପରେ BEFORE, DURING ଏବଂ AFTER ପାଇଁ DO ଏବଂ DON\'T କାର୍ଯ୍ୟଗୁଡ଼ିକୁ ସଠିକ୍ ଭାବରେ ଚୟନ କରନ୍ତୁ। 25 ମିନିଟ୍‌ ଭିତରେ 5ଟି ଚ୍ୟାଲେଞ୍ଜ ସମାପ୍ତ କରି 150 ମଧ୍ୟରୁ ଉଚ୍ଚ ସ୍କୋର ପାଇପାରିବେ କି?',
+                'breadcrumb-dashboard': 'ଡ୍ୟାଶବୋର୍ଡ',
+                'breadcrumb-section': 'ବିପଦ ପ୍ରସ୍ତୁତି',
+                'breadcrumb-game': 'ପ୍ରାକୃତିକ ବିପଦ ରହସ୍ୟ ଖେଳ',
+
+                'instr-title': 'କିପରି ଖେଳିବେ – ପ୍ରାକୃତିକ ବିପଦ ରହସ୍ୟ',
+                'instr-subtitle': 'ଏହା 5ଟି ଭିନ୍ନ ବିପଦ ଉପରେ ଆଧାରିତ ଏକ Hard Level ଖେଳ। ଆରମ୍ଭ ପୂର୍ବରୁ ଏହି ପଦକ୍ରମ ପଢ଼ନ୍ତୁ।',
+                'instr-1': 'ଆପଣ 5ଟି ରହସ୍ୟମୟ ଚ୍ୟାଲେଞ୍ଜ ଖେଳିବେ। ପ୍ରତ୍ୟେକରେ ଏକ ପ୍ରାକୃତିକ ବିପଦ ଦୃଶ୍ୟ ବର୍ଣ୍ଣନା ଦିଆଯିବ।',
+                'instr-2': 'ପ୍ରଥମେ ପରିସ୍ଥିତି ବର୍ଣ୍ଣନାକୁ ସାବଧାନତାର ସହ ପଢ଼ି କେଉଁ ବିପଦ ଘଟୁଛି ତାହା ଅନୁମାନ କରନ୍ତୁ।',
+                'instr-3': 'ତାପରେ ସେଇ ବିପଦ ପାଇଁ BEFORE, DURING ଏବଂ AFTER ଫେଜର DO ଓ DON\'T କାର୍ଯ୍ୟଗୁଡ଼ିକୁ ବଛନ୍ତୁ।',
+                'instr-4': 'ପ୍ରତ୍ୟେକ କାର୍ଯ୍ୟ କାର୍ଡକୁ ଠିକ୍ DO କିମ୍ବା DON\'T ବାକେଟ୍‌ରେ ଡ୍ରାଗ୍ କରନ୍ତୁ। ସମସ୍ତ କାର୍ଡ ରଖିବା ପରେ ମାତ୍ର ଯାଞ୍ଚ କରନ୍ତୁ।',
+                'instr-5': 'ମୋଟ ଖେଳ ସମୟ 25 ମିନିଟ୍ ଏବଂ ଆପଣ ସର୍ବାଧିକ 150 ପଏଣ୍ଟ୍ ପାଇପାରିବେ।',
+                'instr-tip': 'Tip: ଏକ ସେଫ୍ଟି ଅଫିସର ଭଳି ଭାବନ୍ତୁ। କୌଣସି କାମ ଦେଖିବାକୁ ସାହସୀ ଲାଗିଲେ ମଧ୍ୟ ବାସ୍ତବ ବିପଦ ସମୟରେ ସେଟା ଠାରୁଣିଆ DON\'T ହୋଇପାରେ!',
+                'instr-start-btn': 'ଖେଳ ଆରମ୍ଭ କରନ୍ତୁ',
+
+                'guess-title': '🤔 କେଉଁ ବିପଦ ଘଟୁଛି?',
+                'situation-header': 'ପରିସ୍ଥିତି ବର୍ଣ୍ଣନା:',
+                'submit-guess': 'ଅନୁମାନ ପଠାନ୍ତୁ',
+
+                'phase-before': '📋 BEFORE',
+                'phase-during': '⚡ DURING',
+                'phase-after': '🔧 AFTER',
+
+                'do-title': '✅ DO',
+                'dont-title': '🚫 DON\'T',
+
+                'footer-desc': 'ସ୍ଥାନୀୟ ବିଷୟବସ୍ତୁ ଏବଂ ଇଣ୍ଟରାକ୍ଟିଭ୍ କାର୍ଯ୍ୟକଳାପ ମାଧ୍ୟମରେ ଓଡ଼ିଶାର ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କ ପାଇଁ ବିଜ୍ଞାନ ଓ ଗଣିତ ଶିକ୍ଷାକୁ ଆକର୍ଷଣୀୟ ଏବଂ ପ୍ରାସଙ୍ଗିକ କରିବା।',
+                'quick-links': 'ଶୀଘ୍ର ଲିଙ୍କ',
+                'copyright': '© 2023 STEM Learn Odisha. ସମସ୍ତ ଅଧିକାର ସଂରକ୍ଷିତ।'
+            },
+            hi: {
+                'nav-dashboard': 'डैशबोर्ड',
+                'nav-about': 'हमारे बारे में',
+                'nav-contact': 'संपर्क',
+                'page-title': 'प्राकृतिक आपदा रहस्य खेल',
+                'page-desc': 'स्थिति विवरण पढ़कर आपदा पहचानिए, फिर BEFORE, DURING और AFTER चरणों के लिए DO और DON\'T कार्रवाइयों को सही ढंग से चुनिए। क्या आप 25 मिनट में सभी 5 चुनौतियाँ पूरी कर के 150 में से ऊँचा स्कोर बना सकते हैं?',
+                'breadcrumb-dashboard': 'डैशबोर्ड',
+                'breadcrumb-section': 'आपदा तैयारी',
+                'breadcrumb-game': 'प्राकृतिक आपदा रहस्य खेल',
+
+                'instr-title': 'कैसे खेलें – प्राकृतिक आपदा रहस्य',
+                'instr-subtitle': 'यह 5 अलग–अलग आपदाओं पर आधारित एक Hard Level तैयारी गेम है। शुरू करने से पहले ये चरण पढ़िए।',
+                'instr-1': 'आप 5 रहस्यमयी चुनौतियाँ खेलेंगे। हर एक में किसी वास्तविक आपदा का विवरण दिया गया है।',
+                'instr-2': 'सबसे पहले स्थिति विवरण को ध्यान से पढ़कर अनुमान लगाइए कि कौन सी आपदा हो रही है।',
+                'instr-3': 'फिर उसी आपदा के लिए BEFORE, DURING और AFTER चरणों में DO और DON\'T क्रियाओं को बाँटिए।',
+                'instr-4': 'हर एक एक्शन कार्ड को सही DO या DON\'T वाले बॉक्स में ड्रैग कीजिए। सभी कार्ड लगाने के बाद ही जाँच कीजिए।',
+                'instr-5': 'कुल खेल का समय 25 मिनट है और आप अधिकतम 150 अंक कमा सकते हैं।',
+                'instr-tip': 'Tip: एक सेफ्टी ऑफिसर की तरह सोचिए। कोई काम देखने में बहादुर या रोमांचक लगे, फिर भी असली आपदा में वह बड़ा DON\'T हो सकता है!',
+                'instr-start-btn': 'गेम शुरू करें',
+
+                'guess-title': '🤔 यहाँ कौन सी आपदा हो रही है?',
+                'situation-header': 'स्थिति विवरण:',
+                'submit-guess': 'अनुमान भेजें',
+
+                'phase-before': '📋 BEFORE',
+                'phase-during': '⚡ DURING',
+                'phase-after': '🔧 AFTER',
+
+                'do-title': '✅ DO',
+                'dont-title': '🚫 DON\'T',
+
+                'footer-desc': 'स्थानीय सामग्री और इंटरैक्टिव गतिविधियों के ज़रिए ओडिशा के छात्रों के लिए विज्ञान और गणित की पढ़ाई को रोचक और उपयोगी बनाना।',
+                'quick-links': 'त्वरित लिंक',
+                'copyright': '© 2023 STEM Learn Odisha. सर्वाधिकार सुरक्षित।'
+            }
+        };
+
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const i18nElements = document.querySelectorAll('[data-i18n]');
+
+        function t(key) {
+            const pack = translations[currentLanguage] || translations.en;
+            return pack[key] || translations.en[key] || '';
+        }
+
+        function applyTranslations() {
+            i18nElements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (!key) return;
+                const text = t(key);
+                if (text) {
+                    el.innerHTML = text;
+                }
+            });
+        }
+
+        langButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+                if (lang === currentLanguage) return;
+                currentLanguage = lang;
+
+                langButtons.forEach(b => b.classList.toggle('active', b === btn));
+
+                if (lang === 'or' || lang === 'hi') {
+                    document.body.classList.add('indic-text');
+                } else {
+                    document.body.classList.remove('indic-text');
+                }
+
+                applyTranslations();
+            });
+        });
+
+        /* ====== MASTER POOL: 7 DISASTERS WITH TRANSLATIONS ====== */
+        const allGameData = [
+            {
+                name: "TSUNAMI",
+                emoji: "🌊",
+                situation: {
+                    en: "You're at a beach resort when suddenly the water recedes far from shore, exposing the ocean floor. Fish are flopping on the sand. The sea has pulled back about 100 meters. People around you are curious and some are walking toward the exposed seabed to collect fish.",
+                    or: "ଆପଣ ଏକ ବେଳାଭୂମି ରିସର୍ଟରେ ଅଛନ୍ତି ଯେତେବେଳେ ହଠାତ୍ ଜଳ କୂଳରୁ ବହୁତ ଦୂରରେ ଫେରିଯାଏ, ସମୁଦ୍ର ତଳିଭାଗ ଖୋଲି ପଡ଼ିଯାଏ। ମାଛଗୁଡ଼ିକ ବାଲି ଉପରେ ଥରୁଛନ୍ତି। ସମୁଦ୍ର ପ୍ରାୟ 100 ମିଟର ପଛକୁ ଚାଲିଗଲାଣି। ଆପଣଙ୍କ ଚାରିପାଖରେ ଲୋକମାନେ କୌତୁହଳୀ ଏବଂ କେତେକ ମାଛ ଏକତ୍ର କରିବାକୁ ଖୋଲାପଡ଼ିଥିବା ସମୁଦ୍ର ତଳିଭାଗ ଆଡକୁ ଚାଲୁଛନ୍ତି।",
+                    hi: "आप एक बीच रिसॉर्ट पर हैं जब अचानक पानी तट से बहुत दूर चला जाता है, समुद्र तल दिखाई देने लगता है। मछलियाँ रेत पर तड़प रही हैं। समुद्र लगभग 100 मीटर पीछे चला गया है। आपके आसपास के लोग उत्सुक हैं और कुछ मछलियाँ इकट्ठा करने के लिए खुले समुद्र तल की ओर चल रहे हैं।"
+                },
+                fact: {
+                    en: "Most tsunamis are caused by powerful undersea earthquakes that suddenly move huge amounts of water.",
+                    or: "ଅଧିକାଂଶ ସୁନାମୀ ଶକ୍ତିଶାଳୀ ସମୁଦ୍ରଗର୍ଭ ଭୂମିକମ୍ପଦ୍ୱାରା ସୃଷ୍ଟି ହୁଏ ଯାହା ହଠାତ୍ ବହୁତ ପରିମାଣର ଜଳକୁ ଗତି କରାଏ।",
+                    hi: "अधिकांश सुनामियाँ शक्तिशाली समुद्रतल भूकंपों के कारण होती हैं जो अचानक भारी मात्रा में पानी को हिला देते हैं।"
+                },
+                phases: {
+                    before: {
+                        do: [
+                            {en: "🗺️ Learn evacuation routes to high ground", or: "🗺️ ଉଚ୍ଚ ସ୍ଥାନକୁ ଖାଲି କରିବାର ରାସ୍ତା ଶିଖନ୍ତୁ", hi: "🗺️ उच्च भूमि की ओर निकासी मार्ग सीखें"},
+                            {en: "🎒 Prepare emergency kit with supplies", or: "🎒 ଜରୁରୀ ସାମଗ୍ରୀ ସହିତ ଆପତ୍ତକାଳୀନ କିଟ୍ ପ୍ରସ୍ତୁତ କରନ୍ତୁ", hi: "🎒 आपूर्ति के साथ आपातकालीन किट तैयार करें"},
+                            {en: "🚨 Know natural warning signs", or: "🚨 ପ୍ରାକୃତିକ ସତର୍କତା ସଙ୍କେତ ଜାଣନ୍ତୁ", hi: "🚨 प्राकृतिक चेतावनी संकेतों को जानें"}
+                        ],
+                        dont: [
+                            {en: "🚫 Ignore evacuation warnings", or: "🚫 ଖାଲି କରିବାର ଚେତାବନୀକୁ ଅଣଦେଖା କରନ୍ତୁ ନାହିଁ", hi: "🚫 निकासी चेतावनियों को नजरअंदाज न करें"},
+                            {en: "🏖️ Stay near coastal areas", or: "🏖️ ଉପକୂଳ ଅଞ୍ଚଳ ନିକଟରେ ରୁହନ୍ତୁ ନାହିଁ", hi: "🏖️ तटीय क्षेत्रों के पास न रहें"},
+                            {en: "⏳ Wait to see the wave coming", or: "⏳ ଲହରୀ ଆସିବା ଦେଖିବା ପାଇଁ ଅପେକ୍ଷା କରନ୍ତୁ ନାହିଁ", hi: "⏳ लहर आने का इंतजार न करें"}
+                        ]
+                    },
+                    during: {
+                        do: [
+                            {en: "🏃 Move to higher ground immediately", or: "🏃 ତୁରନ୍ତ ଉଚ୍ଚ ସ୍ଥାନକୁ ଯାଆନ୍ତୁ", hi: "🏃 तुरंत ऊँची जगह की ओर जाएँ"},
+                            {en: "⛰️ Get at least 30 meters above sea level", or: "⛰️ ସମୁଦ୍ର ପତ୍ତନରୁ ଅନ୍ତତଃ 30 ମିଟର ଉପରକୁ ଯାଆନ୍ତୁ", hi: "⛰️ समुद्र तल से कम से कम 30 मीटर ऊपर जाएँ"},
+                            {en: "📻 Listen to emergency broadcasts", or: "📻 ଆପତ୍ତକାଳୀନ ପ୍ରସାରଣ ଶୁଣନ୍ତୁ", hi: "📻 आपातकालीन प्रसारण सुनें"}
+                        ],
+                        dont: [
+                            {en: "📸 Go to beach to watch waves", or: "📸 ଲହରୀ ଦେଖିବାକୁ ବେଳାଭୂମିକୁ ଯାଆନ୍ତୁ ନାହିଁ", hi: "📸 लहरें देखने के लिए समुद्र तट पर न जाएँ"},
+                            {en: "🏠 Stay in low-lying coastal areas", or: "🏠 ନିମ୍ନ ସ୍ଥାନ ଉପକୂଳ ଅଞ୍ଚଳରେ ରୁହନ୍ତୁ ନାହିଁ", hi: "🏠 निचले तटीय क्षेत्रों में न रहें"},
+                            {en: "🚪 Use elevators in buildings", or: "🚪 ଇମାରତରେ ଲିଫ୍ଟ ବ୍ୟବହାର କରନ୍ତୁ ନାହିଁ", hi: "🚪 इमारतों में लिफ्ट का उपयोग न करें"}
+                        ]
+                    },
+                    after: {
+                        do: [
+                            {en: "🛑 Stay on high ground for hours", or: "🛑 ଘଣ୍ଟାକ ପାଇଁ ଉଚ୍ଚ ସ୍ଥାନରେ ରୁହନ୍ତୁ", hi: "🛑 घंटों तक ऊँची जगह पर रहें"},
+                            {en: "🩹 Help injured people safely", or: "🩹 ଆହତ ଲୋକଙ୍କୁ ସୁରକ୍ଷିତ ଭାବରେ ସାହାଯ୍ୟ କରନ୍ତୁ", hi: "🩹 घायल लोगों की सुरक्षित रूप से मदद करें"},
+                            {en: "🚧 Avoid damaged coastal areas", or: "🚧 କ୍ଷତିଗ୍ରସ୍ତ ଉପକୂଳ ଅଞ୍ଚଳ ଏଡାନ୍ତୁ", hi: "🚧 क्षतिग्रस्त तटीय क्षेत्रों से बचें"}
+                        ],
+                        dont: [
+                            {en: "🏡 Return home too early", or: "🏡 ବହୁତ ଶୀଘ୍ର ଘରକୁ ଫେରନ୍ତୁ ନାହିଁ", hi: "🏡 बहुत जल्दी घर न लौटें"},
+                            {en: "💧 Drink possibly contaminated water", or: "💧 ସମ୍ଭାବ୍ୟ ଦୂଷିତ ପାଣି ପିଅନ୍ତୁ ନାହିଁ", hi: "💧 संभावित रूप से दूषित पानी न पिएँ"},
+                            {en: "🔌 Touch damaged electrical equipment", or: "🔌 କ୍ଷତିଗ୍ରସ୍ତ ବିଦ୍ୟୁତ ଉପକରଣକୁ ଛୁଇଁବେ ନାହିଁ", hi: "🔌 क्षतिग्रस्त विद्युत उपकरणों को न छुएँ"}
+                        ]
+                    }
+                }
+            },
+            {
+                name: "TORNADO",
+                emoji: "🌪️",
+                situation: {
+                    en: "Dark greenish clouds fill the sky. You hear a loud roar that sounds like a freight train approaching. The weather radio issues a warning for your area. Hail suddenly starts falling, and the wind picks up dramatically. You notice debris swirling in the distance.",
+                    or: "ଗାଢ ସବୁଜ ମେଘ ଆକାଶ ପୂର୍ଣ୍ଣ କରିଦିଏ। ଆପଣ ଏକ ଉଚ୍ଚ ଗର୍ଜନ ଶୁଣନ୍ତି ଯାହା ଏକ ମାଲବାହୀ ଟ୍ରେନ ଆସୁଥିବା ପରି ଶବ୍ଦ। ପାଗ ରେଡିଓ ଆପଣଙ୍କ କ୍ଷେତ୍ର ପାଇଁ ଏକ ସତର୍କତା ଜାରି କରେ। ହଠାତ୍ କଳା ବର୍ଷା ଆରମ୍ଭ ହୁଏ, ଏବଂ ପବନ ନାଟକୀୟ ଭାବରେ ବଢିଯାଏ। ଆପଣ ଦୂରରେ ମଳିନ ବସ୍ତୁ ଘୁରୁଥିବା ଦେଖନ୍ତି।",
+                    hi: "गहरे हरे बादल आकाश भर गए हैं। आप एक जोरदार गर्जन सुनते हैं जो मालगाड़ी के आने जैसा लगता है। मौसम रेडियो आपके क्षेत्र के लिए चेतावनी जारी करता है। अचानक ओलावृष्टि शुरू हो जाती है, और हवा नाटकीय रूप से तेज हो जाती है। आप दूरी में मलबा घूमता हुआ देखते हैं।"
+                },
+                fact: {
+                    en: "The strongest tornadoes can have wind speeds over 300 km/h, powerful enough to destroy well-built houses.",
+                    or: "ସବୁଠାରୁ ଶକ୍ତିଶାଳୀ ଟର୍ନେଡୋରେ 300 କିମି/ଘଣ୍ଟାରୁ ଅଧିକ ପବନ ବେଗ ହୋଇପାରେ, ଯାହା ଭଲ ଭାବରେ ନିର୍ମିତ ଘରଗୁଡ଼ିକୁ ଧ୍ୱଂସ କରିବା ପାଇଁ ପର୍ଯ୍ୟାପ୍ତ ଶକ୍ତିଶାଳୀ।",
+                    hi: "सबसे मजबूत बवंडरों की हवा की गति 300 किमी/घंटा से अधिक हो सकती है, जो अच्छी तरह से बने घरों को नष्ट करने के लिए काफी शक्तिशाली है।"
+                },
+                phases: {
+                    before: {
+                        do: [
+                            {en: "🏠 Identify safe interior room on lowest floor", or: "🏠 ସର୍ବନିମ୍ନ ମହଲାରେ ସୁରକ୍ଷିତ ଅଭ୍ୟନ୍ତରୀଣ କୋଠରୀ ଚିହ୍ନଟ କରନ୍ତୁ", hi: "🏠 सबसे निचली मंजिल पर सुरक्षित अंदरूनी कमरे की पहचान करें"},
+                            {en: "📦 Stock emergency supplies and radio", or: "📦 ଆପତ୍ତକାଳୀନ ସାମଗ୍ରୀ ଏବଂ ରେଡିଓ ମଜୁଦ କରନ୍ତୁ", hi: "📦 आपातकालीन आपूर्ति और रेडियो स्टॉक करें"},
+                            {en: "📱 Monitor weather alerts regularly", or: "📱 ନିୟମିତ ଭାବରେ ପାଗ ଚେତାବନୀ ନିରୀକ୍ଷଣ କରନ୍ତୁ", hi: "📱 नियमित रूप से मौसम की चेतावनियों पर नजर रखें"}
+                        ],
+                        dont: [
+                            {en: "🤢 Ignore dark greenish sky warnings", or: "🤢 ଗାଢ ସବୁଜ ଆକାଶ ଚେତାବନୀକୁ ଅଣଦେଖା କରନ୍ତୁ ନାହିଁ", hi: "🤢 गहरे हरे आकाश की चेतावनियों को नजरअंदाज न करें"},
+                            {en: "🖼️ Keep windows open during storms", or: "🖼️ ଝଡ଼ ସମୟରେ ୱିଣ୍ଡୋ ଖୋଲା ରଖନ୍ତୁ ନାହିଁ", hi: "🖼️ तूफान के दौरान खिड़कियाँ खुली न रखें"},
+                            {en: "🌉 Plan to shelter under highway overpasses", or: "🌉 ହାଇୱେ ଓଭରପାସ୍ ତଳେ ଆଶ୍ରୟ ନେବାର ଯୋଜନା କରନ୍ତୁ ନାହିଁ", hi: "🌉 हाइवे ओवरपास के नीचे शरण लेने की योजना न बनाएँ"}
+                        ]
+                    },
+                    during: {
+                        do: [
+                            {en: "⬇️ Go to basement or interior room", or: "⬇️ ବେସମେଣ୍ଟ କିମ୍ବା ଅଭ୍ୟନ୍ତରୀଣ କୋଠରୀକୁ ଯାଆନ୍ତୁ", hi: "⬇️ तहखाने या अंदरूनी कमरे में जाएँ"},
+                            {en: "🛡️ Cover yourself with mattress or blankets", or: "🛡️ ଆପଣଙ୍କୁ ଗଦି କିମ୍ବା କମ୍ବଳରେ ଆଚ୍ଛାଦନ କରନ୍ତୁ", hi: "🛡️ अपने आप को गद्दे या कंबल से ढक लें"},
+                            {en: "❌ Stay away from all windows", or: "❌ ସମସ୍ତ ୱିଣ୍ଡୋରୁ ଦୂରରେ ରୁହନ୍ତୁ", hi: "❌ सभी खिड़कियों से दूर रहें"}
+                        ],
+                        dont: [
+                            {en: "🚗 Try to outrun it in a vehicle", or: "🚗 ଗାଡିରେ ଏହାକୁ ପଛରେ ଛାଡିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ ନାହିଁ", hi: "🚗 वाहन में इसे पीछे छोड़ने की कोशिश न करें"},
+                            {en: "🏚️ Stay in mobile home or trailer", or: "🏚️ ମୋବାଇଲ ଘର କିମ୍ବା ଟ୍ରେଲରରେ ରୁହନ୍ତୁ ନାହିଁ", hi: "🏚️ मोबाइल घर या ट्रेलर में न रहें"},
+                            {en: "🚪 Open windows to equalize pressure", or: "🚪 ଚାପ ସମାନ କରିବାକୁ ୱିଣ୍ଡୋ ଖୋଲନ୍ତୁ ନାହିଁ", hi: "🚪 दबाव बराबर करने के लिए खिड़कियाँ न खोलें"}
+                        ]
+                    },
+                    after: {
+                        do: [
+                            {en: "🤕 Check for injuries carefully", or: "🤕 ସାବଧାନତାର ସହ ଆହତ ପରୀକ୍ଷା କରନ୍ତୁ", hi: "🤕 सावधानी से चोटों की जाँच करें"},
+                            {en: "⚡ Avoid damaged power lines completely", or: "⚡ କ୍ଷତିଗ୍ରସ୍ତ ପାୱାର ଲାଇନ୍ ସମ୍ପୁର୍ଣ୍ଣ ଭାବରେ ଏଡାନ୍ତୁ", hi: "⚡ क्षतिग्रस्त बिजली की लाइनों से पूरी तरह बचें"},
+                            {en: "📸 Document all property damage", or: "📸 ସମସ୍ତ ସମ୍ପତି କ୍ଷତି ରେକର୍ଡ କରନ୍ତୁ", hi: "📸 सभी संपत्ति क्षति का दस्तावेजीकरण करें"}
+                        ],
+                        dont: [
+                            {en: "⚠️ Enter severely damaged buildings", or: "⚠️ ଗୁରୁତର କ୍ଷତିଗ୍ରସ୍ତ ଇମାରତରେ ପ୍ରବେଶ କରନ୍ତୁ ନାହିଁ", hi: "⚠️ गंभीर रूप से क्षतिग्रस्त इमारतों में प्रवेश न करें"},
+                            {en: "⚡ Touch any downed power wires", or: "⚡ କୌଣସି ଭାଙ୍ଗି ପଡିଥିବା ପାୱାର ୱାୟାରକୁ ଛୁଇଁବେ ନାହିଁ", hi: "⚡ किसी भी गिरी हुई बिजली की तारों को न छुएँ"},
+                            {en: "🔥 Use candles near gas leak smell", or: "🔥 ଗ୍ୟାସ ଲିକ୍ ଗନ୍ଧ ନିକଟରେ ମହମବତୀ ବ୍ୟବହାର କରନ୍ତୁ ନାହିଁ", hi: "🔥 गैस लीक की गंध के पास मोमबत्तियाँ न जलाएँ"}
+                        ]
+                    }
+                }
+            },
+            {
+                name: "WILDFIRE",
+                emoji: "🔥",
+                situation: {
+                    en: "You smell smoke and see an orange glow on the horizon near your neighborhood. Ash is falling from the sky like snow. The air quality alert on your phone says 'hazardous.' You hear sirens in the distance. Your neighbors are starting to pack their cars.",
+                    or: "ଆପଣ ଧୁଆଁ ଗନ୍ଧ ପାଆନ୍ତି ଏବଂ ଆପଣଙ୍କ ପଡ଼ିଆର ନିକଟରେ କ୍ଷିତିଜରେ ଏକ କମଳା ଆଲୋକ ଦେଖନ୍ତି। ଆକାଶରୁ କଳା ବରଫ ପରି ଖସୁଛି। ଆପଣଙ୍କ ଫୋନ୍ରେ ବାୟୁ ଗୁଣବତ୍ତା ଚେତାବନୀ 'ବିପଜ୍ଜନକ' କହୁଛି। ଆପଣ ଦୂରରେ ସାଇରେନ ଶୁଣନ୍ତି। ଆପଣଙ୍କ ପଡ଼ୋଶୀମାନେ ସେମାନଙ୍କର କାରଗୁଡ଼ିକୁ ପ୍ୟାକ୍ କରିବା ଆରମ୍ଭ କରୁଛନ୍ତି।",
+                    hi: "आपको धुआँ महकता है और अपने पड़ोस के पास क्षितिज पर नारंगी चमक दिखाई देती है। आकाश से राख बर्फ की तरह गिर रही है। आपके फोन पर वायु गुणवत्ता चेतावनी 'खतरनाक' कहती है। आप दूर में सायरन सुनते हैं। आपके पड़ोसी अपनी कारें पैक करना शुरू कर रहे हैं।"
+                },
+                fact: {
+                    en: "Wildfires can move as fast as a running person or faster, especially when pushed by strong winds.",
+                    or: "ବନ୍ୟାଗ୍ନି ଏକ ଦୌଡ଼ୁଥିବା ବ୍ୟକ୍ତି ପରି ଦ୍ରୁତ କିମ୍ବା ତାଠାରୁ ଦ୍ରୁତତର ଗତି କରିପାରେ, ବିଶେଷ କରି ଶକ୍ତିଶାଳୀ ପବନଦ୍ୱାରା ଠେଲିହେଲେ।",
+                    hi: "जंगल की आग एक दौड़ते हुए व्यक्ति जितनी तेज या उससे भी तेज चल सकती है, खासकर जब तेज हवाओं से धकेली जाए।"
+                },
+                phases: {
+                    before: {
+                        do: [
+                            {en: "🌳 Create defensible space around home", or: "🌳 ଘର ଚାରିପାଖରେ ରକ୍ଷାତ୍ମକ ସ୍ଥାନ ସୃଷ୍ଟି କରନ୍ତୁ", hi: "🌳 घर के चारों ओर रक्षात्मक स्थान बनाएँ"},
+                            {en: "🗺️ Have evacuation plan with routes", or: "🗺️ ମାର୍ଗ ସହିତ ଖାଲି କରିବାର ଯୋଜନା ରଖନ୍ତୁ", hi: "🗺️ मार्गों के साथ निकासी योजना तैयार रखें"},
+                            {en: "📑 Prepare emergency kit and documents", or: "📑 ଆପତ୍ତକାଳୀନ କିଟ୍ ଏବଂ ଦଲିଲଗୁଡ଼ିକୁ ପ୍ରସ୍ତୁତ କରନ୍ତୁ", hi: "📑 आपातकालीन किट और दस्तावेज तैयार करें"}
+                        ],
+                        dont: [
+                            {en: "🪵 Store firewood next to house", or: "🪵 ଘର ପାଖରେ କାଠ ଜାମା କରନ୍ତୁ ନାହିଁ", hi: "🪵 घर के बगल में जलाऊ लकड़ी न रखें"},
+                            {en: "🛑 Ignore fire danger warnings", or: "🛑 ଅଗ୍ନି ବିପଦ ଚେତାବନୀକୁ ଅଣଦେଖା କରନ୍ତୁ ନାହିଁ", hi: "🛑 आग के खतरे की चेतावनियों को नजरअंदाज न करें"},
+                            {en: "🗑️ Leave flammable materials outside", or: "🗑️ ଜ୍ୱଳନଶୀଳ ସାମଗ୍ରୀ ବାହାରେ ଛାଡନ୍ତୁ ନାହିଁ", hi: "🗑️ ज्वलनशील सामग्री बाहर न छोड़ें"}
+                        ]
+                    },
+                    during: {
+                        do: [
+                            {en: "🏃 Evacuate immediately when ordered", or: "🏃 ଆଦେଶ ଦେଲେ ତୁରନ୍ତ ଖାଲି ହୋଇଯାଆନ୍ତୁ", hi: "🏃 आदेश देने पर तुरंत निकल जाएँ"},
+                            {en: "🚪 Close all windows and vents", or: "🚪 ସମସ୍ତ ୱିଣ୍ଡୋ ଏବଂ ଭେଣ୍ଟ ବନ୍ଦ କରନ୍ତୁ", hi: "🚪 सभी खिड़कियाँ और वेंट बंद करें"},
+                            {en: "😷 Wear N95 mask for smoke protection", or: "😷 ଧୁଆଁ ସୁରକ୍ଷା ପାଇଁ N95 ମାସ୍କ ପିନ୍ଧନ୍ତୁ", hi: "😷 धुएँ से सुरक्षा के लिए N95 मास्क पहनें"}
+                        ],
+                        dont: [
+                            {en: "🛡️ Stay behind to protect property", or: "🛡️ ସମ୍ପତି ସୁରକ୍ଷା ପାଇଁ ପଛରେ ରୁହନ୍ତୁ ନାହିଁ", hi: "🛡️ संपत्ति की रक्षा के लिए पीछे न रहें"},
+                            {en: "🚗 Drive through heavy smoke", or: "🚗 ଭାରୀ ଧୁଆଁ ମଧ୍ୟରେ ଗାଡି ଚଳାନ୍ତୁ ନାହିଁ", hi: "🚗 भारी धुएँ में गाड़ी न चलाएँ"},
+                            {en: "🐾 Leave pets behind locked up", or: "🐾 ପେଟମାନଙ୍କୁ ତାଲା ଦେଇ ପଛରେ ଛାଡନ୍ତୁ ନାହିଁ", hi: "🐾 पालतू जानवरों को बंद करके पीछे न छोड़ें"}
+                        ]
+                    },
+                    after: {
+                        do: [
+                            {en: "🔥 Check property for hot spots", or: "🔥 ଗରମ ସ୍ଥାନ ପାଇଁ ସମ୍ପତି ପରୀକ୍ଷା କରନ୍ତୁ", hi: "🔥 संपत्ति में गर्म स्थानों की जाँच करें"},
+                            {en: "🧤 Wear protective gear and mask", or: "🧤 ସୁରକ୍ଷାତ୍ମକ ଉପକରଣ ଏବଂ ମାସ୍କ ପିନ୍ଧନ୍ତୁ", hi: "🧤 सुरक्षात्मक गियर और मास्क पहनें"},
+                            {en: "📸 Document all losses with photos", or: "📸 ଫଟୋ ସହ ସମସ୍ତ କ୍ଷତି ରେକର୍ଡ କରନ୍ତୁ", hi: "📸 फोटो के साथ सभी नुकसान दर्ज करें"}
+                        ],
+                        dont: [
+                            {en: "⛔ Return before official clearance", or: "⛔ ସରକାରୀ ସଫା ହେବା ପୂର୍ବରୁ ଫେରନ୍ତୁ ନାହିଁ", hi: "⛔ आधिकारिक मंजूरी से पहले वापस न लौटें"},
+                            {en: "🤚 Touch ash with bare hands", or: "🤚 ଖାଲି ହାତରେ କଳା ଛୁଇଁବେ ନାହିଁ", hi: "🤚 नंगे हाथों से राख न छुएँ"},
+                            {en: "🍎 Eat food exposed to heavy smoke", or: "🍎 ଭାରୀ ଧୁଆଁ ସମ୍ପର୍କିତ ଖାଦ୍ୟ ଖାଆନ୍ତୁ ନାହିଁ", hi: "🍎 भारी धुएँ के संपर्क में आए भोजन न खाएँ"}
+                        ]
+                    }
+                }
+            },
+            {
+                name: "EARTHQUAKE",
+                emoji: "⚡",
+                situation: {
+                    en: "The ground suddenly starts shaking violently. Books fall off shelves, picture frames crash to the floor. You hear glass breaking. Car alarms are going off outside. The shaking lasts about 30 seconds, then stops, but you know aftershocks may follow.",
+                    or: "ଜମି ହଠାତ୍ ଜୋରରେ ଥରିବା ଆରମ୍ଭ କରେ। ବହି ଶେଲ୍ଫରୁ ଖସି ପଡ଼େ, ଫୋଟୋ ଫ୍ରେମ୍ ମେଜ ଉପରେ ପଡ଼ି ଭାଙ୍ଗିଯାଏ। ଆପଣ କାଚ ଭାଙ୍ଗିବାର ଶବ୍ଦ ଶୁଣନ୍ତି। ବାହାରେ କାର ଆଲାର୍ମ ବାଜୁଛି। ଥରିବା ପ୍ରାୟ 30 ସେକେଣ୍ଡ ରହେ, ତା'ପରେ ବନ୍ଦ ହୁଏ, କିନ୍ତୁ ଆପଣ ଜାଣନ୍ତି ଯେ ଆଫ୍ଟରସକ୍ ଅନୁସରଣ କରିପାରେ।",
+                    hi: "जमीन अचानक हिंसक रूप से हिलने लगती है। किताबें अलमारियों से गिर जाती हैं, तस्वीर के फ्रेम फर्श पर गिर जाते हैं। आप कांच टूटने की आवाज सुनते हैं। बाहर कार अलार्म बज रहे हैं। हिलना लगभग 30 सेकंड तक रहता है, फिर रुक जाता है, लेकिन आप जानते हैं कि आफ्टरशॉक आ सकते हैं।"
+                },
+                fact: {
+                    en: "Most earthquakes happen at the edges of tectonic plates, where Earth's crust is slowly moving and grinding.",
+                    or: "ଅଧିକାଂଶ ଭୂମିକମ୍ପ ଟେକ୍ଟୋନିକ୍ ପ୍ଲେଟ୍ କୂଳରେ ଘଟେ, ଯେଉଁଠାରେ ପୃଥିବୀର ଅଭ୍ୟନ୍ତରୀଣ କ୍ରମଶଃ ଗତି କରୁଛି ଏବଂ ଘଷୁଛି।",
+                    hi: "अधिकांश भूकंप टेक्टोनिक प्लेटों के किनारों पर होते हैं, जहाँ पृथ्वी की पपड़ी धीरे-धीरे हिल रही है और रगड़ रही है।"
+                },
+                phases: {
+                    before: {
+                        do: [
+                            {en: "⚙️ Secure heavy furniture to walls", or: "⚙️ ଭାରୀ ଫର୍ନିଚରକୁ କାନ୍ଥରେ ସୁରକ୍ଷିତ କରନ୍ତୁ", hi: "⚙️ भारी फर्नीचर को दीवारों से सुरक्षित करें"},
+                            {en: "👨‍👩‍👧‍👦 Create family emergency plan", or: "👨‍👩‍👧‍👦 ପରିବାର ଆପତ୍ତକାଳୀନ ଯୋଜନା ସୃଷ୍ଟି କରନ୍ତୁ", hi: "👨‍👩‍👧‍👦 परिवार की आपातकालीन योजना बनाएँ"},
+                            {en: "💧 Store water and emergency supplies", or: "💧 ପାଣି ଏବଂ ଆପତ୍ତକାଳୀନ ସାମଗ୍ରୀ ସଂଚୟ କରନ୍ତୁ", hi: "💧 पानी और आपातकालीन आपूर्ति का भंडारण करें"}
+                        ],
+                        dont: [
+                            {en: "📚 Place heavy items on high shelves", or: "📚 ଉଚ୍ଚ ଶେଲ୍ଫରେ ଭାରୀ ଜିନିଷ ରଖନ୍ତୁ ନାହିଁ", hi: "📚 ऊँची अलमारियों पर भारी सामान न रखें"},
+                            {en: "📜 Ignore building safety codes", or: "📜 ବିଲଡିଂ ସୁରକ୍ଷା ନିୟମାବଳୀକୁ ଅଣଦେଖା କରନ୍ତୁ ନାହିଁ", hi: "📜 भवन सुरक्षा कोड को नजरअंदाज न करें"},
+                            {en: "💰 Neglect earthquake insurance", or: "💰 ଭୂମିକମ୍ପ ଇନ୍ସୁରାନ୍ସକୁ ଅବହେଳା କରନ୍ତୁ ନାହିଁ", hi: "💰 भूकंप बीमा की उपेक्षा न करें"}
+                        ]
+                    },
+                    during: {
+                        do: [
+                            {en: "⬇️ Drop, cover and hold on immediately", or: "⬇️ ତୁରନ୍ତ ପଡ଼ନ୍ତୁ, ଆଚ୍ଛାଦନ କରନ୍ତୁ ଏବଂ ଧରି ରଖନ୍ତୁ", hi: "⬇️ तुरंत गिरें, ढकें और पकड़ें रहें"},
+                            {en: "❌ Stay away from windows and glass", or: "❌ ୱିଣ୍ଡୋ ଏବଂ କାଚରୁ ଦୂରରେ ରୁହନ୍ତୁ", hi: "❌ खिड़कियों और कांच से दूर रहें"},
+                            {en: "🌳 If outside move to clear open area", or: "🌳 ଯଦି ବାହାରେ ହୁଅନ୍ତି, ପରିଷ୍କାର ଖୋଲା ଅଞ୍ଚଳକୁ ଯାଆନ୍ତୁ", hi: "🌳 यदि बाहर हैं तो खुले क्षेत्र में चले जाएँ"}
+                        ],
+                        dont: [
+                            {en: "🏃 Run outside during the shaking", or: "🏃 ଥରିବା ସମୟରେ ବାହାରକୁ ଦୌଡନ୍ତୁ ନାହିଁ", hi: "🏃 हिलने के दौरान बाहर न दौड़ें"},
+                            {en: "🚪 Stand in doorway or near walls", or: "🚪 ଦରଜା ବା କାନ୍ଥ ନିକଟରେ ଠିଆ ହୁଅନ୍ତୁ ନାହିଁ", hi: "🚪 दरवाजे या दीवारों के पास न खड़े हों"},
+                            {en: "🚪 Use elevators during shaking", or: "🚪 ଥରିବା ସମୟରେ ଲିଫ୍ଟ ବ୍ୟବହାର କରନ୍ତୁ ନାହିଁ", hi: "🚪 हिलने के दौरान लिफ्ट का उपयोग न करें"}
+                        ]
+                    },
+                    after: {
+                        do: [
+                            {en: "🤕 Check yourself and others for injuries", or: "🤕 ନିଜକୁ ଏବଂ ଅନ୍ୟମାନଙ୍କୁ ଆହତ ପରୀକ୍ଷା କରନ୍ତୁ", hi: "🤕 अपने और दूसरों की चोटों की जाँच करें"},
+                            {en: "🏠 Inspect home for structural damage", or: "🏠 ସଂରଚନାତ୍ମକ କ୍ଷତି ପାଇଁ ଘର ପରୀକ୍ଷା କରନ୍ତୁ", hi: "🏠 संरचनात्मक क्षति के लिए घर का निरीक्षण करें"},
+                            {en: "📦 Be prepared for strong aftershocks", or: "📦 ଶକ୍ତିଶାଳୀ ଆଫ୍ଟରସକ୍ ପାଇଁ ପ୍ରସ୍ତୁତ ରୁହନ୍ତୁ", hi: "📦 मजबूत आफ्टरशॉक के लिए तैयार रहें"}
+                        ],
+                        dont: [
+                            {en: "🔥 Light matches if you smell gas", or: "🔥 ଯଦି ଗ୍ୟାସ ଗନ୍ଧ ପାଆନ୍ତି, ତେବେ ମ୍ୟାଚ ଜଳାନ୍ତୁ ନାହିଁ", hi: "🔥 गैस की गंध आने पर माचिस न जलाएँ"},
+                            {en: "🚧 Enter buildings with visible damage", or: "🚧 ଦୃଶ୍ୟମାନ କ୍ଷତିଗ୍ରସ୍ତ ଇମାରତରେ ପ୍ରବେଶ କରନ୍ତୁ ନାହିଁ", hi: "🚧 दिखाई देने वाली क्षति वाली इमारतों में प्रवेश न करें"},
+                            {en: "📢 Spread unverified rumors or panic", or: "📢 ଅପ୍ରମାଣିତ ଗପ୍ କିମ୍ବା ଆତଙ୍କ ବ୍ୟାପିବା ନକରନ୍ତୁ", hi: "📢 अप्रमाणित अफवाहें या घबराहट न फैलाएँ"}
+                        ]
+                    }
+                }
+            },
+            {
+                name: "HURRICANE",
+                emoji: "🌀",
+                situation: {
+                    en: "Weather forecasts show a Category 4 hurricane heading directly toward your coastal city in 48 hours. Sustained winds could reach 140 mph. Storm surge of 15 feet predicted. Mandatory evacuation orders are being issued for coastal zones. Stores are running out of supplies.",
+                    or: "ପାଗ ପୂର୍ବାନୁମାନ ଦର୍ଶାଏ ଯେ ଏକ କାଟେଗୋରୀ 4 ହରିକେନ୍ 48 ଘଣ୍ଟାରେ ସିଧାସଳଖ ଆପଣଙ୍କ ଉପକୂଳ ସହର ଆଡକୁ ଗତି କରୁଛି। ସ୍ଥାୟୀ ପବନ 140 mph ପର୍ଯ୍ୟନ୍ତ ପହଞ୍ଚିପାରେ। 15 ଫୁଟ ଝଡ଼ ସର୍ଜ ପୂର୍ବାନୁମାନ କରାଯାଇଛି। ଉପକୂଳ ଜୋନ୍ ପାଇଁ ବାଧ୍ୟତାମୂଳକ ଖାଲି କରିବାର ଆଦେଶ ଜାରି କରାଯାଉଛି। ଦୋକାନଗୁଡିକ ସାମଗ୍ରୀରୁ ବାହାରି ଯାଉଛନ୍ତି।",
+                    hi: "मौसम पूर्वानुमान दिखाता है कि एक श्रेणी 4 तूफान 48 घंटे में सीधे आपके तटीय शहर की ओर बढ़ रहा है। निरंतर हवाएँ 140 मील प्रति घंटे तक पहुँच सकती हैं। 15 फीट के तूफानी लहर की भविष्यवाणी की गई है। तटीय क्षेत्रों के लिए अनिवार्य निकासी आदेश जारी किए जा रहे हैं। दुकानों में आपूर्ति खत्म हो रही है।"
+                },
+                fact: {
+                    en: "In the Northern Hemisphere, hurricanes spin counterclockwise because of Earth's rotation (the Coriolis effect).",
+                    or: "ଉତ୍ତର ଗୋଲାର୍ଦ୍ଧରେ, ପୃଥିବୀର ଘୂର୍ଣ୍ଣନ (କୋରିଓଲିସ୍ ପ୍ରଭାବ) ହେତୁ ହରିକେନ୍ ବିପରୀତ ଦିଗରେ ଘୁରେ।",
+                    hi: "उत्तरी गोलार्ध में, पृथ्वी के घूर्णन (कोरिओलिस प्रभाव) के कारण तूफान वामावर्त घूमते हैं।"
+                },
+                phases: {
+                    before: {
+                        do: [
+                            {en: "🔨 Board up all windows securely", or: "🔨 ସମସ୍ତ ୱିଣ୍ଡୋକୁ ସୁରକ୍ଷିତ ଭାବରେ ବୋର୍ଡ କରନ୍ତୁ", hi: "🔨 सभी खिड़कियों को मजबूती से बोर्ड करें"},
+                            {en: "📦 Stock 7 days of supplies", or: "📦 7 ଦିନର ସାମଗ୍ରୀ ସ୍ଟକ୍ କରନ୍ତୁ", hi: "📦 7 दिनों की आपूर्ति स्टॉक करें"},
+                            {en: "🗺️ Plan evacuation route with alternatives", or: "🗺️ ବିକଳ୍ପ ସହିତ ଖାଲି କରିବାର ମାର୍ଗ ଯୋଜନା କରନ୍ତୁ", hi: "🗺️ विकल्पों के साथ निकासी मार्ग योजना बनाएँ"}
+                        ],
+                        dont: [
+                            {en: "⏳ Wait until last minute to prepare", or: "⏳ ପ୍ରସ୍ତୁତ ହେବା ପାଇଁ ଶେଷ ମୁହୂର୍ତ୍ତ ପର୍ଯ୍ୟନ୍ତ ଅପେକ୍ଷା କରନ୍ତୁ ନାହିଁ", hi: "⏳ तैयारी के लिए आखिरी मिनट तक इंतजार न करें"},
+                            {en: "🛑 Ignore mandatory evacuation orders", or: "🛑 ବାଧ୍ୟତାମୂଳକ ଖାଲି କରିବାର ଆଦେଶକୁ ଅଣଦେଖା କରନ୍ତୁ ନାହିଁ", hi: "🛑 अनिवार्य निकासी आदेशों को नजरअंदाज न करें"},
+                            {en: "📑 Forget important documents and photos", or: "📑 ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ ଦଲିଲ ଏବଂ ଫଟୋ ଭୁଲନ୍ତୁ ନାହିଁ", hi: "📑 महत्वपूर्ण दस्तावेज और फोटो न भूलें"}
+                        ]
+                    },
+                    during: {
+                        do: [
+                            {en: "🏡 Stay indoors away from windows", or: "🏡 ୱିଣ୍ଡୋରୁ ଦୂରରେ ଘର ଭିତରେ ରୁହନ୍ତୁ", hi: "🏡 खिड़कियों से दूर घर के अंदर रहें"},
+                            {en: "📻 Listen to weather updates constantly", or: "📻 ଲଗାତାର ପାଗ ଅଦ୍ୟତନ ଶୁଣନ୍ତୁ", hi: "📻 लगातार मौसम अपडेट सुनें"},
+                            {en: "🚪 Remain in interior safe room", or: "🚪 ଅଭ୍ୟନ୍ତରୀଣ ସୁରକ୍ଷିତ କୋଠରୀରେ ରୁହନ୍ତୁ", hi: "🚪 आंतरिक सुरक्षित कमरे में रहें"}
+                        ],
+                        dont: [
+                            {en: "💨 Go outside during the eye", or: "💨 ଆଖି ସମୟରେ ବାହାରକୁ ଯାଆନ୍ତୁ ନାହିଁ", hi: "💨 तूफान की आँख के दौरान बाहर न जाएँ"},
+                            {en: "🕯️ Use open flame candles near gas", or: "🕯️ ଗ୍ୟାସ ନିକଟରେ ଖୋଲା ଜ୍ୱଳା ମହମବତୀ ବ୍ୟବହାର କରନ୍ତୁ ନାହିଁ", hi: "🕯️ गैस के पास खुली लौ वाली मोमबत्तियाँ न जलाएँ"},
+                            {en: "🚗 Drive through any flooded areas", or: "🚗 କୌଣସି ବନ୍ୟା ପ୍ରବାହିତ ଅଞ୍ଚଳରେ ଗାଡି ଚଳାନ୍ତୁ ନାହିଁ", hi: "🚗 किसी भी बाढ़ग्रस्त क्षेत्र में गाड़ी न चलाएँ"}
+                        ]
+                    },
+                    after: {
+                        do: [
+                            {en: "🌊 Avoid all standing floodwater", or: "🌊 ସମସ୍ତ ଠିଆ ବନ୍ୟା ଜଳ ଏଡାନ୍ତୁ", hi: "🌊 सभी खड़े बाढ़ के पानी से बचें"},
+                            {en: "🏠 Check home for structural damage", or: "🏠 ସଂରଚନାତ୍ମକ କ୍ଷତି ପାଇଁ ଘର ପରୀକ୍ଷା କରନ୍ତୁ", hi: "🏠 संरचनात्मक क्षति के लिए घर की जाँच करें"},
+                            {en: "🤝 Help elderly neighbors safely", or: "🤝 ବୃଦ୍ଧ ପଡ଼ୋଶୀଙ୍କୁ ସୁରକ୍ଷିତ ଭାବରେ ସାହାଯ୍ୟ କରନ୍ତୁ", hi: "🤝 बुजुर्ग पड़ोसियों की सुरक्षित रूप से मदद करें"}
+                        ],
+                        dont: [
+                            {en: "🚶 Walk in standing water", or: "🚶 ଠିଆ ପାଣିରେ ଚାଲନ୍ତୁ ନାହିଁ", hi: "🚶 खड़े पानी में न चलें"},
+                            {en: "💧 Use tap water without boiling first", or: "💧 ପ୍ରଥମେ ଫୁଟାଇବା ବିନା ନଳ ପାଣି ବ୍ୟବହାର କରନ୍ତୁ ନାହିଁ", hi: "💧 पहले उबाले बिना नल का पानी न पिएँ"},
+                            {en: "⚠️ Enter buildings surrounded by water", or: "⚠️ ପାଣିରେ ଘେରା ଇମାରତରେ ପ୍ରବେଶ କରନ୍ତୁ ନାହିଁ", hi: "⚠️ पानी से घिरी इमारतों में प्रवेश न करें"}
+                        ]
+                    }
+                }
+            },
+            {
+                name: "FLOOD",
+                emoji: "🌧️",
+                situation: {
+                    en: "It has been raining heavily for two days. The nearby river is rising quickly and local news warns of possible flash flooding. Water is already covering some roads, and drains on your street are overflowing.",
+                    or: "ଦୁଇ ଦିନ ଧରି ଭାରୀ ବର୍ଷା ହେଉଛି। ନିକଟବର୍ତୀ ନଦୀ ଶୀଘ୍ର ବଢ଼ୁଛି ଏବଂ ସ୍ଥାନୀୟ ସମାଚାର ସମ୍ଭାବ୍ୟ ଫ୍ଲାସ୍ ବନ୍ୟା ବିଷୟରେ ସତର୍କ କରେ। ପାଣି ପୂର୍ବରୁ କେତେକ ସଡ଼କ ଆଚ୍ଛାଦନ କରିଛି, ଏବଂ ଆପଣଙ୍କ ଗଳିର ଡ୍ରେନ୍ ଓଭରଫ୍ଲୋ ହେଉଛି।",
+                    hi: "दो दिनों से भारी बारिश हो रही है। पास की नदी तेजी से बढ़ रही है और स्थानीय समाचार संभावित अचानक आई बाढ़ की चेतावनी देते हैं। पानी पहले से ही कुछ सड़कों को ढक रहा है, और आपकी गली के नाले ऊपर से बह रहे हैं।"
+                },
+                fact: {
+                    en: "Just 15 cm of fast-moving floodwater can knock an adult over, and 30 cm can move a small car.",
+                    or: "ମାତ୍ର 15 ସେମି ଦ୍ରୁତ ଗତିର ବନ୍ୟା ଜଳ ଏକ ବୟସ୍କକୁ ଭୁସ୍କାଇ ପାରେ, ଏବଂ 30 ସେମି ଏକ ଛୋଟ କାରକୁ ଗତି କରାଇ ପାରେ।",
+                    hi: "सिर्फ 15 सेमी तेजी से बहने वाला बाढ़ का पानी एक वयस्क को गिरा सकता है, और 30 सेमी एक छोटी कार को हिला सकता है।"
+                },
+                phases: {
+                    before: {
+                        do: [
+                            {en: "📻 Check local flood warnings", or: "📻 ସ୍ଥାନୀୟ ବନ୍ୟା ଚେତାବନୀ ପରୀକ୍ଷା କରନ୍ତୁ", hi: "📻 स्थानीय बाढ़ चेतावनियाँ जाँचें"},
+                            {en: "🗺️ Know higher ground routes", or: "🗺️ ଉଚ୍ଚ ସ୍ଥାନ ମାର୍ଗ ଜାଣନ୍ତୁ", hi: "🗺️ ऊँची जगह के रास्ते जानें"},
+                            {en: "📦 Move valuables to upper floors", or: "📦 ମୂଲ୍ୟବାନ ଜିନିଷଗୁଡ଼ିକୁ ଉପର ମହଲାକୁ ଘୁଞ୍ଚାନ୍ତୁ", hi: "📦 कीमती सामान ऊपरी मंजिलों पर ले जाएँ"}
+                        ],
+                        dont: [
+                            {en: "🚗 Park car in low areas", or: "🚗 ନିମ୍ନ ଅଞ୍ଚଳରେ କାର ପାର୍କ କରନ୍ତୁ ନାହିଁ", hi: "🚗 कार निचले इलाकों में न खड़ी करें"},
+                            {en: "⏳ Wait to see water at your door", or: "⏳ ଆପଣଙ୍କ ଦରଜାରେ ପାଣି ଦେଖିବା ପାଇଁ ଅପେକ୍ଷା କରନ୍ତୁ ନାହିଁ", hi: "🚗 कार निचले इलाकों में न खड़ी करें"},
+                            {en: "🛏️ Sleep in basement rooms", or: "🛏️ ବେସମେଣ୍ଟ କୋଠରୀରେ ଶୋଇବେ ନାହିଁ", hi: "🛏️ तहखाने के कमरों में न सोएँ"}
+                        ]
+                    },
+                    during: {
+                        do: [
+                            {en: "🏃 Move to higher ground immediately", or: "🏃 ତୁରନ୍ତ ଉଚ୍ଚ ସ୍ଥାନକୁ ଯାଆନ୍ତୁ", hi: "🏃 तुरंत ऊँची जगह की ओर जाएँ"},
+                            {en: "🚫 Avoid walking through moving water", or: "🚫 ଗତିଶୀଳ ପାଣି ମଧ୍ୟରେ ଚାଲିବାକୁ ଏଡାନ୍ତୁ", hi: "🚫 बहते पानी में चलने से बचें"},
+                            {en: "🚗 Turn around, don't drive through floods", or: "🚗 ଫେରି ଯାଆନ୍ତୁ, ବନ୍ୟା ମଧ୍ୟରେ ଗାଡି ଚଳାନ୍ତୁ ନାହିଁ", hi: "🚗 वापस मुड़ें, बाढ़ के पानी में गाड़ी न चलाएँ"}
+                        ],
+                        dont: [
+                            {en: "🚗 Drive through flooded roads", or: "🚗 ବନ୍ୟା ପ୍ରବାହିତ ସଡ଼କରେ ଗାଡି ଚଳାନ୍ତୁ ନାହିଁ", hi: "🚗 बाढ़ग्रस्त सड़कों पर गाड़ी न चलाएँ"},
+                            {en: "🤿 Play or swim in floodwater", or: "🤿 ବନ୍ୟା ଜଳରେ ଖେଳନ୍ତୁ ନାହିଁ କିମ୍ବା ସ୍ନାନ କରନ୍ତୁ ନାହିଁ", hi: "🤿 बाढ़ के पानी में खेलें या तैरें नहीं"},
+                            {en: "⚡ Touch electrical equipment in water", or: "⚡ ପାଣିରେ ବିଦ୍ୟୁତ ଉପକରଣକୁ ଛୁଇଁବେ ନାହିଁ", hi: "⚡ पानी में विद्युत उपकरणों को न छुएँ"}
+                        ]
+                    },
+                    after: {
+                        do: [
+                            {en: "🧤 Wear boots and gloves when cleaning", or: "🧤 ସଫା କରିବା ସମୟରେ ବୁଟ ଏବଂ ହାତମୋଜା ପିନ୍ଧନ୍ତୁ", hi: "🧤 सफाई करते समय बूट और दस्ताने पहनें"},
+                            {en: "💧 Use only safe drinking water", or: "💧 କେବଳ ସୁରକ୍ଷିତ ପାନୀୟ ଜଳ ବ୍ୟବହାର କରନ୍ତୁ", hi: "💧 केवल सुरक्षित पीने का पानी ही उपयोग करें"},
+                            {en: "📸 Record damage for insurance", or: "📸 ଇନ୍ସୁରାନ୍ସ ପାଇଁ କ୍ଷତି ରେକର୍ଡ କରନ୍ତୁ", hi: "📸 बीमा के लिए क्षति का रिकॉर्ड करें"}
+                        ],
+                        dont: [
+                            {en: "🚶 Enter buildings with standing water", or: "🚶 ଠିଆ ପାଣି ଥିବା ଇମାରତରେ ପ୍ରବେଶ କରନ୍ତୁ ନାହିଁ", hi: "🚶 खड़े पानी वाली इमारतों में प्रवेश न करें"},
+                            {en: "🍞 Eat food that touched floodwater", or: "🍞 ବନ୍ୟା ଜଳ ସ୍ପର୍ଶ କରିଥିବା ଖାଦ୍ୟ ଖାଆନ୍ତୁ ନାହିଁ", hi: "🍞 बाढ़ के पानी से छुआ भोजन न खाएँ"},
+                            {en: "🔥 Turn on power without inspection", or: "🔥 ପରୀକ୍ଷା ବିନା ବିଦ୍ୟୁତ ଚାଲୁ କରନ୍ତୁ ନାହିଁ", hi: "🔥 निरीक्षण के बिना बिजली न चालू करें"}
+                        ]
+                    }
+                }
+            },
+            {
+                name: "VOLCANO",
+                emoji: "🌋",
+                situation: {
+                    en: "You live near a volcano that has been quiet for years. Suddenly you feel tremors, see ash clouds rising from the crater, and smell sulfur. Authorities issue an alert that an eruption is possible.",
+                    or: "ଆପଣ ଏକ ଜ୍ଵାଳାମୁଖୀ ନିକଟରେ ରୁହନ୍ତି ଯାହା ବର୍ଷଧରି ଶାନ୍ତ ଥିଲା। ହଠାତ୍ ଆପଣ କମ୍ପନ ଅନୁଭବ କରନ୍ତି, ଜ୍ଵାଳାମୁଖୀ ମୁଖରୁ କଳା ମେଘ ଉଠୁଥିବା ଦେଖନ୍ତି, ଏବଂ ଗନ୍ଧକ ଗନ୍ଧ ପାଆନ୍ତି। ପ୍ରଶାସନ ଏକ ଚେତାବନୀ ଜାରି କରେ ଯେ ଏକ ଉଦ୍ଗାର ସମ୍ଭବ ହୋଇପାରେ।",
+                    hi: "आप एक ज्वालामुखी के पास रहते हैं जो सालों से शांत रहा है। अचानक आप कंपन महसूस करते हैं, गड्ढे से राख के बादल उठते देखते हैं, और सल्फर की गंध आती है। अधिकारी चेतावनी जारी करते हैं कि विस्फोट संभव है।"
+                },
+                fact: {
+                    en: "Volcanic ash is made of tiny pieces of rock and glass that can damage lungs, eyes and engines.",
+                    or: "ଜ୍ୱାଳାମୁଖୀ କଳା ପଥର ଏବଂ କାଚର କ୍ଷୁଦ୍ର ଖଣ୍ଡରେ ତିଆରି ଯାହା ଫୁସ୍ଫୁସ୍, ଆଖି ଏବଂ ଇଞ୍ଜିନ୍ କ୍ଷତି କରିପାରେ।",
+                    hi: "ज्वालामुखी राख चट्टान और कांच के छोटे टुकड़ों से बनी होती है जो फेफड़ों, आँखों और इंजनों को नुकसान पहुँचा सकती है।"
+                },
+                phases: {
+                    before: {
+                        do: [
+                            {en: "🗺️ Know evacuation routes away from volcano", or: "🗺️ ଜ୍ଵାଳାମୁଖୀରୁ ଦୂରକୁ ଖାଲି କରିବାର ମାର୍ଗ ଜାଣନ୍ତୁ", hi: "🗺️ ज्वालामुखी से दूर निकासी मार्ग जानें"},
+                            {en: "😷 Keep masks and goggles ready", or: "😷 ମାସ୍କ ଏବଂ ଗୋଗଲ୍ ପ୍ରସ୍ତୁତ ରଖନ୍ତୁ", hi: "😷 मास्क और गॉगल तैयार रखें"},
+                            {en: "📦 Prepare a grab-and-go emergency kit", or: "📦 ଏକ ଗ୍ରାବ-ଆଣ୍ଡ-ଗୋ ଆପତ୍ତକାଳୀନ କିଟ୍ ପ୍ରସ୍ତୁତ କରନ୍ତୁ", hi: "📦 एक त्वरित आपातकालीन किट तैयार करें"}
+                        ],
+                        dont: [
+                            {en: "⛰️ Hike near the crater", or: "⛰️ ଜ୍ଵାଳାମୁଖୀ ମୁଖ ନିକଟରେ ହାଇକ୍ କରନ୍ତୁ ନାହିଁ", hi: "⛰️ गड्ढे के पास पैदल यात्रा न करें"},
+                            {en: "📸 Go closer to take photos", or: "📸 ଫଟୋ ଉଠାଇବା ପାଇଁ ନିକଟରେ ଯାଆନ୍ତୁ ନାହିଁ", hi: "📸 फोटो लेने के लिए करीब न जाएँ"},
+                            {en: "🛑 Ignore official volcano alerts", or: "🛑 ସରକାରୀ ଜ୍ଵାଳାମୁଖୀ ଚେତାବନୀକୁ ଅଣଦେଖା କରନ୍ତୁ ନାହିଁ", hi: "🛑 आधिकारिक ज्वालामुखी चेतावनियों को नजरअंदाज न करें"}
+                        ]
+                    },
+                    during: {
+                        do: [
+                            {en: "🏃 Evacuate along recommended routes", or: "🏃 ସୁପାରିଶ କରାଯାଇଥିବା ମାର୍ଗ ଅନୁସାରେ ଖାଲି ହୋଇଯାଆନ୍ତୁ", hi: "🏃 अनुशंसित मार्गों के साथ निकल जाएँ"},
+                            {en: "😷 Cover nose and mouth with mask", or: "😷 ମାସ୍କରେ ନାକ ଏବଂ ମୁହଁ ଆଚ୍ଛାଦନ କରନ୍ତୁ", hi: "😷 नाक और मुँह को मास्क से ढकें"},
+                            {en: "🏠 Stay indoors if ash is falling", or: "🏠 ଯଦି କଳା ଖସୁଛି, ତେବେ ଘର ଭିତରେ ରୁହନ୍ତୁ", hi: "🏠 यदि राख गिर रही है तो घर के अंदर रहें"}
+                        ],
+                        dont: [
+                            {en: "⛰️ Stay in valleys or river beds", or: "⛰️ ଉପତ୍ୟକା କିମ୍ବା ନଦୀ ଶଯ୍ୟାରେ ରୁହନ୍ତୁ ନାହିଁ", hi: "⛰️ घाटियों या नदी के बिस्तरों में न रहें"},
+                            {en: "🚗 Drive fast in heavy ashfall", or: "🚗 ଭାରୀ କଳା ବର୍ଷା ରେ ଦ୍ରୁତ ଗାଡି ଚଳାନ୍ତୁ ନାହିଁ", hi: "🚗 भारी राख गिरने के दौरान तेज गाड़ी न चलाएँ"},
+                            {en: "👀 Rub eyes if ash gets in", or: "👀 ଯଦି କଳା ପଶିଯାଏ, ତେବେ ଆଖି ଘଷନ୍ତୁ ନାହିଁ", hi: "👀 यदि राख आँख में जाए तो आँख न रगड़ें"}
+                        ]
+                    },
+                    after: {
+                        do: [
+                            {en: "🧹 Clean ash from roofs carefully", or: "🧹 ସାବଧାନତାର ସହ ଛାତରୁ କଳା ସଫା କରନ୍ତୁ", hi: "🧹 सावधानी से छत से राख साफ करें"},
+                            {en: "😷 Wear protection when outside", or: "😷 ବାହାରେ ଥିବା ସମୟରେ ସୁରକ୍ଷାତ୍ମକ ପିନ୍ଧନ୍ତୁ", hi: "😷 बाहर जाते समय सुरक्षा पहनें"},
+                            {en: "📻 Listen for updates on activity", or: "📻 କାର୍ଯ୍ୟକଳାପ ଅଦ୍ୟତନ ପାଇଁ ଶୁଣନ୍ତୁ", hi: "📻 गतिविधि के अपडेट सुनें"}
+                        ],
+                        dont: [
+                            {en: "🚿 Wash ash into drains", or: "🚿 କଳା ଡ୍ରେନ୍ ଭିତରେ ଧୋଇବେ ନାହିଁ", hi: "🚿 राख को नालियों में न बहाएँ"},
+                            {en: "🏡 Return to exclusion zones", or: "🏡 ବାହାର ଜୋନ୍ କୁ ଫେରନ୍ତୁ ନାହିଁ", hi: "🏡 प्रतिबंधित क्षेत्रों में न लौटें"},
+                            {en: "🐾 Let pets roam in heavy ash", or: "🐾 ଭାରୀ କଳା ରେ ପେଟମାନଙ୍କୁ ଘୁରିବା ଦିଅନ୍ତୁ ନାହିଁ", hi: "🐾 भारी राख में पालतू जानवरों को घूमने न दें"}
+                        ]
+                    }
+                }
+            }
+        ];
+
+        const TOTAL_LEVELS_PER_GAME = 5;
+        const TOTAL_GAME_TIME = 25 * 60; // 25 minutes
+
+        let gameData = [];                // the 5 picked disasters for this game
+        let currentLevel = 0;
+        let currentPhase = 'before';
+        let score = 0;
+        let selectedGuess = null;
+        let draggedElement = null;
+        let userAnswers = { do: [], dont: [] };
+        let phaseCompleted = { before: false, during: false, after: false };
+
+        let gameTimeLeft = TOTAL_GAME_TIME;
+        let gameTimerInterval = null;
+
+        // Utility to shuffle an array
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function updateGameTimerDisplay() {
+            const m = Math.floor(gameTimeLeft / 60);
+            const s = gameTimeLeft % 60;
+            document.getElementById('gameTime').textContent =
+                `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        }
+
+        function endGameDueToTime() {
+            // Disable all interactions
+            document.querySelectorAll('button').forEach(b => b.disabled = true);
+            document.querySelectorAll('.action-card').forEach(c => c.draggable = false);
+            document.querySelectorAll('.drop-zone').forEach(z => z.style.pointerEvents = 'none');
+            document.querySelectorAll('.guess-card').forEach(c => c.style.pointerEvents = 'none');
+
+            // Switch to gamePhase and show message
+            document.getElementById('guessPhase').classList.remove('active');
+            document.getElementById('gamePhase').classList.add('active');
+
+            const feedback = document.getElementById('feedback');
+            feedback.className = 'feedback incorrect';
+            feedback.textContent = `⏱️ Time is up! Your final score is ${score}/150.`;
+            feedback.style.display = 'block';
+        }
+
+        function startGameTimer() {
+            if (gameTimerInterval) clearInterval(gameTimerInterval);
+            gameTimeLeft = TOTAL_GAME_TIME;
+            updateGameTimerDisplay();
+            gameTimerInterval = setInterval(() => {
+                gameTimeLeft--;
+                updateGameTimerDisplay();
+                if (gameTimeLeft <= 0) {
+                    clearInterval(gameTimerInterval);
+                    gameTimerInterval = null;
+                    endGameDueToTime();
+                }
+            }, 1000);
+        }
+
+        // Initialize game: pick 5 random challenges and random order
+        function initializeGame() {
+            const shuffledDisasters = shuffleArray(allGameData);
+            gameData = shuffledDisasters.slice(0, TOTAL_LEVELS_PER_GAME); // 5 out of 7, random
+            currentLevel = 0;
+            score = 0;
+            updateScore(0, true); // reset display
+            document.getElementById('level').textContent = 1;
+            phaseCompleted = { before: false, during: false, after: false };
+            selectedGuess = null;
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('guessFeedback').style.display = 'none';
+            document.getElementById('guessPhase').classList.add('active');
+            document.getElementById('gamePhase').classList.remove('active');
+            document.querySelector('.phase-selector').style.display = 'flex';
+            document.getElementById('actionGrid').style.display = 'grid';
+            document.querySelector('.drop-zones').style.display = 'grid';
+            startGameTimer();
+            loadGuessPhase();
+        }
+
+        function updateScore(points, reset = false) {
+            if (reset) {
+                score = 0;
+            } else {
+                score += points;
+            }
+            document.getElementById('score').textContent = score;
+        }
+
+        function updatePhaseButtons() {
+            const phases = ['before', 'during', 'after'];
+            document.querySelectorAll('.phase-btn').forEach(btn => {
+                const phase = btn.dataset.phase;
+                btn.classList.remove('active');
+               
+                if (phase === currentPhase) {
+                    btn.classList.add('active');
+                    btn.disabled = false;
+                } else if (phaseCompleted[phase]) {
+                    btn.disabled = false; // completed phases can be revisited
+                } else {
+                    btn.disabled = true;  // lock future phases
+                }
+            });
+
+            // Unlock next phase if current has been completed
+            const nextIndex = phases.indexOf(currentPhase) + 1;
+            if (phaseCompleted[currentPhase] && nextIndex < phases.length) {
+                const nextPhase = phases[nextIndex];
+                document.querySelector(`.phase-btn[data-phase="${nextPhase}"]`).disabled = false;
+            }
+        }
+
+        function loadGuessPhase() {
+            // Game finished (all 5 levels)
+            if (currentLevel >= TOTAL_LEVELS_PER_GAME) {
+                if (gameTimerInterval) {
+                    clearInterval(gameTimerInterval);
+                    gameTimerInterval = null;
+                }
+                document.getElementById('guessPhase').classList.remove('active');
+                document.getElementById('gamePhase').classList.add('active');
+                document.querySelector('.phase-selector').style.display = 'none';
+                document.getElementById('actionGrid').style.display = 'none';
+                document.querySelector('.drop-zones').style.display = 'none';
+                const feedback = document.getElementById('feedback');
+                feedback.className = 'feedback correct';
+                feedback.textContent = `🏆 GAME COMPLETE! Final Score: ${score}/150 points! ${score >= 120 ? 'AMAZING!' : score >= 90 ? 'Great job!' : 'Good effort!'}`;
+                feedback.style.display = 'block';
+                document.getElementById('checkBtn').style.display = 'none';
+                document.getElementById('nextBtn').style.display = 'none';
+                return;
+            }
+
+            document.getElementById('guessPhase').classList.add('active');
+            document.getElementById('gamePhase').classList.remove('active');
+
+            const level = gameData[currentLevel];
+            document.getElementById('level').textContent = currentLevel + 1;
+
+            // Reset phase completion for new level
+            phaseCompleted = { before: false, during: false, after: false };
+
+            // Set situation text in current language
+            document.getElementById('situationText').textContent = level.situation[currentLanguage] || level.situation.en;
+
+            // Guess options only from the 5 disasters selected in this game
+            const optionsForThisGame = shuffleArray(gameData.map(d => d.name));
+            const guessOptions = document.getElementById('guessOptions');
+            guessOptions.innerHTML = '';
+
+            optionsForThisGame.forEach(option => {
+                const card = document.createElement('div');
+                card.className = 'guess-card';
+                card.textContent = option;
+                card.dataset.disaster = option;
+               
+                card.addEventListener('click', () => {
+                    document.querySelectorAll('.guess-card').forEach(c => c.classList.remove('selected', 'correct', 'wrong'));
+                    card.classList.add('selected');
+                    selectedGuess = option;
+                    document.getElementById('submitGuess').disabled = false;
+                });
+               
+                guessOptions.appendChild(card);
+            });
+
+            document.getElementById('submitGuess').disabled = true;
+            document.getElementById('guessFeedback').style.display = 'none';
+            selectedGuess = null;
+        }
+
+        document.getElementById('submitGuess').addEventListener('click', () => {
+            const level = gameData[currentLevel];
+            const feedback = document.getElementById('guessFeedback');
+            const correctCard = document.querySelector(`[data-disaster="${level.name}"]`);
+            const selectedCard = selectedGuess ? document.querySelector(`[data-disaster="${selectedGuess}"]`) : null;
+           
+            document.querySelectorAll('.guess-card').forEach(c => c.style.pointerEvents = 'none');
+
+            if (selectedGuess === level.name) {
+                updateScore(30);
+                feedback.className = 'feedback correct';
+                feedback.textContent = `🎉 Correct! It's a ${level.name}! You earned 30 points!`;
+                if (selectedCard) selectedCard.classList.add('correct');
+               
+                setTimeout(() => {
+                    document.getElementById('guessPhase').classList.remove('active');
+                    document.getElementById('gamePhase').classList.add('active');
+                    document.getElementById('revealedName').textContent = `${level.emoji} ${level.name}`;
+                    currentPhase = 'before';
+                    loadPhase();
+                }, 2000);
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.textContent = `❌ Not quite! It's actually a ${level.name}. Let's learn about it anyway!`;
+                if (selectedCard) selectedCard.classList.add('wrong');
+                if (correctCard) correctCard.classList.add('correct');
+               
+                setTimeout(() => {
+                    document.getElementById('guessPhase').classList.remove('active');
+                    document.getElementById('gamePhase').classList.add('active');
+                    document.getElementById('revealedName').textContent = `${level.emoji} ${level.name}`;
+                    currentPhase = 'before';
+                    loadPhase();
+                }, 3000);
+            }
+           
+            document.getElementById('submitGuess').disabled = true;
+        });
+
+        function updateCheckButtonState() {
+            const level = gameData[currentLevel];
+            const phaseData = level.phases[currentPhase];
+            const totalActions = phaseData.do.length + phaseData.dont.length;
+            const placedActions = userAnswers.do.length + userAnswers.dont.length;
+            document.getElementById('checkBtn').disabled = (placedActions !== totalActions);
+        }
+
+        function loadPhase() {
+            const level = gameData[currentLevel];
+            const phaseData = level.phases[currentPhase];
+           
+            // Combine DO and DONT actions
+            const allActions = [];
+            phaseData.do.forEach(action => {
+                allActions.push({...action, type: 'do'});
+            });
+            phaseData.dont.forEach(action => {
+                allActions.push({...action, type: 'dont'});
+            });
+           
+            // Shuffle the actions
+            const shuffledActions = shuffleArray(allActions);
+
+            const actionGrid = document.getElementById('actionGrid');
+            actionGrid.innerHTML = '';
+
+            // Only load actions if phase not completed
+            if (!phaseCompleted[currentPhase]) {
+                shuffledActions.forEach(action => {
+                    const card = document.createElement('div');
+                    card.className = 'action-card';
+                    card.draggable = true;
+                    card.textContent = action[currentLanguage] || action.en;
+                    card.dataset.action = JSON.stringify(action);
+
+                    card.addEventListener('dragstart', handleDragStart);
+                    card.addEventListener('dragend', handleDragEnd);
+                   
+                    actionGrid.appendChild(card);
+                });
+            }
+
+            document.getElementById('doZone').innerHTML = '';
+            document.getElementById('dontZone').innerHTML = '';
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('checkBtn').style.display = 'inline-block';
+            document.getElementById('checkBtn').disabled = true;
+            document.getElementById('nextBtn').style.display = 'none';
+
+            if (phaseCompleted[currentPhase]) {
+                document.getElementById('checkBtn').style.display = 'none';
+                document.getElementById('nextBtn').style.display = 'inline-block';
+            }
+
+            userAnswers = { do: [], dont: [] };
+            updatePhaseButtons();
+        }
+
+        function handleDragStart(e) {
+            draggedElement = e.target;
+            e.target.classList.add('dragging');
+            e.dataTransfer.setData('text/plain', e.target.dataset.action);
+        }
+
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+        }
+
+        document.querySelectorAll('.drop-zone').forEach(zone => {
+            zone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                zone.classList.add('drag-over');
+            });
+
+            zone.addEventListener('dragleave', () => {
+                zone.classList.remove('drag-over');
+            });
+
+            zone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                zone.classList.remove('drag-over');
+               
+                const actionJSON = e.dataTransfer.getData('text/plain');
+                const action = JSON.parse(actionJSON);
+                const draggedCard = document.querySelector(`.action-card[data-action='${JSON.stringify(action).replace(/'/g, "\\'")}']`);
+
+                if (draggedCard) {
+                    const zoneType = zone.dataset.zone;
+                    const actionText = action[currentLanguage] || action.en;
+
+                    // Remove from previous answer arrays
+                    userAnswers.do = userAnswers.do.filter(a => a !== actionText);
+                    userAnswers.dont = userAnswers.dont.filter(a => a !== actionText);
+
+                    userAnswers[zoneType].push(actionText);
+                   
+                    const droppedItem = document.createElement('div');
+                    droppedItem.className = 'dropped-item';
+                    droppedItem.textContent = actionText;
+                    droppedItem.dataset.action = actionText;
+                    droppedItem.dataset.originalAction = actionJSON;
+
+                    // Click to remove back to grid
+                    droppedItem.addEventListener('click', () => {
+                        // Remove from userAnswers
+                        userAnswers.do = userAnswers.do.filter(a => a !== actionText);
+                        userAnswers.dont = userAnswers.dont.filter(a => a !== actionText);
+
+                        const newCard = document.createElement('div');
+                        newCard.className = 'action-card';
+                        newCard.draggable = true;
+                        newCard.textContent = actionText;
+                        newCard.dataset.action = actionJSON;
+                        newCard.addEventListener('dragstart', handleDragStart);
+                        newCard.addEventListener('dragend', handleDragEnd);
+                        document.getElementById('actionGrid').appendChild(newCard);
+
+                        droppedItem.remove();
+                        updateCheckButtonState();
+                    });
+
+                    // Append to correct inner container (first div inside zone after h3)
+                    const innerContainer = zone.querySelector('div[id$="Zone"]');
+                    innerContainer.appendChild(droppedItem);
+                    draggedCard.remove();
+
+                    updateCheckButtonState();
+                }
+            });
+        });
+
+        document.getElementById('checkBtn').addEventListener('click', checkAnswers);
+
+        function checkAnswers() {
+            const level = gameData[currentLevel];
+            const phaseData = level.phases[currentPhase];
+            let correctCount = 0;
+            const totalActions = phaseData.do.length + phaseData.dont.length;
+
+            const droppedItems = document.querySelectorAll('.dropped-item');
+            droppedItems.forEach(item => {
+                item.classList.remove('correct', 'wrong');
+                const actionText = item.dataset.action;
+                const parentZone = item.closest('.drop-zone').dataset.zone;
+
+                let isCorrect = false;
+               
+                // Check if action is in DO list
+                if (parentZone === 'do') {
+                    isCorrect = phaseData.do.some(action =>
+                        (action[currentLanguage] || action.en) === actionText
+                    );
+                }
+               
+                // Check if action is in DONT list
+                if (parentZone === 'dont') {
+                    isCorrect = phaseData.dont.some(action =>
+                        (action[currentLanguage] || action.en) === actionText
+                    );
+                }
+
+                if (isCorrect) {
+                    item.classList.add('correct');
+                    correctCount++;
+                } else {
+                    item.classList.add('wrong');
+                }
+            });
+
+            const feedback = document.getElementById('feedback');
+            document.getElementById('checkBtn').style.display = 'none';
+
+            if (correctCount === totalActions) {
+                updateScore(20); // 20 points per phase
+                feedback.className = 'feedback correct';
+                feedback.innerHTML = `✅ Phase Complete! All ${totalActions} actions correctly classified! You earned 20 points.<br><br>💡 Fact: ${level.fact[currentLanguage] || level.fact.en}`;
+                feedback.style.display = 'block';
+                phaseCompleted[currentPhase] = true;
+
+                const phases = ['before', 'during', 'after'];
+                const currentIndex = phases.indexOf(currentPhase);
+                const nextIndex = currentIndex + 1;
+
+                if (nextIndex < phases.length) {
+                    currentPhase = phases[nextIndex];
+                    document.getElementById('nextBtn').textContent = `Go to ${currentPhase.toUpperCase()} Phase`;
+                    document.getElementById('nextBtn').style.display = 'inline-block';
+                    document.getElementById('nextBtn').onclick = nextPhaseHandler;
+                } else {
+                    document.getElementById('nextBtn').textContent = 'Next Challenge';
+                    document.getElementById('nextBtn').style.display = 'inline-block';
+                    document.getElementById('nextBtn').onclick = nextChallengeHandler;
+                }
+
+                document.querySelector('.game-container').classList.add('celebrating');
+                setTimeout(() => {
+                    document.querySelector('.game-container').classList.remove('celebrating');
+                }, 1500);
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.textContent = `❌ Not quite! You correctly classified ${correctCount} of ${totalActions} actions. Try again!`;
+                feedback.style.display = 'block';
+
+                // Reset phase so they drag & drop again
+                setTimeout(() => {
+                    feedback.style.display = 'none';
+                    document.getElementById('checkBtn').style.display = 'inline-block';
+                    document.getElementById('checkBtn').disabled = true;
+                    loadPhase(); // reload cards
+                }, 2000);
+            }
+        }
+
+        function nextPhaseHandler() {
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('feedback').style.display = 'none';
+            loadPhase();
+        }
+
+        function nextChallengeHandler() {
+            currentLevel++;
+            currentPhase = 'before';
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('feedback').style.display = 'none';
+            loadGuessPhase();
+        }
+
+        // Allow revisiting completed phases
+        document.querySelectorAll('.phase-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (!btn.disabled) {
+                    currentPhase = btn.dataset.phase;
+                    loadPhase();
+                }
+            });
+        });
+
+        // Header mobile menu
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navList = document.querySelector('header nav ul');
+        if (mobileMenuBtn && navList) {
+            mobileMenuBtn.addEventListener('click', () => {
+                navList.classList.toggle('show');
+            });
+        }
+
+        // Instructions start button
+        const instructionsModal = document.getElementById('instructions-modal');
+        const startBtn = document.getElementById('start-btn');
+        startBtn.addEventListener('click', () => {
+            instructionsModal.style.display = 'none';
+            initializeGame();
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateGameTimerDisplay();
+            applyTranslations();
+        });
+    </script>
+</body>
+</html>

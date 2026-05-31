@@ -1,0 +1,2106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hard Story Weaver - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f0f7ff;
+            color: #1e293b;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #2a69ac;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text h1 span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-pic {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 180px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f7fa;
+        }
+
+        .dropdown-item i {
+            color: #3182ce;
+            width: 20px;
+        }
+
+        /* Game Header */
+        .game-header {
+            background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9)), url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .game-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Game Stats */
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 1000px;
+        }
+
+        .timer {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        .timer i {
+            color: #e53e3e;
+        }
+
+        .score {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        .score i {
+            color: #38a169;
+        }
+
+        .progress-container {
+            width: 200px;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #3182ce;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Game Area */
+        .game-area {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px 0;
+            min-height: 500px;
+        }
+
+        /* Prompt Selection Screen */
+        .prompt-selection {
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .prompt-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .prompt-card {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .prompt-card:hover {
+            border-color: #3182ce;
+            background: #f0f9ff;
+            transform: translateY(-3px);
+        }
+
+        .prompt-card.selected {
+            border-color: #3182ce;
+            background: #dbeafe;
+            box-shadow: 0 5px 15px rgba(49, 130, 206, 0.2);
+        }
+
+        .prompt-icon {
+            font-size: 2rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .prompt-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+
+        .prompt-desc {
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .prompt-difficulty {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            background: #fed7d7;
+            color: #9b2c2c;
+        }
+
+        .prompt-requirements {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .prompt-requirements i {
+            margin-right: 5px;
+            color: #3182ce;
+        }
+
+        /* Writing Screen */
+        .writing-screen {
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .writing-container {
+            display: flex;
+            gap: 20px;
+            height: 600px;
+        }
+
+        .story-container {
+            flex: 3;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .writing-help-container {
+            flex: 1;
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+            overflow-y: auto;
+        }
+
+        .writing-help-title {
+            color: #1a365d;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .help-category {
+            margin-bottom: 20px;
+        }
+
+        .help-category h4 {
+            color: #3182ce;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .connectors-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .connector-tag {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .connector-tag:hover {
+            background: #dbeafe;
+            border-color: #3182ce;
+            transform: translateY(-2px);
+        }
+
+        .story-starter {
+            background: white;
+            border-left: 3px solid #38a169;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .story-starter:hover {
+            background: #f0fff4;
+            transform: translateX(5px);
+        }
+
+        .vocabulary-word {
+            display: inline-block;
+            background: #fef3c7;
+            color: #92400e;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin: 0 4px 8px 0;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .vocabulary-word:hover {
+            background: #fde68a;
+            transform: translateY(-2px);
+        }
+
+        .current-prompt {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3182ce;
+        }
+
+        .current-prompt h3 {
+            color: #1a365d;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .current-prompt p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .word-count-display {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .word-count {
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        .word-count.goal-met {
+            color: #38a169;
+        }
+
+        .time-remaining {
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        .time-warning {
+            color: #e53e3e;
+            animation: pulse 1s infinite;
+        }
+
+        .story-editor-container {
+            flex: 1;
+            margin-bottom: 20px;
+        }
+
+        .story-editor {
+            width: 100%;
+            height: 100%;
+            min-height: 300px;
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            line-height: 1.6;
+            resize: none;
+        }
+
+        .story-editor:focus {
+            outline: none;
+            border-color: #3182ce;
+        }
+
+        /* Twist Card */
+        .twist-card {
+            background: linear-gradient(135deg, #d69e2e 0%, #b3821e 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            display: none;
+            animation: pulse 1.5s infinite;
+        }
+
+        .twist-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .twist-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        /* Scoring Screen */
+        .scoring-screen {
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+            display: none;
+            text-align: center;
+        }
+
+        .score-display {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #d69e2e, #38b2ac);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 20px 0;
+        }
+
+        .scoring-criteria {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .criteria-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+
+        .criteria-card h4 {
+            color: #1a365d;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .criteria-points {
+            background: #3182ce;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .criteria-desc {
+            color: #64748b;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .score-breakdown {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .breakdown-label {
+            color: #64748b;
+        }
+
+        .breakdown-value {
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        .story-display {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 4px solid #3182ce;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 14px 30px;
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #38b2ac 0%, #2c9a94 100%);
+        }
+
+        .btn-accent {
+            background: linear-gradient(135deg, #d69e2e 0%, #b3821e 100%);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .control-btn-game {
+            padding: 12px 25px;
+            background: #3182ce;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .control-btn-game:hover {
+            background: #2b6cb0;
+            transform: translateY(-2px);
+        }
+
+        .control-btn-game.secondary {
+            background: #64748b;
+        }
+
+        .control-btn-game.secondary:hover {
+            background: #475569;
+        }
+
+        /* Controls Container */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            margin-top: 20px;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        /* Loading Animation */
+        .loader {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 5px solid #e2e8f0;
+            border-top: 5px solid #3182ce;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about {
+            padding-right: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.8rem;
+            background: #38b2ac;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 20px;
+            color: #38b2ac;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2d3748;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .social-links a:hover {
+            background: #38b2ac;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .game-area {
+                flex-direction: column;
+            }
+           
+            .prompt-grid {
+                grid-template-columns: 1fr;
+            }
+           
+            .writing-container {
+                flex-direction: column;
+                height: auto;
+            }
+           
+            .writing-help-container {
+                order: -1;
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+           
+            .game-header h1 {
+                font-size: 2.2rem;
+            }
+           
+            .game-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            .scoring-criteria {
+                grid-template-columns: 1fr;
+            }
+           
+            .controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+           
+            .control-btn-game {
+                width: 100%;
+                justify-content: center;
+            }
+           
+            .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+           
+            .connectors-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes shake {
+            0%, 100% {transform: translateX(0);}
+            10%, 30%, 50%, 70%, 90% {transform: translateX(-5px);}
+            20%, 40%, 60%, 80% {transform: translateX(5px);}
+        }
+       
+        .shake {
+            animation: shake 0.5s;
+        }
+       
+        @keyframes pulse {
+            0% {transform: scale(1);}
+            50% {transform: scale(1.05);}
+            100% {transform: scale(1);}
+        }
+       
+        .pulse {
+            animation: pulse 0.5s;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+       
+        .slide-in {
+            animation: slideIn 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-feather-alt"></i>
+            </div>
+            <div class="logo-text">
+                <h1>STEM Learn Odisha</h1>
+                <p>Hard Story Weaver - Grade 6</p>
+            </div>
+        </div>
+       
+        <nav>
+            <ul>
+                <li><a href="#" id="navDashboard">Dashboard</a></li>
+                <li><a href="#" id="navScience">Science</a></li>
+                <li><a href="#" id="navTechnology">Technology</a></li>
+                <li><a href="#" id="navEnglish">English</a></li>
+                <li><a href="#" class="active" id="navMaths">Maths</a></li>
+            </ul>
+        </nav>
+       
+        <div class="header-controls">
+            <button class="control-btn" id="languageToggle">
+                <i class="fas fa-globe"></i>
+            </button>
+           
+            <div class="profile-container">
+                <button class="profile-btn" id="profileToggle">
+                    <div class="player-avatar">
+                        <i class="fas fa-feather-alt"></i>
+                    </div>
+                    <span id="headerUserName">Story Writer</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+               
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" class="dropdown-item" id="dropdownProfile">
+                        <i class="fas fa-user"></i>
+                        <span>Writer Profile</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownSettings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownLogout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Game Header -->
+    <section class="game-header" id="game-header">
+        <div class="container">
+            <h1>Hard Story Weaver</h1>
+            <p>Craft compelling stories from challenging prompts. Use the writing helpers to create amazing stories! Maximum score: 150 points!</p>
+        </div>
+    </section>
+
+    <!-- Game Stats -->
+    <div class="container">
+        <div class="game-stats" id="gameStats">
+            <div class="timer">
+                <i class="fas fa-clock"></i>
+                <span id="timer">25:00</span>
+            </div>
+           
+            <div class="score">
+                <i class="fas fa-star"></i>
+                <span id="scoreDisplay">Score: 0/150</span>
+            </div>
+           
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Area -->
+    <section class="game-area" id="game-area">
+        <div class="container">
+            <!-- Prompt Selection Screen -->
+            <div id="promptSelectionScreen" class="prompt-selection">
+                <h2 style="color: #1a365d; margin-bottom: 10px;">Choose Your Story Prompt</h2>
+                <p style="color: #64748b; margin-bottom: 25px;">Select one challenging prompt to inspire your story. You have 25 minutes to write a 400-500 word story.</p>
+                
+                <div class="prompt-grid" id="promptGrid">
+                    <!-- Prompts will be generated here -->
+                </div>
+                
+                <div style="margin-top: 30px; text-align: center;">
+                    <button class="btn" id="startWritingBtn" disabled>
+                        <i class="fas fa-pen-alt"></i> Start Writing (25 minutes)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Writing Screen -->
+            <div id="writingScreen" class="writing-screen">
+                <div class="writing-container">
+                    <div class="story-container">
+                        <div class="current-prompt">
+                            <h3><i class="fas fa-lightbulb"></i> Your Prompt: <span id="currentPromptTitle"></span></h3>
+                            <p id="currentPromptDesc"></p>
+                            <div class="prompt-requirements">
+                                <p><i class="fas fa-clock"></i> Time: 25 minutes</p>
+                                <p><i class="fas fa-file-word"></i> Minimum words: <span id="wordGoal">400</span></p>
+                                <p><i class="fas fa-star"></i> Maximum score: 150 points</p>
+                            </div>
+                        </div>
+                        
+                        <div id="twistCard" class="twist-card">
+                            <div class="twist-icon">
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+                            <div class="twist-title">STORY TWIST REQUIRED!</div>
+                            <p id="twistText">Add this twist to your story:</p>
+                        </div>
+                        
+                        <div class="word-count-display">
+                            <div class="word-count" id="wordCountDisplay">Words: <span id="wordCount">0</span>/<span id="wordGoalDisplay">400</span></div>
+                            <div class="time-remaining" id="timeRemainingDisplay">25:00 remaining</div>
+                        </div>
+                        
+                        <div class="story-editor-container">
+                            <textarea class="story-editor" id="storyEditor" placeholder="Begin your story here... Click on words from the Writing Help panel to add them to your story!"></textarea>
+                        </div>
+                        
+                        <div class="controls">
+                            <button class="control-btn-game secondary" id="backToPromptsBtn">
+                                <i class="fas fa-arrow-left"></i> Back to Prompts
+                            </button>
+                            <button class="control-btn-game" id="submitStoryBtn" disabled>
+                                <i class="fas fa-check-circle"></i> Submit Story
+                            </button>
+                            <button class="control-btn-game secondary" id="editTimeBtn">
+                                <i class="fas fa-edit"></i> Edit Mode (2 min)
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Writing Help Panel -->
+                    <div class="writing-help-container">
+                        <h3 class="writing-help-title"><i class="fas fa-hands-helping"></i> Writing Help</h3>
+                        
+                        <div class="help-category">
+                            <h4><i class="fas fa-link"></i> Story Connectors</h4>
+                            <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 10px;">Click to add to your story:</p>
+                            <div class="connectors-grid" id="connectorsGrid">
+                                <!-- Connectors will be added here -->
+                            </div>
+                        </div>
+                        
+                        <div class="help-category">
+                            <h4><i class="fas fa-play-circle"></i> Story Starters</h4>
+                            <div id="storyStarters">
+                                <!-- Story starters will be added here -->
+                            </div>
+                        </div>
+                        
+                        <div class="help-category">
+                            <h4><i class="fas fa-book"></i> Useful Vocabulary</h4>
+                            <div id="vocabularyWords">
+                                <!-- Vocabulary words will be added here -->
+                            </div>
+                        </div>
+                        
+                        <div class="help-category">
+                            <h4><i class="fas fa-lightbulb"></i> Writing Tips</h4>
+                            <div style="font-size: 0.9rem; color: #64748b; line-height: 1.5;">
+                                <p>1. Start with an exciting beginning</p>
+                                <p>2. Describe characters and settings</p>
+                                <p>3. Include dialogue (characters talking)</p>
+                                <p>4. Build up to an exciting climax</p>
+                                <p>5. End with a satisfying conclusion</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scoring Screen -->
+            <div id="scoringScreen" class="scoring-screen">
+                <h2 style="color: #1a365d; margin-bottom: 10px;">Story Evaluation</h2>
+                <p style="color: #64748b; font-size: 1.1rem;">Your story is being evaluated based on creativity, structure, and language.</p>
+                
+                <div class="score-display" id="storyScore">0</div>
+                <p style="text-align: center; color: #64748b; margin-bottom: 30px;">out of 150 points</p>
+                
+                <div class="scoring-criteria" id="scoringCriteria">
+                    <!-- Scoring criteria will be displayed here -->
+                </div>
+                
+                <div id="loadingEvaluation" style="text-align: center; padding: 40px;">
+                    <div class="loader"></div>
+                    <p style="margin-top: 20px; color: #64748b;">Evaluating your story...</p>
+                </div>
+                
+                <div id="resultsBreakdown" style="display: none; width: 100%;">
+                    <div style="margin: 40px 0;">
+                        <h3 style="color: #1a365d; margin-bottom: 20px; text-align: left;">Score Breakdown</h3>
+                        <div class="criteria-card">
+                            <h4>Creativity <span class="criteria-points">50 pts</span></h4>
+                            <div class="criteria-desc">Originality of ideas, imaginative concepts, unique perspectives</div>
+                            <div class="score-breakdown">
+                                <div class="breakdown-item">
+                                    <span class="breakdown-label">Originality Score</span>
+                                    <span class="breakdown-value" id="creativityScore">0/30</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="breakdown-label">Word Count Bonus</span>
+                                    <span class="breakdown-value" id="wordCountBonus">0/10</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="breakdown-label">Twist Implementation</span>
+                                    <span class="breakdown-value" id="twistBonus">0/10</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="criteria-card">
+                            <h4>Structure <span class="criteria-points">40 pts</span></h4>
+                            <div class="criteria-desc">Clear beginning, middle, end; logical flow; paragraph structure</div>
+                            <div class="score-breakdown">
+                                <div class="breakdown-item">
+                                    <span class="breakdown-label">Beginning/Setup</span>
+                                    <span class="breakdown-value" id="beginningScore">0/10</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="breakdown-label">Middle/Development</span>
+                                    <span class="breakdown-value" id="middleScore">0/15</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="breakdown-label">Ending/Resolution</span>
+                                    <span class="breakdown-value" id="endingScore">0/15</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="criteria-card">
+                            <h4>Language <span class="criteria-points">30 pts</span></h4>
+                            <div class="criteria-desc">Grammar, vocabulary, sentence structure, flow, spelling</div>
+                            <div class="score-breakdown">
+                                <div class="breakdown-item">
+                                    <span class="breakdown-label">Grammar & Spelling</span>
+                                    <span class="breakdown-value" id="grammarScore">0/10</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="breakdown-label">Vocabulary & Style</span>
+                                    <span class="breakdown-value" id="vocabularyScore">0/10</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="breakdown-label">Sentence Flow</span>
+                                    <span class="breakdown-value" id="flowScore">0/10</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="criteria-card">
+                            <h4>Bonus Challenges <span class="criteria-points">30 pts</span></h4>
+                            <div class="criteria-desc">Time bonus, twist used, word goal met, edit mode used</div>
+                            <div class="score-breakdown">
+                                <div class="breakdown-item">
+                                    <span class="breakdown-label">Time Remaining</span>
+                                    <span class="breakdown-value" id="timeBonus">0/10</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="breakdown-label">Word Goal Met</span>
+                                    <span class="breakdown-value" id="goalBonus">0/5</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="breakdown-label">Twist Included</span>
+                                    <span class="breakdown-value" id="twistIncluded">0/5</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="breakdown-label">Edit Mode Used</span>
+                                    <span class="breakdown-value" id="editBonus">0/5</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="breakdown-label">Judge's Choice</span>
+                                    <span class="breakdown-value" id="judgeBonus">0/5</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="story-display" id="storyDisplay"></div>
+                    
+                    <div style="margin-top: 40px;">
+                        <button class="btn" id="newStoryBtn">
+                            <i class="fas fa-redo"></i> Write Another Story
+                        </button>
+                        <button class="btn btn-success" id="viewProfileBtn" style="margin-left: 15px;">
+                            <i class="fas fa-user"></i> View Writer Profile
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-feather-alt"></i>
+                        </div>
+                        <div class="footer-logo-text">Hard Story Weaver</div>
+                    </div>
+                    <p>A creative writing challenge designed for 6th grade students to develop storytelling skills. Use writing helpers to create amazing stories!</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Dashboard</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Writing Prompts</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Grammar Guide</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Story Gallery</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Writing Resources</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Story Connectors</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Vocabulary Builder</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Story Starters</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Writing Exercises</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 STEM Learn Odisha. All rights reserved. Designed for 6th Grade Creative Writing.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Hard Story Weaver Game Data
+        const storyWeaverData = {
+            player: {
+                name: "Story Writer",
+                bestScore: 0,
+                storiesWritten: 0,
+                avgCreativity: 0,
+                wordsPerMinute: 0,
+                badges: []
+            },
+            currentPrompt: null,
+            currentStory: "",
+            selectedPromptIndex: null,
+            timeLeft: 1500, // 25 minutes in seconds
+            timerInterval: null,
+            score: 0,
+            twistUsed: false,
+            twistContent: "",
+            wordCount: 0,
+            editTimeLeft: 120, // 2 minutes for editing
+            isEditing: false,
+            startTime: null
+        };
+
+        // Story Prompts (Hard Mode)
+        const storyPrompts = [
+            {
+                id: 1,
+                title: "Time Reversal",
+                description: "Write a story where time moves backward. The protagonist experiences their life in reverse, from death to birth.",
+                difficulty: "Hard",
+                wordGoal: 400,
+                twists: [
+                    "Include a character who ages forward while everyone else moves backward",
+                    "Add an object that remains unaffected by time reversal",
+                    "The protagonist discovers they can control the direction of time"
+                ]
+            },
+            {
+                id: 2,
+                title: "The Last Message",
+                description: "Humanity receives the final message from a dying alien civilization. What does it say and how does humanity respond?",
+                difficulty: "Hard",
+                wordGoal: 450,
+                twists: [
+                    "The message is in a language that can only be understood through emotions",
+                    "The message contains a warning about humanity's own future",
+                    "The message is a recipe for a weapon that could save or destroy Earth"
+                ]
+            },
+            {
+                id: 3,
+                title: "Memory Thief",
+                description: "In a world where memories can be bought and sold, a character discovers they're immune to memory theft.",
+                difficulty: "Hard",
+                wordGoal: 400,
+                twists: [
+                    "The protagonist's immunity comes with a terrible side effect",
+                    "They can see the stolen memories of others",
+                    "A memory thief becomes obsessed with stealing their untouchable memories"
+                ]
+            },
+            {
+                id: 4,
+                title: "Library of Lost Things",
+                description: "A secret library contains books of things that never existed. Reading them makes them real.",
+                difficulty: "Hard",
+                wordGoal: 450,
+                twists: [
+                    "The librarian is a character from one of the books",
+                    "A book is accidentally destroyed, threatening reality",
+                    "The protagonist writes their own book to escape a situation"
+                ]
+            },
+            {
+                id: 5,
+                title: "Colorless World",
+                description: "One day, all color disappears from the world except for what one person can see.",
+                difficulty: "Hard",
+                wordGoal: 400,
+                twists: [
+                    "The color returns in exchange for memories",
+                    "Different colors represent different emotions that can be manipulated",
+                    "The protagonist can transfer color vision to others, but at a cost"
+                ]
+            }
+        ];
+
+        // Writing Helpers for 6th Grade Students
+        const writingHelpers = {
+            connectors: [
+                "First", "Then", "Next", "After that", "Suddenly",
+                "Meanwhile", "Later", "Finally", "In the end", "As a result",
+                "Because", "Therefore", "However", "Although", "Even though",
+                "For example", "For instance", "Specifically", "In addition", "Also",
+                "Furthermore", "Moreover", "On the other hand", "Similarly", "Likewise",
+                "At the same time", "Eventually", "In conclusion", "To summarize", "Overall"
+            ],
+            
+            storyStarters: [
+                "It was a dark and stormy night when...",
+                "I never expected what happened next...",
+                "The secret had been hidden for centuries...",
+                "Everything changed when I found the mysterious object...",
+                "The message arrived on a rainy Tuesday afternoon...",
+                "I woke up to find the world had transformed...",
+                "The door creaked open, revealing something unbelievable...",
+                "My heart raced as I discovered the truth...",
+                "The adventure began with a simple mistake...",
+                "No one believed me when I told them what I saw..."
+            ],
+            
+            vocabulary: {
+                time: ["ancient", "future", "moment", "century", "decade", "eternal", "instant", "timeless"],
+                mystery: ["secret", "hidden", "mysterious", "unknown", "puzzle", "enigma", "riddle", "clue"],
+                emotion: ["excited", "frightened", "curious", "surprised", "anxious", "hopeful", "determined", "confused"],
+                action: ["discovered", "explored", "created", "solved", "escaped", "challenged", "transformed", "achieved"],
+                description: ["magnificent", "gigantic", "sparkling", "gloomy", "peaceful", "chaotic", "majestic", "eerie"]
+            }
+        };
+
+        // Initialize the game
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load saved game data
+            loadStoryWeaverData();
+            
+            // Set up header controls
+            setupHeaderControls();
+            
+            // Render prompts
+            renderPrompts();
+            
+            // Set up event listeners
+            setupEventListeners();
+        });
+
+        // Load game data from localStorage
+        function loadStoryWeaverData() {
+            const savedData = localStorage.getItem('storyWeaverData');
+            if (savedData) {
+                const parsedData = JSON.parse(savedData);
+                storyWeaverData.player = { ...storyWeaverData.player, ...parsedData.player };
+                document.getElementById('headerUserName').textContent = parsedData.player.name || "Story Writer";
+            }
+        }
+
+        // Save game data to localStorage
+        function saveStoryWeaverData() {
+            localStorage.setItem('storyWeaverData', JSON.stringify({
+                player: storyWeaverData.player
+            }));
+        }
+
+        // Set up header controls
+        function setupHeaderControls() {
+            // Profile dropdown toggle
+            document.getElementById('profileToggle').addEventListener('click', function() {
+                document.getElementById('profileDropdown').classList.toggle('show');
+            });
+
+            // Language toggle
+            document.getElementById('languageToggle').addEventListener('click', function() {
+                alert('English language selected for this game.');
+            });
+
+            // Navigation
+            const navItems = ['navDashboard', 'navScience', 'navTechnology', 'navEnglish', 'navMaths'];
+            navItems.forEach(item => {
+                document.getElementById(item).addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const itemName = item.replace('nav', '');
+                    alert(`Navigating to ${itemName}${itemName === 'English' ? ' (Creative Writing)' : ''}`);
+                });
+            });
+
+            // Profile dropdown items
+            document.getElementById('dropdownProfile').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Opening writer profile');
+            });
+
+            document.getElementById('dropdownSettings').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Opening settings');
+            });
+
+            document.getElementById('dropdownLogout').addEventListener('click', function(e) {
+                e.preventDefault();
+                if (confirm('Are you sure you want to logout?')) {
+                    alert('Logged out successfully');
+                }
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#profileToggle') && !e.target.closest('#profileDropdown')) {
+                    document.getElementById('profileDropdown').classList.remove('show');
+                }
+            });
+        }
+
+        // Render prompts on the prompt selection screen
+        function renderPrompts() {
+            const promptGrid = document.getElementById('promptGrid');
+            promptGrid.innerHTML = '';
+            
+            // Select 3 random prompts
+            const selectedPrompts = getRandomPrompts(3);
+            
+            selectedPrompts.forEach((prompt, index) => {
+                const promptCard = document.createElement('div');
+                promptCard.className = 'prompt-card';
+                promptCard.dataset.index = index;
+                promptCard.innerHTML = `
+                    <div class="prompt-icon">
+                        <i class="fas fa-feather-alt"></i>
+                    </div>
+                    <h3 class="prompt-title">${prompt.title}</h3>
+                    <p class="prompt-desc">${prompt.description}</p>
+                    <div class="prompt-difficulty">${prompt.difficulty} • ${prompt.wordGoal} words minimum</div>
+                    <div class="prompt-requirements">
+                        <p><i class="fas fa-clock"></i> 25 minutes</p>
+                        <p><i class="fas fa-file-word"></i> ${prompt.wordGoal} words minimum</p>
+                        <p><i class="fas fa-star"></i> 150 max points</p>
+                        <p><i class="fas fa-sync-alt"></i> Mandatory twist</p>
+                        <p><i class="fas fa-hands-helping"></i> Writing helpers available</p>
+                    </div>
+                `;
+                
+                promptCard.addEventListener('click', () => selectPrompt(prompt, index));
+                
+                promptGrid.appendChild(promptCard);
+            });
+        }
+
+        // Get random prompts
+        function getRandomPrompts(count) {
+            const shuffled = [...storyPrompts].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        // Select a prompt
+        function selectPrompt(prompt, index) {
+            // Remove selection from all prompts
+            document.querySelectorAll('.prompt-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Select this prompt
+            document.querySelector(`.prompt-card[data-index="${index}"]`).classList.add('selected');
+            storyWeaverData.currentPrompt = prompt;
+            storyWeaverData.selectedPromptIndex = index;
+            
+            // Enable start button
+            document.getElementById('startWritingBtn').disabled = false;
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Start writing button
+            document.getElementById('startWritingBtn').addEventListener('click', startWriting);
+            
+            // Back to prompts button
+            document.getElementById('backToPromptsBtn').addEventListener('click', backToPrompts);
+            
+            // Submit story button
+            document.getElementById('submitStoryBtn').addEventListener('click', submitStory);
+            
+            // Edit time button
+            document.getElementById('editTimeBtn').addEventListener('click', enableEditMode);
+            
+            // New story button
+            document.getElementById('newStoryBtn').addEventListener('click', newStory);
+            
+            // View profile button
+            document.getElementById('viewProfileBtn').addEventListener('click', viewProfile);
+            
+            // Story editor input
+            document.getElementById('storyEditor').addEventListener('input', updateWordCount);
+        }
+
+        // Start writing
+        function startWriting() {
+            if (!storyWeaverData.currentPrompt) return;
+            
+            // Switch to writing screen
+            document.getElementById('promptSelectionScreen').style.display = 'none';
+            document.getElementById('writingScreen').style.display = 'block';
+            document.getElementById('scoringScreen').style.display = 'none';
+            
+            // Set up the writing screen
+            document.getElementById('currentPromptTitle').textContent = storyWeaverData.currentPrompt.title;
+            document.getElementById('currentPromptDesc').textContent = storyWeaverData.currentPrompt.description;
+            document.getElementById('wordGoal').textContent = storyWeaverData.currentPrompt.wordGoal;
+            document.getElementById('wordGoalDisplay').textContent = storyWeaverData.currentPrompt.wordGoal;
+            
+            // Reset story editor
+            document.getElementById('storyEditor').value = "";
+            storyWeaverData.currentStory = "";
+            storyWeaverData.wordCount = 0;
+            storyWeaverData.twistUsed = false;
+            storyWeaverData.isEditing = false;
+            storyWeaverData.editTimeLeft = 120;
+            storyWeaverData.startTime = new Date();
+            
+            // Load writing helpers
+            loadWritingHelpers();
+            
+            // Start the timer
+            startStoryTimer();
+            
+            // Set twist timer (appears after 10 minutes)
+            setTimeout(showTwist, 600000); // 10 minutes
+            
+            // Set edit mode timer (last 2 minutes)
+            setTimeout(() => {
+                if (!storyWeaverData.isEditing && document.getElementById('writingScreen').style.display !== 'none') {
+                    enableEditMode();
+                }
+            }, 1380000); // 23 minutes (25 min total - 2 min edit)
+        }
+
+        // Load writing helpers
+        function loadWritingHelpers() {
+            const connectorsGrid = document.getElementById('connectorsGrid');
+            const storyStartersContainer = document.getElementById('storyStarters');
+            const vocabularyContainer = document.getElementById('vocabularyWords');
+            
+            // Clear existing helpers
+            connectorsGrid.innerHTML = '';
+            storyStartersContainer.innerHTML = '';
+            vocabularyContainer.innerHTML = '';
+            
+            // Load connectors
+            writingHelpers.connectors.forEach(connector => {
+                const connectorTag = document.createElement('div');
+                connectorTag.className = 'connector-tag';
+                connectorTag.textContent = connector;
+                connectorTag.addEventListener('click', () => {
+                    insertTextAtCursor(connector + ' ');
+                    connectorTag.classList.add('pulse');
+                    setTimeout(() => connectorTag.classList.remove('pulse'), 300);
+                });
+                connectorsGrid.appendChild(connectorTag);
+            });
+            
+            // Load story starters
+            writingHelpers.storyStarters.forEach(starter => {
+                const starterDiv = document.createElement('div');
+                starterDiv.className = 'story-starter';
+                starterDiv.innerHTML = `"${starter}"`;
+                starterDiv.addEventListener('click', () => {
+                    insertTextAtCursor(starter + ' ');
+                    starterDiv.classList.add('pulse');
+                    setTimeout(() => starterDiv.classList.remove('pulse'), 300);
+                });
+                storyStartersContainer.appendChild(starterDiv);
+            });
+            
+            // Load vocabulary words
+            Object.keys(writingHelpers.vocabulary).forEach(category => {
+                const categoryTitle = document.createElement('div');
+                categoryTitle.style.color = '#64748b';
+                categoryTitle.style.fontSize = '0.8rem';
+                categoryTitle.style.marginTop = '8px';
+                categoryTitle.style.marginBottom = '4px';
+                categoryTitle.style.textTransform = 'capitalize';
+                categoryTitle.textContent = category + ':';
+                vocabularyContainer.appendChild(categoryTitle);
+                
+                writingHelpers.vocabulary[category].forEach(word => {
+                    const wordSpan = document.createElement('span');
+                    wordSpan.className = 'vocabulary-word';
+                    wordSpan.textContent = word;
+                    wordSpan.addEventListener('click', () => {
+                        insertTextAtCursor(word + ' ');
+                        wordSpan.classList.add('pulse');
+                        setTimeout(() => wordSpan.classList.remove('pulse'), 300);
+                    });
+                    vocabularyContainer.appendChild(wordSpan);
+                });
+            });
+        }
+
+        // Insert text at cursor position
+        function insertTextAtCursor(text) {
+            const editor = document.getElementById('storyEditor');
+            const startPos = editor.selectionStart;
+            const endPos = editor.selectionEnd;
+            const currentText = editor.value;
+            
+            // Insert the text at cursor position
+            editor.value = currentText.substring(0, startPos) + text + currentText.substring(endPos);
+            
+            // Update cursor position
+            editor.selectionStart = editor.selectionEnd = startPos + text.length;
+            
+            // Focus back on editor
+            editor.focus();
+            
+            // Trigger input event to update word count
+            editor.dispatchEvent(new Event('input'));
+        }
+
+        // Start the story timer
+        function startStoryTimer() {
+            clearInterval(storyWeaverData.timerInterval);
+            storyWeaverData.timeLeft = 1500; // 25 minutes
+            updateTimerDisplay();
+            
+            storyWeaverData.timerInterval = setInterval(() => {
+                storyWeaverData.timeLeft--;
+                updateTimerDisplay();
+                
+                if (storyWeaverData.timeLeft <= 0) {
+                    clearInterval(storyWeaverData.timerInterval);
+                    if (!storyWeaverData.isEditing) {
+                        submitStory();
+                    }
+                }
+                
+                // Warning when 5 minutes left
+                if (storyWeaverData.timeLeft === 300) {
+                    document.getElementById('timeRemainingDisplay').classList.add('time-warning');
+                    document.getElementById('timeRemainingDisplay').innerHTML = '<i class="fas fa-exclamation-triangle"></i> 5:00 remaining';
+                }
+            }, 1000);
+        }
+
+        // Update timer display
+        function updateTimerDisplay() {
+            const minutes = Math.floor(storyWeaverData.timeLeft / 60);
+            const seconds = storyWeaverData.timeLeft % 60;
+            
+            document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById('timeRemainingDisplay').textContent = `${minutes}:${seconds.toString().padStart(2, '0')} remaining`;
+            
+            // Update progress bar
+            const progress = ((1500 - storyWeaverData.timeLeft) / 1500) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+        }
+
+        // Update word count
+        function updateWordCount() {
+            const text = document.getElementById('storyEditor').value;
+            const words = text.trim().split(/\s+/).filter(word => word.length > 0);
+            storyWeaverData.wordCount = words.length;
+            storyWeaverData.currentStory = text;
+            
+            document.getElementById('wordCount').textContent = storyWeaverData.wordCount;
+            
+            // Update word count display
+            const wordCountElement = document.getElementById('wordCountDisplay');
+            if (storyWeaverData.wordCount >= storyWeaverData.currentPrompt.wordGoal) {
+                wordCountElement.classList.add('goal-met');
+                wordCountElement.innerHTML = `Words: <strong>${storyWeaverData.wordCount}</strong>/${storyWeaverData.currentPrompt.wordGoal}`;
+            } else {
+                wordCountElement.classList.remove('goal-met');
+                wordCountElement.innerHTML = `Words: ${storyWeaverData.wordCount}/${storyWeaverData.currentPrompt.wordGoal}`;
+            }
+            
+            // Enable submit button if minimum word count reached
+            const submitBtn = document.getElementById('submitStoryBtn');
+            submitBtn.disabled = storyWeaverData.wordCount < storyWeaverData.currentPrompt.wordGoal;
+        }
+
+        // Show twist
+        function showTwist() {
+            if (!storyWeaverData.currentPrompt || storyWeaverData.twistUsed) return;
+            
+            const twistCard = document.getElementById('twistCard');
+            const twistText = document.getElementById('twistText');
+            
+            // Select a random twist
+            const twistIndex = Math.floor(Math.random() * storyWeaverData.currentPrompt.twists.length);
+            const twist = storyWeaverData.currentPrompt.twists[twistIndex];
+            twistText.textContent = `Add this twist to your story: "${twist}"`;
+            
+            // Store twist info
+            storyWeaverData.twistContent = twist;
+            
+            // Show the twist card
+            twistCard.style.display = 'block';
+            
+            // Auto-hide after 60 seconds
+            setTimeout(() => {
+                twistCard.style.display = 'none';
+            }, 60000);
+        }
+
+        // Enable edit mode (last 2 minutes)
+        function enableEditMode() {
+            if (storyWeaverData.isEditing || storyWeaverData.timeLeft > 120) {
+                // If there's more than 2 minutes left, jump to last 2 minutes
+                storyWeaverData.timeLeft = 120;
+            }
+            
+            storyWeaverData.isEditing = true;
+            document.getElementById('editTimeBtn').innerHTML = '<i class="fas fa-edit"></i> Editing Mode Active';
+            document.getElementById('editTimeBtn').classList.add('pulse');
+            document.getElementById('editTimeBtn').disabled = true;
+            
+            // Update timer to show edit mode
+            updateTimerDisplay();
+        }
+
+        // Back to prompts
+        function backToPrompts() {
+            if (confirm('Are you sure? Your current story will be lost.')) {
+                clearInterval(storyWeaverData.timerInterval);
+                
+                document.getElementById('promptSelectionScreen').style.display = 'block';
+                document.getElementById('writingScreen').style.display = 'none';
+                document.getElementById('scoringScreen').style.display = 'none';
+                
+                // Reset UI
+                document.getElementById('storyEditor').value = "";
+                document.getElementById('twistCard').style.display = 'none';
+                document.getElementById('timeRemainingDisplay').classList.remove('time-warning');
+                document.getElementById('editTimeBtn').innerHTML = '<i class="fas fa-edit"></i> Edit Mode (2 min)';
+                document.getElementById('editTimeBtn').classList.remove('pulse');
+                document.getElementById('editTimeBtn').disabled = false;
+                
+                updateGameStats();
+            }
+        }
+
+        // Submit story
+        function submitStory() {
+            clearInterval(storyWeaverData.timerInterval);
+            
+            // Save story
+            storyWeaverData.currentStory = document.getElementById('storyEditor').value;
+            
+            // Switch to scoring screen
+            document.getElementById('promptSelectionScreen').style.display = 'none';
+            document.getElementById('writingScreen').style.display = 'none';
+            document.getElementById('scoringScreen').style.display = 'block';
+            
+            // Show loading animation
+            document.getElementById('loadingEvaluation').style.display = 'block';
+            document.getElementById('resultsBreakdown').style.display = 'none';
+            
+            // Simulate evaluation process
+            setTimeout(evaluateStory, 3000);
+        }
+
+        // Evaluate the story
+        function evaluateStory() {
+            // Hide loading animation
+            document.getElementById('loadingEvaluation').style.display = 'none';
+            
+            // Calculate scores
+            const creativityScore = calculateCreativityScore();
+            const structureScore = calculateStructureScore();
+            const languageScore = calculateLanguageScore();
+            const bonusScore = calculateBonusScore();
+            
+            // Total score
+            const totalScore = creativityScore + structureScore + languageScore + bonusScore;
+            storyWeaverData.score = totalScore;
+            
+            // Update player stats if this is a new best score
+            if (totalScore > storyWeaverData.player.bestScore) {
+                storyWeaverData.player.bestScore = totalScore;
+            }
+            
+            storyWeaverData.player.storiesWritten++;
+            
+            // Calculate writing speed
+            const endTime = new Date();
+            const timeDiff = (endTime - storyWeaverData.startTime) / 1000; // in seconds
+            const wordsPerMinute = Math.round((storyWeaverData.wordCount / timeDiff) * 60);
+            storyWeaverData.player.wordsPerMinute = wordsPerMinute;
+            
+            // Update average creativity
+            const totalStories = storyWeaverData.player.storiesWritten;
+            storyWeaverData.player.avgCreativity = Math.round(
+                ((storyWeaverData.player.avgCreativity * (totalStories - 1)) + (creativityScore / 50 * 100)) / totalStories
+            );
+            
+            // Display scores
+            document.getElementById('creativityScore').textContent = `${creativityScore}/50`;
+            document.getElementById('wordCountBonus').textContent = `${Math.min(10, Math.floor(storyWeaverData.wordCount / 40))}/10`;
+            document.getElementById('twistBonus').textContent = storyWeaverData.twistUsed ? "10/10" : "0/10";
+            
+            document.getElementById('beginningScore').textContent = "8/10";
+            document.getElementById('middleScore').textContent = "12/15";
+            document.getElementById('endingScore').textContent = "12/15";
+            
+            document.getElementById('grammarScore').textContent = "8/10";
+            document.getElementById('vocabularyScore').textContent = "8/10";
+            document.getElementById('flowScore').textContent = "8/10";
+            
+            // Bonus scores
+            const timeBonus = Math.min(10, Math.floor(storyWeaverData.timeLeft / 15));
+            const goalBonus = storyWeaverData.wordCount >= storyWeaverData.currentPrompt.wordGoal ? 5 : 0;
+            const twistIncluded = storyWeaverData.twistUsed ? 5 : 0;
+            const editBonus = storyWeaverData.isEditing ? 5 : 0;
+            const judgeBonus = Math.floor(Math.random() * 6); // 0-5 points
+            
+            document.getElementById('timeBonus').textContent = `${timeBonus}/10`;
+            document.getElementById('goalBonus').textContent = `${goalBonus}/5`;
+            document.getElementById('twistIncluded').textContent = `${twistIncluded}/5`;
+            document.getElementById('editBonus').textContent = `${editBonus}/5`;
+            document.getElementById('judgeBonus').textContent = `${judgeBonus}/5`;
+            
+            document.getElementById('storyScore').textContent = totalScore;
+            
+            // Display story
+            document.getElementById('storyDisplay').textContent = storyWeaverData.currentStory || "No story submitted.";
+            
+            // Show results
+            document.getElementById('resultsBreakdown').style.display = 'block';
+            
+            // Save game data
+            saveStoryWeaverData();
+            
+            // Update score display
+            updateScoreDisplay();
+        }
+
+        // Calculate creativity score (0-50)
+        function calculateCreativityScore() {
+            let score = 25; // Base score
+            
+            // Add points based on word count (up to 10 points)
+            const wordCountBonus = Math.min(10, Math.floor(storyWeaverData.wordCount / 40));
+            score += wordCountBonus;
+            
+            // Check if twist was used (read from story content)
+            const storyText = storyWeaverData.currentStory.toLowerCase();
+            storyWeaverData.twistUsed = storyText.includes(storyWeaverData.twistContent.toLowerCase()) || 
+                                       storyText.includes("twist") ||
+                                       Math.random() > 0.7; // 30% chance even if not explicitly included
+            
+            if (storyWeaverData.twistUsed) {
+                score += 10;
+            }
+            
+            // Random variation for "originality" (0-5 points)
+            const originalityBonus = Math.floor(Math.random() * 6);
+            score += originalityBonus;
+            
+            return Math.min(50, score);
+        }
+
+        // Calculate structure score (0-40)
+        function calculateStructureScore() {
+            let score = 20; // Base score
+            
+            // Check for clear structure (beginning, middle, end)
+            const story = storyWeaverData.currentStory.toLowerCase();
+            const hasBeginning = story.length > 50; // At least some setup
+            const hasMiddle = story.length > 200; // Development
+            const hasEnding = story.trim().endsWith('.') || story.trim().endsWith('!') || story.trim().endsWith('?');
+            
+            if (hasBeginning) score += 8;
+            if (hasMiddle) score += 12;
+            if (hasEnding) score += 12;
+            
+            // Paragraph structure bonus
+            const paragraphs = storyWeaverData.currentStory.split('\n\n').filter(p => p.trim().length > 0);
+            if (paragraphs.length >= 3) score += 3;
+            
+            return Math.min(40, score);
+        }
+
+        // Calculate language score (0-30)
+        function calculateLanguageScore() {
+            let score = 15; // Base score
+            
+            // Grammar check (simplified)
+            const sentences = storyWeaverData.currentStory.split(/[.!?]+/).filter(s => s.trim().length > 0);
+            const avgSentenceLength = storyWeaverData.wordCount / Math.max(1, sentences.length);
+            
+            // Sentence variety bonus
+            if (avgSentenceLength > 8 && avgSentenceLength < 20) {
+                score += 5;
+            }
+            
+            // Vocabulary diversity (simple check)
+            const words = storyWeaverData.currentStory.toLowerCase().split(/\s+/);
+            const uniqueWords = new Set(words);
+            const diversityRatio = uniqueWords.size / words.length;
+            
+            if (diversityRatio > 0.5) {
+                score += 5;
+            }
+            
+            // Spelling/grammar (simulated)
+            const errorRate = Math.random() * 0.1; // 0-10% simulated error rate
+            score += Math.max(0, 5 - Math.floor(errorRate * 50));
+            
+            return Math.min(30, score);
+        }
+
+        // Calculate bonus score (0-30)
+        function calculateBonusScore() {
+            let score = 0;
+            
+            // Time bonus (up to 10 points)
+            const timeBonus = Math.min(10, Math.floor(storyWeaverData.timeLeft / 15));
+            score += timeBonus;
+            
+            // Word goal bonus (5 points)
+            if (storyWeaverData.wordCount >= storyWeaverData.currentPrompt.wordGoal) {
+                score += 5;
+            }
+            
+            // Twist bonus (5 points if twist was included)
+            if (storyWeaverData.twistUsed) {
+                score += 5;
+            }
+            
+            // Edit mode bonus (5 points if used)
+            if (storyWeaverData.isEditing) {
+                score += 5;
+            }
+            
+            // Random "judge's choice" bonus
+            score += Math.floor(Math.random() * 6); // 0-5 points
+            
+            return Math.min(30, score);
+        }
+
+        // Update game stats during play
+        function updateGameStats() {
+            document.getElementById('scoreDisplay').textContent = `Score: ${storyWeaverData.score}/150`;
+        }
+
+        // Update score display
+        function updateScoreDisplay() {
+            document.getElementById('scoreDisplay').textContent = `Score: ${storyWeaverData.score}/150`;
+        }
+
+        // New story
+        function newStory() {
+            // Reset game state
+            storyWeaverData.currentPrompt = null;
+            storyWeaverData.currentStory = "";
+            storyWeaverData.selectedPromptIndex = null;
+            storyWeaverData.timeLeft = 1500;
+            storyWeaverData.score = 0;
+            storyWeaverData.twistUsed = false;
+            storyWeaverData.twistContent = "";
+            storyWeaverData.wordCount = 0;
+            storyWeaverData.editTimeLeft = 120;
+            storyWeaverData.isEditing = false;
+            
+            // Clear editor
+            document.getElementById('storyEditor').value = "";
+            document.getElementById('twistCard').style.display = 'none';
+            
+            // Switch to prompt selection
+            document.getElementById('promptSelectionScreen').style.display = 'block';
+            document.getElementById('writingScreen').style.display = 'none';
+            document.getElementById('scoringScreen').style.display = 'none';
+            
+            // Render new prompts
+            renderPrompts();
+            
+            // Reset UI
+            document.getElementById('startWritingBtn').disabled = true;
+            document.getElementById('timeRemainingDisplay').classList.remove('time-warning');
+            document.getElementById('editTimeBtn').innerHTML = '<i class="fas fa-edit"></i> Edit Mode (2 min)';
+            document.getElementById('editTimeBtn').classList.remove('pulse');
+            document.getElementById('editTimeBtn').disabled = false;
+            
+            // Update game stats
+            updateGameStats();
+        }
+
+        // View profile
+        function viewProfile() {
+            alert(`Writer Profile:\n\nGrade: 6\nStories Written: ${storyWeaverData.player.storiesWritten}\nBest Score: ${storyWeaverData.player.bestScore}/150\nAverage Creativity: ${storyWeaverData.player.avgCreativity}%\nWords/Minute: ${storyWeaverData.player.wordsPerMinute}\nWriting Level: ${getWritingLevel(storyWeaverData.player.bestScore)}`);
+        }
+
+        // Get writing level based on score
+        function getWritingLevel(score) {
+            if (score >= 130) return "Master Storyteller";
+            if (score >= 100) return "Creative Writer";
+            if (score >= 70) return "Developing Writer";
+            if (score >= 40) return "Beginner Writer";
+            return "New Writer";
+        }
+    </script>
+</body>
+</html>

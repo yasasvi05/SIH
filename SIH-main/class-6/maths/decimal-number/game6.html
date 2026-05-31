@@ -1,0 +1,1815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decimal Splash - STEM Learn Odisha</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* BASE STYLES - Consistent with Fractions Quest */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #f0f7ff;
+            color: #1e293b;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* HEADER - Matching Fractions Quest */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            position: relative;
+        }
+        
+        .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            flex-shrink: 0;
+        }
+        
+        .logo-icon { 
+            font-size: 2.2rem; 
+            background: white; 
+            color: #2a69ac; 
+            width: 55px; 
+            height: 55px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+        }
+        
+        .logo-text { 
+            font-size: 1.8rem; 
+            font-weight: 700; 
+            line-height: 1.2;
+        }
+        
+        .logo-text span { 
+            color: #38b2ac; 
+            font-weight: 800; 
+        }
+        
+        /* GAME HEADER */
+        .game-header {
+            background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9)), url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            border-bottom: 5px solid #38b2ac;
+        }
+        
+        /* LEVEL SELECTION */
+        .level-selection {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 40px 0;
+            flex-wrap: wrap;
+        }
+        
+        .level-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 300px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            border: 3px solid #3182ce;
+            position: relative;
+        }
+        
+        .level-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .level-card.locked {
+            opacity: 0.7;
+            cursor: not-allowed;
+            border-color: #cbd5e0;
+        }
+        
+        .level-card.locked:hover {
+            transform: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .level-icon {
+            font-size: 3rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+        
+        .level-card.locked .level-icon {
+            color: #cbd5e0;
+        }
+        
+        .lock-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: #a0aec0;
+            z-index: 10;
+            display: none;
+        }
+        
+        .level-card.locked .lock-icon {
+            display: block;
+        }
+        
+        .level-card h3 {
+            margin-bottom: 10px;
+            color: #1a365d;
+        }
+        
+        .level-card.locked h3 {
+            color: #a0aec0;
+        }
+        
+        .level-card p {
+            flex-grow: 1;
+            margin-bottom: 20px;
+            color: #4a5568;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+        
+        .level-card.locked p {
+            color: #cbd5e0;
+        }
+        
+        /* GAME STATS */
+        #game-stats-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px 25px;
+            margin: -30px auto 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+            max-width: 95%;
+        }
+        
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .score-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .score, .level-info, .timer-container {
+            background: #f7fafc;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border-left: 4px solid #4299e1;
+            min-width: 180px;
+        }
+        
+        .level-info {
+            border-left-color: #38a169;
+        }
+        
+        .timer-container {
+            border-left-color: #ed8936;
+        }
+        
+        .score-value, .level-value, .timer-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1a365d;
+            display: block;
+            margin-top: 5px;
+        }
+        
+        .score-label, .level-label, .timer-label {
+            font-size: 0.9rem;
+            color: #4a5568;
+            font-weight: 500;
+            display: block;
+        }
+        
+        .timer-value.warning {
+            color: #e53e3e;
+        }
+        
+        /* GAME CONTAINERS */
+        .game-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            min-height: 600px;
+        }
+        
+        .game-instructions {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            border: 2px dashed #4299e1;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            max-width: 800px;
+        }
+        
+        /* LEVEL 1: FISHING POND */
+        .fishing-pond {
+            width: 100%;
+            max-width: 1000px;
+            height: 400px;
+            background: linear-gradient(to bottom, #63b3ed, #3182ce);
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            border: 8px solid #2c5282;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+        
+        .water-surface {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            animation: wave 3s infinite linear;
+        }
+        
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(50px); }
+        }
+        
+        /* LEVEL 2: DECIMAL ISLAND */
+        .decimal-island {
+            width: 100%;
+            max-width: 1000px;
+            height: 400px;
+            background: linear-gradient(to bottom, #48bb78, #2f855a);
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            border: 8px solid #276749;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            background-image: 
+                radial-gradient(circle at 20% 80%, #ecc94b 20px, transparent 20px),
+                radial-gradient(circle at 40% 60%, #ecc94b 15px, transparent 15px),
+                radial-gradient(circle at 60% 40%, #ecc94b 25px, transparent 25px),
+                radial-gradient(circle at 80% 20%, #ecc94b 18px, transparent 18px);
+        }
+        
+        .island-title {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 700;
+            color: #1a365d;
+            z-index: 5;
+        }
+        
+        /* LEVEL 3: DECIMAL RACETRACK */
+        .racetrack {
+            width: 100%;
+            max-width: 1000px;
+            height: 400px;
+            background: linear-gradient(to bottom, #e2e8f0, #cbd5e0);
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            border: 8px solid #4a5568;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+        
+        .track-lane {
+            position: absolute;
+            width: 100%;
+            height: 80px;
+            background: #4a5568;
+            left: 0;
+        }
+        
+        .track-lane:nth-child(1) { top: 50px; }
+        .track-lane:nth-child(2) { top: 150px; }
+        .track-lane:nth-child(3) { top: 250px; }
+        
+        .track-lane::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 5px;
+            background: repeating-linear-gradient(
+                90deg,
+                white,
+                white 20px,
+                transparent 20px,
+                transparent 40px
+            );
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        /* COMMON ELEMENTS */
+        .fish, .decimal-treasure, .race-car {
+            position: absolute;
+            width: 80px;
+            height: 40px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 5;
+        }
+        
+        .fish:hover, .decimal-treasure:hover {
+            transform: scale(1.1);
+        }
+        
+        .fish-body, .treasure-body, .car-body {
+            position: absolute;
+            width: 70px;
+            height: 30px;
+            border-radius: 50%;
+            top: 5px;
+            left: 5px;
+        }
+        
+        .fish-body {
+            background: linear-gradient(45deg, #e53e3e, #f56565);
+        }
+        
+        .treasure-body {
+            background: linear-gradient(45deg, #d69e2e, #f6ad55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #744210;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .car-body {
+            background: linear-gradient(45deg, #3182ce, #63b3ed);
+            border-radius: 10px 50% 50% 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .car-wheel {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: #1a202c;
+            border-radius: 50%;
+            bottom: 0;
+        }
+        
+        .car-wheel:nth-child(2) { left: 15px; }
+        .car-wheel:nth-child(3) { right: 15px; }
+        
+        .fish-tail {
+            position: absolute;
+            width: 20px;
+            height: 30px;
+            background: #c53030;
+            border-radius: 50%;
+            top: 5px;
+            left: 60px;
+            transform: rotate(45deg);
+        }
+        
+        .fish-eye, .treasure-eye {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            top: 12px;
+            left: 15px;
+        }
+        
+        .decimal-value {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #1a365d;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 10;
+            min-width: 50px;
+            text-align: center;
+        }
+        
+        .fish:hover .decimal-value,
+        .decimal-treasure:hover .decimal-value,
+        .race-car:hover .decimal-value {
+            display: block;
+        }
+        
+        /* LEVEL 2: TREASURE CHESTS */
+        .treasure-chest {
+            position: absolute;
+            width: 100px;
+            height: 80px;
+            background: linear-gradient(45deg, #d69e2e, #b7791f);
+            border-radius: 10px;
+            cursor: pointer;
+            z-index: 5;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #744210;
+            border: 3px solid #744210;
+        }
+        
+        .treasure-chest:hover {
+            transform: scale(1.1);
+        }
+        
+        .chest-lid {
+            position: absolute;
+            width: 100px;
+            height: 20px;
+            background: linear-gradient(45deg, #b7791f, #d69e2e);
+            top: -20px;
+            border-radius: 10px 10px 0 0;
+            border: 3px solid #744210;
+            border-bottom: none;
+            transition: transform 0.3s ease;
+        }
+        
+        .treasure-chest.open .chest-lid {
+            transform: rotate(-45deg);
+            transform-origin: right top;
+        }
+        
+        /* FISHING ROD */
+        .fishing-rod {
+            position: absolute;
+            bottom: -20px;
+            right: 100px;
+            width: 10px;
+            height: 250px;
+            background: #8b4513;
+            transform-origin: top center;
+            transform: rotate(-30deg);
+            z-index: 10;
+            transition: transform 0.5s ease;
+        }
+        
+        .fishing-line {
+            position: absolute;
+            bottom: 250px;
+            right: 95px;
+            width: 2px;
+            height: 150px;
+            background: white;
+            transform-origin: top center;
+            transform: rotate(-30deg);
+        }
+        
+        .hook {
+            position: absolute;
+            bottom: 100px;
+            right: 93px;
+            width: 15px;
+            height: 15px;
+            background: #d69e2e;
+            border-radius: 50% 50% 0 50%;
+            transform: rotate(45deg);
+            z-index: 10;
+        }
+        
+        /* CATCH BASKET & TREASURE COLLECTION */
+        .catch-area {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            border: 3px solid #38a169;
+        }
+        
+        .catch-title {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #1a365d;
+        }
+        
+        .order-type {
+            font-weight: 700;
+            color: #3182ce;
+        }
+        
+        .catch-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            min-height: 80px;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 8px;
+        }
+        
+        .caught-item {
+            background: #38a169;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: popIn 0.3s ease;
+        }
+        
+        .caught-item.treasure {
+            background: #d69e2e;
+        }
+        
+        .caught-item.race {
+            background: #3182ce;
+        }
+        
+        @keyframes popIn {
+            0% { transform: scale(0); }
+            100% { transform: scale(1); }
+        }
+        
+        /* RACE TRACK CONTROLS */
+        .race-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .race-tracker {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            min-width: 200px;
+            text-align: center;
+        }
+        
+        /* FEEDBACK */
+        .feedback {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 15px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-align: center;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .feedback.correct {
+            color: #38a169;
+            background: #f0fff4;
+            border: 2px solid #38a169;
+        }
+        
+        .feedback.wrong {
+            color: #e53e3e;
+            background: #fff5f5;
+            border: 2px solid #e53e3e;
+        }
+        
+        /* BUTTONS */
+        .game-btn {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin: 10px;
+        }
+        
+        .game-btn:hover {
+            background: #3182ce;
+        }
+        
+        .game-btn:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+        }
+        
+        .game-btn.secondary {
+            background: #38a169;
+        }
+        
+        .game-btn.secondary:hover {
+            background: #2f855a;
+        }
+        
+        /* MODALS */
+        .level-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            display: none;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .modal-title {
+            color: #1a365d;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        
+        .modal-text {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            color: #4a5568;
+        }
+        
+        /* FOOTER */
+        footer {
+            background: #1a365d;
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+        
+        .copyright {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+        
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            .game-stats {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .score-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .score, .level-info, .timer-container {
+                width: 100%;
+                min-width: auto;
+            }
+            
+            .fishing-pond, .decimal-island, .racetrack {
+                height: 300px;
+            }
+            
+            .level-card {
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            .race-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .fish, .decimal-treasure, .race-car {
+                width: 60px;
+                height: 30px;
+            }
+            
+            .fish-body, .treasure-body, .car-body {
+                width: 50px;
+                height: 20px;
+            }
+            
+            .fish-tail {
+                left: 45px;
+            }
+            
+            .decimal-value {
+                font-size: 1rem;
+            }
+            
+            .treasure-chest {
+                width: 80px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+            
+            .chest-lid {
+                width: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon"><i class="fas fa-water"></i></div>
+                    <div class="logo-text">STEM Learn <span>Odisha</span></div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- GAME HEADER -->
+    <section class="game-header">
+        <div class="container">
+            <h1>Decimal Splash: Adventure Through Three Worlds!</h1>
+            <p>Master decimal skills across three unique challenges - each unlocked by completing the previous!</p>
+        </div>
+    </section>
+    
+    <!-- GAME STATS -->
+    <div class="container" id="game-stats-container">
+        <div class="game-stats">
+            <div class="score-container">
+                <div class="score">
+                    <span class="score-label">Score</span>
+                    <span id="score" class="score-value">0</span>
+                </div>
+                <div class="level-info">
+                    <span class="level-label">Current Level</span>
+                    <span id="current-level" class="level-value">1 - Fishing Pond</span>
+                </div>
+                <div class="timer-container">
+                    <span class="timer-label">Time Left</span>
+                    <span id="timer" class="timer-value">--</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- LEVEL SELECTION -->
+    <div class="container level-selection" id="level-selection">
+        <div class="level-card" id="level-card-1" data-level="1">
+            <div class="level-icon"><i class="fas fa-fish"></i></div>
+            <h3>Level 1: Fishing Pond</h3>
+            <p>Catch fish in ascending decimal order. Learn decimal comparison and ordering.</p>
+            <button class="game-btn" onclick="startLevel(1)">Start Level 1</button>
+        </div>
+        <div class="level-card locked" id="level-card-2" data-level="2">
+            <div class="lock-icon"><i class="fas fa-lock"></i></div>
+            <div class="level-icon"><i class="fas fa-gem"></i></div>
+            <h3>Level 2: Treasure Island</h3>
+            <p>Collect decimal treasures and solve place value puzzles. Unlock after completing Level 1.</p>
+            <button class="game-btn" disabled>Locked</button>
+        </div>
+        <div class="level-card locked" id="level-card-3" data-level="3">
+            <div class="lock-icon"><i class="fas fa-lock"></i></div>
+            <div class="level-icon"><i class="fas fa-flag-checkered"></i></div>
+            <h3>Level 3: Decimal Raceway</h3>
+            <p>Race decimal cars and solve conversion challenges. Unlock after completing Level 2.</p>
+            <button class="game-btn" disabled>Locked</button>
+        </div>
+    </div>
+    
+    <!-- LEVEL 1: FISHING POND -->
+    <div class="container game-container" id="level-1-container">
+        <div class="game-instructions">
+            <h2>Level 1: Fishing Pond</h2>
+            <p>Catch fish in ascending decimal order. Each fish has a decimal value. Click on them from smallest to largest.</p>
+            <p><strong>Target: </strong><span id="level-1-target">10</span> fish | <strong>Time: </strong><span id="level-1-time">60</span> seconds</p>
+        </div>
+        
+        <!-- FISHING POND -->
+        <div class="fishing-pond" id="fishing-pond">
+            <div class="water-surface"></div>
+            <!-- Fish will be generated here dynamically -->
+            <div class="fishing-rod" id="fishing-rod"></div>
+            <div class="fishing-line"></div>
+            <div class="hook" id="hook"></div>
+        </div>
+        
+        <!-- CATCH BASKET -->
+        <div class="catch-area">
+            <h3 class="catch-title">Your Catch: <span class="order-type">Ascending Order</span></h3>
+            <div class="catch-content" id="level-1-basket">
+                <p style="color: #a0aec0; text-align: center; width: 100%;">Your caught fish will appear here...</p>
+            </div>
+        </div>
+        
+        <!-- FEEDBACK AND CONTROLS -->
+        <div class="feedback" id="level-1-feedback"></div>
+        
+        <div>
+            <button class="game-btn secondary" onclick="restartLevel()">
+                <i class="fas fa-redo"></i> Restart Level
+            </button>
+            <button class="game-btn" onclick="backToLevelSelection()">
+                <i class="fas fa-home"></i> Level Selection
+            </button>
+        </div>
+    </div>
+    
+    <!-- LEVEL 2: TREASURE ISLAND -->
+    <div class="container game-container" id="level-2-container">
+        <div class="game-instructions">
+            <h2>Level 2: Treasure Island</h2>
+            <p>Collect decimal treasures and match them to their place value descriptions. Click treasures to reveal values!</p>
+            <p><strong>Target: </strong><span id="level-2-target">8</span> treasures | <strong>Time: </strong><span id="level-2-time">90</span> seconds</p>
+        </div>
+        
+        <!-- TREASURE ISLAND -->
+        <div class="decimal-island" id="decimal-island">
+            <div class="island-title">Decimal Treasure Island</div>
+            <!-- Treasures will be generated here dynamically -->
+        </div>
+        
+        <!-- PLACE VALUE CHALLENGE -->
+        <div class="catch-area">
+            <h3 class="catch-title">Place Value Challenge</h3>
+            <p id="place-value-question" style="text-align: center; margin-bottom: 15px; font-size: 1.1rem;">
+                Find the treasure with: <span id="current-challenge" style="font-weight: bold; color: #3182ce;">0.25 (twenty-five hundredths)</span>
+            </p>
+            <div class="catch-content" id="level-2-collection">
+                <p style="color: #a0aec0; text-align: center; width: 100%;">Your collected treasures will appear here...</p>
+            </div>
+        </div>
+        
+        <!-- FEEDBACK AND CONTROLS -->
+        <div class="feedback" id="level-2-feedback"></div>
+        
+        <div>
+            <button class="game-btn secondary" onclick="restartLevel()">
+                <i class="fas fa-redo"></i> Restart Level
+            </button>
+            <button class="game-btn" onclick="backToLevelSelection()">
+                <i class="fas fa-home"></i> Level Selection
+            </button>
+        </div>
+    </div>
+    
+    <!-- LEVEL 3: DECIMAL RACEWAY -->
+    <div class="container game-container" id="level-3-container">
+        <div class="game-instructions">
+            <h2>Level 3: Decimal Raceway</h2>
+            <p>Race decimal cars by solving conversion problems. Answer correctly to move your car forward!</p>
+            <p><strong>Target: </strong><span id="level-3-target">5</span> laps | <strong>Time: </strong><span id="level-3-time">120</span> seconds</p>
+        </div>
+        
+        <!-- RACETRACK -->
+        <div class="racetrack" id="racetrack">
+            <div class="track-lane"></div>
+            <div class="track-lane"></div>
+            <div class="track-lane"></div>
+            <!-- Cars will be generated here dynamically -->
+        </div>
+        
+        <!-- RACE CONTROLS -->
+        <div class="race-controls">
+            <div class="race-tracker">
+                <h4>Your Car Position</h4>
+                <div id="player-position" style="font-size: 2rem; font-weight: bold; color: #3182ce;">0%</div>
+            </div>
+            <div class="race-tracker">
+                <h4>Conversion Challenge</h4>
+                <p id="conversion-question" style="font-size: 1.1rem; margin: 10px 0;">Convert 0.5 to fraction:</p>
+                <div id="conversion-options" style="display: flex; gap: 10px; justify-content: center;">
+                    <!-- Options will be generated here -->
+                </div>
+            </div>
+            <div class="race-tracker">
+                <h4>Laps Completed</h4>
+                <div id="lap-count" style="font-size: 2rem; font-weight: bold; color: #38a169;">0/5</div>
+            </div>
+        </div>
+        
+        <!-- FEEDBACK AND CONTROLS -->
+        <div class="feedback" id="level-3-feedback"></div>
+        
+        <div>
+            <button class="game-btn secondary" onclick="restartLevel()">
+                <i class="fas fa-redo"></i> Restart Level
+            </button>
+            <button class="game-btn" onclick="backToLevelSelection()">
+                <i class="fas fa-home"></i> Level Selection
+            </button>
+        </div>
+    </div>
+    
+    <!-- LEVEL COMPLETE MODAL -->
+    <div class="level-modal" id="level-complete-modal">
+        <div class="modal-content">
+            <div class="level-icon" id="modal-icon" style="font-size: 4rem; margin-bottom: 20px;"></div>
+            <h2 class="modal-title" id="modal-title">Level 1 Complete!</h2>
+            <p class="modal-text" id="modal-text">Congratulations! You've completed Level 1 and unlocked Level 2!</p>
+            <p id="modal-score" style="font-size: 1.5rem; font-weight: bold; color: #3182ce; margin: 15px 0;">Score: +500</p>
+            <button class="game-btn" id="next-level-btn" onclick="goToNextLevel()">Go to Next Level</button>
+            <button class="game-btn secondary" onclick="backToLevelSelection()">Back to Level Selection</button>
+        </div>
+    </div>
+    
+    <!-- GAME COMPLETE MODAL -->
+    <div class="level-modal" id="game-complete-modal">
+        <div class="modal-content">
+            <i class="fas fa-trophy" style="font-size: 4rem; color: #ecc94b; margin-bottom: 20px;"></i>
+            <h2 class="modal-title">Game Complete!</h2>
+            <p class="modal-text">You've mastered all three decimal worlds! You are now a Decimal Master!</p>
+            <p id="final-score" style="font-size: 1.5rem; font-weight: bold; color: #3182ce; margin: 15px 0;">Final Score: 0</p>
+            <button class="game-btn" onclick="location.reload()">Play Again</button>
+        </div>
+    </div>
+    
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="copyright">
+                &copy; 2024 STEM Learn Odisha. Decimal Splash - Three Worlds of Decimal Adventure.
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Game State Variables
+        let score = 0;
+        let currentLevel = 1;
+        let levelsUnlocked = {1: true, 2: false, 3: false};
+        let gameActive = false;
+        let timerInterval;
+        
+        // Level-specific variables
+        let level1 = {
+            fishCaught: 0,
+            totalFish: 10,
+            timeLeft: 60,
+            fishValues: [],
+            nextExpectedValue: null,
+            caughtValues: []
+        };
+        
+        let level2 = {
+            treasuresCollected: 0,
+            totalTreasures: 8,
+            timeLeft: 90,
+            treasures: [],
+            currentChallenge: null,
+            placeValueDescriptions: []
+        };
+        
+        let level3 = {
+            playerPosition: 0,
+            totalLaps: 5,
+            currentLap: 0,
+            timeLeft: 120,
+            conversionProblems: [],
+            currentProblem: null
+        };
+        
+        // Decimal values pool
+        const decimalValues = [
+            "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9",
+            "0.25", "0.50", "0.75", "1.25", "2.50", "0.33", "0.67", "1.33", "2.67",
+            "0.125", "0.375", "0.625", "0.875", "1.125", "2.375"
+        ];
+        
+        // Place value descriptions
+        const placeValueDescriptions = {
+            "0.1": "one tenth",
+            "0.2": "two tenths",
+            "0.3": "three tenths",
+            "0.4": "four tenths",
+            "0.5": "five tenths or one half",
+            "0.6": "six tenths",
+            "0.7": "seven tenths",
+            "0.8": "eight tenths",
+            "0.9": "nine tenths",
+            "0.25": "twenty-five hundredths or one quarter",
+            "0.50": "fifty hundredths or one half",
+            "0.75": "seventy-five hundredths or three quarters",
+            "0.33": "thirty-three hundredths or one third",
+            "0.67": "sixty-seven hundredths or two thirds",
+            "0.125": "one hundred twenty-five thousandths or one eighth",
+            "0.375": "three hundred seventy-five thousandths or three eighths",
+            "0.625": "six hundred twenty-five thousandths or five eighths",
+            "0.875": "eight hundred seventy-five thousandths or seven eighths"
+        };
+        
+        // Conversion pairs
+        const conversionPairs = {
+            "0.1": "1/10", "0.2": "1/5", "0.25": "1/4", "0.3": "3/10", "0.33": "1/3",
+            "0.4": "2/5", "0.5": "1/2", "0.6": "3/5", "0.67": "2/3", "0.7": "7/10",
+            "0.75": "3/4", "0.8": "4/5", "0.9": "9/10", "0.125": "1/8", "0.375": "3/8",
+            "0.625": "5/8", "0.875": "7/8", "1.25": "5/4", "1.5": "3/2", "2.5": "5/2"
+        };
+        
+        // DOM Elements
+        const scoreEl = document.getElementById('score');
+        const currentLevelEl = document.getElementById('current-level');
+        const timerEl = document.getElementById('timer');
+        const levelSelection = document.getElementById('level-selection');
+        const levelContainers = {
+            1: document.getElementById('level-1-container'),
+            2: document.getElementById('level-2-container'),
+            3: document.getElementById('level-3-container')
+        };
+        const levelCompleteModal = document.getElementById('level-complete-modal');
+        const gameCompleteModal = document.getElementById('game-complete-modal');
+        
+        // Start a specific level
+        function startLevel(level) {
+            if (level > 1 && !levelsUnlocked[level]) return;
+            
+            currentLevel = level;
+            gameActive = true;
+            
+            // Update UI
+            currentLevelEl.textContent = `${level} - ${getLevelName(level)}`;
+            scoreEl.textContent = score;
+            
+            // Hide level selection, show level container
+            levelSelection.style.display = 'none';
+            Object.values(levelContainers).forEach(container => {
+                container.style.display = 'none';
+            });
+            levelContainers[level].style.display = 'flex';
+            
+            // Initialize level
+            switch(level) {
+                case 1:
+                    initLevel1();
+                    break;
+                case 2:
+                    initLevel2();
+                    break;
+                case 3:
+                    initLevel3();
+                    break;
+            }
+        }
+        
+        // Get level name
+        function getLevelName(level) {
+            switch(level) {
+                case 1: return 'Fishing Pond';
+                case 2: return 'Treasure Island';
+                case 3: return 'Decimal Raceway';
+                default: return '';
+            }
+        }
+        
+        // Back to level selection
+        function backToLevelSelection() {
+            gameActive = false;
+            clearInterval(timerInterval);
+            
+            Object.values(levelContainers).forEach(container => {
+                container.style.display = 'none';
+            });
+            levelSelection.style.display = 'flex';
+            levelCompleteModal.style.display = 'none';
+            gameCompleteModal.style.display = 'none';
+        }
+        
+        // Restart current level
+        function restartLevel() {
+            startLevel(currentLevel);
+        }
+        
+        // Update score
+        function updateScore(points) {
+            score += points;
+            scoreEl.textContent = score;
+        }
+        
+        // Start timer
+        function startTimer(time) {
+            clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                if (!gameActive) return;
+                
+                // Update appropriate level timer
+                if (currentLevel === 1) {
+                    level1.timeLeft--;
+                    if (level1.timeLeft <= 0) {
+                        endLevel(false);
+                        return;
+                    }
+                    timerEl.textContent = `${level1.timeLeft}s`;
+                    if (level1.timeLeft <= 10) timerEl.classList.add('warning');
+                } else if (currentLevel === 2) {
+                    level2.timeLeft--;
+                    if (level2.timeLeft <= 0) {
+                        endLevel(false);
+                        return;
+                    }
+                    timerEl.textContent = `${level2.timeLeft}s`;
+                    if (level2.timeLeft <= 10) timerEl.classList.add('warning');
+                } else if (currentLevel === 3) {
+                    level3.timeLeft--;
+                    if (level3.timeLeft <= 0) {
+                        endLevel(false);
+                        return;
+                    }
+                    timerEl.textContent = `${level3.timeLeft}s`;
+                    if (level3.timeLeft <= 10) timerEl.classList.add('warning');
+                }
+            }, 1000);
+        }
+        
+        // End level
+        function endLevel(success) {
+            gameActive = false;
+            clearInterval(timerInterval);
+            
+            if (success) {
+                // Calculate score bonus
+                let timeBonus = 0;
+                let levelBonus = 0;
+                
+                if (currentLevel === 1) {
+                    timeBonus = level1.timeLeft * 2;
+                    levelBonus = 500;
+                } else if (currentLevel === 2) {
+                    timeBonus = level2.timeLeft * 3;
+                    levelBonus = 750;
+                } else if (currentLevel === 3) {
+                    timeBonus = level3.timeLeft * 5;
+                    levelBonus = 1000;
+                }
+                
+                updateScore(levelBonus + timeBonus);
+                
+                // Unlock next level
+                if (currentLevel < 3) {
+                    levelsUnlocked[currentLevel + 1] = true;
+                    const nextLevelCard = document.getElementById(`level-card-${currentLevel + 1}`);
+                    nextLevelCard.classList.remove('locked');
+                    nextLevelCard.querySelector('.lock-icon').style.display = 'none';
+                    const nextButton = nextLevelCard.querySelector('button');
+                    nextButton.disabled = false;
+                    nextButton.textContent = `Start Level ${currentLevel + 1}`;
+                    nextButton.onclick = () => startLevel(currentLevel + 1);
+                }
+                
+                // Show level complete modal
+                const modalIcon = document.getElementById('modal-icon');
+                const modalTitle = document.getElementById('modal-title');
+                const modalText = document.getElementById('modal-text');
+                const modalScore = document.getElementById('modal-score');
+                const nextLevelBtn = document.getElementById('next-level-btn');
+                
+                modalIcon.className = 'level-icon';
+                if (currentLevel === 1) {
+                    modalIcon.innerHTML = '<i class="fas fa-fish"></i>';
+                    modalTitle.textContent = 'Level 1 Complete!';
+                    modalText.textContent = 'Congratulations! You\'ve mastered the Fishing Pond and unlocked Treasure Island!';
+                    nextLevelBtn.textContent = 'Go to Level 2';
+                } else if (currentLevel === 2) {
+                    modalIcon.innerHTML = '<i class="fas fa-gem"></i>';
+                    modalTitle.textContent = 'Level 2 Complete!';
+                    modalText.textContent = 'Excellent! You\'ve conquered Treasure Island and unlocked the Decimal Raceway!';
+                    nextLevelBtn.textContent = 'Go to Level 3';
+                } else {
+                    modalIcon.innerHTML = '<i class="fas fa-flag-checkered"></i>';
+                    modalTitle.textContent = 'Level 3 Complete!';
+                    modalText.textContent = 'Amazing! You\'ve won the Decimal Raceway and mastered all three worlds!';
+                    nextLevelBtn.style.display = 'none';
+                }
+                
+                modalScore.textContent = `Score: +${levelBonus + timeBonus} (+${levelBonus} level + ${timeBonus} time)`;
+                levelCompleteModal.style.display = 'flex';
+                
+                // If all levels complete, show game complete modal
+                if (currentLevel === 3) {
+                    setTimeout(() => {
+                        levelCompleteModal.style.display = 'none';
+                        document.getElementById('final-score').textContent = score;
+                        gameCompleteModal.style.display = 'flex';
+                    }, 2000);
+                }
+            } else {
+                // Level failed
+                const feedbackEl = document.querySelector(`#level-${currentLevel}-container .feedback`);
+                if (currentLevel === 1) {
+                    feedbackEl.textContent = `Time's up! You caught ${level1.fishCaught} fish. Try again!`;
+                } else if (currentLevel === 2) {
+                    feedbackEl.textContent = `Time's up! You collected ${level2.treasuresCollected} treasures. Try again!`;
+                } else if (currentLevel === 3) {
+                    feedbackEl.textContent = `Time's up! You completed ${level3.currentLap} laps. Try again!`;
+                }
+                feedbackEl.className = 'feedback wrong';
+            }
+        }
+        
+        // Go to next level
+        function goToNextLevel() {
+            levelCompleteModal.style.display = 'none';
+            if (currentLevel < 3) {
+                startLevel(currentLevel + 1);
+            }
+        }
+        
+        // LEVEL 1: FISHING POND
+        function initLevel1() {
+            level1.fishCaught = 0;
+            level1.timeLeft = 60;
+            level1.caughtValues = [];
+            level1.fishValues = [...decimalValues]
+                .sort(() => Math.random() - 0.5)
+                .slice(0, level1.totalFish);
+            
+            level1.fishValues.sort((a, b) => parseFloat(a) - parseFloat(b));
+            level1.nextExpectedValue = level1.fishValues[0];
+            
+            // Update UI
+            document.getElementById('level-1-target').textContent = level1.totalFish;
+            document.getElementById('level-1-time').textContent = level1.timeLeft;
+            document.getElementById('level-1-feedback').textContent = '';
+            document.getElementById('level-1-feedback').className = 'feedback';
+            document.getElementById('level-1-basket').innerHTML = '<p style="color: #a0aec0; text-align: center; width: 100%;">Your caught fish will appear here...</p>';
+            
+            // Generate fish
+            const pond = document.getElementById('fishing-pond');
+            pond.innerHTML = '<div class="water-surface"></div><div class="fishing-rod" id="fishing-rod"></div><div class="fishing-line"></div><div class="hook" id="hook"></div>';
+            
+            level1.fishValues.forEach((value, index) => {
+                const fish = createFish(value, index);
+                pond.appendChild(fish);
+            });
+            
+            // Start timer
+            timerEl.textContent = `${level1.timeLeft}s`;
+            timerEl.classList.remove('warning');
+            startTimer();
+        }
+        
+        function createFish(value, index) {
+            const fish = document.createElement('div');
+            fish.className = 'fish';
+            fish.dataset.value = value;
+            fish.dataset.index = index;
+            
+            // Random position
+            const left = 10 + Math.random() * 80;
+            const top = 30 + Math.random() * 60;
+            fish.style.left = `${left}%`;
+            fish.style.top = `${top}%`;
+            
+            // Random color
+            const hue = Math.floor(Math.random() * 360);
+            
+            // Fish body
+            const fishBody = document.createElement('div');
+            fishBody.className = 'fish-body';
+            fishBody.style.background = `linear-gradient(45deg, hsl(${hue}, 70%, 50%), hsl(${hue + 30}, 80%, 60%))`;
+            
+            // Fish tail
+            const fishTail = document.createElement('div');
+            fishTail.className = 'fish-tail';
+            fishTail.style.background = `hsl(${hue}, 70%, 40%)`;
+            
+            // Fish eye
+            const fishEye = document.createElement('div');
+            fishEye.className = 'fish-eye';
+            
+            // Decimal value
+            const decimalValue = document.createElement('div');
+            decimalValue.className = 'decimal-value';
+            decimalValue.textContent = value;
+            
+            // Assemble fish
+            fish.appendChild(fishBody);
+            fish.appendChild(fishTail);
+            fish.appendChild(fishEye);
+            fish.appendChild(decimalValue);
+            
+            // Click event
+            fish.addEventListener('click', () => catchFish(fish));
+            
+            return fish;
+        }
+        
+        function catchFish(fishElement) {
+            if (!gameActive) return;
+            
+            const value = fishElement.dataset.value;
+            
+            if (value === level1.nextExpectedValue) {
+                // Correct fish
+                level1.caughtValues.push(value);
+                level1.fishCaught++;
+                
+                // Add to basket
+                const basket = document.getElementById('level-1-basket');
+                const placeholder = basket.querySelector('p');
+                if (placeholder) placeholder.remove();
+                
+                const caughtFish = document.createElement('div');
+                caughtFish.className = 'caught-item';
+                caughtFish.innerHTML = `<i class="fas fa-fish"></i> ${value}`;
+                basket.appendChild(caughtFish);
+                
+                // Update fish
+                fishElement.style.opacity = '0.5';
+                fishElement.style.pointerEvents = 'none';
+                
+                // Animate rod
+                animateFishingRod();
+                
+                // Update feedback
+                const feedback = document.getElementById('level-1-feedback');
+                feedback.textContent = `Great! ${value} is correct!`;
+                feedback.className = 'feedback correct';
+                
+                // Update score
+                updateScore(20);
+                
+                // Update next expected value
+                const currentIndex = level1.fishValues.indexOf(value);
+                if (currentIndex < level1.fishValues.length - 1) {
+                    level1.nextExpectedValue = level1.fishValues[currentIndex + 1];
+                    feedback.textContent += ` Next: ${level1.nextExpectedValue}`;
+                } else {
+                    level1.nextExpectedValue = null;
+                }
+                
+                // Check if level complete
+                if (level1.fishCaught >= level1.totalFish) {
+                    setTimeout(() => endLevel(true), 1000);
+                }
+            } else {
+                // Wrong fish
+                const feedback = document.getElementById('level-1-feedback');
+                feedback.textContent = `Oops! ${value} is not next. You need ${level1.nextExpectedValue}.`;
+                feedback.className = 'feedback wrong';
+                
+                // Penalty
+                updateScore(-5);
+                level1.timeLeft = Math.max(5, level1.timeLeft - 3);
+                
+                // Shake fish
+                fishElement.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    fishElement.style.animation = '';
+                }, 500);
+            }
+        }
+        
+        function animateFishingRod() {
+            const rod = document.getElementById('fishing-rod');
+            const hook = document.getElementById('hook');
+            
+            rod.style.transform = 'rotate(-60deg)';
+            hook.style.bottom = '200px';
+            
+            setTimeout(() => {
+                rod.style.transform = 'rotate(-30deg)';
+                hook.style.bottom = '100px';
+            }, 800);
+        }
+        
+        // LEVEL 2: TREASURE ISLAND
+        function initLevel2() {
+            level2.treasuresCollected = 0;
+            level2.timeLeft = 90;
+            level2.treasures = [...decimalValues]
+                .sort(() => Math.random() - 0.5)
+                .slice(0, level2.totalTreasures);
+            
+            // Update UI
+            document.getElementById('level-2-target').textContent = level2.totalTreasures;
+            document.getElementById('level-2-time').textContent = level2.timeLeft;
+            document.getElementById('level-2-feedback').textContent = '';
+            document.getElementById('level-2-feedback').className = 'feedback';
+            document.getElementById('level-2-collection').innerHTML = '<p style="color: #a0aec0; text-align: center; width: 100%;">Your collected treasures will appear here...</p>';
+            
+            // Generate treasures
+            const island = document.getElementById('decimal-island');
+            island.innerHTML = '<div class="island-title">Decimal Treasure Island</div>';
+            
+            level2.treasures.forEach((value, index) => {
+                const treasure = createTreasure(value, index);
+                island.appendChild(treasure);
+            });
+            
+            // Set first challenge
+            setTreasureChallenge();
+            
+            // Start timer
+            timerEl.textContent = `${level2.timeLeft}s`;
+            timerEl.classList.remove('warning');
+            startTimer();
+        }
+        
+        function createTreasure(value, index) {
+            const treasure = document.createElement('div');
+            treasure.className = 'treasure-chest';
+            treasure.dataset.value = value;
+            treasure.dataset.index = index;
+            
+            // Random position
+            const left = 10 + Math.random() * 80;
+            const top = 30 + Math.random() * 60;
+            treasure.style.left = `${left}%`;
+            treasure.style.top = `${top}%`;
+            
+            // Chest lid
+            const chestLid = document.createElement('div');
+            chestLid.className = 'chest-lid';
+            
+            // Treasure body with value
+            const treasureBody = document.createElement('div');
+            treasureBody.className = 'treasure-body';
+            treasureBody.textContent = '?';
+            
+            // Decimal value (hidden initially)
+            const decimalValue = document.createElement('div');
+            decimalValue.className = 'decimal-value';
+            decimalValue.textContent = value;
+            
+            // Assemble treasure
+            treasure.appendChild(chestLid);
+            treasure.appendChild(treasureBody);
+            treasure.appendChild(decimalValue);
+            
+            // Click event
+            treasure.addEventListener('click', () => openTreasure(treasure));
+            
+            return treasure;
+        }
+        
+        function setTreasureChallenge() {
+            // Get a random treasure value that hasn't been collected
+            const uncollected = level2.treasures.filter(v => !level2.treasuresCollected.includes(v));
+            if (uncollected.length === 0) return;
+            
+            const randomValue = uncollected[Math.floor(Math.random() * uncollected.length)];
+            level2.currentChallenge = randomValue;
+            
+            // Update UI
+            document.getElementById('current-challenge').textContent = 
+                `${randomValue} (${placeValueDescriptions[randomValue] || randomValue})`;
+        }
+        
+        function openTreasure(treasureElement) {
+            if (!gameActive) return;
+            
+            const value = treasureElement.dataset.value;
+            
+            // Open the chest
+            treasureElement.classList.add('open');
+            treasureElement.querySelector('.treasure-body').textContent = value;
+            treasureElement.style.pointerEvents = 'none';
+            
+            // Check if it matches the challenge
+            if (value === level2.currentChallenge) {
+                // Correct treasure
+                level2.treasuresCollected.push(value);
+                
+                // Add to collection
+                const collection = document.getElementById('level-2-collection');
+                const placeholder = collection.querySelector('p');
+                if (placeholder) placeholder.remove();
+                
+                const collectedItem = document.createElement('div');
+                collectedItem.className = 'caught-item treasure';
+                collectedItem.innerHTML = `<i class="fas fa-gem"></i> ${value}`;
+                collection.appendChild(collectedItem);
+                
+                // Update feedback
+                const feedback = document.getElementById('level-2-feedback');
+                feedback.textContent = `Correct! ${value} is ${placeValueDescriptions[value] || value}`;
+                feedback.className = 'feedback correct';
+                
+                // Update score
+                updateScore(30);
+                
+                // Set new challenge or end level
+                if (level2.treasuresCollected.length < level2.totalTreasures) {
+                    setTimeout(setTreasureChallenge, 1000);
+                } else {
+                    setTimeout(() => endLevel(true), 1000);
+                }
+            } else {
+                // Wrong treasure
+                const feedback = document.getElementById('level-2-feedback');
+                feedback.textContent = `Not this one! You need ${level2.currentChallenge}`;
+                feedback.className = 'feedback wrong';
+                
+                // Penalty
+                updateScore(-10);
+                level2.timeLeft = Math.max(5, level2.timeLeft - 5);
+                
+                // Close chest after delay
+                setTimeout(() => {
+                    treasureElement.classList.remove('open');
+                    treasureElement.querySelector('.treasure-body').textContent = '?';
+                    treasureElement.style.pointerEvents = 'auto';
+                }, 1500);
+            }
+        }
+        
+        // LEVEL 3: DECIMAL RACEWAY
+        function initLevel3() {
+            level3.playerPosition = 0;
+            level3.currentLap = 0;
+            level3.timeLeft = 120;
+            
+            // Update UI
+            document.getElementById('level-3-target').textContent = level3.totalLaps;
+            document.getElementById('level-3-time').textContent = level3.timeLeft;
+            document.getElementById('level-3-feedback').textContent = '';
+            document.getElementById('level-3-feedback').className = 'feedback';
+            document.getElementById('player-position').textContent = '0%';
+            document.getElementById('lap-count').textContent = `0/${level3.totalLaps}`;
+            
+            // Generate player car
+            const track = document.getElementById('racetrack');
+            track.innerHTML = '<div class="track-lane"></div><div class="track-lane"></div><div class="track-lane"></div>';
+            
+            const playerCar = createRaceCar('player', '0%');
+            track.appendChild(playerCar);
+            
+            // Generate AI cars
+            for (let i = 0; i < 2; i++) {
+                const aiCar = createRaceCar(`ai-${i}`, `${Math.random() * 30}%`);
+                track.appendChild(aiCar);
+            }
+            
+            // Set first conversion problem
+            setConversionProblem();
+            
+            // Start timer
+            timerEl.textContent = `${level3.timeLeft}s`;
+            timerEl.classList.remove('warning');
+            startTimer();
+            
+            // Start AI movement
+            moveAICars();
+        }
+        
+        function createRaceCar(type, position) {
+            const car = document.createElement('div');
+            car.className = 'race-car';
+            car.id = `${type}-car`;
+            car.dataset.type = type;
+            car.style.top = type === 'player' ? '55px' : type === 'ai-0' ? '155px' : '255px';
+            car.style.left = position;
+            
+            // Car body
+            const carBody = document.createElement('div');
+            carBody.className = 'car-body';
+            carBody.textContent = type === 'player' ? 'YOU' : 'AI';
+            carBody.style.background = type === 'player' 
+                ? 'linear-gradient(45deg, #3182ce, #63b3ed)' 
+                : 'linear-gradient(45deg, #e53e3e, #f56565)';
+            
+            // Car wheels
+            const wheel1 = document.createElement('div');
+            wheel1.className = 'car-wheel';
+            const wheel2 = document.createElement('div');
+            wheel2.className = 'car-wheel';
+            
+            // Decimal value
+            const decimalValue = document.createElement('div');
+            decimalValue.className = 'decimal-value';
+            decimalValue.textContent = 'Race!';
+            
+            // Assemble car
+            car.appendChild(carBody);
+            car.appendChild(wheel1);
+            car.appendChild(wheel2);
+            car.appendChild(decimalValue);
+            
+            return car;
+        }
+        
+        function setConversionProblem() {
+            // Get random decimal for conversion
+            const decimals = Object.keys(conversionPairs);
+            const randomDecimal = decimals[Math.floor(Math.random() * decimals.length)];
+            const correctAnswer = conversionPairs[randomDecimal];
+            
+            level3.currentProblem = { decimal: randomDecimal, answer: correctAnswer };
+            
+            // Update UI
+            document.getElementById('conversion-question').textContent = `Convert ${randomDecimal} to fraction:`;
+            
+            // Generate options
+            const optionsContainer = document.getElementById('conversion-options');
+            optionsContainer.innerHTML = '';
+            
+            // Create correct answer and 3 wrong answers
+            const options = [correctAnswer];
+            while (options.length < 4) {
+                const randomNum = Math.floor(Math.random() * 9) + 1;
+                const randomDen = Math.floor(Math.random() * 9) + 2;
+                const fraction = `${randomNum}/${randomDen}`;
+                if (!options.includes(fraction)) {
+                    options.push(fraction);
+                }
+            }
+            
+            // Shuffle options
+            options.sort(() => Math.random() - 0.5);
+            
+            // Create option buttons
+            options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'game-btn secondary';
+                button.textContent = option;
+                button.style.margin = '5px';
+                button.onclick = () => checkConversionAnswer(option);
+                optionsContainer.appendChild(button);
+            });
+        }
+        
+        function checkConversionAnswer(selectedAnswer) {
+            if (!gameActive) return;
+            
+            const { decimal, answer } = level3.currentProblem;
+            
+            if (selectedAnswer === answer) {
+                // Correct answer
+                const feedback = document.getElementById('level-3-feedback');
+                feedback.textContent = `Correct! ${decimal} = ${answer}`;
+                feedback.className = 'feedback correct';
+                
+                // Move player car forward
+                level3.playerPosition += 20;
+                if (level3.playerPosition >= 100) {
+                    level3.playerPosition = 0;
+                    level3.currentLap++;
+                    document.getElementById('lap-count').textContent = `${level3.currentLap}/${level3.totalLaps}`;
+                    updateScore(100);
+                    
+                    // Check if race complete
+                    if (level3.currentLap >= level3.totalLaps) {
+                        setTimeout(() => endLevel(true), 1000);
+                        return;
+                    }
+                }
+                
+                // Update car position
+                const playerCar = document.getElementById('player-car');
+                playerCar.style.left = `${level3.playerPosition}%`;
+                document.getElementById('player-position').textContent = `${level3.playerPosition}%`;
+                
+                // Update score
+                updateScore(50);
+                
+                // Set new problem
+                setTimeout(setConversionProblem, 1000);
+            } else {
+                // Wrong answer
+                const feedback = document.getElementById('level-3-feedback');
+                feedback.textContent = `Incorrect! ${decimal} = ${answer}`;
+                feedback.className = 'feedback wrong';
+                
+                // Penalty
+                updateScore(-20);
+                level3.timeLeft = Math.max(5, level3.timeLeft - 10);
+                
+                // AI cars move forward
+                moveAICarsForward();
+            }
+        }
+        
+        function moveAICars() {
+            if (!gameActive) return;
+            
+            setInterval(() => {
+                if (!gameActive) return;
+                
+                // Move AI cars slowly
+                moveAICarsForward();
+            }, 3000);
+        }
+        
+        function moveAICarsForward() {
+            ['ai-0', 'ai-1'].forEach(aiId => {
+                const aiCar = document.getElementById(`${aiId}-car`);
+                let currentPos = parseFloat(aiCar.style.left) || 0;
+                currentPos += Math.random() * 15;
+                if (currentPos > 100) currentPos = 0;
+                aiCar.style.left = `${currentPos}%`;
+            });
+        }
+        
+        // Initialize the game
+        window.onload = function() {
+            scoreEl.textContent = score;
+            currentLevelEl.textContent = '1 - Fishing Pond';
+            timerEl.textContent = '--';
+            
+            // Add CSS for shake animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes shake {
+                    0%, 100% { transform: translateX(0); }
+                    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                    20%, 40%, 60%, 80% { transform: translateX(5px); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Close modals when clicking outside
+            [levelCompleteModal, gameCompleteModal].forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.style.display = 'none';
+                    }
+                });
+            });
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,1808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Ninja - STEM Learn Odisha</title>
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* BASE STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f0f7ff 0%, #e6f0ff 100%);
+            color: #1e293b;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* MODAL STYLES */
+        .game-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s ease;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .modal-title {
+            color: #1a365d;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .modal-text {
+            font-size: 1.1rem;
+            color: #4a5568;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .modal-btn {
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(66, 153, 225, 0.3);
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(66, 153, 225, 0.4);
+        }
+        
+        /* HEADER & NAVIGATION */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 18px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            background: white;
+            color: #2a69ac;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .logo-text span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+        
+        /* LANGUAGE TOGGLE */
+        .language-switcher {
+            display: flex;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            padding: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .lang-btn {
+            padding: 8px 20px;
+            border: none;
+            background: transparent;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: white;
+        }
+        
+        .lang-btn.active {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .lang-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.6rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            margin-left: 20px;
+        }
+        
+        /* MAIN CONTENT */
+        .main-content {
+            padding: 40px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        /* GAME STATS */
+        .game-stats-container {
+            background: white;
+            border-radius: 15px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 1000px;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .score-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .stat-box {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            padding: 15px 25px;
+            border-radius: 12px;
+            min-width: 180px;
+            border-left: 5px solid #4299e1;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .level-info {
+            border-left-color: #38a169;
+        }
+        
+        .timer-info {
+            border-left-color: #ed8936;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a365d;
+            display: block;
+            margin-top: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.95rem;
+            color: #4a5568;
+            font-weight: 500;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .progress-container {
+            flex-grow: 1;
+            min-width: 300px;
+            margin-top: 5px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            background: #e2e8f0;
+            border-radius: 10px;
+            height: 12px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #4299e1, #38a169);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            width: 0%;
+        }
+        
+        /* LEVEL SELECTION */
+        .level-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 20px 0;
+            width: 100%;
+            max-width: 1000px;
+        }
+        
+        .level-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 3px solid #4299e1;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .level-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #4299e1, #38a169);
+        }
+        
+        .level-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .level-icon {
+            font-size: 3rem;
+            color: #4299e1;
+            margin-bottom: 20px;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e6f7ff 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .level-card h3 {
+            margin-bottom: 10px;
+            color: #1a365d;
+            font-size: 1.4rem;
+        }
+        
+        .level-card p {
+            margin-bottom: 25px;
+            color: #4a5568;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        .level-card.locked {
+            opacity: 0.7;
+            cursor: not-allowed;
+            border-color: #cbd5e0;
+        }
+        
+        .level-card.locked::before {
+            background: #cbd5e0;
+        }
+        
+        .lock-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: #a0aec0;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        /* LEVEL CONTAINERS */
+        .level-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1000px;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+        
+        .level-header {
+            text-align: center;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+        
+        .level-title {
+            color: #1a365d;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .level-subtitle {
+            color: #4a5568;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* LEVEL 1: BIGGEST NUMBER */
+        .game-area {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border-radius: 15px;
+            border: 3px solid #4299e1;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .number-bubble {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            user-select: none;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            z-index: 1;
+            transition: all 0.3s ease;
+            border: 3px solid white;
+        }
+        
+        .number-bubble:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .number-bubble.correct {
+            animation: pulse 0.5s ease;
+        }
+        
+        .number-bubble.incorrect {
+            animation: shake 0.5s ease;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-10px); }
+            40%, 80% { transform: translateX(10px); }
+        }
+        
+        /* LEVEL 2: ARRANGE NUMBERS */
+        .arrange-container {
+            width: 100%;
+            margin-bottom: 30px;
+        }
+        
+        .numbers-source {
+            background: #f7fafc;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .source-title {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .source-numbers {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            min-height: 100px;
+        }
+        
+        .number-tile {
+            width: 90px;
+            height: 90px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            cursor: grab;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 2px solid #4299e1;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        
+        .number-tile:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            background: #f0f9ff;
+        }
+        
+        .number-tile:active {
+            cursor: grabbing;
+        }
+        
+        .drop-zone {
+            background: #f7fafc;
+            border-radius: 15px;
+            padding: 30px;
+            border: 3px dashed #4299e1;
+            min-height: 180px;
+            transition: all 0.3s ease;
+        }
+        
+        .drop-zone.drag-over {
+            background: #ebf8ff;
+            border-color: #3182ce;
+            transform: scale(1.02);
+        }
+        
+        .drop-title {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .drop-numbers {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            min-height: 120px;
+        }
+        
+        .dropped-tile {
+            width: 90px;
+            height: 90px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 2px solid #38a169;
+            background: #f0fff4;
+        }
+        
+        /* LEVEL 3: ODD-EVEN SLICING */
+        .sorting-container {
+            width: 100%;
+            margin-bottom: 30px;
+        }
+        
+        .sorting-numbers {
+            background: #f7fafc;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .sorting-categories {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+        
+        .category-box {
+            background: #f7fafc;
+            border-radius: 15px;
+            padding: 25px;
+            min-height: 250px;
+            border: 3px dashed #4299e1;
+            transition: all 0.3s ease;
+        }
+        
+        .category-box.drag-over {
+            background: #ebf8ff;
+            border-color: #3182ce;
+            transform: scale(1.02);
+        }
+        
+        .category-title {
+            text-align: center;
+            font-size: 1.3rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            font-weight: 700;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .category-items {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            min-height: 180px;
+        }
+        
+        .category-tile {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 2px solid #4299e1;
+        }
+        
+        /* FEEDBACK & CONTROLS */
+        .feedback {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 20px 0;
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .feedback.correct {
+            color: #276749;
+            background: #f0fff4;
+            border: 2px solid #38a169;
+        }
+        
+        .feedback.wrong {
+            color: #c53030;
+            background: #fff5f5;
+            border: 2px solid #fc8181;
+        }
+        
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .control-btn {
+            padding: 16px 35px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .start-btn {
+            background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+            color: white;
+        }
+        
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(56, 161, 105, 0.3);
+        }
+        
+        .reset-btn {
+            background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+            color: white;
+        }
+        
+        .reset-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(237, 137, 54, 0.3);
+        }
+        
+        .check-btn {
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+            color: white;
+        }
+        
+        .check-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(66, 153, 225, 0.3);
+        }
+        
+        /* FOOTER */
+        footer {
+            background: #1a365d;
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+            text-align: center;
+        }
+        
+        .copyright {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+        }
+        
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-container {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .game-stats {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .score-container {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .stat-box {
+                width: 100%;
+                min-width: auto;
+            }
+            
+            .progress-container {
+                min-width: 100%;
+            }
+            
+            .level-selection {
+                grid-template-columns: 1fr;
+            }
+            
+            .level-container {
+                padding: 25px 20px;
+            }
+            
+            .sorting-categories {
+                grid-template-columns: 1fr;
+            }
+            
+            .game-area {
+                height: 350px;
+            }
+            
+            .number-bubble, .number-tile, .dropped-tile, .category-tile {
+                width: 75px;
+                height: 75px;
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .level-title {
+                font-size: 1.6rem;
+            }
+            
+            .game-area {
+                height: 300px;
+            }
+            
+            .number-bubble, .number-tile, .dropped-tile {
+                width: 65px;
+                height: 65px;
+                font-size: 1.6rem;
+            }
+            
+            .control-btn {
+                padding: 14px 25px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon"><i class="fas fa-star"></i></div>
+                    <div class="logo-text">STEM Learn <span>Odisha</span></div>
+                </div>
+
+                <div class="nav-container">
+                    <div class="language-switcher">
+                        <button class="lang-btn active" data-lang="en">English</button>
+                        <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+                    </div>
+                    <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+                </div>
+            </div>
+        </div>
+    </header>
+   
+    <!-- MODALS -->
+    <div class="game-modal" id="completion-modal">
+        <div class="modal-content">
+            <div class="modal-icon" style="font-size: 4rem; color: #38a169; margin-bottom: 20px;">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <h2 class="modal-title" data-i18n="modal_complete_title">Level Complete!</h2>
+            <p class="modal-text" data-i18n="modal_complete_text">Congratulations! You've mastered this level and unlocked the next challenge.</p>
+            <button class="modal-btn" id="next-level-btn" data-i18n="btn_next_level">Continue</button>
+        </div>
+    </div>
+   
+    <div class="game-modal" id="game-over-modal">
+        <div class="modal-content">
+            <div class="modal-icon" style="font-size: 4rem; color: #ed8936; margin-bottom: 20px;">
+                <i class="fas fa-crown"></i>
+            </div>
+            <h2 class="modal-title" data-i18n="modal_gameover_title">Game Complete!</h2>
+            <p class="modal-text">
+                <span data-i18n="modal_gameover_text">You've mastered all three levels of Number Ninja! Your final score is </span>
+                <span id="final-score" style="font-weight: 800; color: #1a365d; font-size: 1.3rem;">0</span>.
+            </p>
+            <button class="modal-btn" onclick="location.reload()" data-i18n="btn_start_over">Play Again</button>
+        </div>
+    </div>
+   
+    <!-- MAIN CONTENT -->
+    <div class="container main-content">
+        <!-- GAME STATS -->
+        <div class="game-stats-container" id="game-stats-container">
+            <div class="game-stats">
+                <div class="score-container">
+                    <div class="stat-box">
+                        <span class="stat-label" data-i18n="score_label">Score</span>
+                        <span id="score" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-box level-info">
+                        <span class="stat-label" data-i18n="level_label">Level</span>
+                        <span id="level-display" class="stat-value" data-i18n="level_1">Select</span>
+                    </div>
+                    <div class="stat-box timer-info" id="timer-box" style="display: none;">
+                        <span class="stat-label" data-i18n="time_label">Time</span>
+                        <span id="timer" class="stat-value">30</span>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LEVEL SELECTION -->
+        <div class="level-selection" id="level-selection-container">
+            <div class="level-card" id="level-card-1">
+                <div class="level-icon"><i class="fas fa-search"></i></div>
+                <h3 data-i18n="level1_title">Identify Biggest</h3>
+                <p data-i18n="level1_desc">Tap the largest number among flying numbers on the screen.</p>
+                <button class="modal-btn" onclick="startLevel(1)" data-i18n="btn_start_level1">Start Level 1</button>
+            </div>
+            <div class="level-card locked" id="level-card-2">
+                <div class="lock-icon"><i class="fas fa-lock"></i></div>
+                <div class="level-icon"><i class="fas fa-sort-numeric-up"></i></div>
+                <h3 data-i18n="level2_title">Arrange Numbers</h3>
+                <p data-i18n="level2_desc">Arrange numbers in ascending order by dragging and dropping.</p>
+                <button class="modal-btn" disabled data-i18n="btn_locked">Locked</button>
+            </div>
+            <div class="level-card locked" id="level-card-3">
+                <div class="lock-icon"><i class="fas fa-lock"></i></div>
+                <div class="level-icon"><i class="fas fa-divide"></i></div>
+                <h3 data-i18n="level3_title">Odd-Even Slicing</h3>
+                <p data-i18n="level3_desc">Separate odd and even numbers into correct categories.</p>
+                <button class="modal-btn" disabled data-i18n="btn_locked">Locked</button>
+            </div>
+        </div>
+
+        <!-- LEVEL 1: IDENTIFY BIGGEST NUMBER -->
+        <div class="level-container" id="level-1-container">
+            <div class="level-header">
+                <h2 class="level-title" data-i18n="level1_h2">Level 1: Identify Biggest Number</h2>
+                <p class="level-subtitle" data-i18n="level1_goal">Tap the largest number among the flying numbers!</p>
+            </div>
+           
+            <div class="game-area" id="level1-game-area">
+                <!-- Numbers will appear here dynamically -->
+            </div>
+           
+            <div class="feedback" id="level-1-feedback"></div>
+           
+            <div class="game-controls">
+                <button class="control-btn start-btn" id="level1-start-btn">
+                    <i class="fas fa-play"></i> <span data-i18n="btn_start">Start Round</span>
+                </button>
+                <button class="control-btn reset-btn" onclick="resetLevel(1)">
+                    <i class="fas fa-redo"></i> <span data-i18n="btn_reset">Reset</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- LEVEL 2: ARRANGE NUMBERS -->
+        <div class="level-container" id="level-2-container">
+            <div class="level-header">
+                <h2 class="level-title" data-i18n="level2_h2">Level 2: Arrange Numbers</h2>
+                <p class="level-subtitle" data-i18n="level2_goal">Drag numbers from top to bottom in ascending order!</p>
+            </div>
+           
+            <div class="arrange-container">
+                <div class="numbers-source">
+                    <div class="source-title" data-i18n="level2_source">Numbers to Arrange</div>
+                    <div class="source-numbers" id="source-numbers">
+                        <!-- Numbers will appear here -->
+                    </div>
+                </div>
+               
+                <div class="drop-zone" id="drop-zone">
+                    <div class="drop-title" data-i18n="level2_drop">Drop numbers here in order</div>
+                    <div class="drop-numbers" id="drop-numbers">
+                        <p style="color: #a0aec0; font-style: italic; text-align: center; width: 100; margin-top: 40px;" data-i18n="level2_drop_placeholder">Drag numbers here in ascending order</p>
+                    </div>
+                </div>
+            </div>
+           
+            <div class="feedback" id="level-2-feedback"></div>
+           
+            <div class="game-controls">
+                <button class="control-btn start-btn" onclick="generateLevel2Numbers()">
+                    <i class="fas fa-redo"></i> <span data-i18n="btn_new">New Numbers</span>
+                </button>
+                <button class="control-btn check-btn" onclick="checkLevel2()">
+                    <i class="fas fa-check"></i> <span data-i18n="btn_check">Check Order</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- LEVEL 3: ODD-EVEN SLICING -->
+        <div class="level-container" id="level-3-container">
+            <div class="level-header">
+                <h2 class="level-title" data-i18n="level3_h2">Level 3: Odd-Even Slicing</h2>
+                <p class="level-subtitle" data-i18n="level3_goal">Drag numbers to the correct odd or even category!</p>
+            </div>
+           
+            <div class="sorting-container">
+                <div class="sorting-numbers">
+                    <div class="source-title" data-i18n="level3_source">Numbers to Sort</div>
+                    <div class="source-numbers" id="sorting-numbers">
+                        <!-- Numbers will appear here -->
+                    </div>
+                </div>
+               
+                <div class="sorting-categories">
+                    <div class="category-box" id="category-odd">
+                        <div class="category-title">Odd Numbers</div>
+                        <div class="category-items" id="category-odd-items">
+                            <p style="color: #a0aec0; font-style: italic; text-align: center; width: 100%; margin-top: 60px;" data-i18n="level3_odd_placeholder">Drop odd numbers here</p>
+                        </div>
+                    </div>
+                   
+                    <div class="category-box" id="category-even">
+                        <div class="category-title">Even Numbers</div>
+                        <div class="category-items" id="category-even-items">
+                            <p style="color: #a0aec0; font-style: italic; text-align: center; width: 100%; margin-top: 60px;" data-i18n="level3_even_placeholder">Drop even numbers here</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+            <div class="feedback" id="level-3-feedback"></div>
+           
+            <div class="game-controls">
+                <button class="control-btn start-btn" onclick="generateLevel3Numbers()">
+                    <i class="fas fa-redo"></i> <span data-i18n="btn_new">New Numbers</span>
+                </button>
+                <button class="control-btn check-btn" onclick="checkLevel3()">
+                    <i class="fas fa-check"></i> <span data-i18n="btn_check">Check Sorting</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="copyright">
+                &copy; 2024 STEM Learn Odisha. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- GAME VARIABLES ---
+        let score = 0;
+        let currentLevel = 0;
+        let timerInterval = null;
+        let timeLeft = 30;
+        
+        // Level 1 variables
+        let level1Numbers = [];
+        let level1Round = 0;
+        let level1GameActive = false;
+        let level1NumbersOnScreen = [];
+        
+        // Level 2 variables
+        let level2Numbers = [];
+        let level2SortedNumbers = [];
+        let level2PlacedNumbers = [];
+        
+        // Level 3 variables
+        let level3Numbers = [];
+        let level3OddCount = 0;
+        let level3EvenCount = 0;
+
+        // --- ODIA NUMBER MAPPING ---
+        const odiaNumbers = {
+            0: "୦", 1: "୧", 2: "୨", 3: "୩", 4: "୪",
+            5: "୫", 6: "୬", 7: "୭", 8: "୮", 9: "୯",
+            10: "୧୦", 11: "୧୧", 12: "୧୨", 13: "୧୩", 14: "୧୪",
+            15: "୧୫", 16: "୧୬", 17: "୧୭", 18: "୧୮", 19: "୧୯",
+            20: "୨୦", 21: "୨୧", 22: "୨୨", 23: "୨୩", 24: "୨୪",
+            25: "୨୫", 26: "୨୬", 27: "୨୭", 28: "୨୮", 29: "୨୯",
+            30: "୩୦", 31: "୩୧", 32: "୩୨", 33: "୩୩", 34: "୩୪",
+            35: "୩୫", 36: "୩୬", 37: "୩୭", 38: "୩୮", 39: "୩୯",
+            40: "୪୦", 41: "୪୧", 42: "୪୨", 43: "୪୩", 44: "୪୪",
+            45: "୪୫", 46: "୪୬", 47: "୪୭", 48: "୪୮", 49: "୪୯",
+            50: "୫୦", 51: "୫୧", 52: "୫୨", 53: "୫୩", 54: "୫୪",
+            55: "୫୫", 56: "୫୬", 57: "୫୭", 58: "୫୮", 59: "୫୯",
+            60: "୬୦", 61: "୬୧", 62: "୬୨", 63: "୬୩", 64: "୬୪",
+            65: "୬୫", 66: "୬୬", 67: "୬୭", 68: "୬୮", 69: "୬୯",
+            70: "୭୦", 71: "୭୧", 72: "୭୨", 73: "୭୩", 74: "୭୪",
+            75: "୭୫", 76: "୭୬", 77: "୭୭", 78: "୭୮", 79: "୭୯",
+            80: "୮୦", 81: "୮୧", 82: "୮୨", 83: "୮୩", 84: "୮୪",
+            85: "୮୫", 86: "୮୬", 87: "୮୭", 88: "୮୮", 89: "୮୯",
+            90: "୯୦", 91: "୯୧", 92: "୯୨", 93: "୯୩", 94: "୯୪",
+            95: "୯୫", 96: "୯୬", 97: "୯୭", 98: "୯୮", 99: "୯୯",
+            100: "୧୦୦"
+        };
+
+        function convertToOdiaNumber(num) {
+            if (odiaNumbers[num] !== undefined) {
+                return odiaNumbers[num];
+            }
+            return num.toString().split('').map(digit => odiaNumbers[parseInt(digit)] || digit).join('');
+        }
+
+        // --- LANGUAGE TRANSLATIONS ---
+        const translations = {
+            'en': {
+                'score_label': 'Score',
+                'level_label': 'Level',
+                'time_label': 'Time',
+                'level_1': 'Select',
+                'level_1_number': 'Level 1',
+                'level_2_number': 'Level 2',
+                'level_3_number': 'Level 3',
+                'btn_start_level1': 'Start Level 1',
+                'btn_start_level2': 'Start Level 2',
+                'btn_start_level3': 'Start Level 3',
+                'btn_locked': 'Locked',
+                'btn_check': 'Check',
+                'btn_next_level': 'Continue',
+                'btn_start_over': 'Play Again',
+                'btn_start': 'Start Round',
+                'btn_reset': 'Reset',
+                'btn_new': 'New Numbers',
+                'level1_title': 'Identify Biggest',
+                'level1_desc': 'Tap the largest number among flying numbers on the screen.',
+                'level2_title': 'Arrange Numbers',
+                'level2_desc': 'Arrange numbers in ascending order by dragging and dropping.',
+                'level3_title': 'Odd-Even Slicing',
+                'level3_desc': 'Separate odd and even numbers into correct categories.',
+                'level1_h2': 'Level 1: Identify Biggest Number',
+                'level1_goal': 'Tap the largest number among the flying numbers!',
+                'level2_h2': 'Level 2: Arrange Numbers',
+                'level2_goal': 'Drag numbers from top to bottom in ascending order!',
+                'level2_source': 'Numbers to Arrange',
+                'level2_drop': 'Drop numbers here in order',
+                'level2_drop_placeholder': 'Drag numbers here in ascending order',
+                'level3_h2': 'Level 3: Odd-Even Slicing',
+                'level3_goal': 'Drag numbers to the correct odd or even category!',
+                'level3_source': 'Numbers to Sort',
+                'level3_odd_placeholder': 'Drop odd numbers here',
+                'level3_even_placeholder': 'Drop even numbers here',
+                'modal_complete_title': 'Level Complete!',
+                'modal_complete_text': 'Congratulations! You\'ve mastered this level and unlocked the next challenge.',
+                'modal_gameover_title': 'Game Complete!',
+                'modal_gameover_text': 'You\'ve mastered all three levels of Number Ninja! Your final score is '
+            },
+            'or': {
+                'score_label': 'ସ୍କୋର',
+                'level_label': 'ସ୍ତର',
+                'time_label': 'ସମୟ',
+                'level_1': 'ବାଛନ୍ତୁ',
+                'level_1_number': 'ସ୍ତର ୧',
+                'level_2_number': 'ସ୍ତର ୨',
+                'level_3_number': 'ସ୍ତର ୩',
+                'btn_start_level1': 'ସ୍ତର ୧ ଆରମ୍ଭ କରନ୍ତୁ',
+                'btn_start_level2': 'ସ୍ତର ୨ ଆରମ୍ଭ କରନ୍ତୁ',
+                'btn_start_level3': 'ସ୍ତର ୩ ଆରମ୍ଭ କରନ୍ତୁ',
+                'btn_locked': 'ବନ୍ଦ',
+                'btn_check': 'ଯାଞ୍ଚ କରନ୍ତୁ',
+                'btn_next_level': 'ଜାରି ରଖନ୍ତୁ',
+                'btn_start_over': 'ପୁଣି ଖେଳନ୍ତୁ',
+                'btn_start': 'ଦଉଡ଼ି ଆରମ୍ଭ କରନ୍ତୁ',
+                'btn_reset': 'ରିସେଟ୍ କରନ୍ତୁ',
+                'btn_new': 'ନୂଆ ସଂଖ୍ୟା',
+                'level1_title': 'ସବୁଠାରୁ ବଡ ଚିହ୍ନଟ',
+                'level1_desc': 'ପରଦାରେ ଉଡୁଥିବା ସଂଖ୍ୟାଗୁଡ଼ିକ ମଧ୍ୟରୁ ସବୁଠାରୁ ବଡ ସଂଖ୍ୟାକୁ ଟ୍ୟାପ୍ କରନ୍ତୁ।',
+                'level2_title': 'ସଂଖ୍ୟାଗୁଡ଼ିକୁ ସଜାନ୍ତୁ',
+                'level2_desc': 'ଟାଣି ଏବଂ ଛାଡି ସଂଖ୍ୟାଗୁଡ଼ିକୁ ଆରୋହୀ କ୍ରମରେ ସଜାନ୍ତୁ।',
+                'level3_title': 'ଅଯୁଗ୍ମ-ଯୁଗ୍ମ ବିଭାଜନ',
+                'level3_desc': 'ଅଯୁଗ୍ମ ଏବଂ ଯୁଗ୍ମ ସଂଖ୍ୟାଗୁଡ଼ିକୁ ସଠିକ୍ ବର୍ଗଗୁଡିକରେ ଅଲଗା କରନ୍ତୁ।',
+                'level1_h2': 'ସ୍ତର ୧: ସବୁଠାରୁ ବଡ ସଂଖ୍ୟା ଚିହ୍ନଟ କରନ୍ତୁ',
+                'level1_goal': 'ଉଡୁଥିବା ସଂଖ୍ୟାଗୁଡ଼ିକ ମଧ୍ୟରୁ ସବୁଠାରୁ ବଡଟି ଟ୍ୟାପ୍ କରନ୍ତୁ!',
+                'level2_h2': 'ସ୍ତର ୨: ସଂଖ୍ୟାଗୁଡ଼ିକୁ ସଜାନ୍ତୁ',
+                'level2_goal': 'ସଂଖ୍ୟାଗୁଡ଼ିକୁ ଉପରୁ ତଳକୁ ଆରୋହୀ କ୍ରମରେ ଟାଣନ୍ତୁ!',
+                'level2_source': 'ସଜାଇବା ପାଇଁ ସଂଖ୍ୟା',
+                'level2_drop': 'ଏଠାରେ ସଂଖ୍ୟା ଛାଡନ୍ତୁ',
+                'level2_drop_placeholder': 'ସଂଖ୍ୟାଗୁଡ଼ିକୁ ଆରୋହୀ କ୍ରମରେ ଏଠାରେ ଟାଣନ୍ତୁ',
+                'level3_h2': 'ସ୍ତର ୩: ଅଯୁଗ୍ମ-ଯୁଗ୍ମ ବିଭାଜନ',
+                'level3_goal': 'ସଂଖ୍ୟାଗୁଡ଼ିକୁ ସଠିକ୍ ଅଯୁଗ୍ମ କିମ୍ବା ଯୁଗ୍ମ ବର୍ଗରେ ଟାଣନ୍ତୁ!',
+                'level3_source': 'ବର୍ଗୀକରଣ ପାଇଁ ସଂଖ୍ୟା',
+                'level3_odd_placeholder': 'ଅଯୁଗ୍ମ ସଂଖ୍ୟା ଏଠାରେ ଛାଡନ୍ତୁ',
+                'level3_even_placeholder': 'ଯୁଗ୍ମ ସଂଖ୍ୟା ଏଠାରେ ଛାଡନ୍ତୁ',
+                'modal_complete_title': 'ସ୍ତର ସମାପ୍ତ!',
+                'modal_complete_text': 'ଅଭିନନ୍ଦନ! ଆପଣ ଏହି ସ୍ତରରେ ମାଷ୍ଟର ହୋଇଛନ୍ତି ଏବଂ ପରବର୍ତ୍ତୀ ଚ୍ୟାଲେଞ୍ଜ୍ ଅନଲକ୍ ହୋଇଛି।',
+                'modal_gameover_title': 'ଖେଳ ସମାପ୍ତ!',
+                'modal_gameover_text': 'ଆପଣ ନମ୍ବର ନିଞ୍ଜାର ତିନୋଟି ସ୍ତରରେ ମାଷ୍ଟର ହୋଇଛନ୍ତି! ଆପଣଙ୍କର ଚୂଡ଼ାନ୍ତ ସ୍କୋର '
+            }
+        };
+
+        let currentLang = 'en';
+
+        // --- NUMBER DISPLAY FUNCTIONS ---
+        function formatNumber(num) {
+            if (currentLang === 'or') {
+                return convertToOdiaNumber(num);
+            }
+            return num;
+        }
+
+        // --- LANGUAGE MANAGEMENT ---
+        function updateLanguage(lang) {
+            currentLang = lang;
+            
+            // Update all text elements with data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update language buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.lang-btn[data-lang="${lang}"]`).classList.add('active');
+            
+            // Update dynamic content
+            updateLevelDisplays();
+        }
+
+        function updateLevelDisplays() {
+            document.getElementById('score').textContent = formatNumber(score);
+            
+            if (currentLevel === 0) {
+                document.getElementById('level-display').textContent = translations[currentLang]['level_1'];
+            } else {
+                document.getElementById('level-display').textContent = translations[currentLang][`level_${currentLevel}_number`] || `Level ${currentLevel}`;
+            }
+        }
+
+        function updateScore(points) {
+            score += points;
+            if (score < 0) score = 0;
+            document.getElementById('score').textContent = formatNumber(score);
+        }
+
+        // --- GAME MANAGEMENT ---
+        function showLevelSelection() {
+            document.getElementById('level-1-container').style.display = 'none';
+            document.getElementById('level-2-container').style.display = 'none';
+            document.getElementById('level-3-container').style.display = 'none';
+            document.getElementById('level-selection-container').style.display = 'grid';
+            document.getElementById('game-stats-container').style.display = 'block';
+            currentLevel = 0;
+            document.getElementById('level-display').textContent = translations[currentLang]['level_1'];
+            document.getElementById('timer-box').style.display = 'none';
+            clearInterval(timerInterval);
+        }
+
+        function startLevel(level) {
+            currentLevel = level;
+            document.getElementById('level-selection-container').style.display = 'none';
+            document.getElementById('game-stats-container').style.display = 'block';
+            
+            // Hide all level containers
+            document.querySelectorAll('.level-container').forEach(container => {
+                container.style.display = 'none';
+            });
+            
+            // Show selected level container
+            document.getElementById(`level-${level}-container`).style.display = 'flex';
+            
+            // Update level display
+            document.getElementById('level-display').textContent = translations[currentLang][`level_${level}_number`];
+            
+            // Load the level
+            if (level === 1) loadLevel1();
+            else if (level === 2) loadLevel2();
+            else if (level === 3) loadLevel3();
+        }
+
+        function resetLevel(level) {
+            if (level === 1) loadLevel1();
+            else if (level === 2) loadLevel2();
+            else if (level === 3) loadLevel3();
+        }
+
+        function unlockLevel(level) {
+            if (level === 2) {
+                const level2Card = document.getElementById('level-card-2');
+                level2Card.classList.remove('locked');
+                level2Card.querySelector('.lock-icon').style.display = 'none';
+                const startBtn = level2Card.querySelector('.modal-btn');
+                startBtn.disabled = false;
+                startBtn.textContent = translations[currentLang]['btn_start_level2'];
+                startBtn.setAttribute('onclick', 'startLevel(2)');
+            } else if (level === 3) {
+                const level3Card = document.getElementById('level-card-3');
+                level3Card.classList.remove('locked');
+                level3Card.querySelector('.lock-icon').style.display = 'none';
+                const startBtn = level3Card.querySelector('.modal-btn');
+                startBtn.disabled = false;
+                startBtn.textContent = translations[currentLang]['btn_start_level3'];
+                startBtn.setAttribute('onclick', 'startLevel(3)');
+            }
+        }
+
+        // --- TIMER FUNCTIONS ---
+        function startTimer(duration, callback) {
+            clearInterval(timerInterval);
+            timeLeft = duration;
+            document.getElementById('timer').textContent = formatNumber(timeLeft);
+            document.getElementById('timer-box').style.display = 'block';
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').textContent = formatNumber(timeLeft);
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById('timer-box').style.display = 'none';
+                    if (callback) callback();
+                }
+            }, 1000);
+        }
+
+        // --- LEVEL 1: IDENTIFY BIGGEST NUMBER ---
+        function loadLevel1() {
+            const gameArea = document.getElementById('level1-game-area');
+            gameArea.innerHTML = '';
+            level1NumbersOnScreen = [];
+            level1Round = 0;
+            level1GameActive = false;
+            
+            const startBtn = document.getElementById('level1-start-btn');
+            startBtn.innerHTML = '<i class="fas fa-play"></i> <span data-i18n="btn_start">Start Round</span>';
+            startBtn.onclick = startLevel1Round;
+            
+            document.getElementById('level-1-feedback').textContent = '';
+            document.getElementById('level-1-feedback').className = 'feedback';
+            
+            document.getElementById('progress-fill').style.width = '0%';
+            document.getElementById('timer-box').style.display = 'none';
+            clearInterval(timerInterval);
+        }
+
+        function startLevel1Round() {
+            if (level1GameActive) return;
+            
+            level1GameActive = true;
+            level1Round++;
+            
+            const startBtn = document.getElementById('level1-start-btn');
+            startBtn.innerHTML = '<i class="fas fa-running"></i> <span>Round Active</span>';
+            startBtn.onclick = null;
+            
+            const gameArea = document.getElementById('level1-game-area');
+            gameArea.innerHTML = '';
+            level1NumbersOnScreen = [];
+            
+            // Generate 6 random numbers
+            const numbers = [];
+            for (let i = 0; i < 6; i++) {
+                let num;
+                do {
+                    num = Math.floor(Math.random() * 90) + 10; // 10-99
+                } while (numbers.includes(num));
+                numbers.push(num);
+            }
+            
+            level1Numbers = numbers;
+            
+            // Create number bubbles
+            numbers.forEach((num, index) => {
+                const bubble = document.createElement('div');
+                bubble.className = 'number-bubble';
+                bubble.textContent = formatNumber(num);
+                bubble.dataset.value = num;
+                
+                // Random position
+                const x = Math.random() * 75 + 5;
+                const y = Math.random() * 75 + 5;
+                
+                bubble.style.left = `${x}%`;
+                bubble.style.top = `${y}%`;
+                
+                // Random color
+                const hue = (num * 10) % 360;
+                bubble.style.backgroundColor = `hsl(${hue}, 85%, 65%)`;
+                bubble.style.borderColor = `hsl(${hue}, 85%, 85%)`;
+                
+                // Floating animation
+                bubble.style.animation = `float 3s ease-in-out ${index * 0.2}s infinite alternate`;
+                
+                // Click event
+                bubble.addEventListener('click', () => handleNumberClick(num, bubble));
+                
+                gameArea.appendChild(bubble);
+                level1NumbersOnScreen.push(num);
+            });
+            
+            // Start timer
+            startTimer(10, () => {
+                if (level1GameActive) {
+                    const largest = Math.max(...level1Numbers);
+                    const feedback = document.getElementById('level-1-feedback');
+                    feedback.textContent = currentLang === 'or' ?
+                        `⏰ ସମୟ ଶେଷ! ସବୁଠାରୁ ବଡ ସଂଖ୍ୟା ଥିଲା: ${formatNumber(largest)}` :
+                        `⏰ Time's up! The largest number was: ${formatNumber(largest)}`;
+                    feedback.className = 'feedback wrong';
+                    level1GameActive = false;
+                    startBtn.innerHTML = '<i class="fas fa-play"></i> <span data-i18n="btn_start">Next Round</span>';
+                    startBtn.onclick = startLevel1Round;
+                    updateScore(-5);
+                }
+            });
+            
+            // Update progress
+            document.getElementById('progress-fill').style.width = '100%';
+        }
+
+        function handleNumberClick(clickedNum, element) {
+            if (!level1GameActive) return;
+            
+            clearInterval(timerInterval);
+            document.getElementById('timer-box').style.display = 'none';
+            
+            const largest = Math.max(...level1Numbers);
+            const correct = clickedNum === largest;
+            const feedback = document.getElementById('level-1-feedback');
+            
+            if (correct) {
+                element.classList.add('correct');
+                updateScore(15);
+                feedback.textContent = currentLang === 'or' ?
+                    `✅ ଅତ୍ୟୁତ୍ତମ! ${formatNumber(largest)} ସବୁଠାରୁ ବଡ ସଂଖ୍ୟା। (+${formatNumber(15)} ପଏଣ୍ଟ)` :
+                    `✅ Excellent! ${formatNumber(largest)} is the largest number. (+${formatNumber(15)} points)`;
+                feedback.className = 'feedback correct';
+            } else {
+                element.classList.add('incorrect');
+                updateScore(-5);
+                feedback.textContent = currentLang === 'or' ?
+                    `❌ ଭୁଲ! ${formatNumber(largest)} ସବୁଠାରୁ ବଡ ସଂଖ୍ୟା ଥିଲା। (-${formatNumber(5)} ପଏଣ୍ଟ)` :
+                    `❌ Incorrect! ${formatNumber(largest)} was the largest number. (-${formatNumber(5)} points)`;
+                feedback.className = 'feedback wrong';
+            }
+            
+            level1GameActive = false;
+            const startBtn = document.getElementById('level1-start-btn');
+            startBtn.innerHTML = '<i class="fas fa-play"></i> <span data-i18n="btn_start">Next Round</span>';
+            startBtn.onclick = startLevel1Round;
+            
+            // Check if level complete
+            if (level1Round >= 3) {
+                setTimeout(() => {
+                    document.getElementById('completion-modal').style.display = 'flex';
+                    unlockLevel(2);
+                }, 1500);
+            }
+        }
+
+        // --- LEVEL 2: ARRANGE NUMBERS ---
+        function loadLevel2() {
+            resetLevel2();
+            generateLevel2Numbers();
+        }
+
+        function generateLevel2Numbers() {
+            level2Numbers = [];
+            level2SortedNumbers = [];
+            level2PlacedNumbers = [];
+            
+            // Generate 5-7 random numbers
+            const count = 5 + Math.floor(Math.random() * 3);
+            for (let i = 0; i < count; i++) {
+                let num;
+                do {
+                    num = Math.floor(Math.random() * 50) + 10; // 10-59
+                } while (level2Numbers.includes(num));
+                level2Numbers.push(num);
+            }
+            
+            // Calculate sorted version
+            level2SortedNumbers = [...level2Numbers].sort((a, b) => a - b);
+            
+            // Clear containers
+            const sourceNumbers = document.getElementById('source-numbers');
+            sourceNumbers.innerHTML = '';
+            
+            const dropNumbers = document.getElementById('drop-numbers');
+            dropNumbers.innerHTML = '<p style="color: #a0aec0; font-style: italic; text-align: center; width: 100%; margin-top: 40px;" data-i18n="level2_drop_placeholder">Drag numbers here in ascending order</p>';
+            
+            // Create number tiles (shuffled)
+            const shuffledNumbers = [...level2Numbers].sort(() => Math.random() - 0.5);
+            
+            shuffledNumbers.forEach((num, index) => {
+                const tile = document.createElement('div');
+                tile.className = 'number-tile';
+                tile.textContent = formatNumber(num);
+                tile.dataset.value = num;
+                tile.dataset.index = index;
+                tile.draggable = true;
+                
+                // Drag events
+                tile.addEventListener('dragstart', function(e) {
+                    e.dataTransfer.setData('text/plain', JSON.stringify({
+                        index: index,
+                        value: num
+                    }));
+                    this.style.opacity = '0.6';
+                });
+                
+                tile.addEventListener('dragend', function(e) {
+                    this.style.opacity = '1';
+                });
+                
+                sourceNumbers.appendChild(tile);
+            });
+            
+            // Set up drop zone
+            const dropZone = document.getElementById('drop-zone');
+            
+            dropZone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('drag-over');
+            });
+            
+            dropZone.addEventListener('dragleave', function(e) {
+                this.classList.remove('drag-over');
+            });
+            
+            dropZone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('drag-over');
+                
+                const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                const num = data.value;
+                
+                // Check if already placed
+                if (level2PlacedNumbers.includes(num)) return;
+                
+                // Add to placed numbers
+                level2PlacedNumbers.push(num);
+                
+                // Update drop zone
+                const dropNumbers = document.getElementById('drop-numbers');
+                
+                // Remove placeholder
+                if (dropNumbers.querySelector('p')) {
+                    dropNumbers.innerHTML = '';
+                }
+                
+                const placedTile = document.createElement('div');
+                placedTile.className = 'dropped-tile';
+                placedTile.textContent = formatNumber(num);
+                dropNumbers.appendChild(placedTile);
+                
+                // Hide the dragged element
+                document.querySelector(`.number-tile[data-index="${data.index}"]`).style.display = 'none';
+                
+                // Clear feedback
+                const feedback = document.getElementById('level-2-feedback');
+                feedback.textContent = '';
+                feedback.className = 'feedback';
+                
+                // Update progress
+                const progress = (level2PlacedNumbers.length / level2Numbers.length) * 100;
+                document.getElementById('progress-fill').style.width = `${progress}%`;
+            });
+            
+            // Clear feedback
+            document.getElementById('level-2-feedback').textContent = '';
+            document.getElementById('level-2-feedback').className = 'feedback';
+            
+            // Reset progress
+            document.getElementById('progress-fill').style.width = '0%';
+        }
+
+        function checkLevel2() {
+            const feedback = document.getElementById('level-2-feedback');
+            
+            if (level2PlacedNumbers.length < level2Numbers.length) {
+                feedback.textContent = currentLang === 'or' ?
+                    '❌ ଦୟାକରି ସମସ୍ତ ସଂଖ୍ୟାଗୁଡ଼ିକୁ ବାକ୍ସରେ ଛାଡନ୍ତୁ!' :
+                    '❌ Please place all numbers in the box!';
+                feedback.className = 'feedback wrong';
+                return;
+            }
+            
+            // Check if correctly sorted
+            const correct = JSON.stringify(level2PlacedNumbers) === JSON.stringify(level2SortedNumbers);
+            
+            if (correct) {
+                feedback.textContent = currentLang === 'or' ?
+                    `✅ ଅତ୍ୟୁତ୍ତମ! ସଂଖ୍ୟାଗୁଡ଼ିକ ସଠିକ୍ କ୍ରମରେ ଅଛନ୍ତି! (+${formatNumber(25)} ପଏଣ୍ଟ)` :
+                    `✅ Perfect! Numbers are in correct order! (+${formatNumber(25)} points)`;
+                feedback.className = 'feedback correct';
+                updateScore(25);
+                
+                setTimeout(() => {
+                    document.getElementById('completion-modal').style.display = 'flex';
+                    unlockLevel(3);
+                }, 1500);
+            } else {
+                feedback.textContent = currentLang === 'or' ?
+                    `❌ ଭୁଲ କ୍ରମ! ସଠିକ୍ କ୍ରମ: ${level2SortedNumbers.map(n => formatNumber(n)).join(', ')} (-${formatNumber(5)} ପଏଣ୍ଟ)` :
+                    `❌ Wrong order! Correct order: ${level2SortedNumbers.map(n => formatNumber(n)).join(', ')} (-${formatNumber(5)} points)`;
+                feedback.className = 'feedback wrong';
+                updateScore(-5);
+            }
+        }
+
+        function resetLevel2() {
+            level2Numbers = [];
+            level2SortedNumbers = [];
+            level2PlacedNumbers = [];
+            
+            document.getElementById('source-numbers').innerHTML = '';
+            const dropNumbers = document.getElementById('drop-numbers');
+            dropNumbers.innerHTML = '<p style="color: #a0aec0; font-style: italic; text-align: center; width: 100%; margin-top: 40px;" data-i18n="level2_drop_placeholder">Drag numbers here in ascending order</p>';
+            
+            document.getElementById('level-2-feedback').textContent = '';
+            document.getElementById('level-2-feedback').className = 'feedback';
+            
+            document.getElementById('progress-fill').style.width = '0%';
+        }
+
+        // --- LEVEL 3: ODD-EVEN SLICING ---
+        function loadLevel3() {
+            resetLevel3();
+            generateLevel3Numbers();
+        }
+
+        function generateLevel3Numbers() {
+            level3Numbers = [];
+            level3OddCount = 0;
+            level3EvenCount = 0;
+            
+            // Generate 8-10 random numbers
+            const count = 8 + Math.floor(Math.random() * 3);
+            for (let i = 0; i < count; i++) {
+                const num = Math.floor(Math.random() * 50) + 1; // 1-50
+                level3Numbers.push(num);
+                
+                if (num % 2 === 0) level3EvenCount++;
+                else level3OddCount++;
+            }
+            
+            // Clear containers
+            const sortingNumbers = document.getElementById('sorting-numbers');
+            sortingNumbers.innerHTML = '';
+            
+            // Clear category boxes
+            document.getElementById('category-odd-items').innerHTML = '<p style="color: #a0aec0; font-style: italic; text-align: center; width: 100%; margin-top: 60px;" data-i18n="level3_odd_placeholder">Drop odd numbers here</p>';
+            document.getElementById('category-even-items').innerHTML = '<p style="color: #a0aec0; font-style: italic; text-align: center; width: 100%; margin-top: 60px;" data-i18n="level3_even_placeholder">Drop even numbers here</p>';
+            
+            // Create number tiles (shuffled)
+            const shuffledNumbers = [...level3Numbers].sort(() => Math.random() - 0.5);
+            
+            shuffledNumbers.forEach((num, index) => {
+                const tile = document.createElement('div');
+                tile.className = 'number-tile';
+                tile.textContent = formatNumber(num);
+                tile.dataset.value = num;
+                tile.dataset.index = index;
+                tile.draggable = true;
+                
+                // Color based on odd/even
+                if (num % 2 === 0) {
+                    tile.style.borderColor = '#4299e1';
+                    tile.style.backgroundColor = '#ebf8ff';
+                } else {
+                    tile.style.borderColor = '#ed8936';
+                    tile.style.backgroundColor = '#fffaf0';
+                }
+                
+                // Drag events
+                tile.addEventListener('dragstart', function(e) {
+                    e.dataTransfer.setData('text/plain', JSON.stringify({
+                        index: index,
+                        value: num
+                    }));
+                    this.style.opacity = '0.6';
+                });
+                
+                tile.addEventListener('dragend', function(e) {
+                    this.style.opacity = '1';
+                });
+                
+                sortingNumbers.appendChild(tile);
+            });
+            
+            // Set up category boxes
+            const oddBox = document.getElementById('category-odd');
+            const evenBox = document.getElementById('category-even');
+            
+            [oddBox, evenBox].forEach(box => {
+                box.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.classList.add('drag-over');
+                });
+                
+                box.addEventListener('dragleave', function(e) {
+                    this.classList.remove('drag-over');
+                });
+                
+                box.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('drag-over');
+                    
+                    const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                    const num = data.value;
+                    const isOddBox = this.id === 'category-odd';
+                    
+                    // Check if correct category
+                    const isOdd = num % 2 !== 0;
+                    const correct = (isOdd && isOddBox) || (!isOdd && !isOddBox);
+                    
+                    if (!correct) {
+                        const feedback = document.getElementById('level-3-feedback');
+                        feedback.textContent = currentLang === 'or' ?
+                            '❌ ଭୁଲ ବର୍ଗ! ଏହା ସଠିକ୍ ବର୍ଗରେ ପକାନ୍ତୁ।' :
+                            '❌ Wrong category! Place it in the correct category.';
+                        feedback.className = 'feedback wrong';
+                        return;
+                    }
+                    
+                    // Update category
+                    const categoryItemsDiv = isOddBox ? 
+                        document.getElementById('category-odd-items') : 
+                        document.getElementById('category-even-items');
+                    
+                    // Remove placeholder
+                    if (categoryItemsDiv.querySelector('p')) {
+                        categoryItemsDiv.innerHTML = '';
+                    }
+                    
+                    const placedTile = document.createElement('div');
+                    placedTile.className = 'category-tile';
+                    placedTile.textContent = formatNumber(num);
+                    
+                    // Style based on category
+                    if (isOddBox) {
+                        placedTile.style.borderColor = '#ed8936';
+                        placedTile.style.backgroundColor = '#fffaf0';
+                    } else {
+                        placedTile.style.borderColor = '#4299e1';
+                        placedTile.style.backgroundColor = '#ebf8ff';
+                    }
+                    
+                    categoryItemsDiv.appendChild(placedTile);
+                    
+                    // Hide the dragged element
+                    document.querySelector(`.number-tile[data-index="${data.index}"]`).style.display = 'none';
+                    
+                    // Clear feedback
+                    const feedback = document.getElementById('level-3-feedback');
+                    feedback.textContent = '';
+                    feedback.className = 'feedback';
+                    
+                    // Update progress
+                    const oddItems = document.getElementById('category-odd-items').querySelectorAll('.category-tile').length;
+                    const evenItems = document.getElementById('category-even-items').querySelectorAll('.category-tile').length;
+                    const totalPlaced = oddItems + evenItems;
+                    const progress = (totalPlaced / level3Numbers.length) * 100;
+                    document.getElementById('progress-fill').style.width = `${progress}%`;
+                });
+            });
+            
+            // Clear feedback
+            document.getElementById('level-3-feedback').textContent = '';
+            document.getElementById('level-3-feedback').className = 'feedback';
+            
+            // Reset progress
+            document.getElementById('progress-fill').style.width = '0%';
+        }
+
+        function checkLevel3() {
+            const feedback = document.getElementById('level-3-feedback');
+            
+            // Count items in categories
+            const oddItems = document.getElementById('category-odd-items').querySelectorAll('.category-tile').length;
+            const evenItems = document.getElementById('category-even-items').querySelectorAll('.category-tile').length;
+            const totalPlaced = oddItems + evenItems;
+            
+            if (totalPlaced < level3Numbers.length) {
+                feedback.textContent = currentLang === 'or' ?
+                    '❌ ଦୟାକରି ସମସ୍ତ ସଂଖ୍ୟାଗୁଡ଼ିକୁ ବର୍ଗୀକରଣ କରନ୍ତୁ!' :
+                    '❌ Please categorize all numbers!';
+                feedback.className = 'feedback wrong';
+                return;
+            }
+            
+            // Check if all numbers are correctly categorized
+            const correct = oddItems === level3OddCount && evenItems === level3EvenCount;
+            
+            if (correct) {
+                feedback.textContent = currentLang === 'or' ?
+                    `✅ ଅତ୍ୟୁତ୍ତମ! ସମସ୍ତ ସଂଖ୍ୟାଗୁଡ଼ିକ ସଠିକ୍ ବର୍ଗରେ ଅଛନ୍ତି! (+${formatNumber(30)} ପଏଣ୍ଟ)` :
+                    `✅ Perfect! All numbers are in correct categories! (+${formatNumber(30)} points)`;
+                feedback.className = 'feedback correct';
+                updateScore(30);
+                
+                setTimeout(() => {
+                    document.getElementById('final-score').textContent = formatNumber(score);
+                    document.getElementById('game-over-modal').style.display = 'flex';
+                }, 1500);
+            } else {
+                feedback.textContent = currentLang === 'or' ?
+                    `❌ ଭୁଲ ବର୍ଗୀକରଣ! ${formatNumber(level3OddCount)} ଅଯୁଗ୍ମ ଏବଂ ${formatNumber(level3EvenCount)} ଯୁଗ୍ମ ସଂଖ୍ୟା ଅଛି। (-${formatNumber(8)} ପଏଣ୍ଟ)` :
+                    `❌ Wrong categorization! There are ${formatNumber(level3OddCount)} odd and ${formatNumber(level3EvenCount)} even numbers. (-${formatNumber(8)} points)`;
+                feedback.className = 'feedback wrong';
+                updateScore(-8);
+            }
+        }
+
+        function resetLevel3() {
+            level3Numbers = [];
+            level3OddCount = 0;
+            level3EvenCount = 0;
+            
+            document.getElementById('sorting-numbers').innerHTML = '';
+            document.getElementById('category-odd-items').innerHTML = '<p style="color: #a0aec0; font-style: italic; text-align: center; width: 100%; margin-top: 60px;" data-i18n="level3_odd_placeholder">Drop odd numbers here</p>';
+            document.getElementById('category-even-items').innerHTML = '<p style="color: #a0aec0; font-style: italic; text-align: center; width: 100%; margin-top: 60px;" data-i18n="level3_even_placeholder">Drop even numbers here</p>';
+            
+            document.getElementById('level-3-feedback').textContent = '';
+            document.getElementById('level-3-feedback').className = 'feedback';
+            
+            document.getElementById('progress-fill').style.width = '0%';
+        }
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up language toggle
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    updateLanguage(lang);
+                });
+            });
+            
+            // Set up modal button
+            document.getElementById('next-level-btn').addEventListener('click', function() {
+                document.getElementById('completion-modal').style.display = 'none';
+                showLevelSelection();
+            });
+            
+            // Initialize language
+            updateLanguage('en');
+            
+            // Show level selection by default
+            showLevelSelection();
+        });
+    </script>
+</body>
+</html>

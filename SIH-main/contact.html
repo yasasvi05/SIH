@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 7px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+            background: white;
+            color: #2a69ac;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo-text span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 28px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 1.05rem;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .language-switcher {
+            display: flex;
+            align-items: center;
+            margin-left: 15px;
+        }
+
+        .language-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .language-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.6rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9)), url('https://images.unsplash.com/photo-1516387938699-a93567ec168e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-header p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-light {
+            background: white;
+        }
+
+        .section-dark {
+            background: #f1f5f9;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            color: #1a365d;
+            font-size: 2.5rem;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #38b2ac;
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            margin-bottom: 50px;
+            color: #64748b;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 18px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #38b2ac;
+            box-shadow: 0 0 0 3px rgba(56, 178, 172, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #38b2ac;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2c9a94;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-info {
+            background: white;
+            padding: 40px;
+            border-radius: 18px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+        }
+
+        .contact-method {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .contact-method:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .contact-method h3 {
+            color: #1a365d;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-method h3 i {
+            color: #38b2ac;
+        }
+
+        .contact-method p {
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .support-card {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .support-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .support-card h3 {
+            color: #1a365d;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .support-card h3 i {
+            color: #38b2ac;
+        }
+
+        .support-card p {
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        .support-details {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .support-details p {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .support-details p i {
+            color: #38b2ac;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .faq-card {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .faq-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .faq-card h3 {
+            color: #1a365d;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .faq-card p {
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        .faq-link {
+            display: inline-block;
+            color: #38b2ac;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .faq-link:hover {
+            color: #2c9a94;
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 70px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 45px;
+            margin-bottom: 50px;
+        }
+
+        .footer-about {
+            padding-right: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.8rem;
+            background: #38b2ac;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 25px;
+            color: #38b2ac;
+            font-size: 1.3rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 18px;
+            margin-top: 25px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: #2d3748;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            background: #38b2ac;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .page-header h1 {
+                font-size: 2.6rem;
+            }
+            
+            .page-header p {
+                font-size: 1.2rem;
+            }
+            
+            .contact-grid, .support-grid, .faq-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 35px;
+            }
+            
+            .footer-about {
+                padding-right: 0;
+            }
+            
+            .footer-logo {
+                justify-content: center;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .language-switcher {
+                display: none;
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .contact-form, .contact-info {
+                padding: 25px;
+            }
+        }
+
+        /* Language-specific content */
+        [data-lang="odia"] {
+            display: none;
+        }
+
+        .lang-odia [data-lang="en"] {
+            display: none;
+        }
+
+        .lang-odia [data-lang="odia"] {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <div class="logo-text">STEM <span>Learn</span> Odisha</div>
+                </div>
+
+                <nav>
+                    <ul>
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html" class="active">Contact</a></li>
+                        <li><a href="student-login.html">Student</a></li>
+                        <li><a href="teacher-login.html">Teacher</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="language-switcher">
+                    <button class="language-btn" id="languageToggle">
+                        <i class="fas fa-globe"></i>
+                        <span>English</span>
+                    </button>
+                </div>
+
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 data-lang="en">Contact Us</h1>
+            <h1 data-lang="odia">ଆମ ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ</h1>
+            
+            <p data-lang="en">We're here to help! Reach out to us with any questions, feedback, or support needs.</p>
+            <p data-lang="odia">ଆମେ ସାହାଯ୍ୟ କରିବାକୁ ଏଠାରେ ଅଛୁ! କୌଣସି ପ୍ରଶ୍ନ, ମତାମତ କିମ୍ବା ସହାୟତା ଆବଶ୍ୟକତା ପାଇଁ ଆମ ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ।</p>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section class="section section-light">
+        <div class="container">
+            <h2 class="section-title" data-lang="en">Send us a Message</h2>
+            <h2 class="section-title" data-lang="odia">ଆମକୁ ଏକ ସନ୍ଦେଶ ପଠାନ୍ତୁ</h2>
+            
+            <div class="contact-grid">
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <label for="fullname" data-lang="en">Full Name *</label>
+                            <label for="fullname" data-lang="odia">ପୂର୍ଣ୍ଣ ନାମ *</label>
+                            <input type="text" id="fullname" placeholder="Enter your full name" data-placeholder-en="Enter your full name" data-placeholder-odia="ଆପଣଙ୍କ ପୂର୍ଣ୍ଣ ନାମ ଲେଖନ୍ତୁ" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" data-lang="en">Email Address *</label>
+                            <label for="email" data-lang="odia">ଇମେଲ ଠିକଣା *</label>
+                            <input type="email" id="email" placeholder="Enter your email" data-placeholder-en="Enter your email" data-placeholder-odia="ଆପଣଙ୍କ ଇମେଲ ଲେଖନ୍ତୁ" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="role" data-lang="en">I am a... *</label>
+                            <label for="role" data-lang="odia">ମୁଁ ଜଣେ... *</label>
+                            <select id="role" required>
+                                <option value="" data-lang="en">Select your role</option>
+                                <option value="" data-lang="odia">ଆପଣଙ୍କ ଭୂମିକା ବାଛନ୍ତୁ</option>
+                                <option value="student" data-lang="en">Student</option>
+                                <option value="student" data-lang="odia">ଛାତ୍ର</option>
+                                <option value="teacher" data-lang="en">Teacher</option>
+                                <option value="teacher" data-lang="odia">ଶିକ୍ଷକ</option>
+                                <option value="parent" data-lang="en">Parent</option>
+                                <option value="parent" data-lang="odia">ଅଭିବାବକ</option>
+                                <option value="school-admin" data-lang="en">School Administrator</option>
+                                <option value="school-admin" data-lang="odia">ବିଦ୍ୟାଳୟ ପ୍ରଶାସକ</option>
+                                <option value="other" data-lang="en">Other</option>
+                                <option value="other" data-lang="odia">ଅନ୍ୟାନ୍ୟ</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject" data-lang="en">Subject *</label>
+                            <label for="subject" data-lang="odia">ବିଷୟ *</label>
+                            <input type="text" id="subject" placeholder="What is this about?" data-placeholder-en="What is this about?" data-placeholder-odia="ଏହା କଣ ବିଷୟରେ?" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message" data-lang="en">Message *</label>
+                            <label for="message" data-lang="odia">ସନ୍ଦେଶ *</label>
+                            <textarea id="message" placeholder="Tell us how we can help you..." data-placeholder-en="Tell us how we can help you..." data-placeholder-odia="ଆମେ ଆପଣଙ୍କୁ କିପରି ସାହାଯ୍ୟ କରିପାରିବୁ କୁହନ୍ତୁ..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <span data-lang="en">Send Message</span>
+                            <span data-lang="odia">ସନ୍ଦେଶ ପଠାନ୍ତୁ</span>
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="contact-info">
+                    <div class="contact-method">
+                        <h3><i class="fas fa-envelope"></i> 
+                            <span data-lang="en">Email Us</span>
+                            <span data-lang="odia">ଆମକୁ ଇମେଲ କରନ୍ତୁ</span>
+                        </h3>
+                        <p data-lang="en">Send us your questions or feedback</p>
+                        <p data-lang="odia">ଆମକୁ ଆପଣଙ୍କ ପ୍ରଶ୍ନ କିମ୍ବା ମତାମତ ପଠାନ୍ତୁ</p>
+                        <p><strong>info@stemlearnodisha.edu</strong></p>
+                        <p><strong>support@stemlearnodisha.edu</strong></p>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <h3><i class="fas fa-phone"></i> 
+                            <span data-lang="en">Call Us</span>
+                            <span data-lang="odia">ଆମକୁ ଫୋନ କରନ୍ତୁ</span>
+                        </h3>
+                        <p data-lang="en">Speak with our support team</p>
+                        <p data-lang="odia">ଆମର ସହାୟତା ଦଳ ସହିତ କଥା ହୁଅନ୍ତୁ</p>
+                        <p><strong>+91 674-XXX-XXXX</strong></p>
+                        <p><strong>+91 980X-XXX-XXX</strong></p>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <h3><i class="fas fa-map-marker-alt"></i> 
+                            <span data-lang="en">Visit Us</span>
+                            <span data-lang="odia">ଆମକୁ ଦେଖିବାକୁ ଆସନ୍ତୁ</span>
+                        </h3>
+                        <p data-lang="en">Our main office location</p>
+                        <p data-lang="odia">ଆମର ମୁଖ୍ୟ କାର୍ଯ୍ୟାଳୟର ଅବସ୍ଥାନ</p>
+                        <p><strong data-lang="en">STEM Learn Odisha Foundation</strong></p>
+                        <p><strong data-lang="odia">ବିଜ୍ଞାନ ଶିକ୍ଷା ଓଡିଶା ପ୍ରତିଷ୍ଠାନ</strong></p>
+                        <p data-lang="en">Department of Education, Bhubaneswar, Odisha</p>
+                        <p data-lang="odia">ଶିକ୍ଷା ବିଭାଗ, ଭୁବନେଶ୍ୱର, ଓଡିଶା</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specialized Support Section -->
+    <section class="section section-dark">
+        <div class="container">
+            <h2 class="section-title" data-lang="en">Specialized Support</h2>
+            <h2 class="section-title" data-lang="odia">ବିଶେଷ ସହାୟତା</h2>
+            
+            <p class="section-subtitle" data-lang="en">Get help from our dedicated support teams</p>
+            <p class="section-subtitle" data-lang="odia">ଆମର ଉତ୍ସର୍ଗୀକୃତ ସହାୟତା ଦଳରୁ ସାହାଯ୍ୟ ପାଆନ୍ତୁ</p>
+            
+            <div class="support-grid">
+                <div class="support-card">
+                    <h3><i class="fas fa-user-graduate"></i> 
+                        <span data-lang="en">Student Support</span>
+                        <span data-lang="odia">ଛାତ୍ର ସହାୟତା</span>
+                    </h3>
+                    <p data-lang="en">Help with lessons, quizzes, and technical issues</p>
+                    <p data-lang="odia">ପାଠ, କ୍ୱିଜ୍ ଏବଂ ବୈଷୟିକ ସମସ୍ୟା ସହିତ ସାହାଯ୍ୟ</p>
+                    <div class="support-details">
+                        <p><i class="far fa-clock"></i> 
+                            <span data-lang="en">Mon-Sat: 9 AM - 6 PM</span>
+                            <span data-lang="odia">ସୋମ-ଶନି: ସକାଳ ୯ଟା - ସନ୍ଧ୍ୟା ୬ଟା</span>
+                        </p>
+                        <p><i class="far fa-envelope"></i> student-help@stemlearnodisha.edu</p>
+                    </div>
+                </div>
+                
+                <div class="support-card">
+                    <h3><i class="fas fa-chalkboard-teacher"></i> 
+                        <span data-lang="en">Teacher Support</span>
+                        <span data-lang="odia">ଶିକ୍ଷକ ସହାୟତା</span>
+                    </h3>
+                    <p data-lang="en">Assistance with dashboard, assignments, and training</p>
+                    <p data-lang="odia">ଡ୍ୟାସବୋର୍ଡ, ଆସାଇନମେଣ୍ଟ ଏବଂ ପ୍ରଶିକ୍ଷଣ ସହିତ ସହାୟତା</p>
+                    <div class="support-details">
+                        <p><i class="far fa-clock"></i> 
+                            <span data-lang="en">Mon-Fri: 8 AM - 7 PM</span>
+                            <span data-lang="odia">ସୋମ-ଶୁକ୍ର: ସକାଳ ୮ଟା - ସନ୍ଧ୍ୟା ୭ଟା</span>
+                        </p>
+                        <p><i class="far fa-envelope"></i> teacher-support@stemlearnodisha.edu</p>
+                    </div>
+                </div>
+                
+                <div class="support-card">
+                    <h3><i class="fas fa-laptop"></i> 
+                        <span data-lang="en">Technical Support</span>
+                        <span data-lang="odia">ବୈଷୟିକ ସହାୟତା</span>
+                    </h3>
+                    <p data-lang="en">Platform issues, login problems, and bug reports</p>
+                    <p data-lang="odia">ପ୍ଲାଟଫର୍ମ ସମସ୍ୟା, ଲଗଇନ ସମସ୍ୟା ଏବଂ ବଗ ରିପୋର୍ଟ</p>
+                    <div class="support-details">
+                        <p><i class="far fa-clock"></i> 
+                            <span data-lang="en">Mon-Sun: 24/7</span>
+                            <span data-lang="odia">ସୋମ-ରବି: ୨୪/୭</span>
+                        </p>
+                        <p><i class="far fa-envelope"></i> tech-support@stemlearnodisha.edu</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section section-light">
+        <div class="container">
+            <h2 class="section-title" data-lang="en">Frequently Asked Questions</h2>
+            <h2 class="section-title" data-lang="odia">ବାରମ୍ବାର ପଚରାଯାଉଥିବା ପ୍ରଶ୍ନ</h2>
+            
+            <div class="faq-grid">
+                <div class="faq-card">
+                    <h3 data-lang="en">How do I register my students?</h3>
+                    <h3 data-lang="odia">ମୁଁ କିପରି ମୋର ଛାତ୍ରମାନଙ୍କୁ ନଥିଭୁକ୍ତ କରିବି?</h3>
+                    <p data-lang="en">Teachers can register students through the teacher dashboard by clicking on "Add Students" and following the simple process.</p>
+                    <p data-lang="odia">ଶିକ୍ଷକମାନେ "ଛାତ୍ର ଯୋଡନ୍ତୁ" ଉପରେ କ୍ଲିକ କରି ଏବଂ ସରଳ ପ୍ରକ୍ରିୟା ଅନୁସରଣ କରି ଶିକ୍ଷକ ଡ୍ୟାସବୋର୍ଡ ମାଧ୍ୟମରେ ଛାତ୍ରମାନଙ୍କୁ ନଥିଭୁକ୍ତ କରିପାରିବେ।</p>
+                </div>
+                
+                <div class="faq-card">
+                    <h3 data-lang="en">Is the platform available in Odia language?</h3>
+                    <h3 data-lang="odia">ଏହି ପ୍ଲାଟଫର୍ମ ଓଡିଆ ଭାଷାରେ ଉପଲବ୍ଧ କି?</h3>
+                    <p data-lang="en">Yes, our platform supports both English and Odia languages. You can switch between languages in your profile settings.</p>
+                    <p data-lang="odia">ହଁ, ଆମର ପ୍ଲାଟଫର୍ମ ଇଂରାଜୀ ଏବଂ ଓଡିଆ ଦୁଇ ଭାଷାକୁ ସମର୍ଥନ କରେ। ଆପଣ ଆପଣଙ୍କ ପ୍ରୋଫାଇଲ୍ ସେଟିଂସରେ ଭାଷା ମଧ୍ୟରେ ପରିବର୍ତ୍ତନ କରିପାରିବେ।</p>
+                </div>
+                
+                <div class="faq-card">
+                    <h3 data-lang="en">What devices do students need?</h3>
+                    <h3 data-lang="odia">ଛାତ୍ରମାନେ କେଉଁ ଉପକରଣ ଆବଶ୍ୟକ କରନ୍ତି?</h3>
+                    <p data-lang="en">Students can access our platform on any device with a web browser - smartphones, tablets, laptops, or desktop computers.</p>
+                    <p data-lang="odia">ଛାତ୍ରମାନେ ୱେବ ବ୍ରାଉଜର ଥିବା ଯେକୌଣସି ଉପକରଣରେ ଆମର ପ୍ଲାଟଫର୍ମକୁ ପ୍ରବେଶ କରିପାରିବେ - ସ୍ମାର୍ଟଫୋନ, ଟାବଲେଟ, ଲ୍ୟାପଟପ କିମ୍ବା ଡେସ୍କଟପ କମ୍ପିଉଟର।</p>
+                </div>
+                
+                <div class="faq-card">
+                    <h3 data-lang="en">How can I track student progress?</h3>
+                    <h3 data-lang="odia">ମୁଁ କିପରି ଛାତ୍ର ପ୍ରଗତି ଟ୍ରାକ କରିପାରିବି?</h3>
+                    <p data-lang="en">Teachers have access to a comprehensive dashboard that shows individual and class progress across all subjects and lessons.</p>
+                    <p data-lang="odia">ଶିକ୍ଷକମାନଙ୍କର ଏକ ବ୍ୟାପକ ଡ୍ୟାସବୋର୍ଡକୁ ପ୍ରବେଶାଧିକାର ଅଛି ଯାହା ସମସ୍ତ ବିଷୟ ଏବଂ ପାଠରେ ବ୍ୟକ୍ତିଗତ ଏବଂ ଶ୍ରେଣୀ ପ୍ରଗତି ଦେଖାଏ।</p>
+                </div>
+                
+                <div class="faq-card">
+                    <h3 data-lang="en">Are the lessons aligned with state curriculum?</h3>
+                    <h3 data-lang="odia">ପାଠଗୁଡିକ ରାଜ୍ୟ ପାଠ୍ୟକ୍ରମ ସହିତ ସମନ୍ୱିତ କି?</h3>
+                    <p data-lang="en">Yes, all our lessons are designed to align with the Odisha state curriculum for Class 6 students.</p>
+                    <p data-lang="odia">ହଁ, ଆମର ସମସ୍ତ ପାଠ ଷଷ୍ଠ ଶ୍ରେଣୀର ଛାତ୍ରମାନଙ୍କ ପାଇଁ ଓଡିଶା ରାଜ୍ୟ ପାଠ୍ୟକ୍ରମ ସହିତ ସମନ୍ୱିତ ହେବା ପାଇଁ ଡିଜାଇନ କରାଯାଇଛି।</p>
+                </div>
+                
+                <div class="faq-card">
+                    <h3 data-lang="en">How do I reset my password?</h3>
+                    <h3 data-lang="odia">ମୁଁ କିପରି ମୋର ପାସୱାର୍ଡ ରିସେଟ କରିବି?</h3>
+                    <p data-lang="en">Click on "Forgot Password" on the login page and follow the instructions sent to your registered email address.</p>
+                    <p data-lang="odia">ଲଗଇନ ପୃଷ୍ଠାରେ "ପାସୱାର୍ଡ ଭୁଲି ଗଛି" ଉପରେ କ୍ଲିକ କରନ୍ତୁ ଏବଂ ଆପଣଙ୍କ ନଥିଭୁକ୍ତ ଇମେଲ ଠିକଣାକୁ ପଠାଯାଇଥିବା ନିର୍ଦ୍ଦେଶଗୁଡ଼ିକ ଅନୁସରଣ କରନ୍ତୁ।</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="#" class="faq-link">
+                    <span data-lang="en">View All FAQs <i class="fas fa-arrow-right"></i></span>
+                    <span data-lang="odia">ସମସ୍ତ FAQ ଦେଖନ୍ତୁ <i class="fas fa-arrow-right"></i></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <div class="footer-logo-text">STEM Learn Odisha</div>
+                    </div>
+                    <p data-lang="en">Making Science and Mathematics education engaging and relevant for Class 6 students in Odisha through localized content and interactive learning.</p>
+                    <p data-lang="odia">ଓଡିଶାର କକ୍ଷା ୬ ର ଛାତ୍ରଛାତ୍ରୀଙ୍କ ପାଇଁ ବିଜ୍ଞାନ ଏବଂ ଗଣିତ ଶିକ୍ଷାକୁ ଆକର୍ଷଣୀୟ ଏବଂ ପ୍ରାସଙ୍ଗିକ କରିବା ସ୍ଥାନୀୟକୃତ ବିଷୟବସ୍ତୁ ଏବଂ ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷା ମାଧ୍ୟମରେ।</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <h3 data-lang="en">Quick Links</h3>
+                    <h3 data-lang="odia">ଦ୍ରୁତ ଲିଙ୍କ୍</h3>
+                    <ul>
+                        <li><a href="home.html"><i class="fas fa-home"></i> <span data-lang="en">Home</span><span data-lang="odia">ମୁଖ୍ୟ ପୃଷ୍ଠା</span></a></li>
+                        <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> <span data-lang="en">Our Teachers</span><span data-lang="odia">ଆମର ଶିକ୍ଷକ</span></a></li>
+                        <li><a href="about.html"><i class="fas fa-info-circle"></i> <span data-lang="en">About Us</span><span data-lang="odia">ଆମ ବିଷୟରେ</span></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p data-lang="en">&copy; 2023 STEM Learn Odisha. All rights reserved.</p>
+                <p data-lang="odia">&copy; ୨୦୨୩ ଷ୍ଟେମ୍ ଲର୍ନ ଓଡିଶା। ସମସ୍ତ ଅଧିକାର ସଂରକ୍ଷିତ।</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language toggle functionality
+        const languageToggle = document.getElementById('languageToggle');
+        let isEnglish = true;
+        
+        languageToggle.addEventListener('click', () => {
+            isEnglish = !isEnglish;
+            const languageText = languageToggle.querySelector('span');
+            const allEnglishElements = document.querySelectorAll('[data-lang="en"]');
+            const allOdiaElements = document.querySelectorAll('[data-lang="odia"]');
+            
+            if (isEnglish) {
+                languageText.textContent = 'English';
+                // Show English elements, hide Odia elements
+                allEnglishElements.forEach(el => el.style.display = 'block');
+                allOdiaElements.forEach(el => el.style.display = 'none');
+            } else {
+                languageText.textContent = 'Odia';
+                // Show Odia elements, hide English elements
+                allEnglishElements.forEach(el => el.style.display = 'none');
+                allOdiaElements.forEach(el => el.style.display = 'block');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav ul');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // Form submission handling
+        const contactForm = document.querySelector('form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const message = isEnglish 
+                    ? 'Thank you for your message! We will get back to you soon.'
+                    : 'ଆପଣଙ୍କ ସନ୍ଦେଶ ପାଇଁ ଧନ୍ୟବାଦ! ଆମେ ଶୀଘ୍ର ଆପଣଙ୍କ ସହିତ ଯୋଗାଯୋଗ କରିବୁ।';
+                alert(message);
+                this.reset();
+            });
+        }
+
+        // Simple animation for elements on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.support-card, .faq-card');
+            
+            function checkScroll() {
+                animateElements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.3;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.style.opacity = 1;
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            }
+            
+            // Initialize opacity for animation
+            animateElements.forEach(element => {
+                element.style.opacity = 0;
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'all 0.5s ease';
+            });
+            
+            window.addEventListener('scroll', checkScroll);
+            checkScroll(); // Check on initial load
+        });
+    </script>
+</body>
+</html>

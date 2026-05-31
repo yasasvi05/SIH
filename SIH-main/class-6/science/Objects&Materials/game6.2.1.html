@@ -1,0 +1,3184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treasure Hunt Adventure - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* All your existing CSS remains the same */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f0f7ff;
+            color: #1e293b;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #2a69ac;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text h1 span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-pic {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 180px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f7fa;
+        }
+
+        .dropdown-item i {
+            color: #3182ce;
+            width: 20px;
+        }
+
+        /* Language Options */
+        .language-options {
+            position: absolute;
+            top: 60px;
+            right: 120px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 120px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .language-options.show {
+            display: block;
+        }
+
+        .language-option {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .language-option:last-child {
+            border-bottom: none;
+        }
+
+        .language-option:hover {
+            background: #f5f7fa;
+        }
+
+        /* Language Switcher for Game */
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 25px;
+            padding: 8px;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            gap: 5px;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .lang-btn.active {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+
+        .lang-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Game Header */
+        .game-header {
+            background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9)), url('https://images.unsplash.com/photo-1593118247619-e2d6f056869e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            position: relative;
+            display: none;
+        }
+
+        .game-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Game Stats */
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 1000px;
+            display: none;
+        }
+
+        .timer {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        .timer i {
+            color: #e53e3e;
+        }
+
+        .score {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        .score i {
+            color: #38a169;
+        }
+
+        .hints {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        .hints i {
+            color: #d69e2e;
+        }
+
+        .progress-container {
+            width: 200px;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #3182ce;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Game Area */
+        .game-area {
+            padding: 20px 0;
+            display: none;
+        }
+
+        .location-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .location-image {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .location-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .location-info {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .location-title {
+            font-size: 1.8rem;
+            color: #1a365d;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .location-description {
+            color: #64748b;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .items-to-find {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .items-to-find h3 {
+            color: #1a365d;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .items-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .item-to-find {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .item-to-find.found {
+            background: #e6ffe6;
+            border: 1px solid #38a169;
+        }
+
+        .items-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .item {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .item.found {
+            background: #e6ffe6;
+            border: 2px solid #38a169;
+        }
+
+        .item.locked {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .item-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #4a6572;
+        }
+
+        .item-name {
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 5px;
+        }
+
+        .item-status {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .item.found .item-status {
+            color: #38a169;
+            font-weight: 600;
+        }
+
+        .item.locked::after {
+            content: '🔒';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            margin-top: 20px;
+        }
+
+        .control-btn-game {
+            padding: 12px 25px;
+            background: #3182ce;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .control-btn-game:hover {
+            background: #2b6cb0;
+            transform: translateY(-2px);
+        }
+
+        .control-btn-game.hint {
+            background: #d69e2e;
+        }
+
+        .control-btn-game.hint:hover {
+            background: #b3821e;
+        }
+
+        .control-btn-game.reset {
+            background: #e53e3e;
+        }
+
+        .control-btn-game.reset:hover {
+            background: #c53030;
+        }
+
+        .control-btn-game:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .control-btn-game:disabled:hover {
+            background: #3182ce;
+            transform: none;
+        }
+
+        /* Instructions Modal */
+        .instructions-modal {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .instructions-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 700px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            text-align: center;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .instructions-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #1a365d;
+            font-weight: 700;
+        }
+
+        .instructions-text {
+            color: #64748b;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            text-align: left;
+            font-size: 1.1rem;
+        }
+
+        .instructions-list {
+            margin-left: 20px;
+            margin-bottom: 25px;
+        }
+
+        .instructions-list li {
+            margin-bottom: 10px;
+        }
+
+        .start-game-btn {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #38b2ac 0%, #2c9a94 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .start-game-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(56, 178, 172, 0.3);
+        }
+
+        /* Item Detail Modal */
+        .item-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .item-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            text-align: center;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .item-icon-large {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            color: #4a6572;
+        }
+
+        .item-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #1a365d;
+            font-weight: 700;
+        }
+
+        .item-fact {
+            color: #64748b;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            font-size: 1.1rem;
+            text-align: left;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .item-quiz {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .quiz-question {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #1a365d;
+            font-size: 1.1rem;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            font-size: 1rem;
+        }
+
+        .quiz-option:hover {
+            border-color: #3182ce;
+            background: #f0f9ff;
+        }
+
+        .quiz-option.selected {
+            border-color: #3182ce;
+            background: #d6e4ff;
+        }
+
+        .item-submit {
+            padding: 12px 30px;
+            background: #3182ce;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .item-submit:hover {
+            background: #2b6cb0;
+            transform: translateY(-2px);
+        }
+
+        .item-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Success Modal */
+        .success-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .success-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .badge {
+            font-size: 3rem;
+            color: #d69e2e;
+            margin-bottom: 15px;
+        }
+
+        .success-title {
+            font-size: 1.8rem;
+            color: #1a365d;
+            margin-bottom: 15px;
+        }
+
+        .success-text {
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+       
+        .did-you-know {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .did-you-know strong {
+            color: #38b2ac;
+            font-size: 1.1em;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .did-you-know p {
+            font-size: 0.95rem;
+            color: #4a6572;
+        }
+
+        .next-btn {
+            padding: 12px 30px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .next-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Interactive Map */
+        .interactive-map {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .map-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .map-item {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            font-size: 1.5rem;
+            border: 2px solid transparent;
+            z-index: 10;
+        }
+
+        .map-item:hover {
+            transform: scale(1.2);
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            border-color: #3182ce;
+        }
+
+        .map-item.found {
+            background: #e6ffe6;
+            border: 2px solid #38a169;
+        }
+
+        .map-item.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about {
+            padding-right: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.8rem;
+            background: #38b2ac;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 20px;
+            color: #38b2ac;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2d3748;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .social-links a:hover {
+            background: #38b2ac;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .location-container {
+                flex-direction: column;
+            }
+           
+            .items-container {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+           
+            .game-header h1 {
+                font-size: 2.2rem;
+            }
+           
+            .game-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            .controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+           
+            .control-btn-game {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .items-container {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .instructions-content,
+            .item-content,
+            .success-content {
+                padding: 20px;
+            }
+            
+            .instructions-title,
+            .item-title,
+            .success-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes shake {
+            0%, 100% {transform: translateX(0);}
+            10%, 30%, 50%, 70%, 90% {transform: translateX(-5px);}
+            20%, 40%, 60%, 80% {transform: translateX(5px);}
+        }
+       
+        .shake {
+            animation: shake 0.5s;
+        }
+       
+        @keyframes pulse {
+            0% {transform: scale(1);}
+            50% {transform: scale(1.1);}
+            100% {transform: scale(1);}
+        }
+       
+        .pulse {
+            animation: pulse 0.5s;
+        }
+        
+        /* Simple dialog for younger students */
+        .simple-dialog {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .simple-dialog h3 {
+            color: #1a365d;
+            margin-bottom: 15px;
+        }
+        
+        .simple-dialog p {
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .simple-dialog button {
+            background: #3182ce;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .simple-dialog button:hover {
+            background: #2b6cb0;
+        }
+        
+        /* Odia font support */
+        .odia-text {
+            font-family: 'Kalinga', 'Nirmala UI', 'Segoe UI', sans-serif;
+        }
+        
+        /* Hindi font support */
+        .hindi-text {
+            font-family: 'Mangal', 'Nirmala UI', 'Segoe UI', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="logo-text">
+                <h1>STEM Learn Odisha</h1>
+                <p>Gamified Learning Platform</p>
+            </div>
+        </div>
+       
+        <nav>
+            <ul>
+                <li><a href="student-dashboard.html" id="navDashboard">Dashboard</a></li>
+                <li><a href="science.html" id="navScience">Science</a></li>
+                <li><a href="food.html" id="navFood">Food</a></li>
+                <li><a href="scienceidx.html" id="navCurriculum">Curriculum</a></li>
+            </ul>
+        </nav>
+       
+        <div class="header-controls">
+            <button class="control-btn" id="languageToggle">
+                <i class="fas fa-globe"></i>
+            </button>
+           
+            <div class="profile-container">
+                <button class="profile-btn" id="profileToggle">
+                    <img src="" alt="Profile" class="profile-pic" id="headerProfilePic">
+                    <span id="headerUserName">Student</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+               
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="student-dashboard.html" class="dropdown-item" id="dropdownProfile">
+                        <i class="fas fa-user"></i>
+                        <span data-translate="dropdown-profile">Profile</span>
+                    </a>
+                    <a href="student-dashboard.html" class="dropdown-item" id="dropdownSettings">
+                        <i class="fas fa-cog"></i>
+                        <span data-translate="dropdown-settings">Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownLogout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span data-translate="dropdown-logout">Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Language Options -->
+    <div class="language-options" id="languageOptions">
+        <div class="language-option" data-lang="en">English</div>
+        <div class="language-option" data-lang="or">ଓଡ଼ିଆ</div>
+        <div class="language-option" data-lang="hi">हिन्दी</div>
+    </div>
+
+    <!-- Language Switcher for Game -->
+    <div class="language-switcher" id="game-language-switcher">
+        <button class="lang-btn active" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+        <button class="lang-btn" data-lang="hi">हिन्दी</button>
+    </div>
+
+    <!-- Instructions Modal -->
+    <div class="instructions-modal" id="instructions-modal">
+        <div class="instructions-content">
+            <!-- Separate language switcher for instructions only -->
+            <div class="language-switcher" id="instructions-language-switcher" style="position: relative; top: 0; right: 0; margin: 0 auto 20px auto; width: fit-content; background: rgba(26, 54, 93, 0.1);">
+                <button class="lang-btn active" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+                <button class="lang-btn" data-lang="hi">हिन्दी</button>
+            </div>
+            
+            <h2 class="instructions-title" id="instructions-title">Welcome to Treasure Hunt!</h2>
+            <div class="instructions-text" id="instructions-text">
+                <p id="instructions-intro">Hello Explorer! Ready for an exciting treasure hunt?</p>
+                <ul class="instructions-list" id="instructions-list">
+                    <li id="instruction-1">Explore different rooms in the virtual house</li>
+                    <li id="instruction-2">Click on items you find to collect them</li>
+                    <li id="instruction-3">Answer questions about each item you find</li>
+                    <li id="instruction-4">Earn points for correct answers</li>
+                    <li id="instruction-5">Complete each room to unlock the next one!</li>
+                    <li id="instruction-6">Collect all items to win the Treasure Hunter badge!</li>
+                </ul>
+                <p id="instructions-outro">Let's start the adventure! Good luck! 🍀</p>
+            </div>
+            <button class="start-game-btn" id="start-game-btn">Start Adventure!</button>
+        </div>
+    </div>
+
+    <!-- Game Header -->
+    <section class="game-header" id="game-header">
+        <div class="container">
+            <h1 data-translate="game-title">Treasure Hunt Adventure</h1>
+            <p data-translate="game-desc">Explore the virtual house and find hidden treasures while learning fun facts!</p>
+        </div>
+    </section>
+
+    <!-- Game Stats -->
+    <div class="container" id="game-stats-container">
+        <div class="game-stats" id="game-stats">
+            <div class="timer">
+                <i class="fas fa-clock"></i>
+                <span id="time">20:00</span>
+            </div>
+           
+            <div class="score">
+                <i class="fas fa-star"></i>
+                <span id="score">Score: 0</span>
+            </div>
+           
+            <div class="hints">
+                <i class="fas fa-lightbulb"></i>
+                <span id="hints-left">Hints: 5</span>
+            </div>
+           
+            <div class="progress-container">
+                <div class="progress-bar" id="progress" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Area -->
+    <section class="game-area" id="game-area">
+        <div class="container">
+            <div class="location-container">
+                <div class="interactive-map" id="interactive-map">
+                    <img class="map-image" id="map-image" src="" alt="Room">
+                    <!-- Map items will be dynamically added here -->
+                </div>
+                <div class="location-info">
+                    <h2 class="location-title" id="location-title">Kitchen</h2>
+                    <p class="location-description" id="location-description">Welcome to the kitchen! Look around and click on items you find. Each item has a question for you to answer!</p>
+                    
+                    <div class="items-to-find">
+                        <h3 data-translate="items-to-find">Items to Find:</h3>
+                        <div class="items-list" id="items-to-find-list">
+                            <!-- Items to find will be added here -->
+                        </div>
+                    </div>
+                    
+                    <div class="items-container" id="items-container">
+                        <!-- Found items will be displayed here -->
+                    </div>
+                </div>
+            </div>
+           
+            <div class="controls">
+                <button class="control-btn-game hint" id="hint-btn">
+                    <i class="fas fa-lightbulb"></i>
+                    <span data-translate="hint-btn">Get Hint</span>
+                </button>
+                <button class="control-btn-game" id="next-location-btn" disabled>
+                    <i class="fas fa-arrow-right"></i>
+                    <span data-translate="next-location-btn">Next Room</span>
+                </button>
+                <button class="control-btn-game reset" id="reset-btn">
+                    <i class="fas fa-redo"></i>
+                    <span data-translate="reset-btn">Start Over</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Item Detail Modal -->
+    <div class="item-modal" id="item-modal">
+        <div class="item-content">
+            <div class="item-icon-large" id="item-icon-large"></div>
+            <h2 class="item-title" id="item-title"></h2>
+            <p class="item-fact" id="item-fact"></p>
+            <div class="item-quiz" id="item-quiz">
+                <div class="quiz-question" id="quiz-question"></div>
+                <div class="quiz-options" id="quiz-options"></div>
+                <button class="item-submit" id="item-submit" disabled data-translate="submit-btn">Check Answer</button>
+                <div id="quiz-feedback" style="margin-top: 20px; font-weight: 600;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="success-modal">
+        <div class="success-content">
+            <div class="badge">
+                <i class="fas fa-medal"></i>
+            </div>
+            <h2 class="success-title" data-translate="success-title">Congratulations!</h2>
+            <p class="success-text" data-translate="success-text">You found all the treasures and earned the <strong>Treasure Hunter</strong> badge!</p>
+            <div class="did-you-know">
+                <strong data-translate="did-you-know">Awesome Job!</strong>
+                <p data-translate="treasure-fact">You've explored the whole house and learned about everyday objects. Keep exploring the world around you - there's always something new to discover!</p>
+            </div>
+            <button class="next-btn" id="success-next-btn" data-translate="play-again-btn">Play Again</button>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+           
+            if (!user) {
+                // Redirect to login if not authenticated
+                window.location.href = 'student-login.html';
+                return;
+            }
+           
+            // Load user data
+            loadUserData(user);
+            
+            // Initialize the game page
+            initGamePage();
+        });
+
+        // Load user data into the page
+        function loadUserData(user) {
+            document.getElementById('headerUserName').textContent = user.fullName;
+            document.getElementById('headerProfilePic').src = user.profilePicture ? `uploads/${user.profilePicture}` : 'default-profile.png';
+        }
+
+        // Game elements
+        const instructionsModal = document.getElementById('instructions-modal');
+        const startGameBtn = document.getElementById('start-game-btn');
+        const gameHeader = document.getElementById('game-header');
+        const gameStatsContainer = document.getElementById('game-stats-container');
+        const gameArea = document.getElementById('game-area');
+        const interactiveMap = document.getElementById('interactive-map');
+        const mapImage = document.getElementById('map-image');
+        const itemModal = document.getElementById('item-modal');
+        const itemTitleEl = document.getElementById('item-title');
+        const itemIconLargeEl = document.getElementById('item-icon-large');
+        const itemFactEl = document.getElementById('item-fact');
+        const itemQuizEl = document.getElementById('item-quiz');
+        const quizQuestionEl = document.getElementById('quiz-question');
+        const quizOptionsEl = document.getElementById('quiz-options');
+        const itemSubmitBtn = document.getElementById('item-submit');
+        const quizFeedbackEl = document.getElementById('quiz-feedback');
+        const successModal = document.getElementById('success-modal');
+        const progressEl = document.getElementById('progress');
+        const scoreEl = document.getElementById('score');
+        const hintsLeftEl = document.getElementById('hints-left');
+        const hintBtn = document.getElementById('hint-btn');
+        const nextLocationBtn = document.getElementById('next-location-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const timeEl = document.getElementById('time');
+        const successNextBtn = document.getElementById('success-next-btn');
+        const locationTitleEl = document.getElementById('location-title');
+        const locationDescriptionEl = document.getElementById('location-description');
+        const itemsContainerEl = document.getElementById('items-container');
+        const itemsToFindList = document.getElementById('items-to-find-list');
+
+        // Game state variables
+        let score = 0;
+        let hintsLeft = 5;
+        let timerInterval;
+        let timeRemaining = 1200; // 20 minutes
+        let isGameStarted = false;
+        let instructionsLanguage = 'en'; // Separate language for instructions
+        let gameLanguage = 'en'; // Separate language for the game
+        let currentLocationIndex = 0;
+        let currentItem = null;
+        let foundItems = [];
+        let unlockedRooms = [0]; // Start with only the first room unlocked
+        let currentGameItems = []; // Will store the randomly selected items for this game session
+
+        // Complete translations for all languages
+        const translations = {
+            en: {
+                'navDashboard': 'Dashboard',
+                'navScience': 'Science',
+                'navFood': 'Food',
+                'navCurriculum': 'Curriculum',
+                'dropdown-profile': 'Profile',
+                'dropdown-settings': 'Settings',
+                'dropdown-logout': 'Logout',
+                'game-title': 'Treasure Hunt Adventure',
+                'game-desc': 'Explore the virtual house and find hidden treasures while learning fun facts!',
+                'instructions-title': 'Welcome to Treasure Hunt!',
+                'instructions-intro': 'Hello Explorer! Ready for an exciting treasure hunt?',
+                'instruction-1': 'Explore different rooms in the virtual house',
+                'instruction-2': 'Click on items you find to collect them',
+                'instruction-3': 'Answer questions about each item you find',
+                'instruction-4': 'Earn points for correct answers',
+                'instruction-5': 'Complete each room to unlock the next one!',
+                'instruction-6': 'Collect all items to win the Treasure Hunter badge!',
+                'instructions-outro': 'Let\'s start the adventure! Good luck!',
+                'start-game-btn': 'Start Adventure!',
+                'hint-btn': 'Get Hint',
+                'next-location-btn': 'Next Room',
+                'reset-btn': 'Start Over',
+                'submit-btn': 'Check Answer',
+                'success-title': 'Congratulations!',
+                'success-text': 'You found all the treasures and earned the <strong>Treasure Hunter</strong> badge!',
+                'did-you-know': 'Awesome Job!',
+                'treasure-fact': 'You\'ve explored the whole house and learned about everyday objects. Keep exploring the world around you - there\'s always something new to discover!',
+                'play-again-btn': 'Play Again',
+                'items-to-find': 'Items to Find:',
+                'found-status': 'Found! 🎉',
+                'you-found': 'You found:'
+            },
+            or: {
+                'navDashboard': 'ଡ୍ୟାସବୋର୍ଡ',
+                'navScience': 'ବିଜ୍ଞାନ',
+                'navFood': 'ଖାଦ୍ୟ',
+                'navCurriculum': 'ପାଠ୍ୟକ୍ରମ',
+                'dropdown-profile': 'ପ୍ରୋଫାଇଲ୍',
+                'dropdown-settings': 'ସେଟିଂସ୍',
+                'dropdown-logout': 'ଲଗଆଉଟ୍',
+                'game-title': 'ଖଜାଣା ଖୋଜିବା ରୋମାଞ୍ଚ',
+                'game-desc': 'ଭର୍ଚୁଆଲ୍ ଘରେ ଭ୍ରମଣ କର ଏବଂ ମଜାଦାର ତଥ୍ୟ ଶିଖିବା ସମୟରେ ଲୁକ୍କାୟିତ ଖଜାଣା ଖୋଜ!',
+                'instructions-title': 'ଖଜାଣା ଖୋଜିବାକୁ ସ୍ୱାଗତ!',
+                'instructions-intro': 'ନମସ୍କାର ଏକ୍ସପ୍ଲୋରର! ଏକ ରୋମାଞ୍ଚକର ଖଜାଣା ଖୋଜିବା ପାଇଁ ପ୍ରସ୍ତୁତ?',
+                'instruction-1': 'ଭର୍ଚୁଆଲ୍ ଘରର ବିଭିନ୍ନ କୋଠରୀ ଅନୁସନ୍ଧାନ କର',
+                'instruction-2': 'ଆପଣ ପାଇଥିବା ଜିନିଷଗୁଡିକୁ ସଂଗ୍ରହ କରିବା ପାଇଁ କ୍ଲିକ୍ କରନ୍ତୁ',
+                'instruction-3': 'ଆପଣ ପ୍ରତ୍ୟେକ ଜିନିଷ ବିଷୟରେ ପ୍ରଶ୍ନଗୁଡିକର ଉତ୍ତର ଦିଅନ୍ତୁ',
+                'instruction-4': 'ସଠିକ୍ ଉତ୍ତର ପାଇଁ ପଏଣ୍ଟ ଅର୍ଜନ କରନ୍ତୁ',
+                'instruction-5': 'ପ୍ରତ୍ୟେକ କୋଠରୀ ସମ୍ପୂର୍ଣ୍ଣ କରି ପରବର୍ତ୍ତୀ କୋଠରୀ ଅନଲକ୍ କରନ୍ତୁ!',
+                'instruction-6': 'ଖଜାଣା ଶିକାରୀ ବ୍ୟାଜ୍ ଜିତିବା ପାଇଁ ସମସ୍ତ ଜିନିଷ ସଂଗ୍ରହ କର!',
+                'instructions-outro': 'ଚାଲ ରୋମାଞ୍ଚ ଆରମ୍ଭ କରିବା! ଶୁଭକାମନା!',
+                'start-game-btn': 'ରୋମାଞ୍ଚ ଆରମ୍ଭ କର!',
+                'hint-btn': 'ସୂଚନା ନିଅ',
+                'next-location-btn': 'ପରବର୍ତ୍ତୀ କୋଠରୀ',
+                'reset-btn': 'ପୁନଃଆରମ୍ଭ କର',
+                'submit-btn': 'ଉତ୍ତର ଯାଞ୍ଚ କର',
+                'success-title': 'ଅଭିନନ୍ଦନ!',
+                'success-text': 'ଆପଣ ସମସ୍ତ ଖଜାଣା ଖୋଜି ସାରିଛନ୍ତି ଏବଂ <strong>ଖଜାଣା ଶିକାରୀ</strong> ବ୍ୟାଜ୍ ଅର୍ଜନ କରିଛନ୍ତି!',
+                'did-you-know': 'ବହୁତ ବଢିଆ!',
+                'treasure-fact': 'ଆପଣ ସମ୍ପୂର୍ଣ୍ଣ ଘର ଅନୁସନ୍ଧାନ କରିଛନ୍ତି ଏବଂ ଦୈନନ୍ଦିନ ବସ୍ତୁଗୁଡିକ ବିଷୟରେ ଶିଖିଛନ୍ତି। ଆପଣଙ୍କ ଚାରିପାଖରେ ଥିବା ପୃଥିବୀକୁ ଅନୁସନ୍ଧାନ କରିବା ଜାରି ରଖନ୍ତୁ - ସର୍ବଦା କିଛି ନୂଆ ଆବିଷ୍କାର କରିବାକୁ ଅଛି!',
+                'play-again-btn': 'ପୁନର୍ବାର ଖେଳନ୍ତୁ',
+                'items-to-find': 'ଖୋଜିବା ପାଇଁ ଜିନିଷଗୁଡିକ:',
+                'found-status': 'ମିଳିଗଲା! 🎉',
+                'you-found': 'ଆପଣ ପାଇଲେ:'
+            },
+            hi: {
+                'navDashboard': 'डैशबोर्ड',
+                'navScience': 'विज्ञान',
+                'navFood': 'भोजन',
+                'navCurriculum': 'पाठ्यक्रम',
+                'dropdown-profile': 'प्रोफाइल',
+                'dropdown-settings': 'सेटिंग्स',
+                'dropdown-logout': 'लॉगआउट',
+                'game-title': 'खजाना खोज साहसिक',
+                'game-desc': 'आभासी घर का पता लगाएं और मजेदार तथ्य सीखते हुए छिपे हुए खजाने ढूंढें!',
+                'instructions-title': 'खजाना खोज में आपका स्वागत है!',
+                'instructions-intro': 'नमस्ते एक्सप्लोरर! एक रोमांचक खजाना खोज के लिए तैयार?',
+                'instruction-1': 'आभासी घर के विभिन्न कमरों का पता लगाएं',
+                'instruction-2': 'आपको मिलने वाली वस्तुओं को एकत्र करने के लिए क्लिक करें',
+                'instruction-3': 'आपको मिलने वाली प्रत्येक वस्तु के बारे में प्रश्नों के उत्तर दें',
+                'instruction-4': 'सही उत्तरों के लिए अंक अर्जित करें',
+                'instruction-5': 'प्रत्येक कमरा पूरा करके अगला कमरा अनलॉक करें!',
+                'instruction-6': 'सभी आइटम एकत्र करें और ट्रेजर हंटर बैज जीतें!',
+                'instructions-outro': 'चलो साहसिक शुरू करते हैं! शुभकामनाएं!',
+                'start-game-btn': 'साहसिक शुरू करें!',
+                'hint-btn': 'संकेत लें',
+                'next-location-btn': 'अगला कमरा',
+                'reset-btn': 'फिर से शुरू करें',
+                'submit-btn': 'उत्तर जांचें',
+                'success-title': 'बधाई हो!',
+                'success-text': 'आपने सभी खजाने ढूंढ लिए हैं और <strong>खजाना शिकारी</strong> बैज अर्जित किया है!',
+                'did-you-know': 'शानदार काम!',
+                'treasure-fact': 'आपने पूरे घर का पता लगाया है और रोजमर्रा की वस्तुओं के बारे में सीखा है। अपने आसपास की दुनिया का पता लगाते रहें - हमेशा कुछ नया खोजने को मिलता है!',
+                'play-again-btn': 'फिर से खेलें',
+                'items-to-find': 'ढूंढने के लिए वस्तुएं:',
+                'found-status': 'मिल गया! 🎉',
+                'you-found': 'आपको मिला:'
+            }
+        };
+
+        // Initialize the game page
+        function initGamePage() {
+            // Set up header language options
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    switchLanguage(lang);
+                    document.getElementById('languageOptions').classList.remove('show');
+                });
+            });
+
+            // Language switching for game
+            document.querySelectorAll('#game-language-switcher .lang-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.dataset.lang;
+                    switchGameLanguage(lang);
+                });
+            });
+
+            // Language switching for instructions only
+            document.querySelectorAll('#instructions-language-switcher .lang-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.dataset.lang;
+                    switchInstructionsLanguage(lang);
+                });
+            });
+
+            // Dashboard integration event listeners
+            const profileToggle = document.getElementById('profileToggle');
+            const profileDropdown = document.getElementById('profileDropdown');
+            const languageToggle = document.getElementById('languageToggle');
+            const languageOptions = document.getElementById('languageOptions');
+            const dropdownProfile = document.getElementById('dropdownProfile');
+            const dropdownSettings = document.getElementById('dropdownSettings');
+            const dropdownLogout = document.getElementById('dropdownLogout');
+            const navDashboard = document.getElementById('navDashboard');
+            const navScience = document.getElementById('navScience');
+            const navCurriculum = document.getElementById('navCurriculum');
+            const navFood = document.getElementById('navFood');
+
+            // Profile dropdown toggle
+            profileToggle.addEventListener('click', function() {
+                profileDropdown.classList.toggle('show');
+            });
+
+            // Language toggle
+            languageToggle.addEventListener('click', function() {
+                languageOptions.classList.toggle('show');
+            });
+
+            // Navigation between pages
+            dropdownProfile.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#profile';
+            });
+
+            dropdownSettings.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#settings';
+            });
+
+            dropdownLogout.addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('user');
+                window.location.href = 'student-login.html';
+            });
+
+            // Navigation menu items
+            navDashboard.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html';
+            });
+
+            navScience.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'science.html';
+            });
+
+            navCurriculum.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'scienceidx.html';
+            });
+
+            navFood.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'food.html';
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#languageToggle') && !e.target.closest('#languageOptions')) {
+                    languageOptions.classList.remove('show');
+                }
+               
+                if (!e.target.closest('#profileToggle') && !e.target.closest('#profileDropdown')) {
+                    profileDropdown.classList.remove('show');
+                }
+            });
+
+            // Initialize with default language
+            switchLanguage('en');
+            switchGameLanguage('en');
+            switchInstructionsLanguage('en');
+            
+            // Start with instructions modal open
+            instructionsModal.style.display = 'flex';
+        }
+
+        // Language switching functions
+        function switchLanguage(lang) {
+            // Update header language elements
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    if (key === 'success-text') {
+                        element.innerHTML = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+        }
+
+        function switchGameLanguage(lang) {
+            gameLanguage = lang;
+           
+            // Update language buttons in game switcher
+            document.querySelectorAll('#game-language-switcher .lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+
+            // Update all translated elements in the game
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.dataset.translate;
+                if (translations[lang] && translations[lang][key]) {
+                    if (key === 'success-text') {
+                        // Handle HTML content separately
+                        const translatedText = translations[lang][key];
+                        element.innerHTML = translatedText;
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+
+            // Add language-specific font classes
+            document.body.classList.remove('odia-text', 'hindi-text');
+            if (lang === 'or') {
+                document.body.classList.add('odia-text');
+            } else if (lang === 'hi') {
+                document.body.classList.add('hindi-text');
+            }
+
+            // Update score display
+            updateScoreDisplay();
+            updateHintsDisplay();
+            
+            // Update game if active
+            if (isGameStarted) {
+                // Reload current location with new language
+                generateRandomItems();
+                loadLocation(currentLocationIndex);
+            }
+        }
+
+        function switchInstructionsLanguage(lang) {
+            instructionsLanguage = lang;
+           
+            // Update language buttons in instructions switcher
+            document.querySelectorAll('#instructions-language-switcher .lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+
+            // Update instruction elements
+            updateInstructionTranslations(lang);
+        }
+
+        // Function to update instruction elements
+        function updateInstructionTranslations(lang) {
+            const instructionsTitle = document.getElementById('instructions-title');
+            const instructionsIntro = document.getElementById('instructions-intro');
+            const instruction1 = document.getElementById('instruction-1');
+            const instruction2 = document.getElementById('instruction-2');
+            const instruction3 = document.getElementById('instruction-3');
+            const instruction4 = document.getElementById('instruction-4');
+            const instruction5 = document.getElementById('instruction-5');
+            const instruction6 = document.getElementById('instruction-6');
+            const instructionsOutro = document.getElementById('instructions-outro');
+            const startGameBtn = document.getElementById('start-game-btn');
+
+            if (translations[lang]) {
+                if (instructionsTitle) instructionsTitle.textContent = translations[lang]['instructions-title'];
+                if (instructionsIntro) instructionsIntro.textContent = translations[lang]['instructions-intro'];
+                if (instruction1) instruction1.textContent = translations[lang]['instruction-1'];
+                if (instruction2) instruction2.textContent = translations[lang]['instruction-2'];
+                if (instruction3) instruction3.textContent = translations[lang]['instruction-3'];
+                if (instruction4) instruction4.textContent = translations[lang]['instruction-4'];
+                if (instruction5) instruction5.textContent = translations[lang]['instruction-5'];
+                if (instruction6) instruction6.textContent = translations[lang]['instruction-6'];
+                if (instructionsOutro) instructionsOutro.textContent = translations[lang]['instructions-outro'];
+                if (startGameBtn) startGameBtn.textContent = translations[lang]['start-game-btn'];
+            }
+        }
+
+        // Multi-language locations with all 4 rooms
+        const locations = {
+            en: [
+                {
+                    id: 'kitchen',
+                    name: 'Kitchen',
+                    description: 'Welcome to the kitchen! Look around and click on items you find. Each item has a question for you to answer!',
+                    image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                },
+                {
+                    id: 'bathroom',
+                    name: 'Bathroom',
+                    description: 'This is the bathroom where we keep clean. Look for items that help with personal hygiene!',
+                    image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80'
+                },
+                {
+                    id: 'bedroom',
+                    name: 'Bedroom',
+                    description: 'This is the bedroom where we sleep and relax. Can you find items related to rest and comfort?',
+                    image: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                },
+                {
+                    id: 'livingroom',
+                    name: 'Living Room',
+                    description: 'This is the living room where we spend time with family. Look for items related to entertainment and comfort!',
+                    image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                }
+            ],
+            or: [
+                {
+                    id: 'kitchen',
+                    name: 'ରୋଷେଇଘର',
+                    description: 'ରୋଷେଇଘରକୁ ସ୍ୱାଗତ! ଚାରିପାଖରେ ଦେଖନ୍ତୁ ଏବଂ ଆପଣ ପାଇଥିବା ଜିନିଷଗୁଡିକୁ କ୍ଲିକ୍ କରନ୍ତୁ। ପ୍ରତ୍ୟେକ ଜିନିଷରେ ଆପଣଙ୍କ ପାଇଁ ଏକ ପ୍ରଶ୍ନ ଅଛି!',
+                    image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                },
+                {
+                    id: 'bathroom',
+                    name: 'ଗାଧୁଆଘର',
+                    description: 'ଏହା ହେଉଛି ଗାଧୁଆଘର ଯେଉଁଠାରେ ଆମେ ପରିଷ୍କାର ରହୁ। ବ୍ୟକ୍ତିଗତ ସ୍ୱଚ୍ଛତାରେ ସାହାଯ୍ୟ କରୁଥିବା ଜିନିଷଗୁଡିକୁ ଖୋଜନ୍ତୁ!',
+                    image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80'
+                },
+                {
+                    id: 'bedroom',
+                    name: 'ଶୋଇବାର ଘର',
+                    description: 'ଏହା ହେଉଛି ଶୋଇବାର ଘର ଯେଉଁଠାରେ ଆମେ ଶୋଇ ଏବଂ ଆରାମ କରୁ। ଆରାମ ଏବଂ ସୁଖସୁବିଧା ସହିତ ଜଡିତ ଜିନିଷଗୁଡିକୁ ଆପଣ ଖୋଜିପାରିବେ କି?',
+                    image: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                },
+                {
+                    id: 'livingroom',
+                    name: 'ବସିବାର ଘର',
+                    description: 'ଏହା ହେଉଛି ବସିବାର ଘର ଯେଉଁଠାରେ ଆମେ ପରିବାର ସହିତ ସମୟ ବିତାଉ। ମନୋରଞ୍ଜନ ଏବଂ ସୁଖସୁବିଧା ସହିତ ଜଡିତ ଜିନିଷଗୁଡିକୁ ଖୋଜନ୍ତୁ!',
+                    image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                }
+            ],
+            hi: [
+                {
+                    id: 'kitchen',
+                    name: 'रसोई',
+                    description: 'रसोई में आपका स्वागत है! चारों ओर देखें और जो वस्तुएं मिलें उन पर क्लिक करें। प्रत्येक वस्तु में आपके लिए एक प्रश्न है!',
+                    image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                },
+                {
+                    id: 'bathroom',
+                    name: 'बाथरूम',
+                    description: 'यह बाथरूम है जहां हम साफ-सफाई रखते हैं। व्यक्तिगत स्वच्छता में मदद करने वाली वस्तुओं को ढूंढें!',
+                    image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80'
+                },
+                {
+                    id: 'bedroom',
+                    name: 'बेडरूम',
+                    description: 'यह बेडरूम है जहां हम सोते और आराम करते हैं। क्या आप आराम और सुविधा से संबंधित वस्तुएं ढूंढ सकते हैं?',
+                    image: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                },
+                {
+                    id: 'livingroom',
+                    name: 'लिविंग रूम',
+                    description: 'यह लिविंग रूम है जहां हम परिवार के साथ समय बिताते हैं। मनोरंजन और आराम से संबंधित वस्तुएं ढूंढें!',
+                    image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                }
+            ]
+        };
+
+        // Multi-language item database with all possible items
+        const itemDatabase = {
+            en: [
+                // Kitchen items
+                {
+                    id: 'spoon',
+                    name: 'Spoon',
+                    icon: '🥄',
+                    fact: 'Spoons are one of the oldest eating utensils, dating back to prehistoric times. They help us eat liquid and semi-liquid foods like soup, cereal, and yogurt.',
+                    quiz: {
+                        question: 'What type of food is a spoon MOST useful for eating?',
+                        options: ['Soup', 'Bread', 'Apple', 'Chips'],
+                        answer: 'Soup'
+                    },
+                    location: 'kitchen',
+                    position: { x: 75, y: 65 },
+                    dependencies: []
+                },
+                {
+                    id: 'plate',
+                    name: 'Plate',
+                    icon: '🍽️',
+                    fact: 'Plates provide a flat surface for serving food. They help keep our food organized and make eating more convenient. Plates can be made from ceramic, glass, plastic, or even biodegradable materials.',
+                    quiz: {
+                        question: 'What is the main purpose of a plate?',
+                        options: ['To hold food', 'To drink from', 'To cook food', 'To store food'],
+                        answer: 'To hold food'
+                    },
+                    location: 'kitchen',
+                    position: { x: 35, y: 60 },
+                    dependencies: []
+                },
+                {
+                    id: 'bowl',
+                    name: 'Bowl',
+                    icon: '🥣',
+                    fact: 'Bowls are deeper than plates and are perfect for foods with liquids like cereal, soup, or rice. Their curved sides help prevent spills.',
+                    quiz: {
+                        question: 'Why are bowls better than plates for cereal?',
+                        options: ['They hold liquid better', 'They look nicer', 'They are heavier', 'They are more expensive'],
+                        answer: 'They hold liquid better'
+                    },
+                    location: 'kitchen',
+                    position: { x: 60, y: 70 },
+                    dependencies: ['plate']
+                },
+                {
+                    id: 'fork',
+                    name: 'Fork',
+                    icon: '🍴',
+                    fact: 'Forks help us pick up solid foods like vegetables, meat, and pasta. They have pointed tines that make it easier to spear and hold food.',
+                    quiz: {
+                        question: 'Which food would be easiest to eat with a fork?',
+                        options: ['Pasta', 'Soup', 'Ice cream', 'Juice'],
+                        answer: 'Pasta'
+                    },
+                    location: 'kitchen',
+                    position: { x: 45, y: 55 },
+                    dependencies: []
+                },
+                {
+                    id: 'knife',
+                    name: 'Knife',
+                    icon: '🔪',
+                    fact: 'Knives are cutting tools used to slice, chop, or spread food. They have a sharp blade that makes food preparation easier and safer.',
+                    quiz: {
+                        question: 'What is the main use of a kitchen knife?',
+                        options: ['To cut food', 'To stir food', 'To measure ingredients', 'To serve drinks'],
+                        answer: 'To cut food'
+                    },
+                    location: 'kitchen',
+                    position: { x: 55, y: 45 },
+                    dependencies: []
+                },
+                {
+                    id: 'cup',
+                    name: 'Cup',
+                    icon: '🥛',
+                    fact: 'Cups are containers designed for drinking liquids. They usually have handles to make holding hot drinks more comfortable.',
+                    quiz: {
+                        question: 'What is a cup primarily used for?',
+                        options: ['Drinking liquids', 'Storing food', 'Cooking meals', 'Measuring ingredients'],
+                        answer: 'Drinking liquids'
+                    },
+                    location: 'kitchen',
+                    position: { x: 70, y: 50 },
+                    dependencies: []
+                },
+                
+                // Bathroom items
+                {
+                    id: 'toothbrush',
+                    name: 'Toothbrush',
+                    icon: '🪥',
+                    fact: 'Toothbrushes help remove food particles and plaque from teeth. Modern toothbrushes typically have nylon bristles, but the first toothbrushes were made from natural materials like animal hair or plant fibers.',
+                    quiz: {
+                        question: 'What is the main purpose of a toothbrush?',
+                        options: ['To clean teeth', 'To brush hair', 'To clean shoes', 'To paint walls'],
+                        answer: 'To clean teeth'
+                    },
+                    location: 'bathroom',
+                    position: { x: 70, y: 30 },
+                    dependencies: []
+                },
+                {
+                    id: 'soap',
+                    name: 'Soap',
+                    icon: '🧼',
+                    fact: 'Soap works by breaking down oils and dirt on our skin so they can be washed away with water. Regular handwashing with soap prevents the spread of germs and illnesses.',
+                    quiz: {
+                        question: 'How does soap help clean our hands?',
+                        options: ['It breaks down oils and dirt', 'It colors our skin', 'It makes our skin smell nice', 'It makes water hotter'],
+                        answer: 'It breaks down oils and dirt'
+                    },
+                    location: 'bathroom',
+                    position: { x: 40, y: 60 },
+                    dependencies: []
+                },
+                {
+                    id: 'towel',
+                    name: 'Towel',
+                    icon: '🧺',
+                    fact: 'Towels are made of absorbent material that soaks up water from our skin. The loops in towel fabric (called pile) create more surface area to hold water.',
+                    quiz: {
+                        question: 'What makes towels able to dry our skin?',
+                        options: ['They are absorbent', 'They are colorful', 'They are soft', 'They are large'],
+                        answer: 'They are absorbent'
+                    },
+                    location: 'bathroom',
+                    position: { x: 25, y: 40 },
+                    dependencies: []
+                },
+                {
+                    id: 'mirror',
+                    name: 'Mirror',
+                    icon: '🪞',
+                    fact: 'Mirrors reflect light to show us our own image. They help us see ourselves when grooming, brushing teeth, or getting ready for the day.',
+                    quiz: {
+                        question: 'What does a mirror do?',
+                        options: ['Shows our reflection', 'Makes us look different', 'Cleans our face', 'Makes the room brighter'],
+                        answer: 'Shows our reflection'
+                    },
+                    location: 'bathroom',
+                    position: { x: 60, y: 25 },
+                    dependencies: []
+                },
+                {
+                    id: 'shampoo',
+                    name: 'Shampoo',
+                    icon: '🧴',
+                    fact: 'Shampoo is a hair care product used to clean hair and scalp. It removes dirt, oil, and product buildup while keeping hair healthy and shiny.',
+                    quiz: {
+                        question: 'What is shampoo used for?',
+                        options: ['Cleaning hair', 'Cleaning teeth', 'Washing clothes', 'Cleaning floors'],
+                        answer: 'Cleaning hair'
+                    },
+                    location: 'bathroom',
+                    position: { x: 50, y: 70 },
+                    dependencies: []
+                },
+                {
+                    id: 'toothpaste',
+                    name: 'Toothpaste',
+                    icon: '🦷',
+                    fact: 'Toothpaste contains mild abrasives and fluoride that help clean teeth, remove plaque, and prevent cavities. It makes brushing more effective.',
+                    quiz: {
+                        question: 'What is the main benefit of using toothpaste?',
+                        options: ['It helps prevent cavities', 'It makes teeth whiter', 'It makes breath smell good', 'It makes brushing faster'],
+                        answer: 'It helps prevent cavities'
+                    },
+                    location: 'bathroom',
+                    position: { x: 35, y: 35 },
+                    dependencies: ['toothbrush']
+                },
+                
+                // Bedroom items
+                {
+                    id: 'pillow',
+                    name: 'Pillow',
+                    icon: '🛏️',
+                    fact: 'Pillows support our head and neck while sleeping, helping maintain proper spinal alignment. This can lead to better sleep and reduced neck pain.',
+                    quiz: {
+                        question: 'Where should you place a pillow when sleeping?',
+                        options: ['Under your head', 'Under your feet', 'On your stomach', 'Beside the bed'],
+                        answer: 'Under your head'
+                    },
+                    location: 'bedroom',
+                    position: { x: 50, y: 70 },
+                    dependencies: []
+                },
+                {
+                    id: 'blanket',
+                    name: 'Blanket',
+                    icon: '🛌',
+                    fact: 'Blankets help keep us warm by trapping body heat. They create a layer of insulation between our body and the cooler air in the room.',
+                    quiz: {
+                        question: 'How do blankets help us stay warm?',
+                        options: ['They trap body heat', 'They produce heat', 'They cool the air', 'They reflect heat'],
+                        answer: 'They trap body heat'
+                    },
+                    location: 'bedroom',
+                    position: { x: 30, y: 40 },
+                    dependencies: []
+                },
+                {
+                    id: 'alarm',
+                    name: 'Alarm Clock',
+                    icon: '⏰',
+                    fact: 'Alarm clocks help us wake up at specific times. Modern alarm clocks can be digital or analog and often have features like snooze buttons for extra sleep time.',
+                    quiz: {
+                        question: 'What is the main purpose of an alarm clock?',
+                        options: ['To wake us up on time', 'To tell the temperature', 'To play music', 'To light the room'],
+                        answer: 'To wake us up on time'
+                    },
+                    location: 'bedroom',
+                    position: { x: 70, y: 30 },
+                    dependencies: ['pillow']
+                },
+                {
+                    id: 'lamp',
+                    name: 'Bedside Lamp',
+                    icon: '💡',
+                    fact: 'Bedside lamps provide focused light for reading or other activities before sleep. They allow us to have light without turning on bright overhead lights.',
+                    quiz: {
+                        question: 'When might you use a bedside lamp?',
+                        options: ['When reading before bed', 'When cooking dinner', 'When taking a shower', 'When exercising'],
+                        answer: 'When reading before bed'
+                    },
+                    location: 'bedroom',
+                    position: { x: 25, y: 60 },
+                    dependencies: []
+                },
+                {
+                    id: 'book',
+                    name: 'Book',
+                    icon: '📚',
+                    fact: 'Books contain stories, information, or knowledge printed on pages. Reading books helps us learn new things, improve vocabulary, and develop imagination.',
+                    quiz: {
+                        question: 'What is the main purpose of a book?',
+                        options: ['To provide reading material', 'To decorate shelves', 'To hold doors open', 'To use as a pillow'],
+                        answer: 'To provide reading material'
+                    },
+                    location: 'bedroom',
+                    position: { x: 65, y: 55 },
+                    dependencies: []
+                },
+                {
+                    id: 'hanger',
+                    name: 'Clothes Hanger',
+                    icon: '👔',
+                    fact: 'Clothes hangers help keep clothes organized and prevent wrinkles. They come in various shapes and materials to suit different types of clothing.',
+                    quiz: {
+                        question: 'What is a clothes hanger used for?',
+                        options: ['Hanging clothes', 'Folding clothes', 'Washing clothes', 'Ironing clothes'],
+                        answer: 'Hanging clothes'
+                    },
+                    location: 'bedroom',
+                    position: { x: 40, y: 25 },
+                    dependencies: []
+                },
+                
+                // Living room items
+                {
+                    id: 'remote',
+                    name: 'TV Remote',
+                    icon: '📺',
+                    fact: 'TV remotes use infrared light or radio signals to communicate with televisions. They allow us to change channels, adjust volume, and control other functions without getting up.',
+                    quiz: {
+                        question: 'How does a TV remote control the television?',
+                        options: ['It sends signals', 'It uses magic', 'It talks to the TV', 'It connects with wires'],
+                        answer: 'It sends signals'
+                    },
+                    location: 'livingroom',
+                    position: { x: 40, y: 50 },
+                    dependencies: []
+                },
+                {
+                    id: 'cushion',
+                    name: 'Cushion',
+                    icon: '🪑',
+                    fact: 'Cushions make seating more comfortable by providing padding and support. They can also add color and style to a room while making furniture more inviting.',
+                    quiz: {
+                        question: 'What is the main benefit of using cushions on chairs?',
+                        options: ['They make sitting more comfortable', 'They make chairs look bigger', 'They prevent chairs from moving', 'They make cleaning easier'],
+                        answer: 'They make sitting more comfortable'
+                    },
+                    location: 'livingroom',
+                    position: { x: 25, y: 40 },
+                    dependencies: ['lamp']
+                },
+                {
+                    id: 'frame',
+                    name: 'Photo Frame',
+                    icon: '🖼️',
+                    fact: 'Photo frames protect and display photographs. They help preserve memories and add personal touches to home decor.',
+                    quiz: {
+                        question: 'What is the purpose of a photo frame?',
+                        options: ['To display pictures', 'To hold papers', 'To cover walls', 'To store small items'],
+                        answer: 'To display pictures'
+                    },
+                    location: 'livingroom',
+                    position: { x: 60, y: 30 },
+                    dependencies: []
+                },
+                {
+                    id: 'vase',
+                    name: 'Vase',
+                    icon: '🏺',
+                    fact: 'Vases are containers used to hold cut flowers. They keep flowers fresh by providing water and support while adding beauty to a room.',
+                    quiz: {
+                        question: 'What is a vase typically used for?',
+                        options: ['Holding flowers', 'Storing food', 'Drinking water', 'Planting seeds'],
+                        answer: 'Holding flowers'
+                    },
+                    location: 'livingroom',
+                    position: { x: 75, y: 60 },
+                    dependencies: []
+                },
+                {
+                    id: 'magazine',
+                    name: 'Magazine',
+                    icon: '📰',
+                    fact: 'Magazines contain articles, stories, and pictures on various topics. They provide entertainment and information on current trends, news, or hobbies.',
+                    quiz: {
+                        question: 'What would you typically find in a magazine?',
+                        options: ['Articles and pictures', 'Food recipes only', 'Only advertisements', 'Blank pages'],
+                        answer: 'Articles and pictures'
+                    },
+                    location: 'livingroom',
+                    position: { x: 35, y: 65 },
+                    dependencies: []
+                },
+                {
+                    id: 'rug',
+                    name: 'Rug',
+                    icon: '🧶',
+                    fact: 'Rugs cover floor areas to provide comfort, warmth, and noise reduction. They also protect floors from wear and add decorative elements to rooms.',
+                    quiz: {
+                        question: 'What is one benefit of having a rug on the floor?',
+                        options: ['It makes the floor warmer', 'It makes cleaning harder', 'It makes the room darker', 'It makes furniture smaller'],
+                        answer: 'It makes the floor warmer'
+                    },
+                    location: 'livingroom',
+                    position: { x: 50, y: 50 },
+                    dependencies: []
+                }
+            ],
+            or: [
+                // Kitchen items in Odia
+                {
+                    id: 'spoon',
+                    name: 'ଚାମଚ',
+                    icon: '🥄',
+                    fact: 'ଚାମଚ ହେଉଛି ସବୁଠାରୁ ପୁରାତନ ଖାଦ୍ୟ ଉପକରଣଗୁଡିକ ମଧ୍ୟରୁ ଗୋଟିଏ, ଯାହା ପ୍ରାକ୍-ଐତିହାସିକ ଯୁଗରେ ଆରମ୍ଭ ହୋଇଥିଲା। ସେଗୁଡିକ ଆମକୁ ସୁପ, ସିରିଆଲ୍ ଏବଂ ଦହି ଭଳି ତରଳ ଏବଂ ଅର୍ଦ୍ଧ-ତରଳ ଖାଦ୍ୟ ଖାଇବାରେ ସାହାଯ୍ୟ କରେ।',
+                    quiz: {
+                        question: 'କେଉଁ ପ୍ରକାରର ଖାଦ୍ୟ ଖାଇବା ପାଇଁ ଚାମଚ ସବୁଠାରୁ ଉପଯୋଗୀ?',
+                        options: ['ସୁପ', 'ପାଉଁରୁଟି', 'ଆପଲ୍', 'ଚିପ୍ସ'],
+                        answer: 'ସୁପ'
+                    },
+                    location: 'kitchen',
+                    position: { x: 75, y: 65 },
+                    dependencies: []
+                },
+                {
+                    id: 'plate',
+                    name: 'ଥାଳି',
+                    icon: '🍽️',
+                    fact: 'ଥାଳି ଖାଦ୍ୟ ପରସିବା ପାଇଁ ସମତଳ ପୃଷ୍ଠଦେଶ ଯୋଗାଏ। ସେଗୁଡିକ ଆମର ଖାଦ୍ୟକୁ ସଂଗଠିତ ରଖିବାରେ ସାହାଯ୍ୟ କରେ ଏବଂ ଖାଇବାକୁ ଅଧିକ ସୁବିଧାଜନକ କରେ। ଥାଳି ସେରାମିକ୍, କାଚ, ପ୍ଲାଷ୍ଟିକ୍ କିମ୍ବା ଜୈବ ବିଘଟନୀୟ ପଦାର୍ଥରେ ମଧ୍ୟ ତିଆରି ହୋଇପାରେ।',
+                    quiz: {
+                        question: 'ଥାଳିର ମୁଖ୍ୟ ଉଦ୍ଦେଶ୍ୟ କଣ?',
+                        options: ['ଖାଦ୍ୟ ଧରିବା', 'ପିଇବା', 'ଖାଦ୍ୟ ରାନ୍ଧିବା', 'ଖାଦ୍ୟ ସଂରକ୍ଷଣ କରିବା'],
+                        answer: 'ଖାଦ୍ୟ ଧରିବା'
+                    },
+                    location: 'kitchen',
+                    position: { x: 35, y: 60 },
+                    dependencies: []
+                },
+                {
+                    id: 'bowl',
+                    name: 'ବାଉଲ୍',
+                    icon: '🥣',
+                    fact: 'ବାଉଲ୍ ଥାଳି ଅପେକ୍ଷା ଗଭୀର ଏବଂ ସିରିଆଲ୍, ସୁପ କିମ୍ବା ଭାତ ଭଳି ତରଳ ଥିବା ଖାଦ୍ୟ ପାଇଁ ଉପଯୁକ୍ତ। ସେମାନଙ୍କର ବକ୍ର ପାର୍ଶ୍ୱଗୁଡିକ ସ୍ପିଲ୍ ରୋକିବାରେ ସାହାଯ୍ୟ କରେ।',
+                    quiz: {
+                        question: 'ସିରିଆଲ୍ ପାଇଁ ବାଉଲ୍ ଥାଳି ଅପେକ୍ଷା କାହିଁକି ଭଲ?',
+                        options: ['ସେଗୁଡିକ ତରଳକୁ ଭଲ ଭାବରେ ଧରିଥାଏ', 'ସେଗୁଡିକ ସୁନ୍ଦର ଦେଖାଯାଏ', 'ସେଗୁଡିକ ଭାରୀ ଅଟେ', 'ସେଗୁଡିକ ଅଧିକ ମୂଲ୍ୟବାନ୍'],
+                        answer: 'ସେଗୁଡିକ ତରଳକୁ ଭଲ ଭାବରେ ଧରିଥାଏ'
+                    },
+                    location: 'kitchen',
+                    position: { x: 60, y: 70 },
+                    dependencies: ['plate']
+                },
+                {
+                    id: 'fork',
+                    name: 'କାଟୁତି',
+                    icon: '🍴',
+                    fact: 'କାଟୁତି ଆମକୁ ପରିବା, ମାଂସ ଏବଂ ପାସ୍ତା ଭଳି ଘନ ଖାଦ୍ୟ ଉଠାଇବାରେ ସାହାଯ୍ୟ କରେ। ସେଗୁଡିକରେ ତୀକ୍ଷ୍ଣ ଦାନ୍ତ ଥାଏ ଯାହା ଖାଦ୍ୟକୁ ଭୋଜି ଏବଂ ଧରିରଖିବା ସହଜ କରେ।',
+                    quiz: {
+                        question: 'କେଉଁ ଖାଦ୍ୟ କାଟୁତି ସହିତ ଖାଇବା ସବୁଠାରୁ ସହଜ?',
+                        options: ['ପାସ୍ତା', 'ସୁପ', 'ଆଇସ୍କ୍ରିମ୍', 'ଜୁସ୍'],
+                        answer: 'ପାସ୍ତା'
+                    },
+                    location: 'kitchen',
+                    position: { x: 45, y: 55 },
+                    dependencies: []
+                },
+                {
+                    id: 'knife',
+                    name: 'ଛୁରୀ',
+                    icon: '🔪',
+                    fact: 'ଛୁରୀ ହେଉଛି କଟିବା ଉପକରଣ ଯାହା ଖାଦ୍ୟକୁ କାଟିବା, କୁଟିବା କିମ୍ବା ଲଗାଇବା ପାଇଁ ବ୍ୟବହୃତ ହୁଏ। ସେଗୁଡିକରେ ଏକ ତୀକ୍ଷ୍ଣ ବ୍ଲେଡ୍ ଅଛି ଯାହା ଖାଦ୍ୟ ପ୍ରସ୍ତୁତିକୁ ସହଜ ଏବଂ ସୁରକ୍ଷିତ କରେ।',
+                    quiz: {
+                        question: 'ରୋଷେଇଘର ଛୁରୀର ମୁଖ୍ୟ ବ୍ୟବହାର କଣ?',
+                        options: ['ଖାଦ୍ୟ କାଟିବା', 'ଖାଦ୍ୟ ଘୁଞ୍ଚାଇବା', 'ଉପାଦାନ ମାପିବା', 'ପେୟ ପରସିବା'],
+                        answer: 'ଖାଦ୍ୟ କାଟିବା'
+                    },
+                    location: 'kitchen',
+                    position: { x: 55, y: 45 },
+                    dependencies: []
+                },
+                {
+                    id: 'cup',
+                    name: 'କପ୍',
+                    icon: '🥛',
+                    fact: 'କପ୍ ହେଉଛି ତରଳ ପିଇବା ପାଇଁ ଡିଜାଇନ୍ କରାଯାଇଥିବା କଣ୍ଟେନର। ସେଗୁଡିକରେ ସାଧାରଣତଃ ହ୍ୟାଣ୍ଡେଲ୍ ଥାଏ ଯାହା ଗରମ ପେୟ ଧରିବାକୁ ଅଧିକ ଆରାମଦାୟକ କରେ।',
+                    quiz: {
+                        question: 'କପ୍ ମୁଖ୍ୟତଃ କେଉଁଥିପାଇଁ ବ୍ୟବହୃତ ହୁଏ?',
+                        options: ['ତରଳ ପିଇବା', 'ଖାଦ୍ୟ ସଂରକ୍ଷଣ', 'ଖାଦ୍ୟ ରାନ୍ଧିବା', 'ଉପାଦାନ ମାପିବା'],
+                        answer: 'ତରଳ ପିଇବା'
+                    },
+                    location: 'kitchen',
+                    position: { x: 70, y: 50 },
+                    dependencies: []
+                },
+                
+                // Bathroom items in Odia
+                {
+                    id: 'toothbrush',
+                    name: 'ଦାନ୍ତ ବ୍ରସ୍',
+                    icon: '🪥',
+                    fact: 'ଦାନ୍ତ ବ୍ରସ୍ ଦାନ୍ତରୁ ଖାଦ୍ୟ କଣିକା ଏବଂ ପ୍ଲାକ୍ ଦୂର କରିବାରେ ସାହାଯ୍ୟ କରେ। ଆଧୁନିକ ଦାନ୍ତ ବ୍ରସ୍ ସାଧାରଣତଃ ନାଏଲନ୍ ବ୍ରିଷ୍ଟଲ୍ ବ୍ୟବହାର କରେ, କିନ୍ତୁ ପ୍ରଥମ ଦାନ୍ତ ବ୍ରସ୍ ପଶୁ ଲୋମ କିମ୍ବା ଉଦ୍ଭିଦ ତନ୍ତୁ ଭଳି ପ୍ରାକୃତିକ ପଦାର୍ଥରେ ତିଆରି ହୋଇଥିଲା।',
+                    quiz: {
+                        question: 'ଦାନ୍ତ ବ୍ରସ୍ର ମୁଖ୍ୟ ଉଦ୍ଦେଶ୍ୟ କଣ?',
+                        options: ['ଦାନ୍ତ ପରିଷ୍କାର କରିବା', 'ଚୁଟି ବ୍ରସ୍ କରିବା', 'ଜୋତା ପରିଷ୍କାର କରିବା', 'କାନ୍ଥ ରଙ୍ଗ କରିବା'],
+                        answer: 'ଦାନ୍ତ ପରିଷ୍କାର କରିବା'
+                    },
+                    location: 'bathroom',
+                    position: { x: 70, y: 30 },
+                    dependencies: []
+                },
+                {
+                    id: 'soap',
+                    name: 'ସାବୁନ୍',
+                    icon: '🧼',
+                    fact: 'ସାବୁନ୍ ଆମର ଚର୍ମରେ ଥିବା ତେଲ ଏବଂ ମଇଳାକୁ ଭାଙ୍ଗି ଦେଇ କାମ କରେ ଯାହା ଦ୍ୱାରା ସେଗୁଡିକ ପାଣିରେ ଧୋଇଯାଇପାରେ। ସାବୁନ୍ ସହିତ ନିୟମିତ ହାତ ଧୋଇବା ରୋଗାଣୁ ଏବଂ ରୋଗର ପ୍ରସାର ରୋକିଥାଏ।',
+                    quiz: {
+                        question: 'ସାବୁନ୍ ଆମର ହାତ କିପରି ପରିଷ୍କାର କରିବାରେ ସାହାଯ୍ୟ କରେ?',
+                        options: ['ଏହା ତେଲ ଏବଂ ମଇଳାକୁ ଭାଙ୍ଗି ଦେଇଥାଏ', 'ଏହା ଆମର ଚର୍ମକୁ ରଙ୍ଗିନ୍ କରିଥାଏ', 'ଏହା ଆମର ଚର୍ମକୁ ସୁଗନ୍ଧିତ କରିଥାଏ', 'ଏହା ପାଣିକୁ ଗରମ କରିଥାଏ'],
+                        answer: 'ଏହା ତେଲ ଏବଂ ମଇଳାକୁ ଭାଙ୍ଗି ଦେଇଥାଏ'
+                    },
+                    location: 'bathroom',
+                    position: { x: 40, y: 60 },
+                    dependencies: []
+                },
+                {
+                    id: 'towel',
+                    name: 'ତୋଲିଆ',
+                    icon: '🧺',
+                    fact: 'ତୋଲିଆ ଶୋଷକ ପଦାର୍ଥରେ ତିଆରି ଯାହା ଆମର ଚର୍ମରୁ ପାଣି ଶୋଷି ନିଏ। ତୋଲିଆ କପଡାରେ ଥିବା ଲୁପ୍ (ପାଇଲ୍ କୁହାଯାଏ) ଅଧିକ ପୃଷ୍ଠଦେଶ କ୍ଷେତ୍ରଫଳ ସୃଷ୍ଟି କରି ପାଣି ଧରିରଖିବାରେ ସାହାଯ୍ୟ କରେ।',
+                    quiz: {
+                        question: 'ତୋଲିଆ ଆମର ଚର୍ମକୁ ଶୁଖାଇବାରେ ସକ୍ଷମ କରେ କାହିଁକି?',
+                        options: ['ସେଗୁଡିକ ଶୋଷକ ଅଟେ', 'ସେଗୁଡିକ ରଙ୍ଗୀନ୍ ଅଟେ', 'ସେଗୁଡିକ ନରମ ଅଟେ', 'ସେଗୁଡିକ ବଡ଼ ଅଟେ'],
+                        answer: 'ସେଗୁଡିକ ଶୋଷକ ଅଟେ'
+                    },
+                    location: 'bathroom',
+                    position: { x: 25, y: 40 },
+                    dependencies: []
+                },
+                {
+                    id: 'mirror',
+                    name: 'ଆଇନା',
+                    icon: '🪞',
+                    fact: 'ଆଇନା ଆଲୋକକୁ ପ୍ରତିଫଳିତ କରି ଆମକୁ ଆମର ନିଜର ପ୍ରତିଛବି ଦେଖାଏ। ସେଗୁଡିକ ଆମକୁ ଗ୍ରୁମିଂ, ଦାନ୍ତ ବ୍ରସ୍ କରିବା କିମ୍ବା ଦିନ ପାଇଁ ପ୍ରସ୍ତୁତ ହେବା ସମୟରେ ନିଜକୁ ଦେଖିବାରେ ସାହାଯ୍ୟ କରେ।',
+                    quiz: {
+                        question: 'ଆଇନା କଣ କରେ?',
+                        options: ['ଆମର ପ୍ରତିଛବି ଦେଖାଏ', 'ଆମକୁ ଭିନ୍ନ ଦେଖାଏ', 'ଆମର ମୁହଁ ପରିଷ୍କାର କରେ', 'କୋଠରୀକୁ ଉଜ୍ଜ୍ୱଳ କରେ'],
+                        answer: 'ଆମର ପ୍ରତିଛବି ଦେଖାଏ'
+                    },
+                    location: 'bathroom',
+                    position: { x: 60, y: 25 },
+                    dependencies: []
+                },
+                {
+                    id: 'shampoo',
+                    name: 'ଶାମ୍ପୁ',
+                    icon: '🧴',
+                    fact: 'ଶାମ୍ପୁ ହେଉଛି ଏକ କେଶ ଯତ୍ନ ଉତ୍ପାଦ ଯାହା ଚୁଟି ଏବଂ ସ୍କାଲ୍ପ୍ ପରିଷ୍କାର କରିବା ପାଇଁ ବ୍ୟବହୃତ ହୁଏ। ଏହା ମଇଳା, ତେଲ ଏବଂ ଉତ୍ପାଦ ବିଲ୍ଡଅପ୍ ଦୂର କରେ ଏବଂ ଚୁଟିକୁ ସ୍ୱାସ୍ଥ୍ୟସମ୍ମତ ଏବଂ ଚମକଦାର ରଖେ।',
+                    quiz: {
+                        question: 'ଶାମ୍ପୁ କେଉଁଥିପାଇଁ ବ୍ୟବହୃତ ହୁଏ?',
+                        options: ['ଚୁଟି ପରିଷ୍କାର କରିବା', 'ଦାନ୍ତ ପରିଷ୍କାର କରିବା', 'କପଡା ଧୋଇବା', 'ମେଜ୍ ପରିଷ୍କାର କରିବା'],
+                        answer: 'ଚୁଟି ପରିଷ୍କାର କରିବା'
+                    },
+                    location: 'bathroom',
+                    position: { x: 50, y: 70 },
+                    dependencies: []
+                },
+                {
+                    id: 'toothpaste',
+                    name: 'ଟୁଥପେସ୍ଟ',
+                    icon: '🦷',
+                    fact: 'ଟୁଥପେସ୍ଟରେ ହାଲୁକା ଘର୍ଷଣୀୟ ପଦାର୍ଥ ଏବଂ ଫ୍ଲୋରାଇଡ୍ ଅଛି ଯାହା ଦାନ୍ତ ପରିଷ୍କାର କରିବା, ପ୍ଲାକ୍ ଦୂର କରିବା ଏବଂ କ୍ୟାଭିଟି ରୋକିବାରେ ସାହାଯ୍ୟ କରେ। ଏହା ବ୍ରସିଂକୁ ଅଧିକ ପ୍ରଭାବଶାଳୀ କରେ।',
+                    quiz: {
+                        question: 'ଟୁଥପେସ୍ଟ ବ୍ୟବହାର କରିବାର ମୁଖ୍ୟ ଲାଭ କଣ?',
+                        options: ['ଏହା କ୍ୟାଭିଟି ରୋକିବାରେ ସାହାଯ୍ୟ କରେ', 'ଏହା ଦାନ୍ତକୁ ଧଳା କରେ', 'ଏହା ଶ୍ୱାସକୁ ସୁଗନ୍ଧିତ କରେ', 'ଏହା ବ୍ରସିଂକୁ ଦ୍ରୁତ କରେ'],
+                        answer: 'ଏହା କ୍ୟାଭିଟି ରୋକିବାରେ ସାହାଯ୍ୟ କରେ'
+                    },
+                    location: 'bathroom',
+                    position: { x: 35, y: 35 },
+                    dependencies: ['toothbrush']
+                },
+                
+                // Bedroom items in Odia
+                {
+                    id: 'pillow',
+                    name: 'ବାଲିସ୍',
+                    icon: '🛏️',
+                    fact: 'ବାଲିସ୍ ଶୋଇବା ସମୟରେ ଆମର ମୁଣ୍ଡ ଏବଂ ବେକକୁ ସମର୍ଥନ କରେ, ଯାହା ଦ୍ୱାରା ସ୍ପାଇନ୍ ସଠିକ୍ ଭାବରେ ରହେ। ଏହା ଭଲ ନିଦ ଏବଂ ବେକ ଯନ୍ତ୍ରଣା ହ୍ରାସ କରିପାରେ।',
+                    quiz: {
+                        question: 'ଶୋଇବା ସମୟରେ ବାଲିସ୍ କେଉଁଠାରେ ରଖିବା ଉଚିତ୍?',
+                        options: ['ମୁଣ୍ଡ ତଳେ', 'ପାଦ ତଳେ', 'ପେଟ ଉପରେ', 'ବିଛଣା ପାଖରେ'],
+                        answer: 'ମୁଣ୍ଡ ତଳେ'
+                    },
+                    location: 'bedroom',
+                    position: { x: 50, y: 70 },
+                    dependencies: []
+                },
+                {
+                    id: 'blanket',
+                    name: 'କମ୍ବଳ',
+                    icon: '🛌',
+                    fact: 'କମ୍ବଳ ଆମର ଶରୀରର ଉଷ୍ମତାକୁ ଆବଦ୍ଧ କରି ଆମକୁ ଗରମ ରଖିବାରେ ସାହାଯ୍ୟ କରେ। ସେଗୁଡିକ ଆମର ଶରୀର ଏବଂ କୋଠରୀର ଥଣ୍ଡା ବାୟୁ ମଧ୍ୟରେ ଏକ ଇନ୍ସୁଲେସନ୍ ସ୍ତର ସୃଷ୍ଟି କରେ।',
+                    quiz: {
+                        question: 'କମ୍ବଳ ଆମକୁ ଗରମ ରଖିବାରେ କିପରି ସାହାଯ୍ୟ କରେ?',
+                        options: ['ସେଗୁଡିକ ଶରୀରର ଉଷ୍ମତାକୁ ଆବଦ୍ଧ କରେ', 'ସେଗୁଡିକ ଉଷ୍ମତା ଉତ୍ପାଦନ କରେ', 'ସେଗୁଡିକ ବାୟୁକୁ ଥଣ୍ଡା କରେ', 'ସେଗୁଡିକ ଉଷ୍ମତାକୁ ପ୍ରତିଫଳିତ କରେ'],
+                        answer: 'ସେଗୁଡିକ ଶରୀରର ଉଷ୍ମତାକୁ ଆବଦ୍ଧ କରେ'
+                    },
+                    location: 'bedroom',
+                    position: { x: 30, y: 40 },
+                    dependencies: []
+                },
+                {
+                    id: 'alarm',
+                    name: 'ଅଲାର୍ମ ଘଣ୍ଟି',
+                    icon: '⏰',
+                    fact: 'ଅଲାର୍ମ ଘଣ୍ଟି ନିର୍ଦ୍ଦିଷ୍ଟ ସମୟରେ ଆମକୁ ଉଠିବାରେ ସାହାଯ୍ୟ କରେ। ଆଧୁନିକ ଅଲାର୍ମ ଘଣ୍ଟି ଡିଜିଟାଲ୍ କିମ୍ବା ଆନାଲଗ୍ ହୋଇପାରେ ଏବଂ ଅତିରିକ୍ତ ନିଦ ପାଇଁ ସ୍ନୁଜ୍ ବଟନ୍ ଭଳି ବିଶେଷତା ଥାଏ।',
+                    quiz: {
+                        question: 'ଅଲାର୍ମ ଘଣ୍ଟିର ମୁଖ୍ୟ ଉଦ୍ଦେଶ୍ୟ କଣ?',
+                        options: ['ସମୟରେ ଆମକୁ ଉଠାଇବା', 'ତାପମାତ୍ରା କହିବା', 'ସଙ୍ଗୀତ ବଜାଇବା', 'କୋଠରୀକୁ ଆଲୋକିତ କରିବା'],
+                        answer: 'ସମୟରେ ଆମକୁ ଉଠାଇବା'
+                    },
+                    location: 'bedroom',
+                    position: { x: 70, y: 30 },
+                    dependencies: ['pillow']
+                },
+                {
+                    id: 'lamp',
+                    name: 'ବେଡସାଇଡ୍ ଲାମ୍ପ',
+                    icon: '💡',
+                    fact: 'ବେଡସାଇଡ୍ ଲାମ୍ପ ଶୋଇବା ପୂର୍ବରୁ ପଢ଼ିବା କିମ୍ବା ଅନ୍ୟ କାର୍ଯ୍ୟକଳାପ ପାଇଁ କେନ୍ଦ୍ରିତ ଆଲୋକ ଯୋଗାଏ। ସେଗୁଡିକ ଉଜ୍ଜ୍ୱଳ ଓଭରହେଡ୍ ଲାଇଟ୍ ଚାଳୁ ନକରି ଆମକୁ ଆଲୋକ ପାଇବାରେ ସାହାଯ୍ୟ କରେ।',
+                    quiz: {
+                        question: 'ଆପଣ କେବେ ବେଡସାଇଡ୍ ଲାମ୍ପ ବ୍ୟବହାର କରିବେ?',
+                        options: ['ଶୋଇବା ପୂର୍ବରୁ ପଢ଼ିବା ସମୟରେ', 'ରାତ୍ରୀ ଭୋଜନ ରାନ୍ଧିବା ସମୟରେ', 'ଗାଧୁଆହେବା ସମୟରେ', 'ବ୍ୟାୟାମ କରିବା ସମୟରେ'],
+                        answer: 'ଶୋଇବା ପୂର୍ବରୁ ପଢ଼ିବା ସମୟରେ'
+                    },
+                    location: 'bedroom',
+                    position: { x: 25, y: 60 },
+                    dependencies: []
+                },
+                {
+                    id: 'book',
+                    name: 'ବହି',
+                    icon: '📚',
+                    fact: 'ବହିରେ ପୃଷ୍ଠାଗୁଡିକରେ ଛପା ହୋଇଥିବା ଗପ, ସୂଚନା କିମ୍ବା ଜ୍ଞାନ ଅଛି। ବହି ପଢ଼ିବା ଆମକୁ ନୂଆ ଜିନିଷ ଶିଖିବାରେ, ଶବ୍ଦାବଳୀ ଉନ୍ନତ କରିବାରେ ଏବଂ କଳ୍ପନା ବିକଶିତ କରିବାରେ ସାହାଯ୍ୟ କରେ।',
+                    quiz: {
+                        question: 'ବହିର ମୁଖ୍ୟ ଉଦ୍ଦେଶ୍ୟ କଣ?',
+                        options: ['ପଢ଼ିବା ପାଇଁ ସାମଗ୍ରୀ ଯୋଗାଇବା', 'ଶେଲ୍ଫ୍ ସଜାଇବା', 'ଦରଜା ଖୋଲା ରଖିବା', 'ବାଲିସ୍ ଭାବରେ ବ୍ୟବହାର କରିବା'],
+                        answer: 'ପଢ଼ିବା ପାଇଁ ସାମଗ୍ରୀ ଯୋଗାଇବା'
+                    },
+                    location: 'bedroom',
+                    position: { x: 65, y: 55 },
+                    dependencies: []
+                },
+                {
+                    id: 'hanger',
+                    name: 'କପଡା ହ୍ୟାଙ୍ଗର୍',
+                    icon: '👔',
+                    fact: 'କପଡା ହ୍ୟାଙ୍ଗର୍ କପଡାକୁ ସଂଗଠିତ ରଖିବାରେ ସାହାଯ୍ୟ କରେ ଏବଂ କ୍ରିଜ୍ ରୋକିଥାଏ। ସେଗୁଡିକ ବିଭିନ୍ନ ପ୍ରକାରର କପଡା ପାଇଁ ଉପଯୁକ୍ତ ବିଭିନ୍ନ ଆକୃତି ଏବଂ ପଦାର୍ଥରେ ଆସେ।',
+                    quiz: {
+                        question: 'କପଡା ହ୍ୟାଙ୍ଗର୍ କେଉଁଥିପାଇଁ ବ୍ୟବହୃତ ହୁଏ?',
+                        options: ['କପଡା ଟାଙ୍ଗିବା', 'କପଡା ଭାଙ୍ଗିବା', 'କପଡା ଧୋଇବା', 'କପଡା ଇସ୍ତ୍ରୀ କରିବା'],
+                        answer: 'କପଡା ଟାଙ୍ଗିବା'
+                    },
+                    location: 'bedroom',
+                    position: { x: 40, y: 25 },
+                    dependencies: []
+                },
+                
+                // Living room items in Odia
+                {
+                    id: 'remote',
+                    name: 'ଟିଭି ରିମୋଟ୍',
+                    icon: '📺',
+                    fact: 'ଟିଭି ରିମୋଟ୍ ଟେଲିଭିଜନ୍ ସହିତ ସଂଚାର କରିବା ପାଇଁ ଇନ୍ଫ୍ରାରେଡ୍ ଆଲୋକ କିମ୍ବା ରେଡିଓ ସିଗନାଲ୍ ବ୍ୟବହାର କରେ। ସେଗୁଡିକ ଉଠିନଯାଇ ଚ୍ୟାନେଲ୍ ବଦଳାଇବା, ଭଲ୍ୟୁମ୍ ଆଡଜଷ୍ଟ କରିବା ଏବଂ ଅନ୍ୟ କାର୍ଯ୍ୟ ନିୟନ୍ତ୍ରଣ କରିବାରେ ସାହାଯ୍ୟ କରେ।',
+                    quiz: {
+                        question: 'ଟିଭି ରିମୋଟ୍ ଟେଲିଭିଜନ୍ କିପରି ନିୟନ୍ତ୍ରଣ କରେ?',
+                        options: ['ଏହା ସିଗନାଲ୍ ପଠାଏ', 'ଏହା ଯାଦୁ ବ୍ୟବହାର କରେ', 'ଏହା ଟିଭି ସହିତ କଥା ହୁଏ', 'ଏହା ତାର ସହିତ ସଂଯୁକ୍ତ ହୁଏ'],
+                        answer: 'ଏହା ସିଗନାଲ୍ ପଠାଏ'
+                    },
+                    location: 'livingroom',
+                    position: { x: 40, y: 50 },
+                    dependencies: []
+                },
+                {
+                    id: 'cushion',
+                    name: 'ଗଦି',
+                    icon: '🪑',
+                    fact: 'ଗଦି ଆସନକୁ ଅଧିକ ଆରାମଦାୟକ କରେ। ସେଗୁଡିକ ରଙ୍ଗ ଏବଂ ଷ୍ଟାଇଲ୍ ଯୋଗ କରିପାରେ ଏବଂ ଫର୍ନିଚରକୁ ଅଧିକ ଆକର୍ଷଣୀୟ କରିପାରେ।',
+                    quiz: {
+                        question: 'ଚେୟାର୍ ଉପରେ ଗଦି ବ୍ୟବହାର କରିବାର ମୁଖ୍ୟ ଲାଭ କଣ?',
+                        options: ['ସେଗୁଡିକ ବସିବାକୁ ଅଧିକ ଆରାମଦାୟକ କରେ', 'ସେଗୁଡିକ ଚେୟାର୍କୁ ବଡ଼ ଦେଖାଏ', 'ସେଗୁଡିକ ଚେୟାର୍କୁ ଘୁଞ୍ଚିବାରୁ ରୋକେ', 'ସେଗୁଡିକ ପରିଷ୍କାର କରିବାକୁ ସହଜ କରେ'],
+                        answer: 'ସେଗୁଡିକ ବସିବାକୁ ଅଧିକ ଆରାମଦାୟକ କରେ'
+                    },
+                    location: 'livingroom',
+                    position: { x: 25, y: 40 },
+                    dependencies: ['lamp']
+                },
+                {
+                    id: 'frame',
+                    name: 'ଫୋଟୋ ଫ୍ରେମ୍',
+                    icon: '🖼️',
+                    fact: 'ଫୋଟୋ ଫ୍ରେମ୍ ଫଟୋଗ୍ରାଫ୍ ସୁରକ୍ଷା ଏବଂ ପ୍ରଦର୍ଶନ କରେ। ସେଗୁଡିକ ସ୍ମୃତି ସଂରକ୍ଷଣରେ ସାହାଯ୍ୟ କରେ ଏବଂ ଘର ସଜ୍ଜାରେ ବ୍ୟକ୍ତିଗତ ସ୍ପର୍ଶ ଯୋଗ କରେ।',
+                    quiz: {
+                        question: 'ଫୋଟୋ ଫ୍ରେମ୍ର ଉଦ୍ଦେଶ୍ୟ କଣ?',
+                        options: ['ଛବି ପ୍ରଦର୍ଶନ କରିବା', 'କାଗଜ ଧରିରଖିବା', 'କାନ୍ଥ ଆଚ୍ଛାଦନ କରିବା', 'ଛୋଟ ଜିନିଷ ସଂରକ୍ଷଣ କରିବା'],
+                        answer: 'ଛବି ପ୍ରଦର୍ଶନ କରିବା'
+                    },
+                    location: 'livingroom',
+                    position: { x: 60, y: 30 },
+                    dependencies: []
+                },
+                {
+                    id: 'vase',
+                    name: 'ଫୁଲଦାନୀ',
+                    icon: '🏺',
+                    fact: 'ଫୁଲଦାନୀ ହେଉଛି କଟା ଫୁଲ ଧରିରଖିବା ପାଇଁ ବ୍ୟବହୃତ କଣ୍ଟେନର। ସେଗୁଡିକ ପାଣି ଏବଂ ସମର୍ଥନ ଯୋଗାଇ ଫୁଲକୁ ତଟକା ରଖେ ଏବଂ କୋଠରୀରେ ସୌନ୍ଦର୍ଯ୍ୟ ଯୋଗ କରେ।',
+                    quiz: {
+                        question: 'ଫୁଲଦାନୀ ସାଧାରଣତଃ କେଉଁଥିପାଇଁ ବ୍ୟବହୃତ ହୁଏ?',
+                        options: ['ଫୁଲ ଧରିରଖିବା', 'ଖାଦ୍ୟ ସଂରକ୍ଷଣ', 'ପାଣି ପିଇବା', 'ବୀଜ ରୋପଣ'],
+                        answer: 'ଫୁଲ ଧରିରଖିବା'
+                    },
+                    location: 'livingroom',
+                    position: { x: 75, y: 60 },
+                    dependencies: []
+                },
+                {
+                    id: 'magazine',
+                    name: 'ପତ୍ରିକା',
+                    icon: '📰',
+                    fact: 'ପତ୍ରିକାରେ ବିଭିନ୍ନ ବିଷୟରେ ପ୍ରବନ୍ଧ, ଗପ ଏବଂ ଛବି ଅଛି। ସେଗୁଡିକ ବର୍ତ୍ତମାନର ପ୍ରବୃତ୍ତି, ଖବର କିମ୍ବା ଶୌକ ଉପରେ ମନୋରଞ୍ଜନ ଏବଂ ସୂଚନା ଯୋଗାଏ।',
+                    quiz: {
+                        question: 'ଆପଣ ଏକ ପତ୍ରିକାରେ ସାଧାରଣତଃ କଣ ପାଇବେ?',
+                        options: ['ପ୍ରବନ୍ଧ ଏବଂ ଛବି', 'କେବଳ ଖାଦ୍ୟ ରେସିପି', 'କେବଳ ବିଜ୍ଞାପନ', 'ଖାଲି ପୃଷ୍ଠା'],
+                        answer: 'ପ୍ରବନ୍ଧ ଏବଂ ଛବି'
+                    },
+                    location: 'livingroom',
+                    position: { x: 35, y: 65 },
+                    dependencies: []
+                },
+                {
+                    id: 'rug',
+                    name: 'ଗାଲିଚା',
+                    icon: '🧶',
+                    fact: 'ଗାଲିଚା ଆରାମ, ଉଷ୍ମତା ଏବଂ ଶବ୍ଦ ହ୍ରାସ ଯୋଗାଇବା ପାଇଁ ମେଜ୍ ଅଞ୍ଚଳକୁ ଆଚ୍ଛାଦନ କରେ। ସେଗୁଡିକ ଘର୍ଷଣରୁ ମେଜ୍ ସୁରକ୍ଷା କରେ ଏବଂ କୋଠରୀରେ ସଜ୍ଜା ଉପାଦାନ ଯୋଗ କରେ।',
+                    quiz: {
+                        question: 'ମେଜ୍ ଉପରେ ଗାଲିଚା ଥିବାର ଗୋଟିଏ ଲାଭ କଣ?',
+                        options: ['ଏହା ମେଜ୍କୁ ଗରମ କରେ', 'ଏହା ପରିଷ୍କାର କରିବାକୁ କଷ୍ଟକର କରେ', 'ଏହା କୋଠରୀକୁ ଅନ୍ଧକାର କରେ', 'ଏହା ଫର୍ନିଚରକୁ ଛୋଟ ଦେଖାଏ'],
+                        answer: 'ଏହା ମେଜ୍କୁ ଗରମ କରେ'
+                    },
+                    location: 'livingroom',
+                    position: { x: 50, y: 50 },
+                    dependencies: []
+                }
+            ],
+            hi: [
+                // Kitchen items in Hindi
+                {
+                    id: 'spoon',
+                    name: 'चम्मच',
+                    icon: '🥄',
+                    fact: 'चम्मच सबसे पुराने खाने के बर्तनों में से एक हैं, जिनका इतिहास प्रागैतिहासिक काल से है। वे हमें सूप, अनाज और दही जैसे तरल और अर्ध-तरल खाद्य पदार्थ खाने में मदद करते हैं।',
+                    quiz: {
+                        question: 'किस प्रकार के भोजन को खाने के लिए चम्मच सबसे उपयोगी है?',
+                        options: ['सूप', 'रोटी', 'सेब', 'चिप्स'],
+                        answer: 'सूप'
+                    },
+                    location: 'kitchen',
+                    position: { x: 75, y: 65 },
+                    dependencies: []
+                },
+                {
+                    id: 'plate',
+                    name: 'प्लेट',
+                    icon: '🍽️',
+                    fact: 'प्लेट भोजन परोसने के लिए एक सपाट सतह प्रदान करती हैं। वे हमारे भोजन को व्यवस्थित रखने में मदद करती हैं और खाने को अधिक सुविधाजनक बनाती हैं। प्लेट सिरेमिक, कांच, प्लास्टिक या यहां तक कि बायोडिग्रेडेबल सामग्री से बनाई जा सकती हैं।',
+                    quiz: {
+                        question: 'प्लेट का मुख्य उद्देश्य क्या है?',
+                        options: ['भोजन रखना', 'पीने के लिए', 'भोजन पकाना', 'भोजन संग्रहीत करना'],
+                        answer: 'भोजन रखना'
+                    },
+                    location: 'kitchen',
+                    position: { x: 35, y: 60 },
+                    dependencies: []
+                },
+                {
+                    id: 'bowl',
+                    name: 'कटोरा',
+                    icon: '🥣',
+                    fact: 'कटोरे प्लेटों की तुलना में गहरे होते हैं और अनाज, सूप या चावल जैसे तरल वाले खाद्य पदार्थों के लिए एकदम सही होते हैं। उनके घुमावदार किनारे छलकने से रोकने में मदद करते हैं।',
+                    quiz: {
+                        question: 'अनाज के लिए कटोरे प्लेटों से बेहतर क्यों हैं?',
+                        options: ['वे तरल को बेहतर ढंग से रोकते हैं', 'वे अच्छे दिखते हैं', 'वे भारी होते हैं', 'वे अधिक महंगे होते हैं'],
+                        answer: 'वे तरल को बेहतर ढंग से रोकते हैं'
+                    },
+                    location: 'kitchen',
+                    position: { x: 60, y: 70 },
+                    dependencies: ['plate']
+                },
+                {
+                    id: 'fork',
+                    name: 'कांटा',
+                    icon: '🍴',
+                    fact: 'कांटे हमें सब्जियों, मांस और पास्ता जैसे ठोस खाद्य पदार्थों को उठाने में मदद करते हैं। उनमें नुकीले दांत होते हैं जो भोजन को भोंकने और पकड़ने में आसान बनाते हैं।',
+                    quiz: {
+                        question: 'कांटे से कौन सा भोजन खाना सबसे आसान होगा?',
+                        options: ['पास्ता', 'सूप', 'आइसक्रीम', 'जूस'],
+                        answer: 'पास्ता'
+                    },
+                    location: 'kitchen',
+                    position: { x: 45, y: 55 },
+                    dependencies: []
+                },
+                {
+                    id: 'knife',
+                    name: 'चाकू',
+                    icon: '🔪',
+                    fact: 'चाकू काटने के उपकरण हैं जिनका उपयोग भोजन को काटने, छोटे टुकड़ों में काटने या फैलाने के लिए किया जाता है। उनमें एक तेज ब्लेड होती है जो भोजन की तैयारी को आसान और सुरक्षित बनाती है।',
+                    quiz: {
+                        question: 'रसोई के चाकू का मुख्य उपयोग क्या है?',
+                        options: ['भोजन काटना', 'भोजन हिलाना', 'सामग्री मापना', 'पेय परोसना'],
+                        answer: 'भोजन काटना'
+                    },
+                    location: 'kitchen',
+                    position: { x: 55, y: 45 },
+                    dependencies: []
+                },
+                {
+                    id: 'cup',
+                    name: 'कप',
+                    icon: '🥛',
+                    fact: 'कप तरल पदार्थ पीने के लिए डिज़ाइन किए गए कंटेनर हैं। उनमें आमतौर पर हैंडल होते हैं जो गर्म पेय पदार्थों को पकड़ना अधिक आरामदायक बनाते हैं।',
+                    quiz: {
+                        question: 'कप मुख्य रूप से किसके लिए उपयोग किया जाता है?',
+                        options: ['तरल पदार्थ पीना', 'भोजन संग्रहीत करना', 'भोजन पकाना', 'सामग्री मापना'],
+                        answer: 'तरल पदार्थ पीना'
+                    },
+                    location: 'kitchen',
+                    position: { x: 70, y: 50 },
+                    dependencies: []
+                },
+                
+                // Bathroom items in Hindi
+                {
+                    id: 'toothbrush',
+                    name: 'टूथब्रश',
+                    icon: '🪥',
+                    fact: 'टूथब्रश दांतों से भोजन के कण और प्लाक को हटाने में मदद करते हैं। आधुनिक टूथब्रश आमतौर पर नायलॉन के ब्रिसल्स वाले होते हैं, लेकिन पहले टूथब्रश जानवरों के बाल या पौधों के रेशों जैसी प्राकृतिक सामग्रियों से बने होते थे।',
+                    quiz: {
+                        question: 'टूथब्रश का मुख्य उद्देश्य क्या है?',
+                        options: ['दांत साफ करना', 'बाल ब्रश करना', 'जूते साफ करना', 'दीवारें पेंट करना'],
+                        answer: 'दांत साफ करना'
+                    },
+                    location: 'bathroom',
+                    position: { x: 70, y: 30 },
+                    dependencies: []
+                },
+                {
+                    id: 'soap',
+                    name: 'साबुन',
+                    icon: '🧼',
+                    fact: 'साबुन हमारी त्वचा पर मौजूद तेल और गंदगी को तोड़कर काम करता है ताकि उन्हें पानी से धोया जा सके। साबुन से नियमित हाथ धोने से कीटाणुओं और बीमारियों का प्रसार रोकने में मदद मिलती है।',
+                    quiz: {
+                        question: 'साबुन हमारे हाथों को साफ करने में कैसे मदद करता है?',
+                        options: ['यह तेल और गंदगी को तोड़ता है', 'यह हमारी त्वचा को रंग देता है', 'यह हमारी त्वचा को अच्छी महक देता है', 'यह पानी को गर्म करता है'],
+                        answer: 'यह तेल और गंदगी को तोड़ता है'
+                    },
+                    location: 'bathroom',
+                    position: { x: 40, y: 60 },
+                    dependencies: []
+                },
+                {
+                    id: 'towel',
+                    name: 'तौलिया',
+                    icon: '🧺',
+                    fact: 'तौलिया सोखने वाली सामग्री से बना होता है जो हमारी त्वचा से पानी को सोख लेता है। तौलिया के कपड़े में लूप (जिसे पाइल कहा जाता है) अधिक सतह क्षेत्र बनाते हैं जो पानी को रोक सकते हैं।',
+                    quiz: {
+                        question: 'तौलिया हमारी त्वचा को सुखाने में कैसे सक्षम बनाता है?',
+                        options: ['वे सोखने वाले होते हैं', 'वे रंगीन होते हैं', 'वे नरम होते हैं', 'वे बड़े होते हैं'],
+                        answer: 'वे सोखने वाले होते हैं'
+                    },
+                    location: 'bathroom',
+                    position: { x: 25, y: 40 },
+                    dependencies: []
+                },
+                {
+                    id: 'mirror',
+                    name: 'शीशा',
+                    icon: '🪞',
+                    fact: 'शीशे प्रकाश को प्रतिबिंबित करके हमें हमारी अपनी छवि दिखाते हैं। वे हमें ग्रूमिंग करते समय, दांत ब्रश करते समय या दिन के लिए तैयार होते समय खुद को देखने में मदद करते हैं।',
+                    quiz: {
+                        question: 'शीशा क्या करता है?',
+                        options: ['हमारा प्रतिबिंब दिखाता है', 'हमें अलग दिखाता है', 'हमारा चेहरा साफ करता है', 'कमरे को उज्जवल बनाता है'],
+                        answer: 'हमारा प्रतिबिंब दिखाता है'
+                    },
+                    location: 'bathroom',
+                    position: { x: 60, y: 25 },
+                    dependencies: []
+                },
+                {
+                    id: 'shampoo',
+                    name: 'शैम्पू',
+                    icon: '🧴',
+                    fact: 'शैम्पू बालों की देखभाल का उत्पाद है जिसका उपयोग बालों और स्कैल्प को साफ करने के लिए किया जाता है। यह गंदगी, तेल और उत्पाद निर्माण को हटाता है और बालों को स्वस्थ और चमकदार रखता है।',
+                    quiz: {
+                        question: 'शैम्पू का उपयोग किसके लिए किया जाता है?',
+                        options: ['बाल साफ करना', 'दांत साफ करना', 'कपड़े धोना', 'फर्श साफ करना'],
+                        answer: 'बाल साफ करना'
+                    },
+                    location: 'bathroom',
+                    position: { x: 50, y: 70 },
+                    dependencies: []
+                },
+                {
+                    id: 'toothpaste',
+                    name: 'टूथपेस्ट',
+                    icon: '🦷',
+                    fact: 'टूथपेस्ट में हल्के अपघर्षक और फ्लोराइड होते हैं जो दांतों को साफ करने, प्लाक हटाने और कैविटी को रोकने में मदद करते हैं। यह ब्रशिंग को अधिक प्रभावी बनाता है।',
+                    quiz: {
+                        question: 'टूथपेस्ट का उपयोग करने का मुख्य लाभ क्या है?',
+                        options: ['यह कैविटी को रोकने में मदद करता है', 'यह दांतों को सफेद बनाता है', 'यह सांसों को अच्छी महक देता है', 'यह ब्रशिंग को तेज करता है'],
+                        answer: 'यह कैविटी को रोकने में मदद करता है'
+                    },
+                    location: 'bathroom',
+                    position: { x: 35, y: 35 },
+                    dependencies: ['toothbrush']
+                },
+                
+                // Bedroom items in Hindi
+                {
+                    id: 'pillow',
+                    name: 'तकिया',
+                    icon: '🛏️',
+                    fact: 'तकिया सोते समय हमारे सिर और गर्दन को सहारा देती है, जिससे रीढ़ की हड्डी सही तरीके से रहती है। इससे बेहतर नींद आती है और गर्दन के दर्द में कमी आती है।',
+                    quiz: {
+                        question: 'सोते समय तकिया कहाँ रखनी चाहिए?',
+                        options: ['सिर के नीचे', 'पैरों के नीचे', 'पेट पर', 'बिस्तर के बगल में'],
+                        answer: 'सिर के नीचे'
+                    },
+                    location: 'bedroom',
+                    position: { x: 50, y: 70 },
+                    dependencies: []
+                },
+                {
+                    id: 'blanket',
+                    name: 'कंबल',
+                    icon: '🛌',
+                    fact: 'कंबल हमारे शरीर की गर्मी को रोककर हमें गर्म रखने में मदद करते हैं। वे हमारे शरीर और कमरे की ठंडी हवा के बीच इन्सुलेशन की एक परत बनाते हैं।',
+                    quiz: {
+                        question: 'कंबल हमें गर्म रखने में कैसे मदद करते हैं?',
+                        options: ['वे शरीर की गर्मी को रोकते हैं', 'वे गर्मी पैदा करते हैं', 'वे हवा को ठंडा करते हैं', 'वे गर्मी को प्रतिबिंबित करते हैं'],
+                        answer: 'वे शरीर की गर्मी को रोकते हैं'
+                    },
+                    location: 'bedroom',
+                    position: { x: 30, y: 40 },
+                    dependencies: []
+                },
+                {
+                    id: 'alarm',
+                    name: 'अलार्म घड़ी',
+                    icon: '⏰',
+                    fact: 'अलार्म घड़ी हमें निश्चित समय पर जगाने में मदद करती है। आधुनिक अलार्म घड़ी डिजिटल या एनालॉग हो सकती हैं और अक्सर अतिरिक्त नींद के लिए स्नूज़ बटन जैसी सुविधाएँ होती हैं।',
+                    quiz: {
+                        question: 'अलार्म घड़ी का मुख्य उद्देश्य क्या है?',
+                        options: ['हमें समय पर जगाना', 'तापमान बताना', 'संगीत बजाना', 'कमरे को रोशन करना'],
+                        answer: 'हमें समय पर जगाना'
+                    },
+                    location: 'bedroom',
+                    position: { x: 70, y: 30 },
+                    dependencies: ['pillow']
+                },
+                {
+                    id: 'lamp',
+                    name: 'बेडसाइड लैंप',
+                    icon: '💡',
+                    fact: 'बेडसाइड लैंप सोने से पहले पढ़ने या अन्य गतिविधियों के लिए केंद्रित प्रकाश प्रदान करते हैं। वे हमें उज्ज्वल ओवरहेड लाइट्स चालू किए बिना प्रकाश प्राप्त करने की अनुमति देते हैं।',
+                    quiz: {
+                        question: 'आप बेडसाइड लैंप का उपयोग कब कर सकते हैं?',
+                        options: ['सोने से पहले पढ़ते समय', 'रात का खाना पकाते समय', 'नहाते समय', 'व्यायाम करते समय'],
+                        answer: 'सोने से पहले पढ़ते समय'
+                    },
+                    location: 'bedroom',
+                    position: { x: 25, y: 60 },
+                    dependencies: []
+                },
+                {
+                    id: 'book',
+                    name: 'किताब',
+                    icon: '📚',
+                    fact: 'किताबों में पन्नों पर छपी कहानियाँ, जानकारी या ज्ञान होता है। किताबें पढ़ने से हमें नई चीजें सीखने, शब्दावली में सुधार करने और कल्पना विकसित करने में मदद मिलती है।',
+                    quiz: {
+                        question: 'किताब का मुख्य उद्देश्य क्या है?',
+                        options: ['पढ़ने की सामग्री प्रदान करना', 'शेल्फ सजाना', 'दरवाजे खुले रखना', 'तकिया के रूप में उपयोग करना'],
+                        answer: 'पढ़ने की सामग्री प्रदान करना'
+                    },
+                    location: 'bedroom',
+                    position: { x: 65, y: 55 },
+                    dependencies: []
+                },
+                {
+                    id: 'hanger',
+                    name: 'कपड़े हैंगर',
+                    icon: '👔',
+                    fact: 'कपड़े हैंगर कपड़ों को व्यवस्थित रखने और सिलवटों को रोकने में मदद करते हैं। वे विभिन्न प्रकार के कपड़ों के अनुरूप विभिन्न आकारों और सामग्रियों में आते हैं।',
+                    quiz: {
+                        question: 'कपड़े हैंगर का उपयोग किसके लिए किया जाता है?',
+                        options: ['कपड़े लटकाना', 'कपड़े तह करना', 'कपड़े धोना', 'कपड़े इस्त्री करना'],
+                        answer: 'कपड़े लटकाना'
+                    },
+                    location: 'bedroom',
+                    position: { x: 40, y: 25 },
+                    dependencies: []
+                },
+                
+                // Living room items in Hindi
+                {
+                    id: 'remote',
+                    name: 'टीवी रिमोट',
+                    icon: '📺',
+                    fact: 'टीवी रिमोट टेलीविजन के साथ संचार करने के लिए इन्फ्रारेड लाइट या रेडियो सिग्नल का उपयोग करते हैं। वे हमें उठे बिना चैनल बदलने, वॉल्यूम एडजस्ट करने और अन्य कार्यों को नियंत्रित करने की अनुमति देते हैं।',
+                    quiz: {
+                        question: 'टीवी रिमोट टेलीविजन को कैसे नियंत्रित करता है?',
+                        options: ['यह सिग्नल भेजता है', 'यह जादू का उपयोग करता है', 'यह टीवी से बात करता है', 'यह तारों से जुड़ता है'],
+                        answer: 'यह सिग्नल भेजता है'
+                    },
+                    location: 'livingroom',
+                    position: { x: 40, y: 50 },
+                    dependencies: []
+                },
+                {
+                    id: 'cushion',
+                    name: 'कुशन',
+                    icon: '🪑',
+                    fact: 'कुशन पैडिंग और सहारा प्रदान करके बैठने को अधिक आरामदायक बनाते हैं। वे कमरे में रंग और शैली भी जोड़ सकते हैं और फर्नीचर को अधिक आकर्षक बना सकते हैं।',
+                    quiz: {
+                        question: 'कुर्सियों पर कुशन का उपयोग करने का मुख्य लाभ क्या है?',
+                        options: ['वे बैठने को अधिक आरामदायक बनाते हैं', 'वे कुर्सियों को बड़ा दिखाते हैं', 'वे कुर्सियों को हिलने से रोकते हैं', 'वे सफाई को आसान बनाते हैं'],
+                        answer: 'वे बैठने को अधिक आरामदायक बनाते हैं'
+                    },
+                    location: 'livingroom',
+                    position: { x: 25, y: 40 },
+                    dependencies: ['lamp']
+                },
+                {
+                    id: 'frame',
+                    name: 'फोटो फ्रेम',
+                    icon: '🖼️',
+                    fact: 'फोटो फ्रेम तस्वीरों की सुरक्षा और प्रदर्शन करते हैं। वे यादों को संरक्षित करने और घर की सजावट में व्यक्तिगत स्पर्श जोड़ने में मदद करते हैं।',
+                    quiz: {
+                        question: 'फोटो फ्रेम का उद्देश्य क्या है?',
+                        options: ['तस्वीरें प्रदर्शित करना', 'कागजात रखना', 'दीवारों को ढकना', 'छोटी वस्तुओं को संग्रहीत करना'],
+                        answer: 'तस्वीरें प्रदर्शित करना'
+                    },
+                    location: 'livingroom',
+                    position: { x: 60, y: 30 },
+                    dependencies: []
+                },
+                {
+                    id: 'vase',
+                    name: 'फूलदान',
+                    icon: '🏺',
+                    fact: 'फूलदान कटे हुए फूलों को रखने के लिए उपयोग किए जाने वाले कंटेनर हैं। वे पानी और सहारा प्रदान करके फूलों को ताजा रखते हैं और कमरे में सुंदरता जोड़ते हैं।',
+                    quiz: {
+                        question: 'फूलदान आमतौर पर किसके लिए उपयोग किया जाता है?',
+                        options: ['फूल रखना', 'भोजन संग्रहीत करना', 'पानी पीना', 'बीज लगाना'],
+                        answer: 'फूल रखना'
+                    },
+                    location: 'livingroom',
+                    position: { x: 75, y: 60 },
+                    dependencies: []
+                },
+                {
+                    id: 'magazine',
+                    name: 'पत्रिका',
+                    icon: '📰',
+                    fact: 'पत्रिकाओं में विभिन्न विषयों पर लेख, कहानियाँ और चित्र होते हैं। वे वर्तमान रुझानों, समाचारों या शौक पर मनोरंजन और जानकारी प्रदान करती हैं।',
+                    quiz: {
+                        question: 'आप आमतौर पर एक पत्रिका में क्या पाएंगे?',
+                        options: ['लेख और चित्र', 'केवल भोजन व्यंजनों', 'केवल विज्ञापन', 'खाली पन्ने'],
+                        answer: 'लेख और चित्र'
+                    },
+                    location: 'livingroom',
+                    position: { x: 35, y: 65 },
+                    dependencies: []
+                },
+                {
+                    id: 'rug',
+                    name: 'गलीचा',
+                    icon: '🧶',
+                    fact: 'गलीचा आराम, गर्मी और शोर में कमी प्रदान करने के लिए फर्श के क्षेत्रों को ढकते हैं। वे फर्श को घिसाव से भी बचाते हैं और कमरों में सजावटी तत्व जोड़ते हैं।',
+                    quiz: {
+                        question: 'फर्श पर गलीचा होने का एक लाभ क्या है?',
+                        options: ['यह फर्श को गर्म बनाता है', 'यह सफाई को कठिन बनाता है', 'यह कमरे को अंधेरा बनाता है', 'यह फर्नीचर को छोटा बनाता है'],
+                        answer: 'यह फर्श को गर्म बनाता है'
+                    },
+                    location: 'livingroom',
+                    position: { x: 50, y: 50 },
+                    dependencies: []
+                }
+            ]
+        };
+
+        // Function to start the game
+        startGameBtn.addEventListener('click', () => {
+            instructionsModal.style.display = 'none';
+            gameHeader.style.display = 'block';
+            gameStatsContainer.style.display = 'block';
+            gameArea.style.display = 'block';
+            isGameStarted = true;
+            startGame();
+        });
+
+        function startGame() {
+            // Generate random items for this game session
+            generateRandomItems();
+            loadLocation(currentLocationIndex);
+            startTimer();
+            setupEventListeners();
+        }
+
+        // Function to generate random items for each room
+        function generateRandomItems() {
+            currentGameItems = [];
+            const allItems = itemDatabase[gameLanguage];
+            
+            // For each room, select 3 random items
+            locations[gameLanguage].forEach(location => {
+                const roomItems = allItems.filter(item => item.location === location.id);
+                
+                // Shuffle the items and pick 3
+                const shuffled = [...roomItems].sort(() => 0.5 - Math.random());
+                const selectedItems = shuffled.slice(0, 3);
+                
+                // Add to current game items
+                currentGameItems.push(...selectedItems);
+            });
+        }
+
+        // Timer functionality
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (timeRemaining > 0) {
+                    timeRemaining--;
+                    const minutes = Math.floor(timeRemaining / 60);
+                    const seconds = timeRemaining % 60;
+                    timeEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                } else {
+                    clearInterval(timerInterval);
+                    showSimpleDialog("Time's Up!", "Don't worry! You can try again. Click OK to restart the game.", resetGame);
+                }
+            }, 1000);
+        }
+
+        function setupEventListeners() {
+            hintBtn.addEventListener('click', useHint);
+            nextLocationBtn.addEventListener('click', nextLocation);
+            resetBtn.addEventListener('click', () => {
+                showSimpleDialog("Start Over?", "Are you sure you want to restart the game? Your progress will be lost.", resetGame);
+            });
+            itemSubmitBtn.addEventListener('click', submitQuizAnswer);
+            successNextBtn.addEventListener('click', resetGame);
+        }
+
+        function loadLocation(locationIndex) {
+            const currentLocations = locations[gameLanguage];
+            const location = currentLocations[locationIndex];
+            mapImage.src = location.image;
+            locationTitleEl.textContent = location.name;
+            locationDescriptionEl.textContent = location.description;
+            
+            // Clear previous items
+            interactiveMap.innerHTML = '';
+            interactiveMap.appendChild(mapImage);
+            itemsContainerEl.innerHTML = '';
+            itemsToFindList.innerHTML = '';
+            
+            // Get items for this location from current game items
+            const locationItems = currentGameItems.filter(item => item.location === location.id);
+            
+            // Add items to find list
+            locationItems.forEach(item => {
+                const itemToFind = document.createElement('div');
+                itemToFind.classList.add('item-to-find');
+                if (foundItems.includes(item.id)) {
+                    itemToFind.classList.add('found');
+                }
+                itemToFind.innerHTML = `
+                    <span>${item.icon}</span>
+                    <span>${item.name}</span>
+                `;
+                itemsToFindList.appendChild(itemToFind);
+            });
+            
+            // Add items to the interactive map
+            locationItems.forEach(item => {
+                const mapItem = document.createElement('div');
+                mapItem.classList.add('map-item');
+                mapItem.style.left = `${item.position.x}%`;
+                mapItem.style.top = `${item.position.y}%`;
+                mapItem.textContent = item.icon;
+                mapItem.dataset.itemId = item.id;
+                
+                // Check if item is found
+                if (foundItems.includes(item.id)) {
+                    mapItem.classList.add('found');
+                }
+
+                if (!foundItems.includes(item.id)) {
+                    mapItem.addEventListener('click', () => showItemModal(item));
+                }
+                
+                interactiveMap.appendChild(mapItem);
+            });
+            
+            // Display found items in the items container
+            const foundLocationItems = locationItems.filter(item => foundItems.includes(item.id));
+            foundLocationItems.forEach(item => {
+                const itemEl = document.createElement('div');
+                itemEl.classList.add('item', 'found');
+                itemEl.innerHTML = `
+                    <div class="item-icon">${item.icon}</div>
+                    <div class="item-name">${item.name}</div>
+                    <div class="item-status">${translations[gameLanguage]['found-status']}</div>
+                `;
+                itemsContainerEl.appendChild(itemEl);
+            });
+            
+            // Update next room button state
+            updateNextRoomButton();
+            updateProgress();
+        }
+
+        function isItemAvailable(item) {
+            // All items are available immediately - no dependencies
+            return true;
+        }
+
+        function showItemModal(item) {
+            currentItem = item;
+            itemTitleEl.textContent = `${translations[gameLanguage]['you-found']} ${item.name}`;
+            itemIconLargeEl.textContent = item.icon;
+            itemFactEl.textContent = item.fact;
+            
+            // Reset quiz section
+            itemSubmitBtn.disabled = true;
+            itemSubmitBtn.style.display = 'block';
+            quizFeedbackEl.textContent = '';
+            
+            // Set up quiz
+            quizQuestionEl.textContent = item.quiz.question;
+            quizOptionsEl.innerHTML = '';
+            
+            item.quiz.options.forEach(option => {
+                const optionEl = document.createElement('div');
+                optionEl.classList.add('quiz-option');
+                optionEl.textContent = option;
+                optionEl.dataset.value = option;
+                optionEl.addEventListener('click', () => {
+                    document.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
+                    optionEl.classList.add('selected');
+                    itemSubmitBtn.disabled = false;
+                });
+                quizOptionsEl.appendChild(optionEl);
+            });
+            
+            itemModal.style.display = 'flex';
+        }
+
+        function submitQuizAnswer() {
+            const selectedOption = document.querySelector('.quiz-option.selected');
+            if (!selectedOption) return;
+
+            const selectedValue = selectedOption.dataset.value;
+            if (selectedValue === currentItem.quiz.answer) {
+                quizFeedbackEl.textContent = 'Correct! 🎉 You earned 50 points!';
+                quizFeedbackEl.style.color = '#38a169';
+                
+                // Add item to found items
+                if (!foundItems.includes(currentItem.id)) {
+                    foundItems.push(currentItem.id);
+                    updateScore(50);
+                    updateProgress();
+                    
+                    // Check if current room is completed
+                    checkRoomCompletion();
+                }
+                
+                // Update UI
+                itemSubmitBtn.style.display = 'none';
+                
+                // Close modal after 1 second (reduced from 2 seconds)
+                setTimeout(() => {
+                    itemModal.style.display = 'none';
+                    loadLocation(currentLocationIndex); // Refresh the location view
+                    
+                    // Check if all items are found
+                    checkCompletion();
+                }, 1000); // Reduced from 2000ms to 1000ms
+            } else {
+                quizFeedbackEl.textContent = 'Not quite right. Try again! 💪';
+                quizFeedbackEl.style.color = '#e53e3e';
+                updateScore(-5);
+            }
+        }
+
+        function checkRoomCompletion() {
+            const locationItems = currentGameItems.filter(item => item.location === locations[gameLanguage][currentLocationIndex].id);
+            const foundLocationItems = locationItems.filter(item => foundItems.includes(item.id));
+            
+            // If all items in current room are found
+            if (foundLocationItems.length === locationItems.length) {
+                // Unlock next room if not already unlocked
+                if (!unlockedRooms.includes(currentLocationIndex + 1) && currentLocationIndex < locations[gameLanguage].length - 1) {
+                    unlockedRooms.push(currentLocationIndex + 1);
+                    showSimpleDialog("Room Complete!", `Great job! You've found all items in the ${locations[gameLanguage][currentLocationIndex].name}. The ${locations[gameLanguage][currentLocationIndex + 1].name} is now unlocked!`, null);
+                }
+                
+                // Update next room button
+                updateNextRoomButton();
+            }
+        }
+
+        function updateNextRoomButton() {
+            const locationItems = currentGameItems.filter(item => item.location === locations[gameLanguage][currentLocationIndex].id);
+            const foundLocationItems = locationItems.filter(item => foundItems.includes(item.id));
+            
+            // Enable next room button if current room is complete AND next room exists AND is unlocked
+            if (foundLocationItems.length === locationItems.length && 
+                currentLocationIndex < locations[gameLanguage].length - 1 && 
+                unlockedRooms.includes(currentLocationIndex + 1)) {
+                nextLocationBtn.disabled = false;
+            } else {
+                nextLocationBtn.disabled = true;
+            }
+        }
+
+        function useHint() {
+            if (hintsLeft > 0) {
+                hintsLeft--;
+                updateHintsDisplay();
+                
+                // Find an available but not found item in current location
+                const locationItems = currentGameItems.filter(item => 
+                    item.location === locations[gameLanguage][currentLocationIndex].id && 
+                    !foundItems.includes(item.id) && 
+                    isItemAvailable(item)
+                );
+                
+                if (locationItems.length > 0) {
+                    // Highlight a random available item
+                    const randomItem = locationItems[Math.floor(Math.random() * locationItems.length)];
+                    const mapItems = document.querySelectorAll('.map-item');
+                    mapItems.forEach(item => {
+                        if (item.dataset.itemId === randomItem.id) {
+                            item.classList.add('pulse');
+                            setTimeout(() => {
+                                item.classList.remove('pulse');
+                            }, 2000);
+                        }
+                    });
+                    
+                    showSimpleDialog("Hint!", `Look for the ${randomItem.name} ${randomItem.icon} in this room!`, null);
+                } else {
+                    showSimpleDialog("No Hints Needed!", "You've already found all available items in this room! Great job!", null);
+                }
+                
+                updateScore(-5);
+            } else {
+                showSimpleDialog("Out of Hints!", "You've used all your hints! Try exploring the rooms carefully.", null);
+            }
+        }
+
+        function nextLocation() {
+            // Only proceed if next room is unlocked
+            if (unlockedRooms.includes(currentLocationIndex + 1)) {
+                currentLocationIndex++;
+                loadLocation(currentLocationIndex);
+            }
+        }
+
+        function updateScore(points) {
+            score += points;
+            if (score < 0) score = 0;
+            updateScoreDisplay();
+        }
+
+        function updateScoreDisplay() {
+            const scoreText = gameLanguage === 'or' ? 'ସ୍କୋର: ' : 
+                             gameLanguage === 'hi' ? 'स्कोर: ' : 'Score: ';
+            scoreEl.textContent = scoreText + score;
+        }
+
+        function updateHintsDisplay() {
+            const hintsText = gameLanguage === 'or' ? 'ସୂଚନା: ' : 
+                             gameLanguage === 'hi' ? 'संकेत: ' : 'Hints: ';
+            hintsLeftEl.textContent = hintsText + hintsLeft;
+        }
+
+        function updateProgress() {
+            const progress = (foundItems.length / currentGameItems.length) * 100;
+            progressEl.style.width = `${progress}%`;
+        }
+
+        function checkCompletion() {
+            if (foundItems.length === currentGameItems.length) {
+                clearInterval(timerInterval);
+                setTimeout(() => {
+                    successModal.style.display = 'flex';
+                }, 1000);
+            }
+        }
+
+        function resetGame() {
+            clearInterval(timerInterval);
+            score = 0;
+            hintsLeft = 5;
+            timeRemaining = 1200;
+            isGameStarted = false;
+            currentLocationIndex = 0;
+            foundItems = [];
+            unlockedRooms = [0]; // Reset to only first room unlocked
+            currentGameItems = []; // Clear current game items
+           
+            updateScoreDisplay();
+            updateHintsDisplay();
+            progressEl.style.width = '0%';
+            timeEl.textContent = '20:00';
+
+            successModal.style.display = 'none';
+            itemModal.style.display = 'none';
+            gameHeader.style.display = 'none';
+            gameStatsContainer.style.display = 'none';
+            gameArea.style.display = 'none';
+            instructionsModal.style.display = 'flex';
+        }
+
+        // Simple dialog function for younger students
+        function showSimpleDialog(title, message, callback) {
+            const dialog = document.createElement('div');
+            dialog.style.position = 'fixed';
+            dialog.style.top = '0';
+            dialog.style.left = '0';
+            dialog.style.width = '100%';
+            dialog.style.height = '100%';
+            dialog.style.backgroundColor = 'rgba(0,0,0,0.7)';
+            dialog.style.display = 'flex';
+            dialog.style.alignItems = 'center';
+            dialog.style.justifyContent = 'center';
+            dialog.style.zIndex = '3000';
+            dialog.style.padding = '20px';
+            
+            const dialogContent = document.createElement('div');
+            dialogContent.className = 'simple-dialog';
+            dialogContent.innerHTML = `
+                <h3>${title}</h3>
+                <p>${message}</p>
+                <button id="dialog-ok">OK</button>
+            `;
+            
+            dialog.appendChild(dialogContent);
+            document.body.appendChild(dialog);
+            
+            document.getElementById('dialog-ok').addEventListener('click', function() {
+                document.body.removeChild(dialog);
+                if (callback) callback();
+            });
+        }
+
+        // Initialize the game
+        updateInstructionTranslations(instructionsLanguage);
+    </script>
+</body>
+</html>

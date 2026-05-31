@@ -1,0 +1,1847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Value Builder - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles with Profile Controls */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #2a69ac;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text h1 span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-pic {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 180px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f7fa;
+        }
+
+        .dropdown-item i {
+            color: #3182ce;
+            width: 20px;
+        }
+
+        /* Language Options */
+        .language-options {
+            position: absolute;
+            top: 60px;
+            right: 120px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 120px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .language-options.show {
+            display: block;
+        }
+
+        .language-option {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .language-option:last-child {
+            border-bottom: none;
+        }
+
+        .language-option:hover {
+            background: #f5f7fa;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9)), url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .breadcrumb-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .breadcrumb a {
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #3182ce;
+        }
+
+        .breadcrumb span {
+            color: #64748b;
+        }
+
+        /* Game Container */
+        .game-container {
+            padding: 50px 0;
+            min-height: 70vh;
+        }
+
+        .game-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .game-area {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Game Info Panel */
+        .game-info {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .game-title {
+            font-size: 1.8rem;
+            color: #1a365d;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .game-description {
+            color: #64748b;
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        .game-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-box {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #3182ce;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .game-instructions {
+            background: #f0f9ff;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #3182ce;
+        }
+
+        .instructions-title {
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .instructions-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .instructions-list li {
+            margin-bottom: 8px;
+            color: #4a5568;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .instructions-list li i {
+            color: #3182ce;
+            margin-top: 2px;
+        }
+
+        /* Game Play Area */
+        .game-play-area {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .target-section {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            border-radius: 10px;
+            color: white;
+        }
+
+        .target-label {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .target-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Blocks Container */
+        .blocks-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .blocks-title {
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 5px;
+        }
+
+        .blocks-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 10px;
+            min-height: 120px;
+            border: 2px dashed #cbd5e0;
+        }
+
+        .block {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            cursor: grab;
+            user-select: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .block:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .block:active {
+            cursor: grabbing;
+        }
+
+        .hundred-block {
+            background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+        }
+
+        .ten-block {
+            background: linear-gradient(135deg, #38b2ac 0%, #2c9a94 100%);
+        }
+
+        .one-block {
+            background: linear-gradient(135deg, #d69e2e 0%, #b7791f 100%);
+        }
+
+        .block-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .block-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        /* Building Area */
+        .building-area {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .building-title {
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 5px;
+        }
+
+        .building-zone {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            padding: 25px;
+            background: #f8fafc;
+            border-radius: 10px;
+            min-height: 150px;
+            border: 2px dashed #cbd5e0;
+            position: relative;
+        }
+
+        .dropped-block {
+            position: relative;
+        }
+
+        .remove-btn {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #e53e3e;
+            color: white;
+            border: none;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .dropped-block:hover .remove-btn {
+            display: flex;
+        }
+
+        /* Game Controls */
+        .game-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #3182ce;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2b6cb0;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: #38b2ac;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: #e53e3e;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c53030;
+            transform: translateY(-2px);
+        }
+
+        /* Timer Display */
+        .timer-display {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #e53e3e;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Feedback Messages */
+        .feedback-message {
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .feedback-success {
+            background: #c6f6d5;
+            color: #22543d;
+            border: 1px solid #9ae6b4;
+            display: block;
+        }
+
+        .feedback-error {
+            background: #fed7d7;
+            color: #742a2a;
+            border: 1px solid #fc8181;
+            display: block;
+        }
+
+        /* Score System */
+        .score-system {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #4a5568;
+        }
+
+        .score-value {
+            font-weight: 700;
+            color: #3182ce;
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about {
+            padding-right: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.8rem;
+            background: #38b2ac;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 20px;
+            color: #38b2ac;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2d3748;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .social-links a:hover {
+            background: #38b2ac;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            nav ul {
+                gap: 15px;
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .game-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .control-buttons {
+                flex-wrap: wrap;
+            }
+            
+            .block {
+                width: 70px;
+                height: 70px;
+            }
+        }
+
+        /* Odia font support */
+        .odia-text {
+            font-family: 'Kalinga', 'Nirmala UI', 'Segoe UI', sans-serif;
+        }
+
+        /* Animation for correct answer */
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .celebrate {
+            animation: celebrate 0.5s ease 3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-atom"></i>
+            </div>
+            <div class="logo-text">
+                <h1>STEM Learn Odisha</h1>
+                <p>Gamified Learning Platform</p>
+            </div>
+        </div>
+       
+        <nav>
+            <ul>
+                <li><a href="student-dashboard.html" id="navDashboard">Dashboard</a></li>
+                <li><a href="mathematics.html" id="navMathematics">Mathematics</a></li>
+                <li><a href="scienceidx.html" id="navCurriculum">Curriculum</a></li>
+                <li><a href="fractions.html" id="navFractions">Fractions</a></li>
+            </ul>
+        </nav>
+       
+        <div class="header-controls">
+            <button class="control-btn" id="languageToggle">
+                <i class="fas fa-globe"></i>
+            </button>
+           
+            <div class="profile-container">
+                <button class="profile-btn" id="profileToggle">
+                    <img src="" alt="Profile" class="profile-pic" id="headerProfilePic">
+                    <span id="headerUserName">Student</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+               
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" class="dropdown-item" id="dropdownProfile">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownSettings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownLogout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Language Options -->
+    <div class="language-options" id="languageOptions">
+        <div class="language-option" data-lang="en">English</div>
+        <div class="language-option" data-lang="or">ଓଡ଼ିଆ</div>
+    </div>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 data-translate="game-title">Place Value Builder</h1>
+            <p data-translate="game-desc">Help the broken robot build numbers using hundreds, tens, and ones blocks!</p>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <a href="student-dashboard.html" data-translate="breadcrumb-home">Home</a>
+                <span>/</span>
+                <a href="mathematics.html" data-translate="breadcrumb-math">Mathematics</a>
+                <span>/</span>
+                <span data-translate="breadcrumb-topic">Place Value Builder</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Container -->
+    <section class="game-container">
+        <div class="container">
+            <div class="game-area">
+                <!-- Game Information Panel -->
+                <div class="game-info">
+                    <h2 class="game-title">
+                        <i class="fas fa-robot"></i>
+                        <span data-translate="game-title-full">Place Value Builder</span>
+                    </h2>
+                    
+                    <div class="game-description" data-translate="game-description">
+                        The robot's battery system is broken! It needs you to build the correct number 
+                        using hundreds, tens, and ones blocks. Drag the blocks to the building zone to 
+                        create the target number shown above.
+                    </div>
+                    
+                    <div class="game-stats">
+                        <div class="stat-box">
+                            <div class="stat-value" id="scoreValue">0</div>
+                            <div class="stat-label" data-translate="stat-score">Score</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value" id="levelValue">1</div>
+                            <div class="stat-label" data-translate="stat-level">Level</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value" id="correctValue">0</div>
+                            <div class="stat-label" data-translate="stat-correct">Correct</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value" id="timeValue">60</div>
+                            <div class="stat-label" data-translate="stat-time">Time (s)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="game-instructions">
+                        <h3 class="instructions-title">
+                            <i class="fas fa-info-circle"></i>
+                            <span data-translate="instructions-title">How to Play:</span>
+                        </h3>
+                        <ul class="instructions-list">
+                            <li>
+                                <i class="fas fa-bullseye"></i>
+                                <span data-translate="instruction1">Look at the target number shown above</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-mouse-pointer"></i>
+                                <span data-translate="instruction2">Drag and drop blocks to the building zone</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-battery-full"></i>
+                                <span data-translate="instruction3">Use 100s, 10s, and 1s blocks to build the number</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span data-translate="instruction4">Click "Check Answer" when you're ready</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-clock"></i>
+                                <span data-translate="instruction5">Beat the timer for bonus points!</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Game Play Area -->
+                <div class="game-play-area">
+                    <!-- Target Number Display -->
+                    <div class="target-section">
+                        <div class="target-label" data-translate="target-label">Build This Number:</div>
+                        <div class="target-number" id="targetNumber">247</div>
+                    </div>
+                    
+                    <!-- Blocks Available -->
+                    <div class="blocks-container">
+                        <div class="blocks-title" data-translate="blocks-title">Available Blocks:</div>
+                        <div class="blocks-area" id="blocksArea">
+                            <!-- Blocks will be generated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <!-- Building Zone -->
+                    <div class="building-area">
+                        <div class="building-title" data-translate="building-title">Building Zone:</div>
+                        <div class="building-zone" id="buildingZone">
+                            <div class="empty-message" data-translate="empty-message">Drag blocks here to build the number</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Feedback Message -->
+                    <div class="feedback-message" id="feedbackMessage"></div>
+                    
+                    <!-- Game Controls -->
+                    <div class="game-controls">
+                        <div class="control-buttons">
+                            <button class="btn btn-primary" id="checkAnswerBtn">
+                                <i class="fas fa-check"></i>
+                                <span data-translate="check-btn">Check Answer</span>
+                            </button>
+                            <button class="btn btn-secondary" id="resetBtn">
+                                <i class="fas fa-redo"></i>
+                                <span data-translate="reset-btn">Reset</span>
+                            </button>
+                            <button class="btn btn-success" id="nextBtn">
+                                <i class="fas fa-forward"></i>
+                                <span data-translate="next-btn">Next Number</span>
+                            </button>
+                        </div>
+                        
+                        <div class="timer-display">
+                            <i class="fas fa-clock"></i>
+                            <span id="timerDisplay">60</span>
+                        </div>
+                    </div>
+                    
+                    <div class="score-system">
+                        <i class="fas fa-star"></i>
+                        <span data-translate="score-label">Current Score:</span>
+                        <span class="score-value" id="currentScore">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <div class="footer-logo-text">STEM Learn Odisha</div>
+                    </div>
+                    <p data-translate="footer-desc">Making Science and Mathematics education engaging and relevant for Class 6 students in Odisha through localized content and interactive learning.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h3 data-translate="quick-links">Quick Links</h3>
+                    <ul>
+                        <li><a href="student-dashboard.html"><i class="fas fa-tachometer-alt"></i> <span data-translate="nav-dashboard">Dashboard</span></a></li>
+                        <li><a href="mathematics.html"><i class="fas fa-calculator"></i> <span data-translate="nav-mathematics">Mathematics</span></a></li>
+                        <li><a href="fractions.html"><i class="fas fa-divide"></i> <span data-translate="nav-fractions">Fractions</span></a></li>
+                        <li><a href="scienceidx.html"><i class="fas fa-book"></i> <span data-translate="nav-curriculum">Curriculum</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h3 data-translate="contact-us">Contact Us</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> <span data-translate="footer-address">Department of Education, Bhubaneswar</span></a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +91 674 123 4567</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@stemlearnodisha.com</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p data-translate="copyright">© 2023 STEM Learn Odisha. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+           
+            if (!user) {
+                // Redirect to login if not authenticated
+                window.location.href = 'student-login.html';
+                return;
+            }
+           
+            // Load user data
+            loadUserData(user);
+            
+            // Initialize the game
+            initGame();
+        });
+
+        // Load user data into the page
+        function loadUserData(user) {
+            document.getElementById('headerUserName').textContent = user.fullName;
+            document.getElementById('headerProfilePic').src = user.profilePicture ? `uploads/${user.profilePicture}` : 'default-profile.png';
+        }
+
+        // Game Variables
+        let score = 0;
+        let level = 1;
+        let correctAnswers = 0;
+        let timer = 60;
+        let timerInterval;
+        let currentTargetNumber = 0;
+        let placedBlocks = [];
+        let isGameActive = true;
+
+        // Game Configuration
+        const gameConfig = {
+            maxLevel: 10,
+            timePerLevel: 60,
+            scoreCorrect: 100,
+            scoreBonus: 50,
+            timeBonusThreshold: 30
+        };
+
+        // Available blocks for each level
+        const levelBlocks = {
+            1: { hundreds: 2, tens: 9, ones: 9 },
+            2: { hundreds: 3, tens: 9, ones: 9 },
+            3: { hundreds: 4, tens: 9, ones: 9 },
+            4: { hundreds: 5, tens: 9, ones: 9 },
+            5: { hundreds: 6, tens: 9, ones: 9 },
+            6: { hundreds: 7, tens: 9, ones: 9 },
+            7: { hundreds: 8, tens: 9, ones: 9 },
+            8: { hundreds: 9, tens: 9, ones: 9 },
+            9: { hundreds: 10, tens: 9, ones: 9 },
+            10: { hundreds: 10, tens: 10, ones: 10 }
+        };
+
+        // Translations
+        const translations = {
+            en: {
+                'nav-dashboard': 'Dashboard',
+                'nav-mathematics': 'Mathematics',
+                'nav-curriculum': 'Curriculum',
+                'nav-fractions': 'Fractions',
+                'game-title': 'Place Value Builder',
+                'game-desc': 'Help the broken robot build numbers using hundreds, tens, and ones blocks!',
+                'breadcrumb-home': 'Home',
+                'breadcrumb-math': 'Mathematics',
+                'breadcrumb-topic': 'Place Value Builder',
+                'game-title-full': 'Place Value Builder',
+                'game-description': 'The robot\'s battery system is broken! It needs you to build the correct number using hundreds, tens, and ones blocks. Drag the blocks to the building zone to create the target number shown above.',
+                'stat-score': 'Score',
+                'stat-level': 'Level',
+                'stat-correct': 'Correct',
+                'stat-time': 'Time (s)',
+                'instructions-title': 'How to Play:',
+                'instruction1': 'Look at the target number shown above',
+                'instruction2': 'Drag and drop blocks to the building zone',
+                'instruction3': 'Use 100s, 10s, and 1s blocks to build the number',
+                'instruction4': 'Click "Check Answer" when you\'re ready',
+                'instruction5': 'Beat the timer for bonus points!',
+                'target-label': 'Build This Number:',
+                'blocks-title': 'Available Blocks:',
+                'building-title': 'Building Zone:',
+                'empty-message': 'Drag blocks here to build the number',
+                'check-btn': 'Check Answer',
+                'reset-btn': 'Reset',
+                'next-btn': 'Next Number',
+                'score-label': 'Current Score:',
+                'footer-desc': 'Making Science and Mathematics education engaging and relevant for Class 6 students in Odisha through localized content and interactive learning.',
+                'quick-links': 'Quick Links',
+                'contact-us': 'Contact Us',
+                'footer-address': 'Department of Education, Bhubaneswar',
+                'copyright': '© 2023 STEM Learn Odisha. All rights reserved.'
+            },
+            or: {
+                'nav-dashboard': 'ଡ୍ୟାସବୋର୍ଡ',
+                'nav-mathematics': 'ଗଣିତ',
+                'nav-curriculum': 'ପାଠ୍ୟକ୍ରମ',
+                'nav-fractions': 'ଭଗ୍ନାଂଶ',
+                'game-title': 'ସ୍ଥାନ ମୂଲ୍ୟ ନିର୍ମାତା',
+                'game-desc': 'ଶହ, ଦଶ, ଏବଂ ଗୋଟିଏ ବ୍ଲକ୍ ବ୍ୟବହାର କରି ସଂଖ୍ୟା ନିର୍ମାଣ କରିବାରେ ଭାଙ୍ଗି ଯାଇଥିବା ରୋବଟକୁ ସାହାଯ୍ୟ କରନ୍ତୁ!',
+                'breadcrumb-home': 'ମୁଖ୍ୟ ପୃଷ୍ଠା',
+                'breadcrumb-math': 'ଗଣିତ',
+                'breadcrumb-topic': 'ସ୍ଥାନ ମୂଲ୍ୟ ନିର୍ମାତା',
+                'game-title-full': 'ସ୍ଥାନ ମୂଲ୍ୟ ନିର୍ମାତା',
+                'game-description': 'ରୋବଟର ବ୍ୟାଟେରି ସିଷ୍ଟମ୍ ଭାଙ୍ଗି ଯାଇଛି! ଏହାକୁ ଶହ, ଦଶ ଏବଂ ଗୋଟିଏ ବ୍ଲକ୍ ବ୍ୟବହାର କରି ସଠିକ୍ ସଂଖ୍ୟା ନିର୍ମାଣ କରିବା ପାଇଁ ଆପଣଙ୍କ ସାହାଯ୍ୟ ଦରକାର। ଉପରେ ଦେଖାଯାଉଥିବା ଲକ୍ଷ୍ୟ ସଂଖ୍ୟା ସୃଷ୍ଟି କରିବା ପାଇଁ ବ୍ଲକ୍‌ଗୁଡ଼ିକୁ ବିଲଡିଂ ଜୋନକୁ ଟାଣନ୍ତୁ ଏବଂ ଛାଡନ୍ତୁ।',
+                'stat-score': 'ସ୍କୋର',
+                'stat-level': 'ସ୍ତର',
+                'stat-correct': 'ଠିକ୍',
+                'stat-time': 'ସମୟ (ସେ.)',
+                'instructions-title': 'କିପରି ଖେଳିବେ:',
+                'instruction1': 'ଉପରେ ଦେଖାଯାଉଥିବା ଲକ୍ଷ୍ୟ ସଂଖ୍ୟାକୁ ଦେଖନ୍ତୁ',
+                'instruction2': 'ବ୍ଲକ୍‌ଗୁଡ଼ିକୁ ବିଲଡିଂ ଜୋନକୁ ଟାଣନ୍ତୁ ଏବଂ ଛାଡନ୍ତୁ',
+                'instruction3': 'ସଂଖ୍ୟା ନିର୍ମାଣ କରିବା ପାଇଁ 100, 10 ଏବଂ 1 ବ୍ଲକ୍ ବ୍ୟବହାର କରନ୍ତୁ',
+                'instruction4': 'ଯେତେବେଳେ ପ୍ରସ୍ତୁତ ହୁଅନ୍ତି, "ଉତ୍ତର ଯାଞ୍ଚ କରନ୍ତୁ" କ୍ଲିକ୍ କରନ୍ତୁ',
+                'instruction5': 'ବୋନସ୍ ପଏଣ୍ଟ୍ ପାଇଁ ଟାଇମରକୁ ପରାସ୍ତ କରନ୍ତୁ!',
+                'target-label': 'ଏହି ସଂଖ୍ୟା ନିର୍ମାଣ କରନ୍ତୁ:',
+                'blocks-title': 'ଉପଲବ୍ଧ ବ୍ଲକ୍‌ଗୁଡ଼ିକ:',
+                'building-title': 'ନିର୍ମାଣ କ୍ଷେତ୍ର:',
+                'empty-message': 'ସଂଖ୍ୟା ନିର୍ମାଣ କରିବା ପାଇଁ ଏଠାରେ ବ୍ଲକ୍‌ଗୁଡ଼ିକୁ ଟାଣନ୍ତୁ',
+                'check-btn': 'ଉତ୍ତର ଯାଞ୍ଚ କରନ୍ତୁ',
+                'reset-btn': 'ପୁନର୍ବାର ଆରମ୍ଭ କରନ୍ତୁ',
+                'next-btn': 'ପରବର୍ତ୍ତୀ ସଂଖ୍ୟା',
+                'score-label': 'ବର୍ତ୍ତମାନର ସ୍କୋର:',
+                'footer-desc': 'ଓଡ଼ିଶାର ଷଷ୍ଠ ଶ୍ରେଣୀର ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କ ପାଇଁ ସ୍ଥାନୀୟ ବିଷୟବସ୍ତୁ ଏବଂ ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ମାଧ୍ୟମରେ ବିଜ୍ଞାନ ଏବଂ ଗଣିତ ଶିକ୍ଷାକୁ ଆକର୍ଷଣୀୟ ଏବଂ ପ୍ରାସଙ୍ଗିକ କରିବା',
+                'quick-links': 'ଶୀଘ୍ର ଲିଙ୍କ୍',
+                'contact-us': 'ଆମ ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ',
+                'footer-address': 'ଶିକ୍ଷା ବିଭାଗ, ଭୁବନେଶ୍ୱର',
+                'copyright': '© 2023 STEM ଲର୍ନ ଓଡ଼ିଶା। ସମସ୍ତ ଅଧିକାର ସଂରକ୍ଷିତ।'
+            }
+        };
+
+        let currentLanguage = 'en';
+
+        // Initialize the game
+        function initGame() {
+            // Initialize game state
+            score = 0;
+            level = 1;
+            correctAnswers = 0;
+            timer = gameConfig.timePerLevel;
+            placedBlocks = [];
+            isGameActive = true;
+
+            // Generate initial blocks
+            generateBlocks();
+            
+            // Generate first target number
+            generateTargetNumber();
+            
+            // Update UI
+            updateGameUI();
+            
+            // Start timer
+            startTimer();
+            
+            // Initialize drag and drop
+            initDragAndDrop();
+            
+            // Initialize buttons
+            initButtons();
+            
+            // Initialize navigation
+            initNavigation();
+            
+            // Set up language options
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    switchLanguage(lang);
+                    document.getElementById('languageOptions').classList.remove('show');
+                });
+            });
+
+            // Initialize with default language
+            switchLanguage('en');
+        }
+
+        // Generate blocks based on current level
+        function generateBlocks() {
+            const blocksArea = document.getElementById('blocksArea');
+            blocksArea.innerHTML = '';
+            
+            const blocksConfig = levelBlocks[level] || levelBlocks[1];
+            
+            // Generate hundred blocks
+            for (let i = 0; i < blocksConfig.hundreds; i++) {
+                const block = createBlock(100, 'hundred');
+                blocksArea.appendChild(block);
+            }
+            
+            // Generate ten blocks
+            for (let i = 0; i < blocksConfig.tens; i++) {
+                const block = createBlock(10, 'ten');
+                blocksArea.appendChild(block);
+            }
+            
+            // Generate one blocks
+            for (let i = 0; i < blocksConfig.ones; i++) {
+                const block = createBlock(1, 'one');
+                blocksArea.appendChild(block);
+            }
+        }
+
+        // Create a block element
+        function createBlock(value, type) {
+            const block = document.createElement('div');
+            block.className = `block ${type}-block`;
+            block.setAttribute('data-value', value);
+            block.setAttribute('draggable', 'true');
+            
+            const valueSpan = document.createElement('div');
+            valueSpan.className = 'block-value';
+            valueSpan.textContent = value;
+            
+            const labelSpan = document.createElement('div');
+            labelSpan.className = 'block-label';
+            labelSpan.textContent = type === 'hundred' ? 'Hundreds' : 
+                                 type === 'ten' ? 'Tens' : 'Ones';
+            
+            block.appendChild(valueSpan);
+            block.appendChild(labelSpan);
+            
+            return block;
+        }
+
+        // Generate target number based on level
+        function generateTargetNumber() {
+            let min, max;
+            
+            switch(level) {
+                case 1:
+                    min = 100;
+                    max = 199;
+                    break;
+                case 2:
+                    min = 200;
+                    max = 299;
+                    break;
+                case 3:
+                    min = 300;
+                    max = 399;
+                    break;
+                case 4:
+                    min = 400;
+                    max = 499;
+                    break;
+                case 5:
+                    min = 500;
+                    max = 599;
+                    break;
+                case 6:
+                    min = 600;
+                    max = 699;
+                    break;
+                case 7:
+                    min = 700;
+                    max = 799;
+                    break;
+                case 8:
+                    min = 800;
+                    max = 899;
+                    break;
+                case 9:
+                    min = 900;
+                    max = 999;
+                    break;
+                case 10:
+                    min = 100;
+                    max = 999;
+                    break;
+                default:
+                    min = 100;
+                    max = 199;
+            }
+            
+            currentTargetNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+            document.getElementById('targetNumber').textContent = currentTargetNumber;
+            document.getElementById('targetNumber').classList.remove('celebrate');
+        }
+
+        // Initialize drag and drop functionality
+        function initDragAndDrop() {
+            const blocks = document.querySelectorAll('.block');
+            const buildingZone = document.getElementById('buildingZone');
+            
+            // Add event listeners to blocks
+            blocks.forEach(block => {
+                block.addEventListener('dragstart', handleDragStart);
+                block.addEventListener('dragend', handleDragEnd);
+            });
+            
+            // Add event listeners to building zone
+            buildingZone.addEventListener('dragover', handleDragOver);
+            buildingZone.addEventListener('dragenter', handleDragEnter);
+            buildingZone.addEventListener('dragleave', handleDragLeave);
+            buildingZone.addEventListener('drop', handleDrop);
+            
+            // Remove building zone empty message if it exists
+            buildingZone.querySelector('.empty-message')?.remove();
+        }
+
+        // Drag and Drop Handlers
+        function handleDragStart(e) {
+            if (!isGameActive) {
+                e.preventDefault();
+                return;
+            }
+            
+            e.dataTransfer.setData('text/plain', e.target.getAttribute('data-value'));
+            e.target.style.opacity = '0.5';
+            
+            // Create a drag image
+            const dragImage = e.target.cloneNode(true);
+            dragImage.style.position = 'absolute';
+            dragImage.style.top = '-1000px';
+            document.body.appendChild(dragImage);
+            e.dataTransfer.setDragImage(dragImage, 40, 40);
+            
+            setTimeout(() => {
+                document.body.removeChild(dragImage);
+            }, 0);
+        }
+
+        function handleDragEnd(e) {
+            e.target.style.opacity = '1';
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+        }
+
+        function handleDragEnter(e) {
+            e.preventDefault();
+            e.target.classList.add('drag-over');
+        }
+
+        function handleDragLeave(e) {
+            e.target.classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            e.target.classList.remove('drag-over');
+            
+            if (!isGameActive) return;
+            
+            const value = parseInt(e.dataTransfer.getData('text/plain'));
+            
+            // Create a new block in the building zone
+            const block = createBlock(value, getBlockType(value));
+            block.classList.add('dropped-block');
+            
+            // Add remove button
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-btn';
+            removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+            removeBtn.addEventListener('click', function() {
+                removeBlockFromZone(block);
+            });
+            
+            block.appendChild(removeBtn);
+            e.target.appendChild(block);
+            
+            // Add to placed blocks array
+            placedBlocks.push({
+                element: block,
+                value: value
+            });
+            
+            // Remove empty message if it exists
+            const emptyMessage = e.target.querySelector('.empty-message');
+            if (emptyMessage) {
+                emptyMessage.remove();
+            }
+            
+            // Remove the block from available blocks
+            removeBlockFromSource(value);
+            
+            // Update total value display
+            updateTotalValue();
+        }
+
+        // Get block type based on value
+        function getBlockType(value) {
+            switch(value) {
+                case 100: return 'hundred';
+                case 10: return 'ten';
+                case 1: return 'one';
+                default: return 'one';
+            }
+        }
+
+        // Remove block from source area
+        function removeBlockFromSource(value) {
+            const blocksArea = document.getElementById('blocksArea');
+            const blocks = blocksArea.querySelectorAll('.block');
+            
+            for (let block of blocks) {
+                if (parseInt(block.getAttribute('data-value')) === value) {
+                    block.remove();
+                    break;
+                }
+            }
+        }
+
+        // Remove block from building zone
+        function removeBlockFromZone(blockElement) {
+            // Remove from placed blocks array
+            placedBlocks = placedBlocks.filter(item => item.element !== blockElement);
+            
+            // Add block back to source area
+            const value = parseInt(blockElement.getAttribute('data-value'));
+            const blocksArea = document.getElementById('blocksArea');
+            const newBlock = createBlock(value, getBlockType(value));
+            blocksArea.appendChild(newBlock);
+            
+            // Reinitialize drag and drop for new block
+            newBlock.addEventListener('dragstart', handleDragStart);
+            newBlock.addEventListener('dragend', handleDragEnd);
+            
+            // Remove from building zone
+            blockElement.remove();
+            
+            // Update total value display
+            updateTotalValue();
+            
+            // Add empty message if building zone is empty
+            const buildingZone = document.getElementById('buildingZone');
+            if (buildingZone.children.length === 0) {
+                const emptyMessage = document.createElement('div');
+                emptyMessage.className = 'empty-message';
+                emptyMessage.textContent = currentLanguage === 'or' ? 
+                    'ସଂଖ୍ୟା ନିର୍ମାଣ କରିବା ପାଇଁ ଏଠାରେ ବ୍ଲକ୍‌ଗୁଡ଼ିକୁ ଟାଣନ୍ତୁ' : 
+                    'Drag blocks here to build the number';
+                buildingZone.appendChild(emptyMessage);
+            }
+        }
+
+        // Calculate total value of placed blocks
+        function calculateTotalValue() {
+            return placedBlocks.reduce((total, block) => total + block.value, 0);
+        }
+
+        // Update total value display
+        function updateTotalValue() {
+            const total = calculateTotalValue();
+            // You could display this if you want, but it's optional
+        }
+
+        // Initialize buttons
+        function initButtons() {
+            // Check Answer Button
+            document.getElementById('checkAnswerBtn').addEventListener('click', checkAnswer);
+            
+            // Reset Button
+            document.getElementById('resetBtn').addEventListener('click', resetBuildingZone);
+            
+            // Next Button
+            document.getElementById('nextBtn').addEventListener('click', nextNumber);
+        }
+
+        // Check if the answer is correct
+        function checkAnswer() {
+            if (!isGameActive) return;
+            
+            const totalValue = calculateTotalValue();
+            const feedbackMessage = document.getElementById('feedbackMessage');
+            
+            if (totalValue === currentTargetNumber) {
+                // Correct answer
+                correctAnswers++;
+                let pointsEarned = gameConfig.scoreCorrect;
+                
+                // Time bonus
+                if (timer > gameConfig.timeBonusThreshold) {
+                    pointsEarned += gameConfig.scoreBonus;
+                }
+                
+                score += pointsEarned;
+                
+                // Update UI
+                feedbackMessage.className = 'feedback-message feedback-success';
+                feedbackMessage.innerHTML = `
+                    <i class="fas fa-check-circle"></i>
+                    ${currentLanguage === 'or' ? 
+                        `ବହୁତ ଭଲ! ସଠିକ୍ ଉତ୍ତର। ଆପଣ ${pointsEarned} ପଏଣ୍ଟ୍ ଅର୍ଜନ କରିଛନ୍ତି!` : 
+                        `Excellent! Correct answer. You earned ${pointsEarned} points!`}
+                `;
+                
+                // Celebrate animation
+                document.getElementById('targetNumber').classList.add('celebrate');
+                
+                // Update game state
+                updateGameUI();
+                
+                // Disable game for a moment
+                isGameActive = false;
+                
+                // Auto-proceed to next number after 2 seconds
+                setTimeout(() => {
+                    nextNumber();
+                    isGameActive = true;
+                }, 2000);
+                
+                // Save progress
+                saveProgress();
+                
+            } else {
+                // Incorrect answer
+                feedbackMessage.className = 'feedback-message feedback-error';
+                feedbackMessage.innerHTML = `
+                    <i class="fas fa-exclamation-circle"></i>
+                    ${currentLanguage === 'or' ? 
+                        `ଓହୋ! ସଠିକ୍ ନୁହେଁ। ଆପଣ ${totalValue} ତିଆରି କରିଛନ୍ତି, କିନ୍ତୁ ଆମକୁ ${currentTargetNumber} ଦରକାର। ପୁନର୍ବାର ଚେଷ୍ଟା କରନ୍ତୁ!` : 
+                        `Oops! Not quite right. You built ${totalValue}, but we need ${currentTargetNumber}. Try again!`}
+                `;
+            }
+            
+            feedbackMessage.style.display = 'block';
+        }
+
+        // Reset building zone
+        function resetBuildingZone() {
+            const buildingZone = document.getElementById('buildingZone');
+            const blocksArea = document.getElementById('blocksArea');
+            
+            // Move all blocks back to source
+            placedBlocks.forEach(block => {
+                const value = parseInt(block.element.getAttribute('data-value'));
+                const newBlock = createBlock(value, getBlockType(value));
+                blocksArea.appendChild(newBlock);
+                
+                // Reinitialize drag and drop for new block
+                newBlock.addEventListener('dragstart', handleDragStart);
+                newBlock.addEventListener('dragend', handleDragEnd);
+            });
+            
+            // Clear building zone
+            buildingZone.innerHTML = '';
+            placedBlocks = [];
+            
+            // Add empty message
+            const emptyMessage = document.createElement('div');
+            emptyMessage.className = 'empty-message';
+            emptyMessage.textContent = currentLanguage === 'or' ? 
+                'ସଂଖ୍ୟା ନିର୍ମାଣ କରିବା ପାଇଁ ଏଠାରେ ବ୍ଲକ୍‌ଗୁଡ଼ିକୁ ଟାଣନ୍ତୁ' : 
+                'Drag blocks here to build the number';
+            buildingZone.appendChild(emptyMessage);
+            
+            // Hide feedback message
+            document.getElementById('feedbackMessage').style.display = 'none';
+            
+            // Regenerate blocks if needed
+            generateBlocks();
+            initDragAndDrop();
+        }
+
+        // Move to next number
+        function nextNumber() {
+            // Hide feedback message
+            document.getElementById('feedbackMessage').style.display = 'none';
+            
+            // Reset timer
+            timer = gameConfig.timePerLevel;
+            updateTimerDisplay();
+            
+            // Check if we should level up
+            if (correctAnswers >= 3) {
+                levelUp();
+            }
+            
+            // Generate new target number
+            generateTargetNumber();
+            
+            // Reset building zone
+            resetBuildingZone();
+            
+            // Regenerate blocks for new level
+            generateBlocks();
+            initDragAndDrop();
+        }
+
+        // Level up
+        function levelUp() {
+            if (level < gameConfig.maxLevel) {
+                level++;
+                correctAnswers = 0; // Reset for next level
+                
+                // Show level up message
+                const feedbackMessage = document.getElementById('feedbackMessage');
+                feedbackMessage.className = 'feedback-message feedback-success';
+                feedbackMessage.innerHTML = `
+                    <i class="fas fa-trophy"></i>
+                    ${currentLanguage === 'or' ? 
+                        `ଅଭିନନ୍ଦନ! ଆପଣ ସ୍ତର ${level} କୁ ଉନ୍ନତି ପାଇଲେ!` : 
+                        `Congratulations! You advanced to Level ${level}!`}
+                `;
+                feedbackMessage.style.display = 'block';
+                
+                // Update UI
+                updateGameUI();
+            }
+        }
+
+        // Update game UI
+        function updateGameUI() {
+            document.getElementById('scoreValue').textContent = score;
+            document.getElementById('levelValue').textContent = level;
+            document.getElementById('correctValue').textContent = correctAnswers;
+            document.getElementById('currentScore').textContent = score;
+        }
+
+        // Timer functions
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if (timer > 0 && isGameActive) {
+                    timer--;
+                    updateTimerDisplay();
+                } else if (timer === 0) {
+                    timeUp();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            document.getElementById('timerDisplay').textContent = timer;
+            document.getElementById('timeValue').textContent = timer;
+            
+            // Change color when time is running low
+            if (timer <= 10) {
+                document.getElementById('timerDisplay').style.color = '#e53e3e';
+            } else if (timer <= 30) {
+                document.getElementById('timerDisplay').style.color = '#d69e2e';
+            } else {
+                document.getElementById('timerDisplay').style.color = '#3182ce';
+            }
+        }
+
+        function timeUp() {
+            isGameActive = false;
+            clearInterval(timerInterval);
+            
+            const feedbackMessage = document.getElementById('feedbackMessage');
+            feedbackMessage.className = 'feedback-message feedback-error';
+            feedbackMessage.innerHTML = `
+                <i class="fas fa-clock"></i>
+                ${currentLanguage === 'or' ? 
+                    'ସମୟ ଶେଷ! ପୁନର୍ବାର ଚେଷ୍ଟା କରିବା ପାଇଁ "ପରବର୍ତ୍ତୀ ସଂଖ୍ୟା" କ୍ଲିକ୍ କରନ୍ତୁ।' : 
+                    'Time\'s up! Click "Next Number" to try again.'}
+            `;
+            feedbackMessage.style.display = 'block';
+        }
+
+        // Save progress to localStorage
+        function saveProgress() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user) {
+                // Initialize game progress if not exists
+                if (!user.gameProgress) {
+                    user.gameProgress = {};
+                }
+                
+                // Update place value game progress
+                if (!user.gameProgress.placeValue) {
+                    user.gameProgress.placeValue = {
+                        highScore: 0,
+                        maxLevel: 0,
+                        totalCorrect: 0
+                    };
+                }
+                
+                // Update values
+                user.gameProgress.placeValue.highScore = Math.max(user.gameProgress.placeValue.highScore || 0, score);
+                user.gameProgress.placeValue.maxLevel = Math.max(user.gameProgress.placeValue.maxLevel || 0, level);
+                user.gameProgress.placeValue.totalCorrect = (user.gameProgress.placeValue.totalCorrect || 0) + 1;
+                
+                // Save back to localStorage
+                localStorage.setItem('user', JSON.stringify(user));
+            }
+        }
+
+        // Initialize navigation
+        function initNavigation() {
+            const profileToggle = document.getElementById('profileToggle');
+            const profileDropdown = document.getElementById('profileDropdown');
+            const languageToggle = document.getElementById('languageToggle');
+            const languageOptions = document.getElementById('languageOptions');
+            const dropdownProfile = document.getElementById('dropdownProfile');
+            const dropdownSettings = document.getElementById('dropdownSettings');
+            const dropdownLogout = document.getElementById('dropdownLogout');
+            const navDashboard = document.getElementById('navDashboard');
+            const navMathematics = document.getElementById('navMathematics');
+            const navCurriculum = document.getElementById('navCurriculum');
+            const navFractions = document.getElementById('navFractions');
+
+            // Profile dropdown toggle
+            profileToggle.addEventListener('click', function() {
+                profileDropdown.classList.toggle('show');
+            });
+
+            // Language toggle
+            languageToggle.addEventListener('click', function() {
+                languageOptions.classList.toggle('show');
+            });
+
+            // Navigation between pages
+            dropdownProfile.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#profile';
+            });
+
+            dropdownSettings.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#settings';
+            });
+
+            dropdownLogout.addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('user');
+                window.location.href = 'student-login.html';
+            });
+
+            // Navigation menu items
+            navDashboard.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html';
+            });
+
+            navMathematics.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'mathematics.html';
+            });
+
+            navCurriculum.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'scienceidx.html';
+            });
+
+            navFractions.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'fractions.html';
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#languageToggle') && !e.target.closest('#languageOptions')) {
+                    languageOptions.classList.remove('show');
+                }
+               
+                if (!e.target.closest('#profileToggle') && !e.target.closest('#profileDropdown')) {
+                    profileDropdown.classList.remove('show');
+                }
+            });
+        }
+
+        // Switch language function
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            const map = translations[lang] || translations.en;
+            
+            // Update all text content
+            Object.keys(map).forEach(key => {
+                const elements = document.querySelectorAll(`[data-translate="${key}"]`);
+                elements.forEach(element => {
+                    element.textContent = map[key];
+                });
+            });
+            
+            // Update empty message in building zone
+            const buildingZone = document.getElementById('buildingZone');
+            const emptyMessage = buildingZone.querySelector('.empty-message');
+            if (emptyMessage) {
+                emptyMessage.textContent = map['empty-message'] || 'Drag blocks here to build the number';
+            }
+            
+            // Add Odia font class for Odia text
+            if (lang === 'or') {
+                document.body.classList.add('odia-text');
+            } else {
+                document.body.classList.remove('odia-text');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Concepts in Geometry - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #2a69ac;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text h1 span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-pic {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 180px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f7fa;
+        }
+
+        .dropdown-item i {
+            color: #3182ce;
+            width: 20px;
+        }
+
+        /* Language Options */
+        .language-options {
+            position: absolute;
+            top: 60px;
+            right: 120px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 120px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .language-options.show {
+            display: block;
+        }
+
+        .language-option {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .language-option:last-child {
+            border-bottom: none;
+        }
+
+        .language-option:hover {
+            background: #f5f7fa;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9)), url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .breadcrumb-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .breadcrumb a {
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #3182ce;
+        }
+
+        .breadcrumb span {
+            color: #64748b;
+        }
+
+        /* Interactive Content */
+        .interactive-content {
+            padding: 50px 0;
+        }
+
+        .learning-path {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .learning-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .path-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .path-card {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .path-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-color: #3182ce;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .card-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+            flex-grow: 1;
+        }
+
+        /* Popup Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-section {
+            margin-bottom: 30px;
+        }
+
+        .modal-section h3 {
+            color: #1a365d;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .modal-section p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .modal-section ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .modal-section li {
+            margin-bottom: 8px;
+        }
+
+        /* Progress Tracking */
+        .progress-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .progress-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .progress-bars {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .progress-item {
+            margin-bottom: 15px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        .progress-bar-container {
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #3182ce;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        /* Games Section */
+        .games-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .game-level {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .game-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .game-desc {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .game-body {
+            padding: 20px;
+        }
+
+        .game-features {
+            margin-bottom: 20px;
+        }
+
+        .game-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .game-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .game-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Resources Section */
+        .resources-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .resource-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .resource-icon {
+            font-size: 2.5rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .resource-title {
+            font-size: 1.1rem;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+
+        .resource-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .download-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about {
+            padding-right: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.8rem;
+            background: #38b2ac;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 20px;
+            color: #38b2ac;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2d3748;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .social-links a:hover {
+            background: #38b2ac;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .games-grid, .resources-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .path-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            nav ul {
+                gap: 15px;
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* Odia font support */
+        .odia-text {
+            font-family: 'Kalinga', 'Nirmala UI', 'Segoe UI', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-atom"></i>
+            </div>
+            <div class="logo-text">
+                <h1>STEM Learn Odisha</h1>
+                <p>Gamified Learning Platform</p>
+            </div>
+        </div>
+       
+        <nav>
+            <ul>
+                <li><a href="student-dashboard.html" id="navDashboard">Dashboard</a></li>
+                <li><a href="mathematics.html" id="navMathematics">Mathematics</a></li>
+                <li><a href="scienceidx.html" id="navCurriculum">Curriculum</a></li>
+                <li><a href="geometry.html" class="active" id="navGeometry">Geometry</a></li>
+            </ul>
+        </nav>
+       
+        <div class="header-controls">
+            <button class="control-btn" id="languageToggle">
+                <i class="fas fa-globe"></i>
+            </button>
+           
+            <div class="profile-container">
+                <button class="profile-btn" id="profileToggle">
+                    <img src="" alt="Profile" class="profile-pic" id="headerProfilePic">
+                    <span id="headerUserName">Student</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+               
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" class="dropdown-item" id="dropdownProfile">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownSettings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownLogout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Language Options -->
+    <div class="language-options" id="languageOptions">
+        <div class="language-option" data-lang="en">English</div>
+        <div class="language-option" data-lang="or">ଓଡ଼ିଆ</div>
+    </div>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 data-translate="geometry-title">Basic Concepts in Geometry</h1>
+            <p data-translate="geometry-desc">Explore points, lines, angles and shapes through interactive activities and games</p>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <a href="student-dashboard.html" data-translate="breadcrumb-home">Dashboard</a>
+                <span>/</span>
+                <a href="mathematics.html" data-translate="breadcrumb-math">Mathematics</a>
+                <span>/</span>
+                <span data-translate="breadcrumb-topic">Basic Concepts in Geometry</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Content -->
+    <section class="interactive-content">
+        <div class="container">
+            <!-- Learning Path -->
+            <div class="learning-path">
+                <h2 class="learning-title">
+                    <i class="fas fa-road"></i>
+                    <span data-translate="learning-path-title">Your Learning Path</span>
+                </h2>
+                <div class="path-cards">
+                    <div class="path-card" data-card="points">
+                        <div class="card-icon">
+                            <i class="fas fa-circle"></i>
+                        </div>
+                        <div class="card-title" data-translate="card1-title">Points and Lines</div>
+                        <div class="card-desc" data-translate="card1-desc">Learn about basic building blocks of geometry - points, lines, and rays</div>
+                    </div>
+                    <div class="path-card" data-card="angles">
+                        <div class="card-icon">
+                            <i class="fas fa-angle-right"></i>
+                        </div>
+                        <div class="card-title" data-translate="card2-title">Angles</div>
+                        <div class="card-desc" data-translate="card2-desc">Understand different types of angles and their measurements</div>
+                    </div>
+                    <div class="path-card" data-card="shapes">
+                        <div class="card-icon">
+                            <i class="fas fa-shapes"></i>
+                        </div>
+                        <div class="card-title" data-translate="card3-title">Basic Shapes</div>
+                        <div class="card-desc" data-translate="card3-desc">Explore triangles, quadrilaterals, circles and their properties</div>
+                    </div>
+                    <div class="path-card" data-card="review">
+                        <div class="card-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="card-title" data-translate="card4-title">Review and Quizzes</div>
+                        <div class="card-desc" data-translate="card4-desc">Test your knowledge with interactive quizzes and reviews</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Games Section -->
+            <div class="games-section">
+                <h2 class="section-title">
+                    <i class="fas fa-gamepad"></i>
+                    <span data-translate="games-title">Interactive Learning Games</span>
+                </h2>
+
+                <div class="games-grid">
+                    <div class="game-card">
+                        <div class="game-header">
+                            <div class="game-level" data-translate="level-basic">Basic</div>
+                            <h3 class="game-title" data-translate="game1-title">Shape Explorer</h3>
+                            <p class="game-desc" data-translate="game1-desc">Identify and classify different geometric shapes</p>
+                        </div>
+                        <div class="game-body">
+                            <div class="game-features">
+                                <div class="game-feature">
+                                    <i class="fas fa-star"></i>
+                                    <span data-translate="game1-feature1">Identify triangles, quadrilaterals, circles</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-clock"></i>
+                                    <span data-translate="game1-feature2">10-15 minutes gameplay</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-trophy"></i>
+                                    <span data-translate="game1-feature3">Earn up to 50 points</span>
+                                </div>
+                            </div>
+                            <a href="game3.html" class="game-btn" data-translate="play-game">Play Game</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Section -->
+            <div class="resources-section">
+                <h2 class="section-title">
+                    <i class="fas fa-download"></i>
+                    <span data-translate="resources-title">Learning Resources</span>
+                </h2>
+
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <h3 class="resource-title" data-translate="resource1-title">Study Notes</h3>
+                        <p class="resource-desc" data-translate="resource1-desc">Complete chapter notes for revision</p>
+                        <a href="#" class="download-btn">
+                            <i class="fas fa-download"></i>
+                            <span data-translate="download-english">Download (English)</span>
+                        </a>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3 class="resource-title" data-translate="resource2-title">ଅଧ୍ୟୟନ ଟିପ୍ପଣୀ</h3>
+                        <p class="resource-desc" data-translate="resource2-desc">ସମ୍ପୂର୍ଣ୍ଣ ଅଧ୍ୟାୟ ଟିପ୍ପଣୀ ସଂଶୋଧନ ପାଇଁ</p>
+                        <a href="#" class="download-btn">
+                            <i class="fas fa-download"></i>
+                            <span data-translate="download-odia">Download (ଓଡ଼ିଆ)</span>
+                        </a>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <h3 class="resource-title" data-translate="resource3-title">Geometry Flashcards</h3>
+                        <p class="resource-desc" data-translate="resource3-desc">Visual learning cards for geometry concepts</p>
+                        <a href="#" class="download-btn">
+                            <i class="fas fa-download"></i>
+                            <span data-translate="download-flashcards">Download Flashcards</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <div class="footer-logo-text">STEM Learn Odisha</div>
+                    </div>
+                    <p data-translate="footer-desc">Making Science and Mathematics education engaging and relevant for Class 6 students in Odisha through localized content and interactive learning.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h3 data-translate="quick-links">Quick Links</h3>
+                    <ul>
+                        <li><a href="student-dashboard.html"><i class="fas fa-tachometer-alt"></i> <span data-translate="nav-dashboard">Dashboard</span></a></li>
+                        <li><a href="mathematics.html"><i class="fas fa-calculator"></i> <span data-translate="nav-mathematics">Mathematics</span></a></li>
+                        <li><a href="geometry.html"><i class="fas fa-draw-polygon"></i> <span data-translate="nav-geometry">Geometry</span></a></li>
+                        <li><a href="scienceidx.html"><i class="fas fa-book"></i> <span data-translate="nav-curriculum">Curriculum</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h3 data-translate="contact-us">Contact Us</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> <span data-translate="footer-address">Department of Education, Bhubaneswar</span></a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +91 674 123 4567</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@stemlearnodisha.com</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p data-translate="copyright">© 2023 STEM Learn Odisha. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Popup -->
+    <div class="modal" id="content-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">Points and Lines</h2>
+                <button class="close-modal" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+           
+            if (!user) {
+                // Redirect to login if not authenticated
+                window.location.href = 'student-login.html';
+                return;
+            }
+           
+            // Load user data
+            loadUserData(user);
+            
+            // Initialize the page
+            init();
+        });
+
+        // Load user data into the page
+        function loadUserData(user) {
+            document.getElementById('headerUserName').textContent = user.fullName;
+            document.getElementById('headerProfilePic').src = user.profilePicture ? `uploads/${user.profilePicture}` : 'default-profile.png';
+        }
+
+        // Content for modal popups
+        const contentData = {
+            'points': {
+                'title': 'Points and Lines',
+                'content': `
+                    <div class="modal-section">
+                        <h3>Basic Building Blocks of Geometry</h3>
+                        <p>Geometry starts with three fundamental concepts: points, lines, and planes. These are the basic building blocks of all geometric figures.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Point</h3>
+                        <p>A point is a location in space. It has no size, no length, no width, and no depth.</p>
+                        <ul>
+                            <li>Represented by a dot</li>
+                            <li>Named with a capital letter (Point A, Point B)</li>
+                            <li>Has position but no dimensions</li>
+                        </ul>
+                        <p>Example: • A (Point A)</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Line</h3>
+                        <p>A line is a straight path that extends infinitely in both directions.</p>
+                        <ul>
+                            <li>Has infinite length but no thickness</li>
+                            <li>Named by two points on the line (Line AB or ↔AB)</li>
+                            <li>Extends forever in both directions</li>
+                        </ul>
+                        <p>Example: ↔AB (Line AB passing through points A and B)</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Line Segment</h3>
+                        <p>A line segment is part of a line with two endpoints.</p>
+                        <ul>
+                            <li>Has definite length</li>
+                            <li>Named by its endpoints (Segment AB or —AB)</li>
+                            <li>Does not extend infinitely</li>
+                        </ul>
+                        <p>Example: —AB (Line segment with endpoints A and B)</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Ray</h3>
+                        <p>A ray is part of a line that has one endpoint and extends infinitely in one direction.</p>
+                        <ul>
+                            <li>Has one endpoint</li>
+                            <li>Extends infinitely in one direction</li>
+                            <li>Named by its endpoint and any other point on it (Ray AB or →AB)</li>
+                        </ul>
+                        <p>Example: →AB (Ray starting at A and passing through B)</p>
+                    </div>
+                `
+            },
+            'angles': {
+                'title': 'Angles',
+                'content': `
+                    <div class="modal-section">
+                        <h3>What is an Angle?</h3>
+                        <p>An angle is formed when two rays share a common endpoint. The common endpoint is called the vertex, and the rays are called the arms of the angle.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Parts of an Angle</h3>
+                        <p>Every angle has three parts:</p>
+                        <ul>
+                            <li><strong>Vertex:</strong> The common endpoint where two rays meet</li>
+                            <li><strong>Arms:</strong> The two rays that form the angle</li>
+                            <li><strong>Interior:</strong> The region between the two arms</li>
+                            <li><strong>Exterior:</strong> The region outside the angle</li>
+                        </ul>
+                        <p>Example: ∠ABC has vertex B, with arms BA and BC</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Types of Angles</h3>
+                        <p>Angles are classified based on their measure:</p>
+                        <ul>
+                            <li><strong>Acute Angle:</strong> Less than 90°</li>
+                            <li><strong>Right Angle:</strong> Exactly 90° (forms an L shape)</li>
+                            <li><strong>Obtuse Angle:</strong> Greater than 90° but less than 180°</li>
+                            <li><strong>Straight Angle:</strong> Exactly 180° (forms a straight line)</li>
+                            <li><strong>Reflex Angle:</strong> Greater than 180° but less than 360°</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Measuring Angles</h3>
+                        <p>Angles are measured in degrees using a protractor:</p>
+                        <ul>
+                            <li>Place the center of the protractor on the vertex</li>
+                            <li>Align one arm with the 0° line</li>
+                            <li>Read the degree measure where the other arm crosses the protractor</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Angle Relationships</h3>
+                        <p>Special pairs of angles:</p>
+                        <ul>
+                            <li><strong>Complementary Angles:</strong> Two angles whose sum is 90°</li>
+                            <li><strong>Supplementary Angles:</strong> Two angles whose sum is 180°</li>
+                            <li><strong>Adjacent Angles:</strong> Angles that share a common vertex and arm</li>
+                            <li><strong>Vertically Opposite Angles:</strong> Angles opposite each other when two lines intersect (they are equal)</li>
+                        </ul>
+                    </div>
+                `
+            },
+            'shapes': {
+                'title': 'Basic Shapes',
+                'content': `
+                    <div class="modal-section">
+                        <h3>Geometric Shapes</h3>
+                        <p>Geometric shapes are figures formed by points, lines, and curves. They can be classified based on their properties.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Triangles</h3>
+                        <p>A triangle is a polygon with three sides and three angles.</p>
+                        <ul>
+                            <li><strong>By sides:</strong> Equilateral (all sides equal), Isosceles (two sides equal), Scalene (no sides equal)</li>
+                            <li><strong>By angles:</strong> Acute (all angles < 90°), Right (one angle = 90°), Obtuse (one angle > 90°)</li>
+                            <li><strong>Angle sum:</strong> The sum of all angles in a triangle is always 180°</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Quadrilaterals</h3>
+                        <p>A quadrilateral is a polygon with four sides and four angles.</p>
+                        <ul>
+                            <li><strong>Square:</strong> All sides equal, all angles 90°</li>
+                            <li><strong>Rectangle:</strong> Opposite sides equal, all angles 90°</li>
+                            <li><strong>Parallelogram:</strong> Opposite sides parallel and equal</li>
+                            <li><strong>Rhombus:</strong> All sides equal, opposite sides parallel</li>
+                            <li><strong>Trapezium:</strong> One pair of parallel sides</li>
+                            <li><strong>Kite:</strong> Two pairs of adjacent sides equal</li>
+                        </ul>
+                        <p><strong>Angle sum:</strong> The sum of all angles in a quadrilateral is always 360°</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Circle</h3>
+                        <p>A circle is a set of all points in a plane that are equidistant from a fixed point called the center.</p>
+                        <ul>
+                            <li><strong>Center:</strong> The fixed point</li>
+                            <li><strong>Radius:</strong> Distance from center to any point on the circle</li>
+                            <li><strong>Diameter:</strong> Distance across the circle through the center (2 × radius)</li>
+                            <li><strong>Circumference:</strong> Distance around the circle</li>
+                            <li><strong>Chord:</strong> Line segment with both endpoints on the circle</li>
+                            <li><strong>Arc:</strong> Part of the circumference</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Polygons</h3>
+                        <p>Polygons are closed figures with three or more straight sides.</p>
+                        <ul>
+                            <li><strong>Triangle:</strong> 3 sides</li>
+                            <li><strong>Quadrilateral:</strong> 4 sides</li>
+                            <li><strong>Pentagon:</strong> 5 sides</li>
+                            <li><strong>Hexagon:</strong> 6 sides</li>
+                            <li><strong>Heptagon:</strong> 7 sides</li>
+                            <li><strong>Octagon:</strong> 8 sides</li>
+                        </ul>
+                        <p><strong>Regular Polygon:</strong> All sides and angles are equal</p>
+                    </div>
+                `
+            },
+            'review': {
+                'title': 'Review and Quizzes',
+                'content': `
+                    <div class="modal-section">
+                        <h3>Test Your Geometry Knowledge</h3>
+                        <p>Let's review what you've learned about basic geometry concepts.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Quick Quiz</h3>
+                        <p><strong>Question 1:</strong> What do we call a part of a line with two endpoints?</p>
+                        <ul>
+                            <li>A) Ray</li>
+                            <li>B) Line segment</li>
+                            <li>C) Point</li>
+                            <li>D) Plane</li>
+                        </ul>
+                        <p><strong>Answer:</strong> B) Line segment</p>
+                        
+                        <p><strong>Question 2:</strong> What type of angle measures exactly 90°?</p>
+                        <ul>
+                            <li>A) Acute angle</li>
+                            <li>B) Obtuse angle</li>
+                            <li>C) Right angle</li>
+                            <li>D) Straight angle</li>
+                        </ul>
+                        <p><strong>Answer:</strong> C) Right angle</p>
+                        
+                        <p><strong>Question 3:</strong> How many sides does a quadrilateral have?</p>
+                        <ul>
+                            <li>A) 3</li>
+                            <li>B) 4</li>
+                            <li>C) 5</li>
+                            <li>D) 6</li>
+                        </ul>
+                        <p><strong>Answer:</strong> B) 4</p>
+                        
+                        <p><strong>Question 4:</strong> What is the sum of all angles in a triangle?</p>
+                        <ul>
+                            <li>A) 90°</li>
+                            <li>B) 180°</li>
+                            <li>C) 270°</li>
+                            <li>D) 360°</li>
+                        </ul>
+                        <p><strong>Answer:</strong> B) 180°</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Key Points to Remember</h3>
+                        <ul>
+                            <li>Point has position but no dimensions</li>
+                            <li>Line extends infinitely in both directions</li>
+                            <li>Line segment has two endpoints</li>
+                            <li>Ray has one endpoint and extends infinitely in one direction</li>
+                            <li>Angles are classified as acute, right, obtuse, straight, or reflex</li>
+                            <li>Triangle angle sum = 180°, Quadrilateral angle sum = 360°</li>
+                            <li>Circle has center, radius, diameter, and circumference</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Interactive Activities</h3>
+                        <p>Try these activities to reinforce your learning:</p>
+                        <ul>
+                            <li>Draw and label points, lines, line segments, and rays</li>
+                            <li>Use a protractor to measure different angles</li>
+                            <li>Identify geometric shapes in your environment</li>
+                            <li>Create a poster showing different types of triangles and quadrilaterals</li>
+                            <li>Play the geometry games to test your skills</li>
+                        </ul>
+                    </div>
+                `
+            }
+        };
+
+        // Translations
+        const translations = {
+            en: {
+                'nav-dashboard': 'Dashboard',
+                'nav-mathematics': 'Mathematics',
+                'nav-curriculum': 'Curriculum',
+                'nav-geometry': 'Geometry',
+                'geometry-title': 'Basic Concepts in Geometry',
+                'geometry-desc': 'Explore points, lines, angles and shapes through interactive activities and games',
+                'breadcrumb-home': 'Home',
+                'breadcrumb-math': 'Mathematics',
+                'breadcrumb-topic': 'Basic Concepts in Geometry',
+                'learning-path-title': 'Your Learning Path',
+                'card1-title': 'Points and Lines',
+                'card1-desc': 'Learn about basic building blocks of geometry - points, lines, and rays',
+                'card2-title': 'Angles',
+                'card2-desc': 'Understand different types of angles and their measurements',
+                'card3-title': 'Basic Shapes',
+                'card3-desc': 'Explore triangles, quadrilaterals, circles and their properties',
+                'card4-title': 'Review and Quizzes',
+                'card4-desc': 'Test your knowledge with interactive quizzes and reviews',
+                'progress-title': 'Your Progress',
+                'progress-points': 'Points and Lines',
+                'progress-angles': 'Angles',
+                'progress-shapes': 'Basic Shapes',
+                'progress-overall': 'Overall Mastery',
+                'games-title': 'Interactive Learning Games',
+                'level-basic': 'Basic',
+                'game1-title': 'Shape Explorer',
+                'game1-desc': 'Identify and classify different geometric shapes',
+                'game1-feature1': 'Identify triangles, quadrilaterals, circles',
+                'game1-feature2': '10-15 minutes gameplay',
+                'game1-feature3': 'Earn up to 50 points',
+                'level-intermediate': 'Intermediate',
+                'game2-title': 'Angle Master',
+                'game2-desc': 'Measure and classify different types of angles',
+                'game2-feature1': 'Identify acute, obtuse, right angles',
+                'game2-feature2': '15-20 minutes gameplay',
+                'game2-feature3': 'Earn up to 100 points',
+                'level-hard': 'Hard',
+                'game3-title': 'Geometric Builder',
+                'game3-desc': 'Construct geometric figures using points and lines',
+                'game3-feature1': 'Create shapes from given points',
+                'game3-feature2': '20-25 minutes gameplay',
+                'game3-feature3': 'Earn up to 150 points',
+                'play-game': 'Play Game',
+                'resources-title': 'Learning Resources',
+                'resource1-title': 'Study Notes',
+                'resource1-desc': 'Complete chapter notes for revision',
+                'download-english': 'Download (English)',
+                'resource2-title': 'Study Notes',
+                'resource2-desc': 'Complete chapter notes for revision',
+                'download-odia': 'Download (Odia)',
+                'resource3-title': 'Geometry Flashcards',
+                'resource3-desc': 'Visual learning cards for geometry concepts',
+                'download-flashcards': 'Download Flashcards',
+                'footer-desc': 'Making Science and Mathematics education engaging and relevant for Class 6 students in Odisha through localized content and interactive learning.',
+                'quick-links': 'Quick Links',
+                'contact-us': 'Contact Us',
+                'footer-address': 'Department of Education, Bhubaneswar',
+                'copyright': '© 2023 STEM Learn Odisha. All rights reserved.'
+            },
+            or: {
+                'nav-dashboard': 'ଡ୍ୟାସବୋର୍ଡ',
+                'nav-mathematics': 'ଗଣିତ',
+                'nav-curriculum': 'ପାଠ୍ୟକ୍ରମ',
+                'nav-geometry': 'ଜ୍ୟାମିତି',
+                'geometry-title': 'ଜ୍ୟାମିତିର ମୌଳିକ ଧାରଣାଗୁଡିକ',
+                'geometry-desc': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ କାର୍ଯ୍ୟକଳାପ ଏବଂ ଖେଳ ମାଧ୍ୟମରେ ବିନ୍ଦୁ, ରେଖା, କୋଣ ଏବଂ ଆକୃତି ଏକ୍ସପ୍ଲୋର୍ କରନ୍ତୁ',
+                'breadcrumb-home': 'ମୁଖ୍ୟ ପୃଷ୍ଠା',
+                'breadcrumb-math': 'ଗଣିତ',
+                'breadcrumb-topic': 'ଜ୍ୟାମିତିର ମୌଳିକ ଧାରଣାଗୁଡିକ',
+                'learning-path-title': 'ଆପଣଙ୍କର ଶିକ୍ଷଣ ପଥ',
+                'card1-title': 'ବିନ୍ଦୁ ଏବଂ ରେଖା',
+                'card1-desc': 'ଜ୍ୟାମିତିର ମୌଳିକ ବିଲଡିଂ ବ୍ଲକ୍ ବିଷୟରେ ଜାଣନ୍ତୁ - ବିନ୍ଦୁ, ରେଖା, ଏବଂ ରେଖାଖଣ୍ଡ',
+                'card2-title': 'କୋଣ',
+                'card2-desc': 'ବିଭିନ୍ନ ପ୍ରକାରର କୋଣ ଏବଂ ସେମାନଙ୍କର ମାପ ବୁଝନ୍ତୁ',
+                'card3-title': 'ମୌଳିକ ଆକୃତି',
+                'card3-desc': 'ତ୍ରିଭୁଜ, ଚତୁର୍ଭୁଜ, ବୃତ୍ତ ଏବଂ ସେମାନଙ୍କର ଗୁଣଧର୍ମ ଏକ୍ସପ୍ଲୋର୍ କରନ୍ତୁ',
+                'card4-title': 'ସମୀକ୍ଷା ଏବଂ କ୍ୱିଜ୍',
+                'card4-desc': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ କ୍ୱିଜ୍ ଏବଂ ସମୀକ୍ଷା ସହିତ ଆପଣଙ୍କର ଜ୍ଞାନ ପରୀକ୍ଷା କରନ୍ତୁ',
+                'progress-title': 'ଆପଣଙ୍କର ପ୍ରଗତି',
+                'progress-points': 'ବିନ୍ଦୁ ଏବଂ ରେଖା',
+                'progress-angles': 'କୋଣ',
+                'progress-shapes': 'ମୌଳିକ ଆକୃତି',
+                'progress-overall': 'ସର୍ବମୋଟ ଦକ୍ଷତା',
+                'games-title': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ଖେଳଗୁଡିକ',
+                'level-basic': 'ମୌଳିକ',
+                'game1-title': 'ଆକୃତି ଏକ୍ସପ୍ଲୋର୍',
+                'game1-desc': 'ବିଭିନ୍ନ ଜ୍ୟାମିତିକ ଆକୃତି ଚିହ୍ନିବା ଏବଂ ଶ୍ରେଣୀବିଭାଗ କରିବା',
+                'game1-feature1': 'ତ୍ରିଭୁଜ, ଚତୁର୍ଭୁଜ, ବୃତ୍ତ ଚିହ୍ନିବା',
+                'game1-feature2': '10-15 ମିନିଟ୍ ଖେଳପଣ',
+                'game1-feature3': '50 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ ଅର୍ଜନ କରନ୍ତୁ',
+                'level-intermediate': 'ମଧ୍ୟମ ସ୍ତର',
+                'game2-title': 'କୋଣ ମାଷ୍ଟର୍',
+                'game2-desc': 'ବିଭିନ୍ନ ପ୍ରକାରର କୋଣ ମାପ ଏବଂ ଶ୍ରେଣୀବିଭାଗ କରିବା',
+                'game2-feature1': 'ସମକୋଣ, ବିଷମକୋଣ, ସମକୋଣ ଚିହ୍ନିବା',
+                'game2-feature2': '15-20 ମିନିଟ୍ ଖେଳପଣ',
+                'game2-feature3': '100 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ ଅର୍ଜନ କରନ୍ତୁ',
+                'level-hard': 'କଠିନ',
+                'game3-title': 'ଜ୍ୟାମିତିକ ବିଲଡର୍',
+                'game3-desc': 'ବିନ୍ଦୁ ଏବଂ ରେଖା ବ୍ୟବହାର କରି ଜ୍ୟାମିତିକ ଚିତ୍ର ନିର୍ମାଣ କରନ୍ତୁ',
+                'game3-feature1': 'ଦିଆଯାଇଥିବା ବିନ୍ଦୁରୁ ଆକୃତି ସୃଷ୍ଟି କରନ୍ତୁ',
+                'game3-feature2': '20-25 ମିନିଟ୍ ଖେଳପଣ',
+                'game3-feature3': '150 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ ଅର୍ଜନ କରନ୍ତୁ',
+                'play-game': 'ଖେଳନ୍ତୁ',
+                'resources-title': 'ଶିକ୍ଷଣ ସମ୍ବଳ',
+                'resource1-title': 'ଅଧ୍ୟୟନ ଟିପ୍ପଣୀ',
+                'resource1-desc': 'ସଂଶୋଧନ ପାଇଁ ସମ୍ପୂର୍ଣ୍ଣ ଅଧ୍ୟାୟ ଟିପ୍ପଣୀ',
+                'download-english': 'ଡାଉନଲୋଡ୍ (ଇଂରାଜୀ)',
+                'resource2-title': 'ଅଧ୍ୟୟନ ଟିପ୍ପଣୀ',
+                'resource2-desc': 'ସମ୍ପୂର୍ଣ୍ଣ ଅଧ୍ୟାୟ ଟିପ୍ପଣୀ ସଂଶୋଧନ ପାଇଁ',
+                'download-odia': 'ଡାଉନଲୋଡ୍ (ଓଡ଼ିଆ)',
+                'resource3-title': 'ଜ୍ୟାମିତି ଫ୍ଲାସ୍‌କାର୍ଡଗୁଡିକ',
+                'resource3-desc': 'ଜ୍ୟାମିତି ଧାରଣାଗୁଡିକ ପାଇଁ ଭିଜୁଆଲ୍ ଶିକ୍ଷଣ କାର୍ଡଗୁଡିକ',
+                'download-flashcards': 'ଫ୍ଲାସ୍‌କାର୍ଡଗୁଡିକ ଡାଉନଲୋଡ୍ କରନ୍ତୁ',
+                'footer-desc': 'ଓଡ଼ିଶାର ଷଷ୍ଠ ଶ୍ରେଣୀର ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କ ପାଇଁ ସ୍ଥାନୀୟ ବିଷୟବସ୍ତୁ ଏବଂ ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ମାଧ୍ୟମରେ ବିଜ୍ଞାନ ଏବଂ ଗଣିତ ଶିକ୍ଷାକୁ ଆକର୍ଷଣୀୟ ଏବଂ ପ୍ରାସଙ୍ଗିକ କରିବା',
+                'quick-links': 'ଶୀଘ୍ର ଲିଙ୍କ୍',
+                'contact-us': 'ଆମ ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ',
+                'footer-address': 'ଶିକ୍ଷା ବିଭାଗ, ଭୁବନେଶ୍ୱର',
+                'copyright': '© 2023 STEM ଲର୍ନ ଓଡ଼ିଶା। ସମସ୍ତ ଅଧିକାର ସଂରକ୍ଷିତ।'
+            }
+        };
+
+        let currentLanguage = 'en';
+
+        // Initialize the page
+        function init() {
+            // Set up language options
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    switchLanguage(lang);
+                    document.getElementById('languageOptions').classList.remove('show');
+                });
+            });
+
+            // Set up path cards
+            const pathCards = document.querySelectorAll('.path-card');
+            pathCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const cardType = this.getAttribute('data-card');
+                    openModal(cardType);
+                });
+            });
+
+            // Set up modal close button
+            document.getElementById('close-modal').addEventListener('click', closeModalFunc);
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === document.getElementById('content-modal')) {
+                    closeModalFunc();
+                }
+            });
+
+            // Dashboard integration event listeners
+            const profileToggle = document.getElementById('profileToggle');
+            const profileDropdown = document.getElementById('profileDropdown');
+            const languageToggle = document.getElementById('languageToggle');
+            const languageOptions = document.getElementById('languageOptions');
+            const dropdownProfile = document.getElementById('dropdownProfile');
+            const dropdownSettings = document.getElementById('dropdownSettings');
+            const dropdownLogout = document.getElementById('dropdownLogout');
+            const navDashboard = document.getElementById('navDashboard');
+            const navMathematics = document.getElementById('navMathematics');
+            const navCurriculum = document.getElementById('navCurriculum');
+            const navGeometry = document.getElementById('navGeometry');
+
+            // Profile dropdown toggle
+            profileToggle.addEventListener('click', function() {
+                profileDropdown.classList.toggle('show');
+            });
+
+            // Language toggle
+            languageToggle.addEventListener('click', function() {
+                languageOptions.classList.toggle('show');
+            });
+
+            // Navigation between pages
+            dropdownProfile.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#profile';
+            });
+
+            dropdownSettings.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#settings';
+            });
+
+            dropdownLogout.addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('user');
+                window.location.href = 'student-login.html';
+            });
+
+            // Navigation menu items
+            navDashboard.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html';
+            });
+
+            navMathematics.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'mathematics.html';
+            });
+
+            navCurriculum.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'scienceidx.html';
+            });
+
+            navGeometry.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'geometry.html';
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#languageToggle') && !e.target.closest('#languageOptions')) {
+                    languageOptions.classList.remove('show');
+                }
+               
+                if (!e.target.closest('#profileToggle') && !e.target.closest('#profileDropdown')) {
+                    profileDropdown.classList.remove('show');
+                }
+            });
+
+            // Initialize with default language
+            switchLanguage('en');
+        }
+
+        // Switch language function
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            const map = translations[lang] || translations.en;
+            
+            // Update all text content
+            Object.keys(map).forEach(key => {
+                const elements = document.querySelectorAll(`[data-translate="${key}"]`);
+                elements.forEach(element => {
+                    element.textContent = map[key];
+                });
+            });
+            
+            // Add Odia font class for Odia text
+            if (lang === 'or') {
+                document.body.classList.add('odia-text');
+            } else {
+                document.body.classList.remove('odia-text');
+            }
+        }
+
+        // Open modal with content
+        function openModal(cardType) {
+            const content = contentData[cardType];
+            if (content) {
+                document.getElementById('modal-title').textContent = content.title;
+                document.getElementById('modal-body').innerHTML = content.content;
+                document.getElementById('content-modal').style.display = 'flex';
+            }
+        }
+
+        // Close modal function
+        function closeModalFunc() {
+            document.getElementById('content-modal').style.display = 'none';
+        }
+
+    </script>
+</body>
+</html>

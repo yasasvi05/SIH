@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garbage Sorting Challenge – STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #e0f2fe, #d1fae5);
+            min-height: 100vh;
+            color: #1e293b;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            background: rgba(15, 23, 42, 0.85);
+            border-radius: 25px;
+            padding: 6px;
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: flex;
+            gap: 5px;
+        }
+
+        .lang-btn {
+            padding: 6px 12px;
+            border: none;
+            background: transparent;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: white;
+            white-space: nowrap;
+        }
+
+        .lang-btn.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .lang-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            gap: 16px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+            background: white;
+            color: #2a69ac;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo-text span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 24px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-size: 0.98rem;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.6rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(
+                    rgba(14, 42, 71, 0.85),
+                    rgba(26, 54, 93, 0.9)
+                ),
+                url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.4rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-header p {
+            font-size: 1.05rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: 12px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+        }
+
+        .breadcrumb-content {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb a {
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #3182ce;
+        }
+
+        .breadcrumb span {
+            color: #64748b;
+        }
+
+        /* Game Section Wrapper */
+        .garbage-game-section {
+            padding: 30px 0 50px;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 18px;
+            padding: 20px 18px 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Top stats bar (Shadow Lab style) */
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+
+        .timer-box {
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #fee2e2;
+            color: #b91c1c;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .game-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .game-title-block {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .game-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1a365d;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .game-subtitle {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .badge-level {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            background: #fef2f2;
+            color: #b91c1c;
+            font-weight: 600;
+        }
+
+        /* ORIGINAL GAME STYLES (slightly adapted) */
+        .menu-screen, .quiz-screen, .complete-screen, .game-over-screen {
+            background: #f8fafc;
+            border-radius: 18px;
+            padding: 24px 20px 26px;
+            margin: 10px auto 0;
+        }
+
+        .menu-screen h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 18px;
+            font-size: 0.95rem;
+        }
+
+        .level-button {
+            width: 100%;
+            background: linear-gradient(to right, #4ade80, #3b82f6);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .level-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .instructions {
+            background: #dcfce7;
+            padding: 16px;
+            border-radius: 16px;
+            margin-top: 14px;
+        }
+
+        .instructions h3 {
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .instructions ul {
+            list-style: none;
+            padding-left: 0;
+            font-size: 0.9rem;
+        }
+
+        .instructions li {
+            margin-bottom: 4px;
+            color: #374151;
+        }
+
+        .game-header-inner {
+            background: white;
+            border-radius: 16px;
+            padding: 14px 16px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .level-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .level-emoji {
+            font-size: 2em;
+        }
+
+        .stats-inner {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .stat-item-inner {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .combo-badge {
+            background: #fed7aa;
+            padding: 5px 12px;
+            border-radius: 20px;
+            color: #c2410c;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .feedback {
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 14px 20px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 0.95em;
+            z-index: 1000;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .feedback.good {
+            background: #22c55e;
+            color: white;
+        }
+
+        .feedback.bad {
+            background: #f97373;
+            color: white;
+        }
+
+        .game-area {
+            position: relative;
+            background: url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1200&q=80') no-repeat center center;
+            background-size: cover;
+            border-radius: 16px;
+            height: 340px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 16px;
+        }
+
+        .waste-item {
+            position: absolute;
+            cursor: grab;
+            transition: top 0.1s linear, left 0.1s linear, transform 0.2s;
+        }
+
+        .waste-item.dragging {
+            transition: none;
+        }
+
+        .waste-item:active {
+            cursor: grabbing;
+        }
+
+        .waste-item:hover {
+            transform: scale(1.08);
+        }
+
+        .item-card {
+            background: white;
+            border: 2px solid #333;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            padding: 10px 12px;
+            text-align: center;
+        }
+
+        .item-emoji {
+            font-size: 2.4em;
+            margin-bottom: 4px;
+        }
+
+        .item-name {
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .bins {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .bin {
+            border: 4px solid;
+            border-radius: 16px;
+            padding: 18px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+        }
+
+        .bin:hover {
+            transform: translateY(-3px);
+        }
+
+        .bin.recyclable {
+            background: #d1fae5;
+            border-color: #10b981;
+        }
+
+        .bin.organic {
+            background: #fef3c7;
+            border-color: #f59e0b;
+        }
+
+        .bin.hazardous {
+            background: #fecaca;
+            border-color: #ef4444;
+        }
+
+        .bin.reusable {
+            background: #e9d5ff;
+            border-color: #a855f7;
+        }
+
+        .bin-icon {
+            font-size: 2em;
+            margin-bottom: 6px;
+        }
+
+        .bin h3 {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .bin p {
+            font-size: 0.75em;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .complete-emoji {
+            font-size: 3.5em;
+            text-align: center;
+            margin-bottom: 14px;
+        }
+
+        .score-display {
+            font-size: 1.4em;
+            text-align: center;
+            margin: 12px 0;
+        }
+
+        .score-number {
+            color: #10b981;
+            font-weight: 700;
+        }
+
+        .next-button {
+            background: linear-gradient(to right, #4ade80, #3b82f6);
+            color: white;
+            border: none;
+            padding: 12px 26px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: block;
+            margin: 18px auto 0;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+        }
+
+        .next-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 32px 0 16px;
+            margin-top: 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-bottom: 18px;
+        }
+
+        .footer-about {
+            padding-right: 10px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.6rem;
+            background: #38b2ac;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 10px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.8rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+
+            .bins {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                gap: 10px;
+                background: #0f172a;
+                position: absolute;
+                top: 55px;
+                right: 10px;
+                padding: 10px 12px;
+                border-radius: 10px;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+                min-width: 150px;
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .menu-screen, .quiz-screen, .complete-screen, .game-over-screen {
+                padding: 18px 16px 20px;
+            }
+
+            .game-area {
+                height: 280px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button class="lang-btn active" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+        <button class="lang-btn" data-lang="hi">हिन्दी</button>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <div class="logo-text">STEM <span>Learn</span> Odisha</div>
+                </div>
+
+                <nav>
+                    <ul>
+                        <li><a href="student-dashboard.html" data-i18n="nav-dashboard">Dashboard</a></li>
+                        <li><a href="about.html" data-i18n="nav-about">About</a></li>
+                        <li><a href="contact.html" data-i18n="nav-contact">Contact</a></li>
+                    </ul>
+                </nav>
+
+                <button class="mobile-menu-btn" aria-label="Toggle navigation menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 data-i18n="page-title">Garbage Sorting Challenge – 3R Lab</h1>
+            <p data-i18n="page-desc">
+                Sort waste into the correct bins, apply the 3R rule (Reduce, Reuse, Recycle), and earn points by making eco-smart choices in just 25 minutes!
+            </p>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <a href="student-dashboard.html" data-i18n="breadcrumb-dashboard">Dashboard</a>
+                <span>/</span>
+                <span data-i18n="breadcrumb-topic">Waste Management</span>
+                <span>/</span>
+                <span data-i18n="breadcrumb-game">Garbage Sorting Challenge</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Section -->
+    <section class="garbage-game-section">
+        <div class="container">
+            <div class="game-card">
+                <!-- Top stats bar -->
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <div class="timer-box">
+                            <i class="fas fa-clock"></i>
+                            <span data-i18n="time-label">Time left:</span>
+                            <span id="timer">25:00</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-star"></i>
+                        <span data-i18n="score-label">Score:</span>
+                        <span id="score">0</span> / 150
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-flag-checkered"></i>
+                        <span data-i18n="levels-label">Levels completed:</span>
+                        <span id="levelsDone">0</span> / 4
+                    </div>
+                    <div class="stat-item">
+                        <span class="badge-level">
+                            <i class="fas fa-signal"></i>
+                            <span data-i18n="level-hard">Hard</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Title row -->
+                <div class="game-header-row">
+                    <div class="game-title-block">
+                        <div class="game-title">
+                            <i class="fas fa-trash-alt"></i>
+                            <span data-i18n="game-title">Garbage Sorting Challenge</span>
+                        </div>
+                        <div class="game-subtitle" data-i18n="game-subtitle">
+                            Drag waste items into the correct bins and answer 3R questions for eco-bonus points.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inner game wrapper (your original screens) -->
+                <div id="menuScreen" class="menu-screen">
+                    <h1 data-i18n="menu-title">🌍 Garbage Sorting Challenge</h1>
+                    <p class="subtitle" data-i18n="menu-subtitle">Learn and practice the 3R Rule: Reduce, Reuse, Recycle!</p>
+                    
+                    <div id="levelButtons"></div>
+                    
+                    <div class="instructions">
+                        <h3 data-i18n="howto-title">🎯 How to Play:</h3>
+                        <ul>
+                            <li data-i18n="howto-1">• Drag each waste item into the correct bin: Recyclable, Organic, Hazardous, or Reusable.</li>
+                            <li data-i18n="howto-2">• Some special items trigger 3R questions for bonus points.</li>
+                            <li data-i18n="howto-3">• 5 correct in a row gives you a combo bonus.</li>
+                            <li data-i18n="howto-4">• Total target: 100 points within about 25 minutes.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="gameScreen" class="hidden">
+                    <div class="game-header-inner">
+                        <div class="level-info">
+                            <div class="level-emoji" id="currentLevelEmoji"></div>
+                            <div>
+                                <h2 id="currentLevelName"></h2>
+                                <p id="currentLevelNumber"></p>
+                            </div>
+                        </div>
+                        <div class="stats-inner">
+                            <div id="comboBadge" class="combo-badge hidden"></div>
+                        </div>
+                    </div>
+
+                    <div id="feedback" class="feedback hidden"></div>
+
+                    <div class="game-area" id="gameArea"></div>
+
+                    <div class="bins">
+                        <div class="bin recyclable" data-bin="recyclable">
+                            <div class="bin-icon">♻️</div>
+                            <h3 data-i18n="bin-recyclable">Recyclable</h3>
+                            <p data-i18n="bin-recyclable-desc">Plastic, paper, metal items</p>
+                        </div>
+                        <div class="bin organic" data-bin="organic">
+                            <div class="bin-icon">🍃</div>
+                            <h3 data-i18n="bin-organic">Organic</h3>
+                            <p data-i18n="bin-organic-desc">Food, leaves, natural waste</p>
+                        </div>
+                        <div class="bin hazardous" data-bin="hazardous">
+                            <div class="bin-icon">⚠️</div>
+                            <h3 data-i18n="bin-hazardous">Hazardous</h3>
+                            <p data-i18n="bin-hazardous-desc">Batteries, chemicals, sharp glass</p>
+                        </div>
+                        <div class="bin reusable" data-bin="reusable">
+                            <div class="bin-icon">💚</div>
+                            <h3 data-i18n="bin-reusable">Reusable</h3>
+                            <p data-i18n="bin-reusable-desc">Clothes, bags, toys</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="quizScreen" class="quiz-screen hidden">
+                    <div id="quizEmoji" class="complete-emoji"></div>
+                    <h2 id="quizQuestion" style="text-align: center; margin-bottom: 16px;"></h2>
+                    <div class="quiz-options" id="quizOptions"></div>
+                </div>
+
+                <div id="completeScreen" class="complete-screen hidden">
+                    <div class="complete-emoji">🏆</div>
+                    <h2 style="text-align: center; margin-bottom: 14px;" data-i18n="level-complete-title">Level Complete!</h2>
+                    <div id="completeLevelEmoji" class="complete-emoji"></div>
+                    <div class="score-display">
+                        <span data-i18n="score-label-short">Score:</span>
+                        <span class="score-number" id="completeScore">0</span>
+                    </div>
+                    <p style="text-align: center; font-size: 1rem;">
+                        <span data-i18n="accuracy-label">Accuracy:</span>
+                        <strong id="completeAccuracy">0%</strong>
+                    </p>
+                    <button class="next-button" id="nextButton">Next Level →</button>
+                </div>
+
+                <div id="gameOverScreen" class="game-over-screen hidden">
+                    <div class="complete-emoji">🎉</div>
+                    <h2 style="text-align: center; margin-bottom: 16px;" data-i18n="game-complete-title">Game Complete!</h2>
+                    <div class="score-display">
+                        <span data-i18n="final-score-label">Final Score:</span>
+                        <span class="score-number" id="finalScore">0</span>/150
+                    </div>
+                    <div class="instructions">
+                        <h3 data-i18n="learned-title">🧠 You’ve Learned:</h3>
+                        <ul>
+                            <li data-i18n="learned-1">✅ How to classify waste correctly.</li>
+                            <li data-i18n="learned-2">✅ How to apply the 3R rule in real life.</li>
+                            <li data-i18n="learned-3">✅ How small actions help the environment.</li>
+                        </ul>
+                    </div>
+                    <button class="next-button" onclick="location.reload()" data-i18n="play-again-btn">Play Again</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <div class="footer-logo-text">STEM Learn Odisha</div>
+                    </div>
+                    <p data-i18n="footer-desc">
+                        Making Science and Mathematics education engaging and relevant for students in Odisha
+                        through localized content and interactive learning experiences.
+                    </p>
+                </div>
+            </div>
+            <div class="copyright" data-i18n="copyright">
+                © 2023 STEM Learn Odisha. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /* ========= SIMPLE I18N ========= */
+        let currentLanguage = 'en';
+
+        const translations = {
+            en: {
+                'nav-dashboard': 'Dashboard',
+                'nav-about': 'About',
+                'nav-contact': 'Contact',
+                'page-title': 'Garbage Sorting Challenge – 3R Lab',
+                'page-desc': 'Sort waste into the correct bins, apply the 3R rule (Reduce, Reuse, Recycle), and earn points by making eco-smart choices in just 25 minutes!',
+                'breadcrumb-dashboard': 'Dashboard',
+                'breadcrumb-topic': 'Waste Management',
+                'breadcrumb-game': 'Garbage Sorting Challenge',
+                'time-label': 'Time left:',
+                'score-label': 'Score:',
+                'score-label-short': 'Score:',
+                'levels-label': 'Levels completed:',
+                'level-hard': 'Hard',
+                'game-title': 'Garbage Sorting Challenge',
+                'game-subtitle': 'Drag waste items into the correct bins and answer 3R questions for eco-bonus points.',
+                'menu-title': '🌍 Garbage Sorting Challenge',
+                'menu-subtitle': 'Learn and practice the 3R Rule: Reduce, Reuse, Recycle!',
+                'howto-title': '🎯 How to Play:',
+                'howto-1': '• Drag each waste item into the correct bin: Recyclable, Organic, Hazardous, or Reusable.',
+                'howto-2': '• Some special items trigger 3R questions for bonus points.',
+                'howto-3': '• 5 correct in a row gives you a combo bonus.',
+                'howto-4': '• Total target: 150 points within about 25 minutes.',
+                'bin-recyclable': 'Recyclable',
+                'bin-recyclable-desc': 'Plastic, paper, metal items',
+                'bin-organic': 'Organic',
+                'bin-organic-desc': 'Food, leaves, natural waste',
+                'bin-hazardous': 'Hazardous',
+                'bin-hazardous-desc': 'Batteries, chemicals, sharp glass',
+                'bin-reusable': 'Reusable',
+                'bin-reusable-desc': 'Clothes, bags, toys',
+                'level-complete-title': 'Level Complete!',
+                'accuracy-label': 'Accuracy:',
+                'game-complete-title': 'Game Complete!',
+                'final-score-label': 'Final Score:',
+                'learned-title': '🧠 You’ve Learned:',
+                'learned-1': '✅ How to classify waste correctly.',
+                'learned-2': '✅ How to apply the 3R rule in real life.',
+                'learned-3': '✅ How small actions help the environment.',
+                'play-again-btn': 'Play Again',
+                'footer-desc': 'Making Science and Mathematics education engaging and relevant for students in Odisha through localized content and interactive learning experiences.',
+                'copyright': '© 2023 STEM Learn Odisha. All rights reserved.'
+            },
+            or: {
+                'nav-dashboard': 'ଡ୍ୟାଶବୋର୍ଡ',
+                'nav-about': 'ଆମ ବିଷୟରେ',
+                'nav-contact': 'ଯୋଗାଯୋଗ',
+                'page-title': 'ଗାର୍ବେଜ୍ ସର୍ଟିଂ ଚ୍ୟାଲେଞ୍ଜ – 3R ଲ୍ୟାବ୍',
+                'page-desc': 'ଅବଶିଷ୍ଟକୁ ସଠିକ୍ ବିନ୍‌ରେ ପକାନ୍ତୁ, 3R ନିୟମ (Reduce, Reuse, Recycle) ବ୍ୟବହାର କରନ୍ତୁ ଏବଂ 25 ମିନିଟ୍ ଭିତରେ ପରିବେଶ–ବନ୍ଧୁ ତଥା ସ୍ମାର୍ଟ ସିଦ୍ଧାନ୍ତ ଦ୍ୱାରା ପଏଣ୍ଟ ଜିତନ୍ତୁ!',
+                'breadcrumb-dashboard': 'ଡ୍ୟାଶବୋର୍ଡ',
+                'breadcrumb-topic': 'ଅବଶିଷ୍ଟ ପରିଚାଳନା',
+                'breadcrumb-game': 'ଗାର୍ବେଜ୍ ସର୍ଟିଂ ଚ୍ୟାଲେଞ୍ଜ',
+                'time-label': 'ଅବଶିଷ୍ଟ ସମୟ:',
+                'score-label': 'ସ୍କୋର:',
+                'score-label-short': 'ସ୍କୋର:',
+                'levels-label': 'ସମାପ୍ତ ହୋଇଥିବା ସ୍ତର:',
+                'level-hard': 'କଠିନ',
+                'game-title': 'ଗାର୍ବେଜ୍ ସର୍ଟିଂ ଚ୍ୟାଲେଞ୍ଜ',
+                'game-subtitle': 'ଅବଶିଷ୍ଟ ବସ୍ତୁକୁ ସଠିକ୍ ବିନ୍‌ରେ ଡ୍ରାଗ୍ କରନ୍ତୁ ଏବଂ 3R ପ୍ରଶ୍ନର ଉତ୍ତର ଦେଇ ବୋନସ୍ ପଏଣ୍ଟ ଆର୍ଜନ କରନ୍ତୁ।',
+                'menu-title': '🌍 ଗାର୍ବେଜ୍ ସର୍ଟିଂ ଚ୍ୟାଲେଞ୍ଜ',
+                'menu-subtitle': '3R ନିୟମ: Reduce, Reuse, Recycle କିପରି ବ୍ୟବହାର କରିବେ ସେଥି ପ୍ରାକଟିସ୍ କରନ୍ତୁ।',
+                'howto-title': '🎯 କିପରି ଖେଳିବେ:',
+                'howto-1': '• ପ୍ରତ୍ୟେକ ଅବଶିଷ୍ଟ ବସ୍ତୁକୁ ସଠିକ୍ ବିନ୍ (Recyclable / Organic / Hazardous / Reusable) ମଧ୍ୟରେ ଡ୍ରାଗ୍ କରନ୍ତୁ।',
+                'howto-2': '• କିଛି ବିଶେଷ ବସ୍ତୁରେ 3R ସମ୍ପର୍କିତ ପ୍ରଶ୍ନ ଆସିବ ଯାହାରେ ବୋନସ୍ ପଏଣ୍ଟ ମିଳିବ।',
+                'howto-3': '• ଲଗାତାର 5 ଟି ସଠିକ୍ ଉତ୍ତର ଦେଲେ କମ୍ବୋ ବୋନସ୍ ମିଳିବ।',
+                'howto-4': '• ପ୍ରାୟ 25 ମିନିଟ୍ ମଧ୍ୟରେ 150 ସ୍କୋର ଲକ୍ଷ୍ୟ ରଖନ୍ତୁ।',
+                'bin-recyclable': 'ପୁନଃଚକ୍ରିତ (Recyclable)',
+                'bin-recyclable-desc': 'ପ୍ଲାଷ୍ଟିକ୍, କାଗଜ, ଧାତୁ',
+                'bin-organic': 'ଜୈବ (Organic)',
+                'bin-organic-desc': 'ଖାଦ୍ୟ, ପତ୍ର, ପ୍ରାକୃତିକ ଅବଶିଷ୍ଟ',
+                'bin-hazardous': 'ବିପଜ୍ଜନକ (Hazardous)',
+                'bin-hazardous-desc': 'ବ୍ୟାଟେରୀ, ରାସାୟନିକ, ତୀକ୍ଷ୍ଣ କାଚ',
+                'bin-reusable': 'ପୁନଃବ୍ୟବହାରଯୋଗ୍ୟ (Reusable)',
+                'bin-reusable-desc': 'ବସ୍ତ୍ର, ବ୍ୟାଗ୍, ଖେଳନା',
+                'level-complete-title': 'ସ୍ତର ସମାପ୍ତ!',
+                'accuracy-label': 'ସଠିକତା:',
+                'game-complete-title': 'ଖେଳ ସମାପ୍ତ!',
+                'final-score-label': 'ଅନ୍ତିମ ସ୍କୋର:',
+                'learned-title': '🧠 ଆପଣ ଶିଖିଲେ:',
+                'learned-1': '✅ ଅବଶିଷ୍ଟକୁ ସଠିକ୍ ଭାବେ ବିଭାଜନ କରିବା।',
+                'learned-2': '✅ ଦୈନିକ ଜୀବନରେ 3R ନିୟମକୁ ବ୍ୟବହାର କରିବା।',
+                'learned-3': '✅ ଛୋଟ ଛୋଟ ପଦକ୍ଷେପ କିପରି ପରିବେଶକୁ ସାହାଯ୍ୟ କରେ।',
+                'play-again-btn': 'ପୁନି ଖେଳନ୍ତୁ',
+                'footer-desc': 'ସ୍ଥାନୀୟ ବିଷୟବସ୍ତୁ ଏବଂ ଇଣ୍ଟରାକ୍ଟିଭ ଶିକ୍ଷା ମାଧ୍ୟମରେ ଓଡ଼ିଶାର ଛାତ୍ରଛାତ୍ରୀଙ୍କ ପାଇଁ ବିଜ୍ଞାନ ଏବଂ ଗଣିତକୁ ଆକର୍ଷଣୀୟ ଏବଂ ପ୍ରାସଙ୍ଗିକ କରିବା।',
+                'copyright': '© 2023 STEM Learn Odisha. ସମସ୍ତ ଅଧିକାର ସଂରକ୍ଷିତ।'
+            },
+            hi: {
+                'nav-dashboard': 'डैशबोर्ड',
+                'nav-about': 'हमारे बारे में',
+                'nav-contact': 'संपर्क',
+                'page-title': 'गार्बेज सॉर्टिंग चैलेंज – 3R लैब',
+                'page-desc': 'कचरे को सही डिब्बों में डालिए, 3R नियम (Reduce, Reuse, Recycle) का उपयोग कीजिए और 25 मिनट में पर्यावरण–अनुकूल निर्णय लेकर पॉइंट्स कमाइए!',
+                'breadcrumb-dashboard': 'डैशबोर्ड',
+                'breadcrumb-topic': 'कचरा प्रबंधन',
+                'breadcrumb-game': 'गार्बेज सॉर्टिंग चैलेंज',
+                'time-label': 'शेष समय:',
+                'score-label': 'स्कोर:',
+                'score-label-short': 'स्कोर:',
+                'levels-label': 'पूरा हुए स्तर:',
+                'level-hard': 'कठिन',
+                'game-title': 'गार्बेज सॉर्टिंग चैलेंज',
+                'game-subtitle': 'कचरे की वस्तुओं को सही डिब्बों में ड्रैग करें और 3R प्रश्नों के उत्तर देकर बोनस पॉइंट्स पाएं।',
+                'menu-title': '🌍 गार्बेज सॉर्टिंग चैलेंज',
+                'menu-subtitle': '3R नियम: Reduce, Reuse, Recycle को सीखिए और अभ्यास कीजिए।',
+                'howto-title': '🎯 कैसे खेलें:',
+                'howto-1': '• हर कचरे की वस्तु को सही डिब्बे (Recyclable / Organic / Hazardous / Reusable) में ड्रैग करें।',
+                'howto-2': '• कुछ खास वस्तुएँ 3R से जुड़े प्रश्न दिखाएँगी जिनसे बोनस पॉइंट्स मिलेंगे।',
+                'howto-3': '• लगातार 5 सही उत्तरों पर आपको कॉम्बो बोनस मिलेगा।',
+                'howto-4': '• करीब 25 मिनट के भीतर 150 स्कोर का लक्ष्य रखें।',
+                'bin-recyclable': 'रीसायक्ल योग्य',
+                'bin-recyclable-desc': 'प्लास्टिक, कागज़, धातु',
+                'bin-organic': 'जैविक',
+                'bin-organic-desc': 'भोजन, पत्ते, प्राकृतिक कचरा',
+                'bin-hazardous': 'खतरनाक',
+                'bin-hazardous-desc': 'बैटरी, रसायन, नुकीला काँच',
+                'bin-reusable': 'दोबारा उपयोग योग्य',
+                'bin-reusable-desc': 'कपड़े, बैग, खिलौने',
+                'level-complete-title': 'स्तर पूरा!',
+                'accuracy-label': 'शुद्धता:',
+                'game-complete-title': 'खेल समाप्त!',
+                'final-score-label': 'अंतिम स्कोर:',
+                'learned-title': '🧠 आपने सीखा:',
+                'learned-1': '✅ कचरे को सही तरीके से वर्गीकृत करना।',
+                'learned-2': '✅ रोज़मर्रा की ज़िंदगी में 3R नियम लागू करना।',
+                'learned-3': '✅ छोटी–छोटी आदतें पर्यावरण की कैसे मदद करती हैं।',
+                'play-again-btn': 'फिर से खेलें',
+                'footer-desc': 'स्थानीय सामग्री और इंटरएक्टिव गतिविधियों के ज़रिए ओडिशा के विद्यार्थियों के लिए विज्ञान और गणित को रोचक और उपयोगी बनाना।',
+                'copyright': '© 2023 STEM Learn Odisha. सर्वाधिकार सुरक्षित.'
+            }
+        };
+
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const i18nElements = document.querySelectorAll('[data-i18n]');
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navList = document.querySelector('header nav ul');
+
+        function t(key) {
+            const pack = translations[currentLanguage] || translations.en;
+            return pack[key] || translations.en[key] || key;
+        }
+
+        function applyTranslations() {
+            i18nElements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (!key) return;
+                el.textContent = t(key);
+            });
+        }
+
+        langButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+                if (lang === currentLanguage) return;
+                currentLanguage = lang;
+                langButtons.forEach(b => b.classList.toggle('active', b === btn));
+                applyTranslations();
+            });
+        });
+
+        if (mobileMenuBtn && navList) {
+            mobileMenuBtn.addEventListener('click', () => {
+                navList.classList.toggle('show');
+            });
+        }
+
+        applyTranslations();
+
+        /* ========= GAME LOGIC (mostly your original, with 25 min + top bar) ========= */
+
+        // 4 levels, each will show 25:00 at start of that level
+        const LEVELS = [
+            { name: 'Home Kitchen', time: 1500, targetItems: 25, emoji: '🏠' },
+            { name: 'Public Park', time: 1500, targetItems: 25, emoji: '🌳' },
+            { name: 'School Campus', time: 1500, targetItems: 25, emoji: '🏫' },
+            { name: 'Beach Cleanup', time: 1500, targetItems: 25, emoji: '🏖️' }
+        ];
+
+        const ALL_WASTE_ITEMS = [
+            // Kitchen
+            { name: 'Banana Peel', bin: 'organic', emoji: '🍌', speed: 0.2, fact: 'Banana peels decompose in 2-5 weeks and make great compost!', level: 0 },
+            { name: 'Plastic Bottle', bin: 'recyclable', emoji: '🍾', speed: 0.2, fact: 'One recycled plastic bottle saves enough energy to power a lightbulb for 3 hours!', level: 0 },
+            { name: 'Cardboard Box', bin: 'recyclable', emoji: '📦', speed: 0.2, fact: 'Cardboard can be recycled 5-7 times before the fibers become too short!', level: 0 },
+            { name: 'Apple Core', bin: 'organic', emoji: '🍎', speed: 0.2, fact: 'Apple cores take only 2 months to decompose naturally!', level: 0 },
+            { name: 'Broken Glass', bin: 'hazardous', emoji: '🔨', speed: 0.3, fact: 'Glass takes over 4,000 years to decompose but can be recycled endlessly!', level: 0 },
+            { name: 'Tea Leaves', bin: 'organic', emoji: '🍵', speed: 0.2, fact: 'Used tea leaves make excellent fertilizer for plants!', level: 0 },
+            { name: 'Newspaper', bin: 'recyclable', emoji: '📰', speed: 0.2, fact: 'Recycling one ton of paper saves 17 trees!', level: 0 },
+            { name: 'Old T-shirt', bin: 'reusable', emoji: '👕', speed: 0.25, quiz: true, fact: 'Reusing clothes reduces carbon footprint by 24%!', level: 0 },
+            // Park
+            { name: 'Dead Leaves', bin: 'organic', emoji: '🍂', speed: 0.15, fact: 'Leaves create nutrient-rich soil when composted!', level: 1 },
+            { name: 'Soda Can', bin: 'recyclable', emoji: '🥫', speed: 0.25, fact: 'Aluminum cans can be recycled and back on shelves in just 60 days!', level: 1 },
+            { name: 'Food Wrapper', bin: 'hazardous', emoji: '🍬', speed: 0.3, fact: 'Most food wrappers take 450+ years to decompose!', level: 1 },
+            { name: 'Grass Clippings', bin: 'organic', emoji: '🌿', speed: 0.15, fact: 'Grass clippings can reduce the need for lawn fertilizer by 25%!', level: 1 },
+            { name: 'Plastic Bag', bin: 'reusable', emoji: '🛍️', speed: 0.35, quiz: true, fact: 'One reusable bag can replace 700+ plastic bags in its lifetime!', level: 1 },
+            { name: 'Water Bottle', bin: 'recyclable', emoji: '💧', speed: 0.2, fact: 'Billions of plastic bottles are used yearly - recycle them all!', level: 1 },
+            { name: 'Cigarette Butt', bin: 'hazardous', emoji: '🚬', speed: 0.4, fact: 'Cigarette butts contain toxic chemicals and take 10+ years to decompose!', level: 1 },
+            // School
+            { name: 'Old Battery', bin: 'hazardous', emoji: '🔋', speed: 0.45, fact: 'One battery can contaminate 600,000 liters of water!', level: 2 },
+            { name: 'Notebook Paper', bin: 'recyclable', emoji: '📓', speed: 0.2, fact: 'Recycled paper uses 70% less energy than making new paper!', level: 2 },
+            { name: 'Medicine Strip', bin: 'hazardous', emoji: '💊', speed: 0.35, fact: 'Medicines in landfills can contaminate groundwater - always dispose properly!', level: 2 },
+            { name: 'Fruit Peel', bin: 'organic', emoji: '🍊', speed: 0.2, fact: 'Orange peels take 6 months to decompose but are great for compost!', level: 2 },
+            { name: 'Broken Charger', bin: 'hazardous', emoji: '🔌', speed: 0.4, fact: 'E-waste contains valuable metals that can be recovered and reused!', level: 2 },
+            { name: 'Milk Carton', bin: 'recyclable', emoji: '🥛', speed: 0.25, fact: 'Milk cartons are recyclable and can become tissues or paper towels!', level: 2 },
+            { name: 'Old Toy', bin: 'reusable', emoji: '🧸', speed: 0.3, quiz: true, fact: 'Donating toys extends their life and brings joy to other children!', level: 2 },
+            // Beach
+            { name: 'Plastic Straw', bin: 'hazardous', emoji: '🥤', speed: 0.5, fact: 'Millions of straws are used daily - switch to reusable!', level: 3 },
+            { name: 'Seaweed', bin: 'organic', emoji: '🌊', speed: 0.15, fact: 'Seaweed is biodegradable and can be used as fertilizer!', level: 3 },
+            { name: 'Beer Can', bin: 'recyclable', emoji: '🍺', speed: 0.3, fact: 'Recycling aluminum saves 95% of the energy needed to make new cans!', level: 3 },
+            { name: 'Fishing Net', bin: 'hazardous', emoji: '🎣', speed: 0.45, fact: 'Ghost fishing nets harm many marine animals every year!', level: 3 },
+            { name: 'Coconut Shell', bin: 'organic', emoji: '🥥', speed: 0.2, fact: 'Coconut shells can be turned into charcoal or garden mulch!', level: 3 },
+            { name: 'Glass Bottle', bin: 'recyclable', emoji: '🍶', speed: 0.3, fact: 'Glass is 100% recyclable and never loses quality!', level: 3 },
+            { name: 'Styrofoam', bin: 'hazardous', emoji: '📦', speed: 0.5, fact: 'Styrofoam takes hundreds of years to break down and harms wildlife!', level: 3 }
+        ];
+
+        const quizOptions = {
+            '👕': { question: 'Old T-shirt found! What should we do?', answers: ['Reduce', 'Reuse as cloth bag', 'Recycle'], correct: 1, explanation: 'Reuse it as a cloth bag to reduce waste!' },
+            '🛍️': { question: 'Plastic bag detected! Best action?', answers: ['Reduce usage', 'Reuse it', 'Recycle'], correct: 0, explanation: 'Reduce by using reusable bags!' },
+            '🧸': { question: 'Old toy found! What now?', answers: ['Throw away', 'Repair & reuse', 'Recycle parts'], correct: 1, explanation: 'Repair or reuse it and give it a new life!' }
+        };
+
+        let gameState = 'menu';
+        let currentLevel = 0;
+        let score = 0;
+        let timeLeft = 0;
+        let combo = 0;
+        let items = [];
+        let levelStats = { correct: 0, total: 0 };
+        let levelsCompleted = 0;
+
+        let allUsedItemNames = [];
+        let timerInterval;
+        let spawnTimeout;
+        let moveInterval;
+        let draggedItem = null;
+
+        let itemsRemainingInLevel = [];
+
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function init() {
+            renderLevelButtons();
+            setupBinDropZones();
+            updateLevelsDone();
+        }
+
+        function renderLevelButtons() {
+            const container = document.getElementById('levelButtons');
+            LEVELS.forEach((level, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'level-button';
+                btn.innerHTML = `
+                    <span style="font-size: 1.5em;">${level.emoji}</span>
+                    <span>${level.name}</span>
+                    <span style="background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 20px;">${level.targetItems} items</span>
+                `;
+                btn.onclick = () => startLevel(i);
+                container.appendChild(btn);
+            });
+        }
+
+        function startLevel(levelIndex) {
+            currentLevel = levelIndex;
+            combo = 0;
+            items = [];
+            levelStats = { correct: 0, total: 0 };
+            timeLeft = LEVELS[levelIndex].time;
+
+            itemsRemainingInLevel = ALL_WASTE_ITEMS
+                .filter(item => item.level === levelIndex && !allUsedItemNames.includes(item.name))
+                .sort(() => 0.5 - Math.random())
+                .slice(0, LEVELS[levelIndex].targetItems);
+
+            document.getElementById('menuScreen').classList.add('hidden');
+            document.getElementById('gameScreen').classList.remove('hidden');
+            document.getElementById('completeScreen').classList.add('hidden');
+            document.getElementById('gameOverScreen').classList.add('hidden');
+            document.getElementById('currentLevelEmoji').textContent = LEVELS[levelIndex].emoji;
+            document.getElementById('currentLevelName').textContent = LEVELS[levelIndex].name;
+            updateLevelItemsCount();
+            document.getElementById('score').textContent = score;
+            document.getElementById('comboBadge').classList.add('hidden');
+
+            gameState = 'playing';
+            startTimer();
+            spawnItem();
+            startMovement();
+        }
+
+        function updateLevelItemsCount() {
+            document.getElementById('currentLevelNumber').textContent = `Items Left: ${itemsRemainingInLevel.length}`;
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            updateTimerDisplay();
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft <= 0) {
+                    endLevel();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timeLeft / 60);
+            const secs = timeLeft % 60;
+            document.getElementById('timer').textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function spawnItem() {
+            if (gameState !== 'playing' || items.length >= 3) {
+                if (gameState === 'playing' && itemsRemainingInLevel.length > 0) {
+                    spawnTimeout = setTimeout(spawnItem, 1000);
+                }
+                return;
+            }
+
+            if (itemsRemainingInLevel.length === 0) {
+                endLevel();
+                return;
+            }
+
+            const randomItem = itemsRemainingInLevel.shift();
+            updateLevelItemsCount();
+
+            const newItem = {
+                ...randomItem,
+                id: Date.now() + Math.random(),
+                x: Math.random() * 70 + 10,
+                y: -10,
+                speed: randomItem.speed || 0.2
+            };
+
+            items.push(newItem);
+            allUsedItemNames.push(randomItem.name);
+            renderItems();
+            spawnTimeout = setTimeout(spawnItem, 2500 - (currentLevel * 200));
+        }
+
+        function renderItems() {
+            const gameArea = document.getElementById('gameArea');
+            gameArea.innerHTML = '';
+
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'waste-item';
+                div.id = `item-${item.id}`;
+                div.draggable = true;
+                div.style.left = `${item.x}%`;
+                div.style.top = `${item.y}%`;
+                div.innerHTML = `
+                    <div class="item-card">
+                        <div class="item-emoji">${item.emoji}</div>
+                        <div class="item-name">${item.name}</div>
+                    </div>
+                `;
+
+                div.addEventListener('dragstart', (e) => {
+                    draggedItem = item;
+                    div.classList.add('dragging');
+                    e.dataTransfer.setData('text/plain', item.id);
+                    e.dataTransfer.effectAllowed = 'move';
+                });
+
+                div.addEventListener('dragend', () => {
+                    draggedItem = null;
+                    div.classList.remove('dragging');
+                });
+
+                gameArea.appendChild(div);
+            });
+        }
+
+        function startMovement() {
+            clearInterval(moveInterval);
+
+            moveInterval = setInterval(() => {
+                if (gameState !== 'playing') return;
+
+                let missed = false;
+
+                items = items.map(item => {
+                    if (draggedItem && draggedItem.id === item.id) return item;
+                    return { ...item, y: item.y + item.speed };
+                }).filter(item => {
+                    const isMissed = item.y >= 100;
+                    if (isMissed) missed = true;
+                    return !isMissed;
+                });
+
+                if (missed) {
+                    combo = 0;
+                    score = Math.max(0, score - 3);
+                    updateScore();
+                    showFeedback('Missed! -3 points', 'bad');
+                }
+
+                renderItems();
+            }, 50);
+        }
+
+        function setupBinDropZones() {
+            const bins = document.querySelectorAll('[data-bin]');
+            bins.forEach(bin => {
+                bin.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = 'move';
+                });
+
+                bin.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    if (draggedItem) {
+                        handleDrop(draggedItem, bin.dataset.bin);
+                        draggedItem = null;
+                    }
+                });
+            });
+        }
+
+        function handleDrop(item, bin) {
+            items = items.filter(i => i.id !== item.id);
+            renderItems();
+
+            if (item.quiz && item.bin === bin) {
+                showQuiz(item);
+                return;
+            }
+
+            levelStats.total++;
+
+            if (item.bin === bin) {
+                const points = 5 + (combo >= 5 ? 5 : 0);
+                score += points;
+                combo++;
+                levelStats.correct++;
+                updateScore();
+                showFeedback(`✅ Correct! +${points} pts. Fact: ${item.fact}`, 'good');
+            } else {
+                score = Math.max(0, score - 3);
+                combo = 0;
+                updateScore();
+                showFeedback(`Wrong bin! -3 points. It belongs in the ${item.bin} bin.`, 'bad');
+            }
+
+            if (itemsRemainingInLevel.length === 0 && items.length === 0) {
+                endLevel();
+            }
+        }
+
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            const comboBadge = document.getElementById('comboBadge');
+
+            if (combo >= 5) {
+                comboBadge.textContent = `🔥 ${combo}x Combo!`;
+                comboBadge.classList.remove('hidden');
+            } else {
+                comboBadge.classList.add('hidden');
+            }
+        }
+
+        function updateLevelsDone() {
+            document.getElementById('levelsDone').textContent = levelsCompleted;
+        }
+
+        function showFeedback(msg, type) {
+            const feedback = document.getElementById('feedback');
+            feedback.textContent = msg;
+            feedback.className = `feedback ${type}`;
+            feedback.classList.remove('hidden');
+            
+            setTimeout(() => {
+                feedback.classList.add('hidden');
+            }, 4000);
+        }
+
+        function showQuiz(item) {
+            gameState = 'quiz';
+            clearInterval(timerInterval);
+            clearInterval(moveInterval);
+            clearTimeout(spawnTimeout);
+
+            document.getElementById('gameScreen').classList.add('hidden');
+            document.getElementById('quizScreen').classList.remove('hidden');
+
+            const quiz = quizOptions[item.emoji];
+            document.getElementById('quizEmoji').textContent = item.emoji;
+            document.getElementById('quizQuestion').textContent = quiz.question;
+
+            const optionsContainer = document.getElementById('quizOptions');
+            optionsContainer.innerHTML = '';
+            quiz.answers.forEach((answer, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'next-button';
+                btn.style.marginTop = '8px';
+                btn.textContent = answer;
+                btn.onclick = () => handleQuizAnswer(i, quiz.correct, quiz.explanation);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function handleQuizAnswer(answerIndex, correctIndex, explanation) {
+            if (answerIndex === correctIndex) {
+                score += 10;
+                updateScore();
+                showFeedback('🌟 +10 Eco-bonus! ' + explanation, 'good');
+            } else {
+                showFeedback('❌ Incorrect. ' + explanation, 'bad');
+            }
+
+            document.getElementById('quizScreen').classList.add('hidden');
+            document.getElementById('gameScreen').classList.remove('hidden');
+            
+            gameState = 'playing';
+            startTimer();
+            startMovement();
+            spawnItem();
+        }
+
+        function endLevel() {
+            gameState = 'complete';
+            clearInterval(timerInterval);
+            clearInterval(moveInterval);
+            clearTimeout(spawnTimeout);
+
+            const accuracy = levelStats.total > 0 ? ((levelStats.correct / levelStats.total) * 100).toFixed(0) : 0;
+            if (accuracy >= 90) {
+                score += 10;
+            }
+
+            levelsCompleted = Math.min(LEVELS.length, levelsCompleted + 1);
+            updateLevelsDone();
+
+            document.getElementById('gameScreen').classList.add('hidden');
+            document.getElementById('completeScreen').classList.remove('hidden');
+            document.getElementById('completeLevelEmoji').textContent = LEVELS[currentLevel].emoji;
+            document.getElementById('completeScore').textContent = score;
+            document.getElementById('completeAccuracy').textContent = accuracy + '%';
+            
+            document.getElementById('nextButton').textContent = (currentLevel < LEVELS.length - 1) ? 'Next Level →' : 'View Final Score';
+
+            document.getElementById('nextButton').onclick = () => {
+                if (currentLevel < LEVELS.length - 1) {
+                    document.getElementById('completeScreen').classList.add('hidden');
+                    startLevel(currentLevel + 1);
+                } else {
+                    showGameOver();
+                }
+            };
+        }
+
+        function showGameOver() {
+            document.getElementById('completeScreen').classList.add('hidden');
+            document.getElementById('gameOverScreen').classList.remove('hidden');
+            document.getElementById('finalScore').textContent = score;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            init();
+        });
+    </script>
+</body>
+</html>

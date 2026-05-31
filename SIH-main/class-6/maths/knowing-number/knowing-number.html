@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowing Numbers - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles with Profile Controls */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #2a69ac;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text h1 span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-pic {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 180px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f7fa;
+        }
+
+        .dropdown-item i {
+            color: #3182ce;
+            width: 20px;
+        }
+
+        /* Language Options */
+        .language-options {
+            position: absolute;
+            top: 60px;
+            right: 120px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 120px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .language-options.show {
+            display: block;
+        }
+
+        .language-option {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .language-option:last-child {
+            border-bottom: none;
+        }
+
+        .language-option:hover {
+            background: #f5f7fa;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9)), url('https://images.unsplash.com/photo-1509228468518-180dd4864904?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .breadcrumb-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .breadcrumb a {
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #3182ce;
+        }
+
+        .breadcrumb span {
+            color: #64748b;
+        }
+
+        /* Interactive Content */
+        .interactive-content {
+            padding: 50px 0;
+        }
+
+        .learning-path {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .learning-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .path-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .path-card {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .path-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-color: #3182ce;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .card-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+            flex-grow: 1;
+        }
+
+        /* Popup Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-section {
+            margin-bottom: 30px;
+        }
+
+        .modal-section h3 {
+            color: #1a365d;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .modal-section p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .modal-section ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .modal-section li {
+            margin-bottom: 8px;
+        }
+
+        /* Progress Tracking */
+        .progress-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .progress-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .progress-bars {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .progress-item {
+            margin-bottom: 15px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        .progress-bar-container {
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #3182ce;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        /* Games Section */
+        .games-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .game-level {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .game-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .game-desc {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .game-body {
+            padding: 20px;
+        }
+
+        .game-features {
+            margin-bottom: 20px;
+        }
+
+        .game-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .game-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .game-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Resources Section */
+        .resources-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .resource-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .resource-icon {
+            font-size: 2.5rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .resource-title {
+            font-size: 1.1rem;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+
+        .resource-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .download-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about {
+            padding-right: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.8rem;
+            background: #38b2ac;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 20px;
+            color: #38b2ac;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2d3748;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .social-links a:hover {
+            background: #38b2ac;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .games-grid, .resources-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .path-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            nav ul {
+                gap: 15px;
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* Odia font support */
+        .odia-text {
+            font-family: 'Kalinga', 'Nirmala UI', 'Segoe UI', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-atom"></i>
+            </div>
+            <div class="logo-text">
+                <h1>STEM Learn Odisha</h1>
+                <p>Gamified Learning Platform</p>
+            </div>
+        </div>
+       
+        <nav>
+            <ul>
+                <li><a href="student-dashboard.html" id="navDashboard">Dashboard</a></li>
+                <li><a href="mathematics.html" id="navMathematics">Mathematics</a></li>
+                <li><a href="scienceidx.html" id="navCurriculum">Curriculum</a></li>
+                <li><a href="knowing-numbers.html" class="active" id="navNumbers">Knowing Numbers</a></li>
+            </ul>
+        </nav>
+       
+        <div class="header-controls">
+            <button class="control-btn" id="languageToggle">
+                <i class="fas fa-globe"></i>
+            </button>
+           
+            <div class="profile-container">
+                <button class="profile-btn" id="profileToggle">
+                    <img src="" alt="Profile" class="profile-pic" id="headerProfilePic">
+                    <span id="headerUserName">Student</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+               
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" class="dropdown-item" id="dropdownProfile">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownSettings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownLogout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Language Options -->
+    <div class="language-options" id="languageOptions">
+        <div class="language-option" data-lang="en">English</div>
+        <div class="language-option" data-lang="or">ଓଡ଼ିଆ</div>
+    </div>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 data-translate="numbers-title">Knowing Numbers</h1>
+            <p data-translate="numbers-desc">Master the fundamentals of numbers through place value, comparison, and basic operations</p>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <a href="student-dashboard.html" data-translate="breadcrumb-home">Home</a>
+                <span>/</span>
+                <a href="mathematics.html" data-translate="breadcrumb-math">Mathematics</a>
+                <span>/</span>
+                <span data-translate="breadcrumb-topic">Knowing Numbers</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Content -->
+    <section class="interactive-content">
+        <div class="container">
+            <!-- Learning Path -->
+            <div class="learning-path">
+                <h2 class="learning-title">
+                    <i class="fas fa-road"></i>
+                    <span data-translate="learning-path-title">Your Learning Path</span>
+                </h2>
+                <div class="path-cards">
+                    <div class="path-card" data-card="place-value">
+                        <div class="card-icon">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <div class="card-title" data-translate="card1-title">Place Value System</div>
+                        <div class="card-desc" data-translate="card1-desc">Understand the value of digits based on their position in numbers</div>
+                    </div>
+                    <div class="path-card" data-card="comparing">
+                        <div class="card-icon">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <div class="card-title" data-translate="card2-title">Comparing Numbers</div>
+                        <div class="card-desc" data-translate="card2-desc">Learn to compare and order numbers using greater than, less than symbols</div>
+                    </div>
+                    <div class="path-card" data-card="operations">
+                        <div class="card-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div class="card-title" data-translate="card3-title">Number Operations</div>
+                        <div class="card-desc" data-translate="card3-desc">Master addition, subtraction, multiplication, and division of numbers</div>
+                    </div>
+                    <div class="path-card" data-card="review">
+                        <div class="card-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="card-title" data-translate="card4-title">Review and Practice</div>
+                        <div class="card-desc" data-translate="card4-desc">Test your number skills with interactive exercises and challenges</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Games Section -->
+            <div class="games-section">
+                <h2 class="section-title">
+                    <i class="fas fa-gamepad"></i>
+                    <span data-translate="games-title">Interactive Learning Game</span>
+                </h2>
+
+                <div class="games-grid">
+                    <div class="game-card">
+                        <div class="game-header">
+                            <div class="game-level" data-translate="level-interactive">Interactive</div>
+                            <h3 class="game-title" data-translate="game1-title">Number Ninja</h3>
+                            <p class="game-desc" data-translate="game1-desc">Master number concepts through fun challenges and puzzles</p>
+                        </div>
+                        <div class="game-body">
+                            <div class="game-features">
+                                <div class="game-feature">
+                                    <i class="fas fa-star"></i>
+                                    <span data-translate="game1-feature1">Place value challenges</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-clock"></i>
+                                    <span data-translate="game1-feature2">10-15 minutes gameplay</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-trophy"></i>
+                                    <span data-translate="game1-feature3">Earn up to 100 points</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-layer-group"></i>
+                                    <span data-translate="game1-feature4">Multiple difficulty levels</span>
+                                </div>
+                            </div>
+                            <a href="game1.html" class="game-btn" data-translate="play-game">Play Game</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Section -->
+            <div class="resources-section">
+                <h2 class="section-title">
+                    <i class="fas fa-download"></i>
+                    <span data-translate="resources-title">Learning Resources</span>
+                </h2>
+
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <h3 class="resource-title" data-translate="resource1-title">Number Concepts Guide</h3>
+                        <p class="resource-desc" data-translate="resource1-desc">Complete guide to understanding numbers and place value</p>
+                        <a href="#" class="download-btn">
+                            <i class="fas fa-download"></i>
+                            <span data-translate="download-english">Download (English)</span>
+                        </a>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3 class="resource-title" data-translate="resource2-title">ସଂଖ୍ୟା ଧାରଣା ଗାଇଡ୍</h3>
+                        <p class="resource-desc" data-translate="resource2-desc">ସଂଖ୍ୟା ଏବଂ ସ୍ଥାନ ମୂଲ୍ୟ ବୁଝିବା ପାଇଁ ସମ୍ପୂର୍ଣ୍ଣ ଗାଇଡ୍</p>
+                        <a href="#" class="download-btn">
+                            <i class="fas fa-download"></i>
+                            <span data-translate="download-odia">Download (ଓଡ଼ିଆ)</span>
+                        </a>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <h3 class="resource-title" data-translate="resource3-title">Place Value Charts</h3>
+                        <p class="resource-desc" data-translate="resource3-desc">Printable place value charts for practice and reference</p>
+                        <a href="#" class="download-btn">
+                            <i class="fas fa-download"></i>
+                            <span data-translate="download-charts">Download Charts</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <div class="footer-logo-text">STEM Learn Odisha</div>
+                    </div>
+                    <p data-translate="footer-desc">Making Science and Mathematics education engaging and relevant for Class 6 students in Odisha through localized content and interactive learning.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h3 data-translate="quick-links">Quick Links</h3>
+                    <ul>
+                        <li><a href="student-dashboard.html"><i class="fas fa-tachometer-alt"></i> <span data-translate="nav-dashboard">Dashboard</span></a></li>
+                        <li><a href="mathematics.html"><i class="fas fa-calculator"></i> <span data-translate="nav-mathematics">Mathematics</span></a></li>
+                        <li><a href="knowing-numbers.html"><i class="fas fa-sort-numeric-up"></i> <span data-translate="nav-numbers">Knowing Numbers</span></a></li>
+                        <li><a href="scienceidx.html"><i class="fas fa-book"></i> <span data-translate="nav-curriculum">Curriculum</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h3 data-translate="contact-us">Contact Us</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> <span data-translate="footer-address">Department of Education, Bhubaneswar</span></a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +91 674 123 4567</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@stemlearnodisha.com</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p data-translate="copyright">© 2023 STEM Learn Odisha. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Popup -->
+    <div class="modal" id="content-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">Place Value System</h2>
+                <button class="close-modal" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+           
+            if (!user) {
+                // Redirect to login if not authenticated
+                window.location.href = 'student-login.html';
+                return;
+            }
+           
+            // Load user data
+            loadUserData(user);
+            
+            // Initialize the page
+            init();
+        });
+
+        // Load user data into the page
+        function loadUserData(user) {
+            document.getElementById('headerUserName').textContent = user.fullName;
+            document.getElementById('headerProfilePic').src = user.profilePicture ? `uploads/${user.profilePicture}` : 'default-profile.png';
+        }
+
+        // Content for modal popups
+        const contentData = {
+            'place-value': {
+                'title': 'Place Value System',
+                'content': `
+                    <div class="modal-section">
+                        <h3>What is Place Value?</h3>
+                        <p>Place value is the value of each digit in a number based on its position. In our decimal number system, each place is 10 times the value of the place to its right.</p>
+                        <p>For example, in the number 4,567:</p>
+                        <ul>
+                            <li>7 is in the ones place (7 × 1 = 7)</li>
+                            <li>6 is in the tens place (6 × 10 = 60)</li>
+                            <li>5 is in the hundreds place (5 × 100 = 500)</li>
+                            <li>4 is in the thousands place (4 × 1000 = 4000)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Place Value Chart</h3>
+                        <p>A place value chart helps visualize the value of each digit:</p>
+                        <p><strong>Example: 12,345</strong></p>
+                        <p>Ten Thousands | Thousands | Hundreds | Tens | Ones<br>
+                        1 | 2 | 3 | 4 | 5<br>
+                        10,000 | 2,000 | 300 | 40 | 5</p>
+                        <p>So, 12,345 = 10,000 + 2,000 + 300 + 40 + 5</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Expanded Form</h3>
+                        <p>Expanded form shows the value of each digit separately:</p>
+                        <ul>
+                            <li>Standard form: 3,482</li>
+                            <li>Expanded form: 3000 + 400 + 80 + 2</li>
+                            <li>Word form: Three thousand four hundred eighty-two</li>
+                        </ul>
+                        <p>Practice: Write 7,615 in expanded form:<br>
+                        Answer: 7000 + 600 + 10 + 5</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Place Value Practice</h3>
+                        <p>Try these exercises:</p>
+                        <ol>
+                            <li>What is the value of 5 in 5,732? (Answer: 5,000)</li>
+                            <li>What is the value of 8 in 1,843? (Answer: 800)</li>
+                            <li>Write 9,406 in expanded form (Answer: 9000 + 400 + 6)</li>
+                            <li>Which digit is in the hundreds place in 2,579? (Answer: 5)</li>
+                            <li>Write the number: 6000 + 200 + 30 + 9 (Answer: 6,239)</li>
+                        </ol>
+                    </div>
+                `
+            },
+            'comparing': {
+                'title': 'Comparing Numbers',
+                'content': `
+                    <div class="modal-section">
+                        <h3>Greater Than and Less Than</h3>
+                        <p>We use special symbols to compare numbers:</p>
+                        <ul>
+                            <li>> means "greater than" (Example: 8 > 3 means "8 is greater than 3")</li>
+                            <li>< means "less than" (Example: 2 < 9 means "2 is less than 9")</li>
+                            <li>= means "equal to" (Example: 4 = 4 means "4 is equal to 4")</li>
+                        </ul>
+                        <p>The symbol always points to the smaller number: 3 < 8 (point to 3) and 8 > 3 (point to 3)</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Comparing Large Numbers</h3>
+                        <p>Steps to compare numbers:</p>
+                        <ol>
+                            <li>Start from the leftmost digit (highest place value)</li>
+                            <li>Compare digits in the same place value</li>
+                            <li>If digits are equal, move to the next place value to the right</li>
+                            <li>Continue until you find different digits</li>
+                        </ol>
+                        <p>Example: Compare 4,567 and 4,589</p>
+                        <ul>
+                            <li>Thousands: Both are 4 (equal)</li>
+                            <li>Hundreds: Both are 5 (equal)</li>
+                            <li>Tens: 6 vs 8 (6 < 8)</li>
+                            <li>So, 4,567 < 4,589</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Ordering Numbers</h3>
+                        <p>To arrange numbers in order:</p>
+                        <ul>
+                            <li><strong>Ascending order:</strong> From smallest to largest</li>
+                            <li><strong>Descending order:</strong> From largest to smallest</li>
+                        </ul>
+                        <p>Example: Arrange 234, 189, 256 in ascending order:<br>
+                        Answer: 189, 234, 256</p>
+                        <p>Example: Arrange 567, 489, 512 in descending order:<br>
+                        Answer: 567, 512, 489</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Comparison Practice</h3>
+                        <p>Try these exercises:</p>
+                        <ol>
+                            <li>Compare: 3,456 ___ 3,465 (Answer: <)</li>
+                            <li>Compare: 1,234 ___ 1,234 (Answer: =)</li>
+                            <li>Arrange in ascending order: 789, 698, 845, 712 (Answer: 698, 712, 789, 845)</li>
+                            <li>Which is greater: 5,432 or 5,423? (Answer: 5,432)</li>
+                            <li>Write using > or <: 2,345 ___ 2,354 (Answer: <)</li>
+                        </ol>
+                    </div>
+                `
+            },
+            'operations': {
+                'title': 'Number Operations',
+                'content': `
+                    <div class="modal-section">
+                        <h3>Addition of Numbers</h3>
+                        <p>Addition combines numbers to find a total or sum.</p>
+                        <p><strong>Steps for addition:</strong></p>
+                        <ol>
+                            <li>Align numbers by place value (ones under ones, tens under tens)</li>
+                            <li>Add from right to left (ones column first)</li>
+                            <li>Carry over if sum is 10 or more</li>
+                        </ol>
+                        <p>Example: 456 + 278</p>
+                        <p>  456<br>
+                          +278<br>
+                          ----<br>
+                           734</p>
+                        <p>6+8=14 (write 4, carry 1), 5+7+1=13 (write 3, carry 1), 4+2+1=7</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Subtraction of Numbers</h3>
+                        <p>Subtraction finds the difference between numbers.</p>
+                        <p><strong>Steps for subtraction:</strong></p>
+                        <ol>
+                            <li>Align numbers by place value</li>
+                            <li>Subtract from right to left</li>
+                            <li>Borrow from next column if needed</li>
+                        </ol>
+                        <p>Example: 523 - 187</p>
+                        <p>  523<br>
+                          -187<br>
+                          ----<br>
+                           336</p>
+                        <p>3-7 (borrow from tens): 13-7=6, 1-8 (borrow from hundreds): 11-8=3, 4-1=3</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Multiplication Basics</h3>
+                        <p>Multiplication is repeated addition.</p>
+                        <p><strong>Key multiplication facts:</strong></p>
+                        <ul>
+                            <li>Any number × 0 = 0</li>
+                            <li>Any number × 1 = the same number</li>
+                            <li>Order doesn't matter: 3 × 4 = 4 × 3 = 12</li>
+                        </ul>
+                        <p>Example: 23 × 4</p>
+                        <p>  23<br>
+                          × 4<br>
+                          ----<br>
+                           92</p>
+                        <p>3×4=12 (write 2, carry 1), 2×4+1=9</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Division Basics</h3>
+                        <p>Division splits a number into equal parts.</p>
+                        <p><strong>Division terms:</strong></p>
+                        <ul>
+                            <li>Dividend: Number being divided</li>
+                            <li>Divisor: Number dividing by</li>
+                            <li>Quotient: Result of division</li>
+                            <li>Remainder: Leftover amount</li>
+                        </ul>
+                        <p>Example: 45 ÷ 6 = 7 remainder 3</p>
+                        <p>Check: 6 × 7 = 42, 42 + 3 = 45</p>
+                    </div>
+                `
+            },
+            'review': {
+                'title': 'Review and Practice',
+                'content': `
+                    <div class="modal-section">
+                        <h3>Comprehensive Review</h3>
+                        <p>Let's review all number concepts:</p>
+                        <ul>
+                            <li>Place value determines a digit's worth based on its position</li>
+                            <li>Comparing numbers uses >, <, and = symbols</li>
+                            <li>Basic operations include addition, subtraction, multiplication, and division</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Practice Problems</h3>
+                        <p><strong>Place Value:</strong></p>
+                        <ol>
+                            <li>What is the value of 7 in 7,843? (Answer: 7,000)</li>
+                            <li>Write 5,209 in expanded form (Answer: 5000 + 200 + 9)</li>
+                        </ol>
+                        
+                        <p><strong>Comparison:</strong></p>
+                        <ol>
+                            <li>Compare: 3,456 ___ 3,546 (Answer: <)</li>
+                            <li>Arrange in descending order: 345, 432, 398, 410 (Answer: 432, 410, 398, 345)</li>
+                        </ol>
+                        
+                        <p><strong>Operations:</strong></p>
+                        <ol>
+                            <li>345 + 278 = ? (Answer: 623)</li>
+                            <li>567 - 289 = ? (Answer: 278)</li>
+                            <li>34 × 5 = ? (Answer: 170)</li>
+                            <li>87 ÷ 9 = ? (Answer: 9 remainder 6)</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Word Problems</h3>
+                        <p>Apply your number skills to real situations:</p>
+                        <ol>
+                            <li>Rina has ₹345 and earns ₹278 more. How much does she have now? (Answer: ₹623)</li>
+                            <li>A school has 567 students. If 289 are girls, how many are boys? (Answer: 278)</li>
+                            <li>There are 4 rows with 23 chairs in each row. How many chairs total? (Answer: 92)</li>
+                            <li>45 pencils are shared equally among 6 students. How many does each get? (Answer: 7, with 3 left over)</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Tips for Success</h3>
+                        <ul>
+                            <li>Always align numbers by place value for operations</li>
+                            <li>Check your work by doing the inverse operation</li>
+                            <li>Practice regularly to improve speed and accuracy</li>
+                            <li>Use estimation to check if your answer is reasonable</li>
+                            <li>Play the Number Ninja game to practice in a fun way!</li>
+                        </ul>
+                    </div>
+                `
+            }
+        };
+
+        // Translations
+        const translations = {
+            en: {
+                'nav-dashboard': 'Dashboard',
+                'nav-mathematics': 'Mathematics',
+                'nav-curriculum': 'Curriculum',
+                'nav-numbers': 'Knowing Numbers',
+                'numbers-title': 'Knowing Numbers',
+                'numbers-desc': 'Master the fundamentals of numbers through place value, comparison, and basic operations',
+                'breadcrumb-home': 'Home',
+                'breadcrumb-math': 'Mathematics',
+                'breadcrumb-topic': 'Knowing Numbers',
+                'learning-path-title': 'Your Learning Path',
+                'card1-title': 'Place Value System',
+                'card1-desc': 'Understand the value of digits based on their position in numbers',
+                'card2-title': 'Comparing Numbers',
+                'card2-desc': 'Learn to compare and order numbers using greater than, less than symbols',
+                'card3-title': 'Number Operations',
+                'card3-desc': 'Master addition, subtraction, multiplication, and division of numbers',
+                'card4-title': 'Review and Practice',
+                'card4-desc': 'Test your number skills with interactive exercises and challenges',
+                'progress-title': 'Your Progress',
+                'progress-place-value': 'Place Value System',
+                'progress-comparing': 'Comparing Numbers',
+                'progress-operations': 'Number Operations',
+                'progress-overall': 'Overall Mastery',
+                'games-title': 'Interactive Learning Game',
+                'level-interactive': 'Interactive',
+                'game1-title': 'Number Ninja',
+                'game1-desc': 'Master number concepts through fun challenges and puzzles',
+                'game1-feature1': 'Place value challenges',
+                'game1-feature2': '10-15 minutes gameplay',
+                'game1-feature3': 'Earn up to 100 points',
+                'game1-feature4': 'Multiple difficulty levels',
+                'play-game': 'Play Game',
+                'resources-title': 'Learning Resources',
+                'resource1-title': 'Number Concepts Guide',
+                'resource1-desc': 'Complete guide to understanding numbers and place value',
+                'download-english': 'Download (English)',
+                'resource2-title': 'Number Concepts Guide',
+                'resource2-desc': 'Complete guide to understanding numbers and place value',
+                'download-odia': 'Download (Odia)',
+                'resource3-title': 'Place Value Charts',
+                'resource3-desc': 'Printable place value charts for practice and reference',
+                'download-charts': 'Download Charts',
+                'footer-desc': 'Making Science and Mathematics education engaging and relevant for Class 6 students in Odisha through localized content and interactive learning.',
+                'quick-links': 'Quick Links',
+                'contact-us': 'Contact Us',
+                'footer-address': 'Department of Education, Bhubaneswar',
+                'copyright': '© 2023 STEM Learn Odisha. All rights reserved.'
+            },
+            or: {
+                'nav-dashboard': 'ଡ୍ୟାସବୋର୍ଡ',
+                'nav-mathematics': 'ଗଣିତ',
+                'nav-curriculum': 'ପାଠ୍ୟକ୍ରମ',
+                'nav-numbers': 'ସଂଖ୍ୟା ଜ୍ଞାନ',
+                'numbers-title': 'ସଂଖ୍ୟା ଜ୍ଞାନ',
+                'numbers-desc': 'ସ୍ଥାନ ମୂଲ୍ୟ, ତୁଳନା, ଏବଂ ମୌଳିକ କାର୍ଯ୍ୟ ମାଧ୍ୟମରେ ସଂଖ୍ୟାର ମୌଳିକ ତଥ୍ୟ ଆୟତ୍ତ କରନ୍ତୁ',
+                'breadcrumb-home': 'ମୁଖ୍ୟ ପୃଷ୍ଠା',
+                'breadcrumb-math': 'ଗଣିତ',
+                'breadcrumb-topic': 'ସଂଖ୍ୟା ଜ୍ଞାନ',
+                'learning-path-title': 'ଆପଣଙ୍କର ଶିକ୍ଷଣ ପଥ',
+                'card1-title': 'ସ୍ଥାନ ମୂଲ୍ୟ ପ୍ରଣାଳୀ',
+                'card1-desc': 'ସଂଖ୍ୟାରେ ସେମାନଙ୍କର ସ୍ଥାନ ଉପରେ ଆଧାର କରି ଅଙ୍କଗୁଡିକର ମୂଲ୍ୟ ବୁଝନ୍ତୁ',
+                'card2-title': 'ସଂଖ୍ୟା ତୁଳନା',
+                'card2-title': 'ସଂଖ୍ୟା ତୁଳନା',
+                'card2-desc': 'ଅଧିକ ଠାରୁ, କମ୍ ଠାରୁ ଚିହ୍ନ ବ୍ୟବହାର କରି ସଂଖ୍ୟା ତୁଳନା ଏବଂ ସଜାଇବା ଶିଖନ୍ତୁ',
+                'card3-title': 'ସଂଖ୍ୟା କାର୍ଯ୍ୟ',
+                'card3-desc': 'ସଂଖ୍ୟାର ଯୋଗ, ବିୟୋଗ, ଗୁଣନ, ଏବଂ ଭାଗ ଆୟତ୍ତ କରନ୍ତୁ',
+                'card4-title': 'ସମୀକ୍ଷା ଏବଂ ଅଭ୍ୟାସ',
+                'card4-desc': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ ଅଭ୍ୟାସ ଏବଂ ଚ୍ୟାଲେଞ୍ଜ୍ ସହିତ ଆପଣଙ୍କର ସଂଖ୍ୟା ଦକ୍ଷତା ପରୀକ୍ଷା କରନ୍ତୁ',
+                'progress-title': 'ଆପଣଙ୍କର ପ୍ରଗତି',
+                'progress-place-value': 'ସ୍ଥାନ ମୂଲ୍ୟ ପ୍ରଣାଳୀ',
+                'progress-comparing': 'ସଂଖ୍ୟା ତୁଳନା',
+                'progress-operations': 'ସଂଖ୍ୟା କାର୍ଯ୍ୟ',
+                'progress-overall': 'ସର୍ବମୋଟ ଦକ୍ଷତା',
+                'games-title': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ଖେଳ',
+                'level-interactive': 'ଇଣ୍ଟରାକ୍ଟିଭ୍',
+                'game1-title': 'ନମ୍ବର ନିଞ୍ଜା',
+                'game1-desc': 'ମଜାଦାର ଚ୍ୟାଲେଞ୍ଜ୍ ଏବଂ ପଜଲ୍ ମାଧ୍ୟମରେ ସଂଖ୍ୟା ଧାରଣା ଆୟତ୍ତ କରନ୍ତୁ',
+                'game1-feature1': 'ସ୍ଥାନ ମୂଲ୍ୟ ଚ୍ୟାଲେଞ୍ଜ୍',
+                'game1-feature2': '10-15 ମିନିଟ୍ ଖେଳପଣ',
+                'game1-feature3': '100 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ ଅର୍ଜନ କରନ୍ତୁ',
+                'game1-feature4': 'ଏକାଧିକ କଠିନତା ସ୍ତର',
+                'play-game': 'ଖେଳନ୍ତୁ',
+                'resources-title': 'ଶିକ୍ଷଣ ସମ୍ବଳ',
+                'resource1-title': 'ସଂଖ୍ୟା ଧାରଣା ଗାଇଡ୍',
+                'resource1-desc': 'ସଂଖ୍ୟା ଏବଂ ସ୍ଥାନ ମୂଲ୍ୟ ବୁଝିବା ପାଇଁ ସମ୍ପୂର୍ଣ୍ଣ ଗାଇଡ୍',
+                'download-english': 'ଡାଉନଲୋଡ୍ (ଇଂରାଜୀ)',
+                'resource2-title': 'ସଂଖ୍ୟା ଧାରଣା ଗାଇଡ୍',
+                'resource2-desc': 'ସଂଖ୍ୟା ଏବଂ ସ୍ଥାନ ମୂଲ୍ୟ ବୁଝିବା ପାଇଁ ସମ୍ପୂର୍ଣ୍ଣ ଗାଇଡ୍',
+                'download-odia': 'ଡାଉନଲୋଡ୍ (ଓଡ଼ିଆ)',
+                'resource3-title': 'ସ୍ଥାନ ମୂଲ୍ୟ ଚାର୍ଟ୍',
+                'resource3-desc': 'ଅଭ୍ୟାସ ଏବଂ ସନ୍ଦର୍ଭ ପାଇଁ ପ୍ରିଣ୍ଟେବଲ୍ ସ୍ଥାନ ମୂଲ୍ୟ ଚାର୍ଟ୍',
+                'download-charts': 'ଚାର୍ଟ୍ ଡାଉନଲୋଡ୍ କରନ୍ତୁ',
+                'footer-desc': 'ଓଡ଼ିଶାର ଷଷ୍ଠ ଶ୍ରେଣୀର ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କ ପାଇଁ ସ୍ଥାନୀୟ ବିଷୟବସ୍ତୁ ଏବଂ ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ମାଧ୍ୟମରେ ବିଜ୍ଞାନ ଏବଂ ଗଣିତ ଶିକ୍ଷାକୁ ଆକର୍ଷଣୀୟ ଏବଂ ପ୍ରାସଙ୍ଗିକ କରିବା',
+                'quick-links': 'ଶୀଘ୍ର ଲିଙ୍କ୍',
+                'contact-us': 'ଆମ ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ',
+                'footer-address': 'ଶିକ୍ଷା ବିଭାଗ, ଭୁବନେଶ୍ୱର',
+                'copyright': '© 2023 STEM ଲର୍ନ ଓଡ଼ିଶା। ସମସ୍ତ ଅଧିକାର ସଂରକ୍ଷିତ।'
+            }
+        };
+
+        let currentLanguage = 'en';
+
+        // Initialize the page
+        function init() {
+            // Set up language options
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    switchLanguage(lang);
+                    document.getElementById('languageOptions').classList.remove('show');
+                });
+            });
+
+            // Set up path cards
+            const pathCards = document.querySelectorAll('.path-card');
+            pathCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const cardType = this.getAttribute('data-card');
+                    openModal(cardType);
+                });
+            });
+
+            // Set up modal close button
+            document.getElementById('close-modal').addEventListener('click', closeModalFunc);
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === document.getElementById('content-modal')) {
+                    closeModalFunc();
+                }
+            });
+
+            // Dashboard integration event listeners
+            const profileToggle = document.getElementById('profileToggle');
+            const profileDropdown = document.getElementById('profileDropdown');
+            const languageToggle = document.getElementById('languageToggle');
+            const languageOptions = document.getElementById('languageOptions');
+            const dropdownProfile = document.getElementById('dropdownProfile');
+            const dropdownSettings = document.getElementById('dropdownSettings');
+            const dropdownLogout = document.getElementById('dropdownLogout');
+            const navDashboard = document.getElementById('navDashboard');
+            const navMathematics = document.getElementById('navMathematics');
+            const navCurriculum = document.getElementById('navCurriculum');
+            const navNumbers = document.getElementById('navNumbers');
+
+            // Profile dropdown toggle
+            profileToggle.addEventListener('click', function() {
+                profileDropdown.classList.toggle('show');
+            });
+
+            // Language toggle
+            languageToggle.addEventListener('click', function() {
+                languageOptions.classList.toggle('show');
+            });
+
+            // Navigation between pages
+            dropdownProfile.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#profile';
+            });
+
+            dropdownSettings.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#settings';
+            });
+
+            dropdownLogout.addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('user');
+                window.location.href = 'student-login.html';
+            });
+
+            // Navigation menu items
+            navDashboard.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html';
+            });
+
+            navMathematics.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'mathematics.html';
+            });
+
+            navCurriculum.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'scienceidx.html';
+            });
+
+            navNumbers.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'knowing-numbers.html';
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#languageToggle') && !e.target.closest('#languageOptions')) {
+                    languageOptions.classList.remove('show');
+                }
+               
+                if (!e.target.closest('#profileToggle') && !e.target.closest('#profileDropdown')) {
+                    profileDropdown.classList.remove('show');
+                }
+            });
+
+            // Initialize with default language
+            switchLanguage('en');
+        }
+
+        // Switch language function
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            const map = translations[lang] || translations.en;
+            
+            // Update all text content
+            Object.keys(map).forEach(key => {
+                const elements = document.querySelectorAll(`[data-translate="${key}"]`);
+                elements.forEach(element => {
+                    element.textContent = map[key];
+                });
+            });
+            
+            // Add Odia font class for Odia text
+            if (lang === 'or') {
+                document.body.classList.add('odia-text');
+            } else {
+                document.body.classList.remove('odia-text');
+            }
+        }
+
+        // Open modal with content
+        function openModal(cardType) {
+            const content = contentData[cardType];
+            if (content) {
+                document.getElementById('modal-title').textContent = content.title;
+                document.getElementById('modal-body').innerHTML = content.content;
+                document.getElementById('content-modal').style.display = 'flex';
+            }
+        }
+
+        // Close modal function
+        function closeModalFunc() {
+            document.getElementById('content-modal').style.display = 'none';
+        }
+
+        // Progress tracking
+        function updateProgress(category, points) {
+            const progressBars = {
+                'place-value': document.getElementById('place-value-progress'),
+                'comparing': document.getElementById('comparing-progress'),
+                'operations': document.getElementById('operations-progress'),
+                'overall': document.getElementById('overall-progress')
+            };
+            
+            const progressValues = {
+                'place-value': document.getElementById('place-value-progress-value'),
+                'comparing': document.getElementById('comparing-progress-value'),
+                'operations': document.getElementById('operations-progress-value'),
+                'overall': document.getElementById('overall-progress-value')
+            };
+            
+            // Update specific category
+            let currentWidth = parseInt(progressBars[category].style.width);
+            if (currentWidth + points <= 100) {
+                progressBars[category].style.width = (currentWidth + points) + '%';
+                progressValues[category].textContent = (currentWidth + points) + '%';
+            } else {
+                progressBars[category].style.width = '100%';
+                progressValues[category].textContent = '100%';
+            }
+            
+            // Update overall progress
+            let overallWidth = (
+                parseInt(progressBars['place-value'].style.width) +
+                parseInt(progressBars['comparing'].style.width) +
+                parseInt(progressBars['operations'].style.width)
+            ) / 3;
+            
+            progressBars['overall'].style.width = overallWidth + '%';
+            progressValues['overall'].textContent = Math.round(overallWidth) + '%';
+        }
+    </script>
+</body>
+</html>

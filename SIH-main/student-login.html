@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a497a 0%, #1a365d 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Language and Home Controls */
+        .controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            color: white;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        /* Auth Container */
+        .auth-container {
+            display: flex;
+            width: 100%;
+            max-width: 900px;
+            min-height: 550px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Left Side - Branding */
+        .auth-branding {
+            flex: 1;
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .brand-logo {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .brand-logo i {
+            font-size: 3rem;
+            color: #2a69ac;
+        }
+
+        .brand-text {
+            margin-bottom: 30px;
+        }
+
+        .brand-text h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .brand-text p {
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .brand-features {
+            width: 100%;
+            text-align: left;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .feature i {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            color: #38b2ac;
+        }
+
+        .feature p {
+            font-size: 0.95rem;
+        }
+
+        /* Right Side - Form */
+        .auth-form {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-header {
+            margin-bottom: 30px;
+        }
+
+        .form-header h2 {
+            font-size: 1.8rem;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+
+        .form-header p {
+            color: #64748b;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.2);
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #3182ce;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2b6cb0;
+            transform: translateY(-2px);
+        }
+
+        .form-footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .form-footer a {
+            color: #3182ce;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .form-footer a:hover {
+            color: #2b6cb0;
+            text-decoration: underline;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #e5e7eb;
+        }
+
+        .divider span {
+            padding: 0 15px;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* Profile Picture Upload */
+        .profile-upload {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-preview {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            overflow: hidden;
+            border: 2px dashed #d1d5db;
+        }
+
+        .profile-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .profile-preview i {
+            font-size: 2rem;
+            color: #9ca3af;
+        }
+
+        .upload-btn {
+            padding: 10px 20px;
+            background: #f3f4f6;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .upload-btn:hover {
+            background: #e5e7eb;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .auth-container {
+                flex-direction: column;
+                max-width: 500px;
+            }
+            
+            .auth-branding {
+                padding: 30px 20px;
+            }
+            
+            .auth-form {
+                padding: 30px 20px;
+            }
+            
+            .controls {
+                top: 10px;
+                right: 10px;
+            }
+        }
+
+        /* Password Validation */
+        .password-validation {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .validation-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .validation-item i {
+            margin-right: 5px;
+        }
+
+        .valid {
+            color: #10b981;
+        }
+
+        .invalid {
+            color: #ef4444;
+        }
+
+        /* Language Options */
+        .language-options {
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            display: none;
+            z-index: 101;
+        }
+
+        .language-options.show {
+            display: block;
+        }
+
+        .language-option {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background 0.3s ease;
+        }
+
+        .language-option:hover {
+            background: #f3f4f6;
+        }
+
+        /* Odia font support */
+        .odia-text {
+            font-family: 'Kalinga', 'Nirmala UI', 'Segoe UI', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Language and Home Controls -->
+    <div class="controls">
+        <a href="home.html" class="control-btn" id="homeBtn" title="Go to Home">
+            <i class="fas fa-home"></i>
+        </a>
+        <button class="control-btn" id="languageToggle">
+            <i class="fas fa-globe"></i>
+        </button>
+    </div>
+
+    <!-- Language Options -->
+    <div class="language-options" id="languageOptions">
+        <div class="language-option" data-lang="en">English</div>
+        <div class="language-option" data-lang="or">ଓଡ଼ିଆ</div>
+    </div>
+
+    <div class="container">
+        <!-- Login Form -->
+        <div class="auth-container" id="loginContainer">
+            <div class="auth-branding">
+                <div class="brand-logo">
+                    <i class="fas fa-atom"></i>
+                </div>
+                <div class="brand-text">
+                    <h1>STEM Learn Odisha</h1>
+                    <p>Gamified Learning Platform</p>
+                </div>
+                <div class="brand-features">
+                    <div class="feature">
+                        <i class="fas fa-gamepad"></i>
+                        <p>Interactive learning games</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-trophy"></i>
+                        <p>Earn rewards and badges</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-graduation-cap"></i>
+                        <p>Curriculum-aligned content</p>
+                    </div>
+                </div>
+            </div>
+            <div class="auth-form">
+                <div class="form-header">
+                    <h2 data-translate="login-title">Login to Your Account</h2>
+                    <p data-translate="login-subtitle">Welcome back! Please enter your details</p>
+                </div>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail" data-translate="email-label">Email</label>
+                        <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword" data-translate="password-label">Password</label>
+                        <div class="password-container">
+                            <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
+                            <button type="button" class="toggle-password" id="loginTogglePassword">
+                                <i class="far fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" data-translate="login-button">Login</button>
+                    
+                    <div class="form-footer">
+                        <a href="#" data-translate="forgot-password">Forgot Password?</a>
+                        <div class="divider"><span data-translate="or">Or</span></div>
+                        <p data-translate="no-account">Don't have an account? <a href="#" id="goToRegister">Register</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Registration Form -->
+        <div class="auth-container" id="registerContainer" style="display: none;">
+            <div class="auth-branding">
+                <div class="brand-logo">
+                    <i class="fas fa-atom"></i>
+                </div>
+                <div class="brand-text">
+                    <h1>STEM Learn Odisha</h1>
+                    <p>Gamified Learning Platform</p>
+                </div>
+                <div class="brand-features">
+                    <div class="feature">
+                        <i class="fas fa-user-plus"></i>
+                        <p>Join our learning community</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-medal"></i>
+                        <p>Track your progress</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-rocket"></i>
+                        <p>Start your learning journey</p>
+                    </div>
+                </div>
+            </div>
+            <div class="auth-form">
+                <div class="form-header">
+                    <h2 data-translate="register-title">Create an Account</h2>
+                    <p data-translate="register-subtitle">Join us to start your learning adventure</p>
+                </div>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="fullName" data-translate="fullname-label">Full Name</label>
+                        <input type="text" id="fullName" class="form-control" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="grade" data-translate="grade-label">Grade/Standard</label>
+                        <select id="grade" class="form-control" required>
+                            <option value="" disabled selected>Select your grade</option>
+                            <option value="1">Grade 1</option>
+                            <option value="2">Grade 2</option>
+                            <option value="3">Grade 3</option>
+                            <option value="4">Grade 4</option>
+                            <option value="5">Grade 5</option>
+                            <option value="6">Grade 6</option>
+                            <option value="7">Grade 7</option>
+                            <option value="8">Grade 8</option>
+                            <option value="9">Grade 9</option>
+                            <option value="10">Grade 10</option>
+                            <option value="11">Grade 11</option>
+                            <option value="12">Grade 12</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail" data-translate="email-label">Email</label>
+                        <input type="email" id="registerEmail" class="form-control" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword" data-translate="password-label">Password</label>
+                        <div class="password-container">
+                            <input type="password" id="registerPassword" class="form-control" placeholder="Create a password" required>
+                            <button type="button" class="toggle-password" id="registerTogglePassword">
+                                <i class="far fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="password-validation">
+                            <div class="validation-item" id="lengthValidation">
+                                <i class="fas fa-check-circle valid" style="display: none;"></i>
+                                <i class="fas fa-times-circle invalid"></i>
+                                <span data-translate="password-length">At least 8 characters</span>
+                            </div>
+                            <div class="validation-item" id="numberValidation">
+                                <i class="fas fa-check-circle valid" style="display: none;"></i>
+                                <i class="fas fa-times-circle invalid"></i>
+                                <span data-translate="password-number">Contains a number</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword" data-translate="confirm-password-label">Confirm Password</label>
+                        <div class="password-container">
+                            <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm your password" required>
+                            <button type="button" class="toggle-password" id="confirmTogglePassword">
+                                <i class="far fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="password-validation">
+                            <div class="validation-item" id="matchValidation">
+                                <i class="fas fa-check-circle valid" style="display: none;"></i>
+                                <i class="fas fa-times-circle invalid"></i>
+                                <span data-translate="password-match">Passwords match</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label data-translate="profile-picture-label">Profile Picture</label>
+                        <div class="profile-upload">
+                            <div class="profile-preview" id="profilePreview">
+                                <i class="fas fa-user"></i>
+                                <img id="previewImage" src="" alt="Profile Preview">
+                            </div>
+                            <input type="file" id="profilePicture" accept="image/*" style="display: none;">
+                            <button type="button" class="upload-btn" id="uploadButton" data-translate="upload-button">Upload Photo</button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" data-translate="register-button">Register</button>
+                    
+                    <div class="form-footer">
+                        <p data-translate="have-account">Already have an account? <a href="#" id="goToLogin">Login</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle between login and register forms
+        document.getElementById('goToRegister').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('registerContainer').style.display = 'flex';
+        });
+
+        document.getElementById('goToLogin').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('registerContainer').style.display = 'none';
+            document.getElementById('loginContainer').style.display = 'flex';
+        });
+
+        // Toggle password visibility
+        function setupPasswordToggle(inputId, buttonId) {
+            const passwordInput = document.getElementById(inputId);
+            const toggleButton = document.getElementById(buttonId);
+            
+            toggleButton.addEventListener('click', function() {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    toggleButton.innerHTML = '<i class="far fa-eye-slash"></i>';
+                } else {
+                    passwordInput.type = 'password';
+                    toggleButton.innerHTML = '<i class="far fa-eye"></i>';
+                }
+            });
+        }
+
+        setupPasswordToggle('loginPassword', 'loginTogglePassword');
+        setupPasswordToggle('registerPassword', 'registerTogglePassword');
+        setupPasswordToggle('confirmPassword', 'confirmTogglePassword');
+
+        // Profile picture upload and preview
+        document.getElementById('uploadButton').addEventListener('click', function() {
+            document.getElementById('profilePicture').click();
+        });
+
+        document.getElementById('profilePicture').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const preview = document.getElementById('previewImage');
+                    preview.src = event.target.result;
+                    preview.style.display = 'block';
+                    document.querySelector('#profilePreview i').style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Password validation
+        document.getElementById('registerPassword').addEventListener('input', function() {
+            const password = this.value;
+            const lengthValidation = document.getElementById('lengthValidation');
+            const numberValidation = document.getElementById('numberValidation');
+            
+            // Validate length
+            if (password.length >= 8) {
+                lengthValidation.querySelector('.valid').style.display = 'inline';
+                lengthValidation.querySelector('.invalid').style.display = 'none';
+            } else {
+                lengthValidation.querySelector('.valid').style.display = 'none';
+                lengthValidation.querySelector('.invalid').style.display = 'inline';
+            }
+            
+            // Validate number
+            if (/\d/.test(password)) {
+                numberValidation.querySelector('.valid').style.display = 'inline';
+                numberValidation.querySelector('.invalid').style.display = 'none';
+            } else {
+                numberValidation.querySelector('.valid').style.display = 'none';
+                numberValidation.querySelector('.invalid').style.display = 'inline';
+            }
+            
+            // Check if passwords match
+            validatePasswordMatch();
+        });
+
+        document.getElementById('confirmPassword').addEventListener('input', validatePasswordMatch);
+
+        function validatePasswordMatch() {
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const matchValidation = document.getElementById('matchValidation');
+            
+            if (confirmPassword.length > 0 && password === confirmPassword) {
+                matchValidation.querySelector('.valid').style.display = 'inline';
+                matchValidation.querySelector('.invalid').style.display = 'none';
+            } else if (confirmPassword.length > 0) {
+                matchValidation.querySelector('.valid').style.display = 'none';
+                matchValidation.querySelector('.invalid').style.display = 'inline';
+            } else {
+                matchValidation.querySelector('.valid').style.display = 'none';
+                matchValidation.querySelector('.invalid').style.display = 'inline';
+            }
+        }
+
+        // Form submission handlers
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Store user data
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    alert('Login successful!');
+                    // Redirect to dashboard or home page
+                    window.location.href = 'student-dashboard.html';
+                } else {
+                    alert(data.message);
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('An error occurred during login');
+            }
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('fullName', document.getElementById('fullName').value);
+            formData.append('email', document.getElementById('registerEmail').value);
+            formData.append('password', document.getElementById('registerPassword').value);
+            formData.append('grade', document.getElementById('grade').value);
+            
+            const profilePicture = document.getElementById('profilePicture').files[0];
+            if (profilePicture) {
+                formData.append('profilePicture', profilePicture);
+            }
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/register', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Store user data
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    alert('Registration successful!');
+                    // Redirect to dashboard or home page
+                    // window.location.href = 'dashboard.html';
+                } else {
+                    alert(data.message);
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                alert('An error occurred during registration');
+            }
+        });
+
+        // Language toggle
+        document.getElementById('languageToggle').addEventListener('click', function() {
+            document.getElementById('languageOptions').classList.toggle('show');
+        });
+
+        // Language selection
+        document.querySelectorAll('.language-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                switchLanguage(lang);
+                document.getElementById('languageOptions').classList.remove('show');
+            });
+        });
+
+        // Language translations
+        const translations = {
+            en: {
+                'login-title': 'Login to Your Account',
+                'login-subtitle': 'Welcome back! Please enter your details',
+                'email-label': 'Email',
+                'password-label': 'Password',
+                'login-button': 'Login',
+                'forgot-password': 'Forgot Password?',
+                'or': 'Or',
+                'no-account': 'Don\'t have an account?',
+                'register-title': 'Create an Account',
+                'register-subtitle': 'Join us to start your learning adventure',
+                'fullname-label': 'Full Name',
+                'grade-label': 'Grade/Standard',
+                'confirm-password-label': 'Confirm Password',
+                'profile-picture-label': 'Profile Picture',
+                'upload-button': 'Upload Photo',
+                'register-button': 'Register',
+                'have-account': 'Already have an account?',
+                'password-length': 'At least 8 characters',
+                'password-number': 'Contains a number',
+                'password-match': 'Passwords match'
+            },
+            or: {
+                'login-title': 'ଆପଣଙ୍କର ଆକାଉଣ୍ଟକୁ ଲଗଇନ୍ କରନ୍ତୁ',
+                'login-subtitle': 'ପୁନର୍ବାର ସ୍ୱାଗତ! ଦୟାକରି ଆପଣଙ୍କର ବିବରଣୀ ପ୍ରବେଶ କରନ୍ତୁ',
+                'email-label': 'ଇମେଲ୍',
+                'password-label': 'ପାସୱାର୍ଡ',
+                'login-button': 'ଲଗଇନ୍',
+                'forgot-password': 'ପାସୱାର୍ଡ ଭୁଲି ଗଲେ?',
+                'or': 'କିମ୍ବା',
+                'no-account': 'ଆକାଉଣ୍ଟ୍ ନାହିଁ?',
+                'register-title': 'ଏକ ଆକାଉଣ୍ଟ୍ ସୃଷ୍ଟି କରନ୍ତୁ',
+                'register-subtitle': 'ଆପଣଙ୍କର ଶିଖଣ ଯାତ୍ରା ଆରମ୍ଭ କରିବାକୁ ଆମ ସହିତ ଯୋଗଦାନ କରନ୍ତୁ',
+                'fullname-label': 'ପୂରା ନାମ',
+                'grade-label': 'ଶ୍ରେଣୀ/ଷ୍ଟାଣ୍ଡାର୍ଡ',
+                'confirm-password-label': 'ପାସୱାର୍ଡ ନିଶ୍ଚିତ କରନ୍ତୁ',
+                'profile-picture-label': 'ପ୍ରୋଫାଇଲ୍ ଚିତ୍ର',
+                'upload-button': 'ଫଟୋ ଅପଲୋଡ୍ କରନ୍ତୁ',
+                'register-button': 'ନମୋଦିତ କରନ୍ତୁ',
+                'have-account': 'ପୂର୍ବରୁ ଏକ ଆକାଉଣ୍ଟ୍ ଅଛି?',
+                'password-length': 'ଅତିକମରେ ୮ ଅକ୍ଷର',
+                'password-number': 'ଏକ ସଂଖ୍ୟା ଅନ୍ତର୍ଭୁକ୍ତ କରେ',
+                'password-match': 'ପାସୱାର୍ଡ୍ ମେଳ ଖାଉଛି'
+            }
+        };
+
+        function switchLanguage(lang) {
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                element.textContent = translations[lang][key];
+            });
+            
+            if (lang === 'or') {
+                document.body.classList.add('odia-text');
+            } else {
+                document.body.classList.remove('odia-text');
+            }
+        }
+
+        // Close language options when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('#languageToggle') && !e.target.closest('#languageOptions')) {
+                document.getElementById('languageOptions').classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title data-i18n="title">Moving Objects - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+        body { background:#f8fafc; color:#1e293b; line-height:1.6; }
+        .container { width:100%; max-width:1200px; margin:0 auto; padding:0 20px; }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg,#0e2a47 0%,#1a365d 100%);
+            color:white; padding:15px 0; position:sticky; top:0; z-index:100;
+            box-shadow:0 4px 12px rgba(0,0,0,0.1);
+        }
+        .header-content { display:flex; justify-content:space-between; align-items:center; gap:16px; position:relative; }
+        .logo { display:flex; align-items:center; gap:12px; }
+        .logo-icon { font-size:2.2rem; background:white; color:#2a69ac; width:55px; height:55px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+        .logo-text { font-size:1.8rem; font-weight:700; }
+        .logo-text span { color:#38b2ac; font-weight:800; }
+
+        nav ul { display:flex; list-style:none; gap:28px; }
+        nav a { color:white; text-decoration:none; font-weight:500; transition:all .3s ease; padding:8px 12px; border-radius:8px; font-size:1.05rem; }
+        nav a:hover, nav a.active { background: rgba(255,255,255,0.15); transform:translateY(-2px); }
+
+        .mobile-menu-btn { display:none; font-size:1.6rem; background:none; border:none; color:white; cursor:pointer; }
+
+        .language-switcher { display:flex; gap:5px; background:rgba(255,255,255,0.15); border-radius:25px; padding:6px; backdrop-filter: blur(10px); align-items:center; margin-left:16px; }
+        .lang-btn { padding:6px 12px; border:none; background:transparent; border-radius:20px; cursor:pointer; font-size:.85rem; font-weight:500; transition:all .3s ease; color:white; white-space:nowrap; }
+        .lang-btn.active { background: rgba(255,255,255,0.25); color:white; }
+        .lang-btn:hover:not(.active){ background: rgba(255,255,255,0.1); }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(14,42,71,0.85), rgba(26,54,93,0.9)),
+                        url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size:cover; background-position:center; color:white; padding:80px 0; text-align:center; position:relative;
+        }
+        .page-header h1 { font-size:2.8rem; margin-bottom:20px; font-weight:700; text-shadow:0 2px 4px rgba(0,0,0,0.2); }
+        .page-header p { font-size:1.1rem; max-width:800px; margin:0 auto; opacity:0.95; font-weight:300; }
+
+        /* Breadcrumb */
+        .breadcrumb { background:white; padding:15px 0; box-shadow:0 2px 5px rgba(0,0,0,0.05); }
+        .breadcrumb-content { display:flex; align-items:center; gap:10px; }
+        .breadcrumb a { color:#64748b; text-decoration:none; transition:color .3s ease; }
+        .breadcrumb a:hover{ color:#3182ce; }
+
+        /* Content */
+        .science-content { padding:50px 0; }
+        .topic-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; margin-bottom:30px; }
+        .topic-card { background:#f8fafc; border-radius:12px; padding:20px; transition:all .3s ease; border:1px solid #e2e8f0; cursor:pointer; }
+        .topic-card.active { background:#ebf8ff; border-color:#90cdf4; }
+        .topic-card:hover { transform:translateY(-5px); box-shadow:0 10px 20px rgba(0,0,0,0.1); }
+        .topic-icon { font-size:2rem; color:#3182ce; margin-bottom:15px; }
+        .topic-title { font-size:1.2rem; color:#1a365d; margin-bottom:10px; }
+        .topic-desc { color:#64748b; font-size:.95rem; margin-bottom:15px; }
+        .topic-progress { height:8px; background:#e2e8f0; border-radius:4px; overflow:hidden; margin-bottom:10px; }
+        .progress-bar { height:100%; background:#3182ce; border-radius:4px; }
+        .progress-text { font-size:.85rem; color:#64748b; display:flex; justify-content:space-between; }
+
+        .topic-content { background:white; border-radius:15px; padding:30px; margin-bottom:30px; box-shadow:0 5px 15px rgba(0,0,0,0.05); border:1px solid #e2e8f0; }
+        .topic-header { margin-bottom:25px;}
+        .topic-heading { font-size:1.8rem; color:#1a365d; margin-bottom:15px; }
+        .topic-intro { color:#64748b; line-height:1.7; margin-bottom:20px; }
+
+        .info-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:25px; margin-bottom:30px; }
+        .info-card { background:#f8fafc; border-radius:12px; padding:20px; border:1px solid #e2e8f0; }
+        .info-card h3 { color:#1a365d; margin-bottom:15px; font-size:1.2rem; display:flex; align-items:center; gap:10px; }
+        .info-card ul { padding-left:20px; color:#64748b; }
+        .info-card li { margin-bottom:8px; line-height:1.5; }
+
+        .topic-panel { display:none; }
+        .topic-panel.active { display:block; }
+
+        /* Games */
+        .games-section { margin-bottom:30px; }
+        .section-title { font-size:1.5rem; color:#1a365d; margin-bottom:20px; display:flex; align-items:center; gap:10px; }
+        .games-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:25px; }
+        .game-card { background:white; border-radius:15px; overflow:hidden; box-shadow:0 5px 15px rgba(0,0,0,0.05); transition:all .3s ease; border:1px solid #e2e8f0; }
+        .game-card:hover { transform:translateY(-5px); box-shadow:0 10px 25px rgba(0,0,0,0.1); }
+        .game-header { padding:20px; background: linear-gradient(135deg,#3182ce 0%,#2b6cb0 100%); color:white; text-align:center; }
+        .game-level { display:inline-block; padding:5px 15px; background: rgba(255,255,255,0.2); border-radius:20px; font-size:.85rem; margin-bottom:10px; }
+        .game-title { font-size:1.3rem; margin-bottom:10px; }
+        .game-desc { opacity:0.95; font-size:.95rem; }
+        .game-body { padding:20px; }
+        .game-features { margin-bottom:20px; }
+        .game-feature { display:flex; align-items:center; gap:10px; margin-bottom:10px; color:#64748b; font-size:0.9rem; }
+        .game-btn { display:block; width:100%; padding:12px; background:#38b2ac; color:white; border:none; border-radius:8px; font-weight:600; cursor:pointer; transition:all .3s ease; text-align:center; text-decoration:none; }
+        .game-btn:hover{ background:#2c9a94; transform:translateY(-2px); }
+
+        /* Resources */
+        .resources-section { background:white; border-radius:15px; padding:30px; box-shadow:0 5px 15px rgba(0,0,0,0.05); border:1px solid #e2e8f0; }
+        .resources-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; }
+        .resource-card { background:#f8fafc; border-radius:12px; padding:20px; text-align:center; border:1px solid #e2e8f0; transition:all .3s ease; }
+        .resource-card:hover{ transform:translateY(-5px); box-shadow:0 10px 20px rgba(0,0,0,0.1); }
+        .resource-icon { font-size:2.5rem; color:#3182ce; margin-bottom:15px; }
+        .resource-title { font-size:1.1rem; color:#1a365d; margin-bottom:10px; }
+        .download-btn { display:inline-flex; align-items:center; gap:8px; padding:10px 20px; background:#38b2ac; color:white; border:none; border-radius:6px; font-weight:500; cursor:pointer; transition:all .3s ease; text-decoration:none; font-size:.9rem; }
+        .download-btn:hover { background:#2c9a94; transform:translateY(-2px); }
+
+        /* Footer */
+        footer { background: linear-gradient(135deg,#0e2a47 0%,#1a365d 100%); color:white; padding:50px 0 20px; margin-top:50px; }
+        .footer-content { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:40px; margin-bottom:40px; }
+        .footer-logo-icon { font-size:1.8rem; background:#38b2ac; color:white; width:45px; height:45px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+        .copyright { text-align:center; padding-top:20px; border-top:1px solid #2d3748; color:#a0aec0; font-size:0.9rem; }
+
+        /* Responsive */
+        @media (max-width:968px){
+            .topic-cards, .info-grid, .games-grid, .resources-grid { grid-template-columns:1fr; }
+            .header-content { flex-wrap:wrap; }
+            nav { flex:1 1 auto; }
+        }
+        @media (max-width:768px){
+            nav ul { display:none; flex-direction:column; gap:12px; background:#0e2a47; position:absolute; top:60px; right:20px; padding:15px 20px; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.25); min-width:180px; }
+            nav ul.show { display:flex; }
+            .mobile-menu-btn { display:block; }
+            .page-header h1 { font-size:2.2rem; }
+            .language-switcher { order:3; margin-left:0; }
+        }
+
+        /* Indic font */
+        .indic-text { font-family: 'Nirmala UI','Kalinga','Segoe UI', sans-serif; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon" aria-hidden="true"><i class="fas fa-shoe-prints"></i></div>
+                    <div class="logo-text"><span data-i18n="brand">STEM Learn</span> <span>Odisha</span></div>
+                </div>
+
+                <nav>
+                    <ul>
+                        <li><a href="home.html" data-i18n="nav-home">Home</a></li>
+                        <li><a href="science.html" data-i18n="nav-science">Science</a></li>
+                        <li><a href="math.html" data-i18n="nav-math">Math</a></li>
+                        <li><a href="teachers.html" data-i18n="nav-teachers">Teachers</a></li>
+                        <li><a href="about.html" data-i18n="nav-about">About</a></li>
+                        <li><a href="contact.html" data-i18n="nav-contact">Contact</a></li>
+                    </ul>
+                </nav>
+
+                <div class="language-switcher" role="tablist" aria-label="Language switcher">
+                    <button class="lang-btn active" data-lang="en" aria-pressed="true">English</button>
+                    <button class="lang-btn" data-lang="or" aria-pressed="false">ଓଡ଼ିଆ</button>
+                    <button class="lang-btn" data-lang="hi" aria-pressed="false">हिन्दी</button>
+                </div>
+
+                <button class="mobile-menu-btn" aria-label="Toggle navigation menu"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 data-i18n="page-title">Moving Objects</h1>
+            <p data-i18n="page-desc">Learn how we measure motion — length, distance and speed — and try interactive activities to practice.</p>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <a href="home.html" data-i18n="breadcrumb-home">Home</a>
+                <span>/</span>
+                <a href="science.html" data-i18n="breadcrumb-science">Science</a>
+                <span>/</span>
+                <span data-i18n="breadcrumb-moving">Moving Objects</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main -->
+    <section class="science-content">
+        <div class="container">
+
+            <!-- Topic content -->
+            <div class="topic-content">
+                <!-- Moving -->
+                <div class="topic-panel active" data-topic="moving">
+                    <div class="topic-header">
+                        <h2 class="topic-heading" data-i18n="moving-title">Moving Objects — Introduction</h2>
+                        <p class="topic-intro" data-i18n="moving-intro">
+                            Objects are said to be in motion when their position changes with time compared to another object used as reference. Motion is everywhere: walking, cars on a road, a falling leaf. We will learn how to describe motion and measure it.
+                        </p>
+                    </div>
+
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <h3><i class="fas fa-info-circle"></i> <span data-i18n="moving-concepts">Key concepts</span></h3>
+                            <ul>
+                                <li data-i18n="moving-point1">Reference point — we need something fixed to say whether an object moved.</li>
+                                <li data-i18n="moving-point2">Distance vs displacement — distance is path length; displacement is straight-line change in position.</li>
+                                <li data-i18n="moving-point3">Types of motion — linear, circular, oscillatory.</li>
+                            </ul>
+                        </div>
+
+                        <div class="info-card">
+                            <h3><i class="fas fa-lightbulb"></i> <span data-i18n="moving-why">Why it matters</span></h3>
+                            <ul>
+                                <li data-i18n="moving-why1">Describing motion helps us design safe roads, sports strategies and machines.</li>
+                                <li data-i18n="moving-why2">Understanding measurement and speed is useful in everyday life and science.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Measurement -->
+                <div class="topic-panel" data-topic="measurement">
+                    <div class="topic-header">
+                        <h2 class="topic-heading" data-i18n="measure-title">Measurement of length & distance</h2>
+                        <p class="topic-intro" data-i18n="measure-intro">
+                            We measure how far objects are or how long they are using units and tools. Learn SI units, tools like ruler, measuring tape, and how to measure carefully.
+                        </p>
+                    </div>
+
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <h3><i class="fas fa-ruler-combined"></i> <span data-i18n="measure-basic">Basic rules</span></h3>
+                            <ul>
+                                <li data-i18n="measure-1">Standard unit in SI: metre (m). Subunits: centimetre (cm), millimetre (mm).</li>
+                                <li data-i18n="measure-2">Use the correct tool: ruler for small lengths, tape for larger distances.</li>
+                                <li data-i18n="measure-3">Read the measuring scale from the zero mark; keep the instrument straight for accurate reading.</li>
+                            </ul>
+                        </div>
+
+                        <div class="info-card">
+                            <h3><i class="fas fa-wrench"></i> <span data-i18n="measure-practice">Practical tips & activities</span></h3>
+                            <ul>
+                                <li data-i18n="measure-act1">Activity: measure the length of a book in cm using a ruler — record three readings and take the average.</li>
+                                <li data-i18n="measure-act2">Estimate first, then measure — improves skill in judging distances.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Speed -->
+                <div class="topic-panel" data-topic="speed">
+                    <div class="topic-header">
+                        <h2 class="topic-heading" data-i18n="speed-title">Speed</h2>
+                        <p class="topic-intro" data-i18n="speed-intro">
+                            Speed tells how fast an object moves. We'll learn the formula, units and simple calculations to find speed from distance and time.
+                        </p>
+                    </div>
+
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <h3><i class="fas fa-calculator"></i> <span data-i18n="speed-basic">Basic formula</span></h3>
+                            <ul>
+                                <li data-i18n="speed-1">Speed = Distance ÷ Time.</li>
+                                <li data-i18n="speed-2">SI unit: metres per second (m/s). Common unit: kilometres per hour (km/h).</li>
+                                <li data-i18n="speed-3">Convert: 1 m/s = 3.6 km/h (multiply by 3.6).</li>
+                            </ul>
+                        </div>
+
+                        <div class="info-card">
+                            <h3><i class="fas fa-play-circle"></i> <span data-i18n="speed-examples">Examples & practice</span></h3>
+                            <ul>
+                                <li data-i18n="speed-ex1">If a runner covers 100 m in 20 s, speed = 100 ÷ 20 = 5 m/s.</li>
+                                <li data-i18n="speed-ex2">Activity: time a toy car over 2 m and calculate speed in m/s.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Games Section (only 2 games) -->
+                <div class="games-section">
+                    <h2 class="section-title"><i class="fas fa-gamepad"></i> <span data-i18n="games-title">Interactive Learning Games</span></h2>
+
+                    <div class="games-grid">
+                        <div class="game-card">
+                            <div class="game-header">
+                                <div class="game-level" data-i18n="level-basic">Basic</div>
+                                <h3 class="game-title" data-i18n="game1-title">Measure It!</h3>
+                                <p class="game-desc" data-i18n="game1-desc">Practice measuring objects using rulers and tapes — score points for accuracy.</p>
+                            </div>
+                            <div class="game-body">
+                                <div class="game-features">
+                                    <div class="game-feature"><i class="fas fa-star"></i><span data-i18n="game1-feature1">Estimate then measure to earn bonus points.</span></div>
+                                    <div class="game-feature"><i class="fas fa-clock"></i><span data-i18n="game1-feature2">10–15 minutes gameplay.</span></div>
+                                    <div class="game-feature"><i class="fas fa-trophy"></i><span data-i18n="game1-feature3">Earn up to 100 points.</span></div>
+                                </div>
+                                <a href="game6.4.1.html" class="game-btn" data-i18n="play-game">Play Game</a>
+                            </div>
+                        </div>
+
+                        <div class="game-card">
+                            <div class="game-header">
+                                <div class="game-level" data-i18n="level-intermediate">Intermediate</div>
+                                <h3 class="game-title" data-i18n="game2-title">Speed Challenge</h3>
+                                <p class="game-desc" data-i18n="game2-desc">Calculate speed from distance and time; match units and convert between m/s and km/h.</p>
+                            </div>
+                            <div class="game-body">
+                                <div class="game-features">
+                                    <div class="game-feature"><i class="fas fa-star"></i><span data-i18n="game2-feature1">Solve time-distance-speed puzzles.</span></div>
+                                    <div class="game-feature"><i class="fas fa-clock"></i><span data-i18n="game2-feature2">15–20 minutes gameplay.</span></div>
+                                    <div class="game-feature"><i class="fas fa-trophy"></i><span data-i18n="game2-feature3">Earn up to 150 points.</span></div>
+                                </div>
+                                <a href="game6.4.2.html" class="game-btn" data-i18n="play-game">Play Game</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resources -->
+                <div class="resources-section">
+                    <h2 class="section-title"><i class="fas fa-download"></i> <span data-i18n="resources-title">Learning Resources</span></h2>
+
+                    <div class="resources-grid">
+                        <div class="resource-card">
+                            <div class="resource-icon" aria-hidden="true"><i class="fas fa-file-pdf"></i></div>
+                            <h3 class="resource-title" data-i18n="resource1-title">Study Notes (English)</h3>
+                            <p class="resource-desc" data-i18n="resource1-desc">Complete notes on Moving Objects, Measurement and Speed (English).</p>
+                            <a href="#" class="download-btn" data-i18n="download-english"><i class="fas fa-download"></i><span>Download (English)</span></a>
+                        </div>
+
+                        <div class="resource-card">
+                            <div class="resource-icon" aria-hidden="true"><i class="fas fa-file-alt"></i></div>
+                            <h3 class="resource-title" data-i18n="resource2-title">Study Notes (Odia)</h3>
+                            <p class="resource-desc" data-i18n="resource2-desc">Odia notes for Moving Objects & Speed.</p>
+                            <a href="#" class="download-btn" data-i18n="download-odia"><i class="fas fa-download"></i><span>Download (Odia)</span></a>
+                        </div>
+
+                        <div class="resource-card">
+                            <div class="resource-icon" aria-hidden="true"><i class="fas fa-file-lines"></i></div>
+                            <h3 class="resource-title" data-i18n="resource3-title">Study Notes (Hindi)</h3>
+                            <p class="resource-desc" data-i18n="resource3-desc">Hindi notes on Measurement and Speed.</p>
+                            <a href="#" class="download-btn" data-i18n="download-hindi"><i class="fas fa-download"></i><span>Download (Hindi)</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+                        <div class="footer-logo-icon" aria-hidden="true"><i class="fas fa-shoe-prints"></i></div>
+                        <div style="font-size:1.6rem;font-weight:700;" data-i18n="brand-footer">STEM Learn Odisha</div>
+                    </div>
+                    <p data-i18n="footer-desc">Making Science and Mathematics education engaging and relevant for students in Odisha through localized content and interactive learning.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h3 data-i18n="quick-links">Quick Links</h3>
+                    <ul style="list-style:none;">
+                        <li><a href="home.html"><i class="fas fa-home"></i> <span data-i18n="nav-home">Home</span></a></li>
+                        <li><a href="science.html"><i class="fas fa-flask"></i> <span data-i18n="nav-science">Science</span></a></li>
+                        <li><a href="math.html"><i class="fas fa-calculator"></i> <span data-i18n="nav-math">Math</span></a></li>
+                        <li><a href="teachers.html"><i class="fas fa-chalkboard-teacher"></i> <span data-i18n="nav-teachers">Teachers</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h3 data-i18n="contact-us">Contact Us</h3>
+                    <ul style="list-style:none;">
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> <span data-i18n="footer-address">Department of Education, Bhubaneswar</span></a></li>
+                        <li><a href="tel:+916741234567"><i class="fas fa-phone"></i> +91 674 123 4567</a></li>
+                        <li><a href="mailto:info@stemlearnodisha.com"><i class="fas fa-envelope"></i> info@stemlearnodisha.com</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p data-i18n="copyright">© 2023 STEM Learn Odisha. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Basic i18n and UI behavior
+        let currentLanguage = 'en';
+
+        // translations for Odia (or) and Hindi (hi) focused on keys used in this page
+        const translations = {
+            or: {
+                'title': 'ଚଳୁଥିବା ବସ୍ତୁମାନେ - STEM Learn Odisha',
+                'brand': 'STEM Learn',
+                'brand-footer': 'STEM Learn Odisha',
+                'page-title': 'ଚଳୁଥିବା ବସ୍ତୁମାନେ',
+                'page-desc': 'ଆମେ କିପରି ଗତିକୁ ମାପିଥାଉ — ଦୂରତା, ଲମ୍ବାଇ ଏବଂ ବେଗ — ଏବଂ ପ୍ରାୟୋଗିକ କାର୍ଯ୍ୟରେ ଅଭ୍ୟାସ କରନ୍ତୁ।',
+                'breadcrumb-home': 'ମୁଖ୍ୟ ପୃଷ୍ଠା',
+                'breadcrumb-science': 'ବିଜ୍ଞାନ',
+                'breadcrumb-moving': 'ଚଳୁଥିବା ବସ୍ତୁମାନେ',
+                'nav-home':'ମୁଖ୍ୟ ପୃଷ୍ଠା', 'nav-science':'ବିଜ୍ଞାନ','nav-math':'ଗଣିତ','nav-teachers':'ଶିକ୍ଷକ','nav-about':'ବିଷୟରେ','nav-contact':'ଯୋଗାଯୋଗ',
+                'topic1-title': 'ଚଳୁଥିବା ବସ୍ତୁମାନେ',
+                'topic1-desc': 'ଗତି କାହାକୁ କୁହାଯାଏ? ପ୍ରତ୍ୟେକ ଦୃଶ୍ୟରେ ଗତି।',
+                'topic2-title': 'ଲମ୍ବାଇ ଓ ଦୂରତାର ମାପ',
+                'topic2-desc': 'ଏକକ, ମାପ ଉପକରଣ ଏବଂ ଅଭ୍ୟାସ ଟିପ୍ସ।',
+                'topic3-title': 'ବେଗ',
+                'topic3-desc': 'ଏକ ଜିନିଷ କେତେ ତ୍ବରିତ ଭାବରେ ଗତି କରେ — ସୂତ୍ର ଏବଂ ଉଦାହରଣ।',
+                'progress-label': 'ପ୍ରଗତି',
+                'moving-title': 'ଚଳୁଥିବା ବସ୍ତୁମାନେ — ପରିଚୟ',
+                'moving-intro': 'ଯେତେବେଳେ ଗୋଟିଏ ବସ୍ତୁର ଅବସ୍ଥା ଅନ୍ୟ ଗୋଟିଏ ସନ୍ଦର୍ଭ ସହିତ ସମୟର ସହିତ ପରିବର୍ତ୍ତିତ ହୁଏ, ସେତେବେଳେ ଦାହାକୁ ଗତି କୁହାଯାଏ।',
+                'moving-concepts': 'ମୂଳ ଧାରଣା',
+                'moving-point1': 'ସନ୍ଦର୍ଭ ବିନା ଗତି କହିବା ଅର୍ଥହୀନ।',
+                'moving-point2': 'ଦୂରତା ଏବଂ ଚୟନ — ଦୂରତା ପଥ; ଚୟନ ସରଳ ରେଖା ଲକ୍ଷ୍ୟ।',
+                'moving-point3': 'ଗତିର ପ୍ରକାର — ସରଳ, ଘୂର୍ଣ୍ଣ, ଓସିଲେଟରୀ।',
+                'moving-why': 'କାହିଁକି ଜରୁରୀ',
+                'moving-why1': 'ଗତି ବର୍ଣ୍ଣନା ସୁରକ୍ଷିତ ସଡ଼କ, କ୍ରୀଡ଼ା ଓ ଯନ୍ତ୍ର ତିଆରିରେ ସାହାଯ୍ୟକାରୀ।',
+                'moving-why2': 'ମାପ ଏବଂ ବେଗ ଜୀବନ ଏବଂ ବିଜ୍ଞାନରେ ଉପଯୋଗୀ।',
+                'measure-title': 'ଲମ୍ବାଇ ଓ ଦୂରତାର ମାପ',
+                'measure-intro': 'ମାପ କରିବା ପାଇଁ ଏକକ ଓ ଉପକରଣ ଆବଶ୍ୟକ। SI ଏକକ ହେଉଛି ମିଟର୍ (m)।',
+                'measure-basic': 'ମୂଳ ନିୟମ',
+                'measure-1': 'SI ଏକକ: ମିଟର୍ (m). ଉପଏକକ: ସେଣ୍ଟିମିଟର (cm), ମିଲିମିଟର (mm).',
+                'measure-2': 'କୌଣସି ଲମ୍ବାଇ ପାଇଁ ଉପଯୁକ୍ତ ମାପ ଉପକରଣ ବ୍ୟବହାର କରନ୍ତୁ।',
+                'measure-3': 'ଠିକ ଭ୍ରମଣ ପାଇଁ ମାପ ଉପକରଣକୁ ସିଦ୍ଧା ଧରନ୍ତୁ।',
+                'measure-practice': 'ପ୍ରାୟୋଗିକ ଟିପ୍ସ',
+                'measure-act1': 'କାର୍ଯ୍ୟ: ଏକ ପୁସ୍ତକର ଲମ୍ବାଇ cm ରେ ମାପନ୍ତୁ — ତିନୋଟି ମାପ ନିଅନ୍ତୁ ଏବଂ ମଧ୍ୟମ ନିଅନ୍ତୁ।',
+                'measure-act2': 'ପ୍ରଥମ ଅନୁମାନ କରନ୍ତୁ, ଫିରେ ମାପନ୍ତୁ — ଅନୁମାନ କୁ ଭଲ କରିବ।',
+                'speed-title': 'ବେଗ',
+                'speed-intro': 'ବେଗ କହେ ଗତିର ଦ୍ରୁତି — ଆମେ ସଙ୍କ୍ଷେପରେ ସୂତ୍ର ଓ ଉଦାହରଣ ସହିତ ଶିଖିବୁ ।',
+                'speed-basic': 'ମୂଳ ସୂତ୍ର',
+                'speed-1': 'Speed = Distance ÷ Time.',
+                'speed-2': 'SI ଏକକ: m/s. ଖଣ୍ଡଶବ୍ଦ: km/h.',
+                'speed-3': 'Convert: 1 m/s = 3.6 km/h.',
+                'speed-examples': 'ଉଦାହରଣ',
+                'speed-ex1': 'ଯଦି ଏକ ଦୌଡ଼ାଳୀ 100 m 20 s ରେ ଯାଏ, speed = 5 m/s.',
+                'speed-ex2': 'କାର୍ଯ୍ୟ: ଖେଳନାଗାଡ଼ି 2 m ଖୋଲା ଓ ମାପ କରନ୍ତୁ।',
+                'games-title': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ ଖେଳ',
+                'level-basic': 'ମୌଳିକ',
+                'level-intermediate': 'ମଧ୍ୟମ',
+                'game1-title': 'ମାପନ୍ତୁ!',
+                'game1-desc': 'ରୁଲର୍/ଟେପ୍ ଦ୍ୱାରା ଅବଜେକ୍ଟ ମାପନ୍ତୁ ଏବଂ ସଠିକତାରେ ପଏଣ୍ଟ ପାଆନ୍ତୁ।',
+                'game1-feature1': 'ଅନୁମାନ ପରେ ମାପନ୍ତୁ — ବୋନସ ପାଆନ୍ତୁ।',
+                'game1-feature2': '10–15 ମିନିଟ୍ ଖେଳ।',
+                'game1-feature3': '100 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ।',
+                'game2-title': 'ବେଗ ଚ୍ୟାଲେଞ୍ଜ୍',
+                'game2-desc': 'ଦୂରତା ଏବଂ ସମୟରୁ ବେଗ ହିସାବ କରନ୍ତୁ ଏବଂ ଏକକ ରୂପାନ୍ତରଣ କରନ୍ତୁ।',
+                'game2-feature1': 'ସମସ୍ୟା ସମାଧାନ ଏବଂ ଏକକ ରୂପାନ୍ତରଣ।',
+                'game2-feature2': '15–20 ମିନିଟ୍ ଖେଳ।',
+                'game2-feature3': '150 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ।',
+                'play-game': 'ଖେଳନ୍ତୁ',
+                'resources-title': 'ଶିକ୍ଷଣ ସମ୍ବଳ',
+                'resource1-title': 'ଅଧ୍ୟୟନ ଟିପ୍ପଣୀ (ଇଂରାଜୀ)',
+                'resource1-desc': 'Moving Objects, Measurement and Speed — English notes.',
+                'download-english': 'ଡାଉନଲୋଡ୍ (ଇଂରାଜୀ)',
+                'resource2-title': 'ଅଧ୍ୟୟନ ଟିପ୍ପଣୀ (ଓଡ଼ିଆ)',
+                'resource2-desc': 'Moving Objects ଓଡ଼ିଆ ଟିପ୍ପଣୀ।',
+                'download-odia': 'ଡାଉନଲୋଡ୍ (ଓଡ଼ିଆ)',
+                'resource3-title': 'ଅଧ୍ୟୟନ ଟିପ୍ପଣୀ (ହିନ୍ଦୀ)',
+                'resource3-desc': 'Moving Objects हिन्दी नोट्स।',
+                'download-hindi': 'ଡାଉନଲୋଡ୍ (ହିନ୍ଦୀ)',
+                'footer-desc': 'ଓଡ଼ିଶାର ଛାତ୍ରଛାତ୍ରୀଙ୍କ ପାଇଁ ସ୍ଥାନୀୟ ବିଷୟବସ୍ତୁ ଏବଂ ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷା।',
+                'quick-links': 'ଶୀଘ୍ର ଲିଙ୍କ୍',
+                'contact-us': 'ଯୋଗାଯୋଗ',
+                'footer-address': 'ଶିକ୍ଷା ବିଭାଗ, ଭୁବନେଶ୍ଵର',
+                'copyright': '© 2023 STEM Learn Odisha. ସମସ୍ତ ଅଧିକାର ସଂରକ୍ଷିତ।'
+            },
+            hi: {
+                'title': 'गतिशील वस्तुएँ - STEM Learn Odisha',
+                'brand': 'STEM Learn',
+                'brand-footer': 'STEM Learn Odisha',
+                'page-title': 'गतिशील वस्तुएँ',
+                'page-desc': 'हम यह सीखेंगे कि गति को कैसे मापते हैं — लंबाई, दूरी और वेग — तथा अभ्यास करें।',
+                'breadcrumb-home': 'मुख्य पृष्ठ',
+                'breadcrumb-science': 'विज्ञान',
+                'breadcrumb-moving': 'गतिशील वस्तुएँ',
+                'nav-home':'मुख्य पृष्ठ','nav-science':'विज्ञान','nav-math':'गणित','nav-teachers':'शिक्षक','nav-about':'के बारे में','nav-contact':'संपर्क',
+                'topic1-title': 'गतिशील वस्तुएँ',
+                'topic1-desc': 'गति क्या है? रोज़मर्रा के उदाहरण।',
+                'topic2-title': 'लंबाई और दूरी का मापन',
+                'topic2-desc': 'इकाइयाँ, उपकरण और माप के टिप्स।',
+                'topic3-title': 'वेग',
+                'topic3-desc': 'किसी वस्तु की गति की तीव्रता — सूत्र और उदाहरण।',
+                'progress-label': 'प्रगति',
+                'moving-title': 'गतिशील वस्तुएँ — परिचय',
+                'moving-intro': 'जब किसी वस्तु की स्थिति किसी नियत संदर्भ के सापेक्ष समय के साथ बदलती है, तब वह गतिशील मानी जाती है।',
+                'moving-concepts': 'प्रमुख धारणाएँ',
+                'moving-point1': 'संदर्भ बिंदु आवश्यक है।',
+                'moving-point2': 'दूरी बनाम विस्थापन — दूरी पथ, विस्थापन सीधी रेखा।',
+                'moving-point3': 'गति के प्रकार — रेखीय, परिकीय, दोलन।',
+                'moving-why': 'महत्त्व',
+                'moving-why1': 'गति का वर्णन सड़क सुरक्षा, खेल और मशीनों में मदद करता है।',
+                'moving-why2': 'मापन और वेग दैनिक जीवन और विज्ञान में उपयोगी हैं।',
+                'measure-title': 'लंबाई और दूरी का मापन',
+                'measure-intro': 'माप के लिए मानक इकाइयाँ और उपकरण ज़रूरी हैं। SI इकाई मीटर (m) है।',
+                'measure-basic': 'मूल नियम',
+                'measure-1': 'SI इकाई: मीटर (m). उपइकाइयाँ: सेंटीमीटर (cm), मिलीमीटर (mm).',
+                'measure-2': 'उपयुक्त उपकरण चुनें: छोटी लंबाई के लिए रूलर, बड़ी दूरी के लिए मीज़ टेप।',
+                'measure-3': 'माप करते समय उपकरण को सीधा रखें और शून्य मार्क से पढ़ें।',
+                'measure-practice': 'व्यावहारिक टिप्स',
+                'measure-act1': 'क्रिया: किसी पुस्तक की लंबाई cm में मापें — तीन बार नापकर औसत लें।',
+                'measure-act2': 'पहले अनुमान लगाएँ, फिर मापें — अनुमान बेहतर होता है।',
+                'speed-title': 'वेग',
+                'speed-intro': 'वेग बताता है कि कोई वस्तु कितनी तेज़ी से चलती है। सूत्र और उदाहरण सीखें।',
+                'speed-basic': 'मूल सूत्र',
+                'speed-1': 'Speed = Distance ÷ Time.',
+                'speed-2': 'SI इकाई: m/s. सामान्य इकाई: km/h.',
+                'speed-3': 'रुपांतरण: 1 m/s = 3.6 km/h.',
+                'speed-examples': 'उदाहरण',
+                'speed-ex1': 'यदि धावक 100 m 20 s में तय करता है, speed = 5 m/s.',
+                'speed-ex2': 'गतिविधि: खिलौना कार 2 m में कितना समय लेती है, माप कर वेग निकालें।',
+                'games-title': 'इंटरैक्टिव गेम्स',
+                'level-basic': 'आसान',
+                'level-intermediate': 'मध्यम',
+                'game1-title': 'Measure It!',
+                'game1-desc': 'रूलर/टेप से वस्तुओं को मापो और सही नाप पर अंक पाओ।',
+                'game1-feature1': 'पहले अनुमान करो, फिर मापो — बोनस अंक।',
+                'game1-feature2': '10–15 मिनट।',
+                'game1-feature3': '100 अंक तक।',
+                'game2-title': 'Speed Challenge',
+                'game2-desc': 'दूरी और समय से वेग निकालो और इकाइयाँ बदलिए।',
+                'game2-feature1': 'समस्याएँ हल करो और इकाई बदलो।',
+                'game2-feature2': '15–20 मिनट।',
+                'game2-feature3': '150 अंक तक।',
+                'play-game': 'गेम खेलें',
+                'resources-title': 'संसाधन',
+                'resource1-title': 'Study Notes (English)',
+                'resource1-desc': 'Moving Objects, Measurement and Speed — English notes.',
+                'download-english': 'Download (English)',
+                'resource2-title': 'Study Notes (Odia)',
+                'resource2-desc': 'Moving Objects ଓଡ଼ିଆ ଟିପ୍ପଣୀ।',
+                'download-odia': 'Download (ଓଡ଼ିଆ)',
+                'resource3-title': 'Study Notes (Hindi)',
+                'resource3-desc': 'Moving Objects हिन्दी नोट्स।',
+                'download-hindi': 'Download (हिन्दी)',
+                'footer-desc': 'स्थानीय सामग्री और इंटरैक्टिव गतिविधियों के माध्यम से ओडिशा के छात्रों के लिए विज्ञान और गणित।',
+                'quick-links': 'Quick Links',
+                'contact-us': 'Contact Us',
+                'footer-address': 'Department of Education, Bhubaneswar',
+                'copyright': '© 2023 STEM Learn Odisha. All rights reserved.'
+            }
+        };
+
+        // gather elements and store original English text
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const i18nElements = document.querySelectorAll('[data-i18n]');
+        i18nElements.forEach(el => el.setAttribute('data-i18n-en', el.textContent.trim()));
+
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            langButtons.forEach(btn => {
+                const is = btn.getAttribute('data-lang') === lang;
+                btn.classList.toggle('active', is);
+                btn.setAttribute('aria-pressed', is ? 'true' : 'false');
+            });
+            i18nElements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                const original = el.getAttribute('data-i18n-en') || '';
+                if (lang === 'en') {
+                    el.textContent = original;
+                } else {
+                    const t = translations[lang] && translations[lang][key];
+                    el.textContent = t || original;
+                }
+            });
+            // toggle Indic font class for Odia/Hindi
+            if (lang === 'or' || lang === 'hi') document.body.classList.add('indic-text'); else document.body.classList.remove('indic-text');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // language switching
+            langButtons.forEach(btn => btn.addEventListener('click', () => switchLanguage(btn.getAttribute('data-lang'))));
+
+            // mobile menu
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navList = document.querySelector('header nav ul');
+            if (mobileMenuBtn && navList) {
+                mobileMenuBtn.addEventListener('click', () => navList.classList.toggle('show'));
+            }
+
+            // topic switching
+            const topicCards = document.querySelectorAll('.topic-card');
+            const topicPanels = document.querySelectorAll('.topic-panel');
+            topicCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const topic = card.getAttribute('data-topic');
+                    topicCards.forEach(c => c.classList.toggle('active', c === card));
+                    topicPanels.forEach(panel => panel.classList.toggle('active', panel.getAttribute('data-topic') === topic));
+                    // keep page position stable (no scrollIntoView)
+                });
+            });
+
+            // default language
+            switchLanguage('en');
+        });
+    </script>
+</body>
+</html>

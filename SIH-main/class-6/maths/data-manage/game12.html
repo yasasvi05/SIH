@@ -1,0 +1,2182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Detective - STEM Learn Odisha</title>
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* BASE STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background-color: #f0f7ff;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+       
+        /* MODAL STYLES */
+        .game-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        .modal-title {
+            color: #1a365d;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        .modal-text {
+            font-size: 1rem;
+            color: #4a5568;
+            margin-bottom: 25px;
+        }
+        .modal-btn {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .modal-btn:hover {
+            background: #3182ce;
+        }
+        .modal-btn:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+        }
+
+        /* HEADER & NAVIGATION */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+       
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-icon {
+            font-size: 2.2rem;
+            background: white;
+            color: #2a69ac;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .logo-text span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+       
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            white-space: nowrap;
+        }
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* LANGUAGE TOGGLE */
+        .language-switcher {
+            display: flex;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .lang-btn {
+            padding: 6px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: white;
+        }
+        .lang-btn.active {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+        .lang-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.6rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            margin-left: 20px;
+        }
+
+        /* GAME HEADER */
+        .game-header {
+            background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9));
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        /* GAME STATS */
+        #game-stats-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px 25px;
+            margin: -30px auto 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+            max-width: 95%;
+        }
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .score-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .score, .level-info {
+            background: #f7fafc;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border-left: 4px solid #4299e1;
+            min-width: 180px;
+        }
+        .level-info {
+            border-left-color: #38a169;
+        }
+        .score-value, .level-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1a365d;
+            display: block;
+            margin-top: 5px;
+        }
+        .score-label, .level-label {
+            font-size: 0.9rem;
+            color: #4a5568;
+            font-weight: 500;
+            display: block;
+        }
+        .progress-container {
+            width: 100%;
+            background: #e2e8f0;
+            border-radius: 10px;
+            height: 12px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            background: linear-gradient(to right, #4299e1, #38a169);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* LEVEL SELECTION */
+        .level-selection {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 40px 0;
+            flex-wrap: wrap;
+        }
+        .level-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 250px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            border: 3px solid #3182ce;
+            position: relative;
+        }
+        .level-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        .level-card h3 {
+            margin-bottom: 5px;
+            color: #1a365d;
+        }
+        .level-card p {
+            flex-grow: 1;
+            margin-bottom: 20px;
+            color: #4a5568;
+            line-height: 1.5;
+        }
+        .level-card.locked {
+            opacity: 0.8;
+            cursor: not-allowed;
+            border-color: #e2e8f0;
+        }
+        .lock-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: #a0aec0;
+            z-index: 10;
+            pointer-events: none;
+        }
+       
+        .level-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            min-height: 500px;
+        }
+        .feedback {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 15px;
+            padding: 10px 20px;
+            border-radius: 8px;
+        }
+        .feedback.correct {
+            color: #38a169;
+            background: #f0fff4;
+        }
+        .feedback.wrong {
+            color: #e53e3e;
+            background: #fff5f5;
+        }
+        .target-box {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            border: 2px dashed #4299e1;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        .target-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a365d;
+        }
+
+        /* LEVEL 1: DATA COLLECTOR */
+        .items-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+            width: 100%;
+            max-width: 900px;
+        }
+       
+        .data-item {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+            cursor: grab;
+            transition: all 0.3s ease;
+            border: 2px solid #4299e1;
+            user-select: none;
+            height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+       
+        .data-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+            background: #f0f9ff;
+        }
+       
+        .data-item:active {
+            cursor: grabbing;
+        }
+       
+        .item-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+       
+        .item-name {
+            font-weight: 600;
+            margin-bottom: 3px;
+            color: #1a365d;
+            font-size: 1rem;
+        }
+       
+        .item-details {
+            font-size: 0.85rem;
+            color: #4a5568;
+            margin: 2px 0;
+        }
+       
+        .categories-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+            width: 100%;
+            max-width: 900px;
+        }
+       
+        .category-box {
+            background: #e2e8f0;
+            padding: 25px;
+            border-radius: 10px;
+            min-height: 200px;
+            border: 3px dashed #4299e1;
+            transition: background-color 0.3s;
+        }
+       
+        .category-box.drag-over {
+            background: #dbeafe;
+            border-color: #1e40af;
+        }
+       
+        .category-title {
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #1a365d;
+            font-size: 1.2rem;
+        }
+       
+        .category-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            min-height: 150px;
+        }
+       
+        .category-item {
+            background: white;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 110px;
+            border: 1px solid #cbd5e1;
+        }
+       
+        /* LEVEL 2: DATA ANALYZER */
+        .marks-table {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+       
+        .marks-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+       
+        .marks-table th {
+            background: #2d3748;
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-weight: 600;
+        }
+       
+        .marks-table td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+       
+        .marks-table tr:hover {
+            background: #f7fafc;
+        }
+       
+        .question-box {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+       
+        .question {
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+       
+        .answer-input {
+            padding: 10px;
+            border: 2px solid #4299e1;
+            border-radius: 5px;
+            width: 200px;
+            margin-right: 10px;
+        }
+       
+        /* LEVEL 3: DATA STRUCTURE MASTER */
+        .data-structure-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+        }
+       
+        .data-array {
+            background: #2d3748;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            min-height: 100px;
+        }
+       
+        .array-item {
+            background: #4299e1;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: grab;
+            user-select: none;
+            min-width: 60px;
+            text-align: center;
+        }
+       
+        .array-item:hover {
+            background: #3182ce;
+        }
+       
+        .array-item:active {
+            cursor: grabbing;
+        }
+       
+        .structure-box {
+            background: #e2e8f0;
+            padding: 25px;
+            border-radius: 10px;
+            min-height: 150px;
+            border: 3px dashed #4299e1;
+            transition: background-color 0.3s;
+        }
+       
+        .structure-box.drag-over {
+            background: #dbeafe;
+            border-color: #1e40af;
+        }
+       
+        .structure-title {
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #1a365d;
+            font-size: 1.2rem;
+        }
+       
+        .structure-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            min-height: 100px;
+        }
+       
+        /* FOOTER */
+        footer {
+            background: #1a365d;
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+        .copyright {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            nav {
+                display: none;
+            }
+            nav.active {
+                display: block;
+            }
+            .level-card {
+                width: 100%;
+                max-width: 350px;
+            }
+            .game-stats {
+                flex-direction: column;
+                gap: 15px;
+                align-items: stretch;
+            }
+            .score-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .score, .level-info {
+                width: 100%;
+                min-width: auto;
+            }
+            .items-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            .categories-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .data-item {
+                height: 130px;
+                padding: 12px;
+            }
+            .marks-table {
+                font-size: 0.9rem;
+                overflow-x: auto;
+            }
+            .marks-table th, .marks-table td {
+                padding: 8px 5px;
+            }
+        }
+       
+        @media (max-width: 480px) {
+            .items-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            .data-item {
+                height: 120px;
+                padding: 10px;
+            }
+            .item-icon {
+                font-size: 1.8rem;
+            }
+            .item-name {
+                font-size: 0.9rem;
+            }
+            .item-details {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+               
+                <div class="logo">
+                    <div class="logo-icon"><i class="fas fa-database"></i></div>
+                    <div class="logo-text">STEM Learn <span style="color: #38b2ac;">Odisha</span></div>
+                </div>
+
+                <div class="nav-container">
+                    <nav>
+                        <ul>
+                            <li><a href="#" data-i18n="nav_dashboard">Dashboard</a></li>
+                            <li><a href="#" data-i18n="nav_about">About</a></li>
+                            <li><a href="#" data-i18n="nav_contact">Contact</a></li>
+                        </ul>
+                    </nav>
+
+                    <div class="language-switcher">
+                        <button class="lang-btn active" data-lang="en">English</button>
+                        <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+                    </div>
+
+                    <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+                </div>
+            </div>
+        </div>
+    </header>
+   
+    <!-- COMPLETION MODAL -->
+    <div class="game-modal" id="completion-modal">
+        <div class="modal-content">
+            <h2 class="modal-title" data-i18n="modal_complete_title">Level Complete!</h2>
+            <p class="modal-text" data-i18n="modal_complete_text">Congratulations! You earned points and unlocked the next challenge.</p>
+            <button class="modal-btn" id="next-level-btn" data-i18n="btn_next_level">Go to Level Selection</button>
+        </div>
+    </div>
+   
+    <!-- GAME OVER MODAL -->
+    <div class="game-modal" id="game-over-modal">
+        <div class="modal-content">
+            <i class="fas fa-trophy" style="font-size: 3rem; color: #38a169; margin-bottom: 15px;"></i>
+            <h2 class="modal-title" data-i18n="modal_gameover_title">Quest Complete!</h2>
+            <p class="modal-text">
+                <span data-i18n="modal_gameover_text">You have mastered all three levels of the Data Detective Challenge! Your final score is </span>
+                <span id="final-score" style="font-weight: 700; color: #1a365d;">0</span>.
+            </p>
+            <button class="modal-btn" onclick="location.reload()" data-i18n="btn_start_over">Start Over</button>
+        </div>
+    </div>
+   
+    <!-- GAME HEADER -->
+    <section class="game-header" id="game-header">
+        <div class="container">
+            <h1 data-i18n="title_header">Data Detective Challenge: Class 6</h1>
+            <p data-i18n="subtitle_header">Master data collection, analysis, and organization through fun challenges!</p>
+        </div>
+    </section>
+
+    <!-- GAME STATS -->
+    <div class="container" id="game-stats-container">
+        <div class="game-stats">
+            <div class="score-container">
+                <div class="score">
+                    <span class="score-label" data-i18n="score_label">Score</span>
+                    <span id="score" class="score-value">0</span>
+                </div>
+                <div class="level-info">
+                    <span class="level-label" data-i18n="level_label">Level</span>
+                    <span id="level-display" class="level-value" data-i18n="level_1">Select a Level</span>
+                </div>
+            </div>
+            <div style="flex-grow: 1; margin-left: 30px;">
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar" style="width: 0%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LEVEL SELECTION -->
+    <div class="container level-selection" id="level-selection-container">
+        <div class="level-card" id="level-card-1">
+            <h3 data-i18n="level1_title">Level 1: Data Collector</h3>
+            <p data-i18n="level1_desc">Collect and classify items into categories. Learn basic data organization!</p>
+            <button class="start-btn modal-btn" onclick="startLevel(1)" data-i18n="btn_start_level1">Start Level 1</button>
+        </div>
+        <div class="level-card locked" id="level-card-2">
+            <div class="lock-icon"><i class="fas fa-lock"></i></div>
+            <h3 data-i18n="level2_title">Level 2: Data Analyzer</h3>
+            <p data-i18n="level2_desc">Analyze marks data and calculate mean, median, mode!</p>
+            <button class="start-btn modal-btn" disabled data-i18n="btn_locked">Locked</button>
+        </div>
+        <div class="level-card locked" id="level-card-3">
+            <div class="lock-icon"><i class="fas fa-lock"></i></div>
+            <h3 data-i18n="level3_title">Level 3: Data Structure Master</h3>
+            <p data-i18n="level3_desc">Organize and search data using arrays and sorting algorithms!</p>
+            <button class="start-btn modal-btn" disabled data-i18n="btn_locked">Locked</button>
+        </div>
+    </div>
+
+    <!-- LEVEL 1: DATA COLLECTOR -->
+    <div class="container level-container" id="level-1-container">
+        <h2 style="margin-bottom: 15px;" data-i18n="level1_h2">Level 1: Data Collector</h2>
+       
+        <div class="target-box">
+            <h3 id="level1-instructions-text">Sort these items into Fruits and Vegetables</h3>
+            <p data-i18n="level1_goal">Drag each item to the correct category box below!</p>
+        </div>
+
+        <!-- ITEMS TO SORT -->
+        <div style="width: 100%; max-width: 900px; margin: 0 auto;">
+            <h3 style="text-align: center; margin: 20px 0 15px 0; color: #1a365d;" id="level1-items-title">Items to Sort</h3>
+            <div class="items-container" id="items-container">
+                <!-- Items will be generated here -->
+            </div>
+        </div>
+
+        <!-- CATEGORIES -->
+        <div class="categories-container" id="categories-container">
+            <div class="category-box" id="category-1">
+                <div class="category-title" id="category1-title">Fruits 🍎</div>
+                <div class="category-items" id="category1-items">
+                    <p style="color: #64748b; font-style: italic; text-align: center; width: 100%; margin-top: 40px;" id="category1-drop">Drop fruits here</p>
+                </div>
+            </div>
+           
+            <div class="category-box" id="category-2">
+                <div class="category-title" id="category2-title">Vegetables 🥦</div>
+                <div class="category-items" id="category2-items">
+                    <p style="color: #64748b; font-style: italic; text-align: center; width: 100%; margin-top: 40px;" id="category2-drop">Drop vegetables here</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- QUESTIONS -->
+        <div class="question-box" id="level1-questions">
+            <h3 style="color: #1a365d; margin-bottom: 15px;" data-i18n="level1_questions">Data Analysis Questions</h3>
+            <div id="level1-questions-container">
+                <!-- Questions will be generated here -->
+            </div>
+        </div>
+
+        <p id="level-1-feedback" class="feedback" style="margin-top: 20px;"></p>
+        <button class="modal-btn" onclick="checkLevel1()" style="margin-top: 20px;" data-i18n="btn_check">Check Answers</button>
+    </div>
+
+    <!-- LEVEL 2: DATA ANALYZER -->
+    <div class="container level-container" id="level-2-container">
+        <h2 style="margin-bottom: 15px;" data-i18n="level2_h2">Level 2: Data Analyzer</h2>
+       
+        <div class="target-box">
+            <h3 id="level2-instructions-text">Class 6 Marks Analysis</h3>
+            <p data-i18n="level2_goal">Analyze the marks data and answer the questions below!</p>
+        </div>
+
+        <!-- MARKS TABLE -->
+        <div class="marks-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th data-i18n="level2_student">Student</th>
+                        <th data-i18n="level2_maths">Maths</th>
+                        <th data-i18n="level2_science">Science</th>
+                        <th data-i18n="level2_english">English</th>
+                        <th data-i18n="level2_total">Total</th>
+                    </tr>
+                </thead>
+                <tbody id="marks-table-body">
+                    <!-- Marks data will be generated here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ANALYSIS QUESTIONS -->
+        <div class="question-box">
+            <h3 style="color: #1a365d; margin-bottom: 15px;" data-i18n="level2_analysis">Data Analysis</h3>
+            <div id="level2-questions-container">
+                <!-- Questions will be generated here -->
+            </div>
+        </div>
+
+        <p id="level-2-feedback" class="feedback" style="margin-top: 20px;"></p>
+        <button class="modal-btn" onclick="checkLevel2()" style="margin-top: 20px;" data-i18n="btn_check">Check Answers</button>
+    </div>
+
+    <!-- LEVEL 3: DATA STRUCTURE MASTER -->
+    <div class="container level-container" id="level-3-container">
+        <h2 style="margin-bottom: 15px;" data-i18n="level3_h2">Level 3: Data Structure Master</h2>
+       
+        <div class="target-box">
+            <h3 id="level3-instructions-text">Organize and Search Data</h3>
+            <p data-i18n="level3_goal">Sort the numbers in ascending order and remove duplicates!</p>
+        </div>
+
+        <!-- DATA ARRAY -->
+        <div class="data-structure-container">
+            <div>
+                <h3 style="text-align: center; margin: 20px 0 15px 0; color: #1a365d;" id="level3-array-title">Original Data Array</h3>
+                <div class="data-array" id="original-array">
+                    <!-- Numbers will be generated here -->
+                </div>
+            </div>
+           
+            <div class="structure-box" id="sorted-box">
+                <div class="structure-title" id="sorted-title">Sorted Array (Ascending Order)</div>
+                <div class="structure-items" id="sorted-items">
+                    <p style="color: #64748b; font-style: italic; text-align: center; width: 100%; margin-top: 40px;" id="sorted-drop">Drop sorted numbers here</p>
+                </div>
+            </div>
+           
+            <div class="structure-box" id="unique-box">
+                <div class="structure-title" id="unique-title">Unique Numbers (No Duplicates)</div>
+                <div class="structure-items" id="unique-items">
+                    <p style="color: #64748b; font-style: italic; text-align: center; width: 100%; margin-top: 40px;" id="unique-drop">Drop unique numbers here</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEARCH QUESTIONS -->
+        <div class="question-box">
+            <h3 style="color: #1a365d; margin-bottom: 15px;" data-i18n="level3_search">Search Questions</h3>
+            <div id="level3-questions-container">
+                <!-- Questions will be generated here -->
+            </div>
+        </div>
+
+        <p id="level-3-feedback" class="feedback" style="margin-top: 20px;"></p>
+        <button class="modal-btn" onclick="checkLevel3()" style="margin-top: 20px;" data-i18n="btn_check">Check Answers</button>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="copyright">
+                &copy; 2024 STEM Learn Odisha. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- GAME VARIABLES ---
+        let score = 0;
+        let currentLevel = 0;
+       
+        // Level 1 variables
+        let level1Items = [];
+        let fruitsCount = 0;
+        let vegetablesCount = 0;
+        let level1QuestionSet = 0;
+        let level1CurrentQuestionSet = [];
+       
+        // Level 2 variables
+        let marksData = [];
+        let level2QuestionSet = 0;
+        let level2CurrentQuestionSet = [];
+       
+        // Level 3 variables
+        let originalNumbers = [];
+        let sortedNumbers = [];
+        let uniqueNumbers = [];
+        let level3QuestionSet = 0;
+        let level3CurrentQuestionSet = [];
+
+        // --- ODIA NUMBER MAPPING ---
+        const odiaNumbers = {
+            0: "୦", 1: "୧", 2: "୨", 3: "୩", 4: "୪",
+            5: "୫", 6: "୬", 7: "୭", 8: "୮", 9: "୯",
+            10: "୧୦", 11: "୧୧", 12: "୧୨", 13: "୧୩", 14: "୧୪",
+            15: "୧୫", 16: "୧୬", 17: "୧୭", 18: "୧୮", 19: "୧୯",
+            20: "୨୦", 21: "୨୧", 22: "୨୨", 23: "୨୩", 24: "୨୪",
+            25: "୨୫", 26: "୨୬", 27: "୨୭", 28: "୨୮", 29: "୨୯",
+            30: "୩୦", 31: "୩୧", 32: "୩୨", 33: "୩୩", 34: "୩୪",
+            35: "୩୫", 36: "୩୬", 37: "୩୭", 38: "୩୮", 39: "୩୯",
+            40: "୪୦", 41: "୪୧", 42: "୪୨", 43: "୪୩", 44: "୪୪",
+            45: "୪୫", 46: "୪୬", 47: "୪୭", 48: "୪୮", 49: "୪୯",
+            50: "୫୦", 51: "୫୧", 52: "୫୨", 53: "୫୩", 54: "୫୪",
+            55: "୫୫", 56: "୫୬", 57: "୫୭", 58: "୫୮", 59: "୫୯",
+            60: "୬୦", 61: "୬୧", 62: "୬୨", 63: "୬୩", 64: "୬୪",
+            65: "୬୫", 66: "୬୬", 67: "୬୭", 68: "୬୮", 69: "୬୯",
+            70: "୭୦", 71: "୭୧", 72: "୭୨", 73: "୭୩", 74: "୭୪",
+            75: "୭୫", 76: "୭୬", 77: "୭୭", 78: "୭୮", 79: "୭୯",
+            80: "୮୦", 81: "୮୧", 82: "୮୨", 83: "୮୩", 84: "୮୪",
+            85: "୮୫", 86: "୮୬", 87: "୮୭", 88: "୮୮", 89: "୮୯",
+            90: "୯୦", 91: "୯୧", 92: "୯୨", 93: "୯୩", 94: "୯୪",
+            95: "୯୫", 96: "୯୬", 97: "୯୭", 98: "୯୮", 99: "୯୯",
+            100: "୧୦୦"
+        };
+
+        function convertToOdiaNumber(num) {
+            if (odiaNumbers[num] !== undefined) {
+                return odiaNumbers[num];
+            }
+            return num.toString().split('').map(digit => odiaNumbers[parseInt(digit)] || digit).join('');
+        }
+
+        // --- LANGUAGE TRANSLATIONS ---
+        const translations = {
+            'en': {
+                'nav_dashboard': 'Dashboard',
+                'nav_about': 'About',
+                'nav_contact': 'Contact',
+                'title_header': 'Data Detective Challenge: Class 6',
+                'subtitle_header': 'Master data collection, analysis, and organization through fun challenges!',
+                'score_label': 'Score',
+                'level_label': 'Level',
+                'level_1': 'Select a Level',
+                'level_1_number': 'Level 1',
+                'level_2_number': 'Level 2',
+                'level_3_number': 'Level 3',
+                'btn_start_level1': 'Start Level 1',
+                'btn_start_level2': 'Start Level 2',
+                'btn_start_level3': 'Start Level 3',
+                'btn_locked': 'Locked',
+                'btn_check': 'Check Answers',
+                'btn_next_level': 'Go to Level Selection',
+                'btn_start_over': 'Start Over',
+                'level1_title': 'Level 1: Data Collector',
+                'level1_desc': 'Collect and classify items into categories. Learn basic data organization!',
+                'level2_title': 'Level 2: Data Analyzer',
+                'level2_desc': 'Analyze marks data and calculate mean, median, mode!',
+                'level3_title': 'Level 3: Data Structure Master',
+                'level3_desc': 'Organize and search data using arrays and sorting algorithms!',
+                'level1_h2': 'Level 1: Data Collector',
+                'level1_goal': 'Drag each item to the correct category box below!',
+                'level1_questions': 'Data Analysis Questions',
+                'level2_h2': 'Level 2: Data Analyzer',
+                'level2_goal': 'Analyze the marks data and answer the questions below!',
+                'level2_student': 'Student',
+                'level2_maths': 'Maths',
+                'level2_science': 'Science',
+                'level2_english': 'English',
+                'level2_total': 'Total',
+                'level2_analysis': 'Data Analysis',
+                'level3_h2': 'Level 3: Data Structure Master',
+                'level3_goal': 'Sort the numbers in ascending order and remove duplicates!',
+                'level3_search': 'Search Questions',
+                'modal_complete_title': 'Level Complete!',
+                'modal_complete_text': 'Congratulations! You earned points and unlocked the next challenge.',
+                'modal_gameover_title': 'Quest Complete!',
+                'modal_gameover_text': 'You have mastered all three levels of the Data Detective Challenge! Your final score is '
+            },
+            'or': {
+                'nav_dashboard': 'ଡ୍ୟାଶବୋର୍ଡ',
+                'nav_about': 'ବିଷୟରେ',
+                'nav_contact': 'ଯୋଗାଯୋଗ',
+                'title_header': 'ତଥ୍ୟ ଡିଟେକ୍ଟିଭ୍ ଚ୍ୟାଲେଞ୍ଜ: ଷଷ୍ଠ ଶ୍ରେଣୀ',
+                'subtitle_header': 'ମଜାଦାର ଚ୍ୟାଲେଞ୍ଜଗୁଡ଼ିକ ମାଧ୍ୟମରେ ତଥ୍ୟ ସଂଗ୍ରହ, ବିଶ୍ଳେଷଣ ଏବଂ ସଂଗଠନ ଆୟତ୍ତ କରନ୍ତୁ!',
+                'score_label': 'ସ୍କୋର',
+                'level_label': 'ସ୍ତର',
+                'level_1': 'ଏକ ସ୍ତର ବାଛନ୍ତୁ',
+                'level_1_number': 'ସ୍ତର ୧',
+                'level_2_number': 'ସ୍ତର ୨',
+                'level_3_number': 'ସ୍ତର ୩',
+                'btn_start_level1': 'ସ୍ତର ୧ ଆରମ୍ଭ କରନ୍ତୁ',
+                'btn_start_level2': 'ସ୍ତର ୨ ଆରମ୍ଭ କରନ୍ତୁ',
+                'btn_start_level3': 'ସ୍ତର ୩ ଆରମ୍ଭ କରନ୍ତୁ',
+                'btn_locked': 'ବନ୍ଦ',
+                'btn_check': 'ଉତ୍ତର ଯାଞ୍ଚ କରନ୍ତୁ',
+                'btn_next_level': 'ସ୍ତର ଚୟନକୁ ଯାଆନ୍ତୁ',
+                'btn_start_over': 'ପୁଣି ଆରମ୍ଭ କରନ୍ତୁ',
+                'level1_title': 'ସ୍ତର ୧: ତଥ୍ୟ ସଂଗ୍ରାହକ',
+                'level1_desc': 'ବସ୍ତୁଗୁଡ଼ିକୁ ବର୍ଗୀକରଣ କରି ସଂଗ୍ରହ କରନ୍ତୁ। ମୌଳିକ ତଥ୍ୟ ସଂଗଠନ ଶିଖନ୍ତୁ!',
+                'level2_title': 'ସ୍ତର ୨: ତଥ୍ୟ ବିଶ୍ଳେଷକ',
+                'level2_desc': 'ଚିହ୍ନ ତଥ୍ୟ ବିଶ୍ଳେଷଣ କରି ମଧ୍ୟମା, ମଧ୍ୟାଙ୍କ, ବହୁଳକ ଗଣନା କରନ୍ତୁ!',
+                'level3_title': 'ସ୍ତର ୩: ତଥ୍ୟ ସ୍ଟ୍ରକ୍ଚର ମାଷ୍ଟର',
+                'level3_desc': 'ଏରେ ଏବଂ ସର୍ଟିଂ ଆଲଗୋରିଦମ୍ ବ୍ୟବହାର କରି ତଥ୍ୟ ସଂଗଠିତ କରନ୍ତୁ ଏବଂ ଖୋଜନ୍ତୁ!',
+                'level1_h2': 'ସ୍ତର ୧: ତଥ୍ୟ ସଂଗ୍ରାହକ',
+                'level1_goal': 'ପ୍ରତ୍ୟେକ ବସ୍ତୁକୁ ତଳେ ଥିବା ସଠିକ୍ ବର୍ଗ ବାକ୍ସରେ ଟାଣନ୍ତୁ!',
+                'level1_questions': 'ତଥ୍ୟ ବିଶ୍ଳେଷଣ ପ୍ରଶ୍ନ',
+                'level2_h2': 'ସ୍ତର ୨: ତଥ୍ୟ ବିଶ୍ଳେଷକ',
+                'level2_goal': 'ଚିହ୍ନ ତଥ୍ୟ ବିଶ୍ଳେଷଣ କରି ତଳେ ଥିବା ପ୍ରଶ୍ନଗୁଡ଼ିକର ଉତ୍ତର ଦିଅନ୍ତୁ!',
+                'level2_student': 'ଛାତ୍ର',
+                'level2_maths': 'ଗଣିତ',
+                'level2_science': 'ବିଜ୍ଞାନ',
+                'level2_english': 'ଇଂରାଜୀ',
+                'level2_total': 'ମୋଟ',
+                'level2_analysis': 'ତଥ୍ୟ ବିଶ୍ଳେଷଣ',
+                'level3_h2': 'ସ୍ତର ୩: ତଥ୍ୟ ସ୍ଟ୍ରକ୍ଚର ମାଷ୍ଟର',
+                'level3_goal': 'ସଂଖ୍ୟାଗୁଡ଼ିକୁ ଆରୋହୀ କ୍ରମରେ ସର୍ଟ କରନ୍ତୁ ଏବଂ ନକଲ ବାହାର କରନ୍ତୁ!',
+                'level3_search': 'ଖୋଜିବା ପ୍ରଶ୍ନ',
+                'modal_complete_title': 'ସ୍ତର ସମାପ୍ତ!',
+                'modal_complete_text': 'ଅଭିନନ୍ଦନ! ଆପଣ ପଏଣ୍ଟ ହାସଲ କରି ପରବର୍ତ୍ତୀ ଚ୍ୟାଲେଞ୍ଜ୍ ଅନଲକ୍ କଲେ।',
+                'modal_gameover_title': 'ଅନୁସନ୍ଧାନ ସମାପ୍ତ!',
+                'modal_gameover_text': 'ଆପଣ ତଥ୍ୟ ଡିଟେକ୍ଟିଭ୍ ଚ୍ୟାଲେଞ୍ଜର ତିନୋଟି ସ୍ତରରେ ମାଷ୍ଟର ହୋଇଛନ୍ତି! ଆପଣଙ୍କର ଚୂଡ଼ାନ୍ତ ସ୍କୋର '
+            }
+        };
+
+        let currentLang = 'en';
+
+        // --- NUMBER DISPLAY FUNCTIONS ---
+        function formatNumber(num) {
+            if (currentLang === 'or') {
+                return convertToOdiaNumber(num);
+            }
+            return num;
+        }
+
+        // --- NAVIGATION FUNCTIONS ---
+        function setupNavigation() {
+            // Dashboard link
+            document.querySelector('a[data-i18n="nav_dashboard"]').addEventListener('click', function(e) {
+                e.preventDefault();
+                showLevelSelection();
+                updateLanguage(currentLang);
+            });
+           
+            // About link
+            document.querySelector('a[data-i18n="nav_about"]').addEventListener('click', function(e) {
+                e.preventDefault();
+                if (currentLang === 'en') {
+                    alert('About STEM Learn Odisha:\n\nThis interactive game teaches data analysis skills through fun challenges. Designed for Class 6 students to master data collection, organization, and analysis!');
+                } else {
+                    alert('STEM Learn Odisha ବିଷୟରେ:\n\nଏହି ଇଣ୍ଟରାକ୍ଟିଭ୍ ଖେଳଟି ମଜାଦାର ଚ୍ୟାଲେଞ୍ଜଗୁଡ଼ିକ ମାଧ୍ୟମରେ ତଥ୍ୟ ବିଶ୍ଳେଷଣ ଦକ୍ଷତା ଶିଖାଏ। ଷଷ୍ଠ ଶ୍ରେଣୀର ଛାତ୍ରଛାତ୍ରୀଙ୍କ ପାଇଁ ତଥ୍ୟ ସଂଗ୍ରହ, ସଂଗଠନ ଏବଂ ବିଶ୍ଳେଷଣ ଆୟତ୍ତ କରିବା ପାଇଁ ରୂପାନ୍ତରିତ!');
+                }
+            });
+           
+            // Contact link
+            document.querySelector('a[data-i18n="nav_contact"]').addEventListener('click', function(e) {
+                e.preventDefault();
+                if (currentLang === 'en') {
+                    alert('Contact STEM Learn Odisha:\n\nEmail: contact@stemlearnodisha.org\nPhone: +91-XXXXXX-XXXX\nWebsite: www.stemlearnodisha.org');
+                } else {
+                    alert('STEM Learn Odisha ସହ ଯୋଗାଯୋଗ:\n\nଇମେଲ୍: contact@stemlearnodisha.org\nଫୋନ୍: +୯୧-XXXXXX-XXXX\nୱେବସାଇଟ୍: www.stemlearnodisha.org');
+                }
+            });
+        }
+
+        // --- GAME FUNCTIONS ---
+        function updateLanguage(lang) {
+            console.log("Updating language to:", lang);
+            currentLang = lang;
+           
+            // Update all text elements with data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+           
+            // Update language buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.lang-btn[data-lang="${lang}"]`).classList.add('active');
+           
+            // Update dynamic content
+            updateLevelDisplays();
+           
+            // Update any dynamic text that doesn't have data-i18n
+            if (currentLevel === 1) {
+                // Update Level 1 content
+                if (level1CurrentQuestionSet && level1CurrentQuestionSet.category1) {
+                    document.getElementById('category1-title').textContent = `${level1CurrentQuestionSet.category1} ${level1CurrentQuestionSet.category1Emoji}`;
+                    document.getElementById('category2-title').textContent = `${level1CurrentQuestionSet.category2} ${level1CurrentQuestionSet.category2Emoji}`;
+                    document.getElementById('category1-drop').textContent = `Drop ${level1CurrentQuestionSet.category1.toLowerCase()} here`;
+                    document.getElementById('category2-drop').textContent = `Drop ${level1CurrentQuestionSet.category2.toLowerCase()} here`;
+                    document.getElementById('level1-instructions-text').textContent = level1CurrentQuestionSet.instruction;
+                }
+            }
+        }
+
+        function updateLevelDisplays() {
+            // Update score display
+            document.getElementById('score').textContent = formatNumber(score);
+           
+            // Update level display
+            if (currentLevel === 0) {
+                document.getElementById('level-display').textContent = translations[currentLang]['level_1'];
+            } else {
+                document.getElementById('level-display').textContent = `${translations[currentLang][`level_${currentLevel}_number`] || `Level ${currentLevel}`}`;
+            }
+        }
+
+        function updateScore(points) {
+            score += points;
+            document.getElementById('score').textContent = formatNumber(score);
+        }
+
+        function showLevelSelection() {
+            document.getElementById('level-1-container').style.display = 'none';
+            document.getElementById('level-2-container').style.display = 'none';
+            document.getElementById('level-3-container').style.display = 'none';
+            document.getElementById('level-selection-container').style.display = 'flex';
+            currentLevel = 0;
+            document.getElementById('level-display').textContent = translations[currentLang]['level_1'];
+        }
+
+        function startLevel(level) {
+            currentLevel = level;
+            document.getElementById('level-selection-container').style.display = 'none';
+           
+            if (level === 1) {
+                document.getElementById('level-1-container').style.display = 'flex';
+                loadLevel1();
+            } else if (level === 2) {
+                document.getElementById('level-2-container').style.display = 'flex';
+                loadLevel2();
+            } else if (level === 3) {
+                document.getElementById('level-3-container').style.display = 'flex';
+                loadLevel3();
+            }
+           
+            document.getElementById('level-display').textContent = `${translations[currentLang][`level_${level}_number`] || `Level ${level}`}`;
+        }
+
+        // --- LEVEL 1: DATA COLLECTOR ---
+        // Define 3 different question sets for Level 1 (ALL WITH AT LEAST 3 QUESTIONS)
+        const level1QuestionSets = [
+            {
+                category1: "Fruits",
+                category2: "Vegetables",
+                category1Emoji: "🍎",
+                category2Emoji: "🥦",
+                instruction: "Sort these items into Fruits and Vegetables",
+                items: [
+                    { name: 'Apple', type: 'fruit', icon: '🍎', color: 'Red', weight: '150g', price: '₹50' },
+                    { name: 'Banana', type: 'fruit', icon: '🍌', color: 'Yellow', weight: '120g', price: '₹20' },
+                    { name: 'Orange', type: 'fruit', icon: '🍊', color: 'Orange', weight: '130g', price: '₹30' },
+                    { name: 'Grapes', type: 'fruit', icon: '🍇', color: 'Purple', weight: '200g', price: '₹80' },
+                    { name: 'Carrot', type: 'vegetable', icon: '🥕', color: 'Orange', weight: '60g', price: '₹15' },
+                    { name: 'Broccoli', type: 'vegetable', icon: '🥦', color: 'Green', weight: '300g', price: '₹40' },
+                    { name: 'Tomato', type: 'vegetable', icon: '🍅', color: 'Red', weight: '100g', price: '₹25' },
+                    { name: 'Potato', type: 'vegetable', icon: '🥔', color: 'Brown', weight: '150g', price: '₹20' }
+                ],
+                questions: [
+                    { text: "1. Total items collected:", type: "number", id: "q1" },
+                    { text: "2. How many fruits?", type: "number", id: "q2" },
+                    { text: "3. How many vegetables?", type: "number", id: "q3" },
+                    { text: "4. Most common type (Fruits/Vegetables/Equal):", type: "select", id: "q4", options: ["Fruits", "Vegetables", "Equal"] }
+                ]
+            },
+            {
+                category1: "Red Items",
+                category2: "Green Items",
+                category1Emoji: "🔴",
+                category2Emoji: "🟢",
+                instruction: "Sort these items by their color",
+                items: [
+                    { name: 'Apple', type: 'red', icon: '🍎', color: 'Red', weight: '150g', price: '₹50' },
+                    { name: 'Strawberry', type: 'red', icon: '🍓', color: 'Red', weight: '20g', price: '₹80' },
+                    { name: 'Cherry', type: 'red', icon: '🍒', color: 'Red', weight: '8g', price: '₹100' },
+                    { name: 'Tomato', type: 'red', icon: '🍅', color: 'Red', weight: '100g', price: '₹25' },
+                    { name: 'Broccoli', type: 'green', icon: '🥦', color: 'Green', weight: '300g', price: '₹40' },
+                    { name: 'Cucumber', type: 'green', icon: '🥒', color: 'Green', weight: '250g', price: '₹30' },
+                    { name: 'Lettuce', type: 'green', icon: '🥬', color: 'Green', weight: '200g', price: '₹35' },
+                    { name: 'Green Apple', type: 'green', icon: '🍏', color: 'Green', weight: '140g', price: '₹45' }
+                ],
+                questions: [
+                    { text: "1. Total items collected:", type: "number", id: "q1" },
+                    { text: "2. How many red items?", type: "number", id: "q2" },
+                    { text: "3. How many green items?", type: "number", id: "q3" },
+                    { text: "4. Most common color (Red/Green/Equal):", type: "select", id: "q4", options: ["Red", "Green", "Equal"] }
+                ]
+            },
+            {
+                category1: "Heavy Items (100g+)",
+                category2: "Light Items (<100g)",
+                category1Emoji: "⚖️",
+                category2Emoji: "⚖️",
+                instruction: "Sort these items by weight",
+                items: [
+                    { name: 'Apple', type: 'heavy', icon: '🍎', color: 'Red', weight: '150g', price: '₹50' },
+                    { name: 'Watermelon', type: 'heavy', icon: '🍉', color: 'Green', weight: '5000g', price: '₹200' },
+                    { name: 'Pumpkin', type: 'heavy', icon: '🎃', color: 'Orange', weight: '3000g', price: '₹150' },
+                    { name: 'Cabbage', type: 'heavy', icon: '🥬', color: 'Green', weight: '800g', price: '₹40' },
+                    { name: 'Grapes', type: 'light', icon: '🍇', color: 'Purple', weight: '50g', price: '₹30' },
+                    { name: 'Strawberry', type: 'light', icon: '🍓', color: 'Red', weight: '20g', price: '₹80' },
+                    { name: 'Cherry', type: 'light', icon: '🍒', color: 'Red', weight: '8g', price: '₹100' },
+                    { name: 'Blueberry', type: 'light', icon: '🫐', color: 'Blue', weight: '5g', price: '₹120' }
+                ],
+                questions: [
+                    { text: "1. Total items collected:", type: "number", id: "q1" },
+                    { text: "2. How many heavy items?", type: "number", id: "q2" },
+                    { text: "3. How many light items?", type: "number", id: "q3" },
+                    { text: "4. Difference between heavy and light items:", type: "number", id: "q4" }
+                ]
+            }
+        ];
+
+        // Odia translations for items
+        const itemTranslations = {
+            'en': {
+                'Apple': 'Apple', 'Banana': 'Banana', 'Orange': 'Orange', 'Grapes': 'Grapes',
+                'Carrot': 'Carrot', 'Broccoli': 'Broccoli', 'Tomato': 'Tomato', 'Potato': 'Potato',
+                'Strawberry': 'Strawberry', 'Cherry': 'Cherry', 'Cucumber': 'Cucumber', 'Lettuce': 'Lettuce',
+                'Green Apple': 'Green Apple', 'Watermelon': 'Watermelon', 'Pumpkin': 'Pumpkin', 'Cabbage': 'Cabbage',
+                'Blueberry': 'Blueberry'
+            },
+            'or': {
+                'Apple': 'ଆପେଲ୍', 'Banana': 'କଦଳୀ', 'Orange': 'କମଳା', 'Grapes': 'ଅଙ୍ଗୁର',
+                'Carrot': 'ଗାଜର', 'Broccoli': 'ବ୍ରୋକୋଲି', 'Tomato': 'ବିଲାତି ବାଇଗଣ', 'Potato': 'ଆଳୁ',
+                'Strawberry': 'ଷ୍ଟ୍ରବେରି', 'Cherry': 'ଚେରି', 'Cucumber': 'କାକୁଡି', 'Lettuce': 'ଲେଟୁସ୍',
+                'Green Apple': 'ସବୁଜ ଆପେଲ୍', 'Watermelon': 'ତରବୁଜ', 'Pumpkin': 'କଦୁ', 'Cabbage': 'ବନ୍ଧାକୋବି',
+                'Blueberry': 'ବ୍ଲୁବେରି'
+            }
+        };
+
+        function loadLevel1() {
+            // Select a random question set
+            level1QuestionSet = (level1QuestionSet + 1) % level1QuestionSets.length;
+            const questionSet = level1QuestionSets[level1QuestionSet];
+            level1CurrentQuestionSet = questionSet;
+           
+            // Reset counts
+            fruitsCount = 0;
+            vegetablesCount = 0;
+           
+            // Update instructions and categories
+            document.getElementById('level1-instructions-text').textContent = questionSet.instruction;
+            document.getElementById('category1-title').textContent = `${questionSet.category1} ${questionSet.category1Emoji}`;
+            document.getElementById('category2-title').textContent = `${questionSet.category2} ${questionSet.category2Emoji}`;
+            document.getElementById('category1-drop').textContent = `Drop ${questionSet.category1.toLowerCase()} here`;
+            document.getElementById('category2-drop').textContent = `Drop ${questionSet.category2.toLowerCase()} here`;
+           
+            // Create items
+            const itemsContainer = document.getElementById('items-container');
+            itemsContainer.innerHTML = '';
+           
+            // Shuffle items
+            const shuffledItems = [...questionSet.items].sort(() => Math.random() - 0.5);
+            level1Items = shuffledItems;
+           
+            shuffledItems.forEach((item, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'data-item';
+                itemDiv.id = `item-${index}`;
+                itemDiv.draggable = true;
+                itemDiv.dataset.type = item.type;
+                itemDiv.dataset.name = item.name;
+               
+                const itemName = itemTranslations[currentLang][item.name] || item.name;
+               
+                itemDiv.innerHTML = `
+                    <span class="item-icon">${item.icon}</span>
+                    <div class="item-name">${itemName}</div>
+                    <div class="item-details">${item.color} | ${item.weight}</div>
+                    <div class="item-details">${item.price}</div>
+                `;
+               
+                // Add drag events
+                itemDiv.addEventListener('dragstart', function(e) {
+                    e.dataTransfer.setData('text/plain', JSON.stringify({
+                        index: index,
+                        type: item.type,
+                        name: item.name
+                    }));
+                    this.style.opacity = '0.6';
+                });
+               
+                itemDiv.addEventListener('dragend', function(e) {
+                    this.style.opacity = '1';
+                });
+               
+                itemsContainer.appendChild(itemDiv);
+            });
+           
+            // Set up category boxes
+            const category1Box = document.getElementById('category-1');
+            const category2Box = document.getElementById('category-2');
+           
+            // Clear category boxes
+            document.getElementById('category1-items').innerHTML = `<p style="color: #64748b; font-style: italic; text-align: center; width: 100%; margin-top: 40px;">Drop ${questionSet.category1.toLowerCase()} here</p>`;
+            document.getElementById('category2-items').innerHTML = `<p style="color: #64748b; font-style: italic; text-align: center; width: 100%; margin-top: 40px;">Drop ${questionSet.category2.toLowerCase()} here</p>`;
+           
+            // Add drag events to category boxes
+            [category1Box, category2Box].forEach(box => {
+                box.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.classList.add('drag-over');
+                });
+               
+                box.addEventListener('dragleave', function(e) {
+                    this.classList.remove('drag-over');
+                });
+               
+                box.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('drag-over');
+                   
+                    const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                    const item = level1Items[data.index];
+                   
+                    // Check if item is already placed
+                    if (document.getElementById(`placed-${data.index}`)) {
+                        return;
+                    }
+                   
+                    // Check if correct category
+                    const isCategory1Box = this.id === 'category-1';
+                    const correctCategory = isCategory1Box ? questionSet.category1.toLowerCase().includes(item.type) :
+                                                          questionSet.category2.toLowerCase().includes(item.type);
+                   
+                    if (!correctCategory) {
+                        document.getElementById('level-1-feedback').textContent = currentLang === 'or' ?
+                            '❌ ଭୁଲ୍ ବର୍ଗ! ଏହା ସଠିକ୍ ବର୍ଗରେ ପକାନ୍ତୁ।' :
+                            '❌ Wrong category! Place it in the correct category.';
+                        document.getElementById('level-1-feedback').className = 'feedback wrong';
+                        return;
+                    }
+                   
+                    // Update counts
+                    if (isCategory1Box) {
+                        fruitsCount++;
+                    } else {
+                        vegetablesCount++;
+                    }
+                   
+                    // Add to category
+                    const categoryItemsDiv = isCategory1Box ? document.getElementById('category1-items') : document.getElementById('category2-items');
+                   
+                    // Remove placeholder text if it exists
+                    if (categoryItemsDiv.querySelector('p')) {
+                        categoryItemsDiv.innerHTML = '';
+                    }
+                   
+                    const placedItem = document.createElement('div');
+                    placedItem.className = 'category-item';
+                    placedItem.id = `placed-${data.index}`;
+                    placedItem.innerHTML = `
+                        <span style="font-size: 1.5rem;">${item.icon}</span>
+                        <div style="font-size: 0.85rem;">${itemTranslations[currentLang][item.name] || item.name}</div>
+                    `;
+                    categoryItemsDiv.appendChild(placedItem);
+                   
+                    // Remove from items container
+                    document.getElementById(`item-${data.index}`).style.display = 'none';
+                   
+                    // Clear feedback
+                    document.getElementById('level-1-feedback').textContent = '';
+                    document.getElementById('level-1-feedback').className = 'feedback';
+                   
+                    // Update progress
+                    const placedCount = fruitsCount + vegetablesCount;
+                    const progress = (placedCount / level1Items.length) * 100;
+                    document.getElementById('progress-bar').style.width = `${progress}%`;
+                });
+            });
+           
+            // Generate questions
+            generateLevel1Questions();
+           
+            // Clear feedback
+            document.getElementById('level-1-feedback').textContent = '';
+            document.getElementById('level-1-feedback').className = 'feedback';
+        }
+
+        function generateLevel1Questions() {
+            const questionsContainer = document.getElementById('level1-questions-container');
+            questionsContainer.innerHTML = '';
+           
+            level1CurrentQuestionSet.questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.textContent = q.text;
+                questionDiv.style.marginTop = index > 0 ? '15px' : '0';
+               
+                questionsContainer.appendChild(questionDiv);
+               
+                if (q.type === 'number') {
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.className = 'answer-input';
+                    input.id = `l1-${q.id}`;
+                    input.placeholder = 'Enter number';
+                    questionsContainer.appendChild(input);
+                } else if (q.type === 'select') {
+                    const select = document.createElement('select');
+                    select.className = 'answer-input';
+                    select.id = `l1-${q.id}`;
+                   
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = 'Select';
+                    select.appendChild(defaultOption);
+                   
+                    q.options.forEach(option => {
+                        const optionElement = document.createElement('option');
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        select.appendChild(optionElement);
+                    });
+                   
+                    questionsContainer.appendChild(select);
+                }
+               
+                questionsContainer.appendChild(document.createElement('br'));
+            });
+        }
+
+        function checkLevel1() {
+            const feedbackEl = document.getElementById('level-1-feedback');
+           
+            // Check if all items are placed
+            const placedCount = fruitsCount + vegetablesCount;
+            if (placedCount < level1Items.length) {
+                feedbackEl.textContent = currentLang === 'or' ?
+                    '❌ ଦୟାକରି ସମସ୍ତ ବସ୍ତୁଗୁଡ଼ିକୁ ବର୍ଗୀକରଣ କରନ୍ତୁ!' :
+                    '❌ Please categorize all items first!';
+                feedbackEl.className = 'feedback wrong';
+                return;
+            }
+           
+            // Calculate correct answers based on current question set
+            const correctTotal = fruitsCount + vegetablesCount;
+            const correctCategory1Count = fruitsCount;
+            const correctCategory2Count = vegetablesCount;
+           
+            let correct = 0;
+            let message = '';
+           
+            // Check each question
+            level1CurrentQuestionSet.questions.forEach((q, index) => {
+                const answerElement = document.getElementById(`l1-${q.id}`);
+                const userAnswer = q.type === 'number' ? parseInt(answerElement.value) : answerElement.value;
+               
+                let correctAnswer;
+                switch(q.id) {
+                    case 'q1':
+                        correctAnswer = correctTotal;
+                        break;
+                    case 'q2':
+                        correctAnswer = correctCategory1Count;
+                        break;
+                    case 'q3':
+                        correctAnswer = correctCategory2Count;
+                        break;
+                    case 'q4':
+                        if (q.options.includes("Equal")) {
+                            // For Fruits/Vegetables or Red/Green questions
+                            correctAnswer = correctCategory1Count > correctCategory2Count ?
+                                          level1CurrentQuestionSet.category1.split(" ")[0] :
+                                          (correctCategory2Count > correctCategory1Count ?
+                                           level1CurrentQuestionSet.category2.split(" ")[0] : "Equal");
+                        } else {
+                            // For difference question
+                            correctAnswer = Math.abs(correctCategory1Count - correctCategory2Count);
+                        }
+                        break;
+                }
+               
+                if ((q.type === 'number' && userAnswer === correctAnswer) ||
+                    (q.type === 'select' && userAnswer === correctAnswer)) {
+                    correct++;
+                } else {
+                    message += `${q.text} ${formatNumber(correctAnswer)} | `;
+                }
+            });
+           
+            // REQUIRE AT LEAST 3 CORRECT ANSWERS TO UNLOCK NEXT LEVEL
+            const minCorrectToPass = 3;
+           
+            if (correct >= minCorrectToPass && correct === level1CurrentQuestionSet.questions.length) {
+                feedbackEl.textContent = currentLang === 'or' ?
+                    `✅ ଅତ୍ୟୁତ୍ତମ! ସମସ୍ତ ଉତ୍ତର ଠିକ୍! (+${formatNumber(100)} ପଏଣ୍ଟ)` :
+                    `✅ Excellent! All answers correct! (+${formatNumber(100)} points)`;
+                feedbackEl.className = 'feedback correct';
+                updateScore(100);
+               
+                setTimeout(() => {
+                    unlockLevel(2);
+                    document.getElementById('completion-modal').style.display = 'flex';
+                }, 1500);
+            } else if (correct >= minCorrectToPass) {
+                feedbackEl.textContent = currentLang === 'or' ?
+                    `✅ ଭଲ! ${formatNumber(correct)}/${formatNumber(level1CurrentQuestionSet.questions.length)} ଠିକ୍। (+${formatNumber(80)} ପଏଣ୍ଟ)` :
+                    `✅ Good! ${formatNumber(correct)}/${level1CurrentQuestionSet.questions.length} correct. (+${formatNumber(80)} points)`;
+                feedbackEl.className = 'feedback correct';
+                updateScore(80);
+               
+                setTimeout(() => {
+                    unlockLevel(2);
+                    document.getElementById('completion-modal').style.display = 'flex';
+                }, 1500);
+            } else {
+                feedbackEl.textContent = currentLang === 'or' ?
+                    `ଭଲ ଚେଷ୍ଟା! ${formatNumber(correct)}/${formatNumber(level1CurrentQuestionSet.questions.length)} ଠିକ୍। ${message} (-${formatNumber(25)} ପଏଣ୍ଟ)` :
+                    `Good try! ${formatNumber(correct)}/${level1CurrentQuestionSet.questions.length} correct. ${message} (-${formatNumber(25)} points)`;
+                feedbackEl.className = 'feedback wrong';
+                updateScore(-25);
+            }
+        }
+
+        // --- LEVEL 2: DATA ANALYZER ---
+        // Define 3 different question sets for Level 2 (ALL WITH AT LEAST 3 QUESTIONS)
+        const level2QuestionSets = [
+            {
+                questions: [
+                    { text: "1. Mean (average) of Maths marks:", type: "number", id: "q1", step: "0.1" },
+                    { text: "2. Median of Science marks:", type: "number", id: "q2" },
+                    { text: "3. Mode of English marks:", type: "number", id: "q3" },
+                    { text: "4. Range of Maths marks (Max - Min):", type: "number", id: "q4" }
+                ]
+            },
+            {
+                questions: [
+                    { text: "1. How many students scored above 75 in Maths?", type: "number", id: "q1" },
+                    { text: "2. Which subject has the highest average?", type: "select", id: "q2", options: ["Maths", "Science", "English"] },
+                    { text: "3. Total marks of all students in Science:", type: "number", id: "q3" },
+                    { text: "4. Average of all subjects for Student 5:", type: "number", id: "q4", step: "0.1" }
+                ]
+            },
+            {
+                questions: [
+                    { text: "1. Lowest mark in English:", type: "number", id: "q1" },
+                    { text: "2. Highest mark in Maths:", type: "number", id: "q2" },
+                    { text: "3. Difference between highest and lowest total marks:", type: "number", id: "q3" },
+                    { text: "4. How many students have total marks above 200?", type: "number", id: "q4" }
+                ]
+            }
+        ];
+
+        function loadLevel2() {
+            // Select a random question set
+            level2QuestionSet = (level2QuestionSet + 1) % level2QuestionSets.length;
+            const questionSet = level2QuestionSets[level2QuestionSet];
+            level2CurrentQuestionSet = questionSet;
+           
+            // Generate random marks data
+            marksData = [];
+           
+            for (let i = 1; i <= 8; i++) {
+                const maths = Math.floor(Math.random() * 51) + 50; // 50-100
+                const science = Math.floor(Math.random() * 51) + 50;
+                const english = Math.floor(Math.random() * 51) + 50;
+                const total = maths + science + english;
+               
+                marksData.push({
+                    student: `Student ${i}`,
+                    maths: maths,
+                    science: science,
+                    english: english,
+                    total: total
+                });
+            }
+           
+            // Populate table
+            const tableBody = document.getElementById('marks-table-body');
+            tableBody.innerHTML = '';
+           
+            const studentTranslations = {
+                'en': 'Student',
+                'or': 'ଛାତ୍ର'
+            };
+           
+            marksData.forEach((data, index) => {
+                const row = document.createElement('tr');
+                const studentText = currentLang === 'or' ?
+                    `${studentTranslations[currentLang]} ${formatNumber(index + 1)}` :
+                    data.student;
+               
+                row.innerHTML = `
+                    <td>${studentText}</td>
+                    <td>${formatNumber(data.maths)}</td>
+                    <td>${formatNumber(data.science)}</td>
+                    <td>${formatNumber(data.english)}</td>
+                    <td>${formatNumber(data.total)}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+           
+            // Generate questions
+            generateLevel2Questions();
+           
+            // Clear feedback
+            document.getElementById('level-2-feedback').textContent = '';
+            document.getElementById('level-2-feedback').className = 'feedback';
+        }
+
+        function generateLevel2Questions() {
+            const questionsContainer = document.getElementById('level2-questions-container');
+            questionsContainer.innerHTML = '';
+           
+            level2CurrentQuestionSet.questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.textContent = q.text;
+                questionDiv.style.marginTop = index > 0 ? '15px' : '0';
+               
+                questionsContainer.appendChild(questionDiv);
+               
+                if (q.type === 'number') {
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.className = 'answer-input';
+                    input.id = `l2-${q.id}`;
+                    input.placeholder = 'Enter number';
+                    if (q.step) input.step = q.step;
+                    questionsContainer.appendChild(input);
+                } else if (q.type === 'select') {
+                    const select = document.createElement('select');
+                    select.className = 'answer-input';
+                    select.id = `l2-${q.id}`;
+                   
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = 'Select';
+                    select.appendChild(defaultOption);
+                   
+                    q.options.forEach(option => {
+                        const optionElement = document.createElement('option');
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        select.appendChild(optionElement);
+                    });
+                   
+                    questionsContainer.appendChild(select);
+                }
+               
+                questionsContainer.appendChild(document.createElement('br'));
+            });
+        }
+
+        function calculateLevel2Answers() {
+            const answers = {};
+           
+            // Calculate all possible answers
+            const mathsMarks = marksData.map(d => d.maths);
+            const scienceMarks = marksData.map(d => d.science);
+            const englishMarks = marksData.map(d => d.english);
+            const totalMarks = marksData.map(d => d.total);
+           
+            // Mean of Maths
+            const mathsMean = mathsMarks.reduce((a, b) => a + b, 0) / mathsMarks.length;
+           
+            // Median of Science
+            const sortedScience = [...scienceMarks].sort((a, b) => a - b);
+            const mid = Math.floor(sortedScience.length / 2);
+            const scienceMedian = sortedScience.length % 2 !== 0 ?
+                sortedScience[mid] :
+                (sortedScience[mid - 1] + sortedScience[mid]) / 2;
+           
+            // Mode of English
+            const englishFrequency = {};
+            let maxFreq = 0;
+            let englishMode = null;
+            englishMarks.forEach(mark => {
+                englishFrequency[mark] = (englishFrequency[mark] || 0) + 1;
+                if (englishFrequency[mark] > maxFreq) {
+                    maxFreq = englishFrequency[mark];
+                    englishMode = mark;
+                }
+            });
+           
+            // Range of Maths
+            const mathsRange = Math.max(...mathsMarks) - Math.min(...mathsMarks);
+           
+            // Students above 75 in Maths
+            const above75Count = mathsMarks.filter(mark => mark > 75).length;
+           
+            // Subject averages
+            const mathsAvg = mathsMean;
+            const scienceAvg = scienceMarks.reduce((a, b) => a + b, 0) / scienceMarks.length;
+            const englishAvg = englishMarks.reduce((a, b) => a + b, 0) / englishMarks.length;
+           
+            let highestSubject = 'Maths';
+            let highestAvg = mathsAvg;
+            if (scienceAvg > highestAvg) {
+                highestAvg = scienceAvg;
+                highestSubject = 'Science';
+            }
+            if (englishAvg > highestAvg) {
+                highestAvg = englishAvg;
+                highestSubject = 'English';
+            }
+           
+            // Total marks in Science
+            const scienceTotal = scienceMarks.reduce((a, b) => a + b, 0);
+           
+            // Average for Student 5 (index 4)
+            const student5Avg = (marksData[4]?.maths + marksData[4]?.science + marksData[4]?.english) / 3;
+           
+            // Lowest English mark
+            const lowestEnglish = Math.min(...englishMarks);
+           
+            // Highest Maths mark
+            const highestMaths = Math.max(...mathsMarks);
+           
+            // Difference between highest and lowest total
+            const totalRange = Math.max(...totalMarks) - Math.min(...totalMarks);
+           
+            // Students with total above 200
+            const above200Count = totalMarks.filter(total => total > 200).length;
+           
+            // Store all answers
+            answers.q1 = parseFloat(mathsMean.toFixed(1));
+            answers.q2 = scienceMedian;
+            answers.q3 = englishMode;
+            answers.q4 = mathsRange;
+            answers.q5 = above75Count;
+            answers.q6 = highestSubject;
+            answers.q7 = scienceTotal;
+            answers.q8 = parseFloat(student5Avg.toFixed(1));
+            answers.q9 = lowestEnglish;
+            answers.q10 = highestMaths;
+            answers.q11 = totalRange;
+            answers.q12 = above200Count;
+           
+            return answers;
+        }
+
+        function checkLevel2() {
+            const feedbackEl = document.getElementById('level-2-feedback');
+            const correctAnswers = calculateLevel2Answers();
+           
+            let correct = 0;
+            let message = '';
+           
+            // Check each question
+            level2CurrentQuestionSet.questions.forEach((q, index) => {
+                const answerElement = document.getElementById(`l2-${q.id}`);
+                const userAnswer = q.type === 'number' ?
+                    (q.step === "0.1" ? parseFloat(answerElement.value) : parseInt(answerElement.value)) :
+                    answerElement.value;
+               
+                const correctAnswer = correctAnswers[q.id];
+               
+                let isCorrect = false;
+                if (q.type === 'number' && q.step === "0.1") {
+                    isCorrect = Math.abs(userAnswer - correctAnswer) < 0.1;
+                } else {
+                    isCorrect = userAnswer === correctAnswer;
+                }
+               
+                if (isCorrect) {
+                    correct++;
+                } else {
+                    message += `${q.text} ${formatNumber(correctAnswer)} | `;
+                }
+            });
+           
+            // REQUIRE AT LEAST 3 CORRECT ANSWERS TO UNLOCK NEXT LEVEL
+            const minCorrectToPass = 3;
+           
+            if (correct >= minCorrectToPass && correct === level2CurrentQuestionSet.questions.length) {
+                feedbackEl.textContent = currentLang === 'or' ?
+                    `✅ ବିଶ୍ଳେଷଣ ଉତ୍ତମ! ସମସ୍ତ ଉତ୍ତର ଠିକ୍! (+${formatNumber(150)} ପଏଣ୍ଟ)` :
+                    `✅ Analysis perfect! All answers correct! (+${formatNumber(150)} points)`;
+                feedbackEl.className = 'feedback correct';
+                updateScore(150);
+               
+                setTimeout(() => {
+                    unlockLevel(3);
+                    document.getElementById('completion-modal').style.display = 'flex';
+                }, 1500);
+            } else if (correct >= minCorrectToPass) {
+                feedbackEl.textContent = currentLang === 'or' ?
+                    `✅ ଭଲ! ${formatNumber(correct)}/${formatNumber(level2CurrentQuestionSet.questions.length)} ଠିକ୍। (+${formatNumber(120)} ପଏଣ୍ଟ)` :
+                    `✅ Good! ${formatNumber(correct)}/${level2CurrentQuestionSet.questions.length} correct. (+${formatNumber(120)} points)`;
+                feedbackEl.className = 'feedback correct';
+                updateScore(120);
+               
+                setTimeout(() => {
+                    unlockLevel(3);
+                    document.getElementById('completion-modal').style.display = 'flex';
+                }, 1500);
+            } else {
+                feedbackEl.textContent = currentLang === 'or' ?
+                    `ଭଲ ଚେଷ୍ଟା! ${formatNumber(correct)}/${formatNumber(level2CurrentQuestionSet.questions.length)} ଠିକ୍। ${message} (-${formatNumber(30)} ପଏଣ୍ଟ)` :
+                    `Good try! ${formatNumber(correct)}/${level2CurrentQuestionSet.questions.length} correct. ${message} (-${formatNumber(30)} points)`;
+                feedbackEl.className = 'feedback wrong';
+                updateScore(-30);
+            }
+        }
+
+        // --- LEVEL 3: DATA STRUCTURE MASTER ---
+        // Define 3 different question sets for Level 3 (ALL WITH AT LEAST 3 QUESTIONS)
+        const level3QuestionSets = [
+            {
+                questions: [
+                    { text: "1. Highest number in the array:", type: "number", id: "q1" },
+                    { text: "2. Lowest number in the array:", type: "number", id: "q2" },
+                    { text: "3. How many unique numbers?", type: "number", id: "q3" },
+                    { text: "4. Is 25 present in the array? (Yes/No)", type: "select", id: "q4", options: ["Yes", "No"] }
+                ]
+            },
+            {
+                questions: [
+                    { text: "1. Sum of all numbers:", type: "number", id: "q1" },
+                    { text: "2. Average of all numbers:", type: "number", id: "q2", step: "0.1" },
+                    { text: "3. How many numbers are even?", type: "number", id: "q3" },
+                    { text: "4. Median of the array:", type: "number", id: "q4" }
+                ]
+            },
+            {
+                questions: [
+                    { text: "1. Range of numbers (Max - Min):", type: "number", id: "q1" },
+                    { text: "2. How many numbers are greater than 30?", type: "number", id: "q2" },
+                    { text: "3. Sum of even numbers:", type: "number", id: "q3" },
+                    { text: "4. How many numbers are odd?", type: "number", id: "q4" }
+                ]
+            }
+        ];
+
+        function loadLevel3() {
+            // Select a random question set
+            level3QuestionSet = (level3QuestionSet + 1) % level3QuestionSets.length;
+            const questionSet = level3QuestionSets[level3QuestionSet];
+            level3CurrentQuestionSet = questionSet;
+           
+            // Generate random numbers with some duplicates
+            originalNumbers = [];
+            const baseNumbers = [12, 25, 18, 42, 25, 36, 18, 29, 42, 12, 55, 36, 29, 18, 42];
+           
+            // Add some more random numbers
+            for (let i = 0; i < 5; i++) {
+                baseNumbers.push(Math.floor(Math.random() * 50) + 10);
+            }
+           
+            // Shuffle
+            originalNumbers = [...baseNumbers].sort(() => Math.random() - 0.5);
+           
+            // Calculate correct sorted and unique arrays
+            sortedNumbers = [...originalNumbers].sort((a, b) => a - b);
+            uniqueNumbers = [...new Set(sortedNumbers)];
+           
+            // Create array items
+            const originalArrayDiv = document.getElementById('original-array');
+            originalArrayDiv.innerHTML = '';
+           
+            originalNumbers.forEach((num, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'array-item';
+                itemDiv.id = `array-item-${index}`;
+                itemDiv.draggable = true;
+                itemDiv.dataset.value = num;
+                itemDiv.dataset.index = index;
+               
+                itemDiv.textContent = formatNumber(num);
+               
+                // Add drag events
+                itemDiv.addEventListener('dragstart', function(e) {
+                    e.dataTransfer.setData('text/plain', JSON.stringify({
+                        index: index,
+                        value: num
+                    }));
+                    this.style.opacity = '0.6';
+                });
+               
+                itemDiv.addEventListener('dragend', function(e) {
+                    this.style.opacity = '1';
+                });
+               
+                originalArrayDiv.appendChild(itemDiv);
+            });
+           
+            // Set up structure boxes
+            const sortedBox = document.getElementById('sorted-box');
+            const uniqueBox = document.getElementById('unique-box');
+           
+            // Clear boxes
+            document.getElementById('sorted-items').innerHTML = '<p style="color: #64748b; font-style: italic; text-align: center; width: 100%; margin-top: 40px;">Drop sorted numbers here</p>';
+            document.getElementById('unique-items').innerHTML = '<p style="color: #64748b; font-style: italic; text-align: center; width: 100%; margin-top: 40px;">Drop unique numbers here</p>';
+           
+            // Add drag events to boxes
+            [sortedBox, uniqueBox].forEach(box => {
+                box.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.classList.add('drag-over');
+                });
+               
+                box.addEventListener('dragleave', function(e) {
+                    this.classList.remove('drag-over');
+                });
+               
+                box.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('drag-over');
+                   
+                    const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                   
+                    // Check if item is already placed
+                    if (document.getElementById(`placed-sorted-${data.index}`) ||
+                        document.getElementById(`placed-unique-${data.index}`)) {
+                        return;
+                    }
+                   
+                    const isSortedBox = this.id === 'sorted-box';
+                    const targetDiv = isSortedBox ? document.getElementById('sorted-items') : document.getElementById('unique-items');
+                   
+                    // Remove placeholder text if it exists
+                    if (targetDiv.querySelector('p')) {
+                        targetDiv.innerHTML = '';
+                    }
+                   
+                    const placedItem = document.createElement('div');
+                    placedItem.className = 'array-item';
+                    placedItem.id = isSortedBox ? `placed-sorted-${data.index}` : `placed-unique-${data.index}`;
+                    placedItem.textContent = formatNumber(data.value);
+                    targetDiv.appendChild(placedItem);
+                   
+                    // Remove from original array
+                    document.getElementById(`array-item-${data.index}`).style.display = 'none';
+                   
+                    // Clear feedback
+                    document.getElementById('level-3-feedback').textContent = '';
+                    document.getElementById('level-3-feedback').className = 'feedback';
+                });
+            });
+           
+            // Generate questions
+            generateLevel3Questions();
+           
+            // Clear feedback
+            document.getElementById('level-3-feedback').textContent = '';
+            document.getElementById('level-3-feedback').className = 'feedback';
+        }
+
+        function generateLevel3Questions() {
+            const questionsContainer = document.getElementById('level3-questions-container');
+            questionsContainer.innerHTML = '';
+           
+            level3CurrentQuestionSet.questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.textContent = q.text;
+                questionDiv.style.marginTop = index > 0 ? '15px' : '0';
+               
+                questionsContainer.appendChild(questionDiv);
+               
+                if (q.type === 'number') {
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.className = 'answer-input';
+                    input.id = `l3-${q.id}`;
+                    input.placeholder = 'Enter number';
+                    if (q.step) input.step = q.step;
+                    questionsContainer.appendChild(input);
+                } else if (q.type === 'select') {
+                    const select = document.createElement('select');
+                    select.className = 'answer-input';
+                    select.id = `l3-${q.id}`;
+                   
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = 'Select';
+                    select.appendChild(defaultOption);
+                   
+                    q.options.forEach(option => {
+                        const optionElement = document.createElement('option');
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        select.appendChild(optionElement);
+                    });
+                   
+                    questionsContainer.appendChild(select);
+                }
+               
+                questionsContainer.appendChild(document.createElement('br'));
+            });
+        }
+
+        function calculateLevel3Answers() {
+            const answers = {};
+           
+            // Calculate all possible answers
+            const highest = Math.max(...originalNumbers);
+            const lowest = Math.min(...originalNumbers);
+            const uniqueCount = uniqueNumbers.length;
+            const sum = originalNumbers.reduce((a, b) => a + b, 0);
+            const average = parseFloat((sum / originalNumbers.length).toFixed(1));
+            const has25 = originalNumbers.includes(25) ? "Yes" : "No";
+            const evenCount = originalNumbers.filter(num => num % 2 === 0).length;
+           
+            // Median
+            const sorted = [...originalNumbers].sort((a, b) => a - b);
+            const mid = Math.floor(sorted.length / 2);
+            const median = sorted.length % 2 !== 0 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+           
+            // Range
+            const range = highest - lowest;
+           
+            // Numbers greater than 30
+            const greaterThan30 = originalNumbers.filter(num => num > 30).length;
+           
+            // Sum of even numbers
+            const evenSum = originalNumbers.filter(num => num % 2 === 0).reduce((a, b) => a + b, 0);
+           
+            // Odd count
+            const oddCount = originalNumbers.length - evenCount;
+           
+            // Store all answers
+            answers.q1 = highest;
+            answers.q2 = lowest;
+            answers.q3 = uniqueCount;
+            answers.q4 = has25;
+            answers.q5 = sum;
+            answers.q6 = average;
+            answers.q7 = evenCount;
+            answers.q8 = median;
+            answers.q9 = range;
+            answers.q10 = greaterThan30;
+            answers.q11 = evenSum;
+            answers.q12 = oddCount;
+           
+            return answers;
+        }
+
+        function checkLevel3() {
+            const feedbackEl = document.getElementById('level-3-feedback');
+            const correctAnswers = calculateLevel3Answers();
+           
+            let correct = 0;
+            let message = '';
+           
+            // Check each question
+            level3CurrentQuestionSet.questions.forEach((q, index) => {
+                const answerElement = document.getElementById(`l3-${q.id}`);
+                const userAnswer = q.type === 'number' ?
+                    (q.step === "0.1" ? parseFloat(answerElement.value) : parseInt(answerElement.value)) :
+                    answerElement.value;
+               
+                const correctAnswer = correctAnswers[q.id];
+               
+                let isCorrect = false;
+                if (q.type === 'number' && q.step === "0.1") {
+                    isCorrect = Math.abs(userAnswer - correctAnswer) < 0.1;
+                } else {
+                    isCorrect = userAnswer === correctAnswer;
+                }
+               
+                if (isCorrect) {
+                    correct++;
+                } else {
+                    message += `${q.text} ${formatNumber(correctAnswer)} | `;
+                }
+            });
+           
+            // REQUIRE AT LEAST 3 CORRECT ANSWERS TO COMPLETE GAME
+            const minCorrectToPass = 3;
+           
+            if (correct >= minCorrectToPass && correct === level3CurrentQuestionSet.questions.length) {
+                feedbackEl.textContent = currentLang === 'or' ?
+                    `✅ ଡାଟା ସ୍ଟ୍ରକ୍ଚର ମାଷ୍ଟର! ସମସ୍ତ ଉତ୍ତର ଠିକ୍! (+${formatNumber(200)} ପଏଣ୍ଟ)` :
+                    `✅ Data Structure Master! All answers correct! (+${formatNumber(200)} points)`;
+                feedbackEl.className = 'feedback correct';
+                updateScore(200);
+               
+                setTimeout(() => {
+                    document.getElementById('final-score').textContent = formatNumber(score);
+                    document.getElementById('game-over-modal').style.display = 'flex';
+                }, 1500);
+            } else if (correct >= minCorrectToPass) {
+                feedbackEl.textContent = currentLang === 'or' ?
+                    `✅ ଭଲ! ${formatNumber(correct)}/${formatNumber(level3CurrentQuestionSet.questions.length)} ଠିକ୍। (+${formatNumber(160)} ପଏଣ୍ଟ)` :
+                    `✅ Good! ${formatNumber(correct)}/${level3CurrentQuestionSet.questions.length} correct. (+${formatNumber(160)} points)`;
+                feedbackEl.className = 'feedback correct';
+                updateScore(160);
+               
+                setTimeout(() => {
+                    document.getElementById('final-score').textContent = formatNumber(score);
+                    document.getElementById('game-over-modal').style.display = 'flex';
+                }, 1500);
+            } else {
+                feedbackEl.textContent = currentLang === 'or' ?
+                    `ଭଲ ଚେଷ୍ଟା! ${formatNumber(correct)}/${formatNumber(level3CurrentQuestionSet.questions.length)} ଠିକ୍। ${message} (-${formatNumber(40)} ପଏଣ୍ଟ)` :
+                    `Good try! ${formatNumber(correct)}/${level3CurrentQuestionSet.questions.length} correct. ${message} (-${formatNumber(40)} points)`;
+                feedbackEl.className = 'feedback wrong';
+                updateScore(-40);
+            }
+        }
+
+        function unlockLevel(level) {
+            if (level === 2) {
+                const level2Card = document.getElementById('level-card-2');
+                level2Card.classList.remove('locked');
+                level2Card.querySelector('.lock-icon').style.display = 'none';
+                const startBtn = level2Card.querySelector('.start-btn');
+                startBtn.disabled = false;
+                startBtn.textContent = translations[currentLang]['btn_start_level2'];
+                startBtn.setAttribute('onclick', 'startLevel(2)');
+            } else if (level === 3) {
+                const level3Card = document.getElementById('level-card-3');
+                level3Card.classList.remove('locked');
+                level3Card.querySelector('.lock-icon').style.display = 'none';
+                const startBtn = level3Card.querySelector('.start-btn');
+                startBtn.disabled = false;
+                startBtn.textContent = translations[currentLang]['btn_start_level3'];
+                startBtn.setAttribute('onclick', 'startLevel(3)');
+            }
+        }
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up language toggle - FIXED
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    updateLanguage(lang);
+                });
+            });
+           
+            // Set up mobile menu
+            document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+                document.querySelector('nav').classList.toggle('active');
+            });
+           
+            // Set up modal button
+            document.getElementById('next-level-btn').addEventListener('click', function() {
+                document.getElementById('completion-modal').style.display = 'none';
+                showLevelSelection();
+            });
+           
+            // Set up navigation links
+            setupNavigation();
+           
+            // Initialize language
+            updateLanguage('en');
+           
+            // Show level selection by default
+            showLevelSelection();
+        });
+    </script>
+</body>
+</html>

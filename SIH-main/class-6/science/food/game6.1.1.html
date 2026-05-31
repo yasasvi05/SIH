@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Food Detective - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin:0; padding:0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: #f0f7ff; color:#1e293b; line-height:1.6; overflow-x:hidden; }
+        .container { width:100%; max-width:1200px; margin:0 auto; padding:0 20px; }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #2a69ac;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text h1 span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Horizontal Language Selector */
+        .language-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-right: 15px;
+        }
+
+        .language-option-btn {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .language-option-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .language-option-btn.active {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-pic {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 180px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f7fa;
+        }
+
+        .dropdown-item i {
+            color: #3182ce;
+            width: 20px;
+        }
+
+        /* Remove old language options */
+        .language-options {
+            display: none !important;
+        }
+
+        /* Instructions Modal */
+        .instructions-modal { display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 2000; align-items: center; justify-content: center; }
+        .instructions-content { background: white; border-radius: 20px; width: 90%; max-width: 700px; padding: 30px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); position: relative; text-align: center; }
+        .instructions-title { font-size: 2rem; margin-bottom: 20px; color: #1a365d; font-weight: 700; }
+        .instructions-text { color: #64748b; margin-bottom: 25px; line-height: 1.6; text-align: left; font-size: 1.1rem; }
+        .instructions-list { margin-left: 20px; margin-bottom: 25px; }
+        .instructions-list li { margin-bottom: 10px; }
+        .start-game-btn { padding: 15px 40px; background: linear-gradient(135deg, #38b2ac 0%, #2c9a94 100%); color: white; border: none; border-radius: 10px; font-size: 1.2rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 20px; }
+        .start-game-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(56, 178, 172, 0.3); }
+
+        /* game header */
+        .game-header { background: linear-gradient(rgba(14,42,71,0.85),rgba(26,54,93,0.9)), url('https://images.unsplash.com/photo-1593118247619-e2d6f056869e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'); background-size:cover; background-position:center; color:white; padding:50px 0; text-align:center; }
+        .game-header h1 { font-size:2.8rem; margin-bottom:12px; font-weight:700; text-shadow:0 2px 4px rgba(0,0,0,0.2); }
+        .game-header p { font-size:1.1rem; max-width:800px; margin:0 auto; font-weight:300; opacity:0.95; }
+
+        /* game stats (second UI) */
+        .game-stats { display:flex; justify-content:space-between; align-items:center; background:white; padding:15px 25px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.08); margin:20px auto; max-width:1000px; gap:12px; flex-wrap:wrap; }
+        .timer, .score, .hints { display:flex; align-items:center; gap:10px; font-size:1.1rem; font-weight:600; color:#1a365d; }
+        .timer i { color:#e53e3e; }
+        .score i { color:#38a169; }
+        .hints i { color:#d69e2e; }
+        .progress-container { width:200px; height:12px; background:#e2e8f0; border-radius:10px; overflow:hidden; }
+        .progress-bar { height:100%; background:#3182ce; border-radius:10px; transition: width 0.5s ease; }
+
+        /* game area */
+        .game-area { padding:40px 0 60px; }
+        .game-container { display:grid; grid-template-columns:1fr 1fr; gap:30px; max-width:1000px; margin:0 auto 40px auto; }
+        .drop-zone { background: rgba(255,255,255,0.95); border-radius:25px; padding:25px; box-shadow:0 10px 30px rgba(0,0,0,0.08); min-height:350px; display:flex; flex-direction:column; border:3px dashed #cbd5e0; transition: all 0.3s ease; position:relative; }
+        .drop-zone.highlight { border-color:#4299e1; background: rgba(235,248,255,0.95); transform:scale(1.03); }
+        .zone-header { display:flex; align-items:center; gap:15px; margin-bottom:18px; }
+        .zone-icon { width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.6rem; }
+        .plant-icon { background: linear-gradient(45deg,#48bb78,#38a169); color:white; }
+        .animal-icon { background: linear-gradient(45deg,#ed8936,#dd6b20); color:white; }
+        .zone-title { font-size:1.4rem; font-weight:700; color:#1a365d; }
+
+        .zone-items { display:flex; flex-wrap:wrap; gap:12px; min-height:160px; align-content:flex-start; }
+
+        .food-items { display:flex; flex-wrap:wrap; gap:18px; justify-content:center; margin-top:30px; padding:22px; background: rgba(255,255,255,0.1); border-radius:16px; }
+        .food-item { width:110px; height:110px; background: linear-gradient(145deg,#ffffff,#f0f4f8); border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:grab; box-shadow:0 8px 20px rgba(0,0,0,0.06); transition:all 0.25s ease; user-select:none; border:2px solid rgba(255,255,255,0.3); }
+        .food-item:hover { transform:translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.15); }
+        .food-item.dragging { opacity:0.85; transform:scale(1.08) rotate(8deg); z-index:1200; box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+        .food-icon { font-size:2.6rem; margin-bottom:8px; }
+        .food-name { font-size:0.95rem; font-weight:700; color:#2d3748; text-align:center; }
+
+        /* modal */
+        .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.75); z-index:2000; align-items:center; justify-content:center; }
+        .modal-content { background:linear-gradient(145deg,#ffffff,#f0f8ff); border-radius:24px; width:90%; max-width:700px; padding:36px; text-align:center; position:relative; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+        .modal-close { position:absolute; top:16px; right:16px; background:rgba(0,0,0,0.06); border:none; font-size:1.4rem; width:44px; height:44px; border-radius:50%; cursor:pointer; transition: all 0.3s ease; }
+        .modal-close:hover { background:rgba(0,0,0,0.12); transform: rotate(90deg); }
+        .modal-food-image { width:96px; height:96px; font-size:3.6rem; margin:0 auto 18px; display:flex; align-items:center; justify-content:center; border-radius:16px; background:rgba(255,255,255,0.9); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .modal-icon { font-size:3.6rem; margin-bottom:12px; }
+        .modal-title { font-size:2rem; font-weight:800; color:#1a365d; margin-bottom:8px; }
+        .modal-text { color:#4a5568; margin-bottom:18px; font-size:1rem; line-height:1.6; }
+        .modal-action { padding:12px 22px; background:linear-gradient(45deg,#4facfe,#00f2fe); color:white; border:none; border-radius:14px; font-weight:800; cursor:pointer; transition: all 0.3s ease; }
+        .modal-action:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(79, 172, 254, 0.4); }
+
+        /* Level Complete with Ranking */
+        .level-complete { display:none; text-align:center; padding:28px; background:linear-gradient(145deg,#ffffff,#f7fafc); border-radius:20px; box-shadow:0 20px 40px rgba(0,0,0,0.08); max-width:700px; margin:24px auto; }
+        .level-complete .badge { font-size: 3rem; margin-bottom: 20px; color: #fbbf24; }
+        .level-complete .badge i { font-size: 3.5rem; }
+        .level-title { font-size:2.2rem; font-weight:800; color:#1a365d; margin-bottom:15px; }
+        .level-text { color:#4a5568; margin-bottom:20px; font-size:1.1rem; line-height:1.6; }
+       
+        /* Score and Rank Display */
+        .score-rank-container { display: flex; justify-content: center; gap: 30px; margin: 25px 0; flex-wrap: wrap; }
+        .score-box, .rank-box { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); min-width: 180px; }
+        .score-box { border-left: 5px solid #38b2ac; }
+        .rank-box { border-left: 5px solid #f59e0b; }
+        .score-label, .rank-label { font-size: 0.9rem; color: #64748b; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+        .score-value { font-size: 2.5rem; font-weight: 800; color: #1a365d; }
+        .rank-value { font-size: 2.5rem; font-weight: 800; color: #d97706; }
+        .rank-suffix { font-size: 1rem; color: #6b7280; }
+       
+        /* Leaderboard Preview */
+        .leaderboard-preview { margin: 25px 0; padding: 20px; background: #f8fafc; border-radius: 15px; }
+        .leaderboard-title { font-size: 1.2rem; font-weight: 700; color: #1e293b; margin-bottom: 15px; text-align: center; }
+        .leaderboard-list { max-height: 200px; overflow-y: auto; }
+        .leaderboard-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 15px; margin-bottom: 8px; background: white; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .leaderboard-item.current-user { background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border: 2px solid #0ea5e9; }
+        .leaderboard-rank { font-weight: 700; color: #475569; width: 30px; text-align: center; }
+        .leaderboard-name { flex-grow: 1; margin: 0 15px; font-weight: 600; }
+        .leaderboard-score { font-weight: 700; color: #059669; min-width: 60px; text-align: right; }
+       
+        .next-level-btn { padding:12px 24px; background:linear-gradient(45deg,#38b2ac,#2c9a94); color:white; border:none; border-radius:12px; font-size:1.1rem; font-weight:800; cursor:pointer; transition: all 0.3s ease; margin-top:15px; }
+        .next-level-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(56, 178, 172, 0.4); }
+
+        .particles { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-1; }
+        .particle { position:absolute; width:4px; height:4px; background:rgba(255,255,255,0.5); border-radius:50%; animation: float-particle 18s infinite linear; }
+
+        @keyframes float-particle { 0% { transform: translateY(100vh) translateX(0px); opacity:0; } 10%{opacity:1;} 90%{opacity:1;} 100%{transform:translateY(-100px) translateX(100px); opacity:0;} }
+
+        /* Streak Counter */
+        .streak-counter { position: fixed; top: 50%; right: 20px; transform: translateY(-50%); background: linear-gradient(45deg, #ff6b6b, #ee5a24); color: white; padding: 18px 24px; border-radius: 50px; font-weight: 800; font-size: 1.2rem; box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5); z-index: 500; animation: streak-bounce 2s infinite; display: none; }
+        @keyframes streak-bounce {
+            0%, 100% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-55%) scale(1.1); }
+        }
+
+        /* Language-specific text styles */
+        .odia-text { font-family: 'Kalinga', 'Nirmala UI', 'Segoe UI', sans-serif; font-weight:600; }
+        .hindi-text { font-family: 'Nirmala UI', 'Segoe UI', sans-serif; font-weight:600; }
+
+        @media (max-width:968px) {
+            .game-container { grid-template-columns:1fr; gap:20px; }
+            .food-item { width:92px; height:92px; }
+            .game-stats { flex-direction:column; gap:10px; align-items:flex-start; }
+            .streak-counter { display: none !important; }
+            .score-rank-container { gap: 15px; }
+            .score-box, .rank-box { min-width: 150px; padding: 15px; }
+            .language-selector {
+                margin-right: 5px;
+            }
+            .language-option-btn {
+                padding: 4px 8px;
+                font-size: 0.7rem;
+                min-width: 50px;
+            }
+        }
+       
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            nav ul {
+                gap: 15px;
+            }
+           
+            .score-value, .rank-value { font-size: 2rem; }
+            .header-controls {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .language-selector {
+                margin-right: 0;
+                order: 1;
+                width: 100%;
+                justify-content: center;
+                margin-top: 10px;
+            }
+        }
+       
+        @media (max-width: 480px) {
+            .language-selector {
+                gap: 5px;
+            }
+            .language-option-btn {
+                padding: 3px 6px;
+                font-size: 0.65rem;
+                min-width: 45px;
+            }
+        }
+       
+        /* New animations */
+        @keyframes confetti-fall {
+            0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+       
+        @keyframes pop-in {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+       
+        .pop-in { animation: pop-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    <div class="streak-counter" id="streak-counter">🔥 <span id="streak-count">0</span> Streak!</div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-atom"></i>
+            </div>
+            <div class="logo-text">
+                <h1>STEM Learn Odisha</h1>
+                <p>Gamified Learning Platform</p>
+            </div>
+        </div>
+       
+        <nav>
+            <ul>
+                <li><a href="student-dashboard.html" id="navHome" data-translate="nav-dashboard">Dashboard</a></li>
+                <li><a href="science.html" id="navScience" data-translate="nav-science">Science</a></li>
+                <li><a href="about.html" id="navAbout" data-translate="nav-about">About</a></li>
+                <li><a href="contact.html" id="navContact" data-translate="nav-contact">Contact</a></li>
+            </ul>
+        </nav>
+       
+        <div class="header-controls">
+            <!-- Horizontal Language Selector -->
+            <div class="language-selector">
+                <button class="language-option-btn active" data-lang="en">English</button>
+                <button class="language-option-btn" data-lang="or">ଓଡ଼ିଆ</button>
+                <button class="language-option-btn" data-lang="hi">हिन्दी</button>
+            </div>
+           
+            <div class="profile-container">
+                <button class="profile-btn" id="profileToggle">
+                    <img src="" alt="Profile" class="profile-pic" id="headerProfilePic">
+                    <span id="headerUserName">Student</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+               
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" class="dropdown-item" id="dropdownProfile">
+                        <i class="fas fa-user"></i>
+                        <span data-translate="dropdown-profile">Profile</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownSettings">
+                        <i class="fas fa-cog"></i>
+                        <span data-translate="dropdown-settings">Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownLogout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span data-translate="dropdown-logout">Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Instructions modal -->
+    <div class="instructions-modal" id="instructions-modal">
+        <div class="instructions-content">
+            <div class="language-switcher" style="position: relative; top: 0; right: 0; margin: 0 auto 20px auto; width: fit-content; background: rgba(26, 54, 93, 0.1);">
+                <button class="lang-btn active" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+                <button class="lang-btn" data-lang="hi">हिन्दी</button>
+            </div>
+           
+            <h2 class="instructions-title" id="instructions-title">How to Play Food Detective</h2>
+            <div class="instructions-text" id="instructions-text">
+                <p id="instructions-intro">Welcome to Food Detective! Here's how to play:</p>
+                <ul class="instructions-list" id="instructions-list">
+                    <li id="instruction-1">Drag food items to their correct source - either Plant or Animal.</li>
+                    <li id="instruction-2">Each correct answer earns you points and builds your streak.</li>
+                    <li id="instruction-3">Maintain your streak to earn bonus points.</li>
+                    <li id="instruction-4">Complete all items to finish the level.</li>
+                    <li id="instruction-5">Learn about different foods and where they come from!</li>
+                    <li id="instruction-6">Have fun learning about where your food comes from!</li>
+                </ul>
+                <p id="instructions-outro">Good luck and have fun becoming a food detective!</p>
+            </div>
+            <button class="start-game-btn" id="start-game-btn">Start Game</button>
+        </div>
+    </div>
+
+    <!-- Game header -->
+    <section class="game-header" style="display:none;" id="game-header">
+        <div class="container">
+            <h1 data-translate="game-title">Food Detective</h1>
+            <p data-translate="game-desc">Discover where your food comes from! Drag each food item to its correct source and become a food expert!</p>
+        </div>
+    </section>
+
+    <!-- Game stats (second UI) -->
+    <div class="container" style="display:none;" id="game-stats-container">
+        <div class="game-stats">
+            <div class="timer">
+                <i class="fas fa-clock"></i>
+                <span id="time">03:00</span>
+            </div>
+
+            <div class="score">
+                <i class="fas fa-star"></i>
+                <span id="score">Score: 0</span>
+            </div>
+
+            <div class="hints">
+                <i class="fas fa-fire"></i>
+                <span id="streak">Streak: 0</span>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar" id="progress" style="width:0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game area -->
+    <section class="game-area" style="display:none;" id="game-area">
+        <div class="container">
+            <div class="game-container">
+                <div class="drop-zone" id="plant-zone">
+                    <div class="zone-header">
+                        <div class="zone-icon plant-icon"><i class="fas fa-seedling"></i></div>
+                        <h2 class="zone-title" data-translate="plant-source">Plant Sources</h2>
+                    </div>
+                    <div class="zone-items" id="plant-items"></div>
+                </div>
+
+                <div class="drop-zone" id="animal-zone">
+                    <div class="zone-header">
+                        <div class="zone-icon animal-icon"><i class="fas fa-paw"></i></div>
+                        <h2 class="zone-title" data-translate="animal-source">Animal Sources</h2>
+                    </div>
+                    <div class="zone-items" id="animal-items"></div>
+                </div>
+            </div>
+
+            <div class="food-items" id="food-items"></div>
+
+            <!-- Level Complete with Ranking -->
+            <div class="level-complete" id="level-complete">
+                <div class="badge"><i class="fas fa-medal"></i></div>
+                <h2 class="level-title" data-translate="level-title">Level Complete!</h2>
+                <p class="level-text" data-translate="level-text">Congratulations! You've identified the food sources correctly. You're becoming a real food detective!</p>
+               
+                <!-- Score and Rank Display -->
+                <div class="score-rank-container">
+                    <div class="score-box pop-in">
+                        <div class="score-label">Your Score</div>
+                        <div class="score-value" id="final-score">0</div>
+                    </div>
+                    <div class="rank-box pop-in">
+                        <div class="rank-label">Your Rank</div>
+                        <div class="rank-value" id="final-rank">0</div>
+                        <div class="rank-suffix" id="rank-suffix">th</div>
+                    </div>
+                </div>
+               
+                <!-- Leaderboard Preview -->
+                <div class="leaderboard-preview" id="leaderboard-preview">
+                    <div class="leaderboard-title">Top Players</div>
+                    <div class="leaderboard-list" id="leaderboard-list">
+                        <!-- Leaderboard items will be inserted here -->
+                    </div>
+                </div>
+               
+                <button class="next-level-btn" id="play-again-btn" data-translate="play-again">Play Again</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback modal -->
+    <div class="modal" id="feedback-modal">
+        <div class="modal-content" id="modal-content">
+            <button class="modal-close" id="modal-close"><i class="fas fa-times"></i></button>
+
+            <div class="modal-food-image" id="modal-food-image">🍎</div>
+            <div class="modal-icon correct-icon" id="modal-icon"><i class="fas fa-check-circle"></i></div>
+            <h2 class="modal-title" id="modal-title" data-translate="correct-title">Correct!</h2>
+            <p class="modal-text" id="modal-text">Great! Rice comes from plants.</p>
+
+            <button class="modal-action" id="modal-action" data-translate="continue-btn">Continue</button>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+           
+            if (!user) {
+                // Redirect to login if not authenticated
+                window.location.href = 'student-login.html';
+                return;
+            }
+           
+            // Load user data
+            loadUserData(user);
+           
+            // Initialize the game
+            init();
+        });
+
+        // Load user data into the page
+        function loadUserData(user) {
+            document.getElementById('headerUserName').textContent = user.fullName;
+            document.getElementById('headerProfilePic').src = user.profilePicture ? `uploads/${user.profilePicture}` : 'default-profile.png';
+        }
+
+        /* ---- DATA ---- */
+        const foodItems = [
+            { id: 1, name: { en: "Rice", or: "ଚାଉଳ", hi: "चावल" }, icon: "🌾", type: "plant", info: { en: "Rice is a staple food that comes from the rice plant. It is grown in paddy fields and is a major crop in Odisha. Rice provides energy and is eaten daily by millions of people!", or: "ଚାଉଳ ଏକ ମୁଖ୍ୟ ଖାଦ୍ୟ ଯାହା ଧାନ ଗଛରୁ ମିଳେ। ଏହା ଭଲ ପରିମାଣରେ ଧାନ କ୍ଷେତ୍ରରେ ଚାଷ ହୁଏ।", hi: "चावल एक मुख्य भोजन है जो धान के पौधे से आता है। यह ओडिशा में एक प्रमुख फसल है और लाखों लोग इसे दैनिक रूप से खाते हैं!" } },
+            { id: 2, name: { en: "Milk", or: "କ୍ଷୀର", hi: "दूध" }, icon: "🥛", type: "animal", info: { en: "Milk comes from animals like cows and buffaloes. It's rich in calcium and protein.", or: "କ୍ଷୀର ଗାଈ ଓ ଭେଂସ ଠାରୁ ମିଳେ। ଏହା କ୍ୟାଲସିୟମ୍ ଏବଂ ପ୍ରୋଟିନ୍ରେ ପରିପୂର୍ଣ୍ଣ।", hi: "दूध गाय और भैंस से आता है। यह कैल्शियम और प्रोटीन से भरपूर होता है।" } },
+            { id: 3, name: { en: "Apple", or: "ଆପଲ୍", hi: "सेब" }, icon: "🍎", type: "plant", info: { en: "Apples grow on trees and are full of vitamins.", or: "ଆପଲ୍ ଗଛରେ ବଢ଼େ ଏବଂ ଭିଟାମିନ୍‌ରେ ଧନ୍ୟ।", hi: "सेब पेड़ों पर उगते हैं और विटामिन से भरपूर होते हैं।" } },
+            { id: 4, name: { en: "Fish", or: "ମାଛ", hi: "मछली" }, icon: "🐟", type: "animal", info: { en: "Fish live in water and are rich in protein and omega-3.", or: "ମାଛ ଜଳରେ ବସନ୍ତି ଏବଂ ପ୍ରୋଟିନ୍‌ର ଉତ୍ସ।", hi: "मछली पानी में रहती है और प्रोटीन और ओमेगा-3 का अच्छा स्रोत है।" } },
+            { id: 5, name: { en: "Banana", or: "କଦଳୀ", hi: "केला" }, icon: "🍌", type: "plant", info: { en: "Bananas grow on plants and are rich in potassium.", or: "କଦଳୀ ଗଛରେ ବଢ଼େ ଏବଂ ପୋଟାସିୟମ୍‌ର ଭଲ ଉତ୍ସ।", hi: "केले पौधों पर उगते हैं और पोटेशियम से भरपूर होते हैं।" } },
+            { id: 6, name: { en: "Egg", or: "ଅଣ୍ଡା", hi: "अंडा" }, icon: "🥚", type: "animal", info: { en: "Eggs are laid by birds and are a rich source of protein.", or: "ଅଣ୍ଡା ପକ୍ଷୀମାନେ ଦିଅନ୍ତି; ପ୍ରୋଟିନ୍‌ର ଉତ୍ସ।", hi: "अंडे पक्षियों द्वारा दिए जाते हैं और प्रोटीन में समृद्ध होते हैं।" } },
+            { id: 7, name: { en: "Potato", or: "ଆଳୁ", hi: "आलू" }, icon: "🥔", type: "plant", info: { en: "Potatoes are tubers that grow underground.", or: "ଆଳୁ ଭୂମି ତଳେ ବଢ଼ୁଥିବା କନ୍ଦ।", hi: "आलू जमीन के नीचे उगने वाले आलू के भाग हैं।" } },
+            { id: 8, name: { en: "Chicken", or: "ମୁରଗୀ", hi: "चिकन" }, icon: "🍗", type: "animal", info: { en: "Chicken meat comes from chickens; it's a common source of protein.", or: "ଚିକେନ୍ ମାଂସ ମୁରଗୀଠାରୁ ମିଳେ।", hi: "चिकन मुर्गियों से आता है और प्रोटीन का स्रोत है।" } },
+            { id: 9, name: { en: "Wheat", or: "ଗହମ", hi: "गेहूं" }, icon: "🌾", type: "plant", info: { en: "Wheat is ground into flour to make bread and chapati.", or: "ଗହମରୁ ଆଟା ତିଆରି ହୁଏ, ଯାହା ରୋଟି ପାଇଁ ବ୍ୟବହୃତ ହୁଏ।", hi: "गेहूं पीसकर आटा बनता है और रोटी के लिए उपयोग होता है।" } },
+            { id:10, name:{ en:"Honey", or:"ମହୁ", hi:"शहद" }, icon:"🍯", type:"animal", info:{ en:"Honey is made by bees from flower nectar.", or:"ମହୁ ମଧୁମକ୍ଖୀମାନେ ତିଆରି କରନ୍ତି।", hi:"शहद मधुमक्खियों द्वारा बनता है।" } },
+            { id:11, name:{ en:"Coconut", or:"ନାରିଆଳ", hi:"नारियल" }, icon:"🥥", type:"plant", info:{ en:"Coconuts grow on palms; every part is useful.", or:"ନାରିଆଳ ତାଳ ଗଛରେ ବଢ଼େ; ପ୍ରତ୍ୟେକ ଅଂଶ ଉପଯୋଗୀ।", hi:"नारियल पेड़ों पर उगते हैं। हर हिस्सा उपयोगी है।" } },
+            { id:12, name:{ en:"Carrot", or:"ଗାଜର", hi:"गाजर" }, icon:"🥕", type:"plant", info:{ en:"Carrots are root vegetables rich in vitamin A.", or:"ଗାଜର ଭିଟାମିନ୍ A ରେ ଧନ୍ୟ।", hi:"गाजर विटामिन A से भरपूर होती हैं।" } },
+            { id:13, name:{ en:"Cheese", or:"ପନିର", hi:"पनीर" }, icon:"🧀", type:"animal", info:{ en:"Cheese is made from milk and is rich in calcium.", or:"ପନିର କ୍ଷୀରରୁ ତିଆରି ହୁଏ ଏବଂ କ୍ୟାଲସିୟମ୍ରେ ଧନ୍ୟ।", hi:"पनीर दूध से बनता है और कैल्शियम से भरपूर होता है।" } },
+            { id:14, name:{ en:"Tomato", or:"ଟମାଟୋ", hi:"टमाटर" }, icon:"🍅", type:"plant", info:{ en:"Tomatoes are fruits that grow on vines.", or:"ଟମାଟୋ ଲତାରେ ବଢ଼ୁଥିବା ଫଳ।", hi:"टमाटर बेल पर उगने वाले फल हैं।" } },
+            { id:15, name:{ en:"Beef", or:"ଗୋମାଂସ", hi:"बीफ" }, icon:"🥩", type:"animal", info:{ en:"Beef comes from cattle and is rich in protein.", or:"ଗୋମାଂସ ଗୋରୁଠାରୁ ମିଳେ ଏବଂ ପ୍ରୋଟିନ୍ରେ ଧନ୍ୟ।", hi:"बीफ मवेशियों से आता है और प्रोटीन से भरपूर होता है।" } },
+            { id:16, name:{ en:"Orange", or:"କମଳା", hi:"संतरा" }, icon:"🍊", type:"plant", info:{ en:"Oranges grow on trees and are rich in vitamin C.", or:"କମଳା ଗଛରେ ବଢ଼େ ଏବଂ ଭିଟାମିନ୍ C ରେ ଧନ୍ୟ।", hi:"संतरे पेड़ों पर उगते हैं और विटामिन सी से भरपूर होते हैं।" } },
+            { id:17, name:{ en:"Yogurt", or:"ଦହି", hi:"दही" }, icon:"🥣", type:"animal", info:{ en:"Yogurt is made from milk and contains probiotics.", or:"ଦହି କ୍ଷୀରରୁ ତିଆରି ହୁଏ ଏବଂ ପ୍ରୋବାୟୋଟିକ୍ ଧାରଣ କରେ।", hi:"दही दूध से बनता है और इसमें प्रोबायोटिक्स होते हैं।" } },
+            { id:18, name:{ en:"Spinach", or:"ପାଳଙ୍ଗ", hi:"पालक" }, icon:"🍃", type:"plant", info:{ en:"Spinach is a leafy green vegetable rich in iron.", or:"ପାଳଙ୍ଗ ଏକ ପତ୍ରଯୁକ୍ତ ଶାଗ ଯାହା ଲୌହରେ ଧନ୍ୟ।", hi:"पालक एक पत्तेदार हरी सब्जी है जो आयरन से भरपूर होती है।" } },
+            { id:19, name:{ en:"Pork", or:"ସୁଆରର ମାଂସ", hi:"सुअर का मांस" }, icon:"🍖", type:"animal", info:{ en:"Pork comes from pigs and is a common meat.", or:"ସୁଆରର ମାଂସ ସୁଆରଠାରୁ ମିଳେ ଏବଂ ଏକ ସାଧାରଣ ମାଂସ।", hi:"सुअर का मांस सुअरों से आता है और एक सामान्य मांस है।" } },
+            { id:20, name:{ en:"Broccoli", or:"ବ୍ରୋକୋଲି", hi:"ब्रोकली" }, icon:"🥦", type:"plant", info:{ en:"Broccoli is a green vegetable rich in vitamins.", or:"ବ୍ରୋକୋଲି ଏକ ହରିତ ଶାକସବ୍ଜି ଯାହା ଭିଟାମିନ୍ରେ ଧନ୍ୟ।", hi:"ब्रोकली एक हरी सब्जी है जो विटामिन से भरपूर होती है।" } }
+        ];
+
+        /* ---- STATE ---- */
+        let currentLanguage = 'en';
+        let score = 0;
+        let correctAnswers = 0;
+        let streak = 0;
+        let timeLeft = 180;
+        let timerInterval = null;
+        let draggedItem = null;
+        let completedItems = [];
+        let isGameStarted = false;
+        let currentGameItems = [];
+        let finalScore = 0;
+        let userRank = 0;
+        let gameName = 'Food Detective';
+
+        /* ---- ELEMENTS ---- */
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const foodItemsContainer = document.getElementById('food-items');
+        const plantZone = document.getElementById('plant-zone');
+        const animalZone = document.getElementById('animal-zone');
+        const plantItems = document.getElementById('plant-items');
+        const animalItems = document.getElementById('animal-items');
+        const scoreElement = document.getElementById('score');
+        const timeElement = document.getElementById('time');
+        const streakElement = document.getElementById('streak');
+        const progressElement = document.getElementById('progress');
+        const feedbackModal = document.getElementById('feedback-modal');
+        const modalContent = document.getElementById('modal-content');
+        const modalFoodImage = document.getElementById('modal-food-image');
+        const modalIcon = document.getElementById('modal-icon');
+        const modalTitle = document.getElementById('modal-title');
+        const modalText = document.getElementById('modal-text');
+        const modalAction = document.getElementById('modal-action');
+        const modalClose = document.getElementById('modal-close');
+        const levelComplete = document.getElementById('level-complete');
+        const playAgainBtn = document.getElementById('play-again-btn');
+        const instructionsModal = document.getElementById('instructions-modal');
+        const startGameBtn = document.getElementById('start-game-btn');
+        const gameHeader = document.getElementById('game-header');
+        const gameStatsContainer = document.getElementById('game-stats-container');
+        const gameArea = document.getElementById('game-area');
+        const streakCounter = document.getElementById('streak-counter');
+        const streakCountDisplay = document.getElementById('streak-count');
+        const finalScoreElement = document.getElementById('final-score');
+        const finalRankElement = document.getElementById('final-rank');
+        const rankSuffixElement = document.getElementById('rank-suffix');
+        const leaderboardPreview = document.getElementById('leaderboard-preview');
+        const leaderboardList = document.getElementById('leaderboard-list');
+
+        // Dashboard integration elements
+        const profileToggle = document.getElementById('profileToggle');
+        const profileDropdown = document.getElementById('profileDropdown');
+        const dropdownProfile = document.getElementById('dropdownProfile');
+        const dropdownSettings = document.getElementById('dropdownSettings');
+        const dropdownLogout = document.getElementById('dropdownLogout');
+        const navHome = document.getElementById('navHome');
+        const navScience = document.getElementById('navScience');
+        const navAbout = document.getElementById('navAbout');
+        const navContact = document.getElementById('navContact');
+
+        // Language selector elements
+        const languageOptionBtns = document.querySelectorAll('.language-option-btn');
+
+        const translations = {
+            en: {
+                'nav-dashboard': 'Dashboard','nav-science': 'Science','nav-about':'About','nav-contact':'Contact',
+                'dropdown-profile': 'Profile','dropdown-settings': 'Settings','dropdown-logout': 'Logout',
+                'game-title':'Food Detective','game-desc':'Discover where your food comes from! Drag each food item to its correct source and become a food expert!',
+                'correct-title':'Awesome!','incorrect-title':'Try Again!',
+                'timer-label': 'Time',
+        'score-label': 'Score',
+        'streak-label': 'Streak',
+                'continue-btn':'Continue Adventure','level-title':'Level Complete!','level-text':"Congratulations! You've identified the food sources correctly. You're becoming a real food detective!",
+                'play-again':'Play Again','instructions-title':'How to Play Food Detective','instructions-intro':"Welcome to Food Detective! Here's how to play:",
+                'instruction-1':'Drag food items to their correct source - either Plant or Animal.',
+                'instruction-2':'Each correct answer earns you points and builds your streak.',
+                'instruction-3':'Maintain your streak to earn bonus points.','instruction-4':'Complete all items to finish the level.',
+                'instruction-5':'Learn about different foods and where they come from!',
+                'instruction-6':'Have fun learning about where your food comes from!','instructions-outro':'Good luck and have fun becoming a food detective!','start-game-btn':'Start Game',
+                'plant-source':'Plant Sources','animal-source':'Animal Sources'
+            },
+            or: {
+                'nav-dashboard':'ଡ୍ୟାସବୋର୍ଡ','nav-science': 'ବିଜ୍ଞାନ','nav-about':'ବିଷୟରେ','nav-contact':'ଯୋଗାଯୋଗ',
+                'dropdown-profile': 'ପ୍ରୋଫାଇଲ୍','dropdown-settings': 'ସେଟିଂସ୍','dropdown-logout': 'ଲଗଆଉଟ୍',
+                'game-title':'ଖାଦ୍ୟ ଗବେଷକ','game-desc':'ଆପଣଙ୍କର ଖାଦ୍ୟ କେଉଁଠାରୁ ଆସେ ଆବିଷ୍କାର କରନ୍ତୁ! ପ୍ରତ୍ୟେକ ଖାଦ୍ୟ ବସ୍ତୁକୁ ସଠିକ ଉତ୍ସକୁ ଟାଣନ୍ତୁ!',
+                'correct-title':'ଚମତ୍କାର!','incorrect-title':'ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ!',
+                 'timer-label': 'ସମୟ',
+        'score-label': 'ସ୍କୋର',
+        'streak-label': 'ଧାରା',
+                'continue-btn':'ଆଗକୁ ବଢ଼ନ୍ତୁ','level-title':'ସ୍ତର ସମ୍ପୂର୍ଣ୍ଣ!','level-text':'ଅଭିନନ୍ଦନ! ଆପଣ ଖାଦ୍ୟ ଉତ୍ସଗୁଡ଼ିକୁ ସଠିକ ଭାବରେ ଚିହ୍ନିଛନ୍ତି!',
+                'play-again':'ପୁଣି ଖେଳନ୍ତୁ','instructions-title':'ଫୁଡ ଡିଟେକ୍ଟିଭ କିପରି ଖେଳିବେ','instructions-intro':'ଫୁଡ ଡିଟେକ୍ଟିଭକୁ ସ୍ୱାଗତ!',
+                'instruction-1':'ଖାଦ୍ୟ ବସ୍ତୁଗୁଡିକୁ ସେମାନଙ୍କ ସଠିକ ଉତ୍ସକୁ ଟାଣନ୍ତୁ - ଉଦ୍ଭିଦ କିମ୍ବା ପ୍ରାଣୀ।',
+                'instruction-2':'ପ୍ରତ୍ୟେକ ସଠିକ ଉତ୍ତର ଆପଣଙ୍କୁ ପଏଣ୍ଟ ଦେବ।','instruction-3':'ଧାରା ବଜାୟ ରଖନ୍ତୁ','instruction-4':'ସମସ୍ତ ଆଇଟମ୍ ସମାପ୍ତ କରନ୍ତୁ',
+                'instruction-5':'ବିଭିନ୍ନ ଖାଦ୍ୟ ଏବଂ ସେମାନଙ୍କ ଉତ୍ସ ବିଷୟରେ ଶିଖନ୍ତୁ!','instruction-6':'ମଜା କରନ୍ତୁ','instructions-outro':'ଶୁଭକାମନା','start-game-btn':'ଖେଳ ଆରମ୍ଭ କରନ୍ତୁ',
+                'plant-source':'ଉଦ୍ଭିଦ ଉତ୍ସ','animal-source':'ପ୍ରାଣୀ ଉତ୍ସ'
+            },
+            hi: {
+                'nav-dashboard':'डैशबोर्ड','nav-science': 'विज्ञान','nav-about':'हमारे बारे में','nav-contact':'संपर्क करें',
+                'dropdown-profile': 'प्रोफाइल','dropdown-settings': 'सेटिंग्स','dropdown-logout': 'लॉगआउट',
+                'game-title':'फूड डिटेक्टिव','game-desc':'खोजें कि आपका भोजन कहाँ से आता है! प्रत्येक खाद्य पदार्थ को उसके सही स्रोत पर खींचें और भोजन विशेषज्ञ बनें!',
+                'correct-title':'बहुत बढ़िया!','incorrect-title':'फिर से कोशिश करें!',
+                'timer-label': 'समय',
+        'score-label': 'स्कोर',
+        'streak-label': 'लगातार',
+                'continue-btn':'जारी रखें','level-title':'स्तर पूरा!','level-text':'बधाई हो! आपने खाद्य स्रोतों को सही ढंग से पहचान लिया है।',
+                'play-again':'फिर से खेलें','instructions-title':'फूड डिटेक्टिव कैसे खेलें','instructions-intro':'स्वागत है',
+                'instruction-1':'खाद्य पार्थों को उनके सही स्रोत पर खींचें - पौधा या जानवर।','instruction-2':'प्रत्येक सही उत्तर अंक अर्जित करता है।',
+                'instruction-3':'अपनी लगातार सफलता बनाए रखें','instruction-4':'सभी आइटम पूरे करें','instruction-5':'विभिन्न खाद्य पार्थों और उनके स्रोतों के बारे में जानें!',
+                'instruction-6':'मज़ा करें','instructions-outro':'शुभकामनाएं','start-game-btn':'खेल शुरू करें','plant-source':'पौधों के स्रोत','animal-source':'जानवरों के स्रोत'
+            }
+        };
+
+        /* ---- INIT ---- */
+        function init() {
+            createParticles();
+
+            // Add event listeners to all language buttons (including those in instructions)
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    switchLanguage(lang);
+                });
+            });
+
+            // Add event listeners to horizontal language selector
+            languageOptionBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    // Update active button
+                    languageOptionBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    switchLanguage(lang);
+                });
+            });
+
+            startGameBtn.addEventListener('click', startGame);
+            modalAction.addEventListener('click', closeModal);
+            modalClose.addEventListener('click', closeModal);
+            playAgainBtn.addEventListener('click', startGame);
+
+            // Dashboard integration event listeners
+            profileToggle.addEventListener('click', function() {
+                profileDropdown.classList.toggle('show');
+            });
+
+            // Navigation between pages
+            dropdownProfile.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#profile';
+            });
+
+            dropdownSettings.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#settings';
+            });
+
+            dropdownLogout.addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('user');
+                window.location.href = 'student-login.html';
+            });
+
+            // Navigation menu items
+            navHome.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html';
+            });
+
+            navScience.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'science.html';
+            });
+
+            navAbout.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('About page would open here');
+            });
+
+            navContact.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Contact page would open here');
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#profileToggle') && !e.target.closest('#profileDropdown')) {
+                    profileDropdown.classList.remove('show');
+                }
+            });
+
+            switchLanguage('en');
+        }
+
+        function createParticles() {
+            const container = document.getElementById('particles');
+            container.innerHTML = '';
+            for (let i=0;i<18;i++){
+                const p = document.createElement('div'); p.className='particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.top = Math.random() * 100 + '%';
+                p.style.animationDelay = `${Math.random()*10}s`;
+                container.appendChild(p);
+            }
+        }
+
+        /* ---- FOOD ITEM UI + RANDOMIZATION ---- */
+        function createFoodItems() {
+            // Shuffle all food items and select 8 random ones
+            const shuffled = [...foodItems].sort(() => Math.random() - 0.5);
+            const count = 8; // Reduced count for better gameplay
+            currentGameItems = shuffled.slice(0, count);
+
+            foodItemsContainer.innerHTML = '';
+            currentGameItems.forEach((item, idx) => {
+                const el = document.createElement('div');
+                el.className = 'food-item';
+                el.draggable = true;
+                el.dataset.id = item.id;
+                el.dataset.type = item.type;
+                el.style.transitionDelay = `${idx * 30}ms`;
+                el.innerHTML = `<div class="food-icon">${item.icon}</div><div class="food-name">${item.name[currentLanguage]}</div>`;
+                foodItemsContainer.appendChild(el);
+            });
+        }
+
+        function setupDragAndDrop() {
+            const foodEls = document.querySelectorAll('.food-item');
+            const dropZones = document.querySelectorAll('.drop-zone');
+
+            foodEls.forEach(it => {
+                it.addEventListener('dragstart', dragStart);
+                it.addEventListener('dragend', dragEnd);
+            });
+
+            dropZones.forEach(z => {
+                z.addEventListener('dragover', dragOver);
+                z.addEventListener('dragenter', dragEnter);
+                z.addEventListener('dragleave', dragLeave);
+                z.addEventListener('drop', drop);
+            });
+        }
+
+        function dragStart(e) {
+            draggedItem = this;
+            e.dataTransfer.setData('text/plain', this.dataset.id);
+            this.classList.add('dragging');
+            setTimeout(()=> this.style.opacity = '0.5', 10);
+        }
+        function dragEnd() { this.classList.remove('dragging'); this.style.opacity='1'; }
+
+        function dragOver(e) { e.preventDefault(); }
+        function dragEnter(e) { e.preventDefault(); this.classList.add('highlight'); }
+        function dragLeave() { this.classList.remove('highlight'); }
+
+        function drop(e) {
+            e.preventDefault();
+            this.classList.remove('highlight');
+            const id = e.dataTransfer.getData('text/plain');
+            const item = foodItems.find(f => f.id == id);
+            const zoneType = this.id === 'plant-zone' ? 'plant' : 'animal';
+            if (!item) return;
+            if (item.type === zoneType) handleCorrectAnswer(item, this);
+            else handleIncorrectAnswer(item, this);
+        }
+
+        /* ---- GAME LOGIC ---- */
+        function handleCorrectAnswer(item, zone) {
+            if (completedItems.includes(item.id)) return; // already placed
+            completedItems.push(item.id);
+
+            const basePoints = 10;
+            const streakBonus = Math.min(streak * 2, 20);
+            const pointsEarned = basePoints + streakBonus;
+            score += pointsEarned;
+            correctAnswers++;
+            streak++;
+
+            updateScore();
+            updateStreak();
+
+            // move element into zone visually
+            if (draggedItem) {
+                const clone = draggedItem.cloneNode(true);
+                clone.classList.remove('dragging');
+                clone.style.opacity = '1';
+                clone.draggable = false;
+                zone.querySelector('.zone-items').appendChild(clone);
+                draggedItem.style.display = 'none';
+            }
+
+            showFeedback(true, item);
+            createConfetti();
+
+            // complete if placed all items
+            if (correctAnswers >= currentGameItems.length) {
+                setTimeout(()=> completeLevel(), 800);
+            }
+        }
+
+        function handleIncorrectAnswer(item, zone) {
+            streak = 0;
+            updateStreak();
+            zone.classList.add('incorrect');
+            if (draggedItem) {
+                draggedItem.style.animation = 'shake 0.6s';
+                setTimeout(()=> draggedItem.style.animation = '', 600);
+            }
+            setTimeout(()=> zone.classList.remove('incorrect'), 900);
+            showFeedback(false, item);
+        }
+
+        /* ---- MODAL & FEEDBACK ---- */
+        function showFeedback(isCorrect, item) {
+            const modal = feedbackModal;
+            const icon = modalIcon;
+            modalFoodImage.textContent = item.icon;
+            if (isCorrect) {
+                modalContent.classList.remove('incorrect-modal');
+                modalContent.classList.add('correct-modal');
+                icon.innerHTML = '<i class="fas fa-check-circle" style="color:#48bb78;"></i>';
+                modalTitle.textContent = translations[currentLanguage]['correct-title'] || 'Correct!';
+                modalText.textContent = (currentLanguage === 'en') ? `${item.name.en} comes from ${item.type === 'plant' ? 'plants' : 'animals'}. ${item.info.en}` :
+                                     (currentLanguage === 'or') ? `${item.name.or} ${item.type === 'plant' ? 'ଉଦ୍ଭିଦ' : 'ପ୍ରାଣୀ'} ଉତ୍ସ ଠାରୁ ଆସେ। ${item.info.or}` :
+                                     `${item.name.hi} ${item.type === 'plant' ? 'पौधों' : 'जानवरों'} से आता है। ${item.info.hi}`;
+            } else {
+                modalContent.classList.remove('correct-modal');
+                modalContent.classList.add('incorrect-modal');
+                icon.innerHTML = '<i class="fas fa-times-circle" style="color:#f56565;"></i>';
+                modalTitle.textContent = translations[currentLanguage]['incorrect-title'] || 'Try Again!';
+                modalText.textContent = (currentLanguage === 'en') ?
+                    `${item.name.en} comes from a different source. ${item.info.en}` :
+                    (currentLanguage === 'or') ? `${item.name.or} ଅନ୍ୟ ଉତ୍ସରୁ ଆସେ। ${item.info.or}` :
+                    `${item.name.hi} दूसरे स्रोत से आता है। ${item.info.hi}`;
+            }
+
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            feedbackModal.style.display = 'none';
+        }
+
+        /* ---- UI Updates ---- */
+        function updateScore() {
+            // Get the translated label
+            const scoreLabel = translations[currentLanguage]?.['score-label'] || 'Score';
+            // Update with both label and value
+            scoreElement.textContent = `${scoreLabel}: ${score}`;
+           
+            const maxPossible = currentGameItems.length * 30;
+            const pct = Math.min(100, Math.round((score / (maxPossible || 1)) * 100));
+            progressElement.style.width = `${pct}%`;
+        }
+
+        function updateStreak() {
+            // Get the translated label
+            const streakLabel = translations[currentLanguage]?.['streak-label'] || 'Streak';
+            // Update with both label and value
+            streakElement.textContent = `${streakLabel}: ${streak}`;
+            streakCountDisplay.textContent = streak;
+           
+            // Show streak counter when streak is 3 or more
+            if (streak >= 3) {
+                streakCounter.style.display = 'block';
+            } else {
+                streakCounter.style.display = 'none';
+            }
+        }
+
+        /* ---- TIMER ---- */
+        function startTimer() {
+            clearInterval(timerInterval);
+            updateTimerDisplay();
+            timerInterval = setInterval(()=> {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    showTimeUpModal();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timeLeft/60);
+            const s = timeLeft % 60;
+            // Get the translated label
+            const timerLabel = translations[currentLanguage]?.['timer-label'] || 'Time';
+            // Update with both label and value
+            timeElement.textContent = `${timerLabel}: ${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+        }
+
+        function showTimeUpModal() {
+            modalIcon.innerHTML = '<i class="fas fa-clock" style="color:#f56565;"></i>';
+            modalTitle.textContent = currentLanguage === 'en' ? "Time's Up!" : (currentLanguage === 'or' ? 'ସମୟ ସରିଗଲା!' : 'समय समाप्त!');
+            modalText.textContent = (currentLanguage === 'en') ? `Time finished. You scored ${score} points and got ${correctAnswers} items correct.` :
+                (currentLanguage === 'or') ? `ସମୟ ସମାପ୍ତ! ଆପଣ ${score} ପଏଣ୍ଟ ପାଇଛନ୍ତି।` : `समय समाप्त! आपने ${score} अंक प्राप्त किए।`;
+            modalAction.textContent = currentLanguage === 'en' ? 'Try Again' : (currentLanguage === 'or' ? 'ପୁଣି ଚେଷ୍ଟା' : 'फिर से कोशिश करें');
+            feedbackModal.style.display = 'flex';
+        }
+
+        /* ---- LEVEL COMPLETION WITH RANKING ---- */
+        async function completeLevel() {
+            clearInterval(timerInterval);
+            const timeBonus = Math.max(0, Math.floor(timeLeft/10) * 5);
+            score += timeBonus;
+            finalScore = score;
+            updateScore();
+           
+            // Save score to server and get rank
+            try {
+                const user = JSON.parse(localStorage.getItem('user'));
+                if (user && user.id) {
+                    const result = await saveGameResult(user.id, finalScore);
+                   
+                    if (result && result.rank) {
+                        // Get leaderboard data
+                        const leaderboardData = await getGameLeaderboard(gameName);
+                       
+                        // Display final results
+                        displayFinalResults(finalScore, result.rank, leaderboardData);
+                    } else {
+                        displayFinalResults(finalScore, result?.rank || 1, []);
+                    }
+                } else {
+                    // Fallback if no user logged in
+                    displayFinalResults(finalScore, 1, []);
+                }
+            } catch (error) {
+                console.error('Error saving game result:', error);
+                displayFinalResults(finalScore, 1, []);
+            }
+           
+            createConfetti();
+            levelComplete.style.display = 'block';
+        }
+
+        /* ---- SERVER COMMUNICATION ---- */
+        async function saveGameResult(userId, gameScore) {
+            try {
+                const timeTaken = 180 - timeLeft; // in seconds
+               
+                const response = await fetch('/api/game/save-result-with-rank', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        userId: userId,
+                        gameName: gameName,
+                        score: gameScore,
+                        timeTaken: timeTaken,
+                        completed: true
+                    })
+                });
+               
+                if (!response.ok) {
+                    throw new Error('Failed to save game result');
+                }
+               
+                return await response.json();
+            } catch (error) {
+                console.error('Error saving game result:', error);
+                throw error;
+            }
+        }
+
+        async function getGameLeaderboard(gameName) {
+            try {
+                const response = await fetch(`/api/game/leaderboard/${encodeURIComponent(gameName)}`);
+               
+                if (!response.ok) {
+                    throw new Error('Failed to fetch leaderboard');
+                }
+               
+                return await response.json();
+            } catch (error) {
+                console.error('Error fetching leaderboard:', error);
+                return [];
+            }
+        }
+
+        /* ---- DISPLAY FINAL RESULTS ---- */
+        function displayFinalResults(finalScore, rank, leaderboardData) {
+            // Update score and rank display
+            finalScoreElement.textContent = finalScore;
+            finalRankElement.textContent = rank;
+           
+            // Add proper suffix to rank
+            const suffix = getRankSuffix(rank);
+            rankSuffixElement.textContent = suffix;
+           
+            // Display leaderboard
+            if (leaderboardData && leaderboardData.length > 0) {
+                displayLeaderboard(leaderboardData);
+                leaderboardPreview.style.display = 'block';
+            } else {
+                leaderboardPreview.style.display = 'none';
+            }
+           
+            // Add celebration effects based on rank
+            if (rank <= 3) {
+                celebrateTopRank(rank);
+            }
+        }
+
+        function getRankSuffix(rank) {
+            if (rank % 100 >= 11 && rank % 100 <= 13) {
+                return 'th';
+            }
+            switch (rank % 10) {
+                case 1: return 'st';
+                case 2: return 'nd';
+                case 3: return 'rd';
+                default: return 'th';
+            }
+        }
+
+        function displayLeaderboard(leaderboardData) {
+            leaderboardList.innerHTML = '';
+           
+            const user = JSON.parse(localStorage.getItem('user'));
+            const currentUserId = user ? user.id : null;
+           
+            // Sort by score descending
+            leaderboardData.sort((a, b) => b.score - a.score);
+           
+            // Display top 5 or less
+            const displayCount = Math.min(5, leaderboardData.length);
+            for (let i = 0; i < displayCount; i++) {
+                const player = leaderboardData[i];
+                const item = document.createElement('div');
+                item.className = 'leaderboard-item';
+               
+                // Highlight current user
+                if (player.user_id == currentUserId) {
+                    item.classList.add('current-user');
+                }
+               
+                // Format rank (starting from 1)
+                const rank = i + 1;
+                const rankSuffix = getRankSuffix(rank);
+               
+                item.innerHTML = `
+                    <div class="leaderboard-rank">${rank}${rankSuffix}</div>
+                    <div class="leaderboard-name">${player.fullName}</div>
+                    <div class="leaderboard-score">${player.score}</div>
+                `;
+               
+                leaderboardList.appendChild(item);
+            }
+        }
+
+        function celebrateTopRank(rank) {
+            // Add special effects for top 3 ranks
+            const medalColors = ['#FFD700', '#C0C0C0', '#CD7F32']; // Gold, Silver, Bronze
+           
+            if (rank <= 3) {
+                // Update medal icon color
+                const medalIcon = document.querySelector('.level-complete .badge i');
+                medalIcon.style.color = medalColors[rank - 1];
+               
+                // Add special confetti for top ranks
+                createSpecialConfetti(rank);
+               
+                // Play victory sound if available
+                if (rank === 1) {
+                    // First place special celebration
+                    setTimeout(() => {
+                        createConfetti();
+                        setTimeout(() => createConfetti(), 300);
+                        setTimeout(() => createConfetti(), 600);
+                    }, 500);
+                }
+            }
+        }
+
+        function createSpecialConfetti(rank) {
+            const colors = rank === 1 ? ['#FFD700', '#FFED4E', '#FFF9C4'] :
+                          rank === 2 ? ['#C0C0C0', '#E5E4E2', '#D3D3D3'] :
+                          ['#CD7F32', '#B87333', '#8B4513'];
+           
+            for (let i = 0; i < 15; i++) {
+                const c = document.createElement('div');
+                c.style.position = 'fixed';
+                c.style.left = Math.random() * 100 + 'vw';
+                c.style.top = '-10px';
+                c.style.width = '12px';
+                c.style.height = '12px';
+                c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                c.style.zIndex = 1500;
+                c.style.borderRadius = '50%';
+                c.style.animation = `confetti-fall ${2 + Math.random()}s ease-out forwards`;
+                document.body.appendChild(c);
+                setTimeout(() => { if (document.body.contains(c)) document.body.removeChild(c); }, 3000);
+            }
+        }
+
+        /* ---- START GAME / LANGUAGE SWITCH ---- */
+        function startGame() {
+            instructionsModal.style.display = 'none';
+            gameHeader.style.display = 'block';
+            gameStatsContainer.style.display = 'block';
+            gameArea.style.display = 'block';
+            levelComplete.style.display = 'none';
+            leaderboardPreview.style.display = 'none';
+           
+            // reset stats
+            score = 0; correctAnswers = 0; streak = 0; timeLeft = 180; completedItems = [];
+            plantItems.innerHTML = ''; animalItems.innerHTML = '';
+           
+            // Generate new random items
+            createFoodItems();
+            setupDragAndDrop();
+            startTimer();
+            updateScore(); updateStreak();
+        }
+
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+           
+            // Update all language buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-lang')===lang);
+            });
+           
+            // Update horizontal language selector
+            languageOptionBtns.forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-lang')===lang);
+            });
+           
+            // translate elements
+            const map = translations[lang] || translations.en;
+            Object.keys(map).forEach(key => {
+                document.querySelectorAll(`[data-translate="${key}"]`).forEach(el => {
+                    el.textContent = map[key];
+                    updateTimerDisplay();
+                    updateScore();
+                    updateStreak();
+                });
+            });
+           
+            // update instructions text
+            document.getElementById('instructions-title').textContent = map['instructions-title'];
+            document.getElementById('instructions-intro').textContent = map['instructions-intro'];
+            document.getElementById('instruction-1').textContent = map['instruction-1'];
+            document.getElementById('instruction-2').textContent = map['instruction-2'];
+            document.getElementById('instruction-3').textContent = map['instruction-3'];
+            document.getElementById('instruction-4').textContent = map['instruction-4'];
+            document.getElementById('instruction-5').textContent = map['instruction-5'];
+            document.getElementById('instruction-6').textContent = map['instruction-6'];
+            document.getElementById('instructions-outro').textContent = map['instructions-outro'];
+            document.getElementById('start-game-btn').textContent = map['start-game-btn'];
+           
+            // update food names in UI
+            document.querySelectorAll('.food-item').forEach(el => {
+                const id = parseInt(el.dataset.id);
+                const it = foodItems.find(f=>f.id===id);
+                if (it) el.querySelector('.food-name').textContent = it.name[lang] || it.name.en;
+            });
+           
+            // apply language-specific font classes
+            if (lang === 'or') {
+                document.body.classList.add('odia-text');
+                document.body.classList.remove('hindi-text');
+            } else if (lang === 'hi') {
+                document.body.classList.add('hindi-text');
+                document.body.classList.remove('odia-text');
+            } else {
+                document.body.classList.remove('odia-text');
+                document.body.classList.remove('hindi-text');
+            }
+        }
+
+        /* ---- FUN STUFF ---- */
+        function createConfetti() {
+            for (let i=0;i<12;i++){
+                const c = document.createElement('div');
+                c.style.position='fixed';
+                c.style.left = Math.random()*100 + 'vw';
+                c.style.top = '-10px';
+                c.style.width='10px'; c.style.height='10px';
+                const colors = ['#ff6b6b','#4ecdc4','#45b7d1','#96ceb4','#ffeaa7'];
+                c.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+                c.style.zIndex = 1500;
+                c.style.borderRadius = '2px';
+                c.style.animation = `confetti-fall 2.8s ease-out forwards`;
+                document.body.appendChild(c);
+                setTimeout(()=> { if (document.body.contains(c)) document.body.removeChild(c); }, 3000);
+            }
+        }
+
+        /* ---- EVENTS & BOOT ---- */
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+            if ((e.key === 'r' || e.key === 'R') && e.ctrlKey) { e.preventDefault(); startGame(); }
+    
+        if (e.key === '1') switchLanguage('en'); if (e.key==='2') switchLanguage('or'); if (e.key==='3') switchLanguage('hi');
+        });
+
+        // hide modal when clicking outside content
+        feedbackModal.addEventListener('click', (ev)=> { if (ev.target === feedbackModal) closeModal(); });
+
+    </script>
+</body>
+</html>

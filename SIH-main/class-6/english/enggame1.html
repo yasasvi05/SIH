@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Builder Challenge - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f7ff 0%, #e6f7ff 100%);
+            color: #1e293b;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #2a69ac;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text h1 span {
+            color: #38b2ac;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Main Game Dashboard */
+        .game-dashboard {
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .dashboard-header {
+            margin-bottom: 40px;
+        }
+
+        .dashboard-header h1 {
+            font-size: 3rem;
+            color: #1a365d;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #3182ce 0%, #38b2ac 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .dashboard-header p {
+            font-size: 1.2rem;
+            color: #64748b;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Syllabus Card */
+        .syllabus-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            text-align: left;
+            border-left: 6px solid #38b2ac;
+        }
+
+        .syllabus-card h2 {
+            color: #1a365d;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .syllabus-card h2 i {
+            color: #38b2ac;
+        }
+
+        .syllabus-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .syllabus-item {
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .syllabus-item:hover {
+            transform: translateY(-5px);
+            background: #f0f9ff;
+        }
+
+        .syllabus-item h3 {
+            color: #3182ce;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .syllabus-item p {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .points-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #38b2ac 0%, #2c9a94 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Game Cards */
+        .game-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .game-card-header {
+            background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .game-card-header i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .game-card-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .game-card-header .game-time {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .game-card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game-card-content p {
+            color: #64748b;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .game-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .game-features li {
+            padding: 8px 0;
+            color: #4a5568;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .game-features li i {
+            color: #38b2ac;
+            font-size: 0.9rem;
+        }
+
+        .game-card-footer {
+            padding: 20px 25px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .points-display {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .points-display .points {
+            background: #38b2ac;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .play-btn {
+            background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .play-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(49, 130, 206, 0.3);
+        }
+
+        /* Progress Section */
+        .progress-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 50px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .progress-header h2 {
+            color: #1a365d;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .total-points {
+            background: linear-gradient(135deg, #38b2ac 0%, #2c9a94 100%);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .progress-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .progress-card {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .progress-card:hover {
+            transform: translateY(-5px);
+            background: #f0f9ff;
+        }
+
+        .progress-card i {
+            font-size: 2rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .progress-card h4 {
+            color: #4a5568;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .progress-card .progress-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a365d;
+            margin-bottom: 5px;
+        }
+
+        .progress-card .progress-label {
+            font-size: 0.9rem;
+            color: #718096;
+        }
+
+        /* Game Areas (Initially Hidden) */
+        .game-area {
+            display: none;
+            padding: 40px 0;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .game-header h1 {
+            font-size: 2.5rem;
+            color: #1a365d;
+            margin-bottom: 15px;
+        }
+
+        .game-header p {
+            color: #64748b;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .back-to-dashboard {
+            background: #e2e8f0;
+            color: #4a5568;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 30px;
+        }
+
+        .back-to-dashboard:hover {
+            background: #cbd5e0;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about {
+            padding-right: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.8rem;
+            background: #38b2ac;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 20px;
+            color: #38b2ac;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2d3748;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .social-links a:hover {
+            background: #38b2ac;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+           
+            .dashboard-header h1 {
+                font-size: 2.2rem;
+            }
+           
+            .game-cards {
+                grid-template-columns: 1fr;
+            }
+           
+            .progress-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .progress-cards {
+                grid-template-columns: 1fr;
+            }
+           
+            .game-card {
+                margin: 0 10px;
+            }
+           
+            .syllabus-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Game Specific Styles will be added in JavaScript */
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+            </div>
+            <div class="logo-text">
+                <h1>STEM Learn <span>Odisha</span></h1>
+                <p>Vocabulary Builder Platform</p>
+            </div>
+        </div>
+       
+        <nav>
+            <ul>
+                <li><a href="#" class="active" id="navHome">Home</a></li>
+                <li><a href="#" id="navGames">Games</a></li>
+                <li><a href="#" id="navProgress">Progress</a></li>
+                <li><a href="#" id="navLeaderboard">Leaderboard</a></li>
+            </ul>
+        </nav>
+       
+        <div class="header-controls">
+            <button class="control-btn" id="languageToggle">
+                <i class="fas fa-globe"></i>
+            </button>
+            <button class="control-btn" id="soundToggle">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="profile-container">
+                <button class="control-btn" id="profileToggle">
+                    <i class="fas fa-user"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Game Dashboard -->
+    <section class="game-dashboard" id="gameDashboard">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1>Word Builder Challenge</h1>
+                <p>Build vocabulary through fun word games and puzzles. Complete all activities to earn up to 50 points!</p>
+            </div>
+
+            <!-- Syllabus Card -->
+            <div class="syllabus-card">
+                <h2><i class="fas fa-book-open"></i> Challenge Syllabus</h2>
+                <div class="syllabus-content">
+                    <div class="syllabus-item">
+                        <h3><i class="fas fa-gamepad"></i> Vocabulary Building</h3>
+                        <p>Learn new words through interactive games and puzzles designed for 6th-8th grade level.</p>
+                        <span class="points-badge">Up to 50 points</span>
+                    </div>
+                    <div class="syllabus-item">
+                        <h3><i class="fas fa-clock"></i> Time Duration</h3>
+                        <p>Complete all activities in 10-15 minutes. Perfect for short, focused learning sessions.</p>
+                        <span class="points-badge">Timed Challenge</span>
+                    </div>
+                    <div class="syllabus-item">
+                        <h3><i class="fas fa-graduation-cap"></i> Learning Outcomes</h3>
+                        <p>Improve spelling, vocabulary, and pattern recognition skills through gamified learning.</p>
+                        <span class="points-badge">Skill Development</span>
+                    </div>
+                    <div class="syllabus-item">
+                        <h3><i class="fas fa-trophy"></i> Points System</h3>
+                        <p>Earn points for correct answers, speed, and bonus achievements. Track your progress!</p>
+                        <span class="points-badge">50 Max Points</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Cards -->
+            <div class="game-cards">
+                <!-- Game 1: Word Search -->
+                <div class="game-card" data-game="wordSearch">
+                    <div class="game-card-header">
+                        <i class="fas fa-search"></i>
+                        <h3>Word Search</h3>
+                        <div class="game-time">5 minutes • Find hidden words</div>
+                    </div>
+                    <div class="game-card-content">
+                        <p>Find school-related words hidden in a letter grid. Words can be horizontal, vertical, or diagonal.</p>
+                        <ul class="game-features">
+                            <li><i class="fas fa-check"></i> 5 target words to find</li>
+                            <li><i class="fas fa-check"></i> Timed challenge</li>
+                            <li><i class="fas fa-check"></i> Visual pattern recognition</li>
+                            <li><i class="fas fa-check"></i> Hint system available</li>
+                        </ul>
+                    </div>
+                    <div class="game-card-footer">
+                        <div class="points-display">
+                            <i class="fas fa-star"></i>
+                            <span>Max: <span class="points">20 points</span></span>
+                        </div>
+                        <button class="play-btn" data-game="wordSearch">
+                            <i class="fas fa-play"></i> Play Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Game 2: Word Scramble -->
+                <div class="game-card" data-game="wordScramble">
+                    <div class="game-card-header">
+                        <i class="fas fa-random"></i>
+                        <h3>Word Scramble</h3>
+                        <div class="game-time">4 minutes • Unscramble words</div>
+                    </div>
+                    <div class="game-card-content">
+                        <p>Unscramble mixed-up letters to form correct words. Test your spelling and vocabulary skills.</p>
+                        <ul class="game-features">
+                            <li><i class="fas fa-check"></i> 8 scrambled words</li>
+                            <li><i class="fas fa-check"></i> Increasing difficulty</li>
+                            <li><i class="fas fa-check"></i> Time bonuses</li>
+                            <li><i class="fas fa-check"></i> Definition hints</li>
+                        </ul>
+                    </div>
+                    <div class="game-card-footer">
+                        <div class="points-display">
+                            <i class="fas fa-star"></i>
+                            <span>Max: <span class="points">15 points</span></span>
+                        </div>
+                        <button class="play-btn" data-game="wordScramble">
+                            <i class="fas fa-play"></i> Play Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Game 3: Synonym Match -->
+                <div class="game-card" data-game="synonymMatch">
+                    <div class="game-card-header">
+                        <i class="fas fa-sync-alt"></i>
+                        <h3>Synonym Match</h3>
+                        <div class="game-time">5 minutes • Match similar words</div>
+                    </div>
+                    <div class="game-card-content">
+                        <p>Match words with their synonyms. Expand your vocabulary by learning word relationships.</p>
+                        <ul class="game-features">
+                            <li><i class="fas fa-check"></i> 10 word pairs</li>
+                            <li><i class="fas fa-check"></i> Multiple choice</li>
+                            <li><i class="fas fa-check"></i> Instant feedback</li>
+                            <li><i class="fas fa-check"></i> Educational hints</li>
+                        </ul>
+                    </div>
+                    <div class="game-card-footer">
+                        <div class="points-display">
+                            <i class="fas fa-star"></i>
+                            <span>Max: <span class="points">15 points</span></span>
+                        </div>
+                        <button class="play-btn" data-game="synonymMatch">
+                            <i class="fas fa-play"></i> Play Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Section -->
+            <div class="progress-section">
+                <div class="progress-header">
+                    <h2><i class="fas fa-chart-line"></i> Your Progress</h2>
+                    <div class="total-points" id="totalPoints">Total: 0/50 points</div>
+                </div>
+                <div class="progress-cards">
+                    <div class="progress-card">
+                        <i class="fas fa-search"></i>
+                        <h4>Word Search</h4>
+                        <div class="progress-value" id="wordSearchScore">0</div>
+                        <div class="progress-label">/ 20 points</div>
+                    </div>
+                    <div class="progress-card">
+                        <i class="fas fa-random"></i>
+                        <h4>Word Scramble</h4>
+                        <div class="progress-value" id="wordScrambleScore">0</div>
+                        <div class="progress-label">/ 15 points</div>
+                    </div>
+                    <div class="progress-card">
+                        <i class="fas fa-sync-alt"></i>
+                        <h4>Synonym Match</h4>
+                        <div class="progress-value" id="synonymMatchScore">0</div>
+                        <div class="progress-label">/ 15 points</div>
+                    </div>
+                    <div class="progress-card">
+                        <i class="fas fa-trophy"></i>
+                        <h4>Completion</h4>
+                        <div class="progress-value" id="completionRate">0%</div>
+                        <div class="progress-label">Overall Progress</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Areas (Hidden by default) -->
+    
+    <!-- Word Search Game -->
+    <section class="game-area" id="wordSearchGame">
+        <div class="container">
+            <button class="back-to-dashboard" onclick="showDashboard()">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </button>
+            <div class="game-header">
+                <h1><i class="fas fa-search"></i> Word Search Challenge</h1>
+                <p>Find hidden words in the grid. Words can be horizontal, vertical, or diagonal.</p>
+            </div>
+            
+            <div id="wordSearchContent">
+                <!-- Word Search game will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Word Scramble Game -->
+    <section class="game-area" id="wordScrambleGame">
+        <div class="container">
+            <button class="back-to-dashboard" onclick="showDashboard()">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </button>
+            <div class="game-header">
+                <h1><i class="fas fa-random"></i> Word Scramble Challenge</h1>
+                <p>Unscramble the letters to form correct words. Use hints if you get stuck!</p>
+            </div>
+            
+            <div id="wordScrambleContent">
+                <!-- Word Scramble game will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Synonym Match Game -->
+    <section class="game-area" id="synonymMatchGame">
+        <div class="container">
+            <button class="back-to-dashboard" onclick="showDashboard()">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </button>
+            <div class="game-header">
+                <h1><i class="fas fa-sync-alt"></i> Synonym Match Challenge</h1>
+                <p>Match words with their synonyms. Learn new word relationships!</p>
+            </div>
+            
+            <div id="synonymMatchContent">
+                <!-- Synonym Match game will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="footer-logo-text">STEM Learn Odisha</div>
+                    </div>
+                    <p>Transforming education through gamified learning experiences. Making vocabulary building fun, interactive, and accessible for all students in Odisha.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+               
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="#"><i class="fas fa-gamepad"></i> Games</a></li>
+                        <li><a href="#"><i class="fas fa-chart-line"></i> Progress</a></li>
+                        <li><a href="#"><i class="fas fa-trophy"></i> Leaderboard</a></li>
+                    </ul>
+                </div>
+               
+                <div class="footer-links">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> info@stemlearnodisha.in</li>
+                        <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Bhubaneswar, Odisha</li>
+                    </ul>
+                </div>
+            </div>
+           
+            <div class="copyright">
+                <p>&copy; 2024 STEM Learn Odisha. All rights reserved. | Designed for educational purposes</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Game State
+        const gameState = {
+            totalPoints: 0,
+            wordSearchScore: 0,
+            wordScrambleScore: 0,
+            synonymMatchScore: 0,
+            completedGames: [],
+            soundEnabled: true
+        };
+
+        // Game Data
+        const gameData = {
+            wordSearch: {
+                words: ["BOOK", "PEN", "MATH", "CLASS", "DESK"],
+                grid: [
+                    ['C', 'L', 'A', 'S', 'S', 'D', 'X', 'Y'],
+                    ['X', 'Y', 'Z', 'A', 'B', 'E', 'C', 'D'],
+                    ['B', 'O', 'O', 'K', 'F', 'S', 'G', 'H'],
+                    ['I', 'J', 'K', 'L', 'M', 'K', 'N', 'O'],
+                    ['P', 'E', 'N', 'Q', 'R', 'S', 'T', 'U'],
+                    ['V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C'],
+                    ['M', 'A', 'T', 'H', 'D', 'E', 'F', 'G'],
+                    ['H', 'I', 'J', 'K', 'L', 'M', 'N', 'O']
+                ],
+                maxPoints: 20
+            },
+            wordScramble: {
+                words: [
+                    { scrambled: "LOOSC", correct: "SCHOOL", hint: "A place where students learn" },
+                    { scrambled: "HERTCAE", correct: "TEACHER", hint: "Person who helps students learn" },
+                    { scrambled: "DENTSUT", correct: "STUDENT", hint: "Person who goes to school" },
+                    { scrambled: "OKBO", correct: "BOOK", hint: "You read this to learn" },
+                    { scrambled: "NEP", correct: "PEN", hint: "Used for writing" },
+                    { scrambled: "RULER", correct: "RULER", hint: "Used to draw straight lines" },
+                    { scrambled: "ABGL", correct: "GLAB", hint: "Where science experiments happen" },
+                    { scrambled: "PYHASIC", correct: "PHYSICS", hint: "Study of matter and energy" }
+                ],
+                maxPoints: 15
+            },
+            synonymMatch: {
+                pairs: [
+                    { word: "HAPPY", synonym: "JOYFUL", options: ["SAD", "JOYFUL", "ANGRY", "TIRED"] },
+                    { word: "BIG", synonym: "LARGE", options: ["SMALL", "LARGE", "TINY", "SHORT"] },
+                    { word: "SMART", synonym: "INTELLIGENT", options: ["STUPID", "INTELLIGENT", "SLOW", "QUIET"] },
+                    { word: "FAST", synonym: "QUICK", options: ["SLOW", "QUICK", "LAZY", "HEAVY"] },
+                    { word: "BEAUTIFUL", synonym: "PRETTY", options: ["UGLY", "PRETTY", "PLAIN", "ROUGH"] },
+                    { word: "BEGIN", synonym: "START", options: ["END", "START", "STOP", "PAUSE"] },
+                    { word: "DIFFICULT", synonym: "HARD", options: ["EASY", "HARD", "SIMPLE", "LIGHT"] },
+                    { word: "SMALL", synonym: "TINY", options: ["BIG", "TINY", "LARGE", "WIDE"] },
+                    { word: "QUIET", synonym: "SILENT", options: ["LOUD", "SILENT", "NOISY", "BUSY"] },
+                    { word: "BRAVE", synonym: "COURAGEOUS", options: ["COWARD", "COURAGEOUS", "SCARED", "SHY"] }
+                ],
+                maxPoints: 15
+            }
+        };
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initGame();
+            loadProgress();
+            updateProgressDisplay();
+        });
+
+        // Initialize game
+        function initGame() {
+            // Setup navigation
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showDashboard();
+                });
+            });
+
+            // Setup play buttons
+            document.querySelectorAll('.play-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const game = this.closest('.game-card').dataset.game;
+                    startGame(game);
+                });
+            });
+
+            // Setup header controls
+            document.getElementById('soundToggle').addEventListener('click', toggleSound);
+            document.getElementById('languageToggle').addEventListener('click', function() {
+                alert('Language selection feature coming soon!');
+            });
+            document.getElementById('profileToggle').addEventListener('click', function() {
+                alert('Profile feature coming soon!');
+            });
+
+            // Show dashboard initially
+            showDashboard();
+        }
+
+        // Load progress from localStorage
+        function loadProgress() {
+            const savedProgress = localStorage.getItem('wordBuilderProgress');
+            if (savedProgress) {
+                Object.assign(gameState, JSON.parse(savedProgress));
+            }
+        }
+
+        // Save progress to localStorage
+        function saveProgress() {
+            localStorage.setItem('wordBuilderProgress', JSON.stringify(gameState));
+        }
+
+        // Update progress display
+        function updateProgressDisplay() {
+            // Update total points
+            gameState.totalPoints = gameState.wordSearchScore + gameState.wordScrambleScore + gameState.synonymMatchScore;
+            document.getElementById('totalPoints').textContent = `Total: ${gameState.totalPoints}/50 points`;
+
+            // Update individual scores
+            document.getElementById('wordSearchScore').textContent = gameState.wordSearchScore;
+            document.getElementById('wordScrambleScore').textContent = gameState.wordScrambleScore;
+            document.getElementById('synonymMatchScore').textContent = gameState.synonymMatchScore;
+
+            // Update completion rate
+            const totalPossible = 50;
+            const completionRate = Math.round((gameState.totalPoints / totalPossible) * 100);
+            document.getElementById('completionRate').textContent = `${completionRate}%`;
+
+            // Save progress
+            saveProgress();
+        }
+
+        // Toggle sound
+        function toggleSound() {
+            gameState.soundEnabled = !gameState.soundEnabled;
+            const btn = document.getElementById('soundToggle');
+            if (gameState.soundEnabled) {
+                btn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                showFeedback('Sound enabled 🔊');
+            } else {
+                btn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                showFeedback('Sound muted 🔇');
+            }
+        }
+
+        // Show dashboard
+        function showDashboard() {
+            document.querySelectorAll('.game-area').forEach(area => {
+                area.style.display = 'none';
+            });
+            document.getElementById('gameDashboard').style.display = 'block';
+            updateProgressDisplay();
+        }
+
+        // Start a specific game
+        function startGame(gameType) {
+            // Hide dashboard
+            document.getElementById('gameDashboard').style.display = 'none';
+            
+            // Show game area
+            document.getElementById(`${gameType}Game`).style.display = 'block';
+            
+            // Load game content
+            switch(gameType) {
+                case 'wordSearch':
+                    loadWordSearchGame();
+                    break;
+                case 'wordScramble':
+                    loadWordScrambleGame();
+                    break;
+                case 'synonymMatch':
+                    loadSynonymMatchGame();
+                    break;
+            }
+        }
+
+        // Load Word Search Game
+        function loadWordSearchGame() {
+            const game = gameData.wordSearch;
+            const container = document.getElementById('wordSearchContent');
+            
+            let html = `
+                <div style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <div style="font-size: 1.2rem; font-weight: 600; color: #1a365d;">
+                            <i class="fas fa-clock"></i> Time: <span id="wordSearchTimer">300</span>s
+                        </div>
+                        <div style="font-size: 1.2rem; font-weight: 600; color: #38a169;">
+                            <i class="fas fa-star"></i> Score: <span id="wordSearchScoreDisplay">${gameState.wordSearchScore}</span>/20
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <h3 style="color: #2c5282; margin-bottom: 15px;">Find These Words:</h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 20px;" id="wordSearchTargets">
+            `;
+            
+            // Add target words
+            game.words.forEach(word => {
+                html += `<div style="background: #e6f7ff; padding: 10px 20px; border-radius: 10px; font-weight: 600; color: #2c5282;" id="target-${word}">${word}</div>`;
+            });
+            
+            html += `
+                        </div>
+                    </div>
+                    
+                    <!-- Word Search Grid -->
+                    <div style="background: #2c5282; padding: 15px; border-radius: 15px; display: inline-block; margin: 0 auto;">
+                        <div style="display: grid; grid-template-columns: repeat(8, 1fr); gap: 2px;" id="wordSearchGrid">
+            `;
+            
+            // Create grid
+            for (let row = 0; row < 8; row++) {
+                for (let col = 0; col < 8; col++) {
+                    html += `<div style="width: 40px; height: 40px; background: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; cursor: pointer; border-radius: 5px; user-select: none;" 
+                              data-row="${row}" data-col="${col}">${game.grid[row][col]}</div>`;
+                }
+            }
+            
+            html += `
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 30px;">
+                        <div style="font-size: 1.3rem; font-weight: 600; color: #3182ce; min-height: 40px; margin-bottom: 20px;" id="currentSelection"></div>
+                        <div style="display: flex; gap: 15px; justify-content: center;">
+                            <button style="padding: 12px 30px; background: #38b2ac; color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;" onclick="submitWordSearchWord()">
+                                <i class="fas fa-check"></i> Submit Word
+                            </button>
+                            <button style="padding: 12px 30px; background: #d69e2e; color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;" onclick="showWordSearchHint()">
+                                <i class="fas fa-lightbulb"></i> Hint
+                            </button>
+                            <button style="padding: 12px 30px; background: #e53e3e; color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;" onclick="clearWordSearchSelection()">
+                                <i class="fas fa-times"></i> Clear
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 30px;">
+                        <h4 style="color: #4a5568; margin-bottom: 15px;">Found Words:</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; min-height: 60px;" id="foundWordsList"></div>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            
+            // Start timer
+            startWordSearchTimer();
+            
+            // Setup grid interaction
+            setupWordSearchGrid();
+        }
+
+        // Word Search variables
+        let wordSearchSelected = [];
+        let wordSearchFound = [];
+        let wordSearchTime = 300;
+        let wordSearchTimer;
+
+        // Setup Word Search grid interaction
+        function setupWordSearchGrid() {
+            const grid = document.getElementById('wordSearchGrid');
+            let isSelecting = false;
+            
+            grid.addEventListener('mousedown', function(e) {
+                const cell = e.target;
+                if (cell.dataset.row) {
+                    isSelecting = true;
+                    clearWordSearchSelection();
+                    addToWordSearchSelection(cell);
+                }
+            });
+            
+            grid.addEventListener('mouseover', function(e) {
+                if (!isSelecting) return;
+                const cell = e.target;
+                if (cell.dataset.row) {
+                    addToWordSearchSelection(cell);
+                }
+            });
+            
+            document.addEventListener('mouseup', function() {
+                isSelecting = false;
+            });
+            
+            // Touch support
+            grid.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const cell = document.elementFromPoint(touch.clientX, touch.clientY);
+                if (cell && cell.dataset.row) {
+                    isSelecting = true;
+                    clearWordSearchSelection();
+                    addToWordSearchSelection(cell);
+                }
+            });
+            
+            grid.addEventListener('touchmove', function(e) {
+                e.preventDefault();
+                if (!isSelecting) return;
+                const touch = e.touches[0];
+                const cell = document.elementFromPoint(touch.clientX, touch.clientY);
+                if (cell && cell.dataset.row) {
+                    addToWordSearchSelection(cell);
+                }
+            });
+            
+            document.addEventListener('touchend', function() {
+                isSelecting = false;
+            });
+        }
+
+        function addToWordSearchSelection(cell) {
+            const row = parseInt(cell.dataset.row);
+            const col = parseInt(cell.dataset.col);
+            
+            // Check if cell is already selected
+            if (wordSearchSelected.some(pos => pos.row === row && pos.col === col)) {
+                return;
+            }
+            
+            // Check if cell is adjacent to last selected
+            if (wordSearchSelected.length > 0) {
+                const last = wordSearchSelected[wordSearchSelected.length - 1];
+                const rowDiff = Math.abs(row - last.row);
+                const colDiff = Math.abs(col - last.col);
+                
+                if (rowDiff > 1 || colDiff > 1) {
+                    return;
+                }
+            }
+            
+            // Add to selection
+            wordSearchSelected.push({row, col});
+            cell.style.background = '#3182ce';
+            cell.style.color = 'white';
+            
+            // Update current selection display
+            updateWordSearchCurrentWord();
+        }
+
+        function clearWordSearchSelection() {
+            wordSearchSelected.forEach(pos => {
+                const cell = document.querySelector(`[data-row="${pos.row}"][data-col="${pos.col}"]`);
+                if (cell) {
+                    cell.style.background = 'white';
+                    cell.style.color = 'black';
+                }
+            });
+            wordSearchSelected = [];
+            document.getElementById('currentSelection').textContent = '';
+        }
+
+        function updateWordSearchCurrentWord() {
+            const word = wordSearchSelected.map(pos => {
+                const cell = document.querySelector(`[data-row="${pos.row}"][data-col="${pos.col}"]`);
+                return cell ? cell.textContent : '';
+            }).join('');
+            
+            document.getElementById('currentSelection').textContent = word;
+        }
+
+        function submitWordSearchWord() {
+            const word = document.getElementById('currentSelection').textContent;
+            const game = gameData.wordSearch;
+            
+            if (word.length < 2) {
+                showFeedback('Select at least 2 letters!');
+                return;
+            }
+            
+            if (wordSearchFound.includes(word)) {
+                showFeedback(`${word} already found!`);
+                clearWordSearchSelection();
+                return;
+            }
+            
+            if (game.words.includes(word)) {
+                // Word found!
+                wordSearchFound.push(word);
+                
+                // Update UI
+                const targetElement = document.getElementById(`target-${word}`);
+                if (targetElement) {
+                    targetElement.style.background = '#c6f6d5';
+                    targetElement.style.color = '#22543d';
+                }
+                
+                // Add to found words list
+                const foundList = document.getElementById('foundWordsList');
+                foundList.innerHTML += `<div style="background: #c6f6d5; padding: 8px 15px; border-radius: 10px; color: #22543d; font-weight: 600;">${word}</div>`;
+                
+                // Calculate points
+                const points = word.length * 2; // 2 points per letter
+                gameState.wordSearchScore += points;
+                document.getElementById('wordSearchScoreDisplay').textContent = gameState.wordSearchScore;
+                
+                showFeedback(`Great! Found "${word}"! +${points} points`);
+                
+                // Check if all words found
+                if (wordSearchFound.length === game.words.length) {
+                    clearInterval(wordSearchTimer);
+                    const timeBonus = Math.floor(wordSearchTime / 10) * 2;
+                    gameState.wordSearchScore += timeBonus;
+                    updateProgressDisplay();
+                    
+                    setTimeout(() => {
+                        showFeedback(`🎉 Level Complete! Time bonus: +${timeBonus} points`);
+                        showDashboard();
+                    }, 1000);
+                }
+                
+                clearWordSearchSelection();
+            } else {
+                showFeedback(`${word} is not a target word. Try again!`);
+                clearWordSearchSelection();
+            }
+        }
+
+        function showWordSearchHint() {
+            const game = gameData.wordSearch;
+            const unfoundWords = game.words.filter(word => !wordSearchFound.includes(word));
+            
+            if (unfoundWords.length > 0) {
+                const hintWord = unfoundWords[0];
+                showFeedback(`Hint: Look for "${hintWord}" in the grid`);
+                
+                // Deduct 1 point for using hint
+                gameState.wordSearchScore = Math.max(0, gameState.wordSearchScore - 1);
+                document.getElementById('wordSearchScoreDisplay').textContent = gameState.wordSearchScore;
+            } else {
+                showFeedback('All words found!');
+            }
+        }
+
+        function startWordSearchTimer() {
+            wordSearchTime = 300;
+            const timerElement = document.getElementById('wordSearchTimer');
+            
+            wordSearchTimer = setInterval(() => {
+                wordSearchTime--;
+                timerElement.textContent = wordSearchTime;
+                
+                if (wordSearchTime <= 0) {
+                    clearInterval(wordSearchTimer);
+                    showFeedback('Time\'s up! Game over.');
+                    setTimeout(showDashboard, 2000);
+                }
+            }, 1000);
+        }
+
+        // Load Word Scramble Game
+        function loadWordScrambleGame() {
+            const game = gameData.wordScramble;
+            const container = document.getElementById('wordScrambleContent');
+            
+            let html = `
+                <div style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <div style="font-size: 1.2rem; font-weight: 600; color: #1a365d;">
+                            <i class="fas fa-clock"></i> Time: <span id="scrambleTimer">240</span>s
+                        </div>
+                        <div style="font-size: 1.2rem; font-weight: 600; color: #38a169;">
+                            <i class="fas fa-star"></i> Score: <span id="scrambleScore">${gameState.wordScrambleScore}</span>/15
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <h3 style="color: #2c5282; margin-bottom: 15px;">Unscramble the Word</h3>
+                        <div style="font-size: 2rem; font-weight: bold; letter-spacing: 5px; color: #3182ce; margin-bottom: 20px; background: #f0f9ff; padding: 20px; border-radius: 15px;" id="scrambledWord">
+                            ${game.words[0].scrambled}
+                        </div>
+                        <div style="color: #718096; margin-bottom: 30px; font-style: italic;" id="scrambleHint">
+                            Hint: ${game.words[0].hint}
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <input type="text" id="scrambleInput" placeholder="Type the correct word here..." 
+                               style="width: 80%; padding: 15px; font-size: 1.2rem; border: 2px solid #e2e8f0; border-radius: 10px; text-align: center; margin-bottom: 20px;">
+                        
+                        <div style="display: flex; gap: 15px; justify-content: center;">
+                            <button style="padding: 12px 30px; background: #38b2ac; color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;" onclick="submitScrambleWord()">
+                                <i class="fas fa-check"></i> Submit
+                            </button>
+                            <button style="padding: 12px 30px; background: #d69e2e; color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;" onclick="showScrambleHint()">
+                                <i class="fas fa-lightbulb"></i> New Hint
+                            </button>
+                            <button style="padding: 12px 30px; background: #3182ce; color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;" onclick="skipScrambleWord()">
+                                <i class="fas fa-forward"></i> Skip
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 30px;">
+                        <h4 style="color: #4a5568; margin-bottom: 15px;">Progress</h4>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <div style="font-size: 1.1rem;">Word <span id="currentWordNumber">1</span> of ${game.words.length}</div>
+                            <div style="font-size: 1.1rem; color: #38a169;">Correct: <span id="correctCount">0</span></div>
+                        </div>
+                        <div style="background: #e2e8f0; height: 10px; border-radius: 5px; overflow: hidden;">
+                            <div style="background: #38a169; height: 100%; width: 0%; transition: width 0.3s;" id="progressBar"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            
+            // Initialize scramble game
+            initScrambleGame();
+        }
+
+        // Word Scramble variables
+        let scrambleCurrentIndex = 0;
+        let scrambleCorrectCount = 0;
+        let scrambleWords = [...gameData.wordScramble.words];
+        let scrambleTime = 240;
+        let scrambleTimer;
+
+        function initScrambleGame() {
+            // Start timer
+            scrambleTime = 240;
+            const timerElement = document.getElementById('scrambleTimer');
+            
+            scrambleTimer = setInterval(() => {
+                scrambleTime--;
+                timerElement.textContent = scrambleTime;
+                
+                if (scrambleTime <= 0) {
+                    clearInterval(scrambleTimer);
+                    showFeedback('Time\'s up! Game over.');
+                    setTimeout(showDashboard, 2000);
+                }
+            }, 1000);
+            
+            // Focus input
+            document.getElementById('scrambleInput').focus();
+            
+            // Update progress
+            updateScrambleProgress();
+        }
+
+        function submitScrambleWord() {
+            const input = document.getElementById('scrambleInput');
+            const userAnswer = input.value.trim().toUpperCase();
+            const correctAnswer = scrambleWords[scrambleCurrentIndex].correct;
+            
+            if (!userAnswer) {
+                showFeedback('Please enter an answer!');
+                return;
+            }
+            
+            if (userAnswer === correctAnswer) {
+                // Correct!
+                scrambleCorrectCount++;
+                const points = Math.max(1, 5 - scrambleCurrentIndex); // More points for earlier words
+                gameState.wordScrambleScore += points;
+                
+                showFeedback(`Correct! "${correctAnswer}" +${points} points`);
+                playSound('correct');
+                
+                // Update score display
+                document.getElementById('scrambleScore').textContent = gameState.wordScrambleScore;
+                document.getElementById('correctCount').textContent = scrambleCorrectCount;
+                
+                // Move to next word
+                scrambleCurrentIndex++;
+                
+                if (scrambleCurrentIndex < scrambleWords.length) {
+                    // Show next word
+                    setTimeout(() => {
+                        showNextScrambleWord();
+                        input.value = '';
+                        input.focus();
+                    }, 1000);
+                } else {
+                    // Game complete
+                    clearInterval(scrambleTimer);
+                    const timeBonus = Math.floor(scrambleTime / 10);
+                    gameState.wordScrambleScore += timeBonus;
+                    
+                    setTimeout(() => {
+                        showFeedback(`🎉 Game Complete! Time bonus: +${timeBonus} points`);
+                        updateProgressDisplay();
+                        showDashboard();
+                    }, 1500);
+                }
+            } else {
+                // Incorrect
+                showFeedback(`Incorrect. Try again!`);
+                playSound('incorrect');
+                input.select();
+            }
+            
+            updateScrambleProgress();
+        }
+
+        function showNextScrambleWord() {
+            if (scrambleCurrentIndex < scrambleWords.length) {
+                const word = scrambleWords[scrambleCurrentIndex];
+                document.getElementById('scrambledWord').textContent = word.scrambled;
+                document.getElementById('scrambleHint').textContent = `Hint: ${word.hint}`;
+                document.getElementById('currentWordNumber').textContent = scrambleCurrentIndex + 1;
+            }
+        }
+
+        function showScrambleHint() {
+            const currentWord = scrambleWords[scrambleCurrentIndex];
+            showFeedback(`New hint: ${currentWord.hint}`);
+            
+            // Deduct 0.5 points for using hint
+            gameState.wordScrambleScore = Math.max(0, gameState.wordScrambleScore - 0.5);
+            document.getElementById('scrambleScore').textContent = gameState.wordScrambleScore.toFixed(1);
+        }
+
+        function skipScrambleWord() {
+            scrambleCurrentIndex++;
+            if (scrambleCurrentIndex < scrambleWords.length) {
+                showNextScrambleWord();
+                document.getElementById('scrambleInput').value = '';
+                document.getElementById('scrambleInput').focus();
+                showFeedback('Word skipped!');
+            } else {
+                clearInterval(scrambleTimer);
+                showFeedback('Game complete!');
+                setTimeout(showDashboard, 1500);
+            }
+            updateScrambleProgress();
+        }
+
+        function updateScrambleProgress() {
+            const progress = ((scrambleCurrentIndex + 1) / scrambleWords.length) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+        }
+
+        // Load Synonym Match Game
+        function loadSynonymMatchGame() {
+            const game = gameData.synonymMatch;
+            const container = document.getElementById('synonymMatchContent');
+            
+            let html = `
+                <div style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <div style="font-size: 1.2rem; font-weight: 600; color: #1a365d;">
+                            <i class="fas fa-clock"></i> Time: <span id="synonymTimer">300</span>s
+                        </div>
+                        <div style="font-size: 1.2rem; font-weight: 600; color: #38a169;">
+                            <i class="fas fa-star"></i> Score: <span id="synonymScore">${gameState.synonymMatchScore}</span>/15
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-bottom: 40px;">
+                        <h3 style="color: #2c5282; margin-bottom: 15px;">Match the Synonym</h3>
+                        <div style="font-size: 2rem; font-weight: bold; color: #3182ce; margin-bottom: 30px; background: #f0f9ff; padding: 25px; border-radius: 15px;" id="synonymWord">
+                            ${game.pairs[0].word}
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 40px;" id="synonymOptions">
+            `;
+            
+            // Add options for first word
+            game.pairs[0].options.forEach((option, index) => {
+                html += `
+                    <div style="padding: 20px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; text-align: center; font-size: 1.2rem; font-weight: 500; cursor: pointer; transition: all 0.3s;" 
+                         onclick="selectSynonymOption(this, '${option}')" data-option="${option}">
+                        ${option}
+                    </div>
+                `;
+            });
+            
+            html += `
+                    </div>
+                    
+                    <div style="margin-top: 30px;">
+                        <h4 style="color: #4a5568; margin-bottom: 15px;">Progress</h4>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <div style="font-size: 1.1rem;">Question <span id="currentQuestion">1</span> of ${game.pairs.length}</div>
+                            <div style="font-size: 1.1rem; color: #38a169;">Correct: <span id="synonymCorrect">0</span></div>
+                        </div>
+                        <div style="background: #e2e8f0; height: 10px; border-radius: 5px; overflow: hidden;">
+                            <div style="background: #38a169; height: 100%; width: 0%; transition: width 0.3s;" id="synonymProgressBar"></div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 30px;">
+                        <button style="padding: 12px 30px; background: #d69e2e; color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; margin: 0 auto;" onclick="showSynonymHint()">
+                            <i class="fas fa-lightbulb"></i> Show Hint
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            
+            // Initialize synonym game
+            initSynonymGame();
+        }
+
+        // Synonym Match variables
+        let synonymCurrentIndex = 0;
+        let synonymCorrectCount = 0;
+        let synonymPairs = [...gameData.synonymMatch.pairs];
+        let synonymTime = 300;
+        let synonymTimer;
+
+        function initSynonymGame() {
+            // Start timer
+            synonymTime = 300;
+            const timerElement = document.getElementById('synonymTimer');
+            
+            synonymTimer = setInterval(() => {
+                synonymTime--;
+                timerElement.textContent = synonymTime;
+                
+                if (synonymTime <= 0) {
+                    clearInterval(synonymTimer);
+                    showFeedback('Time\'s up! Game over.');
+                    setTimeout(showDashboard, 2000);
+                }
+            }, 1000);
+            
+            updateSynonymProgress();
+        }
+
+        function selectSynonymOption(element, selectedOption) {
+            const correctSynonym = synonymPairs[synonymCurrentIndex].synonym;
+            const options = document.querySelectorAll('#synonymOptions div');
+            
+            // Disable all options
+            options.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+                if (opt.dataset.option === correctSynonym) {
+                    opt.style.background = '#c6f6d5';
+                    opt.style.borderColor = '#38a169';
+                } else if (opt.dataset.option === selectedOption && selectedOption !== correctSynonym) {
+                    opt.style.background = '#fed7d7';
+                    opt.style.borderColor = '#e53e3e';
+                }
+            });
+            
+            if (selectedOption === correctSynonym) {
+                // Correct
+                synonymCorrectCount++;
+                const points = 2; // 2 points per correct answer
+                gameState.synonymMatchScore += points;
+                
+                showFeedback(`Correct! "${selectedOption}" is a synonym of "${synonymPairs[synonymCurrentIndex].word}" +${points} points`);
+                playSound('correct');
+                
+                // Update score display
+                document.getElementById('synonymScore').textContent = gameState.synonymMatchScore;
+                document.getElementById('synonymCorrect').textContent = synonymCorrectCount;
+            } else {
+                // Incorrect
+                showFeedback(`Incorrect. The correct synonym is "${correctSynonym}"`);
+                playSound('incorrect');
+            }
+            
+            // Move to next question after delay
+            setTimeout(() => {
+                synonymCurrentIndex++;
+                
+                if (synonymCurrentIndex < synonymPairs.length) {
+                    showNextSynonymQuestion();
+                } else {
+                    // Game complete
+                    clearInterval(synonymTimer);
+                    const timeBonus = Math.floor(synonymTime / 15);
+                    gameState.synonymMatchScore += timeBonus;
+                    
+                    setTimeout(() => {
+                        showFeedback(`🎉 Game Complete! Time bonus: +${timeBonus} points`);
+                        updateProgressDisplay();
+                        showDashboard();
+                    }, 1500);
+                }
+                
+                updateSynonymProgress();
+            }, 1500);
+        }
+
+        function showNextSynonymQuestion() {
+            const pair = synonymPairs[synonymCurrentIndex];
+            document.getElementById('synonymWord').textContent = pair.word;
+            
+            const optionsContainer = document.getElementById('synonymOptions');
+            optionsContainer.innerHTML = '';
+            
+            // Shuffle options
+            const shuffledOptions = [...pair.options].sort(() => Math.random() - 0.5);
+            
+            shuffledOptions.forEach(option => {
+                const optionDiv = document.createElement('div');
+                optionDiv.style.cssText = 'padding: 20px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; text-align: center; font-size: 1.2rem; font-weight: 500; cursor: pointer; transition: all 0.3s;';
+                optionDiv.textContent = option;
+                optionDiv.dataset.option = option;
+                optionDiv.onclick = function() { selectSynonymOption(this, option); };
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            document.getElementById('currentQuestion').textContent = synonymCurrentIndex + 1;
+        }
+
+        function showSynonymHint() {
+            const currentWord = synonymPairs[synonymCurrentIndex].word;
+            const correctSynonym = synonymPairs[synonymCurrentIndex].synonym;
+            showFeedback(`Hint: A synonym of "${currentWord}" starts with "${correctSynonym[0]}"`);
+            
+            // Deduct 0.5 points for using hint
+            gameState.synonymMatchScore = Math.max(0, gameState.synonymMatchScore - 0.5);
+            document.getElementById('synonymScore').textContent = gameState.synonymMatchScore.toFixed(1);
+        }
+
+        function updateSynonymProgress() {
+            const progress = ((synonymCurrentIndex + 1) / synonymPairs.length) * 100;
+            document.getElementById('synonymProgressBar').style.width = `${progress}%`;
+        }
+
+        // Utility functions
+        function showFeedback(message) {
+            // Remove existing feedback
+            const existingFeedback = document.querySelector('.feedback-message');
+            if (existingFeedback) {
+                document.body.removeChild(existingFeedback);
+            }
+            
+            // Create new feedback
+            const feedback = document.createElement('div');
+            feedback.className = 'feedback-message';
+            feedback.textContent = message;
+            feedback.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: #3182ce;
+                color: white;
+                padding: 12px 24px;
+                border-radius: 10px;
+                z-index: 1000;
+                animation: slideIn 0.3s;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                font-weight: 500;
+            `;
+            
+            document.body.appendChild(feedback);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                feedback.style.animation = 'slideOut 0.3s';
+                setTimeout(() => {
+                    if (feedback.parentNode) {
+                        document.body.removeChild(feedback);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        function playSound(type) {
+            if (!gameState.soundEnabled) return;
+            
+            // In a real app, you would play actual sound files
+            console.log(`Playing ${type} sound`);
+        }
+
+        // Add CSS for feedback animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

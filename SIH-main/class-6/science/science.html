@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #2a69ac;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text h1 span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-pic {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 180px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f7fa;
+        }
+
+        .dropdown-item i {
+            color: #3182ce;
+            width: 20px;
+        }
+
+        /* Language Options */
+        .language-options {
+            position: absolute;
+            top: 60px;
+            right: 120px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 120px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .language-options.show {
+            display: block;
+        }
+
+        .language-option {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .language-option:last-child {
+            border-bottom: none;
+        }
+
+        .language-option:hover {
+            background: #f5f7fa;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9)), url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .breadcrumb-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .breadcrumb a {
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #3182ce;
+        }
+
+        .breadcrumb span {
+            color: #64748b;
+        }
+
+        /* Science Content */
+        .science-content {
+            padding: 50px 0;
+        }
+
+        /* Importance Section */
+        .importance-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .importance-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .importance-text {
+            line-height: 1.8;
+            color: #64748b;
+        }
+
+        .importance-text p {
+            margin-bottom: 20px;
+        }
+
+        .importance-image {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .importance-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .benefit-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .benefit-title {
+            font-size: 1.1rem;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+
+        .benefit-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* Curriculum Navigation */
+        .curriculum-nav {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .curriculum-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .topic-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .topic-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+        }
+
+        .topic-card.active {
+            background: #ebf8ff;
+            border-color: #90cdf4;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .topic-icon {
+            font-size: 2rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .topic-title {
+            font-size: 1.2rem;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+
+        .topic-desc {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .topic-progress {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #3182ce;
+            border-radius: 4px;
+        }
+
+        .progress-text {
+            font-size: 0.85rem;
+            color: #64748b;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* What You'll Learn Section */
+        .learn-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .learn-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .learn-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .learn-card h3 {
+            color: #1a365d;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .learn-card ul {
+            padding-left: 20px;
+            color: #64748b;
+        }
+
+        .learn-card li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        /* Games Section */
+        .games-section {
+            margin-bottom: 30px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .game-level {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .game-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .game-desc {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .game-body {
+            padding: 20px;
+        }
+
+        .game-features {
+            margin-bottom: 20px;
+        }
+
+        .game-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .game-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .game-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Resources Section */
+        .resources-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .resource-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .resource-icon {
+            font-size: 2.5rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .resource-title {
+            font-size: 1.1rem;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+
+        .resource-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .download-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about {
+            padding-right: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.8rem;
+            background: #38b2ac;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 20px;
+            color: #38b2ac;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2d3748;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .social-links a:hover {
+            background: #38b2ac;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .importance-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .topic-cards, .learn-grid, .games-grid, .resources-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            nav ul {
+                gap: 15px;
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* Odia font support */
+        .odia-text {
+            font-family: 'Kalinga', 'Nirmala UI', 'Segoe UI', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-atom"></i>
+            </div>
+            <div class="logo-text">
+                <h1>STEM Learn Odisha</h1>
+                <p>Gamified Learning Platform</p>
+            </div>
+        </div>
+       
+        <nav>
+            <ul>
+                <li><a href="student-dashboard.html" id="navHome" data-translate="nav-home">Dashboard</a></li>
+                <li><a href="science.html" class="active" data-translate="nav-science">Science</a></li>
+                <li><a href="about.html" id="navAbout" data-translate="nav-about">About</a></li>
+                <li><a href="contact.html" id="navContact" data-translate="nav-contact">Contact</a></li>
+            </ul>
+        </nav>
+       
+        <div class="header-controls">
+            <button class="control-btn" id="languageToggle">
+                <i class="fas fa-globe"></i>
+            </button>
+           
+            <div class="profile-container">
+                <button class="profile-btn" id="profileToggle">
+                    <img src="" alt="Profile" class="profile-pic" id="headerProfilePic">
+                    <span id="headerUserName">Student</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+               
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" class="dropdown-item" id="dropdownProfile">
+                        <i class="fas fa-user"></i>
+                        <span data-translate="dropdown-profile">Profile</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownSettings">
+                        <i class="fas fa-cog"></i>
+                        <span data-translate="dropdown-settings">Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownLogout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span data-translate="dropdown-logout">Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Language Options -->
+    <div class="language-options" id="languageOptions">
+        <div class="language-option" data-lang="en">English</div>
+        <div class="language-option" data-lang="or">ଓଡ଼ିଆ</div>
+    </div>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 data-translate="science-title">Science</h1>
+            <p data-translate="science-desc">Discover the wonders of science through interactive lessons, experiments, and games designed for Class 6 students</p>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <a href="student-dashboard.html" data-translate="breadcrumb-home">Dashboard</a>
+                <span>></span>
+                <a href="#" class="active" data-translate="breadcrumb-science">Science</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Science Content -->
+    <section class="science-content">
+        <div class="container">
+            <!-- Importance of Science Section -->
+            <div class="importance-section">
+                <h2 class="section-title">
+                    <i class="fas fa-star"></i>
+                    <span data-translate="importance-title">Why Science is Important for Class 6 Students</span>
+                </h2>
+                
+                <div class="importance-content">
+                    <div class="importance-text">
+                        <p data-translate="importance-text1">Science education at the Class 6 level plays a crucial role in developing young minds. It helps students understand the world around them, fosters curiosity, and builds a foundation for future scientific learning.</p>
+                        
+                        <p data-translate="importance-text2">Through hands-on experiments and interactive learning, students develop critical thinking skills, learn to ask questions, and discover how to find answers through observation and experimentation.</p>
+                        
+                        <p data-translate="importance-text3">Our curriculum is designed specifically for Odisha students, incorporating local examples and contexts to make learning more relevant and engaging.</p>
+                    </div>
+                    
+                    <div class="importance-image">
+                        <img src="https://images.unsplash.com/photo-1576086213369-97a306d36557?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Students learning science">
+                    </div>
+                </div>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3 class="benefit-title" data-translate="benefit1-title">Develops Curiosity</h3>
+                        <p class="benefit-desc" data-translate="benefit1-desc">Encourages students to ask questions about natural phenomena</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3 class="benefit-title" data-translate="benefit2-title">Builds Problem-Solving Skills</h3>
+                        <p class="benefit-desc" data-translate="benefit2-desc">Teaches systematic approaches to understanding and solving problems</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <h3 class="benefit-title" data-translate="benefit3-title">Promotes Environmental Awareness</h3>
+                        <p class="benefit-desc" data-translate="benefit3-desc">Helps students understand and appreciate their natural environment</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <h3 class="benefit-title" data-translate="benefit4-title">Prepares for Future Learning</h3>
+                        <p class="benefit-desc" data-translate="benefit4-desc">Builds a strong foundation for advanced science concepts</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- What You'll Learn Section -->
+            <div class="learn-section">
+                <h2 class="section-title">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span data-translate="learn-title">What You'll Learn in Class 6 Science</span>
+                </h2>
+                
+                <div class="learn-grid">
+                    <div class="learn-card">
+                        <h3><i class="fas fa-apple-alt"></i> <span data-translate="learn1-title">Food & Nutrition</span></h3>
+                        <ul>
+                            <li data-translate="learn1-1">Sources of food from plants and animals</li>
+                            <li data-translate="learn1-2">Components of food and their functions</li>
+                            <li data-translate="learn1-3">Balanced diet and its importance</li>
+                            <li data-translate="learn1-4">Deficiency diseases and prevention</li>
+                        </ul>
+                    </div>
+
+                    <div class="learn-card">
+                        <h3><i class="fas fa-tshirt"></i> <span data-translate="learn2-title">Materials & Fabrics</span></h3>
+                        <ul>
+                            <li data-translate="learn2-1">Classification of materials</li>
+                            <li data-translate="learn2-2">Natural and synthetic fibres</li>
+                            <li data-translate="learn2-3">Process of making fabric from fibre</li>
+                            <li data-translate="learn2-4">Properties of different materials</li>
+                        </ul>
+                    </div>
+
+                    <div class="learn-card">
+                        <h3><i class="fas fa-seedling"></i> <span data-translate="learn3-title">Plants & Animals</span></h3>
+                        <ul>
+                            <li data-translate="learn3-1">Parts of plants and their functions</li>
+                            <li data-translate="learn3-2">Process of photosynthesis</li>
+                            <li data-translate="learn3-3">Habitat and adaptation</li>
+                            <li data-translate="learn3-4">Characteristics of living organisms</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="learn-card">
+                        <h3><i class="fas fa-water"></i> <span data-translate="learn4-title">Water & Environment</span></h3>
+                        <ul>
+                            <li data-translate="learn4-1">Importance of water for life</li>
+                            <li data-translate="learn4-2">Water cycle and conservation</li>
+                            <li data-translate="learn4-3">Air and its composition</li>
+                            <li data-translate="learn4-4">Waste management and recycling</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="learn-card">
+                        <h3><i class="fas fa-wind"></i> <span data-translate="learn5-title">Motion & Measurement</span></h3>
+                        <ul>
+                            <li data-translate="learn5-1">Types of motion</li>
+                            <li data-translate="learn5-2">Measurement of distance and time</li>
+                            <li data-translate="learn5-3">Standard units of measurement</li>
+                            <li data-translate="learn5-4">Simple measuring instruments</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="learn-card">
+                        <h3><i class="fas fa-bolt"></i> <span data-translate="learn6-title">Electricity & Circuits</span></h3>
+                        <ul>
+                            <li data-translate="learn6-1">Electric current and circuits</li>
+                            <li data-translate="learn6-2">Conductors and insulators</li>
+                            <li data-translate="learn6-3">Simple electric devices</li>
+                            <li data-translate="learn6-4">Safety with electricity</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Curriculum Navigation -->
+            <div class="curriculum-nav">
+                <h2 class="curriculum-title">
+                    <i class="fas fa-book-open"></i>
+                    <span data-translate="curriculum-title">Science Curriculum for Class 6</span>
+                </h2>
+                <p data-translate="curriculum-desc">Our comprehensive curriculum covers all essential topics as prescribed by the Odisha Board of Secondary Education, with engaging content tailored for young learners.</p>
+                <a href="scienceidx.html" class="game-btn" data-translate="view-curriculum">View Full Curriculum</a>
+            </div>
+        </div>
+    </section>  
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <div class="footer-logo-text">STEM Learn Odisha</div>
+                    </div>
+                    <p data-lang="en">Making Science and Mathematics education engaging and relevant for Class 6 students in Odisha through localized content and interactive learning.</p>
+                    <p data-lang="odia">ଓଡିଶାର କକ୍ଷା ୬ ର ଛାତ୍ରଛାତ୍ରୀଙ୍କ ପାଇଁ ବିଜ୍ଞାନ ଏବଂ ଗଣିତ ଶିକ୍ଷାକୁ ଆକର୍ଷଣୀୟ ଏବଂ ପ୍ରାସଙ୍ଗିକ କରିବା ସ୍ଥାନୀୟକୃତ ବିଷୟବସ୍ତୁ ଏବଂ ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷା ମାଧ୍ୟମରେ।</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <h3 data-lang="en">Quick Links</h3>
+                    <h3 data-lang="odia">ଦ୍ରୁତ ଲିଙ୍କ୍</h3>
+                    <ul>
+                        <li><a href="home.html"><i class="fas fa-home"></i> <span data-lang="en">Home</span><span data-lang="odia">ମୁଖ୍ୟ ପୃଷ୍ଠା</span></a></li>
+                        <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> <span data-lang="en">Our Teachers</span><span data-lang="odia">ଆମର ଶିକ୍ଷକ</span></a></li>
+                        <li><a href="about.html"><i class="fas fa-info-circle"></i> <span data-lang="en">About Us</span><span data-lang="odia">ଆମ ବିଷୟରେ</span></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p data-lang="en">&copy; 2023 STEM Learn Odisha. All rights reserved.</p>
+                <p data-lang="odia">&copy; ୨୦୨୩ ଷ୍ଟେମ୍ ଲର୍ନ ଓଡିଶା। ସମସ୍ତ ଅଧିକାର ସଂରକ୍ଷିତ।</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+           
+            if (!user) {
+                // Redirect to login if not authenticated
+                window.location.href = 'student-login.html';
+                return;
+            }
+           
+            // Load user data
+            loadUserData(user);
+        });
+
+        // Load user data into the page
+        function loadUserData(user) {
+            document.getElementById('headerUserName').textContent = user.fullName;
+            document.getElementById('headerProfilePic').src = user.profilePicture ? `uploads/${user.profilePicture}` : 'default-profile.png';
+        }
+
+        // Profile dropdown toggle
+        document.getElementById('profileToggle').addEventListener('click', function() {
+            document.getElementById('profileDropdown').classList.toggle('show');
+        });
+
+        // Navigation between pages
+        document.getElementById('dropdownProfile').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'student-dashboard.html#profile';
+        });
+
+        document.getElementById('dropdownSettings').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'student-dashboard.html#settings';
+        });
+
+        document.getElementById('dropdownLogout').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('user');
+            window.location.href = 'student-login.html';
+        });
+
+        // Navigation menu items
+        document.getElementById('navHome').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'student-dashboard.html';
+        });
+
+        document.getElementById('navAbout').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('About page would open here');
+        });
+
+        document.getElementById('navContact').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Contact page would open here');
+        });
+
+        // Language toggle
+        document.getElementById('languageToggle').addEventListener('click', function() {
+            document.getElementById('languageOptions').classList.toggle('show');
+        });
+
+        // Language selection
+        document.querySelectorAll('.language-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                switchLanguage(lang);
+                document.getElementById('languageOptions').classList.remove('show');
+            });
+        });
+
+        // Language translations
+        const translations = {
+            en: {
+                'nav-home': 'Dashboard',
+                'nav-science': 'Science',
+                'nav-about': 'About',
+                'nav-contact': 'Contact',
+                'dropdown-profile': 'Profile',
+                'dropdown-settings': 'Settings',
+                'dropdown-logout': 'Logout',
+                'science-title': 'Science',
+                'science-desc': 'Discover the wonders of science through interactive lessons, experiments, and games designed for Class 6 students',
+                'breadcrumb-home': 'Dashboard',
+                'breadcrumb-science': 'Science',
+                'importance-title': 'Why Science is Important for Class 6 Students',
+                'importance-text1': 'Science education at the Class 6 level plays a crucial role in developing young minds. It helps students understand the world around them, fosters curiosity, and builds a foundation for future scientific learning.',
+                'importance-text2': 'Through hands-on experiments and interactive learning, students develop critical thinking skills, learn to ask questions, and discover how to find answers through observation and experimentation.',
+                'importance-text3': 'Our curriculum is designed specifically for Odisha students, incorporating local examples and contexts to make learning more relevant and engaging.',
+                'benefit1-title': 'Develops Curiosity',
+                'benefit1-desc': 'Encourages students to ask questions about natural phenomena',
+                'benefit2-title': 'Builds Problem-Solving Skills',
+                'benefit2-desc': 'Teaches systematic approaches to understanding and solving problems',
+                'benefit3-title': 'Promotes Environmental Awareness',
+                'benefit3-desc': 'Helps students understand and appreciate their natural environment',
+                'benefit4-title': 'Prepares for Future Learning',
+                'benefit4-desc': 'Builds a strong foundation for advanced science concepts',
+                'learn-title': 'What You\'ll Learn in Class 6 Science',
+                'learn1-title': 'Food & Nutrition',
+                'learn1-1': 'Sources of food from plants and animals',
+                'learn1-2': 'Components of food and their functions',
+                'learn1-3': 'Balanced diet and its importance',
+                'learn1-4': 'Deficiency diseases and prevention',
+                'learn2-title': 'Materials & Fabrics',
+                'learn2-1': 'Classification of materials',
+                'learn2-2': 'Natural and synthetic fibres',
+                'learn2-3': 'Process of making fabric from fibre',
+                'learn2-4': 'Properties of different materials',
+                'learn3-title': 'Plants & Animals',
+                'learn3-1': 'Parts of plants and their functions',
+                'learn3-2': 'Process of photosynthesis',
+                'learn3-3': 'Habitat and adaptation',
+                'learn3-4': 'Characteristics of living organisms',
+                'learn4-title': 'Water & Environment',
+                'learn4-1': 'Importance of water for life',
+                'learn4-2': 'Water cycle and conservation',
+                'learn4-3': 'Air and its composition',
+                'learn4-4': 'Waste management and recycling',
+                'learn5-title': 'Motion & Measurement',
+                'learn5-1': 'Types of motion',
+                'learn5-2': 'Measurement of distance and time',
+                'learn5-3': 'Standard units of measurement',
+                'learn5-4': 'Simple measuring instruments',
+                'learn6-title': 'Electricity & Circuits',
+                'learn6-1': 'Electric current and circuits',
+                'learn6-2': 'Conductors and insulators',
+                'learn6-3': 'Simple electric devices',
+                'learn6-4': 'Safety with electricity',
+                'curriculum-title': 'Science Curriculum for Class 6',
+                'curriculum-desc': 'Our comprehensive curriculum covers all essential topics as prescribed by the Odisha Board of Secondary Education, with engaging content tailored for young learners.',
+                'view-curriculum': 'View Full Curriculum'
+            },
+            or: {
+                'nav-home': 'ଡ୍ୟାସବୋର୍ଡ',
+                'nav-science': 'ବିଜ୍ଞାନ',
+                'nav-about': 'ଆମ ବିଷୟରେ',
+                'nav-contact': 'ଯୋଗାଯୋଗ',
+                'dropdown-profile': 'ପ୍ରୋଫାଇଲ୍',
+                'dropdown-settings': 'ସେଟିଂସ୍',
+                'dropdown-logout': 'ଲଗଆଉଟ୍',
+                'science-title': 'ବିଜ୍ଞାନ',
+                'science-desc': 'ଷଷ୍ଠ ଶ୍ରେଣୀର ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କ ପାଇଁ ଡିଜାଇନ୍ କରାଯାଇଥିବା ଇଣ୍ଟରାକ୍ଟିଭ୍ ପାଠ, ପ୍ରୟୋଗ, ଏବଂ ଖେଳ ମାଧ୍ୟମରେ ବିଜ୍ଞାନର ଆଶ୍ଚର୍ଯ୍ୟଗୁଡିକୁ ଆବିଷ୍କାର କରନ୍ତୁ',
+                'breadcrumb-home': 'ଡ୍ୟାସବୋର୍ଡ',
+                'breadcrumb-science': 'ବିଜ୍ଞାନ',
+                'importance-title': 'ଷଷ୍ଠ ଶ୍ରେଣୀର ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କ ପାଇଁ ବିଜ୍ଞାନ କାହିଁକି ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ',
+                'importance-text1': 'ଷଷ୍ଠ ଶ୍ରେଣୀ ସ୍ତରରେ ବିଜ୍ଞାନ ଶିକ୍ଷା ଯୁବ ମନର ବିକାଶରେ ଏକ ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ ଭୂମିକା ଗ୍ରହଣ କରେ। ଏହା ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କୁ ଚାରିପାଖର ପୃଥିବୀକୁ ବୁଝିବାରେ ସାହାଯ୍ୟ କରେ, କୁତୂହଳ ବୃଦ୍ଧି କରେ, ଏବଂ ଭବିଷ୍ୟତର ବୈଜ୍ଞାନିକ ଶିଖଣ ପାଇଁ ଏକ ଅଟଳ ଭିତ୍ତିଭୂମି ପ୍ରସ୍ତୁତ କରେ।',
+                'importance-text2': 'ହ୍ୟାଣ୍ଡସ୍-ଅନ୍ ପ୍ରୟୋଗ ଏବଂ ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ମାଧ୍ୟମରେ, ଛାତ୍ରଛାତ୍ରୀମାନେ ସମାଲୋଚନାତ୍ମକ ଚିନ୍ତନ କୌଶଳ ବିକଶିତ କରନ୍ତି, ପ୍ରଶ୍ନ ପଚାରିବା ଶିଖନ୍ତି, ଏବଂ ପର୍ଯ୍ୟବେକ୍ଷଣ ଏବଂ ପ୍ରୟୋଗ ମାଧ୍ୟମରେ ଉତ୍ତର ଖୋଜିବା ଶିଖନ୍ତି।',
+                'importance-text3': 'ଆମର ପାଠ୍ୟକ୍ରମ ବିଶେଷ ଭାବରେ ଓଡ଼ିଶାର ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କ ପାଇଁ ଡିଜାଇନ୍ କରାଯାଇଛି, ଶିକ୍ଷଣକୁ ଅଧିକ ପ୍ରାସଙ୍ଗିକ ଏବଂ ଆକର୍ଷଣୀୟ କରିବା ପାଇଁ ସ୍ଥାନୀୟ ଉଦାହରଣ ଏବଂ ପ୍ରସଙ୍ଗଗୁଡିକୁ ସାମିଲ କରିଛି।',
+                'benefit1-title': 'କୁତୂହଳ ବିକଶିତ କରେ',
+                'benefit1-desc': 'ପ୍ରାକୃତିକ ଘଟଣା ବିଷୟରେ ପ୍ରଶ୍ନ ପଚାରିବା ପାଇଁ ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କୁ ଉତ୍ସାହିତ କରେ',
+                'benefit2-title': 'ସମସ୍ୟା ସମାଧାନ କୌଶଳ ଗଠନ କରେ',
+                'benefit2-desc': 'ସମସ୍ୟାଗୁଡିକୁ ବୁଝିବା ଏବଂ ସମାଧାନ କରିବା ପାଇଁ ବ୍ୟବସ୍ଥିତ ଉପାୟ ଶିଖାଏ',
+                'benefit3-title': 'ପରିବେଶ ସଚେତନତା ବୃଦ୍ଧି କରେ',
+                'benefit3-desc': 'ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କୁ ସେମାନଙ୍କର ପ୍ରାକୃତିକ ପରିବେଶକୁ ବୁଝିବାରେ ଏବଂ ମୂଲ୍ୟାଙ୍କନ କରିବାରେ ସାହାଯ୍ୟ କରେ',
+                'benefit4-title': 'ଭବିଷ୍ୟତ ଶିଖଣ ପାଇଁ ପ୍ରସ୍ତୁତ କରେ',
+                'benefit4-desc': 'ଉନ୍ନତ ବିଜ୍ଞାନ ଧାରଣାଗୁଡିକ ପାଇଁ ଏକ ଶକ୍ତିଶାଳୀ ଅଟଳ ଭିତ୍ତିଭୂମି ପ୍ରସ୍ତୁତ କରେ',
+                'learn-title': 'ଷଷ୍ଠ ଶ୍ରେଣୀ ବିଜ୍ଞାନରେ ଆପଣ କଣ ଶିଖିବେ',
+                'learn1-title': 'ଖାଦ୍ୟ ଏବଂ ପୋଷଣ',
+                'learn1-1': 'ଉଦ୍ଭିଦ ଏବଂ ପ୍ରାଣୀଙ୍କଠାରୁ ଖାଦ୍ୟର ଉତ୍ସ',
+                'learn1-2': 'ଖାଦ୍ୟର ଉପାଦାନଗୁଡିକ ଏବଂ ସେମାନଙ୍କର କାର୍ଯ୍ୟ',
+                'learn1-3': 'ସନ୍ତୁଳିତ ଖାଦ୍ୟ ଏବଂ ଏହାର ଗୁରୁତ୍ୱ',
+                'learn1-4': 'ଅଭାବଜନିତ ରୋଗ ଏବଂ ପ୍ରତିଷେଧ',
+                'learn2-title': 'ପଦାର୍ଥ ଏବଂ କପଡ଼ା',
+                'learn2-1': 'ପଦାର୍ଥର ଶ୍ରେଣୀବିଭାଗ',
+                'learn2-2': 'ପ୍ରାକୃତିକ ଏବଂ ସିନ୍ଥେଟିକ୍ ତନ୍ତୁ',
+                'learn2-3': 'ତନ୍ତୁରୁ କପଡ଼ା ତିଆରି ପ୍ରକ୍ରିୟା',
+                'learn2-4': 'ବିଭିନ୍ନ ପଦାର୍ଥର ଗୁଣଧର୍ମ',
+                'learn3-title': 'ଉଦ୍ଭିଦ ଏବଂ ପ୍ରାଣୀ',
+                'learn3-1': 'ଉଦ୍ଭିଦର ଅଂଶଗୁଡିକ ଏବଂ ସେମାନଙ୍କର କାର୍ଯ୍ୟ',
+                'learn3-2': 'ସୃଜିଷ୍ଣୁ ପ୍ରକ୍ରିୟା',
+                'learn3-3': 'ଆବାସ ଏବଂ ଅନୁକୂଳନ',
+                'learn3-4': 'ଜୀବନ୍ତ ଜୀବଙ୍କର ବିଶେଷତା',
+                'learn4-title': 'ଜଳ ଏବଂ ପରିବେଶ',
+                'learn4-1': 'ଜୀବନ ପାଇଁ ଜଳର ଗୁରୁତ୍ୱ',
+                'learn4-2': 'ଜଳ ଚକ୍ର ଏବଂ ସଂରକ୍ଷଣ',
+                'learn4-3': 'ବାୟୁ ଏବଂ ଏହାର ଗଠନ',
+                'learn4-4': 'ଆବର୍ଜନା ପରିଚାଳନା ଏବଂ ପୁନର୍ବ୍ୟବହାର',
+                'learn5-title': 'ଗତି ଏବଂ ମାପ',
+                'learn5-1': 'ଗତିର ପ୍ରକାର',
+                'learn5-2': 'ଦୂରତା ଏବଂ ସମୟର ମାପ',
+                'learn5-3': 'ମାପର ମାନକ ଏକକ',
+                'learn5-4': 'ସରଳ ମାପନ ଯନ୍ତ୍ର',
+                'learn6-title': 'ବିଦ୍ୟୁତ୍ ଏବଂ ପରିପଥ',
+                'learn6-1': 'ବିଦ୍ୟୁତ୍ ସ୍ରୋତ ଏବଂ ପରିପଥ',
+                'learn6-2': 'ସୁପରିବାହୀ ଏବଂ କୁପରିବାହୀ',
+                'learn6-3': 'ସରଳ ବିଦ୍ୟୁତ୍ ଯନ୍ତ୍ର',
+                'learn6-4': 'ବିଦ୍ୟୁତ୍ ସହିତ ସୁରକ୍ଷା',
+                'curriculum-title': 'ଷଷ୍ଠ ଶ୍ରେଣୀ ପାଇଁ ବିଜ୍ଞାନ ପାଠ୍ୟକ୍ରମ',
+                'curriculum-desc': 'ଆମର ସମ୍ପୂର୍ଣ୍ଣ ପାଠ୍ୟକ୍ରମ ଓଡ଼ିଶା ମାଧ୍ୟମିକ ଶିକ୍ଷା ବୋର୍ଡ ଦ୍ୱାରା ପ୍ରଣୀତ ସମସ୍ତ ମୌଳିକ ବିଷୟବସ୍ତୁକୁ ଆବର୍ତ୍ତନ କରେ, ଯୁବ ଶିକ୍ଷାର୍ଥୀମାନଙ୍କ ପାଇଁ ଆକର୍ଷଣୀୟ ବିଷୟବସ୍ତୁ ସହିତ।',
+                'view-curriculum': 'ସମ୍ପୂର୍ଣ୍ଣ ପାଠ୍ୟକ୍ରମ ଦେଖନ୍ତୁ'
+            }
+        };
+
+        function switchLanguage(lang) {
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+           
+            if (lang === 'or') {
+                document.body.classList.add('odia-text');
+            } else {
+                document.body.classList.remove('odia-text');
+            }
+        }
+
+        // Close language options when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('#languageToggle') && !e.target.closest('#languageOptions')) {
+                document.getElementById('languageOptions').classList.remove('show');
+            }
+           
+            if (!e.target.closest('#profileToggle') && !e.target.closest('#profileDropdown')) {
+                document.getElementById('profileDropdown').classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>

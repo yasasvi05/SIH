@@ -1,0 +1,2395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Science Crossword Quest - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f0f7ff;
+            color: #1e293b;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #2a69ac;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text h1 span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-pic {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 180px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f7fa;
+        }
+
+        .dropdown-item i {
+            color: #3182ce;
+            width: 20px;
+        }
+
+        /* Language Options */
+        .language-options {
+            position: absolute;
+            top: 60px;
+            right: 120px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 120px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .language-options.show {
+            display: block;
+        }
+
+        .language-option {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .language-option:last-child {
+            border-bottom: none;
+        }
+
+        .language-option:hover {
+            background: #f5f7fa;
+        }
+
+        /* Language Switcher for Game */
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 25px;
+            padding: 8px;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            gap: 5px;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .lang-btn.active {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+
+        .lang-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Game Header */
+        .game-header {
+            background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9)), url('https://images.unsplash.com/photo-1593118247619-e2d6f056869e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            position: relative;
+            display: none;
+        }
+
+        .game-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Game Stats */
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 1000px;
+            display: none;
+        }
+
+        .timer {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        .timer i {
+            color: #e53e3e;
+        }
+
+        .score {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        .score i {
+            color: #38a169;
+        }
+
+        .hints {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        .hints i {
+            color: #d69e2e;
+        }
+
+        .progress-container {
+            width: 200px;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #3182ce;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Game Area */
+        .game-area {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px 0;
+            display: none;
+        }
+
+        .crossword-container {
+            flex: 1;
+            min-width: 500px;
+            padding: 15px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .clues-container {
+            flex: 1;
+            min-width: 300px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-left: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(15, 1fr);
+            gap: 2px;
+            margin: 0 auto;
+            max-width: 600px;
+        }
+
+        .cell {
+            width: 100%;
+            aspect-ratio: 1/1;
+            border: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            background: white;
+            position: relative;
+        }
+
+        .cell.filled {
+            background: #f0f4ff;
+        }
+
+        .cell.selected {
+            background: #d6e4ff;
+            border: 2px solid #4a6572;
+        }
+
+        .cell.error {
+            background: #ffe6e6;
+            animation: shake 0.5s;
+        }
+
+        .cell.correct {
+            background: #e6ffe6;
+        }
+
+        .cell.locked {
+            background: #f5f5f5;
+            cursor: not-allowed;
+        }
+
+        .cell.locked::after {
+            content: '🔒';
+            position: absolute;
+            font-size: 0.7rem;
+            opacity: 0.5;
+        }
+
+        .cell-number {
+            position: absolute;
+            top: 2px;
+            left: 3px;
+            font-size: 0.6rem;
+            color: #4a6572;
+        }
+
+        input.cell-input {
+            width: 100%;
+            height: 100%;
+            border: none;
+            text-align: center;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            background: transparent;
+            outline: none;
+        }
+
+        .clues-section {
+            margin-bottom: 20px;
+        }
+
+        .clues-title {
+            font-size: 1.3rem;
+            color: #4a6572;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #4a6572;
+        }
+
+        .clue {
+            margin: 8px 0;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .clue:hover {
+            background: #e9ecef;
+        }
+
+        .clue.selected {
+            background: #d6e4ff;
+            font-weight: bold;
+        }
+
+        .clue.locked {
+            opacity: 0.6;
+            cursor: not-allowed;
+            position: relative;
+        }
+
+        .clue.locked::after {
+            content: '🔒';
+            position: absolute;
+            right: 10px;
+        }
+
+        .clue-number {
+            font-weight: bold;
+            margin-right: 8px;
+            color: #4a6572;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            margin-top: 20px;
+        }
+
+        .control-btn-game {
+            padding: 12px 25px;
+            background: #3182ce;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .control-btn-game:hover {
+            background: #2b6cb0;
+            transform: translateY(-2px);
+        }
+
+        .control-btn-game.hint {
+            background: #d69e2e;
+        }
+
+        .control-btn-game.hint:hover {
+            background: #b3821e;
+        }
+
+        .control-btn-game.reset {
+            background: #e53e3e;
+        }
+
+        .control-btn-game.reset:hover {
+            background: #c53030;
+        }
+
+        /* Instructions Modal */
+        .instructions-modal {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .instructions-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 700px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            text-align: center;
+        }
+
+        .instructions-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #1a365d;
+            font-weight: 700;
+        }
+
+        .instructions-text {
+            color: #64748b;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            text-align: left;
+            font-size: 1.1rem;
+        }
+
+        .instructions-list {
+            margin-left: 20px;
+            margin-bottom: 25px;
+        }
+
+        .instructions-list li {
+            margin-bottom: 10px;
+        }
+
+        .start-game-btn {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #38b2ac 0%, #2c9a94 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .start-game-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(56, 178, 172, 0.3);
+        }
+
+        /* Riddle Modal */
+        .riddle-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .riddle-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            text-align: center;
+        }
+
+        .riddle-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #1a365d;
+            font-weight: 700;
+        }
+
+        .riddle-question {
+            font-size: 1.3rem;
+            color: #4a6572;
+            margin-bottom: 30px;
+            line-height: 1.5;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .riddle-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .riddle-option {
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .riddle-option:hover {
+            border-color: #3182ce;
+            background: #f0f9ff;
+        }
+
+        .riddle-option.selected {
+            border-color: #3182ce;
+            background: #d6e4ff;
+        }
+
+        .riddle-submit {
+            padding: 12px 30px;
+            background: #3182ce;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .riddle-submit:hover {
+            background: #2b6cb0;
+            transform: translateY(-2px);
+        }
+
+        .riddle-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Fun Fact Modal */
+        .funfact-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .funfact-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            text-align: center;
+        }
+
+        .funfact-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .funfact-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #1a365d;
+            font-weight: 700;
+        }
+
+        .funfact-text {
+            color: #64748b;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .continue-btn {
+            padding: 12px 30px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .continue-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Success Modal */
+        .success-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .badge {
+            font-size: 3rem;
+            color: #d69e2e;
+            margin-bottom: 15px;
+        }
+
+        .success-title {
+            font-size: 1.8rem;
+            color: #1a365d;
+            margin-bottom: 15px;
+        }
+
+        .success-text {
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+       
+        .did-you-know {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .did-you-know strong {
+            color: #38b2ac;
+            font-size: 1.1em;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .did-you-know p {
+            font-size: 0.95rem;
+            color: #4a6572;
+        }
+
+        .next-btn {
+            padding: 12px 30px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .next-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about {
+            padding-right: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.8rem;
+            background: #38b2ac;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 20px;
+            color: #38b2ac;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2d3748;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .social-links a:hover {
+            background: #38b2ac;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .game-area {
+                flex-direction: column;
+            }
+           
+            .clues-container {
+                margin-left: 0;
+                margin-top: 20px;
+            }
+           
+            .crossword-container {
+                min-width: unset;
+            }
+           
+            .riddle-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+           
+            .game-header h1 {
+                font-size: 2.2rem;
+            }
+           
+            .game-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            .grid {
+                grid-template-columns: repeat(15, 20px);
+                max-width: 300px;
+            }
+           
+            .cell {
+                font-size: 0.9rem;
+            }
+           
+            input.cell-input {
+                font-size: 1rem;
+            }
+           
+            .cell-number {
+                font-size: 0.5rem;
+            }
+           
+            .controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+           
+            .control-btn-game {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid {
+                grid-template-columns: repeat(15, 18px);
+                max-width: 270px;
+            }
+           
+            .cell {
+                font-size: 0.8rem;
+            }
+           
+            input.cell-input {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes shake {
+            0%, 100% {transform: translateX(0);}
+            10%, 30%, 50%, 70%, 90% {transform: translateX(-5px);}
+            20%, 40%, 60%, 80% {transform: translateX(5px);}
+        }
+       
+        .shake {
+            animation: shake 0.5s;
+        }
+       
+        @keyframes pulse {
+            0% {transform: scale(1);}
+            50% {transform: scale(1.05);}
+            100% {transform: scale(1);}
+        }
+       
+        .pulse {
+            animation: pulse 0.5s;
+        }
+
+        /* Odia font support */
+        .odia-text {
+            font-family: 'Kalinga', 'Nirmala UI', 'Segoe UI', sans-serif;
+        }
+        
+        /* Hindi font support */
+        .hindi-text {
+            font-family: 'Mangal', 'Nirmala UI', 'Segoe UI', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-atom"></i>
+            </div>
+            <div class="logo-text">
+                <h1>STEM Learn Odisha</h1>
+                <p>Gamified Learning Platform</p>
+            </div>
+        </div>
+       
+        <nav>
+            <ul>
+                <li><a href="student-dashboard.html" id="navDashboard">Dashboard</a></li>
+                <li><a href="science.html" id="navScience">Science</a></li>
+                <li><a href="food.html" id="navFood">Food</a></li>
+                <li><a href="scienceidx.html" id="navCurriculum">Curriculum</a></li>
+            </ul>
+        </nav>
+       
+        <div class="header-controls">
+            <button class="control-btn" id="languageToggle">
+                <i class="fas fa-globe"></i>
+            </button>
+           
+            <div class="profile-container">
+                <button class="profile-btn" id="profileToggle">
+                    <img src="" alt="Profile" class="profile-pic" id="headerProfilePic">
+                    <span id="headerUserName">Student</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+               
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="student-dashboard.html" class="dropdown-item" id="dropdownProfile">
+                        <i class="fas fa-user"></i>
+                        <span data-translate="dropdown-profile">Profile</span>
+                    </a>
+                    <a href="student-dashboard.html" class="dropdown-item" id="dropdownSettings">
+                        <i class="fas fa-cog"></i>
+                        <span data-translate="dropdown-settings">Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownLogout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span data-translate="dropdown-logout">Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Language Options -->
+    <div class="language-options" id="languageOptions">
+        <div class="language-option" data-lang="en">English</div>
+        <div class="language-option" data-lang="or">ଓଡ଼ିଆ</div>
+        <div class="language-option" data-lang="hi">हिन्दी</div>
+    </div>
+
+    <!-- Language Switcher for Game -->
+    <div class="language-switcher" id="game-language-switcher">
+        <button class="lang-btn active" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+        <button class="lang-btn" data-lang="hi">हिन्दी</button>
+    </div>
+
+    <!-- Instructions Modal -->
+    <div class="instructions-modal" id="instructions-modal">
+        <div class="instructions-content">
+            <!-- Separate language switcher for instructions only -->
+            <div class="language-switcher" id="instructions-language-switcher" style="position: relative; top: 0; right: 0; margin: 0 auto 20px auto; width: fit-content; background: rgba(26, 54, 93, 0.1);">
+                <button class="lang-btn active" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+                <button class="lang-btn" data-lang="hi">हिन्दी</button>
+            </div>
+           
+            <h2 class="instructions-title" id="instructions-title">How to Play the Food Science Crossword</h2>
+            <div class="instructions-text" id="instructions-text">
+                <p id="instructions-intro">Welcome to the Food Science Crossword Quest! Here's how to play:</p>
+                <ul class="instructions-list" id="instructions-list">
+                    <li id="instruction-1">All clues are initially locked. You need to solve riddles to unlock them.</li>
+                    <li id="instruction-2">Click on a locked clue to see a riddle. Solve it to unlock the clue.</li>
+                    <li id="instruction-3">Type letters in the crossword grid to fill in the answers.</li>
+                    <li id="instruction-4">Use arrow keys to navigate between cells.</li>
+                    <li id="instruction-5">When you complete a word, a fun fact about that word will appear.</li>
+                    <li id="instruction-6">Complete all words to finish the puzzle and earn your badge!</li>
+                </ul>
+                <p id="instructions-outro">Good luck and have fun learning about food science!</p>
+            </div>
+            <button class="start-game-btn" id="start-game-btn">Start Game</button>
+        </div>
+    </div>
+
+    <!-- Game Header -->
+    <section class="game-header" id="game-header">
+        <div class="container">
+            <h1 data-translate="game-title">Food Science Crossword Quest</h1>
+            <p data-translate="game-desc">Test your knowledge of food science and purification concepts with this challenging crossword puzzle!</p>
+        </div>
+    </section>
+
+    <!-- Game Stats -->
+    <div class="container" id="game-stats-container">
+        <div class="game-stats" id="game-stats">
+            <div class="timer">
+                <i class="fas fa-clock"></i>
+                <span id="time">10:00</span>
+            </div>
+           
+            <div class="score">
+                <i class="fas fa-star"></i>
+                <span id="score">Score: 0</span>
+            </div>
+           
+            <div class="hints">
+                <i class="fas fa-lightbulb"></i>
+                <span id="hints-left">Hints: 3</span>
+            </div>
+           
+            <div class="progress-container">
+                <div class="progress-bar" id="progress" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Area -->
+    <section class="game-area" id="game-area">
+        <div class="container">
+            <div class="crossword-container">
+                <div class="grid" id="crossword-grid">
+                </div>
+           
+                <div class="controls">
+                    <button class="control-btn-game hint" id="hint-btn">
+                        <i class="fas fa-lightbulb"></i>
+                        <span data-translate="hint-btn">Use Hint</span>
+                    </button>
+                    <button class="control-btn-game" id="validate-btn">
+                        <i class="fas fa-check-circle"></i>
+                        <span data-translate="validate-btn">Validate All</span>
+                    </button>
+                    <button class="control-btn-game reset" id="reset-btn">
+                        <i class="fas fa-redo"></i>
+                        <span data-translate="reset-btn">Reset Game</span>
+                    </button>
+                </div>
+            </div>
+           
+            <div class="clues-container">
+                <div class="clues-section">
+                    <h3 class="clues-title" data-translate="across-title">Across</h3>
+                    <div id="across-clues">
+                        </div>
+                </div>
+               
+                <div class="clues-section">
+                    <h3 class="clues-title" data-translate="down-title">Down</h3>
+                    <div id="down-clues">
+                        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Riddle Modal -->
+    <div class="riddle-modal" id="riddle-modal">
+        <div class="riddle-content">
+            <h2 class="riddle-title" id="riddle-title" data-translate="riddle-title">Solve the Riddle to Unlock the Clue!</h2>
+            <div class="riddle-question" id="riddle-question">
+                </div>
+            <div class="riddle-options" id="riddle-options">
+                </div>
+            <button class="riddle-submit" id="riddle-submit" disabled data-translate="submit-btn">Submit Answer</button>
+            <div id="riddle-feedback" style="margin-top: 20px; font-weight: 600;"></div>
+        </div>
+    </div>
+
+    <!-- Fun Fact Modal -->
+    <div class="funfact-modal" id="funfact-modal">
+        <div class="funfact-content">
+            <div class="funfact-icon" id="funfact-icon">🥳</div>
+            <h2 class="funfact-title" id="funfact-title" data-translate="funfact-title">Great Job!</h2>
+            <p class="funfact-text" id="funfact-text"></p>
+            <button class="continue-btn" id="continue-btn" data-translate="continue-btn">Continue</button>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="success-modal">
+        <div class="success-content">
+            <div class="badge">
+                <i class="fas fa-medal"></i>
+            </div>
+            <h2 class="success-title" data-translate="success-title">Puzzle Complete!</h2>
+            <p class="success-text" data-translate="success-text">You've earned the <strong>Crossword Champion</strong> badge!</p>
+            <div class="did-you-know">
+                <strong data-translate="did-you-know">Did you know?</strong>
+                <p data-translate="crossword-fact">The first crossword puzzle was created in 1913 by Arthur Wynne and published in the New York World newspaper. It was called a "Word-Cross" puzzle!</p>
+            </div>
+            <button class="next-btn" id="success-next-btn" data-translate="play-again-btn">Play Again</button>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+           
+            if (!user) {
+                // Redirect to login if not authenticated
+                window.location.href = 'student-login.html';
+                return;
+            }
+           
+            // Load user data
+            loadUserData(user);
+            
+            // Initialize the game page
+            initGamePage();
+        });
+
+        // Load user data into the page
+        function loadUserData(user) {
+            document.getElementById('headerUserName').textContent = user.fullName;
+            document.getElementById('headerProfilePic').src = user.profilePicture ? `uploads/${user.profilePicture}` : 'default-profile.png';
+        }
+
+        // Game variables
+        const GRID_SIZE = 15;
+        const crosswordGrid = document.getElementById('crossword-grid');
+        const acrossCluesContainer = document.getElementById('across-clues');
+        const downCluesContainer = document.getElementById('down-clues');
+        const instructionsModal = document.getElementById('instructions-modal');
+        const startGameBtn = document.getElementById('start-game-btn');
+        const gameHeader = document.getElementById('game-header');
+        const gameStatsContainer = document.getElementById('game-stats-container');
+        const gameArea = document.getElementById('game-area');
+        const riddleModal = document.getElementById('riddle-modal');
+        const riddleQuestionEl = document.getElementById('riddle-question');
+        const riddleOptionsEl = document.getElementById('riddle-options');
+        const riddleSubmitBtn = document.getElementById('riddle-submit');
+        const riddleFeedbackEl = document.getElementById('riddle-feedback');
+        const funfactModal = document.getElementById('funfact-modal');
+        const funfactTextEl = document.getElementById('funfact-text');
+        const continueBtn = document.getElementById('continue-btn');
+        const successModal = document.getElementById('success-modal');
+        const progressEl = document.getElementById('progress');
+        const scoreEl = document.getElementById('score');
+        const hintsLeftEl = document.getElementById('hints-left');
+        const hintBtn = document.getElementById('hint-btn');
+        const validateBtn = document.getElementById('validate-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const timeEl = document.getElementById('time');
+        const successNextBtn = document.getElementById('success-next-btn');
+
+        let crosswordGridState = [];
+        let score = 0;
+        let hintsLeft = 3;
+        let timerInterval;
+        let timeRemaining = 600;
+        let currentRiddleWord = null;
+        let activeClue = null;
+        let isGameStarted = false;
+        let currentGameLanguage = 'en';
+        let currentInstructionsLanguage = 'en';
+        let userQuestionSet = [];
+
+        // Complete translations for all languages
+        const translations = {
+            en: {
+                'navDashboard': 'Dashboard',
+                'navScience': 'Science',
+                'navFood': 'Food',
+                'navCurriculum': 'Curriculum',
+                'dropdown-profile': 'Profile',
+                'dropdown-settings': 'Settings',
+                'dropdown-logout': 'Logout',
+                'game-title': 'Food Science Crossword Quest',
+                'game-desc': 'Test your knowledge of food science and purification concepts with this challenging crossword puzzle!',
+                'instructions-title': 'How to Play the Food Science Crossword',
+                'instructions-intro': 'Welcome to the Food Science Crossword Quest! Here\'s how to play:',
+                'instruction-1': 'All clues are initially locked. You need to solve riddles to unlock them.',
+                'instruction-2': 'Click on a locked clue to see a riddle. Solve it to unlock the clue.',
+                'instruction-3': 'Type letters in the crossword grid to fill in the answers.',
+                'instruction-4': 'Use arrow keys to navigate between cells.',
+                'instruction-5': 'When you complete a word, a fun fact about that word will appear.',
+                'instruction-6': 'Complete all words to finish the puzzle and earn your badge!',
+                'instructions-outro': 'Good luck and have fun learning about food science!',
+                'start-game-btn': 'Start Game',
+                'hint-btn': 'Use Hint',
+                'validate-btn': 'Validate All',
+                'reset-btn': 'Reset Game',
+                'across-title': 'Across',
+                'down-title': 'Down',
+                'riddle-title': 'Solve the Riddle to Unlock the Clue!',
+                'submit-btn': 'Submit Answer',
+                'funfact-title': 'Great Job!',
+                'continue-btn': 'Continue',
+                'success-title': 'Puzzle Complete!',
+                'success-text': 'You\'ve earned the <strong>Crossword Champion</strong> badge!',
+                'did-you-know': 'Did you know?',
+                'crossword-fact': 'The first crossword puzzle was created in 1913 by Arthur Wynne and published in the New York World newspaper. It was called a "Word-Cross" puzzle!',
+                'play-again-btn': 'Play Again'
+            },
+            or: {
+                'navDashboard': 'ଡ୍ୟାସବୋର୍ଡ',
+                'navScience': 'ବିଜ୍ଞାନ',
+                'navFood': 'ଖାଦ୍ୟ',
+                'navCurriculum': 'ପାଠ୍ୟକ୍ରମ',
+                'dropdown-profile': 'ପ୍ରୋଫାଇଲ୍',
+                'dropdown-settings': 'ସେଟିଂସ୍',
+                'dropdown-logout': 'ଲଗଆଉଟ୍',
+                'game-title': 'ଖାଦ୍ୟ ବିଜ୍ଞାନ କ୍ରସୱର୍ଡ କେଷ୍ଟ',
+                'game-desc': 'ଏହି କ୍ରସୱର୍ଡ ପଜଲ୍ ସହିତ ଖାଦ୍ୟ ବିଜ୍ଞାନ ଏବଂ ଶୁଦ୍ଧିକରଣ ଧାରଣା ବିଷୟରେ ଆପଣଙ୍କ ଜ୍ଞାନ ପରୀକ୍ଷା କରନ୍ତୁ!',
+                'instructions-title': 'ଫୁଡ ସାଇନ୍ସ କ୍ରସୱର୍ଡ କେଷ୍ଟ କିପରି ଖେଳିବେ',
+                'instructions-intro': 'ଫୁଡ ସାଇନ୍ସ କ୍ରସୱର୍ଡ କେଷ୍ଟକୁ ସ୍ୱାଗତ! ଏଠାରେ କିପରି ଖେଳିବେ ତାହା ଦିଆଗଲା:',
+                'instruction-1': 'ସମସ୍ତ ସୁରାକ ପ୍ରାରମ୍ଭିକ ଭାବରେ ଲକ୍ ହୋଇଛି । ଏହାକୁ ଅନଲକ୍ କରିବା ପାଇଁ ଆପଣଙ୍କୁ ବୁଝାମଣାକୁ ସମାଧାନ କରିବାକୁ ପଡିବ।',
+                'instruction-2': 'ବୁଝାମଣା ଦେଖିବା ପାଇଁ ଏକ ଲକ୍ ହୋଇଥିବା ସୁରାକ ଉପରେ କ୍ଲିକ୍ କରନ୍ତୁ । ଏହାକୁ ଅନଲକ୍ କରିବା ପାଇଁ ସମାଧାନ କରନ୍ତୁ ।',
+                'instruction-3': 'ଉତ୍ତର ପୂରଣ କରିବାକୁ କ୍ରସୱର୍ଡ ଗ୍ରିଡରେ ଅକ୍ଷର ଟାଇପ୍ କରନ୍ତୁ।',
+                'instruction-4': 'ସେଲଗୁଡିକ ମଧ୍ୟରେ ଯିବା ପାଇଁ ତୀର ଚିହ୍ନ ବ୍ୟବହାର କରନ୍ତୁ।',
+                'instruction-5': 'ଯେତେବେଳେ ଆପଣ ଏକ ଶବ୍ଦ ସମ୍ପୂର୍ଣ୍ଣ କରିବେ, ସେହି ଶବ୍ଦ ବିଷୟରେ ଏକ ମଜାଦାର ତଥ୍ୟ ଆସିବ।',
+                'instruction-6': 'ପଜଲ ସମାପ୍ତ କରିବା ପାଇଁ ସମସ୍ତ ଶବ୍ଦ ପୂରଣ କରନ୍ତୁ ଏବଂ ଆପଣଙ୍କ ବ୍ୟାଜ୍ ଅର୍ଜନ କରନ୍ତୁ!',
+                'instructions-outro': 'ଶୁଭକାମନା ଏବଂ ଫୁଡ ସାଇନ୍ସ ବିଷୟରେ ଶିଖିବାର ମଜା ନିଅନ୍ତୁ!',
+                'start-game-btn': 'ଖେଳ ଆରମ୍ଭ କରନ୍ତୁ',
+                'hint-btn': 'ସୂଚନା ବ୍ୟବହାର କରନ୍ତୁ',
+                'validate-btn': 'ସମସ୍ତ ଯାଞ୍ଚ କରନ୍ତୁ',
+                'reset-btn': 'ଖେଳ ପୁନରାରମ୍ଭ କରନ୍ତୁ',
+                'across-title': 'ସମାନ୍ତରାଳ',
+                'down-title': 'ନିମ୍ନମୁଖୀ',
+                'riddle-title': 'ସୁରାକ ଅନଲକ୍ କରିବା ପାଇଁ ବୁଝାମଣା ସମାଧାନ କରନ୍ତୁ!',
+                'submit-btn': 'ଉତ୍ତର ଦାଖଲ କରନ୍ତୁ',
+                'funfact-title': 'ବହୁତ ଭଲ!',
+                'continue-btn': 'ଜାରି ରଖନ୍ତୁ',
+                'success-title': 'ପଜଲ୍ ସମ୍ପୂର୍ଣ୍ଣ!',
+                'success-text': 'ଆପଣ <strong>କ୍ରସୱର୍ଡ ଚାମ୍ପିୟନ</strong> ବ୍ୟାଜ୍ ଅର୍ଜନ କରିଛନ୍ତି!',
+                'did-you-know': 'ଆପଣ ଜାଣିଛନ୍ତି କି?',
+                'crossword-fact': 'ପ୍ରଥମ କ୍ରସୱର୍ଡ ପଜଲ୍ ୧୯୧୩ ମସିହାରେ ଆର୍ଥର ୱିନ୍ଙ୍କ ଦ୍ୱାରା ସୃଷ୍ଟି କରାଯାଇଥିଲା ଏବଂ ନ୍ୟୁୟର୍କ ୱାର୍ଲ୍ଡ ଖବରକାଗଜରେ ପ୍ରକାଶିତ ହୋଇଥିଲା। ଏହାକୁ "ୱାର୍ଡ-କ୍ରସ୍" ପଜଲ୍ କୁହାଯାଉଥିଲା!',
+                'play-again-btn': 'ପୁନର୍ବାର ଖେଳନ୍ତୁ'
+            },
+            hi: {
+                'navDashboard': 'डैशबोर्ड',
+                'navScience': 'विज्ञान',
+                'navFood': 'भोजन',
+                'navCurriculum': 'पाठ्यक्रम',
+                'dropdown-profile': 'प्रोफाइल',
+                'dropdown-settings': 'सेटिंग्स',
+                'dropdown-logout': 'लॉगआउट',
+                'game-title': 'फूड साइंस क्रॉसवर्ड क्वेस्ट',
+                'game-desc': 'इस चुनौतीपूर्ण क्रॉसवर्ड पहेली के साथ खाद्य विज्ञान और शुद्धिकरण अवधारणाओं का अपना ज्ञान परखें!',
+                'instructions-title': 'फूड साइंस क्रॉसवर्ड कैसे खेलें',
+                'instructions-intro': 'फूड साइंस क्रॉसवर्ड क्वेस्ट में आपका स्वागत है! यहां बताया गया है कि कैसे खेलें:',
+                'instruction-1': 'सभी सुराग शुरू में लॉक हैं। उन्हें अनलॉक करने के लिए आपको पहेलियों को हल करना होगा।',
+                'instruction-2': 'एक लॉक सुराग देखने के लिए उस पर क्लिक करें। इसे अनलॉक करने के लिए हल करें।',
+                'instruction-3': 'उत्तर भरने के लिए क्रॉसवर्ड ग्रिड में अक्षर टाइप करें।',
+                'instruction-4': 'सेलों के बीच नेविगेट करने के लिए एरो कीज़ का उपयोग करें।',
+                'instruction-5': 'जब आप एक शब्द पूरा करते हैं, तो उस शब्द के बारे में एक रोचक तथ्य दिखाई देगा।',
+                'instruction-6': 'पहेली को पूरा करने और अपना बैज अर्जित करने के लिए सभी शब्दों को पूरा करें!',
+                'instructions-outro': 'शुभकामनाएं और खाद्य विज्ञान सीखने का आनंद लें!',
+                'start-game-btn': 'खेल शुरू करें',
+                'hint-btn': 'संकेत का उपयोग करें',
+                'validate-btn': 'सभी सत्यापित करें',
+                'reset-btn': 'खेल रीसेट करें',
+                'across-title': 'आड़ा',
+                'down-title': 'खड़ा',
+                'riddle-title': 'सुराग अनलॉक करने के लिए पहेली हल करें!',
+                'submit-btn': 'उत्तर सबमिट करें',
+                'funfact-title': 'बहुत बढ़िया!',
+                'continue-btn': 'जारी रखें',
+                'success-title': 'पहेली पूरी!',
+                'success-text': 'आपने <strong>क्रॉसवर्ड चैंपियन</strong> बैज अर्जित किया है!',
+                'did-you-know': 'क्या आप जानते हैं?',
+                'crossword-fact': 'पहली क्रॉसवर्ड पहेली 1913 में आर्थर विन द्वारा बनाई गई थी और न्यूयॉर्क वर्ल्ड अखबार में प्रकाशित हुई थी। इसे "वर्ड-क्रॉस" पहेली कहा जाता था!',
+                'play-again-btn': 'फिर से खेलें'
+            }
+        };
+
+        // Enhanced Food Science questions database with more variety
+        const questionDatabase = [
+            {
+                word: 'PROTEIN',
+                clue: 'A macronutrient essential for building muscle, found in meat, eggs, and beans.',
+                riddle: {
+                    question: 'I am a chain of amino acids, and the building block of life. I am found in chicken and fish. What am I?',
+                    options: ['Carbohydrate', 'Protein', 'Fat', 'Sugar'],
+                    answer: 'Protein'
+                },
+                funfact: 'Did you know that proteins are the "workhorse" molecules of the cell, carrying out almost all of its functions? They act as enzymes, antibodies, messengers, and more!'
+            },
+            {
+                word: 'CARBOHYDRATE',
+                clue: 'The main source of energy for the body, found in bread, rice, and fruits.',
+                riddle: {
+                    question: 'I am the body\'s primary fuel source, found in pasta and bread. What am I?',
+                    options: ['Protein', 'Carbohydrate', 'Fat', 'Vitamin'],
+                    answer: 'Carbohydrate'
+                },
+                funfact: 'Carbohydrates provide 4 calories per gram, the same as protein, but less than fat which provides 9 calories per gram.'
+            },
+            {
+                word: 'VITAMIN',
+                clue: 'Organic compounds required in small amounts for normal growth and nutrition.',
+                riddle: {
+                    question: 'I am an organic compound needed in small amounts for health. There are 13 essential types of me. What am I?',
+                    options: ['Mineral', 'Vitamin', 'Enzyme', 'Hormone'],
+                    answer: 'Vitamin'
+                },
+                funfact: 'Vitamins are classified as either fat-soluble (A, D, E, K) or water-soluble (B vitamins and vitamin C). Fat-soluble vitamins can be stored in the body, while water-soluble ones need to be consumed regularly.'
+            },
+            {
+                word: 'MINERAL',
+                clue: 'Inorganic elements essential for various bodily functions.',
+                riddle: {
+                    question: 'I am an inorganic element needed for health. Examples include calcium, iron, and potassium. What am I?',
+                    options: ['Vitamin', 'Mineral', 'Protein', 'Carbohydrate'],
+                    answer: 'Mineral'
+                },
+                funfact: 'Minerals are classified as either macrominerals (needed in larger amounts) or trace minerals (needed in smaller amounts). Calcium is the most abundant mineral in the human body.'
+            },
+            {
+                word: 'ENZYME',
+                clue: 'A biological catalyst that speeds up chemical reactions, often used in food processing.',
+                riddle: {
+                    question: 'I am a special protein that speeds up reactions without being consumed. I can break down starches and sugars. What am I?',
+                    options: ['Catalyst', 'Enzyme', 'Vitamin', 'Hormone'],
+                    answer: 'Enzyme'
+                },
+                funfact: 'A single enzyme molecule can catalyze thousands of reactions per second! Enzymes in saliva, like amylase, start the breakdown of starches in your mouth.'
+            },
+            {
+                word: 'FIBER',
+                clue: 'Indigestible part of plant foods that aids digestion.',
+                riddle: {
+                    question: 'I am the indigestible part of plants that helps keep your digestive system healthy. What am I?',
+                    options: ['Protein', 'Fiber', 'Starch', 'Sugar'],
+                    answer: 'Fiber'
+                },
+                funfact: 'Dietary fiber can be soluble (dissolves in water) or insoluble (doesn\'t dissolve). Both types are important for digestive health.'
+            },
+            {
+                word: 'FAT',
+                clue: 'A macronutrient that provides energy and helps absorb vitamins.',
+                riddle: {
+                    question: 'I provide more energy per gram than carbs or protein, and I help absorb vitamins. What am I?',
+                    options: ['Fiber', 'Fat', 'Protein', 'Sugar'],
+                    answer: 'Fat'
+                },
+                funfact: 'Not all fats are bad! Unsaturated fats found in nuts, avocados, and olive oil are actually good for heart health.'
+            },
+            {
+                word: 'WATER',
+                clue: 'Essential for all bodily functions and makes up about 60% of the human body.',
+                riddle: {
+                    question: 'I am essential for life, make up most of your body, and you should drink me every day. What am I?',
+                    options: ['Water', 'Juice', 'Milk', 'Tea'],
+                    answer: 'Water'
+                },
+                funfact: 'Water is involved in every bodily function, from regulating temperature to transporting nutrients. The human body can survive weeks without food but only days without water.'
+            },
+            {
+                word: 'CALCIUM',
+                clue: 'A mineral essential for strong bones and teeth.',
+                riddle: {
+                    question: 'I am the most abundant mineral in the body, essential for strong bones and teeth. What am I?',
+                    options: ['Iron', 'Calcium', 'Potassium', 'Sodium'],
+                    answer: 'Calcium'
+                },
+                funfact: 'About 99% of the calcium in your body is stored in your bones and teeth. The remaining 1% is in blood and soft tissues where it plays important roles in muscle function and nerve transmission.'
+            },
+            {
+                word: 'IRON',
+                clue: 'A mineral that helps transport oxygen in the blood.',
+                riddle: {
+                    question: 'I am a mineral that helps carry oxygen in your blood. What am I?',
+                    options: ['Zinc', 'Iron', 'Copper', 'Magnesium'],
+                    answer: 'Iron'
+                },
+                funfact: 'Iron deficiency is the most common nutritional deficiency worldwide. It can cause anemia, which leads to fatigue and weakness.'
+            },
+            {
+                word: 'SUGAR',
+                clue: 'A sweet-tasting soluble carbohydrate.',
+                riddle: {
+                    question: 'I am a sweet substance that provides quick energy but should be consumed in moderation. What am I?',
+                    options: ['Salt', 'Sugar', 'Protein', 'Fat'],
+                    answer: 'Sugar'
+                },
+                funfact: 'There are many types of sugar, including glucose, fructose, and sucrose. The average person consumes about 17 teaspoons of added sugar per day, much more than recommended.'
+            },
+            {
+                word: 'SALT',
+                clue: 'A mineral composed primarily of sodium chloride.',
+                riddle: {
+                    question: 'I am a mineral that enhances flavor but too much of me can raise blood pressure. What am I?',
+                    options: ['Pepper', 'Salt', 'Sugar', 'Vinegar'],
+                    answer: 'Salt'
+                },
+                funfact: 'Salt has been used for thousands of years to preserve food. Before refrigeration, salting was one of the main methods to prevent food spoilage.'
+            }
+        ];
+
+        // Initialize the game page
+        function initGamePage() {
+            // Set up header language options
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    switchLanguage(lang);
+                    document.getElementById('languageOptions').classList.remove('show');
+                });
+            });
+
+            // Language switching for game
+            document.querySelectorAll('#game-language-switcher .lang-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.dataset.lang;
+                    switchGameLanguage(lang);
+                });
+            });
+
+            // Language switching for instructions only
+            document.querySelectorAll('#instructions-language-switcher .lang-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.dataset.lang;
+                    switchInstructionsLanguage(lang);
+                });
+            });
+
+            // Dashboard integration event listeners
+            const profileToggle = document.getElementById('profileToggle');
+            const profileDropdown = document.getElementById('profileDropdown');
+            const languageToggle = document.getElementById('languageToggle');
+            const languageOptions = document.getElementById('languageOptions');
+            const dropdownProfile = document.getElementById('dropdownProfile');
+            const dropdownSettings = document.getElementById('dropdownSettings');
+            const dropdownLogout = document.getElementById('dropdownLogout');
+            const navDashboard = document.getElementById('navDashboard');
+            const navScience = document.getElementById('navScience');
+            const navCurriculum = document.getElementById('navCurriculum');
+            const navFood = document.getElementById('navFood');
+
+            // Profile dropdown toggle
+            profileToggle.addEventListener('click', function() {
+                profileDropdown.classList.toggle('show');
+            });
+
+            // Language toggle
+            languageToggle.addEventListener('click', function() {
+                languageOptions.classList.toggle('show');
+            });
+
+            // Navigation between pages
+            dropdownProfile.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#profile';
+            });
+
+            dropdownSettings.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#settings';
+            });
+
+            dropdownLogout.addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('user');
+                window.location.href = 'student-login.html';
+            });
+
+            // Navigation menu items
+            navDashboard.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html';
+            });
+
+            navScience.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'science.html';
+            });
+
+            navCurriculum.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'scienceidx.html';
+            });
+
+            navFood.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'food.html';
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#languageToggle') && !e.target.closest('#languageOptions')) {
+                    languageOptions.classList.remove('show');
+                }
+               
+                if (!e.target.closest('#profileToggle') && !e.target.closest('#profileDropdown')) {
+                    profileDropdown.classList.remove('show');
+                }
+            });
+
+            // Initialize with default language
+            switchLanguage('en');
+            switchGameLanguage('en');
+            switchInstructionsLanguage('en');
+            
+            // Start with instructions modal open
+            instructionsModal.style.display = 'flex';
+            
+            // Create initial grid
+            createGrid();
+        }
+
+        // Language switching functions
+        function switchLanguage(lang) {
+            // Update header language elements
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    if (key === 'success-text') {
+                        element.innerHTML = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+        }
+
+        function switchGameLanguage(lang) {
+            currentGameLanguage = lang;
+           
+            // Update language buttons in game switcher
+            document.querySelectorAll('#game-language-switcher .lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+
+            // Update all translated elements in the game
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.dataset.translate;
+                if (translations[lang] && translations[lang][key]) {
+                    if (key === 'success-text') {
+                        // Handle HTML content separately
+                        const translatedText = translations[lang][key];
+                        element.innerHTML = translatedText;
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+
+            // Add language-specific font classes
+            document.body.classList.remove('odia-text', 'hindi-text');
+            if (lang === 'or') {
+                document.body.classList.add('odia-text');
+            } else if (lang === 'hi') {
+                document.body.classList.add('hindi-text');
+            }
+
+            // Update score display
+            updateScoreDisplay();
+            updateHintsDisplay();
+            
+            // Update game if active
+            if (isGameStarted) {
+                // Re-render clues with new language
+                renderClues();
+            }
+        }
+
+        function switchInstructionsLanguage(lang) {
+            currentInstructionsLanguage = lang;
+           
+            // Update language buttons in instructions switcher
+            document.querySelectorAll('#instructions-language-switcher .lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+
+            // Update instruction elements
+            updateInstructionTranslations(lang);
+        }
+
+        // Function to update instruction elements
+        function updateInstructionTranslations(lang) {
+            const instructionsTitle = document.getElementById('instructions-title');
+            const instructionsIntro = document.getElementById('instructions-intro');
+            const instruction1 = document.getElementById('instruction-1');
+            const instruction2 = document.getElementById('instruction-2');
+            const instruction3 = document.getElementById('instruction-3');
+            const instruction4 = document.getElementById('instruction-4');
+            const instruction5 = document.getElementById('instruction-5');
+            const instruction6 = document.getElementById('instruction-6');
+            const instructionsOutro = document.getElementById('instructions-outro');
+            const startGameBtn = document.getElementById('start-game-btn');
+
+            if (translations[lang]) {
+                if (instructionsTitle) instructionsTitle.textContent = translations[lang]['instructions-title'];
+                if (instructionsIntro) instructionsIntro.textContent = translations[lang]['instructions-intro'];
+                if (instruction1) instruction1.textContent = translations[lang]['instruction-1'];
+                if (instruction2) instruction2.textContent = translations[lang]['instruction-2'];
+                if (instruction3) instruction3.textContent = translations[lang]['instruction-3'];
+                if (instruction4) instruction4.textContent = translations[lang]['instruction-4'];
+                if (instruction5) instruction5.textContent = translations[lang]['instruction-5'];
+                if (instruction6) instruction6.textContent = translations[lang]['instruction-6'];
+                if (instructionsOutro) instructionsOutro.textContent = translations[lang]['instructions-outro'];
+                if (startGameBtn) startGameBtn.textContent = translations[lang]['start-game-btn'];
+            }
+        }
+
+        // Function to create the crossword grid
+        function createGrid() {
+            crosswordGrid.innerHTML = '';
+            crosswordGridState = Array.from({ length: GRID_SIZE }, () => Array(GRID_SIZE).fill(''));
+
+            for (let r = 0; r < GRID_SIZE; r++) {
+                for (let c = 0; c < GRID_SIZE; c++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    cell.dataset.row = r;
+                    cell.dataset.col = c;
+                    crosswordGrid.appendChild(cell);
+                }
+            }
+        }
+
+        // Improved function to generate a unique question set for the user
+        function generateQuestionSet() {
+            // Create a copy of the question database and shuffle it
+            let availableQuestions = [...questionDatabase].sort(() => Math.random() - 0.5);
+            userQuestionSet = [];
+           
+            // Try to place 8-12 words to better utilize the grid
+            const targetWordCount = 8 + Math.floor(Math.random() * 5);
+            let placedWords = 0;
+            let attempts = 0;
+            const maxAttempts = 500;
+
+            // Create a grid representation to track placed letters
+            const grid = Array.from({ length: GRID_SIZE }, () => Array(GRID_SIZE).fill(null));
+
+            while (placedWords < targetWordCount && availableQuestions.length > 0 && attempts < maxAttempts) {
+                attempts++;
+                const question = availableQuestions[0];
+                const word = question.word;
+                const wordLength = word.length;
+
+                // Try to place the word in the grid
+                const placement = tryPlaceWord(grid, word, placedWords);
+               
+                if (placement) {
+                    const { start, direction } = placement;
+                   
+                    // Add the word to the user question set
+                    userQuestionSet.push({
+                        ...question,
+                        start: start,
+                        direction: direction,
+                        number: placedWords + 1
+                    });
+
+                    // Update the grid with the placed word
+                    for (let i = 0; i < wordLength; i++) {
+                        let r = start.row;
+                        let c = start.col;
+                       
+                        if (direction === 'across') {
+                            c += i;
+                        } else {
+                            r += i;
+                        }
+                       
+                        grid[r][c] = word[i];
+                    }
+
+                    placedWords++;
+                    availableQuestions.shift(); // Remove the placed question
+                } else {
+                    // Move the question to the end of the array and try another one
+                    availableQuestions.push(availableQuestions.shift());
+                }
+            }
+
+            console.log(`Placed ${placedWords} words out of ${targetWordCount} after ${attempts} attempts`);
+            return userQuestionSet;
+        }
+
+        // Improved word placement algorithm
+        function tryPlaceWord(grid, word, wordIndex) {
+            const wordLength = word.length;
+            const directions = ['across', 'down'];
+           
+            // Shuffle directions to add variety
+            directions.sort(() => Math.random() - 0.5);
+
+            for (const direction of directions) {
+                // Try different starting positions
+                for (let attempt = 0; attempt < 100; attempt++) {
+                    let startRow, startCol;
+                   
+                    if (direction === 'across') {
+                        startRow = Math.floor(Math.random() * GRID_SIZE);
+                        startCol = Math.floor(Math.random() * (GRID_SIZE - wordLength + 1));
+                    } else {
+                        startRow = Math.floor(Math.random() * (GRID_SIZE - wordLength + 1));
+                        startCol = Math.floor(Math.random() * GRID_SIZE);
+                    }
+
+                    if (canPlaceWordImproved(grid, word, { row: startRow, col: startCol }, direction, wordIndex === 0)) {
+                        return { start: { row: startRow, col: startCol }, direction: direction };
+                    }
+                }
+            }
+           
+            return null;
+        }
+
+        // Improved canPlaceWord function
+        function canPlaceWordImproved(grid, word, start, direction, isFirstWord) {
+            const wordLength = word.length;
+           
+            // Check if the word fits in the grid
+            if (direction === 'across') {
+                if (start.col + wordLength > GRID_SIZE) return false;
+            } else {
+                if (start.row + wordLength > GRID_SIZE) return false;
+            }
+
+            let hasIntersection = false;
+           
+            // Check for conflicts with existing words
+            for (let i = 0; i < wordLength; i++) {
+                let r = start.row;
+                let c = start.col;
+               
+                if (direction === 'across') {
+                    c += i;
+                } else {
+                    r += i;
+                }
+               
+                const existingLetter = grid[r][c];
+               
+                if (existingLetter !== null) {
+                    // If there's a letter already in this position
+                    if (existingLetter !== word[i]) {
+                        return false; // Conflict with existing word
+                    } else {
+                        hasIntersection = true; // Good intersection
+                    }
+                }
+               
+                // Check adjacent cells (for crossword rules)
+                if (!isFirstWord) {
+                    const adjacentCells = getAdjacentCells(r, c, direction);
+                    for (const adj of adjacentCells) {
+                        if (adj.row >= 0 && adj.row < GRID_SIZE && adj.col >= 0 && adj.col < GRID_SIZE) {
+                            if (grid[adj.row][adj.col] !== null &&
+                                !isInCurrentWord(adj.row, adj.col, start, direction, wordLength)) {
+                                return false; // Would create an invalid adjacent word
+                            }
+                        }
+                    }
+                }
+            }
+
+            // For better grid utilization, allow some words without intersections
+            // but prefer words that intersect (makes it look more like a real crossword)
+            if (isFirstWord) {
+                return true; // First word can go anywhere
+            }
+           
+            return hasIntersection || Math.random() < 0.3; // 30% chance to allow non-intersecting words
+        }
+
+        function getAdjacentCells(row, col, direction) {
+            if (direction === 'across') {
+                return [
+                    { row: row - 1, col: col }, // above
+                    { row: row + 1, col: col }, // below
+                ];
+            } else {
+                return [
+                    { row: row, col: col - 1 }, // left
+                    { row: row, col: col + 1 }, // right
+                ];
+            }
+        }
+
+        function isInCurrentWord(row, col, start, direction, length) {
+            if (direction === 'across') {
+                return row === start.row && col >= start.col && col < start.col + length;
+            } else {
+                return col === start.col && row >= start.row && row < start.row + length;
+            }
+        }
+
+        // Function to place words and clues on the grid
+        function placeWords() {
+            acrossCluesContainer.innerHTML = '';
+            downCluesContainer.innerHTML = '';
+           
+            // Generate a unique question set for this user
+            const crosswordData = generateQuestionSet();
+           
+            // Sort words by number for consistent display
+            crosswordData.sort((a, b) => a.number - b.number);
+           
+            crosswordData.forEach(wordData => {
+                const { word, start, direction, number, clue, riddle, funfact } = wordData;
+                const wordLength = word.length;
+                let cells = [];
+
+                for (let i = 0; i < wordLength; i++) {
+                    let r = start.row;
+                    let c = start.col;
+                    if (direction === 'across') {
+                        c += i;
+                    } else {
+                        r += i;
+                    }
+                    const cell = document.querySelector(`.cell[data-row="${r}"][data-col="${c}"]`);
+                    if (cell) {
+                        cell.classList.add('filled');
+                        cell.dataset.word = word;
+                        cells.push(cell);
+
+                        if (i === 0) {
+                            const numberSpan = document.createElement('span');
+                            numberSpan.classList.add('cell-number');
+                            numberSpan.textContent = number;
+                            cell.appendChild(numberSpan);
+                        }
+
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.maxLength = 1;
+                        input.classList.add('cell-input');
+                        input.dataset.row = r;
+                        input.dataset.col = c;
+                        cell.appendChild(input);
+                    }
+                }
+
+                wordData.cells = cells;
+                wordData.isLocked = true;
+                wordData.isComplete = false;
+                wordData.isHintUsed = false;
+
+                // Add clues
+                const clueDiv = document.createElement('div');
+                clueDiv.classList.add('clue', 'locked');
+                clueDiv.dataset.word = word;
+                clueDiv.dataset.number = number;
+                clueDiv.dataset.direction = direction;
+                clueDiv.innerHTML = `<span class="clue-number">${number}.</span> ${clue}`;
+
+                clueDiv.addEventListener('click', () => {
+                    if (clueDiv.classList.contains('locked')) {
+                        showRiddleModal(wordData);
+                    } else {
+                        setActiveClue(wordData.cells[0]);
+                    }
+                });
+
+                if (direction === 'across') {
+                    acrossCluesContainer.appendChild(clueDiv);
+                } else {
+                    downCluesContainer.appendChild(clueDiv);
+                }
+            });
+           
+            userQuestionSet = crosswordData;
+            updateHintsDisplay();
+        }
+
+        // Function to render clues (for language switching)
+        function renderClues() {
+            acrossCluesContainer.innerHTML = '';
+            downCluesContainer.innerHTML = '';
+           
+            userQuestionSet.forEach(wordData => {
+                const { word, direction, number, clue } = wordData;
+                const clueDiv = document.createElement('div');
+                clueDiv.classList.add('clue');
+                if (wordData.isLocked) {
+                    clueDiv.classList.add('locked');
+                }
+                clueDiv.dataset.word = word;
+                clueDiv.dataset.number = number;
+                clueDiv.dataset.direction = direction;
+                clueDiv.innerHTML = `<span class="clue-number">${number}.</span> ${clue}`;
+
+                clueDiv.addEventListener('click', () => {
+                    if (clueDiv.classList.contains('locked')) {
+                        showRiddleModal(wordData);
+                    } else {
+                        setActiveClue(wordData.cells[0]);
+                    }
+                });
+
+                if (direction === 'across') {
+                    acrossCluesContainer.appendChild(clueDiv);
+                } else {
+                    downCluesContainer.appendChild(clueDiv);
+                }
+            });
+        }
+
+        // Function to start the game
+        startGameBtn.addEventListener('click', () => {
+            instructionsModal.style.display = 'none';
+            gameHeader.style.display = 'block';
+            gameStatsContainer.style.display = 'block';
+            gameArea.style.display = 'flex';
+            isGameStarted = true;
+            startGame();
+        });
+
+        function startGame() {
+            createGrid();
+            placeWords();
+            startTimer();
+            setupEventListeners();
+        }
+
+        // Timer functionality
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (timeRemaining > 0) {
+                    timeRemaining--;
+                    const minutes = Math.floor(timeRemaining / 60);
+                    const seconds = timeRemaining % 60;
+                    timeEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                } else {
+                    clearInterval(timerInterval);
+                    alert('Time is up! Game Over.');
+                }
+            }, 1000);
+        }
+
+        function setupEventListeners() {
+            // Cell input handling
+            crosswordGrid.addEventListener('input', (e) => {
+                if (!e.target.classList.contains('cell-input')) return;
+               
+                const input = e.target;
+                const row = parseInt(input.dataset.row);
+                const col = parseInt(input.dataset.col);
+                const value = input.value.toUpperCase();
+
+                crosswordGridState[row][col] = value;
+
+                // Auto-advance to next cell
+                if (value && value.match(/[A-Z]/)) {
+                    const nextCell = getNextCell(row, col, activeClue ? activeClue.direction : 'across');
+                    if (nextCell && nextCell.querySelector('input')) {
+                        nextCell.querySelector('input').focus();
+                    }
+                }
+
+                // Check if current word is complete
+                if (activeClue) {
+                    checkWord(activeClue);
+                }
+            });
+
+            // Cell navigation with arrow keys
+            crosswordGrid.addEventListener('keydown', (e) => {
+                if (!e.target.classList.contains('cell-input')) return;
+
+                const input = e.target;
+                if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                    e.preventDefault();
+                    const row = parseInt(input.dataset.row);
+                    const col = parseInt(input.dataset.col);
+                   
+                    let nextCell;
+                    if (e.key === 'ArrowUp') nextCell = document.querySelector(`.cell[data-row="${row - 1}"][data-col="${col}"]`);
+                    if (e.key === 'ArrowDown') nextCell = document.querySelector(`.cell[data-row="${row + 1}"][data-col="${col}"]`);
+                    if (e.key === 'ArrowLeft') nextCell = document.querySelector(`.cell[data-row="${row}"][data-col="${col - 1}"]`);
+                    if (e.key === 'ArrowRight') nextCell = document.querySelector(`.cell[data-row="${row}"][data-col="${col + 1}"]`);
+                   
+                    if (nextCell && nextCell.classList.contains('filled') && nextCell.querySelector('input')) {
+                        setActiveClue(nextCell);
+                        nextCell.querySelector('input').focus();
+                    }
+                }
+            });
+
+            // Cell click to select word
+            crosswordGrid.addEventListener('click', (e) => {
+                const cell = e.target.closest('.cell.filled');
+                if (cell && cell.querySelector('input')) {
+                    setActiveClue(cell);
+                    cell.querySelector('input').focus();
+                }
+            });
+        }
+
+        function getNextCell(row, col, direction) {
+            let nextRow = row;
+            let nextCol = col;
+           
+            if (direction === 'across') {
+                nextCol += 1;
+            } else {
+                nextRow += 1;
+            }
+           
+            return document.querySelector(`.cell[data-row="${nextRow}"][data-col="${nextCol}"]`);
+        }
+
+        function setActiveClue(cell) {
+            if (!cell) return;
+           
+            document.querySelectorAll('.cell.selected').forEach(c => c.classList.remove('selected'));
+            document.querySelectorAll('.clue.selected').forEach(c => c.classList.remove('selected'));
+
+            const wordData = userQuestionSet.find(w => w.cells && w.cells.includes(cell));
+            if (!wordData || wordData.isComplete) return;
+
+            wordData.cells.forEach(c => c.classList.add('selected'));
+           
+            const clueEl = document.querySelector(`.clue[data-word="${wordData.word}"]`);
+            if (clueEl) {
+                clueEl.classList.add('selected');
+            }
+
+            activeClue = wordData;
+        }
+
+        function showRiddleModal(wordData) {
+            currentRiddleWord = wordData;
+            riddleQuestionEl.textContent = wordData.riddle.question;
+            riddleOptionsEl.innerHTML = '';
+            riddleFeedbackEl.textContent = '';
+            riddleSubmitBtn.disabled = true;
+
+            wordData.riddle.options.forEach(option => {
+                const optionEl = document.createElement('button');
+                optionEl.classList.add('riddle-option');
+                optionEl.textContent = option;
+                optionEl.dataset.value = option;
+                optionEl.addEventListener('click', () => {
+                    document.querySelectorAll('.riddle-option').forEach(opt => opt.classList.remove('selected'));
+                    optionEl.classList.add('selected');
+                    riddleSubmitBtn.disabled = false;
+                });
+                riddleOptionsEl.appendChild(optionEl);
+            });
+            riddleModal.style.display = 'flex';
+        }
+
+        riddleSubmitBtn.addEventListener('click', () => {
+            const selectedOption = document.querySelector('.riddle-option.selected');
+            if (!selectedOption) return;
+
+            const selectedValue = selectedOption.dataset.value;
+            if (selectedValue === currentRiddleWord.riddle.answer) {
+                riddleFeedbackEl.textContent = 'Correct! The clue is now unlocked.';
+                riddleFeedbackEl.style.color = '#38a169';
+                unlockClue(currentRiddleWord);
+            } else {
+                riddleFeedbackEl.textContent = 'Incorrect. Try again!';
+                riddleFeedbackEl.style.color = '#e53e3e';
+            }
+        });
+
+        function unlockClue(wordData) {
+            wordData.isLocked = false;
+            const clueEl = document.querySelector(`.clue[data-word="${wordData.word}"]`);
+            if (clueEl) {
+                clueEl.classList.remove('locked');
+            }
+            setTimeout(() => {
+                riddleModal.style.display = 'none';
+                setActiveClue(wordData.cells[0]);
+            }, 1500);
+        }
+
+        function checkWord(wordData) {
+            if (!wordData) return;
+           
+            let currentWord = '';
+            let allFilled = true;
+           
+            wordData.cells.forEach(cell => {
+                const input = cell.querySelector('input');
+                if (input && input.value) {
+                    currentWord += input.value.toUpperCase();
+                } else {
+                    allFilled = false;
+                }
+            });
+
+            if (allFilled && currentWord === wordData.word) {
+                wordData.isComplete = true;
+                showFunFactModal(wordData);
+                updateScore(100);
+                updateProgress();
+               
+                wordData.cells.forEach(cell => {
+                    cell.classList.add('correct');
+                    const input = cell.querySelector('input');
+                    if (input) {
+                        input.disabled = true;
+                    }
+                });
+               
+                const clueEl = document.querySelector(`.clue[data-word="${wordData.word}"]`);
+                if (clueEl) {
+                    clueEl.classList.add('correct');
+                }
+               
+                checkCompletion();
+            } else if (allFilled && currentWord !== wordData.word) {
+                wordData.cells.forEach(cell => cell.classList.add('error'));
+                setTimeout(() => {
+                    wordData.cells.forEach(cell => cell.classList.remove('error'));
+                }, 500);
+                updateScore(-10);
+            }
+        }
+
+        function showFunFactModal(wordData) {
+            funfactTextEl.textContent = wordData.funfact;
+            funfactModal.style.display = 'flex';
+        }
+
+        continueBtn.addEventListener('click', () => {
+            funfactModal.style.display = 'none';
+        });
+
+        function updateScore(points) {
+            score += points;
+            if (score < 0) score = 0;
+            updateScoreDisplay();
+        }
+
+        function updateScoreDisplay() {
+            const scoreText = currentGameLanguage === 'or' ? 'ସ୍କୋର: ' : 
+                             currentGameLanguage === 'hi' ? 'स्कोर: ' : 'Score: ';
+            scoreEl.textContent = scoreText + score;
+        }
+
+        function updateProgress() {
+            const completedWords = userQuestionSet.filter(w => w.isComplete).length;
+            const totalWords = userQuestionSet.length;
+            const progress = (completedWords / totalWords) * 100;
+            progressEl.style.width = `${progress}%`;
+        }
+
+        function checkCompletion() {
+            const allComplete = userQuestionSet.every(w => w.isComplete);
+            if (allComplete) {
+                clearInterval(timerInterval);
+                setTimeout(() => {
+                    successModal.style.display = 'flex';
+                }, 1000);
+            }
+        }
+
+        hintBtn.addEventListener('click', () => {
+            if (hintsLeft > 0 && activeClue && !activeClue.isHintUsed) {
+                hintsLeft--;
+                hintsLeftEl.textContent = `Hints: ${hintsLeft}`;
+                activeClue.isHintUsed = true;
+               
+                // Reveal one random letter from the word
+                const randomIndex = Math.floor(Math.random() * activeClue.word.length);
+                const cell = activeClue.cells[randomIndex];
+                const input = cell.querySelector('input');
+                if (input && !input.value) {
+                    input.value = activeClue.word[randomIndex];
+                    input.dispatchEvent(new Event('input'));
+                }
+               
+                updateScore(-20);
+            }
+        });
+
+        validateBtn.addEventListener('click', () => {
+            userQuestionSet.forEach(wordData => {
+                if (!wordData.isComplete) {
+                    checkWord(wordData);
+                }
+            });
+        });
+
+        resetBtn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to reset the game? Your progress will be lost.')) {
+                resetGame();
+            }
+        });
+
+        successNextBtn.addEventListener('click', resetGame);
+       
+        function resetGame() {
+            clearInterval(timerInterval);
+            score = 0;
+            hintsLeft = 3;
+            timeRemaining = 600;
+            isGameStarted = false;
+           
+            updateScoreDisplay();
+            updateHintsDisplay();
+            progressEl.style.width = '0%';
+            timeEl.textContent = '10:00';
+
+            successModal.style.display = 'none';
+            gameHeader.style.display = 'none';
+            gameStatsContainer.style.display = 'none';
+            gameArea.style.display = 'none';
+            instructionsModal.style.display = 'flex';
+
+            createGrid();
+        }
+
+        function updateHintsDisplay() {
+            const hintsText = currentGameLanguage === 'or' ? 'ସୂଚନା: ' : 
+                             currentGameLanguage === 'hi' ? 'संकेत: ' : 'Hints: ';
+            hintsLeftEl.textContent = hintsText + hintsLeft;
+        }
+
+        // Initialize the game
+        createGrid();
+    </script>
+</body>
+</html>

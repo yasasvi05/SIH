@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 25px;
+            padding: 8px;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            gap: 5px;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .lang-btn.active {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+
+        .lang-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+            background: white;
+            color: #2a69ac;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo-text span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 28px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 1.05rem;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.6rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9)), url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .breadcrumb-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .breadcrumb a {
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #3182ce;
+        }
+
+        .breadcrumb span {
+            color: #64748b;
+        }
+
+        /* English Content */
+        .english-content {
+            padding: 50px 0;
+        }
+
+        /* Importance Section */
+        .importance-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .importance-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .importance-text {
+            line-height: 1.8;
+            color: #64748b;
+        }
+
+        .importance-text p {
+            margin-bottom: 20px;
+        }
+
+        .importance-image {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .importance-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .benefit-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .benefit-title {
+            font-size: 1.1rem;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+
+        .benefit-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* Curriculum Navigation */
+        .curriculum-nav {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .curriculum-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .topic-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .topic-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+        }
+
+        .topic-card.active {
+            background: #ebf8ff;
+            border-color: #90cdf4;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .topic-icon {
+            font-size: 2rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .topic-title {
+            font-size: 1.2rem;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+
+        .topic-desc {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .topic-progress {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #3182ce;
+            border-radius: 4px;
+        }
+
+        .progress-text {
+            font-size: 0.85rem;
+            color: #64748b;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* What You'll Learn Section */
+        .learn-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .learn-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .learn-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .learn-card h3 {
+            color: #1a365d;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .learn-card ul {
+            padding-left: 20px;
+            color: #64748b;
+        }
+
+        .learn-card li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        /* Games Section */
+        .games-section {
+            margin-bottom: 30px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .game-level {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .game-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .game-desc {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .game-body {
+            padding: 20px;
+        }
+
+        .game-features {
+            margin-bottom: 20px;
+        }
+
+        .game-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .game-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .game-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Resources Section */
+        .resources-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .resource-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .resource-icon {
+            font-size: 2.5rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .resource-title {
+            font-size: 1.1rem;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+
+        .resource-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .download-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about {
+            padding-right: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.8rem;
+            background: #38b2ac;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 20px;
+            color: #38b2ac;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2d3748;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .social-links a:hover {
+            background: #38b2ac;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .importance-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .topic-cards, .learn-grid, .games-grid, .resources-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .language-switcher {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 15px;
+                justify-content: center;
+                background: transparent;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* Odia font support */
+        .odia-text {
+            font-family: 'Kalinga', 'Nirmala UI', 'Segoe UI', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button class="lang-btn active" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="logo-text">STEM <span>Learn</span> Odisha</div>
+                </div>
+
+                <nav>
+                    <ul>
+                        <li><a href="student-dashboard.html" data-translate="nav-student-dashboard">Dashboard</a></li>
+                        <li><a href="about.html" data-translate="nav-about">About</a></li>
+                        <li><a href="contact.html" data-translate="nav-contact">Contact</a></li>
+                    </ul>
+                </nav>
+
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 data-translate="english-title">English</h1>
+            <p data-translate="english-desc">Develop your English language skills through interactive lessons, reading activities, and language games designed for Class 6 students</p>
+        </div>
+    </section>
+
+    <!-- English Content -->
+    <section class="english-content">
+        <div class="container">
+            <!-- Importance of English Section -->
+            <div class="importance-section">
+                <h2 class="section-title">
+                    <i class="fas fa-star"></i>
+                    <span data-translate="importance-title">Why English is Important for Class 6 Students</span>
+                </h2>
+                
+                <div class="importance-content">
+                    <div class="importance-text">
+                        <p data-translate="importance-text1">English language education at the Class 6 level helps students develop essential communication skills that are crucial for academic success and future opportunities. It opens doors to global knowledge and cultural understanding.</p>
+                        
+                        <p data-translate="importance-text2">Through reading, writing, speaking, and listening activities, students build vocabulary, improve grammar, and develop confidence in expressing themselves in English.</p>
+                        
+                        <p data-translate="importance-text3">Our curriculum is designed specifically for Odisha students, incorporating local stories and contexts to make learning more relevant and engaging.</p>
+                    </div>
+                    
+                    <div class="importance-image">
+                        <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Students learning English">
+                    </div>
+                </div>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3 class="benefit-title" data-translate="benefit1-title">Communication Skills</h3>
+                        <p class="benefit-desc" data-translate="benefit1-desc">Develops ability to express thoughts and ideas clearly</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-book-reader"></i>
+                        </div>
+                        <h3 class="benefit-title" data-translate="benefit2-title">Reading Comprehension</h3>
+                        <p class="benefit-desc" data-translate="benefit2-desc">Improves understanding of written texts and stories</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-pencil-alt"></i>
+                        </div>
+                        <h3 class="benefit-title" data-translate="benefit3-title">Writing Ability</h3>
+                        <p class="benefit-desc" data-translate="benefit3-desc">Enhances creative and structured writing skills</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3 class="benefit-title" data-translate="benefit4-title">Global Connection</h3>
+                        <p class="benefit-desc" data-translate="benefit4-desc">Connects students to worldwide knowledge and opportunities</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- What You'll Learn Section -->
+            <div class="learn-section">
+                <h2 class="section-title">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span data-translate="learn-title">What You'll Learn in Class 6 English</span>
+                </h2>
+                
+                <div class="learn-grid">
+                    <div class="learn-card">
+                        <h3><i class="fas fa-book"></i> <span data-translate="learn1-title">Reading Comprehension</span></h3>
+                        <ul>
+                            <li data-translate="learn1-1">Understanding stories and poems</li>
+                            <li data-translate="learn1-2">Identifying main ideas and details</li>
+                            <li data-translate="learn1-3">Making predictions and inferences</li>
+                            <li data-translate="learn1-4">Building reading fluency</li>
+                        </ul>
+                    </div>
+
+                    <div class="learn-card">
+                        <h3><i class="fas fa-pen-fancy"></i> <span data-translate="learn2-title">Grammar & Vocabulary</span></h3>
+                        <ul>
+                            <li data-translate="learn2-1">Parts of speech and sentence structure</li>
+                            <li data-translate="learn2-2">Tenses and verb forms</li>
+                            <li data-translate="learn2-3">Building vocabulary through context</li>
+                            <li data-translate="learn2-4">Using dictionaries and reference materials</li>
+                        </ul>
+                    </div>
+
+                    <div class="learn-card">
+                        <h3><i class="fas fa-edit"></i> <span data-translate="learn3-title">Writing Skills</span></h3>
+                        <ul>
+                            <li data-translate="learn3-1">Paragraph and essay writing</li>
+                            <li data-translate="learn3-2">Story and letter writing</li>
+                            <li data-translate="learn3-3">Descriptive and narrative writing</li>
+                            <li data-translate="learn3-4">Editing and improving written work</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="learn-card">
+                        <h3><i class="fas fa-microphone"></i> <span data-translate="learn4-title">Speaking & Listening</span></h3>
+                        <ul>
+                            <li data-translate="learn4-1">Pronunciation and intonation</li>
+                            <li data-translate="learn4-2">Participating in conversations</li>
+                            <li data-translate="learn4-3">Giving short presentations</li>
+                            <li data-translate="learn4-4">Listening for specific information</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="learn-card">
+                        <h3><i class="fas fa-theater-masks"></i> <span data-translate="learn5-title">Literature Appreciation</span></h3>
+                        <ul>
+                            <li data-translate="learn5-1">Understanding different genres</li>
+                            <li data-translate="learn5-2">Analyzing characters and plots</li>
+                            <li data-translate="learn5-3">Exploring themes and messages</li>
+                            <li data-translate="learn5-4">Connecting stories to real life</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="learn-card">
+                        <h3><i class="fas fa-language"></i> <span data-translate="learn6-title">Language in Use</span></h3>
+                        <ul>
+                            <li data-translate="learn6-1">Using English in daily situations</li>
+                            <li data-translate="learn6-2">Formal and informal language</li>
+                            <li data-translate="learn6-3">Idioms and common expressions</li>
+                            <li data-translate="learn6-4">Cross-cultural communication</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Learning Games -->
+            <div class="games-section">
+                <h2 class="section-title">
+                    <i class="fas fa-gamepad"></i>
+                    <span data-translate="games-title">Interactive Learning Games</span>
+                </h2>
+                
+                <div class="games-grid">
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-level" data-translate="level-basic">Basic</span>
+                            <h3 class="game-title" data-translate="game1-title">Word Builder Challenge</h3>
+                            <p class="game-desc" data-translate="game1-desc">Build vocabulary through fun word games and puzzles</p>
+                        </div>
+                        <div class="game-body">
+                            <div class="game-features">
+                                <div class="game-feature">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span data-translate="game1-feature1">Vocabulary building activities</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span data-translate="game1-feature2">10-15 minutes gameplay</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span data-translate="game1-feature3">Earn up to 50 points</span>
+                                </div>
+                            </div>
+                            <a href="enggame1.html" class="game-btn" data-translate="play-game">Play Game</a>
+                        </div>
+                    </div>
+                    
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-level" data-translate="level-intermediate">Intermediate</span>
+                            <h3 class="game-title" data-translate="game2-title">Grammar Quest</h3>
+                            <p class="game-desc" data-translate="game2-desc">Master grammar rules through interactive challenges</p>
+                        </div>
+                        <div class="game-body">
+                            <div class="game-features">
+                                <div class="game-feature">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span data-translate="game2-feature1">Grammar practice exercises</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span data-translate="game2-feature2">15-20 minutes gameplay</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span data-translate="game2-feature3">Earn up to 100 points</span>
+                                </div>
+                            </div>
+                            <a href="enggame2.html" class="game-btn" data-translate="play-game">Play Game</a>
+                        </div>
+                    </div>
+                    
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-level" data-translate="level-hard">Hard</span>
+                            <h3 class="game-title" data-translate="game3-title">Story Weaver</h3>
+                            <p class="game-desc" data-translate="game3-desc">Create your own stories and develop writing skills</p>
+                        </div>
+                        <div class="game-body">
+                            <div class="game-features">
+                                <div class="game-feature">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span data-translate="game3-feature1">Creative writing prompts</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span data-translate="game3-feature2">20-25 minutes gameplay</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span data-translate="game3-feature3">Earn up to 150 points</span>
+                                </div>
+                            </div>
+                            <a href="enggame3.html" class="game-btn" data-translate="play-game">Play Game</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Learning Resources -->
+            <div class="resources-section">
+                <h2 class="section-title">
+                    <i class="fas fa-download"></i>
+                    <span data-translate="resources-title">Learning Resources</span>
+                </h2>
+                
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3 class="resource-title" data-translate="resource1-title">Study Notes</h3>
+                        <p class="resource-desc" data-translate="resource1-desc">Complete chapter notes for revision</p>
+                        <button class="download-btn">
+                            <i class="fas fa-download"></i>
+                            <span data-translate="download-english">Download (English)</span>
+                        </button>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3 class="resource-title" data-translate="resource2-title">ଅଧ୍ୟୟନ ଟିପ୍ପଣୀ</h3>
+                        <p class="resource-desc" data-translate="resource2-desc">ସମ୍ପୂର୍ଣ୍ଣ ଅଧ୍ୟାୟ ଟିପ୍ପଣୀ ସଂଶୋଧନ ପାଇଁ</p>
+                        <button class="download-btn">
+                            <i class="fas fa-download"></i>
+                            <span data-translate="download-odia">Download (ଓଡ଼ିଆ)</span>
+                        </button>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <h3 class="resource-title" data-translate="resource3-title">Flashcards</h3>
+                        <p class="resource-desc" data-translate="resource3-desc">Visual learning cards for key concepts</p>
+                        <button class="download-btn">
+                            <i class="fas fa-download"></i>
+                            <span data-translate="download-flashcards">Download Flashcards</span>
+                        </button>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h3 class="resource-title" data-translate="resource4-title">Video Lessons</h3>
+                        <p class="resource-desc" data-translate="resource4-desc">Animated explanations of concepts</p>
+                        <button class="download-btn">
+                            <i class="fas fa-play-circle"></i>
+                            <span data-translate="watch-videos">Watch Videos</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>  
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="footer-logo-text">STEM Learn Odisha</div>
+                    </div>
+                    <p data-lang="en">Making English education engaging and relevant for Class 6 students in Odisha through localized content and interactive learning.</p>
+                    <p data-lang="odia">ଓଡିଶାର କକ୍ଷା ୬ ର ଛାତ୍ରଛାତ୍ରୀଙ୍କ ପାଇଁ ଇଂରାଜୀ ଶିକ୍ଷାକୁ ଆକର୍ଷଣୀୟ ଏବଂ ପ୍ରାସଙ୍ଗିକ କରିବା ସ୍ଥାନୀୟକୃତ ବିଷୟବସ୍ତୁ ଏବଂ ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷା ମାଧ୍ୟମରେ।</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <h3 data-lang="en">Quick Links</h3>
+                    <h3 data-lang="odia">ଦ୍ରୁତ ଲିଙ୍କ୍</h3>
+                    <ul>
+                        <li><a href="home.html"><i class="fas fa-home"></i> <span data-lang="en">Home</span><span data-lang="odia">ମୁଖ୍ୟ ପୃଷ୍ଠା</span></a></li>
+                        <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> <span data-lang="en">Our Teachers</span><span data-lang="odia">ଆମର ଶିକ୍ଷକ</span></a></li>
+                        <li><a href="about.html"><i class="fas fa-info-circle"></i> <span data-lang="en">About Us</span><span data-lang="odia">ଆମ ବିଷୟରେ</span></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p data-lang="en">&copy; 2023 STEM Learn Odisha. All rights reserved.</p>
+                <p data-lang="odia">&copy; ୨୦୨୩ ଷ୍ଟେମ୍ ଲର୍ନ ଓଡିଶା। ସମସ୍ତ ଅଧିକାର ସଂରକ୍ଷିତ।</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language switching functionality
+        let currentLanguage = 'en';
+
+        const translations = {
+            en: {
+                'nav-student-dashboard': 'Dashboard',
+                'nav-science': 'Science',
+                'nav-technology': 'Technology',
+                'nav-english': 'English',
+                'nav-math': 'Math',
+                'nav-about': 'About',
+                'nav-contact': 'Contact',
+                'english-title': 'English',
+                'english-desc': 'Develop your English language skills through interactive lessons, reading activities, and language games designed for Class 6 students',
+                'breadcrumb-home': 'Home',
+                'breadcrumb-english': 'English',
+                'breadcrumb-curriculum': 'Class 6 English Curriculum',
+                'importance-title': 'Why English is Important for Class 6 Students',
+                'importance-text1': 'English language education at the Class 6 level helps students develop essential communication skills that are crucial for academic success and future opportunities. It opens doors to global knowledge and cultural understanding.',
+                'importance-text2': 'Through reading, writing, speaking, and listening activities, students build vocabulary, improve grammar, and develop confidence in expressing themselves in English.',
+                'importance-text3': 'Our curriculum is designed specifically for Odisha students, incorporating local stories and contexts to make learning more relevant and engaging.',
+                'benefit1-title': 'Communication Skills',
+                'benefit1-desc': 'Develops ability to express thoughts and ideas clearly',
+                'benefit2-title': 'Reading Comprehension',
+                'benefit2-desc': 'Improves understanding of written texts and stories',
+                'benefit3-title': 'Writing Ability',
+                'benefit3-desc': 'Enhances creative and structured writing skills',
+                'benefit4-title': 'Global Connection',
+                'benefit4-desc': 'Connects students to worldwide knowledge and opportunities',
+                'learn-title': 'What You\'ll Learn in Class 6 English',
+                'learn1-title': 'Reading Comprehension',
+                'learn1-1': 'Understanding stories and poems',
+                'learn1-2': 'Identifying main ideas and details',
+                'learn1-3': 'Making predictions and inferences',
+                'learn1-4': 'Building reading fluency',
+                'learn2-title': 'Grammar & Vocabulary',
+                'learn2-1': 'Parts of speech and sentence structure',
+                'learn2-2': 'Tenses and verb forms',
+                'learn2-3': 'Building vocabulary through context',
+                'learn2-4': 'Using dictionaries and reference materials',
+                'learn3-title': 'Writing Skills',
+                'learn3-1': 'Paragraph and essay writing',
+                'learn3-2': 'Story and letter writing',
+                'learn3-3': 'Descriptive and narrative writing',
+                'learn3-4': 'Editing and improving written work',
+                'learn4-title': 'Speaking & Listening',
+                'learn4-1': 'Pronunciation and intonation',
+                'learn4-2': 'Participating in conversations',
+                'learn4-3': 'Giving short presentations',
+                'learn4-4': 'Listening for specific information',
+                'learn5-title': 'Literature Appreciation',
+                'learn5-1': 'Understanding different genres',
+                'learn5-2': 'Analyzing characters and plots',
+                'learn5-3': 'Exploring themes and messages',
+                'learn5-4': 'Connecting stories to real life',
+                'learn6-title': 'Language in Use',
+                'learn6-1': 'Using English in daily situations',
+                'learn6-2': 'Formal and informal language',
+                'learn6-3': 'Idioms and common expressions',
+                'learn6-4': 'Cross-cultural communication',
+                'curriculum-title': 'English Curriculum for Class 6',
+                'curriculum-desc': 'Our comprehensive curriculum covers all essential topics as prescribed by the Odisha Board of Secondary Education, with engaging content tailored for young learners.',
+                'view-curriculum': 'View Full Curriculum',
+                'games-title': 'Interactive Learning Games',
+                'level-basic': 'Basic',
+                'game1-title': 'Word Builder Challenge',
+                'game1-desc': 'Build vocabulary through fun word games and puzzles',
+                'game1-feature1': 'Vocabulary building activities',
+                'game1-feature2': '10-15 minutes gameplay',
+                'game1-feature3': 'Earn up to 50 points',
+                'level-intermediate': 'Intermediate',
+                'game2-title': 'Grammar Quest',
+                'game2-desc': 'Master grammar rules through interactive challenges',
+                'game2-feature1': 'Grammar practice exercises',
+                'game2-feature2': '15-20 minutes gameplay',
+                'game2-feature3': 'Earn up to 100 points',
+                'level-hard': 'Hard',
+                'game3-title': 'Story Weaver',
+                'game3-desc': 'Create your own stories and develop writing skills',
+                'game3-feature1': 'Creative writing prompts',
+                'game3-feature2': '20-25 minutes gameplay',
+                'game3-feature3': 'Earn up to 150 points',
+                'play-game': 'Play Game',
+                'resources-title': 'Learning Resources',
+                'resource1-title': 'Study Notes',
+                'resource1-desc': 'Complete chapter notes for revision',
+                'download-english': 'Download (English)',
+                'resource2-title': 'ଅଧ୍ୟୟନ ଟିପ୍ପଣୀ',
+                'resource2-desc': 'ସମ୍ପୂର୍ଣ୍ଣ ଅଧ୍ୟାୟ ଟିପ୍ପଣୀ ସଂଶୋଧନ ପାଇଁ',
+                'download-odia': 'Download (ଓଡ଼ିଆ)',
+                'resource3-title': 'Flashcards',
+                'resource3-desc': 'Visual learning cards for key concepts',
+                'download-flashcards': 'Download Flashcards',
+                'resource4-title': 'Video Lessons',
+                'resource4-desc': 'Animated explanations of concepts',
+                'watch-videos': 'Watch Videos'
+            },
+            or: {
+                'nav-student-dashboard': 'ଡ୍ୟାସବୋର୍ଡ',
+                'nav-science': 'ବିଜ୍ଞାନ',
+                'nav-technology': 'ପ୍ରଯୁକ୍ତିବିଦ୍ୟା',
+                'nav-english': 'ଇଂରାଜୀ',
+                'nav-math': 'ଗଣିତ',
+                'nav-about': 'ଆମ ବିଷୟରେ',
+                'nav-contact': 'ଯୋଗାଯୋଗ',
+                'english-title': 'ଇଂରାଜୀ',
+                'english-desc': 'ଷଷ୍ଠ ଶ୍ରେଣୀର ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କ ପାଇଁ ଡିଜାଇନ୍ କରାଯାଇଥିବା ଇଣ୍ଟରାକ୍ଟିଭ୍ ପାଠ, ପଠନ କାର୍ଯ୍ୟକଳାପ, ଏବଂ ଭାଷା ଖେଳ ମାଧ୍ୟମରେ ଆପଣଙ୍କର ଇଂରାଜୀ ଭାଷା ଦକ୍ଷତା ବିକଶିତ କରନ୍ତୁ',
+                'breadcrumb-home': 'ମୁଖ୍ୟ ପୃଷ୍ଠା',
+                'breadcrumb-english': 'ଇଂରାଜୀ',
+                'breadcrumb-curriculum': 'ଷଷ୍ଠ ଶ୍ରେଣୀ ଇଂରାଜୀ ପାଠ୍ୟକ୍ରମ',
+                'importance-title': 'ଷଷ୍ଠ ଶ୍ରେଣୀର ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କ ପାଇଁ ଇଂରାଜୀ କାହିଁକି ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ',
+                'importance-text1': 'ଷଷ୍ଠ ଶ୍ରେଣୀ ସ୍ତରରେ ଇଂରାଜୀ ଭାଷା ଶିକ୍ଷା ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କୁ ଆବଶ୍ୟକୀୟ ସଞ୍ଚାର ଦକ୍ଷତା ବିକଶିତ କରିବାରେ ସାହାଯ୍ୟ କରେ ଯାହା ଶିକ୍ଷାଗତ ସଫଳତା ଏବଂ ଭବିଷ୍ୟତ ସୁଯୋଗଗୁଡିକ ପାଇଁ ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ। ଏହା ବିଶ୍ୱବ୍ୟାପୀ ଜ୍ଞାନ ଏବଂ ସାଂସ୍କୃତିକ ବୁଝାମଣା ପାଇଁ ଦ୍ୱାର ଖୋଲିଥାଏ।',
+                'importance-text2': 'ପଠନ, ଲେଖା, କଥନ, ଏବଂ ଶ୍ରବଣ କାର୍ଯ୍ୟକଳାପ ମାଧ୍ୟମରେ, ଛାତ୍ରଛାତ୍ରୀମାନେ ଶବ୍ଦଭଣ୍ଡାର ଗଠନ କରନ୍ତି, ବ୍ୟାକରଣ ଉନ୍ନତି କରନ୍ତି, ଏବଂ ଇଂରାଜୀରେ ନିଜକୁ ପ୍ରକାଶ କରିବାରେ ଆତ୍ମବିଶ୍ୱାସ ବିକଶିତ କରନ୍ତି।',
+                'importance-text3': 'ଆମର ପାଠ୍ୟକ୍ରମ ବିଶେଷ ଭାବରେ ଓଡ଼ିଶାର ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କ ପାଇଁ ଡିଜାଇନ୍ କରାଯାଇଛି, ଶିକ୍ଷଣକୁ ଅଧିକ ପ୍ରାସଙ୍ଗିକ ଏବଂ ଆକର୍ଷଣୀୟ କରିବା ପାଇଁ ସ୍ଥାନୀୟ ଗପ ଏବଂ ପ୍ରସଙ୍ଗଗୁଡିକୁ ସାମିଲ କରିଛି।',
+                'benefit1-title': 'ସଞ୍ଚାର ଦକ୍ଷତା',
+                'benefit1-desc': 'ଚିନ୍ତା ଏବଂ ଧାରଣାଗୁଡିକୁ ସ୍ପଷ୍ଟ ଭାବରେ ପ୍ରକାଶ କରିବାର କ୍ଷମତା ବିକଶିତ କରେ',
+                'benefit2-title': 'ପଠନ ବୁଝାମଣ',
+                'benefit2-desc': 'ଲିଖିତ ପାଠ୍ୟ ଏବଂ ଗପଗୁଡିକର ବୁଝାମଣ ଉନ୍ନତି କରେ',
+                'benefit3-title': 'ଲେଖା କ୍ଷମତା',
+                'benefit3-desc': 'ସୃଜନଶୀଳ ଏବଂ ବ୍ୟବସ୍ଥିତ ଲେଖା ଦକ୍ଷତାକୁ ବୃଦ୍ଧି କରେ',
+                'benefit4-title': 'ବିଶ୍ୱବ୍ୟାପୀ ସଂଯୋଗ',
+                'benefit4-desc': 'ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କୁ ବିଶ୍ୱବ୍ୟାପୀ ଜ୍ଞାନ ଏବଂ ସୁଯୋଗଗୁଡିକ ସହିତ ସଂଯୋଗ କରେ',
+                'learn-title': 'ଷଷ୍ଠ ଶ୍ରେଣୀ ଇଂରାଜୀରେ ଆପଣ କଣ ଶିଖିବେ',
+                'learn1-title': 'ପଠନ ବୁଝାମଣ',
+                'learn1-1': 'ଗପ ଏବଂ କବିତା ବୁଝିବା',
+                'learn1-2': 'ମୁଖ୍ୟ ଧାରଣା ଏବଂ ବିବରଣୀ ଚିହ୍ନଟ କରିବା',
+                'learn1-3': 'ପୂର୍ବାନୁମାନ ଏବଂ ଅନୁମାନ କରିବା',
+                'learn1-4': 'ପଠନ ସୁଗମତା ଗଠନ କରିବା',
+                'learn2-title': 'ବ୍ୟାକରଣ ଏବଂ ଶବ୍ଦଭଣ୍ଡାର',
+                'learn2-1': 'ବାକ୍ୟର ଅଂଶ ଏବଂ ଗଠନ',
+                'learn2-2': 'କାଳ ଏବଂ କ୍ରିୟା ରୂପ',
+                'learn2-3': 'ପ୍ରସଙ୍ଗ ମାଧ୍ୟମରେ ଶବ୍ଦଭଣ୍ଡାର ଗଠନ କରିବା',
+                'learn2-4': 'ଅଭିଧାନ ଏବଂ ସନ୍ଦର୍ଭ ସାମଗ୍ରୀ ବ୍ୟବହାର କରିବା',
+                'learn3-title': 'ଲେଖା ଦକ୍ଷତା',
+                'learn3-1': 'ଅନୁଚ୍ଛେଦ ଏବଂ ପ୍ରବନ୍ଧ ଲେଖା',
+                'learn3-2': 'ଗପ ଏବଂ ଚିଠି ଲେଖା',
+                'learn3-3': 'ବର୍ଣ୍ଣନାତ୍ମକ ଏବଂ ବୃତ୍ତାନ୍ତମୂଳକ ଲେଖା',
+                'learn3-4': 'ଲିଖିତ କାର୍ଯ୍ୟ ସଂପାଦନ ଏବଂ ଉନ୍ନତି କରିବା',
+                'learn4-title': 'କଥନ ଏବଂ ଶ୍ରବଣ',
+                'learn4-1': 'ଉଚ୍ଚାରଣ ଏବଂ ସ୍ୱରଭଙ୍ଗୀ',
+                'learn4-2': 'ଆଲୋଚନାରେ ଅଂଶଗ୍ରହଣ କରିବା',
+                'learn4-3': 'ସଂକ୍ଷିପ୍ତ ପ୍ରସ୍ତୁତି ଦେବା',
+                'learn4-4': 'ନିର୍ଦ୍ଦିଷ୍ଟ ସୂଚନା ପାଇଁ ଶୁଣିବା',
+                'learn5-title': 'ସାହିତ୍ୟ ମୂଲ୍ୟାୟନ',
+                'learn5-1': 'ବିଭିନ୍ନ ଶୈଳୀ ବୁଝିବା',
+                'learn5-2': 'ଚରିତ୍ର ଏବଂ କଥାବସ୍ତୁ ବିଶ୍ଳେଷଣ କରିବା',
+                'learn5-3': 'ବିଷୟବସ୍ତୁ ଏବଂ ସନ୍ଦେଶଗୁଡିକ ଅନ୍ଵେଷଣ କରିବା',
+                'learn5-4': 'ଗପଗୁଡିକୁ ବାସ୍ତବ ଜୀବନ ସହିତ ସଂଯୋଗ କରିବା',
+                'learn6-title': 'ବ୍ୟବହାରରେ ଭାଷା',
+                'learn6-1': 'ଦ daily ନନ୍ଦିନ ପରିସ୍ଥିତିରେ ଇଂରାଜୀ ବ୍ୟବହାର କରିବା',
+                'learn6-2': 'ଆନୁଷ୍ଠାନିକ ଏବଂ ଅନାନୁଷ୍ଠାନିକ ଭାଷା',
+                'learn6-3': 'ବାକ୍ୟାଂଶ ଏବଂ ସାଧାରଣ ଅଭିବ୍ୟକ୍ତି',
+                'learn6-4': 'ସାଂସ୍କୃତିକ ଅନ୍ତର୍କୋଣୀୟ ସଞ୍ଚାର',
+                'curriculum-title': 'ଷଷ୍ଠ ଶ୍ରେଣୀ ପାଇଁ ଇଂରାଜୀ ପାଠ୍ୟକ୍ରମ',
+                'curriculum-desc': 'ଆମର ସମ୍ପୂର୍ଣ୍ଣ ପାଠ୍ୟକ୍ରମ ଓଡ଼ିଶା ମାଧ୍ୟମିକ ଶିକ୍ଷା ବୋର୍ଡ ଦ୍ୱାରା ପ୍ରଣୀତ ସମସ୍ତ ମୌଳିକ ବିଷୟବସ୍ତୁକୁ ଆବର୍ତ୍ତନ କରେ, ଯୁବ ଶିକ୍ଷାର୍ଥୀମାନଙ୍କ ପାଇଁ ଆକର୍ଷଣୀୟ ବିଷୟବସ୍ତୁ ସହିତ।',
+                'view-curriculum': 'ସମ୍ପୂର୍ଣ୍ଣ ପାଠ୍ୟକ୍ରମ ଦେଖନ୍ତୁ',
+                'games-title': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ଖେଳଗୁଡିକ',
+                'level-basic': 'ମୌଳିକ',
+                'game1-title': 'ଶବ୍ଦ ଗଠନ ଚ୍ୟାଲେଞ୍ଜ',
+                'game1-desc': 'ମଜାଦାର ଶବ୍ଦ ଖେଳ ଏବଂ ପଜଲ୍ ମାଧ୍ୟମରେ ଶବ୍ଦଭଣ୍ଡାର ଗଠନ କରନ୍ତୁ',
+                'game1-feature1': 'ଶବ୍ଦଭଣ୍ଡାର ଗଠନ କାର୍ଯ୍ୟକଳାପ',
+                'game1-feature2': '10-15 ମିନିଟ୍ ଖେଳପଣ',
+                'game1-feature3': '50 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ ଅର୍ଜନ କରନ୍ତୁ',
+                'level-intermediate': 'ମଧ୍ୟମ ସ୍ତର',
+                'game2-title': 'ବ୍ୟାକରଣ ଅନ୍ୱେଷଣ',
+                'game2-desc': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ ଚ୍ୟାଲେଞ୍ଜ ମାଧ୍ୟମରେ ବ୍ୟାକରଣ ନିୟମ ଆୟତ୍ତ କରନ୍ତୁ',
+                'game2-feature1': 'ବ୍ୟାକରଣ ଅଭ୍ୟାସ କାର୍ଯ୍ୟ',
+                'game2-feature2': '15-20 ମିନିଟ୍ ଖେଳପଣ',
+                'game2-feature3': '100 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ ଅର୍ଜନ କରନ୍ତୁ',
+                'level-hard': 'କଠିନ',
+                'game3-title': 'ଗପ ବୁଣାଳି',
+                'game3-desc': 'ନିଜର ଗପ ସୃଷ୍ଟି କରନ୍ତୁ ଏବଂ ଲେଖା ଦକ୍ଷତା ବିକଶିତ କରନ୍ତୁ',
+                'game3-feature1': 'ସୃଜନଶୀଳ ଲେଖା ପ୍ରୋତ୍ସାହନ',
+                'game3-feature2': '20-25 ମିନିଟ୍ ଖେଳପଣ',
+                'game3-feature3': '150 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ ଅର୍ଜନ କରନ୍ତୁ',
+                'play-game': 'ଖେଳନ୍ତୁ',
+                'resources-title': 'ଶିକ୍ଷଣ ସମ୍ବଳ',
+                'resource1-title': 'ଅଧ୍ୟୟନ ଟିପ୍ପଣୀ',
+                'resource1-desc': 'ସଂଶୋଧନ ପାଇଁ ସମ୍ପୂର୍ଣ୍ଣ ଅଧ୍ୟାୟ ଟିପ୍ପଣୀ',
+                'download-english': 'ଡାଉନଲୋଡ୍ (ଇଂରାଜୀ)',
+                'resource2-title': 'ଅଧ୍ୟୟନ ଟିପ୍ପଣୀ',
+                'resource2-desc': 'ସମ୍ପୂର୍ଣ୍ଣ ଅଧ୍ୟାୟ ଟିପ୍ପଣୀ ସଂଶୋଧନ ପାଇଁ',
+                'download-odia': 'ଡାଉନଲୋଡ୍ (ଓଡ଼ିଆ)',
+                'resource3-title': 'ଫ୍ଲାସ୍‌କାର୍ଡଗୁଡିକ',
+                'resource3-desc': 'ମୁଖ୍ୟ ଧାରଣାଗୁଡିକ ପାଇଁ ଭିଜୁଆଲ୍ ଶିକ୍ଷଣ କାର୍ଡଗୁଡିକ',
+                'download-flashcards': 'ଫ୍ଲାସ୍‌କାର୍ଡଗୁଡିକ ଡାଉନଲୋଡ୍ କରନ୍ତୁ',
+                'resource4-title': 'ଭିଡିଓ ପାଠଗୁଡିକ',
+                'resource4-desc': 'ଧାରଣାଗୁଡିକର ଆନିମେଟେଡ୍ ବ୍ୟାଖ୍ୟା',
+                'watch-videos': 'ଭିଡିଓ ଦେଖନ୍ତୁ'
+            }
+        };
+
+        // DOM elements
+        const langButtons = document.querySelectorAll('.lang-btn');
+        
+        // Initialize the page
+        function init() {
+            // Set up language switcher
+            langButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    switchLanguage(lang);
+                });
+            });
+
+            // Initialize with default language
+            switchLanguage('en');
+        }
+
+        // Switch language function
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update active button
+            langButtons.forEach(btn => {
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // Update all text content
+            Object.keys(translations[lang]).forEach(key => {
+                const elements = document.querySelectorAll(`[data-translate="${key}"]`);
+                elements.forEach(element => {
+                    element.textContent = translations[lang][key];
+                });
+            });
+            
+            // Add Odia font class for Odia text
+            if (lang === 'or') {
+                document.body.classList.add('odia-text');
+            } else {
+                document.body.classList.remove('odia-text');
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

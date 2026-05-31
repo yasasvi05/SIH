@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Grain Bag Challenge - STEM Learn Odisha</title>
+ 
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+ <style>
+ /* BASE STYLES */
+ * {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ font-family: 'Poppins', sans-serif;
+ }
+ body {
+ background-color: #f0f7ff;
+ color: #1e293b;
+ line-height: 1.6;
+ }
+ .container {
+ width: 100%;
+ max-width: 1200px;
+ margin: 0 auto;
+ padding: 0 20px;
+ }
+ 
+ /* MODAL STYLES */
+ .game-modal {
+ position: fixed;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ background: rgba(0, 0, 0, 0.7);
+ display: none;
+ justify-content: center;
+ align-items: center;
+ z-index: 10000;
+ }
+ .modal-content {
+ background: white;
+ padding: 40px;
+ border-radius: 15px;
+ max-width: 600px;
+ width: 90%;
+ text-align: center;
+ box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+ }
+ .modal-title {
+ color: #1a365d;
+ margin-bottom: 20px;
+ font-size: 1.8rem;
+ }
+ .modal-text {
+ font-size: 1rem;
+ color: #4a5568;
+ margin-bottom: 25px;
+ }
+ .modal-btn {
+ background: #4299e1;
+ color: white;
+ border: none;
+ padding: 12px 25px;
+ border-radius: 8px;
+ font-size: 1rem;
+ font-weight: 600;
+ cursor: pointer;
+ transition: background 0.3s ease;
+ }
+ .modal-btn:hover {
+ background: #3182ce;
+ }
+ .modal-btn:disabled {
+ background: #a0aec0;
+ cursor: not-allowed;
+ }
+
+ /* HEADER & NAVIGATION */
+ header {
+ background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+ color: white;
+ padding: 15px 0;
+ position: sticky;
+ top: 0;
+ z-index: 100;
+ box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+ }
+ .header-content { 
+ display: flex; 
+ justify-content: space-between; 
+ align-items: center; 
+ }
+ 
+ .logo { 
+ display: flex; 
+ align-items: center; 
+ gap: 12px; 
+ }
+ .logo-icon { 
+ font-size: 2.2rem; 
+ background: white; 
+ color: #2a69ac; 
+ width: 55px; 
+ height: 55px; 
+ border-radius: 50%; 
+ display: flex; 
+ align-items: center; 
+ justify-content: center; 
+ box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+ }
+ .logo-text { 
+ font-size: 1.8rem; 
+ font-weight: 700; 
+ line-height: 1.2;
+ }
+ .logo-text span { 
+ color: #38b2ac; 
+ font-weight: 800; 
+ } 
+
+ .nav-container {
+ display: flex;
+ align-items: center;
+ gap: 20px;
+ }
+ 
+ nav ul { 
+ display: flex; 
+ list-style: none; 
+ gap: 25px; 
+ align-items: center;
+ margin: 0;
+ padding: 0;
+ }
+ nav a { 
+ color: white; 
+ text-decoration: none; 
+ font-weight: 500; 
+ transition: all 0.3s ease; 
+ padding: 8px 12px; 
+ border-radius: 8px; 
+ font-size: 1.05rem; 
+ white-space: nowrap;
+ }
+ nav a:hover, nav a.active { 
+ background: rgba(255, 255, 255, 0.15); 
+ transform: translateY(-2px); 
+ }
+
+ /* LANGUAGE TOGGLE */
+ .language-switcher {
+ display: flex;
+ gap: 5px;
+ background: rgba(255, 255, 255, 0.1);
+ border-radius: 25px;
+ padding: 6px;
+ border: 1px solid rgba(255, 255, 255, 0.2);
+ }
+ .lang-btn {
+ padding: 6px 16px;
+ border: none;
+ background: transparent;
+ border-radius: 20px;
+ cursor: pointer;
+ font-size: 0.9rem;
+ font-weight: 500;
+ transition: all 0.3s ease;
+ color: white;
+ }
+ .lang-btn.active {
+ background: rgba(255, 255, 255, 0.25);
+ color: white;
+ }
+ .lang-btn:hover:not(.active) {
+ background: rgba(255, 255, 255, 0.1);
+ }
+
+ .mobile-menu-btn { 
+ display: none; 
+ font-size: 1.6rem; 
+ background: none; 
+ border: none; 
+ color: white; 
+ cursor: pointer; 
+ margin-left: 20px;
+ }
+
+ /* GAME HEADER */
+ .game-header { 
+ background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9));
+ color: white; 
+ padding: 60px 0; 
+ text-align: center;
+ }
+
+ /* GAME STATS */
+ #game-stats-container {
+ background: white;
+ border-radius: 10px;
+ padding: 20px 25px;
+ margin: -30px auto 30px;
+ box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+ position: relative;
+ z-index: 10;
+ max-width: 95%;
+ }
+ .game-stats {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ }
+ .score-container {
+ display: flex;
+ align-items: center;
+ gap: 15px;
+ }
+ .score, .level-info {
+ background: #f7fafc;
+ padding: 12px 20px;
+ border-radius: 8px;
+ border-left: 4px solid #4299e1;
+ min-width: 180px;
+ }
+ .level-info {
+ border-left-color: #38a169;
+ }
+ .score-value, .level-value {
+ font-size: 1.4rem;
+ font-weight: 700;
+ color: #1a365d;
+ display: block;
+ margin-top: 5px;
+ }
+ .score-label, .level-label {
+ font-size: 0.9rem;
+ color: #4a5568;
+ font-weight: 500;
+ display: block;
+ }
+ .progress-container {
+ width: 100%;
+ background: #e2e8f0;
+ border-radius: 10px;
+ height: 12px;
+ margin-top: 15px;
+ overflow: hidden;
+ }
+ .progress-bar {
+ background: linear-gradient(to right, #4299e1, #38a169);
+ height: 100%;
+ border-radius: 10px;
+ transition: width 0.5s ease;
+ }
+
+ /* LEVEL SELECTION */
+ .level-selection { 
+ display: flex; 
+ justify-content: center; 
+ gap: 30px; 
+ padding: 40px 0; 
+ flex-wrap: wrap; 
+ }
+ .level-card { 
+ background: white; 
+ border-radius: 12px; 
+ box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
+ padding: 30px; 
+ width: 300px; 
+ display: flex;
+ flex-direction: column;
+ justify-content: space-between; 
+ height: 250px;
+ text-align: center; 
+ transition: transform 0.3s ease, box-shadow 0.3s ease; 
+ cursor: pointer; 
+ border: 3px solid #3182ce; 
+ position: relative;
+ }
+ .level-card:hover {
+ transform: translateY(-5px);
+ box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+ }
+ .level-card h3 {
+ margin-bottom: 5px;
+ color: #1a365d;
+ }
+ .level-card p {
+ flex-grow: 1;
+ margin-bottom: 20px;
+ color: #4a5568;
+ line-height: 1.5;
+ }
+ .level-card.locked { 
+ opacity: 0.8; 
+ cursor: not-allowed; 
+ border-color: #e2e8f0; 
+ }
+ .lock-icon {
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%);
+ font-size: 3rem;
+ color: #a0aec0;
+ z-index: 10;
+ pointer-events: none;
+ }
+ 
+ .level-container { 
+ display: none; 
+ flex-direction: column; 
+ align-items: center; 
+ padding: 40px 20px; 
+ min-height: 500px; 
+ }
+ .feedback { 
+ font-size: 1.2rem; 
+ font-weight: 600; 
+ margin-top: 15px; 
+ padding: 10px 20px;
+ border-radius: 8px;
+ }
+ .feedback.correct { 
+ color: #38a169; 
+ background: #f0fff4;
+ }
+ .feedback.wrong { 
+ color: #e53e3e; 
+ background: #fff5f5;
+ }
+ .target-box { 
+ background: #fff; 
+ padding: 20px 30px; 
+ border-radius: 10px; 
+ border: 2px dashed #4299e1; 
+ text-align: center; 
+ margin-bottom: 30px;
+ box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+ }
+ .target-value { 
+ font-size: 2.5rem; 
+ font-weight: 700; 
+ color: #1a365d; 
+ }
+
+ /* LEVEL 1: WEIGHT FINDER */
+ .weighing-equation {
+ font-size: 1.5rem;
+ margin: 10px 0;
+ padding: 10px;
+ background: rgba(0, 0, 0, 0.05);
+ border-radius: 5px;
+ }
+ .bag-container {
+ display: flex;
+ justify-content: center;
+ gap: 30px;
+ margin: 30px 0;
+ }
+ .bag {
+ width: 120px;
+ height: 150px;
+ background: #d4a574;
+ border-radius: 10px 10px 50px 50px;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ position: relative;
+ box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+ }
+ .bag-label {
+ position: absolute;
+ top: 10px;
+ background: white;
+ width: 40px;
+ height: 40px;
+ border-radius: 50%;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-weight: bold;
+ font-size: 1.2rem;
+ color: #1a365d;
+ }
+ .bag-input {
+ margin-top: 20px;
+ width: 80px;
+ padding: 10px;
+ text-align: center;
+ border: 2px solid #4299e1;
+ border-radius: 5px;
+ font-size: 1.2rem;
+ font-weight: bold;
+ }
+ .bag-input:focus {
+ outline: none;
+ border-color: #38a169;
+ }
+ .question-counter {
+ margin-top: 10px;
+ font-size: 1.1rem;
+ color: #4a5568;
+ font-weight: 500;
+ }
+
+ /* LEVEL 2: PROFIT OPTIMIZATION - FIXED SIZE */
+ .market-items {
+ display: grid;
+ grid-template-columns: repeat(3, 1fr);
+ gap: 15px;
+ margin: 20px 0;
+ width: 100%;
+ max-width: 800px;
+ }
+ 
+ .market-item {
+ background: white;
+ border-radius: 8px;
+ padding: 15px;
+ text-align: center;
+ box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+ cursor: grab;
+ transition: all 0.3s ease;
+ border: 2px solid #4299e1;
+ user-select: none;
+ height: 140px;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ }
+ 
+ .market-item:hover {
+ transform: translateY(-3px);
+ box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+ background: #f0f9ff;
+ }
+ 
+ .market-item:active {
+ cursor: grabbing;
+ }
+ 
+ .item-icon {
+ font-size: 2rem;
+ margin-bottom: 8px;
+ display: block;
+ }
+ 
+ .item-name {
+ font-weight: 600;
+ margin-bottom: 3px;
+ color: #1a365d;
+ font-size: 1rem;
+ }
+ 
+ .item-weight, .item-profit {
+ font-size: 0.85rem;
+ color: #4a5568;
+ margin: 2px 0;
+ }
+ 
+ .scale-container {
+ background: #e2e8f0;
+ padding: 25px;
+ border-radius: 10px;
+ margin: 25px 0;
+ width: 100%;
+ max-width: 800px;
+ }
+ 
+ .scale-display {
+ background: #2d3748;
+ color: white;
+ padding: 15px;
+ border-radius: 5px;
+ margin-bottom: 20px;
+ display: flex;
+ justify-content: space-around;
+ font-weight: 600;
+ font-size: 0.95rem;
+ }
+ 
+ .basket-area {
+ background: #f8fafc;
+ min-height: 180px;
+ border-radius: 10px;
+ padding: 20px;
+ display: flex;
+ flex-wrap: wrap;
+ gap: 12px;
+ justify-content: center;
+ align-items: flex-start;
+ border: 3px dashed #4299e1;
+ transition: background-color 0.3s;
+ margin-top: 10px;
+ }
+ 
+ .basket-area.drag-over {
+ background: #dbeafe;
+ border-color: #1e40af;
+ }
+ 
+ .basket-item {
+ background: white;
+ border-radius: 8px;
+ padding: 12px;
+ text-align: center;
+ box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+ width: 130px;
+ border: 1px solid #cbd5e1;
+ }
+ 
+ .basket-empty-text {
+ color: #64748b;
+ font-style: italic;
+ text-align: center;
+ width: 100%;
+ margin-top: 40px;
+ font-size: 1.1rem;
+ }
+
+ /* FOOTER */
+ footer {
+ background: #1a365d;
+ color: white;
+ padding: 30px 0;
+ margin-top: 50px;
+ }
+ .copyright {
+ text-align: center;
+ color: rgba(255, 255, 255, 0.8);
+ font-size: 0.9rem;
+ }
+
+ /* RESPONSIVE DESIGN */
+ @media (max-width: 768px) {
+ .mobile-menu-btn {
+ display: block;
+ }
+ nav {
+ display: none;
+ }
+ nav.active {
+ display: block;
+ }
+ .bag-container {
+ flex-direction: column;
+ align-items: center;
+ }
+ .level-card { 
+ width: 100%; 
+ max-width: 350px; 
+ }
+ .game-stats {
+ flex-direction: column;
+ gap: 15px;
+ align-items: stretch;
+ }
+ .score-container {
+ flex-direction: column;
+ gap: 10px;
+ }
+ .score, .level-info {
+ width: 100%;
+ min-width: auto;
+ }
+ .market-items {
+ grid-template-columns: repeat(2, 1fr);
+ gap: 12px;
+ }
+ .market-item {
+ height: 130px;
+ padding: 12px;
+ }
+ .scale-display {
+ flex-direction: column;
+ gap: 8px;
+ font-size: 0.9rem;
+ }
+ .basket-item {
+ width: 110px;
+ padding: 10px;
+ }
+ .scale-container {
+ padding: 20px;
+ }
+ }
+ 
+ @media (max-width: 480px) {
+ .market-items {
+ grid-template-columns: repeat(2, 1fr);
+ gap: 10px;
+ }
+ .market-item {
+ height: 120px;
+ padding: 10px;
+ }
+ .item-icon {
+ font-size: 1.8rem;
+ }
+ .item-name {
+ font-size: 0.9rem;
+ }
+ .item-weight, .item-profit {
+ font-size: 0.8rem;
+ }
+ }
+ </style>
+</head>
+<body>
+
+ <header>
+ <div class="container">
+ <div class="header-content">
+ 
+ <div class="logo">
+ <div class="logo-icon"><i class="fas fa-weight-hanging"></i></div>
+ <div class="logo-text">STEM Learn <span style="color: #38b2ac;">Odisha</span></div>
+ </div>
+
+ <div class="nav-container">
+ <nav>
+ <ul>
+ <li><a href="#" data-i18n="nav_dashboard">Dashboard</a></li>
+ <li><a href="#" data-i18n="nav_about">About</a></li>
+ <li><a href="#" data-i18n="nav_contact">Contact</a></li>
+ </ul>
+ </nav>
+
+ <div class="language-switcher">
+ <button class="lang-btn active" data-lang="en">English</button>
+ <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+ </div>
+
+ <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+ </div>
+ </div>
+ </div>
+ </header>
+ 
+ <!-- COMPLETION MODAL -->
+ <div class="game-modal" id="completion-modal">
+ <div class="modal-content">
+ <h2 class="modal-title" data-i18n="modal_complete_title">Level Complete!</h2>
+ <p class="modal-text" data-i18n="modal_complete_text">Congratulations! You earned points and unlocked the next challenge.</p>
+ <button class="modal-btn" id="next-level-btn" data-i18n="btn_next_level">Go to Level Selection</button>
+ </div>
+ </div>
+ 
+ <!-- GAME OVER MODAL -->
+ <div class="game-modal" id="game-over-modal">
+ <div class="modal-content">
+ <i class="fas fa-trophy" style="font-size: 3rem; color: #38a169; margin-bottom: 15px;"></i>
+ <h2 class="modal-title" data-i18n="modal_gameover_title">Quest Complete!</h2>
+ <p class="modal-text">
+ <span data-i18n="modal_gameover_text">You have mastered all three levels of the Grain Bag Challenge! Your final score is </span>
+ <span id="final-score" style="font-weight: 700; color: #1a365d;">0</span>.
+ </p>
+ <button class="modal-btn" onclick="location.reload()" data-i18n="btn_start_over">Start Over</button>
+ </div>
+ </div>
+ 
+ <!-- GAME HEADER -->
+ <section class="game-header" id="game-header">
+ <div class="container">
+ <h1 data-i18n="title_header">Grain Bag Challenge: Class 6</h1>
+ <p data-i18n="subtitle_header">Solve three weight-based puzzles to become a Math Master!</p>
+ </div>
+ </section>
+
+ <!-- GAME STATS -->
+ <div class="container" id="game-stats-container">
+ <div class="game-stats">
+ <div class="score-container">
+ <div class="score">
+ <span class="score-label" data-i18n="score_label">Score</span>
+ <span id="score" class="score-value">0</span>
+ </div>
+ <div class="level-info">
+ <span class="level-label" data-i18n="level_label">Level</span>
+ <span id="level-display" class="level-value" data-i18n="level_1">Select a Level</span>
+ </div>
+ </div>
+ <div style="flex-grow: 1; margin-left: 30px;">
+ <div class="progress-container">
+ <div class="progress-bar" id="progress-bar" style="width: 0%;"></div>
+ </div>
+ </div>
+ </div>
+ </div>
+
+ <!-- LEVEL SELECTION -->
+ <div class="container level-selection" id="level-selection-container">
+ <div class="level-card" id="level-card-1">
+ <h3 data-i18n="level1_title">Level 1: Weight Finder</h3>
+ <p data-i18n="level1_desc">Find the weight of each grain bag using weighing machine equations!</p>
+ <button class="start-btn modal-btn" onclick="startLevel(1)" data-i18n="btn_start_level1">Start Level 1</button>
+ </div>
+ <div class="level-card locked" id="level-card-2">
+ <div class="lock-icon"><i class="fas fa-lock"></i></div> 
+ <h3 data-i18n="level2_title">Level 2: Profit Optimizer</h3>
+ <p data-i18n="level2_desc">Build the most profitable basket within the weight limit!</p>
+ <button class="start-btn modal-btn" disabled data-i18n="btn_locked">Locked</button>
+ </div>
+ <div class="level-card locked" id="level-card-3">
+ <div class="lock-icon"><i class="fas fa-lock"></i></div>
+ <h3 data-i18n="level3_title">Level 3: Fake Weight Mystery</h3>
+ <p data-i18n="level3_desc">Find the fake weight using logical reasoning and minimum weighings!</p>
+ <button class="start-btn modal-btn" disabled data-i18n="btn_locked">Locked</button>
+ </div>
+ </div>
+
+ <!-- LEVEL 1: WEIGHT FINDER -->
+ <div class="container level-container" id="level-1-container">
+ <h2 style="margin-bottom: 20px;" data-i18n="level1_h2">Level 1: Find the Weight of Each Bag</h2>
+ 
+ <div class="target-box">
+ <h3 data-i18n="level1_instructions">Weighing Machine Results:</h3>
+ <div id="level-1-equations">
+ <!-- Equations will be generated here -->
+ </div>
+ <div class="question-counter" id="question-counter">Question 1 of 4</div>
+ </div>
+ 
+ <div class="bag-container">
+ <div class="bag" id="bag-a">
+ <div class="bag-label">A</div>
+ <i class="fas fa-weight-hanging" style="font-size: 2rem; color: white; margin-bottom: 10px;"></i>
+ <input type="number" class="bag-input" id="weight-a" placeholder="? kg" min="0" step="0.5">
+ </div>
+ <div class="bag" id="bag-b">
+ <div class="bag-label">B</div>
+ <i class="fas fa-weight-hanging" style="font-size: 2rem; color: white; margin-bottom: 10px;"></i>
+ <input type="number" class="bag-input" id="weight-b" placeholder="? kg" min="0" step="0.5">
+ </div>
+ <div class="bag" id="bag-c">
+ <div class="bag-label">C</div>
+ <i class="fas fa-weight-hanging" style="font-size: 2rem; color: white; margin-bottom: 10px;"></i>
+ <input type="number" class="bag-input" id="weight-c" placeholder="? kg" min="0" step="0.5">
+ </div>
+ </div>
+
+ <p id="level-1-status" class="feedback" data-i18n="level1_status_initial">Enter the weight of each grain bag in kilograms.</p>
+ <button class="modal-btn" onclick="checkLevel1()" style="margin-top: 20px;" data-i18n="btn_check">Check Answers</button>
+ </div>
+
+ <!-- LEVEL 2: PROFIT OPTIMIZER -->
+ <div class="container level-container" id="level-2-container">
+ <h2 style="margin-bottom: 15px;" data-i18n="level2_h2">Level 2: Build the Maximum Profit Basket</h2>
+ 
+ <div class="target-box">
+ <h3 data-i18n="level2_instructions">Weight Limit: <span id="weight-limit" class="target-value">25 kg</span></h3>
+ <p data-i18n="level2_goal">Select items to maximize profit without exceeding the weight limit!</p>
+ </div>
+
+ <!-- SMALLER ITEMS SECTION -->
+ <div style="width: 100%; max-width: 800px; margin: 0 auto;">
+ <h3 style="text-align: center; margin: 20px 0 15px 0; color: #1a365d;" data-i18n="level2_available_items">Available Items (Drag to Basket)</h3>
+ <div class="market-items" id="market-items">
+ <!-- Market items will be generated here -->
+ </div>
+ </div>
+
+ <div class="scale-container">
+ <div class="scale-display">
+ <div id="current-weight" data-i18n="current_weight">Current Weight: 0 kg</div>
+ <div id="current-profit" data-i18n="current_profit">Current Profit: ₹0</div>
+ <div id="remaining-weight" data-i18n="remaining_weight">Remaining: 25 kg</div>
+ </div>
+ 
+ <h3 style="text-align: center; margin-bottom: 15px; color: #1a365d;" data-i18n="level2_your_basket">Your Basket</h3>
+ <div class="basket-area" id="basket-area">
+ <p class="basket-empty-text" data-i18n="level2_drop">Drag items here to build your basket</p>
+ </div>
+ </div>
+
+ <p id="level-2-feedback" class="feedback" style="margin-top: 20px;"></p>
+ <button class="modal-btn" onclick="checkLevel2()" style="margin-top: 20px;" data-i18n="btn_check">Check Profit</button>
+ </div>
+
+ <!-- LEVEL 3: FAKE WEIGHT MYSTERY -->
+ <div class="container level-container" id="level-3-container">
+ <h2 style="margin-bottom: 20px;" data-i18n="level3_h2">Level 3: The Fake Weight Mystery</h2>
+ 
+ <div class="target-box">
+ <h3 data-i18n="level3_instructions">Find the fake weight in minimum weighings!</h3>
+ <p id="level-3-problem" data-i18n="level3_problem">You have 9 identical-looking weights. One is fake (either heavier or lighter). You have 3 weighings to find it.</p>
+ </div>
+
+ <div style="background: white; padding: 20px; border-radius: 10px; margin: 20px 0; width: 100%; max-width: 600px;">
+ <h3 style="color: #1a365d; margin-bottom: 15px;" data-i18n="level3_identify">Identify the Fake Weight</h3>
+ <p style="margin-bottom: 15px;" data-i18n="level3_select_weight">The fake weight is either heavier or lighter than the others. Which weight number is fake?</p>
+ 
+ <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;" id="weight-buttons">
+ <!-- Weight buttons will be generated here -->
+ </div>
+ 
+ <div style="margin-top: 20px;">
+ <p style="margin-bottom: 10px;" data-i18n="level3_select_type">Is the fake weight heavier or lighter?</p>
+ <button class="modal-btn" onclick="selectFakeType('heavier')" style="margin-right: 10px;" data-i18n="level3_heavier">Heavier</button>
+ <button class="modal-btn" onclick="selectFakeType('lighter')" data-i18n="level3_lighter">Lighter</button>
+ </div>
+ </div>
+
+ <p id="level-3-feedback" class="feedback"></p>
+ <button class="modal-btn" onclick="checkLevel3()" style="margin-top: 20px;" data-i18n="btn_check">Check Answer</button>
+ </div>
+
+ <!-- FOOTER -->
+ <footer>
+ <div class="container">
+ <div class="copyright">
+ &copy; 2024 STEM Learn Odisha. All rights reserved.
+ </div>
+ </div>
+ </footer>
+
+ <script>
+ // --- GAME VARIABLES ---
+ let score = 0;
+ let currentLevel = 0;
+ let level1Index = 0;
+ let level2Basket = [];
+ let level2Weight = 0;
+ let level2Profit = 0;
+ 
+ // Level 3 variables
+ let selectedFakeWeight = null;
+ let selectedFakeType = null;
+
+ // --- ODIA NUMBER MAPPING ---
+ const odiaNumbers = {
+ 0: "୦", 1: "୧", 2: "୨", 3: "୩", 4: "୪", 
+ 5: "୫", 6: "୬", 7: "୭", 8: "୮", 9: "୯",
+ 10: "୧୦", 11: "୧୧", 12: "୧୨", 13: "୧୩", 14: "୧୪",
+ 15: "୧୫", 16: "୧୬", 17: "୧୭", 18: "୧୮", 19: "୧୯",
+ 20: "୨୦", 21: "୨୧", 22: "୨୨", 23: "୨୩", 24: "୨୪",
+ 25: "୨୫", 26: "୨୬", 27: "୨୭", 28: "୨୮", 29: "୨୯",
+ 30: "୩୦", 31: "୩୧", 32: "୩୨", 33: "୩୩", 34: "୩୪",
+ 35: "୩୫", 36: "୩୬", 37: "୩୭", 38: "୩୮", 39: "୩୯",
+ 40: "୪୦", 41: "୪୧", 42: "୪୨", 43: "୪୩", 44: "୪୪",
+ 45: "୪୫", 46: "୪୬", 47: "୪୭", 48: "୪୮", 49: "୪୯",
+ 50: "୫୦"
+ };
+
+ function convertToOdiaNumber(num) {
+ if (odiaNumbers[num] !== undefined) {
+ return odiaNumbers[num];
+ }
+ // For numbers above 50, convert digit by digit
+ return num.toString().split('').map(digit => odiaNumbers[parseInt(digit)] || digit).join('');
+ }
+
+ // --- DYNAMIC LEVEL 1 PROBLEM GENERATOR ---
+ function generateLevel1Problem() {
+ // Generate random weights between 5 and 20
+ const A = Math.floor(Math.random() * 16) + 5;
+ const B = Math.floor(Math.random() * 16) + 5;
+ const C = Math.floor(Math.random() * 16) + 5;
+ 
+ // Make sure they're all different
+ if (A === B || A === C || B === C) {
+ return generateLevel1Problem();
+ }
+ 
+ return {
+ equations: [
+ { left: "A", right: "B", total: A + B },
+ { left: "B", right: "C", total: B + C },
+ { left: "A", right: "C", total: A + C }
+ ],
+ solution: { A: A, B: B, C: C }
+ };
+ }
+
+ // Generate dynamic problems for Level 1
+ const level1Problems = [];
+ for (let i = 0; i < 4; i++) {
+ level1Problems.push(generateLevel1Problem());
+ }
+
+ // --- LEVEL 2 DATA ---
+ const level2Items = [
+ { name: "Wheat Sack", icon: "🌾", weight: 5, profit: 40 },
+ { name: "Potatoes", icon: "🥔", weight: 3, profit: 25 },
+ { name: "Onions", icon: "🧅", weight: 2, profit: 15 },
+ { name: "Rice Bag", icon: "🍚", weight: 4, profit: 35 },
+ { name: "Lentils", icon: "🥣", weight: 2, profit: 20 },
+ { name: "Sugar", icon: "🍬", weight: 3, profit: 30 }
+ ];
+ const weightLimit = 25;
+ const maxProfit = 165; // Maximum possible profit
+
+ // --- LANGUAGE TRANSLATIONS ---
+ const translations = {
+ 'en': {
+ 'nav_dashboard': 'Dashboard',
+ 'nav_about': 'About',
+ 'nav_contact': 'Contact',
+ 'title_header': 'Grain Bag Challenge: Class 6',
+ 'subtitle_header': 'Solve three weight-based puzzles to become a Math Master!',
+ 'score_label': 'Score',
+ 'level_label': 'Level',
+ 'level_1': 'Select a Level',
+ 'level_1_number': 'Select a Level',
+ 'level_2_number': 'Level 2',
+ 'level_3_number': 'Level 3',
+ 'btn_start_level1': 'Start Level 1',
+ 'btn_start_level2': 'Start Level 2',
+ 'btn_start_level3': 'Start Level 3',
+ 'btn_locked': 'Locked',
+ 'btn_check': 'Check Answers',
+ 'btn_next_level': 'Go to Level Selection',
+ 'btn_start_over': 'Start Over',
+ 'level1_title': 'Level 1: Weight Finder',
+ 'level1_desc': 'Find the weight of each grain bag using weighing machine equations!',
+ 'level2_title': 'Level 2: Profit Optimizer',
+ 'level2_desc': 'Build the most profitable basket within the weight limit!',
+ 'level3_title': 'Level 3: Fake Weight Mystery',
+ 'level3_desc': 'Find the fake weight using logical reasoning and minimum weighings!',
+ 'level1_h2': 'Level 1: Find the Weight of Each Bag',
+ 'level1_instructions': 'Weighing Machine Results:',
+ 'level1_status_initial': 'Enter the weight of each grain bag in kilograms.',
+ 'level2_h2': 'Level 2: Build the Maximum Profit Basket',
+ 'level2_instructions': 'Weight Limit:',
+ 'level2_goal': 'Select items to maximize profit without exceeding the weight limit!',
+ 'level2_available_items': 'Available Items (Drag to Basket)',
+ 'level2_your_basket': 'Your Basket',
+ 'level2_drop': 'Drag items here to build your basket',
+ 'current_weight': 'Current Weight:',
+ 'current_profit': 'Current Profit:',
+ 'remaining_weight': 'Remaining:',
+ 'level3_h2': 'Level 3: The Fake Weight Mystery',
+ 'level3_instructions': 'Find the fake weight in minimum weighings!',
+ 'level3_problem': 'You have 9 identical-looking weights. One is fake (either heavier or lighter). You have 3 weighings to find it.',
+ 'level3_identify': 'Identify the Fake Weight',
+ 'level3_select_weight': 'The fake weight is either heavier or lighter than the others. Which weight number is fake?',
+ 'level3_select_type': 'Is the fake weight heavier or lighter?',
+ 'level3_heavier': 'Heavier',
+ 'level3_lighter': 'Lighter',
+ 'modal_complete_title': 'Level Complete!',
+ 'modal_complete_text': 'Congratulations! You earned points and unlocked the next challenge.',
+ 'modal_gameover_title': 'Quest Complete!',
+ 'modal_gameover_text': 'You have mastered all three levels of the Grain Bag Challenge! Your final score is ',
+ 'kg': 'kg',
+ 'rupee_symbol': '₹',
+ 'question_of': 'Question',
+ 'of': 'of'
+ },
+ 'or': {
+ 'nav_dashboard': 'ଡ୍ୟାଶବୋର୍ଡ',
+ 'nav_about': 'ବିଷୟରେ',
+ 'nav_contact': 'ଯୋଗାଯୋଗ',
+ 'title_header': 'ଧାନ ବସ୍ତା ଚ୍ୟାଲେଞ୍ଜ: ଷଷ୍ଠ ଶ୍ରେଣୀ',
+ 'subtitle_header': 'ତିନୋଟି ଓଜନ-ଆଧାରିତ ପଜଲ୍ ସମାଧାନ କରି ଗଣିତ ମାଷ୍ଟର ହୁଅନ୍ତୁ!',
+ 'score_label': 'ସ୍କୋର',
+ 'level_label': 'ସ୍ତର',
+ 'level_1': 'ଏକ ସ୍ତର ବାଛନ୍ତୁ',
+ 'level_1_number': 'ସ୍ତର ୧',
+ 'level_2_number': 'ସ୍ତର ୨',
+ 'level_3_number': 'ସ୍ତର ୩',
+ 'btn_start_level1': 'ସ୍ତର ୧ ଆରମ୍ଭ କରନ୍ତୁ',
+ 'btn_start_level2': 'ସ୍ତର ୨ ଆରମ୍ଭ କରନ୍ତୁ',
+ 'btn_start_level3': 'ସ୍ତର ୩ ଆରମ୍ଭ କରନ୍ତୁ',
+ 'btn_locked': 'ବନ୍ଦ',
+ 'btn_check': 'ଉତ୍ତର ଯାଞ୍ଚ କରନ୍ତୁ',
+ 'btn_next_level': 'ସ୍ତର ଚୟନକୁ ଯାଆନ୍ତୁ',
+ 'btn_start_over': 'ପୁଣି ଆରମ୍ଭ କରନ୍ତୁ',
+ 'level1_title': 'ସ୍ତର ୧: ଓଜନ ଖୋଜୁଅ',
+ 'level1_desc': 'ଓଜନ ମେସିନ୍ ସମୀକରଣ ବ୍ୟବହାର କରି ପ୍ରତ୍ୟେକ ଧାନ ବସ୍ତାର ଓଜନ ଖୋଜନ୍ତୁ!',
+ 'level2_title': 'ସ୍ତର ୨: ଲାଭ ଅପ୍ଟିମାଇଜର୍',
+ 'level2_desc': 'ଓଜନ ସୀମା ମଧ୍ୟରେ ସର୍ବାଧିକ ଲାଭଦାୟକ ଟୋକେଇ ନିର୍ମାଣ କରନ୍ତୁ!',
+ 'level3_title': 'ସ୍ତର ୩: ନକଲି ଓଜନ ରହସ୍ୟ',
+ 'level3_desc': 'ତାର୍କିକ ଯୁକ୍ତି ଏବଂ ସର୍ବନିମ୍ନ ଓଜନ ବ୍ୟବହାର କରି ନକଲି ଓଜନ ଖୋଜନ୍ତୁ!',
+ 'level1_h2': 'ସ୍ତର ୧: ପ୍ରତ୍ୟେକ ବସ୍ତାର ଓଜନ ଖୋଜନ୍ତୁ',
+ 'level1_instructions': 'ଓଜନ ମେସିନ୍ ଫଳାଫଳ:',
+ 'level1_status_initial': 'ପ୍ରତ୍ୟେକ ଧାନ ବସ୍ତାର ଓଜନ କିଲୋଗ୍ରାମ୍ରେ ପ୍ରବେଶ କରନ୍ତୁ।',
+ 'level2_h2': 'ସ୍ତର ୨: ସର୍ବାଧିକ ଲାଭଦାୟକ ଟୋକେଇ ନିର୍ମାଣ କରନ୍ତୁ',
+ 'level2_instructions': 'ଓଜନ ସୀମା:',
+ 'level2_goal': 'ଓଜନ ସୀମା ଅତିକ୍ରମ ନ କରି ସର୍ବାଧିକ ଲାଭ ପାଇବା ପାଇଁ ଜିନିଷ ବାଛନ୍ତୁ!',
+ 'level2_available_items': 'ଉପଲବ୍ଧ ଜିନିଷଗୁଡ଼ିକ (ଟୋକେଇକୁ ଟାଣନ୍ତୁ)',
+ 'level2_your_basket': 'ଆପଣଙ୍କର ଟୋକେଇ',
+ 'level2_drop': 'ଆପଣଙ୍କର ଟୋକେଇ ନିର୍ମାଣ କରିବାକୁ ଜିନିଷଗୁଡ଼ିକୁ ଏଠାରେ ଟାଣନ୍ତୁ',
+ 'current_weight': 'ବର୍ତ୍ତମାନର ଓଜନ:',
+ 'current_profit': 'ବର୍ତ୍ତମାନର ଲାଭ:',
+ 'remaining_weight': 'ବାକି:',
+ 'level3_h2': 'ସ୍ତର ୩: ନକଲି ଓଜନ ରହସ୍ୟ',
+ 'level3_instructions': 'ସର୍ବନିମ୍ନ ଓଜନରେ ନକଲି ଓଜନ ଖୋଜନ୍ତୁ!',
+ 'level3_problem': 'ଆପଣଙ୍କ ପାଖରେ ୯ଟି ସମାନ ଦେଖାଯାଉଥିବା ଓଜନ ଅଛି। ଗୋଟିଏ ନକଲି (ହାଲୁକା କିମ୍ବା ଭାରୀ)। ଏହାକୁ ଖୋଜିବାକୁ ଆପଣଙ୍କ ପାଖରେ ୩ଟି ଓଜନ ଅଛି।',
+ 'level3_identify': 'ନକଲି ଓଜନ ଚିହ୍ନଟ କରନ୍ତୁ',
+ 'level3_select_weight': 'ନକଲି ଓଜନ ଅନ୍ୟମାନଙ୍କ ତୁଳନାରେ ହାଲୁକା କିମ୍ବା ଭାରୀ। କେଉଁ ଓଜନ ନମ୍ବରଟି ନକଲି?',
+ 'level3_select_type': 'ନକଲି ଓଜନ ହାଲୁକା କି ଭାରୀ?',
+ 'level3_heavier': 'ଭାରୀ',
+ 'level3_lighter': 'ହାଲୁକା',
+ 'modal_complete_title': 'ସ୍ତର ସମାପ୍ତ!',
+ 'modal_complete_text': 'ଅଭିନନ୍ଦନ! ଆପଣ ପଏଣ୍ଟ ହାସଲ କରି ପରବର୍ତ୍ତୀ ଚ୍ୟାଲେଞ୍ଜ୍ ଅନଲକ୍ କଲେ।',
+ 'modal_gameover_title': 'ଅନୁସନ୍ଧାନ ସମାପ୍ତ!',
+ 'modal_gameover_text': 'ଆପଣ ଧାନ ବସ୍ତା ଚ୍ୟାଲେଞ୍ଜର ତିନୋଟି ସ୍ତରରେ ମାଷ୍ଟର ହୋଇଛନ୍ତି! ଆପଣଙ୍କର ଚୂଡ଼ାନ୍ତ ସ୍କୋର ',
+ 'kg': 'କି.ଗ୍ରା.',
+ 'rupee_symbol': '₹',
+ 'question_of': 'ପ୍ରଶ୍ନ',
+ 'of': 'ରୁ'
+ }
+ };
+
+ let currentLang = 'en';
+
+ // --- NUMBER DISPLAY FUNCTIONS ---
+ function formatNumber(num) {
+ if (currentLang === 'or') {
+ return convertToOdiaNumber(num);
+ }
+ return num;
+ }
+
+ function formatWeight(weight) {
+ if (currentLang === 'or') {
+ return `${formatNumber(weight)} ${translations[currentLang]['kg']}`;
+ }
+ return `${weight} ${translations[currentLang]['kg']}`;
+ }
+
+ function formatProfit(profit) {
+ if (currentLang === 'or') {
+ return `${translations[currentLang]['rupee_symbol']}${formatNumber(profit)}`;
+ }
+ return `${translations[currentLang]['rupee_symbol']}${profit}`;
+ }
+
+ // --- NAVIGATION FUNCTIONS ---
+ function setupNavigation() {
+ // Dashboard link
+ document.querySelector('a[data-i18n="nav_dashboard"]').addEventListener('click', function(e) {
+ e.preventDefault();
+ showLevelSelection();
+ updateLanguage(currentLang);
+ });
+ 
+ // About link
+ document.querySelector('a[data-i18n="nav_about"]').addEventListener('click', function(e) {
+ e.preventDefault();
+ if (currentLang === 'en') {
+ alert('About STEM Learn Odisha:\n\nThis interactive game is designed for Class 6 students to practice mathematical concepts through fun challenges. Developed to make learning enjoyable!');
+ } else {
+ alert('STEM Learn Odisha ବିଷୟରେ:\n\nଏହି ଇଣ୍ଟରାକ୍ଟିଭ୍ ଖେଳଟି ଷଷ୍ଠ ଶ୍ରେଣୀର ଛାତ୍ରଛାତ୍ରୀଙ୍କ ପାଇଁ ମଜାଦାର ଚ୍ୟାଲେଞ୍ଜଗୁଡ଼ିକ ମାଧ୍ୟମରେ ଗାଣିତିକ ଧାରଣାଗୁଡ଼ିକୁ ଅଭ୍ୟାସ କରିବା ପାଇଁ ରୂପାନ୍ତରିତ ହୋଇଛି। ଶିକ୍ଷାକୁ ଆନନ୍ଦଦାୟକ କରିବା ପାଇଁ ବିକଶିତ!');
+ }
+ });
+ 
+ // Contact link
+ document.querySelector('a[data-i18n="nav_contact"]').addEventListener('click', function(e) {
+ e.preventDefault();
+ if (currentLang === 'en') {
+ alert('Contact STEM Learn Odisha:\n\nEmail: contact@stemlearnodisha.org\nPhone: +91-XXXXXX-XXXX\nWebsite: www.stemlearnodisha.org');
+ } else {
+ alert('STEM Learn Odisha ସହ ଯୋଗାଯୋଗ:\n\nଇମେଲ୍: contact@stemlearnodisha.org\nଫୋନ୍: +୯୧-XXXXXX-XXXX\nୱେବସାଇଟ୍: www.stemlearnodisha.org');
+ }
+ });
+ }
+
+ // --- GAME FUNCTIONS ---
+ function updateLanguage(lang) {
+ currentLang = lang;
+ 
+ // Update all text elements with data-i18n
+ document.querySelectorAll('[data-i18n]').forEach(el => {
+ const key = el.getAttribute('data-i18n');
+ if (translations[lang][key]) {
+ el.textContent = translations[lang][key];
+ }
+ });
+ 
+ // Update language buttons
+ document.querySelectorAll('.lang-btn').forEach(btn => {
+ btn.classList.remove('active');
+ });
+ document.querySelector(`.lang-btn[data-lang="${lang}"]`).classList.add('active');
+ 
+ // Update dynamic content
+ updateLevelDisplays();
+ }
+
+ function updateLevelDisplays() {
+ // Update Level 1 equations if they exist
+ if (document.getElementById('level-1-equations').children.length > 0) {
+ updateLevel1Equations();
+ }
+ 
+ // Update Level 2 display
+ if (document.getElementById('level-2-container').style.display === 'flex') {
+ updateLevel2Display();
+ }
+ 
+ // Update Level 3 buttons
+ if (document.getElementById('level-3-container').style.display === 'flex') {
+ updateLevel3Buttons();
+ }
+ 
+ // Update score display
+ document.getElementById('score').textContent = formatNumber(score);
+ 
+ // Update level display
+ if (currentLevel === 0) {
+ document.getElementById('level-display').textContent = translations[currentLang]['level_1'];
+ } else {
+ document.getElementById('level-display').textContent = `${translations[currentLang][`level_${currentLevel}_number`] || `Level ${currentLevel}`}`;
+ }
+ }
+
+ function updateScore(points) {
+ score += points;
+ document.getElementById('score').textContent = formatNumber(score);
+ }
+
+ function showLevelSelection() {
+ document.getElementById('level-1-container').style.display = 'none';
+ document.getElementById('level-2-container').style.display = 'none';
+ document.getElementById('level-3-container').style.display = 'none';
+ document.getElementById('level-selection-container').style.display = 'flex';
+ currentLevel = 0;
+ document.getElementById('level-display').textContent = translations[currentLang]['level_1'];
+ }
+
+ function startLevel(level) {
+ currentLevel = level;
+ document.getElementById('level-selection-container').style.display = 'none';
+ 
+ if (level === 1) {
+ document.getElementById('level-1-container').style.display = 'flex';
+ loadLevel1();
+ } else if (level === 2) {
+ document.getElementById('level-2-container').style.display = 'flex';
+ loadLevel2();
+ } else if (level === 3) {
+ document.getElementById('level-3-container').style.display = 'flex';
+ loadLevel3();
+ }
+ 
+ document.getElementById('level-display').textContent = `${translations[currentLang][`level_${level}_number`] || `Level ${level}`}`;
+ }
+
+ // LEVEL 1 FUNCTIONS
+ function loadLevel1() {
+ level1Index = 0;
+ loadLevel1Question();
+ }
+
+ function updateLevel1Equations() {
+ if (level1Index >= level1Problems.length) return;
+ 
+ const problem = level1Problems[level1Index];
+ const equationsDiv = document.getElementById('level-1-equations');
+ equationsDiv.innerHTML = '';
+ 
+ problem.equations.forEach(eq => {
+ const eqDiv = document.createElement('div');
+ eqDiv.className = 'weighing-equation';
+ const totalText = currentLang === 'or' ? formatNumber(eq.total) : eq.total;
+ const kgText = currentLang === 'or' ? 'କି.ଗ୍ରା.' : 'kg';
+ eqDiv.textContent = `${eq.left} + ${eq.right} = ${totalText} ${kgText}`;
+ equationsDiv.appendChild(eqDiv);
+ });
+ 
+ // Update question counter
+ const questionText = currentLang === 'or' ? 
+ `${translations[currentLang]['question_of']} ${formatNumber(level1Index + 1)} ${translations[currentLang]['of']} ${formatNumber(level1Problems.length)}` :
+ `Question ${level1Index + 1} of ${level1Problems.length}`;
+ document.getElementById('question-counter').textContent = questionText;
+ }
+
+ function loadLevel1Question() {
+ if (level1Index >= level1Problems.length) {
+ unlockLevel(2);
+ document.getElementById('completion-modal').style.display = 'flex';
+ return;
+ }
+
+ updateLevel1Equations();
+ 
+ document.getElementById('weight-a').value = '';
+ document.getElementById('weight-b').value = '';
+ document.getElementById('weight-c').value = '';
+ 
+ document.getElementById('level-1-status').textContent = translations[currentLang]['level1_status_initial'];
+ document.getElementById('level-1-status').classList.remove('correct', 'wrong');
+ 
+ const progress = (level1Index / level1Problems.length) * 100;
+ document.getElementById('progress-bar').style.width = `${progress}%`;
+ }
+
+ function checkLevel1() {
+ const problem = level1Problems[level1Index];
+ const feedbackEl = document.getElementById('level-1-status');
+ 
+ const a = parseFloat(document.getElementById('weight-a').value);
+ const b = parseFloat(document.getElementById('weight-b').value);
+ const c = parseFloat(document.getElementById('weight-c').value);
+ 
+ if (isNaN(a) || isNaN(b) || isNaN(c)) {
+ feedbackEl.textContent = currentLang === 'or' ? 
+ 'ଦୟାକରି ସମସ୍ତ ଓଜନ ପ୍ରବେଶ କରନ୍ତୁ।' : 
+ 'Please enter all weights.';
+ feedbackEl.classList.add('wrong');
+ feedbackEl.classList.remove('correct');
+ return;
+ }
+ 
+ const solution = problem.solution;
+ const tolerance = 0.1;
+ 
+ if (Math.abs(a - solution.A) <= tolerance && 
+ Math.abs(b - solution.B) <= tolerance && 
+ Math.abs(c - solution.C) <= tolerance) {
+ 
+ feedbackEl.textContent = currentLang === 'or' ? 
+ `ଠିକ୍! ବହୁତ ଭଲ! (+${formatNumber(100)} ପଏଣ୍ଟ)` : 
+ `Correct! Well done! (+${formatNumber(100)} points)`;
+ feedbackEl.classList.add('correct');
+ feedbackEl.classList.remove('wrong');
+ updateScore(100);
+ 
+ setTimeout(() => {
+ level1Index++;
+ loadLevel1Question();
+ }, 1500);
+ } else {
+ feedbackEl.textContent = currentLang === 'or' ? 
+ `ଭୁଲ୍। ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ! (-${formatNumber(25)} ପଏଣ୍ଟ)` : 
+ `Incorrect. Try again! (-${formatNumber(25)} points)`;
+ feedbackEl.classList.add('wrong');
+ feedbackEl.classList.remove('correct');
+ updateScore(-25);
+ }
+ }
+
+ // LEVEL 2 FUNCTIONS
+ function loadLevel2() {
+ level2Basket = [];
+ level2Weight = 0;
+ level2Profit = 0;
+ 
+ // Create market items
+ const marketDiv = document.getElementById('market-items');
+ marketDiv.innerHTML = '';
+ 
+ // Create items with Odia translations
+ const itemTranslations = {
+ 'en': {
+ 'Wheat Sack': 'Wheat Sack',
+ 'Potatoes': 'Potatoes',
+ 'Onions': 'Onions',
+ 'Rice Bag': 'Rice Bag',
+ 'Lentils': 'Lentils',
+ 'Sugar': 'Sugar'
+ },
+ 'or': {
+ 'Wheat Sack': 'ଗହମ ବସ୍ତା',
+ 'Potatoes': 'ଆଳୁ',
+ 'Onions': 'ପିଆଜ',
+ 'Rice Bag': 'ଚାଉଳ ବସ୍ତା',
+ 'Lentils': 'ଡାଲି',
+ 'Sugar': 'ଚିନି'
+ }
+ };
+ 
+ level2Items.forEach((item, index) => {
+ const itemDiv = document.createElement('div');
+ itemDiv.className = 'market-item';
+ itemDiv.id = `item-${index}`;
+ itemDiv.draggable = true;
+ 
+ const itemName = itemTranslations[currentLang][item.name] || item.name;
+ const weightText = currentLang === 'or' ? 
+ `${translations[currentLang]['weight'] || 'ଓଜନ'}: ${formatNumber(item.weight)} ${translations[currentLang]['kg']}` :
+ `Weight: ${item.weight} ${translations[currentLang]['kg']}`;
+ const profitText = currentLang === 'or' ? 
+ `${translations[currentLang]['profit'] || 'ଲାଭ'}: ${formatProfit(item.profit)}` :
+ `Profit: ${formatProfit(item.profit)}`;
+ 
+ itemDiv.innerHTML = `
+ <span class="item-icon">${item.icon}</span>
+ <div class="item-name">${itemName}</div>
+ <div class="item-weight">${weightText}</div>
+ <div class="item-profit">${profitText}</div>
+ `;
+ 
+ // Add drag events
+ itemDiv.addEventListener('dragstart', function(e) {
+ e.dataTransfer.setData('text/plain', index.toString());
+ this.style.opacity = '0.6';
+ });
+ 
+ itemDiv.addEventListener('dragend', function(e) {
+ this.style.opacity = '1';
+ });
+ 
+ marketDiv.appendChild(itemDiv);
+ });
+ 
+ // Set up basket area
+ const basketArea = document.getElementById('basket-area');
+ basketArea.innerHTML = '<p class="basket-empty-text">' + translations[currentLang]['level2_drop'] + '</p>';
+ 
+ basketArea.addEventListener('dragover', function(e) {
+ e.preventDefault();
+ this.classList.add('drag-over');
+ });
+ 
+ basketArea.addEventListener('dragleave', function(e) {
+ this.classList.remove('drag-over');
+ });
+ 
+ basketArea.addEventListener('drop', function(e) {
+ e.preventDefault();
+ this.classList.remove('drag-over');
+ 
+ const itemIndex = parseInt(e.dataTransfer.getData('text/plain'));
+ const item = level2Items[itemIndex];
+ 
+ // Check weight limit
+ if (level2Weight + item.weight > weightLimit) {
+ document.getElementById('level-2-feedback').textContent = currentLang === 'or' ? 
+ '❌ ଓଜନ ସୀମା ଅତିକ୍ରମ ହେଲା! ଏହି ଜିନିଷ ଯୋଡ଼ି ହେବ ନାହିଁ।' : 
+ '❌ Weight limit exceeded! Cannot add this item.';
+ document.getElementById('level-2-feedback').className = 'feedback wrong';
+ return;
+ }
+ 
+ // Add to basket
+ level2Basket.push(item);
+ level2Weight += item.weight;
+ level2Profit += item.profit;
+ 
+ updateLevel2Display();
+ 
+ document.getElementById('level-2-feedback').textContent = '';
+ document.getElementById('level-2-feedback').className = 'feedback';
+ });
+ 
+ updateLevel2Display();
+ document.getElementById('level-2-feedback').textContent = '';
+ document.getElementById('level-2-feedback').className = 'feedback';
+ }
+
+ function updateLevel2Display() {
+ const remaining = weightLimit - level2Weight;
+ 
+ document.getElementById('current-weight').textContent = 
+ translations[currentLang]['current_weight'] + ` ${formatNumber(level2Weight)} ${translations[currentLang]['kg']}`;
+ document.getElementById('current-profit').textContent = 
+ translations[currentLang]['current_profit'] + ` ${formatProfit(level2Profit)}`;
+ document.getElementById('remaining-weight').textContent = 
+ translations[currentLang]['remaining_weight'] + ` ${formatNumber(remaining)} ${translations[currentLang]['kg']}`;
+ 
+ // Update weight limit display
+ document.getElementById('weight-limit').textContent = `${formatNumber(weightLimit)} ${translations[currentLang]['kg']}`;
+ 
+ // Update basket display
+ const basketArea = document.getElementById('basket-area');
+ basketArea.innerHTML = '';
+ 
+ if (level2Basket.length === 0) {
+ basketArea.innerHTML = '<p class="basket-empty-text">' + translations[currentLang]['level2_drop'] + '</p>';
+ } else {
+ const itemTranslations = {
+ 'en': {
+ 'Wheat Sack': 'Wheat Sack',
+ 'Potatoes': 'Potatoes',
+ 'Onions': 'Onions',
+ 'Rice Bag': 'Rice Bag',
+ 'Lentils': 'Lentils',
+ 'Sugar': 'Sugar'
+ },
+ 'or': {
+ 'Wheat Sack': 'ଗହମ ବସ୍ତା',
+ 'Potatoes': 'ଆଳୁ',
+ 'Onions': 'ପିଆଜ',
+ 'Rice Bag': 'ଚାଉଳ ବସ୍ତା',
+ 'Lentils': 'ଡାଲି',
+ 'Sugar': 'ଚିନି'
+ }
+ };
+ 
+ level2Basket.forEach((item, index) => {
+ const itemDiv = document.createElement('div');
+ itemDiv.className = 'basket-item';
+ const itemName = itemTranslations[currentLang][item.name] || item.name;
+ itemDiv.innerHTML = `
+ <span style="font-size: 1.8rem;">${item.icon}</span>
+ <div style="font-weight: 600; font-size: 0.95rem;">${itemName}</div>
+ <div style="font-size: 0.85rem;">${formatNumber(item.weight)} ${translations[currentLang]['kg']}</div>
+ <div style="color: green; font-size: 0.85rem;">${formatProfit(item.profit)}</div>
+ `;
+ basketArea.appendChild(itemDiv);
+ });
+ }
+ }
+
+ function checkLevel2() {
+ const feedbackEl = document.getElementById('level-2-feedback');
+ 
+ if (level2Weight > weightLimit) {
+ feedbackEl.textContent = currentLang === 'or' ? 
+ '❌ ଓଜନ ସୀମା ଅତିକ୍ରମ ହେଲା! କିଛି ଜିନିଷ କାଢ଼ନ୍ତୁ।' : 
+ '❌ Weight limit exceeded! Remove some items.';
+ feedbackEl.className = 'feedback wrong';
+ return;
+ }
+ 
+ // Check profit
+ if (level2Profit >= maxProfit * 0.95) {
+ feedbackEl.textContent = currentLang === 'or' ? 
+ `🎉 ଅତ୍ୟୁତ୍ତମ! ସର୍ବାଧିକ ଲାଭ ହାସଲ ହେଲା: ${formatProfit(level2Profit)} (+${formatNumber(150)} ପଏଣ୍ଟ)` : 
+ `🎉 Excellent! Maximum profit achieved: ${formatProfit(level2Profit)} (+${formatNumber(150)} points)`;
+ feedbackEl.className = 'feedback correct';
+ updateScore(150);
+ 
+ setTimeout(() => {
+ unlockLevel(3);
+ document.getElementById('completion-modal').style.display = 'flex';
+ }, 1500);
+ } else {
+ feedbackEl.textContent = currentLang === 'or' ? 
+ `ଭଲ ଚେଷ୍ଟା! ଆପଣ ${formatProfit(level2Profit)} ହାସଲ କଲେ। ସର୍ବାଧିକ ସମ୍ଭାବ୍ୟ ଲାଭ ${formatProfit(maxProfit)}। ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ!` : 
+ `Good try! You earned ${formatProfit(level2Profit)}. Maximum possible is ${formatProfit(maxProfit)}. Try again!`;
+ feedbackEl.className = 'feedback wrong';
+ }
+ }
+
+ // LEVEL 3 FUNCTIONS
+ function updateLevel3Buttons() {
+ const weightButtonsDiv = document.getElementById('weight-buttons');
+ weightButtonsDiv.innerHTML = '';
+ 
+ for (let i = 1; i <= 9; i++) {
+ const button = document.createElement('button');
+ button.className = 'weight-btn modal-btn';
+ button.textContent = formatNumber(i);
+ button.onclick = function() { selectFakeWeight(i); };
+ weightButtonsDiv.appendChild(button);
+ }
+ }
+
+ function loadLevel3() {
+ selectedFakeWeight = null;
+ selectedFakeType = null;
+ 
+ // Create weight buttons
+ updateLevel3Buttons();
+ 
+ // Reset type buttons
+ document.querySelectorAll('.modal-btn[onclick*="selectFakeType"]').forEach(btn => {
+ btn.style.background = '#4299e1';
+ });
+ 
+ document.getElementById('level-3-feedback').textContent = '';
+ document.getElementById('level-3-feedback').classList.remove('correct', 'wrong');
+ }
+
+ function selectFakeWeight(weight) {
+ selectedFakeWeight = weight;
+ 
+ // Highlight selected button
+ document.querySelectorAll('.weight-btn').forEach(btn => {
+ btn.style.background = '#4299e1';
+ });
+ 
+ event.target.style.background = '#38a169';
+ }
+
+ function selectFakeType(type) {
+ selectedFakeType = type;
+ 
+ // Highlight selected button
+ document.querySelectorAll('.modal-btn[onclick*="selectFakeType"]').forEach(btn => {
+ btn.style.background = '#4299e1';
+ });
+ 
+ event.target.style.background = '#38a169';
+ }
+
+ function checkLevel3() {
+ const feedbackEl = document.getElementById('level-3-feedback');
+ 
+ if (!selectedFakeWeight || !selectedFakeType) {
+ feedbackEl.textContent = currentLang === 'or' ? 
+ 'ଦୟାକରି ଓଜନ ନମ୍ବର ଏବଂ ଏହା ହାଲୁକା କି ଭାରୀ ଦୁଇଟିକୁ ବାଛନ୍ତୁ।' : 
+ 'Please select both the weight number and whether it is heavier or lighter.';
+ feedbackEl.classList.add('wrong');
+ feedbackEl.classList.remove('correct');
+ return;
+ }
+ 
+ // In this simplified version, the correct answer is weight 5, lighter
+ const correctWeight = 5;
+ const correctType = 'lighter';
+ 
+ if (selectedFakeWeight === correctWeight && selectedFakeType === correctType) {
+ feedbackEl.textContent = currentLang === 'or' ? 
+ `✅ ଠିକ୍! ନକଲି ଓଜନ #${formatNumber(correctWeight)} ଏବଂ ଏହା ${translations[currentLang]['level3_lighter']}। (+${formatNumber(200)} ପଏଣ୍ଟ)` : 
+ `✅ Correct! The fake weight is #${formatNumber(correctWeight)} and it is ${correctType}. (+${formatNumber(200)} points)`;
+ feedbackEl.classList.add('correct');
+ feedbackEl.classList.remove('wrong');
+ updateScore(200);
+ 
+ setTimeout(() => {
+ document.getElementById('final-score').textContent = formatNumber(score);
+ document.getElementById('game-over-modal').style.display = 'flex';
+ }, 1500);
+ } else {
+ feedbackEl.textContent = currentLang === 'or' ? 
+ '❌ ଭୁଲ୍। ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ! ନକଲି ଓଜନ ଅଲଗା।' : 
+ '❌ Incorrect. Try again! The fake weight is different.';
+ feedbackEl.classList.add('wrong');
+ feedbackEl.classList.remove('correct');
+ updateScore(-50);
+ }
+ }
+
+ function unlockLevel(level) {
+ if (level === 2) {
+ const level2Card = document.getElementById('level-card-2');
+ level2Card.classList.remove('locked');
+ level2Card.querySelector('.lock-icon').style.display = 'none';
+ const startBtn = level2Card.querySelector('.start-btn');
+ startBtn.disabled = false;
+ startBtn.textContent = translations[currentLang]['btn_start_level2'];
+ startBtn.setAttribute('onclick', 'startLevel(2)');
+ } else if (level === 3) {
+ const level3Card = document.getElementById('level-card-3');
+ level3Card.classList.remove('locked');
+ level3Card.querySelector('.lock-icon').style.display = 'none';
+ const startBtn = level3Card.querySelector('.start-btn');
+ startBtn.disabled = false;
+ startBtn.textContent = translations[currentLang]['btn_start_level3'];
+ startBtn.setAttribute('onclick', 'startLevel(3)');
+ }
+ }
+
+ // --- INITIALIZATION ---
+ document.addEventListener('DOMContentLoaded', function() {
+ // Set up language toggle
+ document.querySelectorAll('.lang-btn').forEach(btn => {
+ btn.addEventListener('click', function() {
+ const lang = this.getAttribute('data-lang');
+ updateLanguage(lang);
+ });
+ });
+ 
+ // Set up mobile menu
+ document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+ document.querySelector('nav').classList.toggle('active');
+ });
+ 
+ // Set up modal button
+ document.getElementById('next-level-btn').addEventListener('click', function() {
+ document.getElementById('completion-modal').style.display = 'none';
+ showLevelSelection();
+ });
+ 
+ // Set up navigation links
+ setupNavigation();
+ 
+ // Initialize language
+ updateLanguage('en');
+ 
+ // Show level selection by default
+ showLevelSelection();
+ });
+ </script>
+</body>
+</html>

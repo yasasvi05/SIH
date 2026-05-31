@@ -1,0 +1,2162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food & Vitamin Memory Game - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f0f7ff;
+            color: #1e293b;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #2a69ac;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text h1 span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-pic {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 180px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f7fa;
+        }
+
+        .dropdown-item i {
+            color: #3182ce;
+            width: 20px;
+        }
+
+        /* Language Options */
+        .language-options {
+            position: absolute;
+            top: 60px;
+            right: 120px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 120px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .language-options.show {
+            display: block;
+        }
+
+        .language-option {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .language-option:last-child {
+            border-bottom: none;
+        }
+
+        .language-option:hover {
+            background: #f5f7fa;
+        }
+
+        /* Language Switcher for Game */
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 25px;
+            padding: 8px;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            gap: 5px;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .lang-btn.active {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+
+        .lang-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Instructions Modal */
+        .instructions-modal {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .instructions-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            text-align: center;
+            margin: 20px;
+        }
+
+        .instructions-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #1a365d;
+            font-weight: 700;
+        }
+
+        .instructions-text {
+            color: #64748b;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            text-align: left;
+            font-size: 1rem;
+        }
+
+        .instructions-list {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .instructions-list li {
+            margin-bottom: 8px;
+        }
+
+        .start-game-btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #38b2ac 0%, #2c9a94 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .start-game-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(56, 178, 172, 0.3);
+        }
+
+        /* Game Header */
+        .game-header {
+            background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9)), url('https://images.unsplash.com/photo-1593118247619-e2d6f056869e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            position: relative;
+            display: none;
+        }
+
+        .game-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Game Stats */
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 1000px;
+            display: none;
+        }
+
+        .timer {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        .timer i {
+            color: #e53e3e;
+        }
+
+        .score {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        .score i {
+            color: #38a169;
+        }
+
+        .hints {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        .hints i {
+            color: #d69e2e;
+        }
+
+        .progress-container {
+            width: 200px;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #3182ce;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Memory Game Area */
+        .memory-game-area {
+            padding: 30px 0 50px;
+            text-align: center;
+            display: none;
+        }
+
+        .round-info {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .round-title {
+            font-size: 1.4rem;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+
+        .round-description {
+            color: #64748b;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 15px;
+            max-width: 900px;
+            margin: 0 auto 30px;
+        }
+
+        .card {
+            height: 140px;
+            background: #3182ce;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            position: relative;
+            border: 3px solid transparent;
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 10px;
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            transform: rotateY(180deg);
+            text-align: center;
+        }
+
+        .card-emoji {
+            font-size: 3.5rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .card-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: white;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .card-vitamin {
+            font-size: 0.75rem;
+            color: #38b2ac;
+            margin-top: 4px;
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            font-size: 2rem;
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card.matched {
+            cursor: default;
+            transform: rotateY(180deg) scale(0.95);
+            border-color: #48bb78;
+            box-shadow: 0 0 20px rgba(72, 187, 120, 0.6);
+        }
+
+        .card.wrong {
+            border-color: #e53e3e;
+            animation: shake 0.5s;
+        }
+
+        /* Controls */
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn-game {
+            padding: 12px 25px;
+            background: #3182ce;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .control-btn-game:hover {
+            background: #2b6cb0;
+            transform: translateY(-2px);
+        }
+
+        .control-btn-game.hint {
+            background: #d69e2e;
+        }
+
+        .control-btn-game.hint:hover {
+            background: #b3821e;
+        }
+
+        .control-btn-game.reset {
+            background: #e53e3e;
+        }
+
+        .control-btn-game.reset:hover {
+            background: #c53030;
+        }
+
+        /* Educational Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            text-align: center;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        .modal-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #1a365d;
+        }
+
+        .modal-text {
+            color: #64748b;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .fun-fact {
+            background: #ebf8ff;
+            border-left: 4px solid #3182ce;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
+            border-radius: 4px;
+        }
+
+        .fun-fact-title {
+            font-weight: 600;
+            color: #3182ce;
+            margin-bottom: 8px;
+        }
+
+        .modal-action {
+            padding: 12px 25px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-action:hover {
+            background: #2c9a94;
+        }
+
+        /* Level Complete */
+        .level-complete {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 30px auto;
+        }
+
+        .badge {
+            font-size: 3rem;
+            color: #d69e2e;
+            margin-bottom: 15px;
+        }
+
+        .level-title {
+            font-size: 1.8rem;
+            color: #1a365d;
+            margin-bottom: 15px;
+        }
+
+        .level-text {
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+
+        .next-level-btn {
+            padding: 12px 30px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .next-level-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Success Modal */
+        .success-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .did-you-know {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .did-you-know strong {
+            color: #38b2ac;
+            font-size: 1.1em;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .did-you-know p {
+            font-size: 0.95rem;
+            color: #4a6572;
+        }
+
+        /* Updated Play Again button to match Start Game button */
+        .next-btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #38b2ac 0%, #2c9a94 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(56, 178, 172, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about {
+            padding-right: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.8rem;
+            background: #38b2ac;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 20px;
+            color: #38b2ac;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2d3748;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .social-links a:hover {
+            background: #38b2ac;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .cards-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+           
+            .game-header h1 {
+                font-size: 2.2rem;
+            }
+           
+            .game-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            .cards-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+           
+            .card {
+                height: 120px;
+            }
+           
+            .card-emoji {
+                font-size: 2.5rem;
+            }
+           
+            .card-name {
+                font-size: 0.75rem;
+            }
+           
+            .game-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+           
+            .control-btn-game {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+           
+            .card {
+                height: 100px;
+            }
+           
+            .card-emoji {
+                font-size: 2rem;
+            }
+           
+            .card-name {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes shake {
+            0%, 100% {transform: translateX(0);}
+            10%, 30%, 50%, 70%, 90% {transform: translateX(-5px);}
+            20%, 40%, 60%, 80% {transform: translateX(5px);}
+        }
+       
+        .shake {
+            animation: shake 0.5s;
+        }
+       
+        @keyframes pulse {
+            0% {transform: scale(1);}
+            50% {transform: scale(1.05);}
+            100% {transform: scale(1);}
+        }
+       
+        .pulse {
+            animation: pulse 0.5s;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
+        }
+
+        .bounce {
+            animation: bounce 1s;
+        }
+
+        /* Odia font support */
+        .odia-text {
+            font-family: 'Kalinga', 'Nirmala UI', 'Segoe UI', sans-serif;
+        }
+        
+        /* Hindi font support */
+        .hindi-text {
+            font-family: 'Mangal', 'Nirmala UI', 'Segoe UI', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-atom"></i>
+            </div>
+            <div class="logo-text">
+                <h1>STEM Learn Odisha</h1>
+                <p>Gamified Learning Platform</p>
+            </div>
+        </div>
+       
+        <nav>
+            <ul>
+                <li><a href="student-dashboard.html" id="navDashboard">Dashboard</a></li>
+                <li><a href="science.html" id="navScience">Science</a></li>
+                <li><a href="food.html" id="navFood">Food</a></li>
+                <li><a href="scienceidx.html" id="navCurriculum">Curriculum</a></li>
+            </ul>
+        </nav>
+       
+        <div class="header-controls">
+            <button class="control-btn" id="languageToggle">
+                <i class="fas fa-globe"></i>
+            </button>
+           
+            <div class="profile-container">
+                <button class="profile-btn" id="profileToggle">
+                    <img src="" alt="Profile" class="profile-pic" id="headerProfilePic">
+                    <span id="headerUserName">Student</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+               
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="student-dashboard.html" class="dropdown-item" id="dropdownProfile">
+                        <i class="fas fa-user"></i>
+                        <span data-translate="dropdown-profile">Profile</span>
+                    </a>
+                    <a href="student-dashboard.html" class="dropdown-item" id="dropdownSettings">
+                        <i class="fas fa-cog"></i>
+                        <span data-translate="dropdown-settings">Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownLogout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span data-translate="dropdown-logout">Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Language Options -->
+    <div class="language-options" id="languageOptions">
+        <div class="language-option" data-lang="en">English</div>
+        <div class="language-option" data-lang="or">ଓଡ଼ିଆ</div>
+        <div class="language-option" data-lang="hi">हिन्दी</div>
+    </div>
+
+    <!-- Language Switcher for Game -->
+    <div class="language-switcher" id="game-language-switcher">
+        <button class="lang-btn active" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+        <button class="lang-btn" data-lang="hi">हिन्दी</button>
+    </div>
+
+    <!-- Instructions Modal -->
+    <div class="instructions-modal" id="instructions-modal">
+        <div class="instructions-content">
+            <!-- Separate language switcher for instructions only -->
+            <div class="language-switcher" id="instructions-language-switcher" style="position: relative; top: 0; right: 0; margin: 0 auto 20px auto; width: fit-content; background: rgba(26, 54, 93, 0.1);">
+                <button class="lang-btn active" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+                <button class="lang-btn" data-lang="hi">हिन्दी</button>
+            </div>
+            
+            <h2 class="instructions-title" id="instructions-title">How to Play the Food & Vitamin Memory Game</h2>
+            <div class="instructions-text" id="instructions-text">
+                <p id="instructions-intro">Welcome to the Food & Vitamin Memory Game! Here's how to play:</p>
+                <ul class="instructions-list" id="instructions-list">
+                    <li id="instruction-1">Click on cards to flip them and reveal foods or vitamins.</li>
+                    <li id="instruction-2">Match foods with their corresponding vitamins to earn points.</li>
+                    <li id="instruction-3">Each correct match reveals a fun fact about the food and its nutritional benefits.</li>
+                    <li id="instruction-4">You have 7 minutes to complete each level.</li>
+                    <li id="instruction-5">Earn bonus points for completing levels quickly.</li>
+                    <li id="instruction-6">Complete all levels to earn the Nutrition Expert badge!</li>
+                </ul>
+                <p id="instructions-outro">Good luck and have fun learning about food and nutrition!</p>
+            </div>
+            <button class="start-game-btn" id="start-game-btn">Start Game</button>
+        </div>
+    </div>
+
+    <!-- Game Header -->
+    <section class="game-header" id="game-header">
+        <div class="container">
+            <h1 data-translate="game-title">Food & Vitamin Memory Game</h1>
+            <p data-translate="game-desc">Match foods with their vitamins to learn about healthy nutrition!</p>
+        </div>
+    </section>
+
+    <!-- Game Stats -->
+    <div class="container" id="game-stats-container">
+        <div class="game-stats" id="game-stats">
+            <div class="timer">
+                <i class="fas fa-clock"></i>
+                <span id="time">07:00</span>
+            </div>
+           
+            <div class="score">
+                <i class="fas fa-star"></i>
+                <span id="score">Score: 0</span>
+            </div>
+           
+            <div class="hints">
+                <i class="fas fa-lightbulb"></i>
+                <span id="hints-left">Hints: 3</span>
+            </div>
+           
+            <div class="progress-container">
+                <div class="progress-bar" id="progress" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Memory Game Area -->
+    <section class="memory-game-area" id="memory-game-area">
+        <div class="container">
+            <div class="round-info">
+                <h2 class="round-title" id="round-title">Level 1: Basic Foods & Vitamins</h2>
+                <p class="round-description" id="round-description">Match common foods with their primary vitamins</p>
+            </div>
+           
+            <div class="cards-grid" id="cards-grid">
+                <!-- Cards will be generated by JavaScript -->
+            </div>
+           
+            <div class="game-controls">
+                <button class="control-btn-game hint" id="hint-btn">
+                    <i class="fas fa-lightbulb"></i>
+                    <span data-translate="hint-btn">Show Hint</span>
+                </button>
+                <button class="control-btn-game reset" id="reset-btn">
+                    <i class="fas fa-redo"></i>
+                    <span data-translate="reset-btn">Reset Game</span>
+                </button>
+                <button class="control-btn-game" id="back-to-instructions">
+                    <i class="fas fa-arrow-left"></i>
+                    <span data-translate="back-instructions">Instructions</span>
+                </button>
+            </div>
+           
+            <div class="level-complete" id="level-complete">
+                <div class="badge">
+                    <i class="fas fa-medal"></i>
+                </div>
+                <h2 class="level-title" data-translate="level-complete-title">Level Complete!</h2>
+                <p class="level-text" id="level-text">Congratulations! You've matched all pairs correctly.</p>
+                <button class="next-level-btn" id="next-level-btn" data-translate="next-level">Next Level</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Educational Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-icon" id="modal-icon">🍎</div>
+            <h2 class="modal-title" id="modal-title">Apple & Vitamin C</h2>
+            <p class="modal-text" id="modal-text">Great match! Apples are rich in Vitamin C.</p>
+            <div class="fun-fact">
+                <div class="fun-fact-title" data-translate="fun-fact-title">Fun Fact:</div>
+                <div id="modal-fact">Apples contain antioxidants that help boost your immune system!</div>
+            </div>
+            <button class="modal-action" id="modal-continue" data-translate="continue-playing">Continue Playing</button>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="success-modal">
+        <div class="success-content">
+            <div class="badge">
+                <i class="fas fa-medal"></i>
+            </div>
+            <h2 class="success-title" data-translate="success-title">Game Complete!</h2>
+            <p class="success-text" data-translate="success-text">You've earned the <strong>Nutrition Expert</strong> badge!</p>
+            <div class="did-you-know">
+                <strong data-translate="did-you-know">Did you know?</strong>
+                <p data-translate="memory-fact">Memory games can improve cognitive functions like attention, concentration, and focus. They also boost brain function in the areas of short-term memory and pattern recognition!</p>
+            </div>
+            <button class="next-btn" id="success-next-btn" data-translate="play-again-btn">Play Again</button>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+           
+            if (!user) {
+                // Redirect to login if not authenticated
+                window.location.href = 'student-login.html';
+                return;
+            }
+           
+            // Load user data
+            loadUserData(user);
+            
+            // Initialize the game
+            initGamePage();
+        });
+
+        // Load user data into the page
+        function loadUserData(user) {
+            document.getElementById('headerUserName').textContent = user.fullName;
+            document.getElementById('headerProfilePic').src = user.profilePicture ? `uploads/${user.profilePicture}` : 'default-profile.png';
+        }
+
+        // Enhanced Game Data with more food items and improved vitamin emojis
+        const foodVitaminDatabase = [
+            // Level 1 - Basic Foods
+            {
+                food: { emoji: '🍊', name: 'Orange', nameOr: 'କମଳା', nameHi: 'संतरा', vitamin: 'Vitamin C' },
+                vitamin: { emoji: '💊', name: 'Vitamin C', nameOr: 'ଭିଟାମିନ୍ ସି', nameHi: 'विटामिन सी', type: 'vitamin', color: '#ff6b35' },
+                funFact: 'Oranges are packed with Vitamin C, which helps boost your immune system and keeps your skin healthy!',
+                funFactOr: 'କମଳାରେ ଭିଟାମିନ୍ ସି ଅଧିକ ଅଛି, ଯାହା ଆପଣଙ୍କ ରୋଗ ପ୍ରତିରୋଧକ ଶକ୍ତି ବଢାଏ!',
+                funFactHi: 'संतरे में विटामिन सी भरपूर होता है, जो आपकी प्रतिरक्षा प्रणाली को बढ़ावा देने में मदद करता है!',
+                level: 1
+            },
+            {
+                food: { emoji: '🥕', name: 'Carrot', nameOr: 'ଗାଜର', nameHi: 'गाजर', vitamin: 'Vitamin A' },
+                vitamin: { emoji: '🅰️', name: 'Vitamin A', nameOr: 'ଭିଟାମିନ୍ ଏ', nameHi: 'विटामिन ए', type: 'vitamin', color: '#ff8c00' },
+                funFact: 'Carrots are rich in beta-carotene, which your body converts to Vitamin A for healthy eyes and vision!',
+                funFactOr: 'ଗାଜରରେ ବେଟା-କାରୋଟିନ୍ ଅଧିକ, ଯାହା ଆଖିର ସ୍ବାସ୍ଥ୍ୟ ପାଇଁ ଭଲ!',
+                funFactHi: 'गाजर बीटा-कैरोटीन से भरपूर होती है, जो आपके शरीर में विटामिन ए में परिवर्तित हो जाती है!',
+                level: 1
+            },
+            {
+                food: { emoji: '🍎', name: 'Apple', nameOr: 'ଆପଲ୍', nameHi: 'सेब', vitamin: 'Vitamin C' },
+                vitamin: { emoji: '💊', name: 'Vitamin C', nameOr: 'ଭିଟାମିନ୍ ସି', nameHi: 'विटामिन सी', type: 'vitamin', color: '#ff6b35' },
+                funFact: 'An apple a day keeps the doctor away! Apples contain antioxidants and fiber for good health.',
+                funFactOr: 'ପ୍ରତିଦିନ ଗୋଟିଏ ଆପଲ୍ ଖାଇଲେ ଡାକ୍ତରଙ୍କ ପାଖକୁ ଯିବାର ଦରକାର ନାହିଁ!',
+                funFactHi: 'रोज एक सेब खाओ और डॉक्टर को दूर भगाओ! सेब में एंटीऑक्सिडेंट और फाइबर होते हैं।',
+                level: 1
+            },
+            {
+                food: { emoji: '🥛', name: 'Milk', nameOr: 'କ୍ଷୀର', nameHi: 'दूध', vitamin: 'Vitamin D' },
+                vitamin: { emoji: '☀️', name: 'Vitamin D', nameOr: 'ଭିଟାମିନ୍ ଡି', nameHi: 'विटामिन डी', type: 'vitamin', color: '#ffd700' },
+                funFact: 'Milk is fortified with Vitamin D, which helps your body absorb calcium for strong bones!',
+                funFactOr: 'କ୍ଷୀରରେ ଭିଟାମିନ୍ ଡି ଅଛି, ଯାହା ହାଡ଼ ମଜଭୁତ କରେ!',
+                funFactHi: 'दूध में विटामिन डी होता है, जो आपकी हड्डियों को मजबूत बनाने में मदद करता है!',
+                level: 1
+            },
+            {
+                food: { emoji: '🍌', name: 'Banana', nameOr: 'କଦଳୀ', nameHi: 'केला', vitamin: 'Vitamin B6' },
+                vitamin: { emoji: '🅱️', name: 'Vitamin B6', nameOr: 'ଭିଟାମିନ୍ ବି୬', nameHi: 'विटामिन बी6', type: 'vitamin', color: '#4169e1' },
+                funFact: 'Bananas are rich in Vitamin B6, potassium, and natural sugars that give you quick energy!',
+                funFactOr: 'କଦଳୀରେ ଭିଟାମିନ୍ ବି୬ ଓ ପୋଟାସିୟମ୍ ଅଛି, ଯାହା ଶକ୍ତି ଦେଇଥାଏ!',
+                funFactHi: 'केले में विटामिन बी6, पोटेशियम और प्राकृतिक शर्करा होती है जो आपको तुरंत ऊर्जा देती है!',
+                level: 1
+            },
+            {
+                food: { emoji: '🥬', name: 'Spinach', nameOr: 'ପାଳଙ୍ଗ', nameHi: 'पालक', vitamin: 'Iron' },
+                vitamin: { emoji: '⚙️', name: 'Iron', nameOr: 'ଲୌହ', nameHi: 'आयरन', type: 'mineral', color: '#696969' },
+                funFact: 'Spinach is loaded with iron, which helps carry oxygen in your blood and prevents anemia!',
+                funFactOr: 'ପାଳଙ୍ଗରେ ଲୌହ ଅଧିକ, ଯାହା ରକ୍ତରେ ଅମ୍ଳଜାନ ବହନ କରେ!',
+                funFactHi: 'पालक में आयरन भरपूर होता है, जो आपके रक्त में ऑक्सीजन ले जाने में मदद करता है!',
+                level: 1
+            },
+            {
+                food: { emoji: '🍓', name: 'Strawberry', nameOr: 'ଷ୍ଟ୍ରବେରି', nameHi: 'स्ट्रॉबेरी', vitamin: 'Vitamin C' },
+                vitamin: { emoji: '💊', name: 'Vitamin C', nameOr: 'ଭିଟାମିନ୍ ସି', nameHi: 'विटामिन सी', type: 'vitamin', color: '#ff6b35' },
+                funFact: 'Strawberries have more Vitamin C than oranges and are full of antioxidants!',
+                funFactOr: 'ଷ୍ଟ୍ରବେରିରେ କମଳାଠାରୁ ଅଧିକ ଭିଟାମିନ୍ ସି ଅଛି!',
+                funFactHi: 'स्ट्रॉबेरी में संतरे से अधिक विटामिन सी होता है और यह एंटीऑक्सिडेंट से भरपूर होती है!',
+                level: 1
+            },
+            {
+                food: { emoji: '🥚', name: 'Egg', nameOr: 'ଅଣ୍ଡା', nameHi: 'अंडा', vitamin: 'Protein' },
+                vitamin: { emoji: '🧬', name: 'Protein', nameOr: 'ପ୍ରୋଟିନ୍', nameHi: 'प्रोटीन', type: 'nutrient', color: '#8b4513' },
+                funFact: 'Eggs are a complete protein source containing all essential amino acids needed for muscle growth!',
+                funFactOr: 'ଅଣ୍ଡାରେ ସମସ୍ତ ଜରୁରୀ ଆମିନୋ ଏସିଡ୍ ଅଛି ଯାହା ମାଂସପେଶୀ ବୃଦ୍ଧି ପାଇଁ ଆବଶ୍ୟକ!',
+                funFactHi: 'अंडे एक पूर्ण प्रोटीन स्रोत हैं जिसमें मांसपेशियों के विकास के लिए आवश्यक सभी अमीनो एसिड होते हैं!',
+                level: 1
+            },
+
+            // Level 2 - Advanced Foods
+            {
+                food: { emoji: '🥑', name: 'Avocado', nameOr: 'ଆଭୋକାଡୋ', nameHi: 'एवोकाडो', vitamin: 'Vitamin K' },
+                vitamin: { emoji: '🔰', name: 'Vitamin K', nameOr: 'ଭିଟାମିନ୍ କେ', nameHi: 'विटामिन के', type: 'vitamin', color: '#228b22' },
+                funFact: 'Avocados are rich in Vitamin K, which helps with blood clotting and bone health!',
+                funFactOr: 'ଆଭୋକାଡୋରେ ଭିଟାମିନ୍ କେ ଅଛି, ଯାହା ରକ୍ତ ଜମାଟ ବାନ୍ଧିବାରେ ସାହାଯ୍ୟ କରେ!',
+                funFactHi: 'एवोकाडो विटामिन K से भरपूर होता है, जो रक्त के थक्के जमने और हड्डियों के स्वास्थ्य में मदद करता है!',
+                level: 2
+            },
+            {
+                food: { emoji: '🐟', name: 'Fish', nameOr: 'ମାଛ', nameHi: 'मछली', vitamin: 'Omega-3' },
+                vitamin: { emoji: '🌊', name: 'Omega-3', nameOr: 'ଓମେଗା-୩', nameHi: 'ओमेगा-3', type: 'fatty-acid', color: '#1e90ff' },
+                funFact: 'Fish is rich in Omega-3 fatty acids, which are great for brain health and heart function!',
+                funFactOr: 'ମାଛରେ ଓମେଗା-୩ ଅଛି, ଯାହା ମସ୍ତିଷ୍କ ଓ ହୃଦୟ ପାଇଁ ଭଲ!',
+                funFactHi: 'मछली ओमेगा-3 फैटी एसिड से भरपूर होती है, जो मस्तिष्क स्वास्थ्य और हृदय कार्य के लिए बहुत अच्छी होती है!',
+                level: 2
+            },
+            {
+                food: { emoji: '🥜', name: 'Nuts', nameOr: 'ବାଦାମ', nameHi: 'नट्स', vitamin: 'Vitamin E' },
+                vitamin: { emoji: '🛡️', name: 'Vitamin E', nameOr: 'ଭିଟାମିନ୍ ଇ', nameHi: 'विटामिन ई', type: 'vitamin', color: '#daa520' },
+                funFact: 'Nuts are packed with Vitamin E, a powerful antioxidant that protects your cells!',
+                funFactOr: 'ବାଦାମରେ ଭିଟାମିନ୍ ଇ ଅଛି, ଯାହା କୋଷମାନଙ୍କୁ ସୁରକ୍ଷା ଦିଏ!',
+                funFactHi: 'नट्स विटामिन ई से भरपूर होते हैं, जो एक शक्तिशाली एंटीऑक्सिडेंट है जो आपकी कोशिकाओं की रक्षा करता है!',
+                level: 2
+            },
+            {
+                food: { emoji: '🍇', name: 'Grapes', nameOr: 'ଅଙ୍ଗୁର', nameHi: 'अंगूर', vitamin: 'Antioxidants' },
+                vitamin: { emoji: '💜', name: 'Antioxidants', nameOr: 'ଆଣ୍ଟିଅକ୍ସିଡାଣ୍ଟ', nameHi: 'एंटीऑक्सिडेंट', type: 'compound', color: '#800080' },
+                funFact: 'Grapes contain resveratrol and antioxidants, which have anti-aging properties!',
+                funFactOr: 'ଅଙ୍ଗୁରରେ ଆଣ୍ଟିଅକ୍ସିଡାଣ୍ଟ ଅଛି, ଯାହା ବୟସ ବୃଦ୍ଧି ରୋକିଥାଏ!',
+                funFactHi: 'अंगूर में रेस्वेराट्रोल और एंटीऑक्सिडेंट होते हैं, जिनमें एंटी-एजिंग गुण होते हैं!',
+                level: 2
+            },
+            {
+                food: { emoji: '🧀', name: 'Cheese', nameOr: 'ଚିଜ୍', nameHi: 'चीज़', vitamin: 'Calcium' },
+                vitamin: { emoji: '🦴', name: 'Calcium', nameOr: 'କ୍ୟାଲସିୟମ୍', nameHi: 'कैल्शियम', type: 'mineral', color: '#f5f5dc' },
+                funFact: 'Cheese is rich in calcium and protein, essential for strong bones and teeth!',
+                funFactOr: 'ଚିଜ୍‌ରେ କ୍ୟାଲସିୟମ୍ ଅଛି, ଯାହା ହାଡ଼ ଓ ଦାନ୍ତ ମଜଭୁତ କରେ!',
+                funFactHi: 'चीज़ कैल्शियम और प्रोटीन से भरपूर होती है, जो मजबूत हड्डियों और दांतों के लिए आवश्यक है!',
+                level: 2
+            },
+            {
+                food: { emoji: '🥦', name: 'Broccoli', nameOr: 'ବ୍ରୋକୋଲି', nameHi: 'ब्रोकोली', vitamin: 'Folate' },
+                vitamin: { emoji: '🧪', name: 'Folate', nameOr: 'ଫୋଲେଟ', nameHi: 'फोलेट', type: 'vitamin', color: '#9acd32' },
+                funFact: 'Broccoli is packed with folate, essential for DNA synthesis and cell division!',
+                funFactOr: 'ବ୍ରୋକୋଲିରେ ଫୋଲେଟ ଅଛି, ଯାହା ଡିଏନଏ ସିନ୍ଥେସିସ ପାଇଁ ଜରୁରୀ!',
+                funFactHi: 'ब्रोकोली फोलेट से भरपूर होती है, जो डीएनए संश्लेषण और कोशिका विभाजन के लिए आवश्यक है!',
+                level: 2
+            },
+            {
+                food: { emoji: '🍠', name: 'Sweet Potato', nameOr: 'ମିଠା ଆଳୁ', nameHi: 'शकरकंद', vitamin: 'Beta-Carotene' },
+                vitamin: { emoji: '🔸', name: 'Beta-Carotene', nameOr: 'ବେଟା-କାରୋଟିନ', nameHi: 'बीटा-कैरोटीन', type: 'precursor', color: '#ff4500' },
+                funFact: 'Sweet potatoes are loaded with beta-carotene, which converts to Vitamin A for eye health!',
+                funFactOr: 'ମିଠା ଆଳୁରେ ବେଟା-କାରୋଟିନ ଅଧିକ, ଯାହା ଆଖି ସ୍ବାସ୍ଥ୍ୟ ପାଇଁ ଭଲ!',
+                funFactHi: 'शकरकंद बीटा-कैरोटीन से भरपूर होती है, जो आंखों के स्वास्थ्य के लिए विटामिन ए में परिवर्तित हो जाती है!',
+                level: 2
+            },
+            {
+                food: { emoji: '🥝', name: 'Kiwi', nameOr: 'କିଓି', nameHi: 'कीवी', vitamin: 'Vitamin C' },
+                vitamin: { emoji: '💊', name: 'Vitamin C', nameOr: 'ଭିଟାମିନ୍ ସି', nameHi: 'विटामिन सी', type: 'vitamin', color: '#ff6b35' },
+                funFact: 'Kiwis contain more Vitamin C per serving than oranges and aid in iron absorption!',
+                funFactOr: 'କିଓିରେ କମଳାଠାରୁ ଅଧିକ ଭିଟାମିନ ସି ଅଛି ଏବଂ ଏହା ଲୌହ ଅବଶୋଷଣରେ ସାହାଯ୍ୟ କରେ!',
+                funFactHi: 'कीवी में संतरे की तुलना में प्रति सर्विंग अधिक विटामिन सी होता है और यह आयरन अवशोषण में सहायता करता है!',
+                level: 2
+            },
+
+            // Level 3 - Expert Foods
+            {
+                food: { emoji: '🫐', name: 'Blueberries', nameOr: 'ବ୍ଲୁବେରି', nameHi: 'ब्लूबेरी', vitamin: 'Anthocyanins' },
+                vitamin: { emoji: '💙', name: 'Anthocyanins', nameOr: 'ଆଣ୍ଟୋସାଇନିନ', nameHi: 'एंथोसायनिन', type: 'antioxidant', color: '#4169e1' },
+                funFact: 'Blueberries are superfood packed with anthocyanins that boost brain function and memory!',
+                funFactOr: 'ବ୍ଲୁବେରି ଏକ ସୁପରଫୁଡ ଯାହାରେ ମସ୍ତିଷ୍କ ଓ ସ୍ମୃତି ବଢାଉଥିବା ଆଣ୍ଟୋସାଇନିନ ଅଛି!',
+                funFactHi: 'ब्लूबेरी एक सुपरफूड है जो एंथोसायनिन से भरपूर होती है जो मस्तिष्क कार्य और स्मृति को बढ़ावा देती है!',
+                level: 3
+            },
+            {
+                food: { emoji: '🥔', name: 'Potato', nameOr: 'ଆଳୁ', nameHi: 'आलू', vitamin: 'Potassium' },
+                vitamin: { emoji: '⚡', name: 'Potassium', nameOr: 'ପୋଟାସିୟମ', nameHi: 'पोटेशियम', type: 'mineral', color: '#dda0dd' },
+                funFact: 'Potatoes are rich in potassium, which helps regulate blood pressure and muscle function!',
+                funFactOr: 'ଆଳୁରେ ପୋଟାସିୟମ ଅଧିକ, ଯାହା ରକ୍ତଚାପ ଓ ମାଂସପେଶୀ କାର୍ଯ୍ୟ ନିୟନ୍ତ୍ରଣ କରେ!',
+                funFactHi: 'आलू पोटेशियम से भरपूर होते हैं, जो रक्तचाप और मांसपेशियों के कार्य को नियंत्रित करने में मदद करते हैं!',
+                level: 3
+            },
+            {
+                food: { emoji: '🌰', name: 'Almonds', nameOr: 'ବାଦାମ', nameHi: 'बादाम', vitamin: 'Magnesium' },
+                vitamin: { emoji: '✨', name: 'Magnesium', nameOr: 'ମ୍ୟାଗନେସିୟମ', nameHi: 'मैग्नीशियम', type: 'mineral', color: '#c0c0c0' },
+                funFact: 'Almonds are excellent source of magnesium, crucial for bone health and energy metabolism!',
+                funFactOr: 'ବାଦାମରେ ମ୍ୟାଗନେସିୟମ ଅଧିକ, ଯାହା ହାଡ ସ୍ବାସ୍ଥ୍ୟ ଓ ଶକ୍ତି ପାଇଁ ଜରୁରୀ!',
+                funFactHi: 'बादाम मैग्नीशियम का एक उत्कृष्ट स्रोत हैं, जो हड्डियों के स्वास्थ्य और ऊर्जा चयापचय के लिए महत्वपूर्ण है!',
+                level: 3
+            },
+            {
+                food: { emoji: '🍅', name: 'Tomato', nameOr: 'ଟମାଟୋ', nameHi: 'टमाटर', vitamin: 'Lycopene' },
+                vitamin: { emoji: '🔴', name: 'Lycopene', nameOr: 'ଲାଇକୋପିନ', nameHi: 'लाइकोपीन', type: 'carotenoid', color: '#ff0000' },
+                funFact: 'Tomatoes are rich in lycopene, a powerful antioxidant that may help prevent cancer!',
+                funFactOr: 'ଟମାଟୋରେ ଲାଇକୋପିନ ଅଛି, ଯାହା କର୍କଟ ରୋଗ ପ୍ରତିରୋଧ କରିପାରେ!',
+                funFactHi: 'टमाटर लाइकोपीन से भरपूर होते हैं, एक शक्तिशाली एंटीऑक्सिडेंट जो कैंसर को रोकने में मदद कर सकता है!',
+                level: 3
+            },
+            {
+                food: { emoji: '🥥', name: 'Coconut', nameOr: 'ନଡିଆ', nameHi: 'नारियल', vitamin: 'MCT Oils' },
+                vitamin: { emoji: '🌴', name: 'MCT Oils', nameOr: 'ଏମସିଟି ତେଲ', nameHi: 'एमसीटी ऑयल', type: 'fatty-acid', color: '#8b4513' },
+                funFact: 'Coconuts contain MCT oils that provide quick energy and support brain function!',
+                funFactOr: 'ନଡିଆରେ ଏମସିଟି ତେଲ ଅଛି ଯାହା ତୁରନ୍ତ ଶକ୍ତି ଓ ମସ୍ତିଷ୍କ କାର୍ଯ୍ୟରେ ସାହାଯ୍ୟ କରେ!',
+                funFactHi: 'नारियल में एमसीटी ऑयल होता है जो त्वरित ऊर्जा प्रदान करता है और मस्तिष्क कार्य का समर्थन करता है!',
+                level: 3
+            },
+            {
+                food: { emoji: '🫘', name: 'Beans', nameOr: 'ବିନ୍ସ', nameHi: 'बीन्स', vitamin: 'Fiber' },
+                vitamin: { emoji: '🌾', name: 'Fiber', nameOr: 'ଫାଇବର', nameHi: 'फाइबर', type: 'nutrient', color: '#8fbc8f' },
+                funFact: 'Beans are loaded with fiber, which promotes digestive health and helps control blood sugar!',
+                funFactOr: 'ବିନ୍ସରେ ଫାଇବର ଅଧିକ, ଯାହା ହଜମ ସ୍ବାସ୍ଥ୍ୟ ଓ ରକ୍ତ ଶର୍କରା ନିୟନ୍ତ୍ରଣ କରେ!',
+                funFactHi: 'बीन्स फाइबर से भरपूर होती हैं, जो पाचन स्वास्थ्य को बढ़ावा देती हैं और रक्त शर्करा को नियंत्रित करने में मदद करती हैं!',
+                level: 3
+            }
+        ];
+
+        // Translations
+        const translations = {
+            en: {
+                'navDashboard': 'Dashboard',
+                'navScience': 'Science',
+                'navFood': 'Food',
+                'navCurriculum': 'Curriculum',
+                'dropdown-profile': 'Profile',
+                'dropdown-settings': 'Settings',
+                'dropdown-logout': 'Logout',
+                'game-title': 'Food & Vitamin Memory Game',
+                'game-desc': 'Match foods with their vitamins to learn about healthy nutrition!',
+                'instructions-title': 'How to Play the Food & Vitamin Memory Game',
+                'instructions-intro': 'Welcome to the Food & Vitamin Memory Game! Here\'s how to play:',
+                'instruction-1': 'Click on cards to flip them and reveal foods or vitamins.',
+                'instruction-2': 'Match foods with their corresponding vitamins to earn points.',
+                'instruction-3': 'Each correct match reveals a fun fact about the food and its nutritional benefits.',
+                'instruction-4': 'You have 7 minutes to complete each level.',
+                'instruction-5': 'Earn bonus points for completing levels quickly.',
+                'instruction-6': 'Complete all levels to earn the Nutrition Expert badge!',
+                'instructions-outro': 'Good luck and have fun learning about food and nutrition!',
+                'start-game-btn': 'Start Game',
+                'hint-btn': 'Show Hint',
+                'reset-btn': 'Reset Game',
+                'back-instructions': 'Instructions',
+                'level-complete-title': 'Level Complete!',
+                'next-level': 'Next Level',
+                'fun-fact-title': 'Fun Fact:',
+                'continue-playing': 'Continue Playing',
+                'success-title': 'Game Complete!',
+                'success-text': 'You\'ve earned the <strong>Nutrition Expert</strong> badge!',
+                'did-you-know': 'Did you know?',
+                'memory-fact': 'Memory games can improve cognitive functions like attention, concentration, and focus. They also boost brain function in the areas of short-term memory and pattern recognition!',
+                'play-again-btn': 'Play Again'
+            },
+            or: {
+                'navDashboard': 'ଡ୍ୟାସବୋର୍ଡ',
+                'navScience': 'ବିଜ୍ଞାନ',
+                'navFood': 'ଖାଦ୍ୟ',
+                'navCurriculum': 'ପାଠ୍ୟକ୍ରମ',
+                'dropdown-profile': 'ପ୍ରୋଫାଇଲ୍',
+                'dropdown-settings': 'ସେଟିଂସ୍',
+                'dropdown-logout': 'ଲଗଆଉଟ୍',
+                'game-title': 'ଖାଦ୍ୟ ଓ ଭିଟାମିନ୍ ସ୍ମୃତି ଖେଳ',
+                'game-desc': 'ସୁସ୍ଥ ପୁଷ୍ଟି ବିଷୟରେ ଜାଣିବା ପାଇଁ ଖାଦ୍ୟକୁ ସେମାନଙ୍କର ଭିଟାମିନ୍ ସହିତ ମେଳାନ୍ତୁ!',
+                'instructions-title': 'ଫୁଡ ଓ ଭିଟାମିନ୍ ମେମୋରି ଗେମ୍ କିପରି ଖେଳିବେ',
+                'instructions-intro': 'ଫୁଡ ଓ ଭିଟାମିନ୍ ମେମୋରି ଗେମ୍ କୁ ସ୍ୱାଗତ! ଏଠାରେ କିପରି ଖେଳିବେ ତାହା ଦିଆଗଲା:',
+                'instruction-1': 'ଖାଦ୍ୟ କିମ୍ବା ଭିଟାମିନ୍ ପ୍ରକାଶ କରିବା ପାଇଁ କାର୍ଡଗୁଡିକ ଉପରେ କ୍ଲିକ୍ କରନ୍ତୁ।',
+                'instruction-2': 'ପଏଣ୍ଟ ଅର୍ଜନ କରିବା ପାଇଁ ଖାଦ୍ୟକୁ ସେମାନଙ୍କର ସଂପୃକ୍ତ ଭିଟାମିନ୍ ସହିତ ମେଳାନ୍ତୁ।',
+                'instruction-3': 'ପ୍ରତ୍ୟେକ ସଠିକ୍ ମେଳ ଖାଦ୍ୟ ଏବଂ ଏହାର ପୁଷ୍ଟିକର ଲାଭ ବିଷୟରେ ଏକ ମଜାଦାର ତଥ୍ୟ ପ୍ରକାଶ କରେ।',
+                'instruction-4': 'ପ୍ରତ୍ୟେକ ସ୍ତର ସମ୍ପୂର୍ଣ୍ଣ କରିବାକୁ ଆପଣଙ୍କର ୭ ମିନିଟ୍ ସମୟ ଅଛି।',
+                'instruction-5': 'ସ୍ତର ଶୀଘ୍ର ସମ୍ପୂର୍ଣ୍ଣ କରିବା ପାଇଁ ବୋନସ୍ ପଏଣ୍ଟ ଅର୍ଜନ କରନ୍ତୁ।',
+                'instruction-6': 'ନ୍ୟୁଟ୍ରିସନ୍ ଏକ୍ସପର୍ଟ ବ୍ୟାଜ୍ ଅର୍ଜନ କରିବା ପାଇଁ ସମସ୍ତ ସ୍ତର ସମ୍ପୂର୍ଣ୍ଣ କରନ୍ତୁ!',
+                'instructions-outro': 'ଶୁଭକାମନା ଏବଂ ଖାଦ୍ୟ ଓ ପୁଷ୍ଟି ବିଷୟରେ ଶିଖିବାର ମଜା ନିଅନ୍ତୁ!',
+                'start-game-btn': 'ଖେଳ ଆରମ୍ଭ କରନ୍ତୁ',
+                'hint-btn': 'ସଙ୍କେତ ଦେଖାନ୍ତୁ',
+                'reset-btn': 'ଖେଳ ପୁନଃ ଆରମ୍ଭ',
+                'back-instructions': 'ନିର୍ଦ୍ଦେଶାବଳୀ',
+                'level-complete-title': 'ସ୍ତର ସମ୍ପୂର୍ଣ୍ଣ!',
+                'next-level': 'ପରବର୍ତ୍ତୀ ସ୍ତର',
+                'fun-fact-title': 'ମଜାଦାର ତଥ୍ୟ:',
+                'continue-playing': 'ଖେଳ ଜାରି ରଖନ୍ତୁ',
+                'success-title': 'ଖେଳ ସମ୍ପୂର୍ଣ୍ଣ!',
+                'success-text': 'ଆପଣ <strong>ନ୍ୟୁଟ୍ରିସନ୍ ଏକ୍ସପର୍ଟ</strong> ବ୍ୟାଜ୍ ଅର୍ଜନ କରିଛନ୍ତି!',
+                'did-you-know': 'ଆପଣ ଜାଣିଛନ୍ତି କି?',
+                'memory-fact': 'ମେମୋରି ଗେମ୍ ଧ୍ୟାନ, ଏକାଗ୍ରତା ଏବଂ ଫୋକସ୍ ଭଳି ଜ୍ଞାନଗତ କାର୍ଯ୍ୟକୁ ଉନ୍ନତ କରିପାରେ। ସେମାନେ ଅଳ୍ପ ସମୟର ସ୍ମୃତି ଏବଂ ପ୍ୟାଟର୍ନ୍ ଚିହ୍ନଟ କ୍ଷେତ୍ରରେ ମସ୍ତିଷ୍କ କାର୍ଯ୍ୟକୁ ବୃଦ୍ଧି କରନ୍ତି!',
+                'play-again-btn': 'ପୁନର୍ବାର ଖେଳନ୍ତୁ'
+            },
+            hi: {
+                'navDashboard': 'डैशबोर्ड',
+                'navScience': 'विज्ञान',
+                'navFood': 'भोजन',
+                'navCurriculum': 'पाठ्यक्रम',
+                'dropdown-profile': 'प्रोफाइल',
+                'dropdown-settings': 'सेटिंग्स',
+                'dropdown-logout': 'लॉगआउट',
+                'game-title': 'भोजन और विटामिन मेमोरी गेम',
+                'game-desc': 'स्वस्थ पोषण के बारे में जानने के लिए भोजन को उनके विटामिन के साथ मिलाएं!',
+                'instructions-title': 'भोजन और विटामिन मेमोरी गेम कैसे खेलें',
+                'instructions-intro': 'भोजन और विटामिन मेमोरी गेम में आपका स्वागत है! यहां बताया गया है कि कैसे खेलें:',
+                'instruction-1': 'भोजन या विटामिन प्रकट करने के लिए कार्डों पर क्लिक करें।',
+                'instruction-2': 'अंक अर्जित करने के लिए भोजन को उनके संबंधित विटामिन के साथ मिलाएं।',
+                'instruction-3': 'प्रत्येक सही मिलान भोजन और उसके पोषण संबंधी लाभों के बारे में एक रोचक तथ्य प्रकट करता है।',
+                'instruction-4': 'प्रत्येक स्तर को पूरा करने के लिए आपके पास 7 मिनट का समय है।',
+                'instruction-5': 'स्तरों को जल्दी पूरा करने के लिए बोनस अंक अर्जित करें।',
+                'instruction-6': 'न्यूट्रिशन एक्सपर्ट बैज अर्जित करने के लिए सभी स्तर पूरे करें!',
+                'instructions-outro': 'शुभकामनाएं और भोजन और पोषण सीखने का आनंद लें!',
+                'start-game-btn': 'खेल शुरू करें',
+                'hint-btn': 'संकेत दिखाएं',
+                'reset-btn': 'खेल रीसेट करें',
+                'back-instructions': 'निर्देश',
+                'level-complete-title': 'स्तर पूरा!',
+                'next-level': 'अगला स्तर',
+                'fun-fact-title': 'मजेदार तथ्य:',
+                'continue-playing': 'खेल जारी रखें',
+                'success-title': 'खेल पूरा!',
+                'success-text': 'आपने <strong>न्यूट्रिशन एक्सपर्ट</strong> बैज अर्जित किया है!',
+                'did-you-know': 'क्या आप जानते हैं?',
+                'memory-fact': 'मेमोरी गेम ध्यान, एकाग्रता और फोकस जैसे संज्ञानात्मक कार्यों में सुधार कर सकते हैं। वे अल्पकालिक स्मृति और पैटर्न मान्यता के क्षेत्रों में मस्तिष्क कार्य को भी बढ़ावा देते हैं!',
+                'play-again-btn': 'फिर से खेलें'
+            }
+        };
+
+        // Game variables
+        let currentGameLanguage = 'en'; // Separate variable for game language
+        let currentInstructionsLanguage = 'en'; // Separate variable for instructions language
+        let currentLevel = 1;
+        let score = 0;
+        let timeLeft = 420; // 7 minutes in seconds
+        let timer;
+        let gameCards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let totalPairs = 0;
+        let isGameActive = false;
+        let hintsUsed = 0;
+        let hintsLeft = 3;
+        let userQuestionSet = [];
+
+        // DOM elements
+        const instructionsModal = document.getElementById('instructions-modal');
+        const gameHeader = document.getElementById('game-header');
+        const gameStats = document.getElementById('game-stats');
+        const gameStatsContainer = document.getElementById('game-stats-container');
+        const memoryGameArea = document.getElementById('memory-game-area');
+        const startGameBtn = document.getElementById('start-game-btn');
+        const cardsGrid = document.getElementById('cards-grid');
+        const timeDisplay = document.getElementById('time');
+        const scoreDisplay = document.getElementById('score');
+        const hintsLeftEl = document.getElementById('hints-left');
+        const progressBar = document.getElementById('progress');
+        const modal = document.getElementById('modal');
+        const levelComplete = document.getElementById('level-complete');
+        const roundTitle = document.getElementById('round-title');
+        const roundDescription = document.getElementById('round-description');
+        const successModal = document.getElementById('success-modal');
+        const successNextBtn = document.getElementById('success-next-btn');
+
+        // Initialize the game page
+        function initGamePage() {
+            // Set up language options for header
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    switchLanguage(lang);
+                    document.getElementById('languageOptions').classList.remove('show');
+                });
+            });
+
+            // Language switching for game
+            document.querySelectorAll('#game-language-switcher .lang-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.dataset.lang;
+                    switchGameLanguage(lang);
+                });
+            });
+
+            // Language switching for instructions only
+            document.querySelectorAll('#instructions-language-switcher .lang-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.dataset.lang;
+                    switchInstructionsLanguage(lang);
+                });
+            });
+
+            // Dashboard integration event listeners
+            const profileToggle = document.getElementById('profileToggle');
+            const profileDropdown = document.getElementById('profileDropdown');
+            const languageToggle = document.getElementById('languageToggle');
+            const languageOptions = document.getElementById('languageOptions');
+            const dropdownProfile = document.getElementById('dropdownProfile');
+            const dropdownSettings = document.getElementById('dropdownSettings');
+            const dropdownLogout = document.getElementById('dropdownLogout');
+            const navDashboard = document.getElementById('navDashboard');
+            const navScience = document.getElementById('navScience');
+            const navCurriculum = document.getElementById('navCurriculum');
+            const navFood = document.getElementById('navFood');
+
+            // Profile dropdown toggle
+            profileToggle.addEventListener('click', function() {
+                profileDropdown.classList.toggle('show');
+            });
+
+            // Language toggle
+            languageToggle.addEventListener('click', function() {
+                languageOptions.classList.toggle('show');
+            });
+
+            // Navigation between pages
+            dropdownProfile.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#profile';
+            });
+
+            dropdownSettings.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#settings';
+            });
+
+            dropdownLogout.addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('user');
+                window.location.href = 'student-login.html';
+            });
+
+            // Navigation menu items
+            navDashboard.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html';
+            });
+
+            navScience.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'science.html';
+            });
+
+            navCurriculum.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'scienceidx.html';
+            });
+
+            navFood.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'food.html';
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#languageToggle') && !e.target.closest('#languageOptions')) {
+                    languageOptions.classList.remove('show');
+                }
+               
+                if (!e.target.closest('#profileToggle') && !e.target.closest('#profileDropdown')) {
+                    profileDropdown.classList.remove('show');
+                }
+            });
+
+            // Initialize with default language
+            switchLanguage('en');
+            switchGameLanguage('en');
+            switchInstructionsLanguage('en');
+            
+            // Start with instructions modal open
+            instructionsModal.style.display = 'flex';
+        }
+
+        // Language switching functions
+        function switchLanguage(lang) {
+            // Update header language elements
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    if (key === 'success-text') {
+                        element.innerHTML = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+        }
+
+        function switchGameLanguage(lang) {
+            currentGameLanguage = lang;
+           
+            // Update language buttons in game switcher
+            document.querySelectorAll('#game-language-switcher .lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+
+            // Update all translated elements in the game
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.dataset.translate;
+                if (translations[lang] && translations[lang][key]) {
+                    if (key === 'success-text') {
+                        // Handle HTML content separately
+                        const translatedText = translations[lang][key];
+                        element.innerHTML = translatedText;
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+
+            // Add language-specific font classes
+            document.body.classList.remove('odia-text', 'hindi-text');
+            if (lang === 'or') {
+                document.body.classList.add('odia-text');
+            } else if (lang === 'hi') {
+                document.body.classList.add('hindi-text');
+            }
+
+            // Update score display
+            updateScore();
+            updateHintsDisplay();
+            
+            // Update level info if game is active
+            if (isGameActive) {
+                updateLevelInfo(currentLevel);
+                // Re-render cards with new language
+                renderCards();
+            }
+        }
+
+        function switchInstructionsLanguage(lang) {
+            currentInstructionsLanguage = lang;
+           
+            // Update language buttons in instructions switcher
+            document.querySelectorAll('#instructions-language-switcher .lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+
+            // Update instruction elements
+            updateInstructionTranslations(lang);
+        }
+
+        // Function to update instruction elements
+        function updateInstructionTranslations(lang) {
+            const instructionsTitle = document.getElementById('instructions-title');
+            const instructionsIntro = document.getElementById('instructions-intro');
+            const instruction1 = document.getElementById('instruction-1');
+            const instruction2 = document.getElementById('instruction-2');
+            const instruction3 = document.getElementById('instruction-3');
+            const instruction4 = document.getElementById('instruction-4');
+            const instruction5 = document.getElementById('instruction-5');
+            const instruction6 = document.getElementById('instruction-6');
+            const instructionsOutro = document.getElementById('instructions-outro');
+            const startGameBtn = document.getElementById('start-game-btn');
+
+            if (translations[lang]) {
+                if (instructionsTitle) instructionsTitle.textContent = translations[lang]['instructions-title'];
+                if (instructionsIntro) instructionsIntro.textContent = translations[lang]['instructions-intro'];
+                if (instruction1) instruction1.textContent = translations[lang]['instruction-1'];
+                if (instruction2) instruction2.textContent = translations[lang]['instruction-2'];
+                if (instruction3) instruction3.textContent = translations[lang]['instruction-3'];
+                if (instruction4) instruction4.textContent = translations[lang]['instruction-4'];
+                if (instruction5) instruction5.textContent = translations[lang]['instruction-5'];
+                if (instruction6) instruction6.textContent = translations[lang]['instruction-6'];
+                if (instructionsOutro) instructionsOutro.textContent = translations[lang]['instructions-outro'];
+                if (startGameBtn) startGameBtn.textContent = translations[lang]['start-game-btn'];
+            }
+        }
+
+        // Game initialization
+        function initGame() {
+            currentLevel = 1;
+            score = 0;
+            timeLeft = 420;
+            hintsUsed = 0;
+            hintsLeft = 3;
+            isGameActive = true;
+           
+            instructionsModal.style.display = 'none';
+            gameHeader.style.display = 'block';
+            gameStatsContainer.style.display = 'block';
+            gameStats.style.display = 'flex';
+            memoryGameArea.style.display = 'block';
+           
+            startLevel(currentLevel);
+            startTimer();
+        }
+
+        // Generate a unique question set for the user
+        function generateQuestionSet(level) {
+            // Filter pairs for current level
+            const levelPairs = foodVitaminDatabase.filter(pair => pair.level === level);
+            
+            // Shuffle the pairs and select 6 for the game
+            const shuffledPairs = [...levelPairs].sort(() => Math.random() - 0.5);
+            return shuffledPairs.slice(0, Math.min(6, shuffledPairs.length));
+        }
+
+        function startLevel(level) {
+            // Get pairs for current level
+            userQuestionSet = generateQuestionSet(level);
+            totalPairs = userQuestionSet.length;
+            matchedPairs = 0;
+           
+            // Create card data
+            gameCards = [];
+            userQuestionSet.forEach((pair, index) => {
+                // Food card
+                gameCards.push({
+                    id: `food-${index}`,
+                    type: 'food',
+                    emoji: pair.food.emoji,
+                    name: getLocalizedName(pair.food),
+                    pairId: index,
+                    pairData: pair
+                });
+               
+                // Vitamin card
+                gameCards.push({
+                    id: `vitamin-${index}`,
+                    type: 'vitamin',
+                    emoji: pair.vitamin.emoji,
+                    name: getLocalizedName(pair.vitamin),
+                    pairId: index,
+                    pairData: pair
+                });
+            });
+           
+            // Shuffle cards
+            gameCards = shuffleArray(gameCards);
+           
+            // Update level info
+            updateLevelInfo(level);
+           
+            // Render cards
+            renderCards();
+           
+            // Reset progress
+            updateProgress();
+            updateHintsDisplay();
+        }
+
+        function getLocalizedName(item) {
+            switch(currentGameLanguage) {
+                case 'or': return item.nameOr;
+                case 'hi': return item.nameHi;
+                default: return item.name;
+            }
+        }
+
+        function updateLevelInfo(level) {
+            const levelTitles = {
+                1: { 
+                    en: 'Level 1: Basic Foods & Vitamins', 
+                    or: 'ସ୍ତର ୧: ମୂଳ ଖାଦ୍ୟ ଓ ଭିଟାମିନ୍',
+                    hi: 'स्तर 1: मूल भोजन और विटामिन'
+                },
+                2: { 
+                    en: 'Level 2: Advanced Nutrition', 
+                    or: 'ସ୍ତର ୨: ଉନ୍ନତ ପୁଷ୍ଟି',
+                    hi: 'स्तर 2: उन्नत पोषण'
+                },
+                3: { 
+                    en: 'Level 3: Expert Knowledge', 
+                    or: 'ସ୍ତର ୩: ବିଶେଷଜ୍ଞ ଜ୍ଞାନ',
+                    hi: 'स्तर 3: विशेषज्ञ ज्ञान'
+                }
+            };
+           
+            const levelDescriptions = {
+                1: { 
+                    en: 'Match common foods with their primary vitamins', 
+                    or: 'ସାଧାରଣ ଖାଦ୍ୟକୁ ସେମାନଙ୍କର ମୁଖ୍ୟ ଭିଟାମିନ୍ ସହିତ ମେଳାନ୍ତୁ',
+                    hi: 'सामान्य भोजन को उनके प्राथमिक विटामिन के साथ मिलाएं'
+                },
+                2: { 
+                    en: 'Discover advanced nutritional components', 
+                    or: 'ଉନ୍ନତ ପୁଷ୍ଟିକର ଉପାଦାନ ଆବିଷ୍କାର କରନ୍ତୁ',
+                    hi: 'उन्नत पोषण संबंधी घटकों की खोज करें'
+                },
+                3: { 
+                    en: 'Master complex food-nutrient relationships', 
+                    or: 'ଜଟିଲ ଖାଦ୍ୟ-ପୁଷ୍ଟି ସମ୍ପର୍କ ଅଭ୍ୟାସ କରନ୍ତୁ',
+                    hi: 'जटिल भोजन-पोषक संबंधों में महारत हासिल करें'
+                }
+            };
+           
+            roundTitle.textContent = levelTitles[level][currentGameLanguage];
+            roundDescription.textContent = levelDescriptions[level][currentGameLanguage];
+        }
+
+        function renderCards() {
+            cardsGrid.innerHTML = '';
+           
+            gameCards.forEach(card => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card';
+                cardElement.dataset.cardId = card.id;
+                cardElement.dataset.pairId = card.pairId;
+               
+                cardElement.innerHTML = `
+                    <div class="card-front">
+                        <span class="card-emoji">${card.emoji}</span>
+                        <span class="card-name">${card.name}</span>
+                    </div>
+                    <div class="card-back">
+                        <i class="fas fa-question"></i>
+                    </div>
+                `;
+               
+                cardElement.addEventListener('click', () => flipCard(cardElement, card));
+                cardsGrid.appendChild(cardElement);
+            });
+        }
+
+        function flipCard(cardElement, cardData) {
+            if (!isGameActive || cardElement.classList.contains('flipped') ||
+                cardElement.classList.contains('matched') || flippedCards.length >= 2) {
+                return;
+            }
+           
+            cardElement.classList.add('flipped');
+            flippedCards.push({ element: cardElement, data: cardData });
+           
+            if (flippedCards.length === 2) {
+                setTimeout(checkMatch, 600);
+            }
+        }
+
+        function checkMatch() {
+            const [first, second] = flippedCards;
+           
+            if (first.data.pairId === second.data.pairId) {
+                // Match found!
+                first.element.classList.add('matched');
+                second.element.classList.add('matched');
+                first.element.classList.add('bounce');
+                second.element.classList.add('bounce');
+               
+                matchedPairs++;
+                score += 15;
+               
+                // Show educational modal
+                showEducationalModal(first.data.pairData);
+               
+                // Check if level complete
+                if (matchedPairs === totalPairs) {
+                    setTimeout(completeLevel, 1000);
+                }
+            } else {
+                // No match
+                first.element.classList.add('wrong');
+                second.element.classList.add('wrong');
+               
+                setTimeout(() => {
+                    first.element.classList.remove('flipped', 'wrong');
+                    second.element.classList.remove('flipped', 'wrong');
+                }, 1000);
+               
+                // Penalty: reduce time by 5 seconds
+                timeLeft = Math.max(0, timeLeft - 5);
+            }
+           
+            flippedCards = [];
+            updateScore();
+            updateProgress();
+           
+            // Remove bounce animation
+            setTimeout(() => {
+                document.querySelectorAll('.card').forEach(card => {
+                    card.classList.remove('bounce');
+                });
+            }, 1000);
+        }
+
+        function showEducationalModal(pairData) {
+            const modalIcon = document.getElementById('modal-icon');
+            const modalTitle = document.getElementById('modal-title');
+            const modalText = document.getElementById('modal-text');
+            const modalFact = document.getElementById('modal-fact');
+           
+            modalIcon.textContent = pairData.food.emoji + ' + ' + pairData.vitamin.emoji;
+           
+            const foodName = getLocalizedName(pairData.food);
+            const vitaminName = getLocalizedName(pairData.vitamin);
+           
+            modalTitle.textContent = `${foodName} & ${vitaminName}`;
+            modalText.textContent = currentGameLanguage === 'or' ?
+                'ଉତ୍କୃଷ୍ଟ ମେଳ! ' + `${foodName}ରେ ${vitaminName} ଅଧିକ।` :
+                currentGameLanguage === 'hi' ?
+                `बढ़िया मिलान! ${foodName} में ${vitaminName} अधिक होता है।` :
+                `Great match! ${foodName} is rich in ${vitaminName}.`;
+           
+            modalFact.textContent = currentGameLanguage === 'or' ? 
+                pairData.funFactOr : 
+                currentGameLanguage === 'hi' ? 
+                pairData.funFactHi : 
+                pairData.funFact;
+           
+            modal.style.display = 'flex';
+        }
+
+        function completeLevel() {
+            isGameActive = false;
+           
+            // Bonus points for remaining time
+            const timeBonus = Math.floor(timeLeft / 10);
+            score += timeBonus;
+           
+            // Show level complete screen
+            const levelText = document.getElementById('level-text');
+            const nextLevelBtn = document.getElementById('next-level-btn');
+           
+            if (currentLevel < 3) {
+                levelText.textContent = currentGameLanguage === 'or' ?
+                    `ବଢିଆ! ଆପଣ ସମସ୍ତ ଯୋଡି ସଠିକ୍ ଭାବେ ମେଳାଇଛନ୍ତି। ସମୟ ବୋନସ: ${timeBonus} ପଏଣ୍ଟ` :
+                    currentGameLanguage === 'hi' ?
+                    `बहुत बढ़िया! आपने सभी जोड़े सही ढंग से मिलाए हैं। समय बोनस: ${timeBonus} अंक` :
+                    `Congratulations! You matched all pairs correctly. Time bonus: ${timeBonus} points`;
+                nextLevelBtn.style.display = 'block';
+            } else {
+                levelText.textContent = currentGameLanguage === 'or' ?
+                    `ଅସାଧାରଣ! ଆପଣ ସମସ୍ତ ସ୍ତର ସମ୍ପୂର୍ଣ୍ଣ କରିଛନ୍ତି! ଚୂଡାନ୍ତ ସ୍କୋର: ${score}` :
+                    currentGameLanguage === 'hi' ?
+                    `अद्भुत! आपने सभी स्तर पूरे कर लिए हैं! अंतिम स्कोर: ${score}` :
+                    `Amazing! You completed all levels! Final score: ${score}`;
+                nextLevelBtn.style.display = 'none';
+                setTimeout(() => {
+                    successModal.style.display = 'flex';
+                }, 1500);
+            }
+           
+            levelComplete.style.display = 'block';
+            updateScore();
+        }
+
+        function startTimer() {
+            timer = setInterval(() => {
+                if (timeLeft > 0 && isGameActive) {
+                    timeLeft--;
+                    updateTimeDisplay();
+                } else if (timeLeft === 0) {
+                    gameOver();
+                }
+            }, 1000);
+        }
+
+        function updateTimeDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timeDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function updateScore() {
+            const scoreText = currentGameLanguage === 'or' ? 'ସ୍କୋର: ' : 
+                             currentGameLanguage === 'hi' ? 'स्कोर: ' : 'Score: ';
+            scoreDisplay.textContent = scoreText + score;
+        }
+
+        function updateProgress() {
+            const progress = (matchedPairs / totalPairs) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        function updateHintsDisplay() {
+            const hintsText = currentGameLanguage === 'or' ? 'ସୂଚନା: ' : 
+                             currentGameLanguage === 'hi' ? 'संकेत: ' : 'Hints: ';
+            hintsLeftEl.textContent = hintsText + hintsLeft;
+        }
+
+        function gameOver() {
+            isGameActive = false;
+            clearInterval(timer);
+           
+            alert(currentGameLanguage === 'or' ?
+                `ସମୟ ସମାପ୍ତ! ଆପଣଙ୍କର ଚୂଡାନ୍ତ ସ୍କୋର: ${score}` :
+                currentGameLanguage === 'hi' ?
+                `समय समाप्त! आपका अंतिम स्कोर: ${score}` :
+                `Time's up! Your final score: ${score}`);
+           
+            resetGame();
+        }
+
+        function resetGame() {
+            isGameActive = false;
+            clearInterval(timer);
+            flippedCards = [];
+            matchedPairs = 0;
+            currentLevel = 1;
+            score = 0;
+            timeLeft = 420;
+            hintsUsed = 0;
+            hintsLeft = 3;
+           
+            instructionsModal.style.display = 'flex';
+            gameHeader.style.display = 'none';
+            gameStatsContainer.style.display = 'none';
+            gameStats.style.display = 'none';
+            memoryGameArea.style.display = 'none';
+            levelComplete.style.display = 'none';
+            modal.style.display = 'none';
+            successModal.style.display = 'none';
+           
+            updateScore();
+            updateHintsDisplay();
+        }
+
+        function showHint() {
+            if (!isGameActive || hintsLeft <= 0) return;
+           
+            const unmatched = document.querySelectorAll('.card:not(.matched):not(.flipped)');
+            if (unmatched.length >= 2) {
+                // Find a matching pair
+                for (let i = 0; i < unmatched.length; i++) {
+                    for (let j = i + 1; j < unmatched.length; j++) {
+                        if (unmatched[i].dataset.pairId === unmatched[j].dataset.pairId) {
+                            unmatched[i].classList.add('pulse');
+                            unmatched[j].classList.add('pulse');
+                           
+                            setTimeout(() => {
+                                unmatched[i].classList.remove('pulse');
+                                unmatched[j].classList.remove('pulse');
+                            }, 2000);
+                           
+                            hintsLeft--;
+                            hintsUsed++;
+                            score = Math.max(0, score - 5); // Penalty for hint
+                            updateScore();
+                            updateHintsDisplay();
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        // Event listeners for game controls
+        startGameBtn.addEventListener('click', initGame);
+
+        document.getElementById('hint-btn').addEventListener('click', showHint);
+
+        document.getElementById('reset-btn').addEventListener('click', resetGame);
+
+        document.getElementById('back-to-instructions').addEventListener('click', resetGame);
+
+        document.getElementById('next-level-btn').addEventListener('click', () => {
+            currentLevel++;
+            levelComplete.style.display = 'none';
+            isGameActive = true;
+            timeLeft = 420; // Reset timer for new level
+            startLevel(currentLevel);
+            startTimer();
+        });
+
+        document.getElementById('modal-close').addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        document.getElementById('modal-continue').addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        successNextBtn.addEventListener('click', resetGame);
+
+        // Close modal when clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

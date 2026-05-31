@@ -1,0 +1,3131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Objects & Materials - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #2a69ac;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text h1 span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-pic {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 180px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f7fa;
+        }
+
+        .dropdown-item i {
+            color: #3182ce;
+            width: 20px;
+        }
+
+        /* Language Options */
+        .language-options {
+            position: absolute;
+            top: 60px;
+            right: 120px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 120px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .language-options.show {
+            display: block;
+        }
+
+        .language-option {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .language-option:last-child {
+            border-bottom: none;
+        }
+
+        .language-option:hover {
+            background: #f5f7fa;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9)), url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .breadcrumb-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .breadcrumb a {
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #3182ce;
+        }
+
+        .breadcrumb span {
+            color: #64748b;
+        }
+
+        /* Interactive Content */
+        .interactive-content {
+            padding: 50px 0;
+        }
+
+        .learning-path {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .learning-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .path-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .path-card {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .path-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-color: #3182ce;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .card-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+            flex-grow: 1;
+        }
+
+        /* Popup Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-section {
+            margin-bottom: 30px;
+        }
+
+        .modal-section h3 {
+            color: #1a365d;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .modal-section p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .modal-section ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .modal-section li {
+            margin-bottom: 8px;
+        }
+
+        /* Progress Tracking */
+        .progress-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .progress-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .progress-bars {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .progress-item {
+            margin-bottom: 15px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        .progress-bar-container {
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #3182ce;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        /* Games Section */
+        .games-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .game-level {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .game-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .game-desc {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .game-body {
+            padding: 20px;
+        }
+
+        .game-features {
+            margin-bottom: 20px;
+        }
+
+        .game-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .game-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .game-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Resources Section */
+        .resources-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .resource-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .resource-icon {
+            font-size: 2.5rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .resource-title {
+            font-size: 1.1rem;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+
+        .resource-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .download-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Resource Preview Styles */
+        .resource-preview {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 1px solid #e2e8f0;
+            max-height: 200px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .preview-title {
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+
+        .preview-content {
+            line-height: 1.5;
+            color: #4a5568;
+            font-size: 0.85rem;
+        }
+
+        .preview-content ul {
+            padding-left: 15px;
+            margin: 5px 0;
+        }
+
+        .preview-content li {
+            margin-bottom: 3px;
+        }
+
+        /* ENHANCED FLASHCARD STYLES */
+        .flashcard-preview {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .flashcards-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            min-height: 280px;
+        }
+
+        .flashcard-wrapper {
+            width: 100%;
+            max-width: 500px;
+            height: 280px;
+            perspective: 1500px;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .flashcard-front {
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+        }
+
+        .flashcard-back {
+            background: linear-gradient(135deg, #38b2ac 0%, #2c9a94 100%);
+            color: white;
+            transform: rotateY(180deg);
+            overflow-y: auto;
+        }
+
+        .flashcard-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .flashcard-question {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .flashcard-answer {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .flashcard-hint {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .flashcard-instruction {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            margin-top: 15px;
+        }
+
+        .flashcard-category {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .flashcard-counter {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Flashcard Navigation */
+        .flashcard-navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .flashcard-nav-btn {
+            background: #3182ce;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .flashcard-nav-btn:hover {
+            background: #2b6cb0;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .flashcard-nav-btn:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .flashcard-indicators {
+            display: flex;
+            gap: 8px;
+        }
+
+        .flashcard-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .flashcard-indicator.active {
+            background: #3182ce;
+            transform: scale(1.2);
+        }
+
+        .flashcard-progress {
+            font-size: 1rem;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about {
+            padding-right: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.8rem;
+            background: #38b2ac;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 20px;
+            color: #38b2ac;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2d3748;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .social-links a:hover {
+            background: #38b2ac;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .games-grid, .resources-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .path-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .flashcard-wrapper {
+                max-width: 400px;
+                height: 250px;
+            }
+            
+            .flashcard-question {
+                font-size: 1.2rem;
+            }
+            
+            .flashcard-answer {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            nav ul {
+                gap: 15px;
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .flashcard-wrapper {
+                max-width: 350px;
+                height: 220px;
+            }
+            
+            .flashcard-front, .flashcard-back {
+                padding: 20px;
+            }
+            
+            .flashcard-question {
+                font-size: 1.1rem;
+            }
+            
+            .flashcard-answer {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .flashcard-wrapper {
+                max-width: 300px;
+                height: 200px;
+            }
+            
+            .flashcard-front, .flashcard-back {
+                padding: 15px;
+            }
+            
+            .flashcard-question {
+                font-size: 1rem;
+            }
+            
+            .flashcard-answer {
+                font-size: 0.9rem;
+            }
+            
+            .flashcard-nav-btn {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #38b2ac;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        /* Odia font support */
+        .odia-text {
+            font-family: 'Kalinga', 'Nirmala UI', 'Segoe UI', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-atom"></i>
+            </div>
+            <div class="logo-text">
+                <h1>STEM Learn Odisha</h1>
+                <p>Gamified Learning Platform</p>
+            </div>
+        </div>
+       
+        <nav>
+            <ul>
+                <li><a href="student-dashboard.html" id="navDashboard">Dashboard</a></li>
+                <li><a href="science.html" id="navScience">Science</a></li>
+                <li><a href="scienceidx.html" id="navCurriculum">Curriculum</a></li>
+                <li><a href="objects.html" class="active" id="navObjects">Objects</a></li>
+            </ul>
+        </nav>
+       
+        <div class="header-controls">
+            <button class="control-btn" id="languageToggle">
+                <i class="fas fa-globe"></i>
+            </button>
+           
+            <div class="profile-container">
+                <button class="profile-btn" id="profileToggle">
+                    <img src="" alt="Profile" class="profile-pic" id="headerProfilePic">
+                    <span id="headerUserName">Student</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+               
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" class="dropdown-item" id="dropdownProfile">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownSettings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownLogout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Language Options -->
+    <div class="language-options" id="languageOptions">
+        <div class="language-option" data-lang="en">English</div>
+        <div class="language-option" data-lang="or">ଓଡ଼ିଆ</div>
+    </div>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 id="objects-title">Objects & Materials</h1>
+            <p id="objects-desc">Discover the properties of everyday objects and materials through interactive activities and games</p>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <a href="student-dashboard.html" id="breadcrumb-home">Dashboard</a>
+                <span>/</span>
+                <a href="science.html" id="breadcrumb-science">Science</a>
+                <span>/</span>
+                <a href="scienceidx.html" id="breadcrumb-curriculum">Curriculum</a>
+                <span>/</span>
+                <span id="breadcrumb-topic">Objects & Materials</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Content -->
+    <section class="interactive-content">
+        <div class="container">
+            <!-- Learning Path -->
+            <div class="learning-path">
+                <h2 class="learning-title">
+                    <i class="fas fa-road"></i>
+                    <span id="learning-path-title">Your Learning Path</span>
+                </h2>
+                <div class="path-cards">
+                    <div class="path-card" data-card="daily">
+                        <div class="card-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div class="card-title" id="card1-title">Daily Life Objects</div>
+                        <div class="card-desc" id="card1-desc">Learn about objects we use in our daily lives and their materials</div>
+                    </div>
+                    <div class="path-card" data-card="discrimination">
+                        <div class="card-icon">
+                            <i class="fas fa-object-group"></i>
+                        </div>
+                        <div class="card-title" id="card2-title">Object Discrimination</div>
+                        <div class="card-desc" id="card2-desc">Learn to classify objects based on their properties and materials</div>
+                    </div>
+                    <div class="path-card" data-card="changes">
+                        <div class="card-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <div class="card-title" id="card3-title">Changes in Matter</div>
+                        <div class="card-desc" id="card3-desc">Understand how materials change and transform under different conditions</div>
+                    </div>
+                    <div class="path-card" data-card="review">
+                        <div class="card-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="card-title" id="card4-title">Review and Quizzes</div>
+                        <div class="card-desc" id="card4-desc">Test your knowledge with interactive quizzes and reviews</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Games Section -->
+            <div class="games-section">
+                <h2 class="section-title">
+                    <i class="fas fa-gamepad"></i>
+                    <span id="games-title">Interactive Learning Games</span>
+                </h2>
+
+                <div class="games-grid">
+                    <div class="game-card">
+                        <div class="game-header">
+                            <div class="game-level" id="level-basic">Basic</div>
+                            <h3 class="game-title" id="game1-title">Material Match</h3>
+                            <p class="game-desc" id="game1-desc">Match everyday objects with their materials</p>
+                        </div>
+                        <div class="game-body">
+                            <div class="game-features">
+                                <div class="game-feature">
+                                    <i class="fas fa-star"></i>
+                                    <span id="game1-feature1">Identify materials of common objects</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-clock"></i>
+                                    <span id="game1-feature2">10-15 minutes gameplay</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-trophy"></i>
+                                    <span id="game1-feature3">Earn up to 50 points</span>
+                                </div>
+                            </div>
+                            <a href="game6.2.1.html" class="game-btn" id="play-game">Play Game</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card">
+                        <div class="game-header">
+                            <div class="game-level" id="level-intermediate">Intermediate</div>
+                            <h3 class="game-title" id="game2-title">Object Sorter</h3>
+                            <p class="game-desc" id="game2-desc">Classify objects based on their properties</p>
+                        </div>
+                        <div class="game-body">
+                            <div class="game-features">
+                                <div class="game-feature">
+                                    <i class="fas fa-star"></i>
+                                    <span id="game2-feature1">Sort objects by material, shape, and use</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-clock"></i>
+                                    <span id="game2-feature2">15-20 minutes gameplay</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-trophy"></i>
+                                    <span id="game2-feature3">Earn up to 100 points</span>
+                                </div>
+                            </div>
+                            <a href="game6.2.2.html" class="game-btn" id="play-game2">Play Game</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card">
+                        <div class="game-header">
+                            <div class="game-level" id="level-hard">Hard</div>
+                            <h3 class="game-title" id="game3-title">Material Changes</h3>
+                            <p class="game-desc" id="game3-desc">Explore how materials change under different conditions</p>
+                        </div>
+                        <div class="game-body">
+                            <div class="game-features">
+                                <div class="game-feature">
+                                    <i class="fas fa-star"></i>
+                                    <span id="game3-feature1">Identify reversible and irreversible changes</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-clock"></i>
+                                    <span id="game3-feature2">20-25 minutes gameplay</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-trophy"></i>
+                                    <span id="game3-feature3">Earn up to 150 points</span>
+                                </div>
+                            </div>
+                            <a href="game6.2.3.html" class="game-btn" id="play-game3">Play Game</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Section -->
+            <div class="resources-section">
+                <h2 class="section-title">
+                    <i class="fas fa-download"></i>
+                    <span id="resources-title">Learning Resources</span>
+                </h2>
+
+                <div class="resources-grid">
+                    <!-- Study Notes (English) -->
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <h3 class="resource-title" id="resource1-title">Study Notes</h3>
+                        <p class="resource-desc" id="resource1-desc">Complete chapter notes for revision</p>
+                        
+                        <!-- Resource Preview -->
+                        <div class="resource-preview">
+                            <div class="preview-title">Preview - Chapter Summary</div>
+                            <div class="preview-content">
+                                <strong>Key Concepts:</strong>
+                                <ul>
+                                    <li>Objects are made from different materials</li>
+                                    <li>Materials have different properties</li>
+                                    <li>Objects can be classified based on materials</li>
+                                    <li>Materials can change under different conditions</li>
+                                    <li>Changes can be reversible or irreversible</li>
+                                </ul>
+                                
+                                <strong>Common Materials:</strong>
+                                <ul>
+                                    <li>Wood: Furniture, doors, paper</li>
+                                    <li>Metal: Utensils, vehicles, tools</li>
+                                    <li>Plastic: Containers, toys, bags</li>
+                                    <li>Glass: Windows, bottles, lenses</li>
+                                    <li>Fabric: Clothes, curtains, bags</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <button class="download-btn" onclick="downloadResource('study_notes_english')">
+                            <i class="fas fa-download"></i>
+                            <span id="download-english">Download (English)</span>
+                        </button>
+                    </div>
+
+                    <!-- Study Notes (Odia) -->
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3 class="resource-title" id="resource2-title">Study Notes (Odia)</h3>
+                        <p class="resource-desc" id="resource2-desc">Complete chapter notes for revision</p>
+                        
+                        <!-- Resource Preview -->
+                        <div class="resource-preview odia-text">
+                            <div class="preview-title">ପ୍ରିଭ୍ୟୁ - ଅଧ୍ୟାୟ ସାରାଂଶ</div>
+                            <div class="preview-content">
+                                <strong>ମୁଖ୍ୟ ଧାରଣା:</strong>
+                                <ul>
+                                    <li>ବସ୍ତୁଗୁଡିକ ବିଭିନ୍ନ ପଦାର୍ଥରେ ତିଆରି</li>
+                                    <li>ପଦାର୍ଥଗୁଡିକର ବିଭିନ୍ନ ଗୁଣ ଥାଏ</li>
+                                    <li>ପଦାର୍ଥ ଉପରେ ଆଧାରିତ ବସ୍ତୁଗୁଡିକୁ ଶ୍ରେଣୀବିଭାଗ କରାଯାଇପାରେ</li>
+                                    <li>ବିଭିନ୍ନ ପରିସ୍ଥିତିରେ ପଦାର୍ଥ ପରିବର୍ତ୍ତନ ହୋଇପାରେ</li>
+                                    <li>ପରିବର୍ତ୍ତନ ପ୍ରତ୍ୟାବର୍ତ୍ତନଶୀଳ କିମ୍ବା ଅପ୍ରତ୍ୟାବର୍ତ୍ତନଶୀଳ ହୋଇପାରେ</li>
+                                </ul>
+                                
+                                <strong>ସାଧାରଣ ପଦାର୍ଥ:</strong>
+                                <ul>
+                                    <li>କାଠ: ଆସବାବପତ୍ର, କବାଟ, କାଗଜ</li>
+                                    <li>ଧାତୁ: ବାସନ, ଯାନ, ଉପକରଣ</li>
+                                    <li>ପ୍ଲାଷ୍ଟିକ୍: ପାତ୍ର, ଖେଳନା, ବ୍ୟାଗ୍</li>
+                                    <li>କାଚ: ଝରକା, ବୋତଲ, ଲେନ୍ସ</li>
+                                    <li>କପଡା: ପୋଷାକ, ପର୍ଦା, ବ୍ୟାଗ୍</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <button class="download-btn" onclick="downloadResource('study_notes_odia')">
+                            <i class="fas fa-download"></i>
+                            <span id="download-odia">Download (Odia)</span>
+                        </button>
+                    </div>
+
+                    <!-- Flashcards -->
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <h3 class="resource-title" id="resource3-title">Flashcards</h3>
+                        <p class="resource-desc" id="resource3-desc">Visual learning cards for key concepts</p>
+                        
+                        <!-- Flashcard Preview -->
+                        <div class="resource-preview">
+                            <div class="flashcard-preview">
+                                <div class="flashcards-container">
+                                    <div class="flashcard-wrapper">
+                                        <div class="flashcard" id="main-flashcard" onclick="flipCard()">
+                                            <!-- Content will be dynamically inserted here -->
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flashcard-navigation">
+                                    <button class="flashcard-nav-btn" id="prev-btn" onclick="prevFlashcard()">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    
+                                    <div class="flashcard-progress">
+                                        <span id="current-card">1</span> / <span id="total-cards">10</span>
+                                    </div>
+                                    
+                                    <button class="flashcard-nav-btn" id="next-btn" onclick="nextFlashcard()">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                                
+                                <div class="flashcard-indicators" id="flashcard-indicators">
+                                    <!-- Indicators will be dynamically inserted here -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="download-btn" onclick="downloadResource('flashcards')">
+                            <i class="fas fa-download"></i>
+                            <span id="download-flashcards">Download Flashcards</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <div class="footer-logo-text">STEM Learn Odisha</div>
+                    </div>
+                    <p id="footer-desc">Making Science and Mathematics education engaging and relevant for Class 6 students in Odisha through localized content and interactive learning.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h3 id="quick-links">Quick Links</h3>
+                    <ul>
+                        <li><a href="student-dashboard.html"><i class="fas fa-tachometer-alt"></i> <span id="footer-dashboard">Dashboard</span></a></li>
+                        <li><a href="science.html"><i class="fas fa-flask"></i> <span id="footer-science">Science</span></a></li>
+                        <li><a href="objects.html"><i class="fas fa-cube"></i> <span id="footer-objects">Objects</span></a></li>
+                        <li><a href="scienceidx.html"><i class="fas fa-book"></i> <span id="footer-curriculum">Curriculum</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h3 id="contact-us">Contact Us</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> <span id="footer-address">Department of Education, Bhubaneswar</span></a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +91 674 123 4567</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@stemlearnodisha.com</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p id="copyright">© 2023 STEM Learn Odisha. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Popup -->
+    <div class="modal" id="content-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">Daily Life Objects</h2>
+                <button class="close-modal" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced Flashcard data for Objects & Materials
+        const flashcardsData = [
+            {
+                question: "What are the main properties used to classify materials?",
+                answer: "Materials are classified based on properties like hardness (ability to resist scratching), transparency (ability to allow light through), flexibility (ability to bend without breaking), conductivity (ability to conduct heat/electricity), solubility (ability to dissolve), and density (mass per unit volume). Understanding these properties helps us choose the right material for specific uses.",
+                hint: "Think about how materials behave",
+                category: "Material Properties",
+                icon: "fas fa-flask"
+            },
+            {
+                question: "Explain the difference between transparent, translucent, and opaque materials with examples",
+                answer: "Transparent materials allow light to pass through clearly (e.g., glass, clear plastic). Translucent materials allow some light to pass through but objects appear blurry (e.g., frosted glass, wax paper). Opaque materials do not allow any light to pass through (e.g., wood, metal, bricks). This property determines how materials are used in windows, lampshades, and walls.",
+                hint: "Light transmission properties",
+                category: "Optical Properties",
+                icon: "fas fa-lightbulb"
+            },
+            {
+                question: "What are conductors and insulators? Give examples of each",
+                answer: "Conductors are materials that allow heat or electricity to pass through easily. Examples: Metals like copper, aluminum, iron (good for electrical wires, cooking utensils). Insulators are materials that do not allow heat or electricity to pass through easily. Examples: Wood, plastic, rubber, glass (good for handles, electrical safety equipment).",
+                hint: "Think about heat and electricity flow",
+                category: "Thermal/Electrical",
+                icon: "fas fa-bolt"
+            },
+            {
+                question: "Describe reversible and irreversible changes with examples",
+                answer: "Reversible changes can be undone and the original substance can be recovered. Examples: Melting ice (ice → water → ice), stretching rubber, dissolving sugar in water. Irreversible changes cannot be undone and new substances are formed. Examples: Burning paper (ash), cooking food, rusting iron (rust), baking a cake. Chemical changes are usually irreversible.",
+                hint: "Can it go back to original form?",
+                category: "Changes in Matter",
+                icon: "fas fa-exchange-alt"
+            },
+            {
+                question: "What are the different states of matter and how do they change?",
+                answer: "Three main states: 1) Solid - definite shape and volume (e.g., ice, wood). 2) Liquid - definite volume but no definite shape (e.g., water, oil). 3) Gas - no definite shape or volume (e.g., air, steam). Changes: Melting (solid→liquid), Freezing (liquid→solid), Evaporation (liquid→gas), Condensation (gas→liquid), Sublimation (solid→gas).",
+                hint: "Think about form and volume",
+                category: "States of Matter",
+                icon: "fas fa-snowflake"
+            },
+            {
+                question: "How are materials chosen for specific objects? Give examples",
+                answer: "Materials are chosen based on required properties: 1) Windows → Glass (transparent, weather-resistant). 2) Cooking pots → Aluminum/Steel (good heat conductors). 3) Electric wires → Copper (excellent electrical conductor). 4) Furniture → Wood (strong, can be shaped). 5) Raincoats → Plastic/Rubber (waterproof). 6) Buildings → Bricks/Concrete (strong, durable).",
+                hint: "Match properties to uses",
+                category: "Material Selection",
+                icon: "fas fa-cogs"
+            },
+            {
+                question: "What is biodegradability and why is it important?",
+                answer: "Biodegradable materials can be broken down by natural processes (bacteria, fungi). Examples: Paper, cotton, wood, food waste. Non-biodegradable materials cannot be broken down naturally. Examples: Plastic, glass, metals. Importance: Biodegradable materials reduce pollution and waste accumulation, while non-biodegradable materials cause environmental problems and need proper disposal/recycling.",
+                hint: "Natural breakdown capability",
+                category: "Environmental Impact",
+                icon: "fas fa-leaf"
+            },
+            {
+                question: "Explain the process of recycling different materials",
+                answer: "Recycling converts waste materials into new products: 1) Paper → Pulped, cleaned, made into new paper. 2) Glass → Crushed, melted, molded into new glass. 3) Metals → Melted, purified, shaped into new items. 4) Plastics → Sorted by type, shredded, melted, reformed. Benefits: Conserves resources, reduces landfill waste, saves energy, reduces pollution.",
+                hint: "Waste to new products",
+                category: "Sustainability",
+                icon: "fas fa-recycle"
+            },
+            {
+                question: "What are mixtures and how can they be separated?",
+                answer: "Mixtures contain two or more substances physically combined. Separation methods: 1) Hand picking (stones from rice). 2) Sieving (flour from bran). 3) Filtration (sand from water). 4) Evaporation (salt from water). 5) Magnetism (iron from sand). 6) Decantation (oil from water). Each method uses differences in properties like size, solubility, or magnetic attraction.",
+                hint: "Different physical separation techniques",
+                category: "Mixtures",
+                icon: "fas fa-filter"
+            },
+            {
+                question: "Compare natural and synthetic materials with examples",
+                answer: "Natural materials come from nature without human processing. Examples: Wood, cotton, wool, leather, stone, silk. Synthetic materials are human-made through chemical processes. Examples: Plastic, nylon, polyester, glass, steel, ceramic. Natural materials are often biodegradable but limited, while synthetic materials offer more variety and specific properties but can cause environmental issues.",
+                hint: "Nature-made vs. human-made",
+                category: "Material Types",
+                icon: "fas fa-industry"
+            }
+        ];
+
+        let currentFlashcardIndex = 0;
+        let currentLanguage = 'en';
+
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+           
+            if (!user) {
+                // Redirect to login if not authenticated
+                window.location.href = 'student-login.html';
+                return;
+            }
+           
+            // Load user data
+            loadUserData(user);
+            
+            // Initialize the page
+            init();
+        });
+
+        // Load user data into the page
+        function loadUserData(user) {
+            document.getElementById('headerUserName').textContent = user.fullName;
+            document.getElementById('headerProfilePic').src = user.profilePicture ? `uploads/${user.profilePicture}` : 'default-profile.png';
+        }
+
+        // Content for modal popups
+        const contentData = {
+            'daily': {
+                'title': 'Daily Life Objects',
+                'content': `
+                    <div class="modal-section">
+                        <h3>Objects We Use Every Day</h3>
+                        <p>Our daily lives are filled with various objects made from different materials. Understanding these objects and their materials helps us make better choices and understand the world around us.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Common Objects and Their Materials</h3>
+                        <p>Here are some everyday objects and the materials they're made from:</p>
+                        <ul>
+                            <li><strong>Furniture:</strong> Wood, metal, plastic</li>
+                            <li><strong>Utensils:</strong> Steel, aluminum, plastic, ceramic</li>
+                            <li><strong>Clothing:</strong> Cotton, wool, silk, polyester</li>
+                            <li><strong>Containers:</strong> Glass, plastic, metal, paper</li>
+                            <li><strong>Electronic Devices:</strong> Plastic, metal, glass, silicon</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Properties of Materials</h3>
+                        <p>Different materials have different properties that make them suitable for specific uses:</p>
+                        <ul>
+                            <li><strong>Strength:</strong> Ability to withstand force without breaking</li>
+                            <li><strong>Flexibility:</strong> Ability to bend without breaking</li>
+                            <li><strong>Transparency:</strong> Ability to allow light to pass through</li>
+                            <li><strong>Conductivity:</strong> Ability to conduct heat or electricity</li>
+                            <li><strong>Durability:</strong> Ability to withstand wear and tear</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Choosing the Right Material</h3>
+                        <p>When designing objects, we choose materials based on:</p>
+                        <ul>
+                            <li>The purpose of the object</li>
+                            <li>The environment it will be used in</li>
+                            <li>Cost and availability</li>
+                            <li>Sustainability and environmental impact</li>
+                            <li>Aesthetic preferences</li>
+                        </ul>
+                    </div>
+                `
+            },
+            'discrimination': {
+                'title': 'Object Discrimination',
+                'content': `
+                    <div class="modal-section">
+                        <h3>Classifying Objects</h3>
+                        <p>Object discrimination involves identifying and categorizing objects based on their properties, materials, and uses. This skill helps us organize information and make sense of our environment.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Ways to Classify Objects</h3>
+                        <p>Objects can be classified in multiple ways:</p>
+                        <ul>
+                            <li><strong>By Material:</strong> Wood, metal, plastic, glass, fabric</li>
+                            <li><strong>By Shape:</strong> Round, square, rectangular, cylindrical</li>
+                            <li><strong>By Size:</strong> Small, medium, large</li>
+                            <li><strong>By Use:</strong> Kitchen items, school supplies, toys, tools</li>
+                            <li><strong>By Properties:</strong> Hard, soft, transparent, opaque, flexible, rigid</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Sorting Activities</h3>
+                        <p>Try these sorting activities to practice object discrimination:</p>
+                        <ul>
+                            <li>Sort household items by the material they're made from</li>
+                            <li>Group objects based on whether they sink or float in water</li>
+                            <li>Classify items based on their magnetic properties</li>
+                            <li>Arrange objects from lightest to heaviest</li>
+                            <li>Sort items based on their transparency (transparent, translucent, opaque)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Benefits of Object Discrimination</h3>
+                        <p>Developing object discrimination skills helps us:</p>
+                        <ul>
+                            <li>Organize our environment effectively</li>
+                            <li>Make informed choices about material use</li>
+                            <li>Understand recycling and waste management</li>
+                            <li>Develop logical thinking and problem-solving skills</li>
+                            <li>Appreciate the diversity of materials in our world</li>
+                        </ul>
+                    </div>
+                `
+            },
+            'changes': {
+                'title': 'Changes in Matter',
+                'content': `
+                    <div class="modal-section">
+                        <h3>How Materials Change</h3>
+                        <p>Materials can undergo various changes when exposed to different conditions like heat, cold, pressure, or when mixed with other substances. Understanding these changes helps us use materials effectively and safely.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Physical Changes</h3>
+                        <p>Physical changes affect the form of a material but not its chemical composition:</p>
+                        <ul>
+                            <li><strong>Change of State:</strong> Solid to liquid (melting), liquid to gas (evaporation)</li>
+                            <li><strong>Change of Shape:</strong> Bending, cutting, crushing</li>
+                            <li><strong>Dissolving:</strong> Sugar in water, salt in water</li>
+                            <li><strong>Mixtures:</strong> Combining substances without chemical reaction</li>
+                        </ul>
+                        <p>Physical changes are usually reversible.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Chemical Changes</h3>
+                        <p>Chemical changes result in new substances with different properties:</p>
+                        <ul>
+                            <li><strong>Burning:</strong> Wood turning to ash and smoke</li>
+                            <li><strong>Rusting:</strong> Iron reacting with oxygen to form rust</li>
+                            <li><strong>Cooking:</strong> Chemical changes in food when heated</li>
+                            <li><strong>Digestion:</strong> Breaking down food in our bodies</li>
+                        </ul>
+                        <p>Chemical changes are usually irreversible.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Reversible vs Irreversible Changes</h3>
+                        <p>Understanding whether a change is reversible or irreversible is important:</p>
+                        <ul>
+                            <li><strong>Reversible Changes:</strong> Melting ice, dissolving salt, stretching rubber</li>
+                            <li><strong>Irreversible Changes:</strong> Burning paper, cooking an egg, rusting metal</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Factors Affecting Changes</h3>
+                        <p>Several factors influence how materials change:</p>
+                        <ul>
+                            <li><strong>Temperature:</strong> Heat can melt, burn, or evaporate materials</li>
+                            <li><strong>Pressure:</strong> Can compress or change the state of materials</li>
+                            <li><strong>Time:</strong> Some changes happen quickly, others slowly</li>
+                            <li><strong>Presence of Other Substances:</strong> Can catalyze or prevent changes</li>
+                        </ul>
+                    </div>
+                `
+            },
+            'review': {
+                'title': 'Review and Quizzes',
+                'content': `
+                    <div class="modal-section">
+                        <h3>Test Your Knowledge</h3>
+                        <p>Let's review what you've learned about objects, materials, and their changes.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Quick Quiz</h3>
+                        <p><strong>Question 1:</strong> Which material is typically used for making windows?</p>
+                        <ul>
+                            <li>A) Wood</li>
+                            <li>B) Metal</li>
+                            <li>C) Glass</li>
+                            <li>D) Plastic</li>
+                        </ul>
+                        <p><strong>Answer:</strong> C) Glass</p>
+                        
+                        <p><strong>Question 2:</strong> Which of these is a physical change?</p>
+                        <ul>
+                            <li>A) Burning paper</li>
+                            <li>B) Melting ice</li>
+                            <li>C) Rusting iron</li>
+                            <li>D) Cooking food</li>
+                        </ul>
+                        <p><strong>Answer:</strong> B) Melting ice</p>
+                        
+                        <p><strong>Question 3:</strong> What property describes a material's ability to bend without breaking?</p>
+                        <ul>
+                            <li>A) Strength</li>
+                            <li>B) Flexibility</li>
+                            <li>C) Transparency</li>
+                            <li>D) Conductivity</li>
+                        </ul>
+                        <p><strong>Answer:</strong> B) Flexibility</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Key Points to Remember</h3>
+                        <ul>
+                            <li>Objects are made from different materials with specific properties</li>
+                            <li>Materials can be classified based on various characteristics</li>
+                            <li>Physical changes alter form but not composition</li>
+                            <li>Chemical changes create new substances</li>
+                            <li>Some changes are reversible, others are irreversible</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Interactive Activities</h3>
+                        <p>Try these activities to reinforce your learning:</p>
+                        <ul>
+                            <li>Create a chart of household objects and their materials</li>
+                            <li>Conduct simple experiments to observe material changes</li>
+                            <li>Sort a collection of objects based on different properties</li>
+                            <li>Visit a hardware store to observe different materials and their uses</li>
+                        </ul>
+                    </div>
+                `
+            }
+        };
+
+        // Translations
+        const translations = {
+            en: {
+                'navDashboard': 'Dashboard',
+                'navScience': 'Science',
+                'navCurriculum': 'Curriculum',
+                'navObjects': 'Objects',
+                'objects-title': 'Objects & Materials',
+                'objects-desc': 'Discover the properties of everyday objects and materials through interactive activities and games',
+                'breadcrumb-home': 'Dashboard',
+                'breadcrumb-science': 'Science',
+                'breadcrumb-curriculum': 'Curriculum',
+                'breadcrumb-topic': 'Objects & Materials',
+                'learning-path-title': 'Your Learning Path',
+                'card1-title': 'Daily Life Objects',
+                'card1-desc': 'Learn about objects we use in our daily lives and their materials',
+                'card2-title': 'Object Discrimination',
+                'card2-desc': 'Learn to classify objects based on their properties and materials',
+                'card3-title': 'Changes in Matter',
+                'card3-desc': 'Understand how materials change and transform under different conditions',
+                'card4-title': 'Review and Quizzes',
+                'card4-desc': 'Test your knowledge with interactive quizzes and reviews',
+                'progress-title': 'Your Progress',
+                'progress-daily': 'Daily Life Objects',
+                'progress-discrimination': 'Object Discrimination',
+                'progress-changes': 'Changes in Matter',
+                'progress-overall': 'Overall Mastery',
+                'games-title': 'Interactive Learning Games',
+                'level-basic': 'Basic',
+                'game1-title': 'Material Match',
+                'game1-desc': 'Match everyday objects with their materials',
+                'game1-feature1': 'Identify materials of common objects',
+                'game1-feature2': '10-15 minutes gameplay',
+                'game1-feature3': 'Earn up to 50 points',
+                'level-intermediate': 'Intermediate',
+                'game2-title': 'Object Sorter',
+                'game2-desc': 'Classify objects based on their properties',
+                'game2-feature1': 'Sort objects by material, shape, and use',
+                'game2-feature2': '15-20 minutes gameplay',
+                'game2-feature3': 'Earn up to 100 points',
+                'level-hard': 'Hard',
+                'game3-title': 'Material Changes',
+                'game3-desc': 'Explore how materials change under different conditions',
+                'game3-feature1': 'Identify reversible and irreversible changes',
+                'game3-feature2': '20-25 minutes gameplay',
+                'game3-feature3': 'Earn up to 150 points',
+                'play-game': 'Play Game',
+                'resources-title': 'Learning Resources',
+                'resource1-title': 'Study Notes',
+                'resource1-desc': 'Complete chapter notes for revision',
+                'download-english': 'Download (English)',
+                'resource2-title': 'Study Notes (Odia)',
+                'resource2-desc': 'Complete chapter notes for revision',
+                'download-odia': 'Download (Odia)',
+                'resource3-title': 'Flashcards',
+                'resource3-desc': 'Visual learning cards for key concepts',
+                'download-flashcards': 'Download Flashcards',
+                'footer-desc': 'Making Science and Mathematics education engaging and relevant for Class 6 students in Odisha through localized content and interactive learning.',
+                'quick-links': 'Quick Links',
+                'contact-us': 'Contact Us',
+                'footer-dashboard': 'Dashboard',
+                'footer-science': 'Science',
+                'footer-objects': 'Objects',
+                'footer-curriculum': 'Curriculum',
+                'footer-address': 'Department of Education, Bhubaneswar',
+                'copyright': '© 2023 STEM Learn Odisha. All rights reserved.'
+            },
+            or: {
+                'navDashboard': 'ଡ୍ୟାସବୋର୍ଡ',
+                'navScience': 'ବିଜ୍ଞାନ',
+                'navCurriculum': 'ପାଠ୍ୟକ୍ରମ',
+                'navObjects': 'ବସ୍ତୁ',
+                'objects-title': 'ବସ୍ତୁ ଏବଂ ପଦାର୍ଥ',
+                'objects-desc': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ କାର୍ଯ୍ୟକଳାପ ଏବଂ ଖେଳ ମାଧ୍ୟମରେ ଦୈନନ୍ଦିନ ବସ୍ତୁ ଏବଂ ପଦାର୍ଥଗୁଡିକର ଗୁଣ ଆବିଷ୍କାର କରନ୍ତୁ',
+                'breadcrumb-home': 'ଡ୍ୟାସବୋର୍ଡ',
+                'breadcrumb-science': 'ବିଜ୍ଞାନ',
+                'breadcrumb-curriculum': 'ପାଠ୍ୟକ୍ରମ',
+                'breadcrumb-topic': 'ବସ୍ତୁ ଏବଂ ପଦାର୍ଥ',
+                'learning-path-title': 'ଆପଣଙ୍କର ଶିକ୍ଷଣ ପଥ',
+                'card1-title': 'ଦୈନନ୍ଦିନ ଜୀବନର ବସ୍ତୁଗୁଡିକ',
+                'card1-desc': 'ଆମେ ଆମର ଦୈନନ୍ଦିନ ଜୀବନରେ ବ୍ୟବହାର କରୁଥିବା ବସ୍ତୁଗୁଡିକ ଏବଂ ସେମାନଙ୍କର ପଦାର୍ଥ ବିଷୟରେ ଶିଖନ୍ତୁ',
+                'card2-title': 'ବସ୍ତୁ ପାର୍ଥକ୍ୟ',
+                'card2-desc': 'ସେମାନଙ୍କର ଗୁଣ ଏବଂ ପଦାର୍ଥ ଉପରେ ଆଧାରିତ ବସ୍ତୁଗୁଡିକୁ ଶ୍ରେଣୀବିଭାଗ କରିବା ଶିଖନ୍ତୁ',
+                'card3-title': 'ପଦାର୍ଥରେ ପରିବର୍ତ୍ତନ',
+                'card3-desc': 'ବିଭିନ୍ନ ପରିସ୍ଥିତିରେ ପଦାର୍ଥଗୁଡିକ କିପରି ପରିବର୍ତ୍ତନ ଏବଂ ରୂପାନ୍ତରିତ ହୁଏ ବୁଝନ୍ତୁ',
+                'card4-title': 'ସମୀକ୍ଷା ଏବଂ କ୍ୱିଜ୍',
+                'card4-desc': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ କ୍ୱିଜ୍ ଏବଂ ସମୀକ୍ଷା ସହିତ ଆପଣଙ୍କର ଜ୍ଞାନ ପରୀକ୍ଷା କରନ୍ତୁ',
+                'progress-title': 'ଆପଣଙ୍କର ପ୍ରଗତି',
+                'progress-daily': 'ଦୈନନ୍ଦିନ ଜୀବନର ବସ୍ତୁଗୁଡିକ',
+                'progress-discrimination': 'ବସ୍ତୁ ପାର୍ଥକ୍ୟ',
+                'progress-changes': 'ପଦାର୍ଥରେ ପରିବର୍ତ୍ତନ',
+                'progress-overall': 'ସର୍ବମୋଟ ଦକ୍ଷତା',
+                'games-title': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ଖେଳଗୁଡିକ',
+                'level-basic': 'ମୌଳିକ',
+                'game1-title': 'ପଦାର୍ଥ ମେଳ',
+                'game1-desc': 'ଦୈନନ୍ଦିନ ବସ୍ତୁଗୁଡିକୁ ସେମାନଙ୍କର ପଦାର୍ଥ ସହିତ ମିଳାନ୍ତୁ',
+                'game1-feature1': 'ସାଧାରଣ ବସ୍ତୁଗୁଡିକର ପଦାର୍ଥ ଚିହ୍ନିବା',
+                'game1-feature2': '10-15 ମିନିଟ୍ ଖେଳପଣ',
+                'game1-feature3': '50 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ ଅର୍ଜନ କରନ୍ତୁ',
+                'level-intermediate': 'ମଧ୍ୟମ ସ୍ତର',
+                'game2-title': 'ବସ୍ତୁ ସର୍ଟର୍',
+                'game2-desc': 'ସେମାନଙ୍କର ଗୁଣ ଉପରେ ଆଧାରିତ ବସ୍ତୁଗୁଡିକୁ ଶ୍ରେଣୀବିଭାଗ କରନ୍ତୁ',
+                'game2-feature1': 'ପଦାର୍ଥ, ଆକୃତି, ଏବଂ ବ୍ୟବହାର ଅନୁଯାୟୀ ବସ୍ତୁଗୁଡିକୁ ସଜାନ୍ତୁ',
+                'game2-feature2': '15-20 ମିନିଟ୍ ଖେଳପଣ',
+                'game2-feature3': '100 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ ଅର୍ଜନ କରନ୍ତୁ',
+                'level-hard': 'କଠିନ',
+                'game3-title': 'ପଦାର୍ଥ ପରିବର୍ତ୍ତନ',
+                'game3-desc': 'ବିଭିନ୍ନ ପରିସ୍ଥିତିରେ ପଦାର୍ଥଗୁଡିକ କିପରି ପରିବର୍ତ୍ତନ ହୁଏ ଏକ୍ସପ୍ଲୋର୍ କରନ୍ତୁ',
+                'game3-feature1': 'ପ୍ରତ୍ୟାବର୍ତ୍ତନଶୀଳ ଏବଂ ଅପ୍ରତ୍ୟାବର୍ତ୍ତନଶୀଳ ପରିବର୍ତ୍ତନଗୁଡିକୁ ଚିହ୍ନିବା',
+                'game3-feature2': '20-25 ମିନିଟ୍ ଖେଳପଣ',
+                'game3-feature3': '150 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ ଅର୍ଜନ କରନ୍ତୁ',
+                'play-game': 'ଖେଳନ୍ତୁ',
+                'resources-title': 'ଶିକ୍ଷଣ ସମ୍ବଳ',
+                'resource1-title': 'ଅଧ୍ୟୟନ ଟିପ୍ପଣୀ',
+                'resource1-desc': 'ସଂଶୋଧନ ପାଇଁ ସମ୍ପୂର୍ଣ୍ଣ ଅଧ୍ୟାୟ ଟିପ୍ପଣୀ',
+                'download-english': 'ଡାଉନଲୋଡ୍ (ଇଂରାଜୀ)',
+                'resource2-title': 'ଅଧ୍ୟୟନ ଟିପ୍ପଣୀ (ଓଡ଼ିଆ)',
+                'resource2-desc': 'ସମ୍ପୂର୍ଣ୍ଣ ଅଧ୍ୟାୟ ଟିପ୍ପଣୀ ସଂଶୋଧନ ପାଇଁ',
+                'download-odia': 'ଡାଉନଲୋଡ୍ (ଓଡ଼ିଆ)',
+                'resource3-title': 'ଫ୍ଲାସ୍‌କାର୍ଡଗୁଡିକ',
+                'resource3-desc': 'ମୁଖ୍ୟ ଧାରଣାଗୁଡିକ ପାଇଁ ଭିଜୁଆଲ୍ ଶିକ୍ଷଣ କାର୍ଡଗୁଡିକ',
+                'download-flashcards': 'ଫ୍ଲାସ୍‌କାର୍ଡଗୁଡିକ ଡାଉନଲୋଡ୍ କରନ୍ତୁ',
+                'footer-desc': 'ଓଡ଼ିଶାର ଷଷ୍ଠ ଶ୍ରେଣୀର ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କ ପାଇଁ ସ୍ଥାନୀୟ ବିଷୟବସ୍ତୁ ଏବଂ ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ମାଧ୍ୟମରେ ବିଜ୍ଞାନ ଏବଂ ଗଣିତ ଶିକ୍ଷାକୁ ଆକର୍ଷଣୀୟ ଏବଂ ପ୍ରାସଙ୍ଗିକ କରିବା',
+                'quick-links': 'ଶୀଘ୍ର ଲିଙ୍କ୍',
+                'contact-us': 'ଆମ ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ',
+                'footer-dashboard': 'ଡ୍ୟାସବୋର୍ଡ',
+                'footer-science': 'ବିଜ୍ଞାନ',
+                'footer-objects': 'ବସ୍ତୁ',
+                'footer-curriculum': 'ପାଠ୍ୟକ୍ରମ',
+                'footer-address': 'ଶିକ୍ଷା ବିଭାଗ, ଭୁବନେଶ୍ୱର',
+                'copyright': '© 2023 STEM ଲର୍ନ ଓଡ଼ିଶା। ସମସ୍ତ ଅଧିକାର ସଂରକ୍ଷିତ।'
+            }
+        };
+
+        // Initialize the page
+        function init() {
+            // Set up language options
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    switchLanguage(lang);
+                    document.getElementById('languageOptions').classList.remove('show');
+                });
+            });
+
+            // Set up path cards
+            const pathCards = document.querySelectorAll('.path-card');
+            pathCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const cardType = this.getAttribute('data-card');
+                    openModal(cardType);
+                });
+            });
+
+            // Set up modal close button
+            document.getElementById('close-modal').addEventListener('click', closeModalFunc);
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === document.getElementById('content-modal')) {
+                    closeModalFunc();
+                }
+            });
+
+            // Dashboard integration event listeners
+            const profileToggle = document.getElementById('profileToggle');
+            const profileDropdown = document.getElementById('profileDropdown');
+            const languageToggle = document.getElementById('languageToggle');
+            const languageOptions = document.getElementById('languageOptions');
+            const dropdownProfile = document.getElementById('dropdownProfile');
+            const dropdownSettings = document.getElementById('dropdownSettings');
+            const dropdownLogout = document.getElementById('dropdownLogout');
+            const navDashboard = document.getElementById('navDashboard');
+            const navScience = document.getElementById('navScience');
+            const navCurriculum = document.getElementById('navCurriculum');
+            const navObjects = document.getElementById('navObjects');
+
+            // Profile dropdown toggle
+            profileToggle.addEventListener('click', function() {
+                profileDropdown.classList.toggle('show');
+            });
+
+            // Language toggle
+            languageToggle.addEventListener('click', function() {
+                languageOptions.classList.toggle('show');
+            });
+
+            // Navigation between pages
+            dropdownProfile.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#profile';
+            });
+
+            dropdownSettings.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#settings';
+            });
+
+            dropdownLogout.addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('user');
+                window.location.href = 'student-login.html';
+            });
+
+            // Navigation menu items
+            navDashboard.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html';
+            });
+
+            navScience.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'science.html';
+            });
+
+            navCurriculum.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'scienceidx.html';
+            });
+
+            navObjects.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'objects.html';
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#languageToggle') && !e.target.closest('#languageOptions')) {
+                    languageOptions.classList.remove('show');
+                }
+               
+                if (!e.target.closest('#profileToggle') && !e.target.closest('#profileDropdown')) {
+                    profileDropdown.classList.remove('show');
+                }
+            });
+
+            // Initialize download buttons
+            initDownloadButtons();
+
+            // Initialize flashcards
+            initFlashcards();
+
+            // Initialize with default language
+            switchLanguage('en');
+        }
+
+        // Initialize download buttons
+        function initDownloadButtons() {
+            const downloadButtons = document.querySelectorAll('.download-btn');
+            downloadButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const resourceType = this.getAttribute('onclick').match(/downloadResource\('(.*?)'\)/)[1];
+                    downloadResource(resourceType);
+                });
+            });
+        }
+
+        // Initialize flashcards
+        function initFlashcards() {
+            renderFlashcard();
+            createIndicators();
+            document.getElementById('total-cards').textContent = flashcardsData.length;
+            updateNavigationButtons();
+        }
+
+        // Render current flashcard
+        function renderFlashcard() {
+            const flashcard = document.getElementById('main-flashcard');
+            const cardData = flashcardsData[currentFlashcardIndex];
+            
+            flashcard.className = 'flashcard';
+            
+            flashcard.innerHTML = `
+                <div class="flashcard-category">${cardData.category}</div>
+                <div class="flashcard-counter">${currentFlashcardIndex + 1}/${flashcardsData.length}</div>
+                <div class="flashcard-front">
+                    <div class="flashcard-icon">
+                        <i class="${cardData.icon}"></i>
+                    </div>
+                    <div class="flashcard-question">${cardData.question}</div>
+                    <div class="flashcard-hint">${cardData.hint}</div>
+                    <div class="flashcard-instruction">Click to flip the card</div>
+                </div>
+                <div class="flashcard-back">
+                    <div class="flashcard-icon">
+                        <i class="${cardData.icon}"></i>
+                    </div>
+                    <div class="flashcard-answer">${cardData.answer}</div>
+                    <div class="flashcard-instruction">Click to flip back</div>
+                </div>
+            `;
+            
+            // Update current card number
+            document.getElementById('current-card').textContent = currentFlashcardIndex + 1;
+            
+            // Update indicators
+            updateIndicators();
+        }
+
+        // Create indicators for all flashcards
+        function createIndicators() {
+            const indicatorsContainer = document.getElementById('flashcard-indicators');
+            indicatorsContainer.innerHTML = '';
+            
+            for (let i = 0; i < flashcardsData.length; i++) {
+                const indicator = document.createElement('div');
+                indicator.className = 'flashcard-indicator';
+                if (i === currentFlashcardIndex) indicator.classList.add('active');
+                indicator.onclick = () => goToFlashcard(i);
+                indicatorsContainer.appendChild(indicator);
+            }
+        }
+
+        // Update active indicator
+        function updateIndicators() {
+            const indicators = document.querySelectorAll('.flashcard-indicator');
+            indicators.forEach((indicator, index) => {
+                if (index === currentFlashcardIndex) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            });
+        }
+
+        // Update navigation buttons state
+        function updateNavigationButtons() {
+            document.getElementById('prev-btn').disabled = currentFlashcardIndex === 0;
+            document.getElementById('next-btn').disabled = currentFlashcardIndex === flashcardsData.length - 1;
+        }
+
+        // Flip card function
+        function flipCard() {
+            const flashcard = document.getElementById('main-flashcard');
+            flashcard.classList.toggle('flipped');
+        }
+
+        // Go to specific flashcard
+        function goToFlashcard(index) {
+            currentFlashcardIndex = index;
+            renderFlashcard();
+            updateNavigationButtons();
+        }
+
+        // Next flashcard function
+        function nextFlashcard() {
+            if (currentFlashcardIndex < flashcardsData.length - 1) {
+                currentFlashcardIndex++;
+                renderFlashcard();
+                updateNavigationButtons();
+            }
+        }
+
+        // Previous flashcard function
+        function prevFlashcard() {
+            if (currentFlashcardIndex > 0) {
+                currentFlashcardIndex--;
+                renderFlashcard();
+                updateNavigationButtons();
+            }
+        }
+
+        // Switch language function
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            const map = translations[lang] || translations.en;
+            
+            // Update all text content
+            Object.keys(map).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.textContent = map[key];
+                }
+            });
+            
+            // Add Odia font class for Odia text
+            if (lang === 'or') {
+                document.body.classList.add('odia-text');
+            } else {
+                document.body.classList.remove('odia-text');
+            }
+        }
+
+        // Open modal with content
+        function openModal(cardType) {
+            const content = contentData[cardType];
+            if (content) {
+                document.getElementById('modal-title').textContent = content.title;
+                document.getElementById('modal-body').innerHTML = content.content;
+                document.getElementById('content-modal').style.display = 'flex';
+            }
+        }
+
+        // Close modal function
+        function closeModalFunc() {
+            document.getElementById('content-modal').style.display = 'none';
+        }
+
+        // Download resource function
+        function downloadResource(resourceType) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                showNotification('Please login to download resources', 'error');
+                return;
+            }
+
+            let fileName = '';
+            let content = '';
+            let mimeType = 'text/plain';
+            
+            switch(resourceType) {
+                case 'study_notes_english':
+                    fileName = 'Objects_Materials_Study_Notes_English.txt';
+                    content = generateEnglishNotes();
+                    break;
+                case 'study_notes_odia':
+                    fileName = 'Objects_Materials_Study_Notes_Odia.txt';
+                    content = generateOdiaNotes();
+                    break;
+                case 'flashcards':
+                    fileName = 'Objects_Materials_Flashcards.txt';
+                    content = generateFlashcards();
+                    break;
+            }
+
+            // Create a downloadable file
+            const element = document.createElement('a');
+            const file = new Blob([content], {type: mimeType});
+            element.href = URL.createObjectURL(file);
+            element.download = fileName;
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+            
+            // Show success notification
+            showNotification('Resource downloaded successfully!', 'success');
+            
+            // Log download activity
+            logDownloadActivity(resourceType);
+        }
+
+        function generateEnglishNotes() {
+            return `OBJECTS & MATERIALS
+====================================
+
+CLASS 6 SCIENCE - CHAPTER 7
+STEM Learn Odisha
+====================================
+
+TABLE OF CONTENTS
+=================
+1. Introduction
+2. Classification of Objects
+3. Properties of Materials
+4. Types of Materials
+   - Natural Materials
+   - Synthetic Materials
+5. Changes in Materials
+   - Physical Changes
+   - Chemical Changes
+6. Separation of Mixtures
+7. Recycling and Sustainability
+8. Key Terms
+9. Revision Questions
+
+====================================
+
+1. INTRODUCTION
+===============
+• Everything around us is made of materials
+• Materials have different properties
+• Objects are designed using specific materials
+• Understanding materials helps us make better choices
+
+2. CLASSIFICATION OF OBJECTS
+============================
+
+OBJECTS CAN BE CLASSIFIED BY:
+------------------------------
+1. Material Composition:
+   • Wooden objects: Furniture, doors, paper
+   • Metal objects: Utensils, vehicles, tools
+   • Plastic objects: Containers, toys, bags
+   • Glass objects: Windows, bottles, lenses
+   • Fabric objects: Clothes, curtains, bags
+
+2. Shape:
+   • Round: Balls, wheels, plates
+   • Square: Boxes, books, tiles
+   • Rectangular: Tables, doors, bricks
+   • Cylindrical: Cans, pipes, pens
+
+3. Size:
+   • Small: Needles, pins, buttons
+   • Medium: Books, shoes, plates
+   • Large: Furniture, vehicles, buildings
+
+4. Use:
+   • Kitchen items: Utensils, containers, appliances
+   • School supplies: Books, pens, bags
+   • Clothing: Shirts, pants, shoes
+   • Tools: Hammer, screwdriver, scissors
+
+3. PROPERTIES OF MATERIALS
+==========================
+
+PHYSICAL PROPERTIES:
+--------------------
+1. Hardness: Ability to resist scratching
+   • Hard: Diamond, glass, metals
+   • Soft: Cotton, sponge, rubber
+
+2. Transparency: Ability to allow light through
+   • Transparent: Clear glass, water, air
+   • Translucent: Frosted glass, wax paper
+   • Opaque: Wood, metal, bricks
+
+3. Flexibility: Ability to bend without breaking
+   • Flexible: Rubber, plastic, fabric
+   • Rigid: Wood, glass, metals
+
+4. Solubility: Ability to dissolve in water
+   • Soluble: Sugar, salt, coffee
+   • Insoluble: Sand, plastic, oil
+
+5. Conductivity: Ability to conduct heat/electricity
+   • Good conductors: Metals (copper, aluminum)
+   • Poor conductors (insulators): Wood, plastic, rubber
+
+6. Magnetic Properties: Ability to attract magnets
+   • Magnetic: Iron, steel, nickel
+   • Non-magnetic: Wood, plastic, glass
+
+7. Density: Mass per unit volume
+   • High density: Metals, glass
+   • Low density: Wood, plastic, foam
+
+CHEMICAL PROPERTIES:
+--------------------
+1. Reactivity: How materials react with other substances
+2. Flammability: Ability to catch fire
+3. Corrosion Resistance: Ability to resist rust/decay
+4. Biodegradability: Ability to decompose naturally
+
+4. TYPES OF MATERIALS
+=====================
+
+NATURAL MATERIALS:
+------------------
+Materials that come from nature without human processing.
+
+Examples:
+1. Wood: From trees - used for furniture, paper
+2. Cotton: From cotton plants - used for clothing
+3. Wool: From sheep - used for warm clothing
+4. Leather: From animal skin - used for bags, shoes
+5. Silk: From silkworms - used for fine clothing
+6. Stone: From rocks - used for buildings, statues
+7. Metals: From ores - iron, copper, aluminum
+
+SYNTHETIC MATERIALS:
+--------------------
+Materials created by humans through chemical processes.
+
+Examples:
+1. Plastics: From petroleum - various uses
+2. Nylon: Synthetic fiber - used for clothing, ropes
+3. Polyester: Synthetic fiber - used for clothing
+4. Glass: From sand - used for windows, bottles
+5. Ceramics: From clay - used for pots, tiles
+6. Steel: Alloy of iron and carbon - strong material
+7. Concrete: Mixture of cement, sand, gravel
+
+5. CHANGES IN MATERIALS
+========================
+
+PHYSICAL CHANGES:
+-----------------
+• Change in form but not chemical composition
+• Usually reversible
+• No new substances formed
+
+Examples:
+1. Change of State:
+   • Melting: Solid → Liquid (ice to water)
+   • Freezing: Liquid → Solid (water to ice)
+   • Evaporation: Liquid → Gas (water to steam)
+   • Condensation: Gas → Liquid (steam to water)
+
+2. Change of Shape:
+   • Bending: Metal rod, plastic ruler
+   • Cutting: Paper, wood, fabric
+   • Crushing: Cans, paper balls
+
+3. Dissolving:
+   • Sugar in water
+   • Salt in water
+   • Coffee in water
+
+4. Mixing:
+   • Sand and salt
+   • Different colored beads
+   • Various cereals
+
+CHEMICAL CHANGES:
+-----------------
+• New substances formed
+• Usually irreversible
+• Chemical composition changes
+
+Examples:
+1. Burning:
+   • Wood → Ash + Smoke + Gases
+   • Paper → Ash + Smoke
+   • Fuel → Heat + Light + Gases
+
+2. Rusting:
+   • Iron + Oxygen + Water → Rust (Iron oxide)
+
+3. Cooking:
+   • Raw food → Cooked food (chemical changes in proteins, carbohydrates)
+
+4. Digestion:
+   • Food broken down by enzymes in body
+
+5. Photosynthesis:
+   • Carbon dioxide + Water → Glucose + Oxygen
+
+6. DECOMPOSITION:
+   • Organic matter → Simpler substances
+
+REVERSIBLE vs IRREVERSIBLE CHANGES:
+-----------------------------------
+Reversible Changes:
+• Melting ice
+• Dissolving sugar
+• Stretching rubber
+• Inflating balloon
+• Mixing salt and water
+
+Irreversible Changes:
+• Burning paper
+• Cooking egg
+• Rusting iron
+• Baking cake
+• Ripening fruit
+
+FACTORS AFFECTING CHANGES:
+--------------------------
+1. Temperature: Higher temperatures speed up changes
+2. Pressure: Can change states of matter
+3. Surface Area: Larger surface areas speed up reactions
+4. Catalysts: Substances that speed up chemical changes
+5. Concentration: Higher concentrations increase reaction rates
+
+6. SEPARATION OF MIXTURES
+==========================
+
+METHODS OF SEPARATION:
+----------------------
+1. Hand Picking:
+   • For large, visible differences
+   • Example: Removing stones from rice
+
+2. Sieving:
+   • For different sized particles
+   • Example: Separating flour from bran
+
+3. Filtration:
+   • For insoluble solids from liquids
+   • Example: Separating sand from water
+
+4. Evaporation:
+   • For soluble solids from liquids
+   • Example: Obtaining salt from seawater
+
+5. Distillation:
+   • For liquids with different boiling points
+   • Example: Separating alcohol from water
+
+6. Magnetism:
+   • For magnetic materials from non-magnetic
+   • Example: Separating iron filings from sand
+
+7. Decantation:
+   • For immiscible liquids or heavy solids
+   • Example: Separating oil from water
+
+8. Sedimentation:
+   • Heavy particles settle at bottom
+   • Example: Mud settling in water
+
+9. Winnowing:
+   • For lighter and heavier particles
+   • Example: Separating husk from grains
+
+7. RECYCLING AND SUSTAINABILITY
+================================
+
+IMPORTANCE OF RECYCLING:
+------------------------
+1. Conserves Natural Resources
+2. Reduces Landfill Waste
+3. Saves Energy
+4. Reduces Pollution
+5. Creates Jobs
+6. Protects Environment
+
+RECYCLING PROCESSES:
+--------------------
+1. Paper Recycling:
+   • Collection → Sorting → Pulping → Cleaning → New paper
+
+2. Glass Recycling:
+   • Collection → Sorting → Crushing → Melting → New glass
+
+3. Plastic Recycling:
+   • Collection → Sorting → Washing → Shredding → Melting → New plastic
+
+4. Metal Recycling:
+   • Collection → Sorting → Melting → Purification → New metal
+
+BIODEGRADABLE vs NON-BIODEGRADABLE:
+-----------------------------------
+Biodegradable:
+• Can be decomposed by natural processes
+• Examples: Paper, food waste, cotton, wood
+• Environmentally friendly
+
+Non-Biodegradable:
+• Cannot be decomposed naturally
+• Examples: Plastic, glass, metals
+• Causes environmental pollution
+
+SUSTAINABLE PRACTICES:
+----------------------
+1. Reduce: Use less materials
+2. Reuse: Use items multiple times
+3. Recycle: Convert waste into new products
+4. Choose biodegradable materials
+5. Avoid single-use plastics
+6. Conserve water and energy
+7. Plant trees and maintain green spaces
+
+8. KEY TERMS
+============
+• Material: Substance from which objects are made
+• Property: Characteristic of a material
+• Transparent: Allows light to pass through clearly
+• Opaque: Does not allow light to pass through
+• Soluble: Can dissolve in water
+• Insoluble: Cannot dissolve in water
+• Conductor: Allows heat/electricity to pass through
+• Insulator: Does not allow heat/electricity to pass through
+• Physical Change: Change in form without new substance
+• Chemical Change: New substance formed
+• Reversible Change: Can be undone
+• Irreversible Change: Cannot be undone
+• Mixture: Two or more substances mixed physically
+• Biodegradable: Can decompose naturally
+• Recycling: Converting waste into reusable material
+
+9. REVISION QUESTIONS
+=====================
+
+SHORT ANSWER QUESTIONS:
+1. What are the three types of materials based on transparency?
+2. Give two examples each of conductors and insulators.
+3. What is the difference between physical and chemical changes?
+4. Name three methods of separating mixtures.
+5. Why is recycling important?
+
+LONG ANSWER QUESTIONS:
+1. Classify objects based on different criteria with examples.
+2. Explain various properties of materials with examples.
+3. Describe physical and chemical changes with examples.
+4. Explain different methods of separating mixtures.
+5. Discuss the importance of recycling and sustainable practices.
+
+PRACTICAL ACTIVITIES:
+1. Collect different objects and classify them by material.
+2. Test materials for transparency, flexibility, and conductivity.
+3. Demonstrate reversible and irreversible changes.
+4. Separate a mixture using different methods.
+5. Create a recycling plan for your home/school.
+
+====================================
+CREDITS AND ACKNOWLEDGEMENTS
+====================================
+Prepared by: STEM Learn Odisha Team
+For: Class 6 Students
+Date: ${new Date().toLocaleDateString()}
+
+====================================
+REMEMBER:
+• Every material has unique properties
+• Choose materials wisely for different uses
+• Reduce, Reuse, Recycle
+• Protect our environment for future generations
+
+====================================
+END OF NOTES
+====================================`;
+        }
+
+        function generateOdiaNotes() {
+            return `ବସ୍ତୁ ଏବଂ ପଦାର୍ଥ
+====================================
+
+ଷଷ୍ଠ ଶ୍ରେଣୀ ବିଜ୍ଞାନ - ଅଧ୍ୟାୟ 7
+STEM ଲର୍ନ ଓଡ଼ିଶା
+====================================
+
+ବିଷୟ ସୂଚୀ
+===========
+1. ପରିଚୟ
+2. ବସ୍ତୁର ଶ୍ରେଣୀବିଭାଗ
+3. ପଦାର୍ଥର ଗୁଣ
+4. ପଦାର୍ଥର ପ୍ରକାର
+   - ପ୍ରାକୃତିକ ପଦାର୍ଥ
+   - କୃତ୍ରିମ ପଦାର୍ଥ
+5. ପଦାର୍ଥରେ ପରିବର୍ତ୍ତନ
+   - ଭୌତିକ ପରିବର୍ତ୍ତନ
+   - ରାସାୟନିକ ପରିବର୍ତ୍ତନ
+6. ମିଶ୍ରଣର ପୃଥକୀକରଣ
+7. ପୁନର୍ବ୍ୟବହାର ଏବଂ ଟିକାଉ କାମ
+8. ମୁଖ୍ୟ ପରିଭାଷା
+9. ସମୀକ୍ଷା ପ୍ରଶ୍ନ
+
+====================================
+
+1. ପରିଚୟ
+==========
+• ଆମ ଚାରିପାଖରେ ଥିବା ସମସ୍ତ ଜିନିଷ ପଦାର୍ଥରେ ତିଆରି
+• ପଦାର୍ଥଗୁଡିକର ବିଭିନ୍ନ ଗୁଣ ଥାଏ
+• ବିଶେଷ ପଦାର୍ଥ ବ୍ୟବହାର କରି ବସ୍ତୁ ତିଆରି କରାଯାଏ
+• ପଦାର୍ଥ ବୁଝିବା ଆମକୁ ଉନ୍ନତ ପସନ୍ଦ କରିବାରେ ସହାୟକ
+
+2. ବସ୍ତୁର ଶ୍ରେଣୀବିଭାଗ
+==========================
+
+ବସ୍ତୁଗୁଡିକୁ ଏହିପରି ଶ୍ରେଣୀବିଭାଗ କରାଯାଇପାରେ:
+---------------------------------------------------
+1. ପଦାର୍ଥ ଗଠନ:
+   • କାଠ ବସ୍ତୁ: ଆସବାବପତ୍ର, କବାଟ, କାଗଜ
+   • ଧାତୁ ବସ୍ତୁ: ବାସନ, ଯାନ, ଉପକରଣ
+   • ପ୍ଲାଷ୍ଟିକ୍ ବସ୍ତୁ: ପାତ୍ର, ଖେଳନା, ବ୍ୟାଗ୍
+   • କାଚ ବସ୍ତୁ: ଝରକା, ବୋତଲ, ଲେନ୍ସ
+   • କପଡା ବସ୍ତୁ: ପୋଷାକ, ପର୍ଦା, ବ୍ୟାଗ୍
+
+2. ଆକୃତି:
+   • ଗୋଲ: ବଲ୍, ଚକ, ଥାଳି
+   • ବର୍ଗ: ବାକ୍ସ, ବହି, ଟାଇଲ୍
+   • ଆୟତକାର: ଟେବୁଲ, କବାଟ, ଇଟା
+   • ସିଲିଣ୍ଡ୍ରିକାଲ୍: କ୍ୟାନ୍, ପାଇପ୍, କଲମ୍
+
+3. ଆକାର:
+   • ଛୋଟ: ସୂଚି, ପିନ୍, ବଟନ୍
+   • ମଧ୍ୟମ: ବହି, ଜୋତା, ଥାଳି
+   • ବଡ଼: ଆସବାବପତ୍ର, ଯାନ, ଇମାରତ
+
+4. ବ୍ୟବହାର:
+   • ରୋଷେଇ ଘର ଜିନିଷ: ବାସନ, ପାତ୍ର, ଉପକରଣ
+   • ବିଦ୍ୟାଳୟ ସାମଗ୍ରୀ: ବହି, କଲମ୍, ବ୍ୟାଗ୍
+   • ପୋଷାକ: ଶାର୍ଟ, ପାଣ୍ଟ, ଜୋତା
+   • ଉପକରଣ: ହାତୁଡି, ସ୍କ୍ରୁଡ୍ରାଇଭର, କାତି
+
+3. ପଦାର୍ଥର ଗୁଣ
+==================
+
+ଭୌତିକ ଗୁଣ:
+--------------
+1. କଠିନତା: କାଟି ଯିବାର ପ୍ରତିରୋଧ କରିବାର କ୍ଷମତା
+   • କଠିନ: ହୀରା, କାଚ, ଧାତୁ
+   • ନରମ: କପଡା, ସ୍ପଞ୍ଜ, ରବର
+
+2. ସ୍ବଚ୍ଛତା: ଆଲୋକ ପାରହେବାର କ୍ଷମତା
+   • ସ୍ବଚ୍ଛ: ସାଫ କାଚ, ପାଣି, ବାୟୁ
+   • ଅର୍ଦ୍ଧ-ସ୍ବଚ୍ଛ: ଫ୍ରୋଷ୍ଟେଡ୍ ଗ୍ଲାସ, ୱାକ୍ସ ପେପର
+   • ଅସ୍ବଚ୍ଛ: କାଠ, ଧାତୁ, ଇଟା
+
+3. ନମନୀୟତା: ନ ଭାଙ୍ଗି ବଙ୍କା ହେବାର କ୍ଷମତା
+   • ନମନୀୟ: ରବର, ପ୍ଲାଷ୍ଟିକ୍, କପଡା
+   • ଦୃଢ: କାଠ, କାଚ, ଧାତୁ
+
+4. ଦ୍ରବଣୀୟତା: ପାଣିରେ ଦ୍ରବୀଭୂତ ହେବାର କ୍ଷମତା
+   • ଦ୍ରବଣୀୟ: ଚିନି, ଲୁଣ, କଫି
+   • ଅଦ୍ରବଣୀୟ: ବାଲି, ପ୍ଲାଷ୍ଟିକ୍, ତେଲ
+
+5. ସୁପାରିକତା: ତାପ/ବିଦ୍ୟୁତ୍ ପ୍ରବାହିତ କରିବାର କ୍ଷମତା
+   • ଭଲ ସୁପାରିକ: ଧାତୁ (ତମ୍ବା, ଆଲୁମିନିୟମ୍)
+   • ଖରାପ ସୁପାରିକ (ଇନ୍ସୁଲେଟର୍): କାଠ, ପ୍ଲାଷ୍ଟିକ୍, ରବର
+
+6. ଚୁମ୍ବକୀୟ ଗୁଣ: ଚୁମ୍ବକ ଆକର୍ଷଣ କରିବାର କ୍ଷମତା
+   • ଚୁମ୍ବକୀୟ: ଲୌହ, ଷ୍ଟିଲ୍, ନିକେଲ୍
+   • ଅଚୁମ୍ବକୀୟ: କାଠ, ପ୍ଲାଷ୍ଟିକ୍, କାଚ
+
+7. ସାନ୍ଦ୍ରତା: ପ୍ରତି ଏକକ ଆୟତନରେ ବସ୍ତୁତ୍ଵ
+   • ଉଚ୍ଚ ସାନ୍ଦ୍ରତା: ଧାତୁ, କାଚ
+   • ନିମ୍ନ ସାନ୍ଦ୍ରତା: କାଠ, ପ୍ଲାଷ୍ଟିକ୍, ଫୋମ୍
+
+ରାସାୟନିକ ଗୁଣ:
+-----------------
+1. ପ୍ରତିକ୍ରିୟାଶୀଳତା: ଅନ୍ୟ ପଦାର୍ଥ ସହିତ କିପରି ପ୍ରତିକ୍ରିୟା କରେ
+2. ଜ୍ୱଳନଶୀଳତା: ଜଳିବାର କ୍ଷମତା
+3. କ୍ଷୟ ପ୍ରତିରୋଧ: କଳଙ୍କ/କ୍ଷୟ ପ୍ରତିରୋଧ କରିବାର କ୍ଷମତା
+4. ଜୈବ ବିଘଟନୀୟତା: ପ୍ରାକୃତିକ ଭାବେ ବିଘଟିତ ହେବାର କ୍ଷମତା
+
+4. ପଦାର୍ଥର ପ୍ରକାର
+====================
+
+ପ୍ରାକୃତିକ ପଦାର୍ଥ:
+--------------------
+ପ୍ରକୃତିରୁ ପ୍ରାପ୍ତ ପଦାର୍ଥ ମଣିଷ ପ୍ରକ୍ରିୟା ବିନା।
+
+ଉଦାହରଣ:
+1. କାଠ: ଗଛରୁ - ଆସବାବପତ୍ର, କାଗଜ ପାଇଁ ବ୍ୟବହୃତ
+2. କପଡା: କପାଗଛରୁ - ପୋଷାକ ପାଇଁ ବ୍ୟବହୃତ
+3. ପଶମ: ମେଣ୍ଢାରୁ - ଗରମ ପୋଷାକ ପାଇଁ ବ୍ୟବହୃତ
+4. ଚମଡା: ପ୍ରାଣୀ ଚମଡାରୁ - ବ୍ୟାଗ୍, ଜୋତା ପାଇଁ ବ୍ୟବହୃତ
+5. ରେଶମ: ରେଶମ କୀଟରୁ - ଉତ୍କୃଷ୍ଟ ପୋଷାକ ପାଇଁ ବ୍ୟବହୃତ
+6. ପଥର: ଶିଳାରୁ - ଇମାରତ, ମୂର୍ତ୍ତି ପାଇଁ ବ୍ୟବହୃତ
+7. ଧାତୁ: ଅଦ୍ରାକୁଣ୍ଡରୁ - ଲୌହ, ତମ୍ବା, ଆଲୁମିନିୟମ୍
+
+କୃତ୍ରିମ ପଦାର୍ଥ:
+--------------------
+ରାସାୟନିକ ପ୍ରକ୍ରିୟା ମାଧ୍ୟମରେ ମଣିଷ ଦ୍ୱାରା ସୃଷ୍ଟ ପଦାର୍ଥ।
+
+ଉଦାହରଣ:
+1. ପ୍ଲାଷ୍ଟିକ୍: ପେଟ୍ରୋଲିୟମରୁ - ବିଭିନ୍ନ ବ୍ୟବହାର
+2. ନାୟଲନ୍: କୃତ୍ରିମ ତନ୍ତୁ - ପୋଷାକ, ଦଉଡି ପାଇଁ ବ୍ୟବହୃତ
+3. ପଲିଏଷ୍ଟର: କୃତ୍ରିମ ତନ୍ତୁ - ପୋଷାକ ପାଇଁ ବ୍ୟବହୃତ
+4. କାଚ: ବାଲିରୁ - ଝରକା, ବୋତଲ ପାଇଁ ବ୍ୟବହୃତ
+5. ସେରାମିକ୍: ମାଟିରୁ - ହାଣ୍ଡି, ଟାଇଲ୍ ପାଇଁ ବ୍ୟବହୃତ
+6. ଷ୍ଟିଲ୍: ଲୌହ ଏବଂ କାର୍ବନ୍ର ମିଶ୍ରଧାତୁ - ଶକ୍ତିଶାଳୀ ପଦାର୍ଥ
+7. କଂକ୍ରିଟ୍: ସିମେଣ୍ଟ, ବାଲି, କଂକରର ମିଶ୍ରଣ
+
+5. ପଦାର୍ଥରେ ପରିବର୍ତ୍ତନ
+==========================
+
+ଭୌତିକ ପରିବର୍ତ୍ତନ:
+---------------------
+• ଆକାରରେ ପରିବର୍ତ୍ତନ କିନ୍ତୁ ରାସାୟନିକ ଗଠନରେ ନୁହେଁ
+• ସାଧାରଣତଃ ପ୍ରତ୍ୟାବର୍ତ୍ତନଶୀଳ
+• କୌଣସି ନୂଆ ପଦାର୍ଥ ସୃଷ୍ଟି ହୁଏ ନାହିଁ
+
+ଉଦାହରଣ:
+1. ଅବସ୍ଥା ପରିବର୍ତ୍ତନ:
+   • ତରଳାଇବା: କଠିନ → ତରଳ (ବରଫ ପାଣି ହେବା)
+   • ଜମାଇବା: ତରଳ → କଠିନ (ପାଣି ବରଫ ହେବା)
+   • ବାଷ୍ପୀଭୂତ: ତରଳ → ଗ୍ୟାସ୍ (ପାଣି ବାଷ୍ପ ହେବା)
+   • ଘନୀଭୂତ: ଗ୍ୟାସ୍ → ତରଳ (ବାଷ୍ପ ପାଣି ହେବା)
+
+2. ଆକୃତି ପରିବର୍ତ୍ତନ:
+   • ବଙ୍କା କରିବା: ଧାତୁ ଦଣ୍ଡ, ପ୍ଲାଷ୍ଟିକ୍ ରୁଲର୍
+   • କାଟିବା: କାଗଜ, କାଠ, କପଡା
+   • ଚୂର୍ଣ୍ଣ କରିବା: କ୍ୟାନ୍, କାଗଜ ଗୋଲା
+
+3. ଦ୍ରବୀଭୂତ ହେବା:
+   • ପାଣିରେ ଚିନି
+   • ପାଣିରେ ଲୁଣ
+   • ପାଣିରେ କଫି
+
+4. ମିଶ୍ରଣ:
+   • ବାଲି ଏବଂ ଲୁଣ
+   • ବିଭିନ୍ନ ରଙ୍ଗର ମାଣିକ୍
+   • ବିଭିନ୍ନ ଶସ୍ୟ
+
+ରାସାୟନିକ ପରିବର୍ତ୍ତନ:
+-------------------------
+• ନୂତନ ପଦାର୍ଥ ସୃଷ୍ଟି ହୁଏ
+• ସାଧାରଣତଃ ଅପ୍ରତ୍ୟାବର୍ତ୍ତନଶୀଳ
+• ରାସାୟନିକ ଗଠନ ପରିବର୍ତ୍ତନ ହୁଏ
+
+ଉଦାହରଣ:
+1. ଜଳିବା:
+   • କାଠ → ପାଉଁଶ + ଧୂଆଁ + ଗ୍ୟାସ୍
+   • କାଗଜ → ପାଉଁଶ + ଧୂଆଁ
+   • ଇନ୍ଧନ → ତାପ + ଆଲୋକ + ଗ୍ୟାସ୍
+
+2. କଳଙ୍କି ହେବା:
+   • ଲୌହ + ଅମ୍ଳଜାନ + ପାଣି → କଳଙ୍କ (ଲୌହ ଅକ୍ସାଇଡ୍)
+
+3. ରାନ୍ଧିବା:
+   • କଞ୍ଚା ଖାଦ୍ୟ → ସିଦ୍ଧ ଖାଦ୍ୟ (ପ୍ରୋଟିନ୍, କାର୍ବୋହାଇଡ୍ରେଟ୍ରେ ରାସାୟନିକ ପରିବର୍ତ୍ତନ)
+
+4. ପାଚନ:
+   • ଶରୀରରେ ଏନଜାଇମ୍ ଦ୍ୱାରା ଖାଦ୍ୟ ଭାଙ୍ଗି ଯାଏ
+
+5. ଫଟୋସିନ୍ଥେସିସ୍:
+   • କାର୍ବନ୍ ଡାଇଅକ୍ସାଇଡ୍ + ପାଣି → ଗ୍ଲୁକୋଜ୍ + ଅମ୍ଳଜାନ
+
+6. ବିଘଟନ:
+   • ଜୈବିକ ପଦାର୍ଥ → ସରଳ ପଦାର୍ଥ
+
+ପ୍ରତ୍ୟାବର୍ତ୍ତନଶୀଳ ବନାମ ଅପ୍ରତ୍ୟାବର୍ତ୍ତନଶୀଳ ପରିବର୍ତ୍ତନ:
+---------------------------------------------------------
+ପ୍ରତ୍ୟାବର୍ତ୍ତନଶୀଳ ପରିବର୍ତ୍ତନ:
+• ବରଫ ତରଳିବା
+• ଚିନି ଦ୍ରବୀଭୂତ ହେବା
+• ରବର ଟାଣିବା
+• ବେଲୁନ୍ ଫୁଲାଇବା
+• ଲୁଣ ଏବଂ ପାଣି ମିଶ୍ରଣ
+
+ଅପ୍ରତ୍ୟାବର୍ତ୍ତନଶୀଳ ପରିବର୍ତ୍ତନ:
+• କାଗଜ ଜଳିବା
+• ଅଣ୍ଡା ସିଦ୍ଧ ହେବା
+• ଲୌହ କଳଙ୍କି ହେବା
+• ପିଠା ସେକିବା
+• ଫଳ ପାଚିବା
+
+ପରିବର୍ତ୍ତନକୁ ପ୍ରଭାବିତ କରୁଥିବା କାରକ:
+-----------------------------------------
+1. ତାପମାତ୍ରା: ଉଚ୍ଚ ତାପମାତ୍ରା ପରିବର୍ତ୍ତନକୁ ତ୍ୱରାନ୍ୱିତ କରେ
+2. ଚାପ: ପଦାର୍ଥର ଅବସ୍ଥା ପରିବର୍ତ୍ତନ କରିପାରେ
+3. ପୃଷ୍ଠ କ୍ଷେତ୍ରଫଳ: ବଡ଼ ପୃଷ୍ଠ କ୍ଷେତ୍ରଫଳ ପ୍ରତିକ୍ରିୟାକୁ ତ୍ୱରାନ୍ୱିତ କରେ
+4. ଉତ୍ପ୍ରେରକ: ରାସାୟନିକ ପରିବର୍ତ୍ତନକୁ ତ୍ୱରାନ୍ୱିତ କରୁଥିବା ପଦାର୍ଥ
+5. ସାନ୍ଦ୍ରତା: ଉଚ୍ଚ ସାନ୍ଦ୍ରତା ପ୍ରତିକ୍ରିୟା ହାର ବୃଦ୍ଧି କରେ
+
+6. ମିଶ୍ରଣର ପୃଥକୀକରଣ
+==========================
+
+ପୃଥକୀକରଣ ପଦ୍ଧତି:
+---------------------
+1. ହାତରେ ବାଛିବା:
+   • ବଡ଼, ଦୃଶ୍ୟମାନ ପାର୍ଥକ୍ୟ ପାଇଁ
+   • ଉଦାହରଣ: ଚାଉଳରୁ ପଥର କାଢିବା
+
+2. ଚାଳିବା:
+   • ବିଭିନ୍ନ ଆକାରର କଣିକା ପାଇଁ
+   • ଉଦାହରଣ: ଅଟାରୁ ଚୋବା ଅଲଗା କରିବା
+
+3. ଛାଣିବା:
+   • ତରଳରୁ ଅଦ୍ରବଣୀୟ କଠିନ ପଦାର୍ଥ ପାଇଁ
+   • ଉଦାହରଣ: ପାଣିରୁ ବାଲି ଅଲଗା କରିବା
+
+4. ବାଷ୍ପୀଭୂତ:
+   • ତରଳରୁ ଦ୍ରବଣୀୟ କଠିନ ପଦାର୍ଥ ପାଇଁ
+   • ଉଦାହରଣ: ସମୁଦ୍ର ପାଣିରୁ ଲୁଣ ପାଇବା
+
+5. ପାକ:
+   • ବିଭିନ୍ନ ଉତ୍କଳନାଙ୍କ ଥିବା ତରଳ ପାଇଁ
+   • ଉଦାହରଣ: ପାଣିରୁ ମଦ୍ୟ ଅଲଗା କରିବା
+
+6. ଚୁମ୍ବକତ୍ଵ:
+   • ଅଚୁମ୍ବକୀୟ ପଦାର୍ଥରୁ ଚୁମ୍ବକୀୟ ପଦାର୍ଥ ପାଇଁ
+   • ଉଦାହରଣ: ବାଲିରୁ ଲୌହ କଣିକା ଅଲଗା କରିବା
+
+7. ଉତ୍ତାନ:
+   • ଅମିଶ୍ରଣୀୟ ତରଳ କିମ୍ବା ଭାରୀ କଠିନ ପଦାର୍ଥ ପାଇଁ
+   • ଉଦାହରଣ: ପାଣିରୁ ତେଲ ଅଲଗା କରିବା
+
+8. ନିମ୍ନସ୍ଥ:
+   • ଭାରୀ କଣିକା ତଳେ ବସିଯାଏ
+   • ଉଦାହରଣ: ପାଣିରେ କାଦୁଅ ବସିଯିବା
+
+9. ଝାଡିବା:
+   • ହାଲୁକା ଏବଂ ଭାରୀ କଣିକା ପାଇଁ
+   • ଉଦାହରଣ: ଶସ୍ୟରୁ ଚୋବା ଅଲଗା କରିବା
+
+7. ପୁନର୍ବ୍ୟବହାର ଏବଂ ଟିକାଉ କାମ
+==================================
+
+ପୁନର୍ବ୍ୟବହାରର ଗୁରୁତ୍ୱ:
+---------------------------
+1. ପ୍ରାକୃତିକ ସମ୍ପଦ ସଂରକ୍ଷଣ
+2. ଲ୍ୟାଣ୍ଡଫିଲ୍ ଅପଚୟ ହ୍ରାସ
+3. ଶକ୍ତି ସଞ୍ଚୟ
+4. ପ୍ରଦୂଷଣ ହ୍ରାସ
+5. ଚାକିରି ସୃଷ୍ଟି
+6. ପରିବେଶ ସୁରକ୍ଷା
+
+ପୁନର୍ବ୍ୟବହାର ପ୍ରକ୍ରିୟା:
+----------------------------
+1. କାଗଜ ପୁନର୍ବ୍ୟବହାର:
+   • ସଂଗ୍ରହ → ବିଭାଜନ → ପଲ୍ପିଙ୍ଗ୍ → ପରିଷ୍କରଣ → ନୂଆ କାଗଜ
+
+2. କାଚ ପୁନର୍ବ୍ୟବହାର:
+   • ସଂଗ୍ରହ → ବିଭାଜନ → ଚୂର୍ଣ୍ଣ କରିବା → ତରଳାଇବା → ନୂଆ କାଚ
+
+3. ପ୍ଲାଷ୍ଟିକ୍ ପୁନର୍ବ୍ୟବହାର:
+   • ସଂଗ୍ରହ → ବିଭାଜନ → ଧୋଇବା → ଚୂର୍ଣ୍ଣ କରିବା → ତରଳାଇବା → ନୂଆ ପ୍ଲାଷ୍ଟିକ୍
+
+4. ଧାତୁ ପୁନର୍ବ୍ୟବହାର:
+   • ସଂଗ୍ରହ → ବିଭାଜନ → ତରଳାଇବା → ପରିଷ୍କରଣ → ନୂଆ ଧାତୁ
+
+ଜୈବ ବିଘଟନୀୟ ବନାମ ଅଜୈବ ବିଘଟନୀୟ:
+---------------------------------------
+ଜୈବ ବିଘଟନୀୟ:
+• ପ୍ରାକୃତିକ ପ୍ରକ୍ରିୟା ଦ୍ୱାରା ବିଘଟିତ ହୋଇପାରେ
+• ଉଦାହରଣ: କାଗଜ, ଖାଦ୍ୟ ଅପଚୟ, କପଡା, କାଠ
+• ପରିବେଶ ବନ୍ଧୁତ୍ୱପୂର୍ଣ୍ଣ
+
+ଅଜୈବ ବିଘଟନୀୟ:
+• ପ୍ରାକୃତିକ ଭାବେ ବିଘଟିତ ହୋଇପାରେ ନାହିଁ
+• ଉଦାହରଣ: ପ୍ଲାଷ୍ଟିକ୍, କାଚ, ଧାତୁ
+• ପରିବେଶ ପ୍ରଦୂଷଣ ଘଟାଏ
+
+ଟିକାଉ ଅଭ୍ୟାସ:
+-----------------
+1. ହ୍ରାସ: କମ୍ ପଦାର୍ଥ ବ୍ୟବହାର
+2. ପୁନର୍ବ୍ୟବହାର: ଜିନିଷଗୁଡିକୁ ଏକାଧିକ ଥର ବ୍ୟବହାର
+3. ପୁନର୍ବ୍ୟବହାର: ଅପଚୟକୁ ନୂଆ ଉତ୍ପାଦରେ ପରିଣତ କରିବା
+4. ଜୈବ ବିଘଟନୀୟ ପଦାର୍ଥ ବାଛିବା
+5. ଏକବାର ବ୍ୟବହାର ଯୋଗ୍ୟ ପ୍ଲାଷ୍ଟିକ୍ ଏଡ଼ାଇବା
+6. ଜଳ ଏବଂ ଶକ୍ତି ସଂରକ୍ଷଣ
+7. ଗଛ ଲଗାଇବା ଏବଂ ହରିତ ଅଞ୍ଚଳ ରକ୍ଷଣାବେକ୍ଷଣ
+
+8. ମୁଖ୍ୟ ପରିଭାଷା
+===================
+• ପଦାର୍ଥ: ଯାହା ଦ୍ୱାରା ବସ୍ତୁଗୁଡିକ ତିଆରି
+• ଗୁଣ: ଏକ ପଦାର୍ଥର ବୈଶିଷ୍ଟ୍ୟ
+• ସ୍ବଚ୍ଛ: ସ୍ପଷ୍ଟ ଭାବେ ଆଲୋକ ପାରହେବାର ଅନୁମତି ଦିଏ
+• ଅସ୍ବଚ୍ଛ: ଆଲୋକ ପାରହେବାର ଅନୁମତି ଦିଏ ନାହିଁ
+• ଦ୍ରବଣୀୟ: ପାଣିରେ ଦ୍ରବୀଭୂତ ହୋଇପାରେ
+• ଅଦ୍ରବଣୀୟ: ପାଣିରେ ଦ୍ରବୀଭୂତ ହୋଇପାରେ ନାହିଁ
+• ସୁପାରିକ: ତାପ/ବିଦ୍ୟୁତ୍ ପ୍ରବାହିତ ହେବାର ଅନୁମତି ଦିଏ
+• ଇନ୍ସୁଲେଟର୍: ତାପ/ବିଦ୍ୟୁତ୍ ପ୍ରବାହିତ ହେବାର ଅନୁମତି ଦିଏ ନାହିଁ
+• ଭୌତିକ ପରିବର୍ତ୍ତନ: ନୂଆ ପଦାର୍ଥ ବିନା ଆକାରରେ ପରିବର୍ତ୍ତନ
+• ରାସାୟନିକ ପରିବର୍ତ୍ତନ: ନୂତନ ପଦାର୍ଥ ସୃଷ୍ଟି
+• ପ୍ରତ୍ୟାବର୍ତ୍ତନଶୀଳ ପରିବର୍ତ୍ତନ: ପୂର୍ବାବସ୍ଥାକୁ ଫେରାଇ ହେବ
+• ଅପ୍ରତ୍ୟାବର୍ତ୍ତନଶୀଳ ପରିବର୍ତ୍ତନ: ପୂର୍ବାବସ୍ଥାକୁ ଫେରାଇ ହେବ ନାହିଁ
+• ମିଶ୍ରଣ: ଦୁଇ କିମ୍ବା ଅଧିକ ପଦାର୍ଥ ଭୌତିକ ଭାବେ ମିଶ୍ରିତ
+• ଜୈବ ବିଘଟନୀୟ: ପ୍ରାକୃତିକ ଭାବେ ବିଘଟିତ ହୋଇପାରେ
+• ପୁନର୍ବ୍ୟବହାର: ଅପଚୟକୁ ପୁନର୍ବ୍ୟବହାରଯୋଗ୍ୟ ପଦାର୍ଥରେ ପରିଣତ କରିବା
+
+9. ସମୀକ୍ଷା ପ୍ରଶ୍ନ
+===================
+
+ସଂକ୍ଷିପ୍ତ ଉତ୍ତର ପ୍ରଶ୍ନ:
+1. ସ୍ବଚ୍ଛତା ଉପରେ ଆଧାରିତ ପଦାର୍ଥର ତିନି ପ୍ରକାର କ'ଣ?
+2. ସୁପାରିକ ଏବଂ ଇନ୍ସୁଲେଟର୍ର ପ୍ରତ୍ୟେକରୁ ଦୁଇଟି ଉଦାହରଣ ଦିଅନ୍ତୁ।
+3. ଭୌତିକ ଏବଂ ରାସାୟନିକ ପରିବର୍ତ୍ତନ ମଧ୍ୟରେ ପାର୍ଥକ୍ୟ କ'ଣ?
+4. ମିଶ୍ରଣ ପୃଥକୀକରଣର ତିନି ପଦ୍ଧତିର ନାମ କୁହନ୍ତୁ।
+5. ପୁନର୍ବ୍ୟବହାର କାହିଁକି ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ?
+
+ଦୀର୍ଘ ଉତ୍ତର ପ୍ରଶ୍ନ:
+1. ଉଦାହରଣ ସହ ବିଭିନ୍ନ ମାନଦଣ୍ଡ ଉପରେ ଆଧାରିତ ବସ୍ତୁଗୁଡିକୁ ଶ୍ରେଣୀବିଭାଗ କରନ୍ତୁ।
+2. ଉଦାହରଣ ସହ ପଦାର୍ଥର ବିଭିନ୍ନ ଗୁଣ ବ୍ୟାଖ୍ୟା କରନ୍ତୁ।
+3. ଉଦାହରଣ ସହ ଭୌତିକ ଏବଂ ରାସାୟନିକ ପରିବର୍ତ୍ତନ ବର୍ଣ୍ଣନା କରନ୍ତୁ।
+4. ମିଶ୍ରଣ ପୃଥକୀକରଣର ବିଭିନ୍ନ ପଦ୍ଧତି ବ୍ୟାଖ୍ୟା କରନ୍ତୁ।
+5. ପୁନର୍ବ୍ୟବହାର ଏବଂ ଟିକାଉ ଅଭ୍ୟାସର ଗୁରୁତ୍ୱ ଆଲୋଚନା କରନ୍ତୁ।
+
+ବ୍ୟାବହାରିକ କାର୍ଯ୍ୟକଳାପ:
+1. ବିଭିନ୍ନ ବସ୍ତୁ ସଂଗ୍ରହ କରି ପଦାର୍ଥ ଅନୁସାରେ ଶ୍ରେଣୀବିଭାଗ କରନ୍ତୁ।
+2. ପଦାର୍ଥଗୁଡିକର ସ୍ବଚ୍ଛତା, ନମନୀୟତା, ଏବଂ ସୁପାରିକତା ପରୀକ୍ଷା କରନ୍ତୁ।
+3. ପ୍ରତ୍ୟାବର୍ତ୍ତନଶୀଳ ଏବଂ ଅପ୍ରତ୍ୟାବର୍ତ୍ତନଶୀଳ ପରିବର୍ତ୍ତନ ପ୍ରଦର୍ଶନ କରନ୍ତୁ।
+4. ବିଭିନ୍ନ ପଦ୍ଧତି ବ୍ୟବହାର କରି ଏକ ମିଶ୍ରଣ ପୃଥକ କରନ୍ତୁ।
+5. ଆପଣଙ୍କ ଘର/ବିଦ୍ୟାଳୟ ପାଇଁ ଏକ ପୁନର୍ବ୍ୟବହାର ଯୋଜନା ପ୍ରସ୍ତୁତ କରନ୍ତୁ।
+
+====================================
+କ୍ରେଡିଟ୍ ଏବଂ କୃତଜ୍ଞତା
+====================================
+ପ୍ରସ୍ତୁତକାରୀ: STEM ଲର୍ନ ଓଡ଼ିଶା ଦଳ
+ପାଇଁ: ଷଷ୍ଠ ଶ୍ରେଣୀର ଛାତ୍ରଛାତ୍ରୀ
+ତାରିଖ: ${new Date().toLocaleDateString()}
+
+====================================
+ମନେରଖିବେ:
+• ପ୍ରତ୍ୟେକ ପଦାର୍ଥର ଅନନ୍ୟ ଗୁଣ ଥାଏ
+• ବିଭିନ୍ନ ବ୍ୟବହାର ପାଇଁ ପଦାର୍ଥ ବୁଝି ଶୁଣି ବାଛିବା
+• ହ୍ରାସ, ପୁନର୍ବ୍ୟବହାର, ପୁନର୍ବ୍ୟବହାର
+• ଭବିଷ୍ୟତ ପିଢି ପାଇଁ ଆମ ପରିବେଶ ସୁରକ୍ଷା
+
+====================================
+ଟିପ୍ପଣୀର ଶେଷ
+====================================`;
+        }
+
+        function generateFlashcards() {
+            return `OBJECTS & MATERIALS FLASHCARDS
+====================================
+
+STEM Learn Odisha - Class 6 Science
+====================================
+
+FLASHCARD SET - OBJECTS & MATERIALS
+Total Cards: 10
+
+====================================
+
+CARD 1:
+Category: Material Properties
+Question: What are the main properties used to classify materials?
+Answer: Materials are classified based on properties like hardness (ability to resist scratching), transparency (ability to allow light through), flexibility (ability to bend without breaking), conductivity (ability to conduct heat/electricity), solubility (ability to dissolve), and density (mass per unit volume). Understanding these properties helps us choose the right material for specific uses.
+
+CARD 2:
+Category: Optical Properties
+Question: Explain the difference between transparent, translucent, and opaque materials with examples
+Answer: Transparent materials allow light to pass through clearly (e.g., glass, clear plastic). Translucent materials allow some light to pass through but objects appear blurry (e.g., frosted glass, wax paper). Opaque materials do not allow any light to pass through (e.g., wood, metal, bricks). This property determines how materials are used in windows, lampshades, and walls.
+
+CARD 3:
+Category: Thermal/Electrical
+Question: What are conductors and insulators? Give examples of each
+Answer: Conductors are materials that allow heat or electricity to pass through easily. Examples: Metals like copper, aluminum, iron (good for electrical wires, cooking utensils). Insulators are materials that do not allow heat or electricity to pass through easily. Examples: Wood, plastic, rubber, glass (good for handles, electrical safety equipment).
+
+CARD 4:
+Category: Changes in Matter
+Question: Describe reversible and irreversible changes with examples
+Answer: Reversible changes can be undone and the original substance can be recovered. Examples: Melting ice (ice → water → ice), stretching rubber, dissolving sugar in water. Irreversible changes cannot be undone and new substances are formed. Examples: Burning paper (ash), cooking food, rusting iron (rust), baking a cake. Chemical changes are usually irreversible.
+
+CARD 5:
+Category: States of Matter
+Question: What are the different states of matter and how do they change?
+Answer: Three main states: 1) Solid - definite shape and volume (e.g., ice, wood). 2) Liquid - definite volume but no definite shape (e.g., water, oil). 3) Gas - no definite shape or volume (e.g., air, steam). Changes: Melting (solid→liquid), Freezing (liquid→solid), Evaporation (liquid→gas), Condensation (gas→liquid), Sublimation (solid→gas).
+
+CARD 6:
+Category: Material Selection
+Question: How are materials chosen for specific objects? Give examples
+Answer: Materials are chosen based on required properties: 1) Windows → Glass (transparent, weather-resistant). 2) Cooking pots → Aluminum/Steel (good heat conductors). 3) Electric wires → Copper (excellent electrical conductor). 4) Furniture → Wood (strong, can be shaped). 5) Raincoats → Plastic/Rubber (waterproof). 6) Buildings → Bricks/Concrete (strong, durable).
+
+CARD 7:
+Category: Environmental Impact
+Question: What is biodegradability and why is it important?
+Answer: Biodegradable materials can be broken down by natural processes (bacteria, fungi). Examples: Paper, cotton, wood, food waste. Non-biodegradable materials cannot be broken down naturally. Examples: Plastic, glass, metals. Importance: Biodegradable materials reduce pollution and waste accumulation, while non-biodegradable materials cause environmental problems and need proper disposal/recycling.
+
+CARD 8:
+Category: Sustainability
+Question: Explain the process of recycling different materials
+Answer: Recycling converts waste materials into new products: 1) Paper → Pulped, cleaned, made into new paper. 2) Glass → Crushed, melted, molded into new glass. 3) Metals → Melted, purified, shaped into new items. 4) Plastics → Sorted by type, shredded, melted, reformed. Benefits: Conserves resources, reduces landfill waste, saves energy, reduces pollution.
+
+CARD 9:
+Category: Mixtures
+Question: What are mixtures and how can they be separated?
+Answer: Mixtures contain two or more substances physically combined. Separation methods: 1) Hand picking (stones from rice). 2) Sieving (flour from bran). 3) Filtration (sand from water). 4) Evaporation (salt from water). 5) Magnetism (iron from sand). 6) Decantation (oil from water). Each method uses differences in properties like size, solubility, or magnetic attraction.
+
+CARD 10:
+Category: Material Types
+Question: Compare natural and synthetic materials with examples
+Answer: Natural materials come from nature without human processing. Examples: Wood, cotton, wool, leather, stone, silk. Synthetic materials are human-made through chemical processes. Examples: Plastic, nylon, polyester, glass, steel, ceramic. Natural materials are often biodegradable but limited, while synthetic materials offer more variety and specific properties but can cause environmental issues.
+
+====================================
+HOW TO USE THESE FLASHCARDS:
+1. Print on thick paper or cardstock
+2. Cut along the dotted lines
+3. Fold each card in half
+4. Glue the front and back together
+5. Use for regular revision
+6. Test yourself by looking at the question and trying to recall the answer
+7. Shuffle cards for random practice
+
+====================================
+TIPS FOR EFFECTIVE LEARNING:
+• Review flashcards daily
+• Start with 5-10 minutes per day
+• Say answers out loud
+• Create your own flashcards for difficult topics
+• Study with friends for group practice
+
+====================================
+Prepared by: STEM Learn Odisha
+Date: ${new Date().toLocaleDateString()}
+====================================`;
+        }
+
+        // Show notification function
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            
+            if (type === 'error') {
+                notification.style.background = '#e53e3e';
+            } else if (type === 'success') {
+                notification.style.background = '#38a169';
+            }
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Log download activity
+        function logDownloadActivity(resourceType) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            const activity = {
+                userId: user.id,
+                resourceType: resourceType,
+                timestamp: new Date().toISOString(),
+                page: 'objects.html'
+            };
+            
+            // Save to localStorage
+            let activities = JSON.parse(localStorage.getItem('downloadActivities')) || [];
+            activities.push(activity);
+            localStorage.setItem('downloadActivities', JSON.stringify(activities));
+        }
+
+        // Progress tracking
+        function updateProgress(category, points) {
+            const progressBars = {
+                'daily': document.getElementById('daily-progress'),
+                'discrimination': document.getElementById('discrimination-progress'),
+                'changes': document.getElementById('changes-progress'),
+                'overall': document.getElementById('overall-progress')
+            };
+            
+            const progressValues = {
+                'daily': document.getElementById('daily-progress-value'),
+                'discrimination': document.getElementById('discrimination-progress-value'),
+                'changes': document.getElementById('changes-progress-value'),
+                'overall': document.getElementById('overall-progress-value')
+            };
+            
+            // Update specific category
+            let currentWidth = parseInt(progressBars[category].style.width);
+            if (currentWidth + points <= 100) {
+                progressBars[category].style.width = (currentWidth + points) + '%';
+                progressValues[category].textContent = (currentWidth + points) + '%';
+            } else {
+                progressBars[category].style.width = '100%';
+                progressValues[category].textContent = '100%';
+            }
+            
+            // Update overall progress
+            let overallWidth = (
+                parseInt(progressBars['daily'].style.width) +
+                parseInt(progressBars['discrimination'].style.width) +
+                parseInt(progressBars['changes'].style.width)
+            ) / 3;
+            
+            progressBars['overall'].style.width = overallWidth + '%';
+            progressValues['overall'].textContent = Math.round(overallWidth) + '%';
+        }
+    </script>
+</body>
+</html>

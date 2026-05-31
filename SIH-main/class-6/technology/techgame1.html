@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Computer Detective - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin:0; padding:0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: #f0f7ff; color:#1e293b; line-height:1.6; overflow-x:hidden; }
+        .container { width:100%; max-width:1200px; margin:0 auto; padding:0 20px; }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #2a69ac;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text h1 span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-pic {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 180px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f7fa;
+        }
+
+        .dropdown-item i {
+            color: #3182ce;
+            width: 20px;
+        }
+
+        /* Language Options */
+        .language-options {
+            position: absolute;
+            top: 60px;
+            right: 120px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 120px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .language-options.show {
+            display: block;
+        }
+
+        .language-option {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .language-option:last-child {
+            border-bottom: none;
+        }
+
+        .language-option:hover {
+            background: #f5f7fa;
+        }
+
+        /* Instructions Modal */
+        .instructions-modal { display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 2000; align-items: center; justify-content: center; }
+        .instructions-content { background: white; border-radius: 20px; width: 90%; max-width: 700px; padding: 30px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); position: relative; text-align: center; }
+        .instructions-title { font-size: 2rem; margin-bottom: 20px; color: #1a365d; font-weight: 700; }
+        .instructions-text { color: #64748b; margin-bottom: 25px; line-height: 1.6; text-align: left; font-size: 1.1rem; }
+        .instructions-list { margin-left: 20px; margin-bottom: 25px; }
+        .instructions-list li { margin-bottom: 10px; }
+        .start-game-btn { padding: 15px 40px; background: linear-gradient(135deg, #38b2ac 0%, #2c9a94 100%); color: white; border: none; border-radius: 10px; font-size: 1.2rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 20px; }
+        .start-game-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(56, 178, 172, 0.3); }
+
+        /* game header */
+        .game-header { background: linear-gradient(rgba(14,42,71,0.85),rgba(26,54,93,0.9)), url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'); background-size:cover; background-position:center; color:white; padding:50px 0; text-align:center; }
+        .game-header h1 { font-size:2.8rem; margin-bottom:12px; font-weight:700; text-shadow:0 2px 4px rgba(0,0,0,0.2); }
+        .game-header p { font-size:1.1rem; max-width:800px; margin:0 auto; font-weight:300; opacity:0.95; }
+
+        /* game stats (second UI) */
+        .game-stats { display:flex; justify-content:space-between; align-items:center; background:white; padding:15px 25px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.08); margin:20px auto; max-width:1000px; gap:12px; flex-wrap:wrap; }
+        .timer, .score, .hints { display:flex; align-items:center; gap:10px; font-size:1.1rem; font-weight:600; color:#1a365d; }
+        .timer i { color:#e53e3e; }
+        .score i { color:#38a169; }
+        .hints i { color:#d69e2e; }
+        .progress-container { width:200px; height:12px; background:#e2e8f0; border-radius:10px; overflow:hidden; }
+        .progress-bar { height:100%; background:#3182ce; border-radius:10px; transition: width 0.5s ease; }
+
+        /* game area */
+        .game-area { padding:40px 0 60px; }
+        .game-container { display:grid; grid-template-columns:1fr 1fr; gap:30px; max-width:1000px; margin:0 auto 40px auto; }
+        .drop-zone { background: rgba(255,255,255,0.95); border-radius:25px; padding:25px; box-shadow:0 10px 30px rgba(0,0,0,0.08); min-height:350px; display:flex; flex-direction:column; border:3px dashed #cbd5e0; transition: all 0.3s ease; position:relative; }
+        .drop-zone.highlight { border-color:#4299e1; background: rgba(235,248,255,0.95); transform:scale(1.03); }
+        .zone-header { display:flex; align-items:center; gap:15px; margin-bottom:18px; }
+        .zone-icon { width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.6rem; }
+        .hardware-icon { background: linear-gradient(45deg,#4299e1,#3182ce); color:white; }
+        .software-icon { background: linear-gradient(45deg,#ed8936,#dd6b20); color:white; }
+        .zone-title { font-size:1.4rem; font-weight:700; color:#1a365d; }
+
+        .zone-items { display:flex; flex-wrap:wrap; gap:12px; min-height:160px; align-content:flex-start; }
+
+        .component-items { display:flex; flex-wrap:wrap; gap:18px; justify-content:center; margin-top:30px; padding:22px; background: rgba(255,255,255,0.1); border-radius:16px; }
+        .component-item { width:110px; height:110px; background: linear-gradient(145deg,#ffffff,#f0f4f8); border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:grab; box-shadow:0 8px 20px rgba(0,0,0,0.06); transition:all 0.25s ease; user-select:none; border:2px solid rgba(255,255,255,0.3); }
+        .component-item:hover { transform:translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.15); }
+        .component-item.dragging { opacity:0.85; transform:scale(1.08) rotate(8deg); z-index:1200; box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+        .component-icon { font-size:2.6rem; margin-bottom:8px; }
+        .component-name { font-size:0.95rem; font-weight:700; color:#2d3748; text-align:center; }
+
+        /* modal */
+        .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.75); z-index:2000; align-items:center; justify-content:center; }
+        .modal-content { background:linear-gradient(145deg,#ffffff,#f0f8ff); border-radius:24px; width:90%; max-width:700px; padding:36px; text-align:center; position:relative; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+        .modal-close { position:absolute; top:16px; right:16px; background:rgba(0,0,0,0.06); border:none; font-size:1.4rem; width:44px; height:44px; border-radius:50%; cursor:pointer; transition: all 0.3s ease; }
+        .modal-close:hover { background:rgba(0,0,0,0.12); transform: rotate(90deg); }
+        .modal-component-image { width:96px; height:96px; font-size:3.6rem; margin:0 auto 18px; display:flex; align-items:center; justify-content:center; border-radius:16px; background:rgba(255,255,255,0.9); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .modal-icon { font-size:3.6rem; margin-bottom:12px; }
+        .modal-title { font-size:2rem; font-weight:800; color:#1a365d; margin-bottom:8px; }
+        .modal-text { color:#4a5568; margin-bottom:18px; font-size:1rem; line-height:1.6; }
+        .modal-action { padding:12px 22px; background:linear-gradient(45deg,#4facfe,#00f2fe); color:white; border:none; border-radius:14px; font-weight:800; cursor:pointer; transition: all 0.3s ease; }
+        .modal-action:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(79, 172, 254, 0.4); }
+
+        .level-complete { display:none; text-align:center; padding:28px; background:linear-gradient(145deg,#ffffff,#f7fafc); border-radius:20px; box-shadow:0 20px 40px rgba(0,0,0,0.08); max-width:700px; margin:24px auto; }
+        .next-level-btn { padding:10px 18px; background:linear-gradient(45deg,#38b2ac,#2c9a94); color:white; border:none; border-radius:12px; font-weight:800; cursor:pointer; transition: all 0.3s ease; }
+        .next-level-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(56, 178, 172, 0.4); }
+
+        .particles { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-1; }
+        .particle { position:absolute; width:4px; height:4px; background:rgba(255,255,255,0.5); border-radius:50%; animation: float-particle 18s infinite linear; }
+
+        @keyframes float-particle { 0% { transform: translateY(100vh) translateX(0px); opacity:0; } 10%{opacity:1;} 90%{opacity:1;} 100%{transform:translateY(-100px) translateX(100px); opacity:0;} }
+
+        /* Streak Counter */
+        .streak-counter { position: fixed; top: 50%; right: 20px; transform: translateY(-50%); background: linear-gradient(45deg, #ff6b6b, #ee5a24); color: white; padding: 18px 24px; border-radius: 50px; font-weight: 800; font-size: 1.2rem; box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5); z-index: 500; animation: streak-bounce 2s infinite; display: none; }
+        @keyframes streak-bounce {
+            0%, 100% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-55%) scale(1.1); }
+        }
+
+        /* Language-specific text styles */
+        .odia-text { font-family: 'Kalinga', 'Nirmala UI', 'Segoe UI', sans-serif; font-weight:600; }
+        .hindi-text { font-family: 'Nirmala UI', 'Segoe UI', sans-serif; font-weight:600; }
+
+        @media (max-width:968px) {
+            .game-container { grid-template-columns:1fr; gap:20px; }
+            .component-item { width:92px; height:92px; }
+            .game-stats { flex-direction:column; gap:10px; align-items:flex-start; }
+            .streak-counter { display: none !important; }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            nav ul {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    <div class="streak-counter" id="streak-counter">🔥 <span id="streak-count">0</span> Streak!</div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-microchip"></i>
+            </div>
+            <div class="logo-text">
+                <h1>STEM Learn Odisha</h1>
+                <p>Gamified Learning Platform</p>
+            </div>
+        </div>
+       
+        <nav>
+            <ul>
+                <li><a href="student-dashboard.html" id="navHome" data-translate="nav-dashboard">Dashboard</a></li>
+                <li><a href="computer-science.html" id="navCS" data-translate="nav-cs">Computer Science</a></li>
+                <li><a href="about.html" id="navAbout" data-translate="nav-about">About</a></li>
+                <li><a href="contact.html" id="navContact" data-translate="nav-contact">Contact</a></li>
+            </ul>
+        </nav>
+       
+        <div class="header-controls">
+            <button class="control-btn" id="languageToggle">
+                <i class="fas fa-globe"></i>
+            </button>
+           
+            <div class="profile-container">
+                <button class="profile-btn" id="profileToggle">
+                    <img src="" alt="Profile" class="profile-pic" id="headerProfilePic">
+                    <span id="headerUserName">Student</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+               
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" class="dropdown-item" id="dropdownProfile">
+                        <i class="fas fa-user"></i>
+                        <span data-translate="dropdown-profile">Profile</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownSettings">
+                        <i class="fas fa-cog"></i>
+                        <span data-translate="dropdown-settings">Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownLogout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span data-translate="dropdown-logout">Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Language Options -->
+    <div class="language-options" id="languageOptions">
+        <div class="language-option" data-lang="en">English</div>
+        <div class="language-option" data-lang="or">ଓଡ଼ିଆ</div>
+        <div class="language-option" data-lang="hi">हिन्दी</div>
+    </div>
+
+    <!-- Instructions modal -->
+    <div class="instructions-modal" id="instructions-modal">
+        <div class="instructions-content">
+            <div class="language-switcher" style="position: relative; top: 0; right: 0; margin: 0 auto 20px auto; width: fit-content; background: rgba(26, 54, 93, 0.1);">
+                <button class="lang-btn active" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+                <button class="lang-btn" data-lang="hi">हिन्दी</button>
+            </div>
+           
+            <h2 class="instructions-title" id="instructions-title">How to Play Computer Detective</h2>
+            <div class="instructions-text" id="instructions-text">
+                <p id="instructions-intro">Welcome to Computer Detective! Here's how to play:</p>
+                <ul class="instructions-list" id="instructions-list">
+                    <li id="instruction-1">Drag computer components to their correct category - either Hardware or Software.</li>
+                    <li id="instruction-2">Each correct answer earns you points and builds your streak.</li>
+                    <li id="instruction-3">Maintain your streak to earn bonus points.</li>
+                    <li id="instruction-4">Complete all items to finish the level.</li>
+                    <li id="instruction-5">Learn about different computer components and what they do!</li>
+                    <li id="instruction-6">Have fun learning about computer basics!</li>
+                </ul>
+                <p id="instructions-outro">Good luck and have fun becoming a computer detective!</p>
+            </div>
+            <button class="start-game-btn" id="start-game-btn">Start Game</button>
+        </div>
+    </div>
+
+    <!-- Game header -->
+    <section class="game-header" style="display:none;" id="game-header">
+        <div class="container">
+            <h1 data-translate="game-title">Computer Detective</h1>
+            <p data-translate="game-desc">Discover what makes a computer work! Drag each computer component to its correct category and become a computer expert!</p>
+        </div>
+    </section>
+
+    <!-- Game stats (second UI) -->
+    <div class="container" style="display:none;" id="game-stats-container">
+        <div class="game-stats">
+            <div class="timer">
+                <i class="fas fa-clock"></i>
+                <span id="time">03:00</span>
+            </div>
+
+            <div class="score">
+                <i class="fas fa-star"></i>
+                <span id="score">Score: 0</span>
+            </div>
+
+            <div class="hints">
+                <i class="fas fa-fire"></i>
+                <span id="streak">Streak: 0</span>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar" id="progress" style="width:0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game area -->
+    <section class="game-area" style="display:none;" id="game-area">
+        <div class="container">
+            <div class="game-container">
+                <div class="drop-zone" id="hardware-zone">
+                    <div class="zone-header">
+                        <div class="zone-icon hardware-icon"><i class="fas fa-desktop"></i></div>
+                        <h2 class="zone-title" data-translate="hardware-category">Hardware</h2>
+                    </div>
+                    <div class="zone-items" id="hardware-items"></div>
+                </div>
+
+                <div class="drop-zone" id="software-zone">
+                    <div class="zone-header">
+                        <div class="zone-icon software-icon"><i class="fas fa-code"></i></div>
+                        <h2 class="zone-title" data-translate="software-category">Software</h2>
+                    </div>
+                    <div class="zone-items" id="software-items"></div>
+                </div>
+            </div>
+
+            <div class="component-items" id="component-items"></div>
+
+            <div class="level-complete" id="level-complete">
+                <div class="badge"><i class="fas fa-medal"></i></div>
+                <h2 class="level-title" data-translate="level-title">Level Complete!</h2>
+                <p class="level-text" data-translate="level-text">Congratulations! You've identified the computer components correctly. You're becoming a real computer detective!</p>
+                <button class="next-level-btn" id="play-again-btn" data-translate="play-again">Play Again</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback modal -->
+    <div class="modal" id="feedback-modal">
+        <div class="modal-content" id="modal-content">
+            <button class="modal-close" id="modal-close"><i class="fas fa-times"></i></button>
+
+            <div class="modal-component-image" id="modal-component-image">💻</div>
+            <div class="modal-icon correct-icon" id="modal-icon"><i class="fas fa-check-circle"></i></div>
+            <h2 class="modal-title" id="modal-title" data-translate="correct-title">Correct!</h2>
+            <p class="modal-text" id="modal-text">Great! CPU is computer hardware.</p>
+
+            <button class="modal-action" id="modal-action" data-translate="continue-btn">Continue</button>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+           
+            if (!user) {
+                // Redirect to login if not authenticated
+                window.location.href = 'student-login.html';
+                return;
+            }
+           
+            // Load user data
+            loadUserData(user);
+            
+            // Initialize the game
+            init();
+        });
+
+        // Load user data into the page
+        function loadUserData(user) {
+            document.getElementById('headerUserName').textContent = user.fullName;
+            document.getElementById('headerProfilePic').src = user.profilePicture ? `uploads/${user.profilePicture}` : 'default-profile.png';
+        }
+
+        /* ---- DATA - CHANGED TO COMPUTER COMPONENTS ---- */
+        const computerItems = [
+            { id: 1, name: { en: "CPU", or: "CPU", hi: "सीपीयू" }, icon: "⚙️", type: "hardware", info: { en: "CPU (Central Processing Unit) is the brain of the computer that executes instructions and processes data.", or: "CPU (କେନ୍ଦ୍ରୀୟ ପ୍ରୋସେସିଂ ୟୁନିଟ୍) କମ୍ପ୍ୟୁଟରର ମସ୍ତିଷ୍କ ଯାହା ନିର୍ଦ୍ଦେଶାବଳୀ କାର୍ଯ୍ୟକାରୀ କରେ ଏବଂ ଡାଟା ପ୍ରକ୍ରିୟା କରେ।", hi: "सीपीयू (सेंट्रल प्रोसेसिंग यूनिट) कंप्यूटर का मस्तिष्क है जो निर्देशों को निष्पादित करता है और डेटा को प्रोसेस करता है।" } },
+            { id: 2, name: { en: "Windows", or: "ୱିଣ୍ଡୋସ୍", hi: "विंडोज" }, icon: "🪟", type: "software", info: { en: "Windows is an operating system software developed by Microsoft.", or: "ୱିଣ୍ଡୋସ୍ ହେଉଛି ମାଇକ୍ରୋସଫ୍ଟ ଦ୍ୱାରା ବିକଶିତ ଏକ ଅପରେଟିଂ ସିଷ୍ଟମ୍ ସଫ୍ଟୱେର୍।", hi: "विंडोज माइक्रोसॉफ्ट द्वारा विकसित एक ऑपरेटिंग सिस्टम सॉफ्टवेयर है।" } },
+            { id: 3, name: { en: "Monitor", or: "ମନିଟର୍", hi: "मॉनिटर" }, icon: "🖥️", type: "hardware", info: { en: "Monitor is a hardware output device that displays visual information from the computer.", or: "ମନିଟର୍ ହେଉଛି ଏକ ହାର୍ଡୱେର୍ ଆଉଟପୁଟ୍ ଉପକରଣ ଯାହା କମ୍ପ୍ୟୁଟରରୁ ଭିଜୁଆଲ୍ ସୂଚନା ପ୍ରଦର୍ଶନ କରେ।", hi: "मॉनिटर एक हार्डवेयर आउटपुट डिवाइस है जो कंप्यूटर से दृश्य जानकारी प्रदर्शित करता है।" } },
+            { id: 4, name: { en: "Mouse", or: "ମାଉସ୍", hi: "माउस" }, icon: "🖱️", type: "hardware", info: { en: "Mouse is a hardware input device used to control cursor movement on the screen.", or: "ମାଉସ୍ ହେଉଛି ଏକ ହାର୍ଡୱେର୍ ଇନପୁଟ୍ ଉପକରଣ ଯାହା ସ୍କ୍ରିନରେ କର୍ସର ଗତି ନିୟନ୍ତ୍ରଣ କରିବା ପାଇଁ ବ୍ୟବହୃତ ହୁଏ।", hi: "माउस एक हार्डवेयर इनपुट डिवाइस है जिसका उपयोग स्क्रीन पर कर्सर की गति को नियंत्रित करने के लिए किया जाता है।" } },
+            { id: 5, name: { en: "Photoshop", or: "ଫୋଟୋସପ୍", hi: "फोटोशॉप" }, icon: "🎨", type: "software", info: { en: "Photoshop is a software application for image editing and graphic design.", or: "ଫୋଟୋସପ୍ ହେଉଛି ଇମେଜ୍ ଏଡିଟିଂ ଏବଂ ଗ୍ରାଫିକ୍ ଡିଜାଇନ୍ ପାଇଁ ଏକ ସଫ୍ଟୱେର୍ ଆପ୍ଲିକେସନ୍।", hi: "फोटोशॉप इमेज संपादन और ग्राफिक डिजाइन के लिए एक सॉफ्टवेयर एप्लिकेशन है।" } },
+            { id: 6, name: { en: "RAM", or: "RAM", hi: "रैम" }, icon: "💾", type: "hardware", info: { en: "RAM (Random Access Memory) is hardware that provides temporary storage for running programs.", or: "RAM (ର୍ୟାଣ୍ଡମ୍ ଆକ୍ସେସ୍ ମେମୋରୀ) ହେଉଛି ହାର୍ଡୱେର୍ ଯାହା ଚାଲୁଥିବା ପ୍ରୋଗ୍ରାମ୍ ପାଇଁ ଅସ୍ଥାୟୀ ସଂଚୟ ପ୍ରଦାନ କରେ।", hi: "रैम (रैंडम एक्सेस मेमोरी) हार्डवेयर है जो चल रहे प्रोग्रामों के लिए अस्थायी भंडारण प्रदान करता है।" } },
+            { id: 7, name: { en: "Keyboard", or: "କିବୋର୍ଡ", hi: "कीबोर्ड" }, icon: "⌨️", type: "hardware", info: { en: "Keyboard is a hardware input device used to type text and enter commands.", or: "କିବୋର୍ଡ ହେଉଛି ଏକ ହାର୍ଡୱେର୍ ଇନପୁଟ୍ ଉପକରଣ ଯାହା ଟେକ୍ସଟ୍ ଟାଇପ୍ କରିବା ଏବଂ କମାଣ୍ଡ୍ ପ୍ରବେଶ କରିବା ପାଇଁ ବ୍ୟବହୃତ ହୁଏ।", hi: "कीबोर्ड एक हार्डवेयर इनपुट डिवाइस है जिसका उपयोग टेक्स्ट टाइप करने और कमांड दर्ज करने के लिए किया जाता है।" } },
+            { id: 8, name: { en: "Chrome", or: "କ୍ରୋମ୍", hi: "क्रोम" }, icon: "🌐", type: "software", info: { en: "Chrome is a web browser software developed by Google.", or: "କ୍ରୋମ୍ ହେଉଛି ଗୁଗଲ୍ ଦ୍ୱାରା ବିକଶିତ ଏକ ୱେବ୍ ବ୍ରାଉଜର୍ ସଫ୍ଟୱେର୍।", hi: "क्रोम गूगल द्वारा विकसित एक वेब ब्राउजर सॉफ्टवेयर है।" } },
+            { id: 9, name: { en: "Hard Drive", or: "ହାର୍ଡ ଡ୍ରାଇଭ୍", hi: "हार्ड ड्राइव" }, icon: "💿", type: "hardware", info: { en: "Hard Drive is hardware that stores data permanently using magnetic storage.", or: "ହାର୍ଡ ଡ୍ରାଇଭ୍ ହେଉଛି ହାର୍ଡୱେର୍ ଯାହା ଚୁମ୍ବକୀୟ ସଂରକ୍ଷଣ ବ୍ୟବହାର କରି ଡାଟା ସ୍ଥାୟୀ ଭାବରେ ସଂରକ୍ଷଣ କରେ।", hi: "हार्ड ड्राइव हार्डवेयर है जो चुंबकीय भंडारण का उपयोग करके डेटा को स्थायी रूप से संग्रहीत करता है।" } },
+            { id:10, name:{ en:"Word", or:"ୱାର୍ଡ", hi:"वर्ड" }, icon:"📝", type:"software", info:{ en:"Microsoft Word is word processing software for creating documents.", or:"ମାଇକ୍ରୋସଫ୍ଟ୍ ୱାର୍ଡ ହେଉଛି ଡକ୍ୟୁମେଣ୍ଟ୍ ସୃଷ୍ଟି କରିବା ପାଇଁ ୱାର୍ଡ ପ୍ରୋସେସିଂ ସଫ୍ଟୱେର୍।", hi:"माइक्रोसॉफ्ट वर्ड दस्तावेज बनाने के लिए वर्ड प्रोसेसिंग सॉफ्टवेयर है।" } },
+            { id:11, name:{ en:"Printer", or:"ପ୍ରିଣ୍ଟର୍", hi:"प्रिंटर" }, icon:"🖨️", type:"hardware", info:{ en:"Printer is a hardware output device that produces physical copies of digital documents.", or:"ପ୍ରିଣ୍ଟର୍ ହେଉଛି ଏକ ହାର୍ଡୱେର୍ ଆଉଟପୁଟ୍ ଉପକରଣ ଯାହା ଡିଜିଟାଲ୍ ଡକ୍ୟୁମେଣ୍ଟର ଭ physical ତିକ କପି ଉତ୍ପାଦନ କରେ।", hi:"प्रिंटर एक हार्डवेयर आउटपुट डिवाइस है जो डिजिटल दस्तावेजों की भौतिक प्रतियां तैयार करता है।" } },
+            { id:12, name:{ en:"Excel", or:"ଏକ୍ସେଲ୍", hi:"एक्सेल" }, icon:"📊", type:"software", info:{ en:"Microsoft Excel is spreadsheet software for data analysis and calculations.", or:"ମାଇକ୍ରୋସଫ୍ଟ୍ ଏକ୍ସେଲ୍ ହେଉଛି ଡାଟା ବିଶ୍ଳେଷଣ ଏବଂ ଗଣନା ପାଇଁ ସ୍ପ୍ରେଡସିଟ୍ ସଫ୍ଟୱେର୍।", hi:"माइक्रोसॉफ्ट एक्सेल डेटा विश्लेषण और गणना के लिए स्प्रेडशीट सॉफ्टवेयर है।" } },
+            { id:13, name:{ en:"Motherboard", or:"ମଦରବୋର୍ଡ", hi:"मदरबोर्ड" }, icon:"🔌", type:"hardware", info:{ en:"Motherboard is the main hardware circuit board that connects all components.", or:"ମଦରବୋର୍ଡ ହେଉଛି ମୁଖ୍ୟ ହାର୍ଡୱେର୍ ସର୍କିଟ୍ ବୋର୍ଡ ଯାହା ସମସ୍ତ ଉପାଦାନଗୁଡିକୁ ସଂଯୋଗ କରେ।", hi:"मदरबोर्ड मुख्य हार्डवेयर सर्किट बोर्ड है जो सभी घटकों को जोड़ता है।" } },
+            { id:14, name:{ en:"PowerPoint", or:"ପାୱରପଏଣ୍ଟ୍", hi:"पावरपॉइंट" }, icon:"📽️", type:"software", info:{ en:"Microsoft PowerPoint is presentation software for creating slideshows.", or:"ମାଇକ୍ରୋସଫ୍ଟ୍ ପାୱରପଏଣ୍ଟ୍ ହେଉଛି ସ୍ଲାଇଡଶୋ ସୃଷ୍ଟି କରିବା ପାଇଁ ପ୍ରେଜେଣ୍ଟେସନ୍ ସଫ୍ଟୱେର୍।", hi:"माइक्रोसॉफ्ट पावरपॉइंट स्लाइडशो बनाने के लिए प्रेजेंटेशन सॉफ्टवेयर है।" } },
+            { id:15, name:{ en:"GPU", or:"GPU", hi:"जीपीयू" }, icon:"🎮", type:"hardware", info:{ en:"GPU (Graphics Processing Unit) is hardware that handles graphics and visual computations.", or:"GPU (ଗ୍ରାଫିକ୍ସ ପ୍ରୋସେସିଂ ୟୁନିଟ୍) ହେଉଛି ହାର୍ଡୱେର୍ ଯାହା ଗ୍ରାଫିକ୍ସ ଏବଂ ଭିଜୁଆଲ୍ ଗଣନାକୁ ହ୍ୟାଣ୍ଡେଲ୍ କରେ।", hi:"जीपीयू (ग्राफिक्स प्रोसेसिंग यूनिट) हार्डवेयर है जो ग्राफिक्स और विजुअल गणनाओं को संभालता है।" } },
+            { id:16, name:{ en:"Linux", or:"ଲିନକ୍ସ", hi:"लिनक्स" }, icon:"🐧", type:"software", info:{ en:"Linux is an open-source operating system software.", or:"ଲିନକ୍ସ ହେଉଛି ଏକ ଓପେନ୍-ସୋର୍ସ୍ ଅପରେଟିଂ ସିଷ୍ଟମ୍ ସଫ୍ଟୱେର୍।", hi:"लिनक्स एक ओपन-सोर्स ऑपरेटिंग सिस्टम सॉफ्टवेयर है।" } },
+            { id:17, name:{ en:"Webcam", or:"ୱେବକ୍ୟାମ୍", hi:"वेबकैम" }, icon:"📹", type:"hardware", info:{ en:"Webcam is a hardware input device that captures video for video calls.", or:"ୱେବକ୍ୟାମ୍ ହେଉଛି ଏକ ହାର୍ଡୱେର୍ ଇନପୁଟ୍ ଉପକରଣ ଯାହା ଭିଡିଓ କଲ୍ ପାଇଁ ଭିଡିଓ କ୍ୟାପଚର୍ କରେ।", hi:"वेबकैम एक हार्डवेयर इनपुट डिवाइस है जो वीडियो कॉल के लिए वीडियो कैप्चर करता है।" } },
+            { id:18, name:{ en:"Antivirus", or:"ଆଣ୍ଟିଭାଇରସ୍", hi:"एंटीवायरस" }, icon:"🛡️", type:"software", info:{ en:"Antivirus is security software that protects computers from viruses.", or:"ଆଣ୍ଟିଭାଇରସ୍ ହେଉଛି ସୁରକ୍ଷା ସଫ୍ଟୱେର୍ ଯାହା କମ୍ପ୍ୟୁଟରଗୁଡିକୁ ଭାଇରସ୍ରୁ ରକ୍ଷା କରେ।", hi:"एंटीवायरस सुरक्षा सॉफ्टवेयर है जो कंप्यूटर को वायरस से बचाता है।" } },
+            { id:19, name:{ en:"Speakers", or:"ସ୍ପିକର୍", hi:"स्पीकर" }, icon:"🔊", type:"hardware", info:{ en:"Speakers are hardware output devices that produce sound from the computer.", or:"ସ୍ପିକର୍ ହେଉଛି ହାର୍ଡୱେର୍ ଆଉଟପୁଟ୍ ଉପକରଣ ଯାହା କମ୍ପ୍ୟୁଟରରୁ ଶବ୍ଦ ଉତ୍ପାଦନ କରେ।", hi:"स्पीकर हार्डवेयर आउटपुट डिवाइस हैं जो कंप्यूटर से ध्वनि उत्पन्न करते हैं।" } },
+            { id:20, name:{ en:"Python", or:"ପାଇଥନ୍", hi:"पायथन" }, icon:"🐍", type:"software", info:{ en:"Python is a programming language software used for coding applications.", or:"ପାଇଥନ୍ ହେଉଛି ଏକ ପ୍ରୋଗ୍ରାମିଂ ଭାଷା ସଫ୍ଟୱେର୍ ଯାହା କୋଡିଂ ଆପ୍ଲିକେସନ୍ ପାଇଁ ବ୍ୟବହୃତ ହୁଏ।", hi:"पायथन एक प्रोग्रामिंग भाषा सॉफ्टवेयर है जिसका उपयोग कोडिंग एप्लिकेशन के लिए किया जाता है।" } }
+        ];
+
+        /* ---- STATE ---- */
+        let currentLanguage = 'en';
+        let score = 0;
+        let correctAnswers = 0;
+        let streak = 0;
+        let timeLeft = 180;
+        let timerInterval = null;
+        let draggedItem = null;
+        let completedItems = [];
+        let isGameStarted = false;
+        let currentGameItems = [];
+
+        /* ---- ELEMENTS ---- */
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const componentItemsContainer = document.getElementById('component-items');
+        const hardwareZone = document.getElementById('hardware-zone');
+        const softwareZone = document.getElementById('software-zone');
+        const hardwareItems = document.getElementById('hardware-items');
+        const softwareItems = document.getElementById('software-items');
+        const scoreElement = document.getElementById('score');
+        const timeElement = document.getElementById('time');
+        const streakElement = document.getElementById('streak');
+        const progressElement = document.getElementById('progress');
+        const feedbackModal = document.getElementById('feedback-modal');
+        const modalContent = document.getElementById('modal-content');
+        const modalComponentImage = document.getElementById('modal-component-image');
+        const modalIcon = document.getElementById('modal-icon');
+        const modalTitle = document.getElementById('modal-title');
+        const modalText = document.getElementById('modal-text');
+        const modalAction = document.getElementById('modal-action');
+        const modalClose = document.getElementById('modal-close');
+        const levelComplete = document.getElementById('level-complete');
+        const playAgainBtn = document.getElementById('play-again-btn');
+        const instructionsModal = document.getElementById('instructions-modal');
+        const startGameBtn = document.getElementById('start-game-btn');
+        const gameHeader = document.getElementById('game-header');
+        const gameStatsContainer = document.getElementById('game-stats-container');
+        const gameArea = document.getElementById('game-area');
+        const streakCounter = document.getElementById('streak-counter');
+        const streakCountDisplay = document.getElementById('streak-count');
+
+        // Dashboard integration elements
+        const profileToggle = document.getElementById('profileToggle');
+        const profileDropdown = document.getElementById('profileDropdown');
+        const languageToggle = document.getElementById('languageToggle');
+        const languageOptions = document.getElementById('languageOptions');
+        const dropdownProfile = document.getElementById('dropdownProfile');
+        const dropdownSettings = document.getElementById('dropdownSettings');
+        const dropdownLogout = document.getElementById('dropdownLogout');
+        const navHome = document.getElementById('navHome');
+        const navCS = document.getElementById('navCS');
+        const navAbout = document.getElementById('navAbout');
+        const navContact = document.getElementById('navContact');
+
+        const translations = {
+            en: {
+                'nav-dashboard': 'Dashboard','nav-cs': 'Computer Science','nav-about':'About','nav-contact':'Contact',
+                'dropdown-profile': 'Profile','dropdown-settings': 'Settings','dropdown-logout': 'Logout',
+                'game-title':'Computer Detective','game-desc':'Discover what makes a computer work! Drag each computer component to its correct category and become a computer expert!',
+                'hardware-category':'Hardware','software-category':'Software',
+                'correct-title':'Awesome!','incorrect-title':'Try Again!',
+                'continue-btn':'Continue Adventure','level-title':'Level Complete!','level-text':"Congratulations! You've identified the computer components correctly. You're becoming a real computer detective!",
+                'play-again':'Play Again','instructions-title':'How to Play Computer Detective','instructions-intro':"Welcome to Computer Detective! Here's how to play:",
+                'instruction-1':'Drag computer components to their correct category - either Hardware or Software.',
+                'instruction-2':'Each correct answer earns you points and builds your streak.',
+                'instruction-3':'Maintain your streak to earn bonus points.','instruction-4':'Complete all items to finish the level.',
+                'instruction-5':'Learn about different computer components and what they do!',
+                'instruction-6':'Have fun learning about computer basics!','instructions-outro':'Good luck and have fun becoming a computer detective!','start-game-btn':'Start Game'
+            },
+            or: {
+                'nav-dashboard':'ଡ୍ୟାସବୋର୍ଡ','nav-cs': 'କମ୍ପ୍ୟୁଟର ବିଜ୍ଞାନ','nav-about':'ବିଷୟରେ','nav-contact':'ଯୋଗାଯୋଗ',
+                'dropdown-profile': 'ପ୍ରୋଫାଇଲ୍','dropdown-settings': 'ସେଟିଂସ୍','dropdown-logout': 'ଲଗଆଉଟ୍',
+                'game-title':'କମ୍ପ୍ୟୁଟର ଗବେଷକ','game-desc':'କମ୍ପ୍ୟୁଟର କେମିତି କାମ କରେ ଆବିଷ୍କାର କରନ୍ତୁ! ପ୍ରତ୍ୟେକ କମ୍ପ୍ୟୁଟର ଉପାଦାନକୁ ସଠିକ ବର୍ଗରେ ଟାଣନ୍ତୁ!',
+                'hardware-category':'ହାର୍ଡୱେର୍','software-category':'ସଫ୍ଟୱେର୍',
+                'correct-title':'ଚମତ୍କାର!','incorrect-title':'ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ!',
+                'continue-btn':'ଆଗକୁ ବଢ଼ନ୍ତୁ','level-title':'ସ୍ତର ସମ୍ପୂର୍ଣ୍ଣ!','level-text':'ଅଭିନନ୍ଦନ! ଆପଣ କମ୍ପ୍ୟୁଟର ଉପାଦାନଗୁଡ଼ିକୁ ସଠିକ ଭାବରେ ଚିହ୍ନିଛନ୍ତି!',
+                'play-again':'ପୁଣି ଖେଳନ୍ତୁ','instructions-title':'କମ୍ପ୍ୟୁଟର ଡିଟେକ୍ଟିଭ କିପରି ଖେଳିବେ','instructions-intro':'କମ୍ପ୍ୟୁଟର ଡିଟେକ୍ଟିଭକୁ ସ୍ୱାଗତ!',
+                'instruction-1':'କମ୍ପ୍ୟୁଟର ଉପାଦାନଗୁଡିକୁ ସେମାନଙ୍କ ସଠିକ ବର୍ଗରେ ଟାଣନ୍ତୁ - ହାର୍ଡୱେର୍ କିମ୍ବା ସଫ୍ଟୱେର୍।',
+                'instruction-2':'ପ୍ରତ୍ୟେକ ସଠିକ ଉତ୍ତର ଆପଣଙ୍କୁ ପଏଣ୍ଟ ଦେବ।','instruction-3':'ଧାରା ବଜାୟ ରଖନ୍ତୁ','instruction-4':'ସମସ୍ତ ଆଇଟମ୍ ସମାପ୍ତ କରନ୍ତୁ',
+                'instruction-5':'ବିଭିନ୍ନ କମ୍ପ୍ୟୁଟର ଉପାଦାନ ଏବଂ ସେମାନେ କଣ କରନ୍ତି ବିଷୟରେ ଶିଖନ୍ତୁ!','instruction-6':'ମଜା କରନ୍ତୁ','instructions-outro':'ଶୁଭକାମନା','start-game-btn':'ଖେଳ ଆରମ୍ଭ କରନ୍ତୁ'
+            },
+            hi: {
+                'nav-dashboard':'डैशबोर्ड','nav-cs': 'कंप्यूटर विज्ञान','nav-about':'हमारे बारे में','nav-contact':'संपर्क करें',
+                'dropdown-profile': 'प्रोफाइल','dropdown-settings': 'सेटिंग्स','dropdown-logout': 'लॉगआउट',
+                'game-title':'कंप्यूटर डिटेक्टिव','game-desc':'खोजें कि कंप्यूटर कैसे काम करता है! प्रत्येक कंप्यूटर घटक को उसकी सही श्रेणी में खींचें और कंप्यूटर विशेषज्ञ बनें!',
+                'hardware-category':'हार्डवेयर','software-category':'सॉफ्टवेयर',
+                'correct-title':'बहुत बढ़िया!','incorrect-title':'फिर से कोशिश करें!',
+                'continue-btn':'जारी रखें','level-title':'स्तर पूरा!','level-text':'बधाई हो! आपने कंप्यूटर घटकों को सही ढंग से पहचान लिया है।',
+                'play-again':'फिर से खेलें','instructions-title':'कंप्यूटर डिटेक्टिव कैसे खेलें','instructions-intro':'स्वागत है',
+                'instruction-1':'कंप्यूटर घटकों को उनकी सही श्रेणी में खींचें - हार्डवेयर या सॉफ्टवेयर।','instruction-2':'प्रत्येक सही उत्तर अंक अर्जित करता है।',
+                'instruction-3':'अपनी लगातार सफलता बनाए रखें','instruction-4':'सभी आइटम पूरे करें','instruction-5':'विभिन्न कंप्यूटर घटकों और उनके कार्यों के बारे में जानें!',
+                'instruction-6':'मज़ा करें','instructions-outro':'शुभकामनाएं','start-game-btn':'खेल शुरू करें'
+            }
+        };
+
+        /* ---- INIT ---- */
+        function init() {
+            createParticles();
+
+            // Add event listeners to all language buttons (including those in instructions)
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    switchLanguage(lang);
+                });
+            });
+
+            startGameBtn.addEventListener('click', startGame);
+            modalAction.addEventListener('click', closeModal);
+            modalClose.addEventListener('click', closeModal);
+            playAgainBtn.addEventListener('click', startGame);
+
+            // Dashboard integration event listeners
+            profileToggle.addEventListener('click', function() {
+                profileDropdown.classList.toggle('show');
+            });
+
+            languageToggle.addEventListener('click', function() {
+                languageOptions.classList.toggle('show');
+            });
+
+            // Language selection
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    switchLanguage(lang);
+                    languageOptions.classList.remove('show');
+                });
+            });
+
+            // Navigation between pages
+            dropdownProfile.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#profile';
+            });
+
+            dropdownSettings.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#settings';
+            });
+
+            dropdownLogout.addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('user');
+                window.location.href = 'student-login.html';
+            });
+
+            // Navigation menu items
+            navHome.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html';
+            });
+
+            navCS.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'computer-science.html';
+            });
+
+            navAbout.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('About page would open here');
+            });
+
+            navContact.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Contact page would open here');
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#languageToggle') && !e.target.closest('#languageOptions')) {
+                    languageOptions.classList.remove('show');
+                }
+               
+                if (!e.target.closest('#profileToggle') && !e.target.closest('#profileDropdown')) {
+                    profileDropdown.classList.remove('show');
+                }
+            });
+
+            switchLanguage('en');
+        }
+
+        function createParticles() {
+            const container = document.getElementById('particles');
+            container.innerHTML = '';
+            for (let i=0;i<18;i++){
+                const p = document.createElement('div'); p.className='particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.top = Math.random() * 100 + '%';
+                p.style.animationDelay = `${Math.random()*10}s`;
+                container.appendChild(p);
+            }
+        }
+
+        /* ---- COMPUTER ITEM UI + RANDOMIZATION ---- */
+        function createComponentItems() {
+            // Shuffle all computer items and select 8 random ones
+            const shuffled = [...computerItems].sort(() => Math.random() - 0.5);
+            const count = 8; // Same as original
+            currentGameItems = shuffled.slice(0, count);
+
+            componentItemsContainer.innerHTML = '';
+            currentGameItems.forEach((item, idx) => {
+                const el = document.createElement('div');
+                el.className = 'component-item';
+                el.draggable = true;
+                el.dataset.id = item.id;
+                el.dataset.type = item.type;
+                el.style.transitionDelay = `${idx * 30}ms`;
+                el.innerHTML = `<div class="component-icon">${item.icon}</div><div class="component-name">${item.name[currentLanguage]}</div>`;
+                componentItemsContainer.appendChild(el);
+            });
+        }
+
+        function setupDragAndDrop() {
+            const componentEls = document.querySelectorAll('.component-item');
+            const dropZones = document.querySelectorAll('.drop-zone');
+
+            componentEls.forEach(it => {
+                it.addEventListener('dragstart', dragStart);
+                it.addEventListener('dragend', dragEnd);
+            });
+
+            dropZones.forEach(z => {
+                z.addEventListener('dragover', dragOver);
+                z.addEventListener('dragenter', dragEnter);
+                z.addEventListener('dragleave', dragLeave);
+                z.addEventListener('drop', drop);
+            });
+        }
+
+        function dragStart(e) {
+            draggedItem = this;
+            e.dataTransfer.setData('text/plain', this.dataset.id);
+            this.classList.add('dragging');
+            setTimeout(()=> this.style.opacity = '0.5', 10);
+        }
+        function dragEnd() { this.classList.remove('dragging'); this.style.opacity='1'; }
+
+        function dragOver(e) { e.preventDefault(); }
+        function dragEnter(e) { e.preventDefault(); this.classList.add('highlight'); }
+        function dragLeave() { this.classList.remove('highlight'); }
+
+        function drop(e) {
+            e.preventDefault();
+            this.classList.remove('highlight');
+            const id = e.dataTransfer.getData('text/plain');
+            const item = computerItems.find(f => f.id == id);
+            const zoneType = this.id === 'hardware-zone' ? 'hardware' : 'software';
+            if (!item) return;
+            if (item.type === zoneType) handleCorrectAnswer(item, this);
+            else handleIncorrectAnswer(item, this);
+        }
+
+        /* ---- GAME LOGIC ---- */
+        function handleCorrectAnswer(item, zone) {
+            if (completedItems.includes(item.id)) return; // already placed
+            completedItems.push(item.id);
+
+            const basePoints = 10;
+            const streakBonus = Math.min(streak * 2, 20);
+            const pointsEarned = basePoints + streakBonus;
+            score += pointsEarned;
+            correctAnswers++;
+            streak++;
+
+            updateScore();
+            updateStreak();
+
+            // move element into zone visually
+            if (draggedItem) {
+                const clone = draggedItem.cloneNode(true);
+                clone.classList.remove('dragging');
+                clone.style.opacity = '1';
+                clone.draggable = false;
+                zone.querySelector('.zone-items').appendChild(clone);
+                draggedItem.style.display = 'none';
+            }
+
+            showFeedback(true, item);
+            createConfetti();
+
+            // complete if placed all items
+            if (correctAnswers >= currentGameItems.length) {
+                setTimeout(()=> completeLevel(), 800);
+            }
+        }
+
+        function handleIncorrectAnswer(item, zone) {
+            streak = 0;
+            updateStreak();
+            zone.classList.add('incorrect');
+            if (draggedItem) {
+                draggedItem.style.animation = 'shake 0.6s';
+                setTimeout(()=> draggedItem.style.animation = '', 600);
+            }
+            setTimeout(()=> zone.classList.remove('incorrect'), 900);
+            showFeedback(false, item);
+        }
+
+        /* ---- MODAL & FEEDBACK ---- */
+        function showFeedback(isCorrect, item) {
+            const modal = feedbackModal;
+            const icon = modalIcon;
+            modalComponentImage.textContent = item.icon;
+            if (isCorrect) {
+                modalContent.classList.remove('incorrect-modal');
+                modalContent.classList.add('correct-modal');
+                icon.innerHTML = '<i class="fas fa-check-circle" style="color:#48bb78;"></i>';
+                modalTitle.textContent = translations[currentLanguage]['correct-title'] || 'Correct!';
+                modalText.textContent = (currentLanguage === 'en') ? `${item.name.en} is ${item.type === 'hardware' ? 'physical computer hardware' : 'computer software'}. ${item.info.en}` :
+                                     (currentLanguage === 'or') ? `${item.name.or} ${item.type === 'hardware' ? 'ଭ physical ତିକ କମ୍ପ୍ୟୁଟର ହାର୍ଡୱେର୍' : 'କମ୍ପ୍ୟୁଟର ସଫ୍ଟୱେର୍'}। ${item.info.or}` :
+                                     `${item.name.hi} ${item.type === 'hardware' ? 'भौतिक कंप्यूटर हार्डवेयर है' : 'कंप्यूटर सॉफ्टवेयर है'}। ${item.info.hi}`;
+            } else {
+                modalContent.classList.remove('correct-modal');
+                modalContent.classList.add('incorrect-modal');
+                icon.innerHTML = '<i class="fas fa-times-circle" style="color:#f56565;"></i>';
+                modalTitle.textContent = translations[currentLanguage]['incorrect-title'] || 'Try Again!';
+                modalText.textContent = (currentLanguage === 'en') ?
+                    `${item.name.en} is actually ${item.type === 'hardware' ? 'physical computer hardware' : 'computer software'}, not ${item.type === 'hardware' ? 'software' : 'hardware'}. ${item.info.en}` :
+                    (currentLanguage === 'or') ? `${item.name.or} ପ୍ରକୃତରେ ${item.type === 'hardware' ? 'ଭ physical ତିକ କମ୍ପ୍ୟୁଟର ହାର୍ଡୱେର୍' : 'କମ୍ପ୍ୟୁଟର ସଫ୍ଟୱେର୍'}, ${item.type === 'hardware' ? 'ସଫ୍ଟୱେର୍ ନୁହେଁ' : 'ହାର୍ଡୱେର୍ ନୁହେଁ'}। ${item.info.or}` :
+                    `${item.name.hi} वास्तव में ${item.type === 'hardware' ? 'भौतिक कंप्यूटर हार्डवेयर है' : 'कंप्यूटर सॉफ्टवेयर है'}, ${item.type === 'hardware' ? 'सॉफ्टवेयर नहीं' : 'हार्डवेयर नहीं'}। ${item.info.hi}`;
+            }
+
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            feedbackModal.style.display = 'none';
+        }
+
+        /* ---- UI Updates ---- */
+        function updateScore() {
+            scoreElement.textContent = `Score: ${score}`;
+            const maxPossible = currentGameItems.length * 30; // approximate (base 10 + streak)
+            const pct = Math.min(100, Math.round((score / (maxPossible || 1)) * 100));
+            progressElement.style.width = `${pct}%`;
+        }
+
+        function updateStreak() {
+            streakElement.textContent = `Streak: ${streak}`;
+            streakCountDisplay.textContent = streak;
+           
+            // Show streak counter when streak is 3 or more
+            if (streak >= 3) {
+                streakCounter.style.display = 'block';
+            } else {
+                streakCounter.style.display = 'none';
+            }
+        }
+
+        /* ---- TIMER ---- */
+        function startTimer() {
+            clearInterval(timerInterval);
+            updateTimerDisplay();
+            timerInterval = setInterval(()=> {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    showTimeUpModal();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timeLeft/60);
+            const s = timeLeft % 60;
+            timeElement.textContent = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+        }
+
+        function showTimeUpModal() {
+            modalIcon.innerHTML = '<i class="fas fa-clock" style="color:#f56565;"></i>';
+            modalTitle.textContent = currentLanguage === 'en' ? "Time's Up!" : (currentLanguage === 'or' ? 'ସମୟ ସରିଗଲା!' : 'समय समाप्त!');
+            modalText.textContent = (currentLanguage === 'en') ? `Time finished. You scored ${score} points and got ${correctAnswers} items correct.` :
+                (currentLanguage === 'or') ? `ସମୟ ସମାପ୍ତ! ଆପଣ ${score} ପଏଣ୍ଟ ପାଇଛନ୍ତି।` : `समय समाप्त! आपने ${score} अंक प्राप्त किए।`;
+            modalAction.textContent = currentLanguage === 'en' ? 'Try Again' : (currentLanguage === 'or' ? 'ପୁଣି ଚେଷ୍ଟା' : 'फिर से कोशिश करें');
+            feedbackModal.style.display = 'flex';
+        }
+
+        /* ---- LEVELS & RESTART ---- */
+        function completeLevel() {
+            clearInterval(timerInterval);
+            const timeBonus = Math.max(0, Math.floor(timeLeft/10) * 5);
+            score += timeBonus;
+            updateScore();
+            levelComplete.style.display = 'block';
+            createConfetti();
+        }
+
+        /* ---- START GAME / LANGUAGE SWITCH ---- */
+        function startGame() {
+            instructionsModal.style.display = 'none';
+            gameHeader.style.display = 'block';
+            gameStatsContainer.style.display = 'block';
+            gameArea.style.display = 'block';
+            levelComplete.style.display = 'none';
+           
+            // reset stats
+            score = 0; correctAnswers = 0; streak = 0; timeLeft = 180; completedItems = [];
+            hardwareItems.innerHTML = ''; softwareItems.innerHTML = '';
+           
+            // Generate new random items
+            createComponentItems();
+            setupDragAndDrop();
+            startTimer();
+            updateScore(); updateStreak();
+        }
+
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+           
+            // Update all language buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-lang')===lang);
+            });
+           
+            // translate elements
+            const map = translations[lang] || translations.en;
+            Object.keys(map).forEach(key => {
+                document.querySelectorAll(`[data-translate="${key}"]`).forEach(el => {
+                    el.textContent = map[key];
+                });
+            });
+           
+            // update instructions text
+            document.getElementById('instructions-title').textContent = map['instructions-title'];
+            document.getElementById('instructions-intro').textContent = map['instructions-intro'];
+            document.getElementById('instruction-1').textContent = map['instruction-1'];
+            document.getElementById('instruction-2').textContent = map['instruction-2'];
+            document.getElementById('instruction-3').textContent = map['instruction-3'];
+            document.getElementById('instruction-4').textContent = map['instruction-4'];
+            document.getElementById('instruction-5').textContent = map['instruction-5'];
+            document.getElementById('instruction-6').textContent = map['instruction-6'];
+            document.getElementById('instructions-outro').textContent = map['instructions-outro'];
+            document.getElementById('start-game-btn').textContent = map['start-game-btn'];
+           
+            // update component names in UI
+            document.querySelectorAll('.component-item').forEach(el => {
+                const id = parseInt(el.dataset.id);
+                const it = computerItems.find(f=>f.id===id);
+                if (it) el.querySelector('.component-name').textContent = it.name[lang] || it.name.en;
+            });
+           
+            // apply language-specific font classes
+            if (lang === 'or') {
+                document.body.classList.add('odia-text');
+                document.body.classList.remove('hindi-text');
+            } else if (lang === 'hi') {
+                document.body.classList.add('hindi-text');
+                document.body.classList.remove('odia-text');
+            } else {
+                document.body.classList.remove('odia-text');
+                document.body.classList.remove('hindi-text');
+            }
+        }
+
+        /* ---- FUN STUFF ---- */
+        function createConfetti() {
+            for (let i=0;i<12;i++){
+                const c = document.createElement('div');
+                c.style.position='fixed';
+                c.style.left = Math.random()*100 + 'vw';
+                c.style.top = '-10px';
+                c.style.width='10px'; c.style.height='10px';
+                const colors = ['#ff6b6b','#4ecdc4','#45b7d1','#96ceb4','#ffeaa7'];
+                c.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+                c.style.zIndex = 1500;
+                c.style.borderRadius = '2px';
+                c.style.animation = `confetti-fall 2.8s ease-out forwards`;
+                document.body.appendChild(c);
+                setTimeout(()=> { if (document.body.contains(c)) document.body.removeChild(c); }, 3000);
+            }
+        }
+
+        /* ---- EVENTS & BOOT ---- */
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+            if ((e.key === 'r' || e.key === 'R') && e.ctrlKey) { e.preventDefault(); startGame(); }
+            if (e.key === '1') switchLanguage('en'); if (e.key==='2') switchLanguage('or'); if (e.key==='3') switchLanguage('hi');
+        });
+
+        // hide modal when clicking outside content
+        feedbackModal.addEventListener('click', (ev)=> { if (ev.target === feedbackModal) closeModal(); });
+
+    </script>
+</body>
+</html>

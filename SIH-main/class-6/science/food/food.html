@@ -1,0 +1,2801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food: Where Does It Come From? - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #2a69ac;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text h1 span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-pic {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 180px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f7fa;
+        }
+
+        .dropdown-item i {
+            color: #3182ce;
+            width: 20px;
+        }
+
+        /* Language Options */
+        .language-options {
+            position: absolute;
+            top: 60px;
+            right: 120px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 120px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .language-options.show {
+            display: block;
+        }
+
+        .language-option {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .language-option:last-child {
+            border-bottom: none;
+        }
+
+        .language-option:hover {
+            background: #f5f7fa;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9)), url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .breadcrumb-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .breadcrumb a {
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #3182ce;
+        }
+
+        .breadcrumb span {
+            color: #64748b;
+        }
+
+        /* Interactive Content */
+        .interactive-content {
+            padding: 50px 0;
+        }
+
+        .learning-path {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .learning-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .path-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .path-card {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .path-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-color: #3182ce;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .card-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+            flex-grow: 1;
+        }
+
+        /* Popup Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-section {
+            margin-bottom: 30px;
+        }
+
+        .modal-section h3 {
+            color: #1a365d;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .modal-section p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .modal-section ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .modal-section li {
+            margin-bottom: 8px;
+        }
+
+        /* Progress Tracking */
+        .progress-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .progress-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .progress-bars {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .progress-item {
+            margin-bottom: 15px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        .progress-bar-container {
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #3182ce;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        /* Games Section */
+        .games-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .game-level {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .game-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .game-desc {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .game-body {
+            padding: 20px;
+        }
+
+        .game-features {
+            margin-bottom: 20px;
+        }
+
+        .game-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .game-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .game-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Resources Section */
+        .resources-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .resource-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .resource-icon {
+            font-size: 2.5rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .resource-title {
+            font-size: 1.1rem;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+
+        .resource-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .download-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Resource Preview Styles */
+        .resource-preview {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 1px solid #e2e8f0;
+            max-height: 200px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .preview-title {
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+
+        .preview-content {
+            line-height: 1.5;
+            color: #4a5568;
+            font-size: 0.85rem;
+        }
+
+        .preview-content ul {
+            padding-left: 15px;
+            margin: 5px 0;
+        }
+
+        .preview-content li {
+            margin-bottom: 3px;
+        }
+
+        /* ENHANCED FLASHCARD STYLES */
+        .flashcard-preview {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .flashcards-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            min-height: 280px;
+        }
+
+        .flashcard-wrapper {
+            width: 100%;
+            max-width: 500px;
+            height: 280px;
+            perspective: 1500px;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .flashcard-front {
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+        }
+
+        .flashcard-back {
+            background: linear-gradient(135deg, #38b2ac 0%, #2c9a94 100%);
+            color: white;
+            transform: rotateY(180deg);
+            overflow-y: auto;
+        }
+
+        .flashcard-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .flashcard-question {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .flashcard-answer {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .flashcard-hint {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .flashcard-instruction {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            margin-top: 15px;
+        }
+
+        .flashcard-category {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .flashcard-counter {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Flashcard Navigation */
+        .flashcard-navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .flashcard-nav-btn {
+            background: #3182ce;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .flashcard-nav-btn:hover {
+            background: #2b6cb0;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .flashcard-nav-btn:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .flashcard-indicators {
+            display: flex;
+            gap: 8px;
+        }
+
+        .flashcard-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .flashcard-indicator.active {
+            background: #3182ce;
+            transform: scale(1.2);
+        }
+
+        .flashcard-progress {
+            font-size: 1rem;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about {
+            padding-right: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.8rem;
+            background: #38b2ac;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 20px;
+            color: #38b2ac;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2d3748;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .social-links a:hover {
+            background: #38b2ac;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .games-grid, .resources-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .path-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .flashcard-wrapper {
+                max-width: 400px;
+                height: 250px;
+            }
+            
+            .flashcard-question {
+                font-size: 1.2rem;
+            }
+            
+            .flashcard-answer {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            nav ul {
+                gap: 15px;
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .flashcard-wrapper {
+                max-width: 350px;
+                height: 220px;
+            }
+            
+            .flashcard-front, .flashcard-back {
+                padding: 20px;
+            }
+            
+            .flashcard-question {
+                font-size: 1.1rem;
+            }
+            
+            .flashcard-answer {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .flashcard-wrapper {
+                max-width: 300px;
+                height: 200px;
+            }
+            
+            .flashcard-front, .flashcard-back {
+                padding: 15px;
+            }
+            
+            .flashcard-question {
+                font-size: 1rem;
+            }
+            
+            .flashcard-answer {
+                font-size: 0.9rem;
+            }
+            
+            .flashcard-nav-btn {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #38b2ac;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        /* Odia font support */
+        .odia-text {
+            font-family: 'Kalinga', 'Nirmala UI', 'Segoe UI', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-atom"></i>
+            </div>
+            <div class="logo-text">
+                <h1>STEM Learn Odisha</h1>
+                <p>Gamified Learning Platform</p>
+            </div>
+        </div>
+       
+        <nav>
+            <ul>
+                <li><a href="student-dashboard.html" id="navDashboard">Dashboard</a></li>
+                <li><a href="science.html" id="navScience">Science</a></li>
+                <li><a href="scienceidx.html" id="navCurriculum">Curriculum</a></li>
+                <li><a href="food.html" class="active" id="navFood">Food</a></li>
+            </ul>
+        </nav>
+       
+        <div class="header-controls">
+            <button class="control-btn" id="languageToggle">
+                <i class="fas fa-globe"></i>
+            </button>
+           
+            <div class="profile-container">
+                <button class="profile-btn" id="profileToggle">
+                    <img src="" alt="Profile" class="profile-pic" id="headerProfilePic">
+                    <span id="headerUserName">Student</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+               
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" class="dropdown-item" id="dropdownProfile">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownSettings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownLogout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Language Options -->
+    <div class="language-options" id="languageOptions">
+        <div class="language-option" data-lang="en">English</div>
+        <div class="language-option" data-lang="or">ଓଡ଼ିଆ</div>
+    </div>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 id="food-title">Food: Where Does It Come From?</h1>
+            <p id="food-desc">Explore the journey of food from source to plate through interactive activities and games</p>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <a href="student-dashboard.html" id="breadcrumb-home">Dashboard</a>
+                <span>/</span>
+                <a href="science.html" id="breadcrumb-science">Science</a>
+                <span>/</span>
+                <a href="scienceidx.html" id="breadcrumb-curriculum">Curriculum</a>
+                <span>/</span>
+                <span id="breadcrumb-topic">Food: Where Does It Come From?</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Content -->
+    <section class="interactive-content">
+        <div class="container">
+            <!-- Learning Path -->
+            <div class="learning-path">
+                <h2 class="learning-title">
+                    <i class="fas fa-road"></i>
+                    <span id="learning-path-title">Your Learning Path</span>
+                </h2>
+                <div class="path-cards">
+                    <div class="path-card" data-card="source">
+                        <div class="card-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <div class="card-title" id="card1-title">Source of Food</div>
+                        <div class="card-desc" id="card1-desc">Learn about where our food comes from - plants and animals</div>
+                    </div>
+                    <div class="path-card" data-card="types">
+                        <div class="card-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="card-title" id="card2-title">Types of Food</div>
+                        <div class="card-desc" id="card2-desc">Explore different food categories and their nutritional values</div>
+                    </div>
+                    <div class="path-card" data-card="chain">
+                        <div class="card-icon">
+                            <i class="fas fa-recycle"></i>
+                        </div>
+                        <div class="card-title" id="card3-title">Food Chain</div>
+                        <div class="card-desc" id="card3-desc">Understand how energy flows through different organisms</div>
+                    </div>
+                    <div class="path-card" data-card="review">
+                        <div class="card-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="card-title" id="card4-title">Review and Quizzes</div>
+                        <div class="card-desc" id="card4-desc">Test your knowledge with interactive quizzes and reviews</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Games Section -->
+            <div class="games-section">
+                <h2 class="section-title">
+                    <i class="fas fa-gamepad"></i>
+                    <span id="games-title">Interactive Learning Games</span>
+                </h2>
+
+                <div class="games-grid">
+                    <div class="game-card">
+                        <div class="game-header">
+                            <div class="game-level" id="level-basic">Basic</div>
+                            <h3 class="game-title" id="game1-title">Source of Food</h3>
+                            <p class="game-desc" id="game1-desc">Identify where different foods come from</p>
+                        </div>
+                        <div class="game-body">
+                            <div class="game-features">
+                                <div class="game-feature">
+                                    <i class="fas fa-star"></i>
+                                    <span id="game1-feature1">Match food items to their sources</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-clock"></i>
+                                    <span id="game1-feature2">10-15 minutes gameplay</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-trophy"></i>
+                                    <span id="game1-feature3">Earn up to 50 points</span>
+                                </div>
+                            </div>
+                            <a href="game6.1.1.html" class="game-btn" id="play-game">Play Game</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card">
+                        <div class="game-header">
+                            <div class="game-level" id="level-intermediate">Intermediate</div>
+                            <h3 class="game-title" id="game2-title">Classification of Food</h3>
+                            <p class="game-desc" id="game2-desc">Categorize foods based on their nutrients</p>
+                        </div>
+                        <div class="game-body">
+                            <div class="game-features">
+                                <div class="game-feature">
+                                    <i class="fas fa-star"></i>
+                                    <span id="game2-feature1">Sort foods into categories</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-clock"></i>
+                                    <span id="game2-feature2">15-20 minutes gameplay</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-trophy"></i>
+                                    <span id="game2-feature3">Earn up to 100 points</span>
+                                </div>
+                            </div>
+                            <a href="game6.1.2.html" class="game-btn" id="play-game2">Play Game</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card">
+                        <div class="game-header">
+                            <div class="game-level" id="level-hard">Hard</div>
+                            <h3 class="game-title" id="game3-title">Purification of Food</h3>
+                            <p class="game-desc" id="game3-desc">Learn how food is purified and processed</p>
+                        </div>
+                        <div class="game-body">
+                            <div class="game-features">
+                                <div class="game-feature">
+                                    <i class="fas fa-star"></i>
+                                    <span id="game3-feature1">Sequence the purification process</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-clock"></i>
+                                    <span id="game3-feature2">20-25 minutes gameplay</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-trophy"></i>
+                                    <span id="game3-feature3">Earn up to 150 points</span>
+                                </div>
+                            </div>
+                            <a href="game6.1.3.html" class="game-btn" id="play-game3">Play Game</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Section -->
+            <div class="resources-section">
+                <h2 class="section-title">
+                    <i class="fas fa-download"></i>
+                    <span id="resources-title">Learning Resources</span>
+                </h2>
+
+                <div class="resources-grid">
+                    <!-- Study Notes (English) -->
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <h3 class="resource-title" id="resource1-title">Study Notes</h3>
+                        <p class="resource-desc" id="resource1-desc">Complete chapter notes for revision</p>
+                        
+                        <!-- Resource Preview -->
+                        <div class="resource-preview">
+                            <div class="preview-title">Preview - Chapter Summary</div>
+                            <div class="preview-content">
+                                <strong>Food Sources:</strong>
+                                <ul>
+                                    <li>Plants: Fruits, vegetables, grains, pulses</li>
+                                    <li>Animals: Milk, eggs, meat, fish</li>
+                                </ul>
+                                
+                                <strong>Key Concepts:</strong>
+                                <ul>
+                                    <li>All food comes from plants or animals</li>
+                                    <li>Plants prepare their own food through photosynthesis</li>
+                                    <li>Animals depend on plants or other animals for food</li>
+                                    <li>Food provides energy and helps in growth</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <button class="download-btn" onclick="downloadResource('study_notes_english')">
+                            <i class="fas fa-download"></i>
+                            <span id="download-english">Download (English)</span>
+                        </button>
+                    </div>
+
+                    <!-- Study Notes (Odia) -->
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3 class="resource-title" id="resource2-title">Study Notes (Odia)</h3>
+                        <p class="resource-desc" id="resource2-desc">Complete chapter notes for revision</p>
+                        
+                        <!-- Resource Preview -->
+                        <div class="resource-preview odia-text">
+                            <div class="preview-title">ପ୍ରିଭ୍ୟୁ - ଅଧ୍ୟାୟ ସାରାଂଶ</div>
+                            <div class="preview-content">
+                                <strong>ଖାଦ୍ୟର ଉତ୍ସ:</strong>
+                                <ul>
+                                    <li>ଉଦ୍ଭିଦ: ଫଳ, ପନିପରିବା, ଶସ୍ୟ, ଡାଳି</li>
+                                    <li>ପ୍ରାଣୀ: କ୍ଷୀର, ଅଣ୍ଡା, ମାଂସ, ମାଛ</li>
+                                </ul>
+                                
+                                <strong>ମୁଖ୍ୟ ଧାରଣା:</strong>
+                                <ul>
+                                    <li>ସମସ୍ତ ଖାଦ୍ୟ ଉଦ୍ଭିଦ କିମ୍ବା ପ୍ରାଣୀଠାରୁ ଆସେ</li>
+                                    <li>ଉଦ୍ଭିଦ ଫଟୋସିନ୍ଥେସିସ୍ ମାଧ୍ୟମରେ ନିଜର ଖାଦ୍ୟ ପ୍ରସ୍ତୁତ କରନ୍ତି</li>
+                                    <li>ପ୍ରାଣୀମାନେ ଖାଦ୍ୟ ପାଇଁ ଉଦ୍ଭିଦ କିମ୍ବା ଅନ୍ୟ ପ୍ରାଣୀଙ୍କ ଉପରେ ନିର୍ଭର କରନ୍ତି</li>
+                                    <li>ଖାଦ୍ୟ ଶକ୍ତି ଯୋଗାଏ ଏବଂ ବୃଦ୍ଧିରେ ସହାୟକ ହୁଏ</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <button class="download-btn" onclick="downloadResource('study_notes_odia')">
+                            <i class="fas fa-download"></i>
+                            <span id="download-odia">Download (Odia)</span>
+                        </button>
+                    </div>
+
+                    <!-- Flashcards -->
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <h3 class="resource-title" id="resource3-title">Flashcards</h3>
+                        <p class="resource-desc" id="resource3-desc">Visual learning cards for key concepts</p>
+                        
+                        <!-- Flashcard Preview -->
+                        <div class="resource-preview">
+                            <div class="flashcard-preview">
+                                <div class="flashcards-container">
+                                    <div class="flashcard-wrapper">
+                                        <div class="flashcard" id="main-flashcard" onclick="flipCard()">
+                                            <!-- Content will be dynamically inserted here -->
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flashcard-navigation">
+                                    <button class="flashcard-nav-btn" id="prev-btn" onclick="prevFlashcard()">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    
+                                    <div class="flashcard-progress">
+                                        <span id="current-card">1</span> / <span id="total-cards">10</span>
+                                    </div>
+                                    
+                                    <button class="flashcard-nav-btn" id="next-btn" onclick="nextFlashcard()">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                                
+                                <div class="flashcard-indicators" id="flashcard-indicators">
+                                    <!-- Indicators will be dynamically inserted here -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="download-btn" onclick="downloadResource('flashcards')">
+                            <i class="fas fa-download"></i>
+                            <span id="download-flashcards">Download Flashcards</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <div class="footer-logo-text">STEM Learn Odisha</div>
+                    </div>
+                    <p id="footer-desc">Making Science and Mathematics education engaging and relevant for Class 6 students in Odisha through localized content and interactive learning.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h3 id="quick-links">Quick Links</h3>
+                    <ul>
+                        <li><a href="student-dashboard.html"><i class="fas fa-tachometer-alt"></i> <span id="footer-dashboard">Dashboard</span></a></li>
+                        <li><a href="science.html"><i class="fas fa-flask"></i> <span id="footer-science">Science</span></a></li>
+                        <li><a href="food.html"><i class="fas fa-apple-alt"></i> <span id="footer-food">Food</span></a></li>
+                        <li><a href="scienceidx.html"><i class="fas fa-book"></i> <span id="footer-curriculum">Curriculum</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h3 id="contact-us">Contact Us</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> <span id="footer-address">Department of Education, Bhubaneswar</span></a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +91 674 123 4567</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@stemlearnodisha.com</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p id="copyright">© 2023 STEM Learn Odisha. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Popup -->
+    <div class="modal" id="content-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">Source of Food</h2>
+                <button class="close-modal" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced Flashcard data with longer content
+        const flashcardsData = [
+            {
+                question: "What are the two main sources of food for humans?",
+                answer: "The two main sources of food are plants and animals. Plants provide fruits, vegetables, grains, and pulses. Animals provide milk, eggs, meat, and fish. Understanding these sources helps us make healthy food choices and appreciate where our food comes from.",
+                hint: "Think about the broad categories",
+                category: "Sources of Food",
+                icon: "fas fa-seedling"
+            },
+            {
+                question: "Explain photosynthesis and why it's important for food production",
+                answer: "Photosynthesis is the process by which plants make their own food using sunlight, water, and carbon dioxide. The formula is: 6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂ (with sunlight and chlorophyll). This process is crucial because plants are the primary producers in the food chain, providing energy for all other organisms.",
+                hint: "Plant's food-making process",
+                category: "Plant Biology",
+                icon: "fas fa-sun"
+            },
+            {
+                question: "What are herbivores, carnivores, and omnivores? Give examples of each",
+                answer: "Herbivores are animals that eat only plants (e.g., Cow, Goat, Rabbit). Carnivores are animals that eat only other animals (e.g., Lion, Tiger, Eagle). Omnivores are animals that eat both plants and animals (e.g., Humans, Bears, Crows). Each has different teeth adaptations for their diet.",
+                hint: "Different eating habits",
+                category: "Animal Types",
+                icon: "fas fa-paw"
+            },
+            {
+                question: "Describe a complete food chain with at least four levels",
+                answer: "A complete food chain shows energy transfer: Grass (producer) → Grasshopper (primary consumer) → Frog (secondary consumer) → Snake (tertiary consumer) → Eagle (quaternary consumer). Each organism eats the one before it, transferring energy through the ecosystem. Decomposers break down dead organisms at the end.",
+                hint: "Starts with plants, ends with predators",
+                category: "Ecology",
+                icon: "fas fa-link"
+            },
+            {
+                question: "What is a balanced diet and why is it important for health?",
+                answer: "A balanced diet contains all essential nutrients in proper proportions: carbohydrates for energy, proteins for growth, fats for energy storage, vitamins and minerals for protection, water for body functions, and dietary fiber for digestion. It's important for proper growth, disease prevention, energy maintenance, and overall health.",
+                hint: "Complete nutrition",
+                category: "Nutrition",
+                icon: "fas fa-apple-alt"
+            },
+            {
+                question: "Name and explain different parts of plants that we eat as food",
+                answer: "We eat various plant parts: Roots (carrot, radish), Stems (potato, ginger), Leaves (spinach, cabbage), Flowers (cauliflower, broccoli), Fruits (apple, mango), and Seeds (rice, wheat, beans). Each part provides different nutrients and requires different cultivation methods.",
+                hint: "Think about plant anatomy",
+                category: "Plant Parts",
+                icon: "fas fa-leaf"
+            },
+            {
+                question: "What are the different animal products we get as food?",
+                answer: "Animal products include: Milk and dairy (milk, cheese, yogurt), Eggs (from chickens, ducks), Meat (chicken, fish, mutton), Seafood (prawns, crabs), and Honey (from bees). These provide high-quality proteins, vitamins, and minerals essential for human health.",
+                hint: "Think about farm and sea animals",
+                category: "Animal Products",
+                icon: "fas fa-egg"
+            },
+            {
+                question: "Explain the difference between food chain and food web",
+                answer: "A food chain is a linear sequence showing energy transfer from one organism to another (e.g., Grass → Rabbit → Fox). A food web is a complex network of interconnected food chains showing multiple feeding relationships. Food webs are more realistic as most organisms eat and are eaten by multiple species.",
+                hint: "Linear vs. interconnected",
+                category: "Ecosystems",
+                icon: "fas fa-project-diagram"
+            },
+            {
+                question: "Why are plants called producers and animals called consumers?",
+                answer: "Plants are called producers because they produce their own food through photosynthesis using sunlight. Animals are called consumers because they consume (eat) plants or other animals to get energy. This classification is based on how organisms obtain their food in an ecosystem.",
+                hint: "Think about food creation vs. consumption",
+                category: "Ecology",
+                icon: "fas fa-industry"
+            },
+            {
+                question: "What are the key nutrients we get from food and their functions?",
+                answer: "Key nutrients: 1) Carbohydrates - Main energy source (rice, wheat). 2) Proteins - Growth and repair (milk, eggs). 3) Fats - Energy storage and insulation (oil, nuts). 4) Vitamins - Disease prevention (fruits, vegetables). 5) Minerals - Bone health (milk, greens). 6) Water - Body functions. 7) Fiber - Digestion (whole grains).",
+                hint: "Different nutrients have different jobs",
+                category: "Nutrition",
+                icon: "fas fa-heartbeat"
+            }
+        ];
+
+        let currentFlashcardIndex = 0;
+        let currentLanguage = 'en';
+
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+           
+            if (!user) {
+                // Redirect to login if not authenticated
+                window.location.href = 'student-login.html';
+                return;
+            }
+           
+            // Load user data
+            loadUserData(user);
+            
+            // Initialize the page
+            init();
+        });
+
+        // Load user data into the page
+        function loadUserData(user) {
+            document.getElementById('headerUserName').textContent = user.fullName;
+            document.getElementById('headerProfilePic').src = user.profilePicture ? `uploads/${user.profilePicture}` : 'default-profile.png';
+        }
+
+        // Content for modal popups
+        const contentData = {
+            'source': {
+                'title': 'Source of Food',
+                'content': `
+                    <div class="modal-section">
+                        <h3>Where Does Our Food Come From?</h3>
+                        <p>Food comes from two main sources: plants and animals. Understanding these sources helps us make healthy food choices.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Plant Sources</h3>
+                        <p>Plants provide us with a variety of foods including:</p>
+                        <ul>
+                            <li><strong>Fruits:</strong> Apples, bananas, oranges, mangoes</li>
+                            <li><strong>Vegetables:</strong> Carrots, spinach, potatoes, tomatoes</li>
+                            <li><strong>Grains:</strong> Rice, wheat, corn, oats</li>
+                            <li><strong>Legumes:</strong> Beans, lentils, peas</li>
+                            <li><strong>Nuts and Seeds:</strong> Almonds, walnuts, sunflower seeds</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Animal Sources</h3>
+                        <p>Animals provide us with various food products:</p>
+                        <ul>
+                            <li><strong>Meat:</strong> Chicken, fish, beef, pork</li>
+                            <li><strong>Dairy Products:</strong> Milk, cheese, yogurt, butter</li>
+                            <li><strong>Eggs:</strong> From chickens, ducks, and other birds</li>
+                            <li><strong>Honey:</strong> Produced by bees</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Importance of Knowing Food Sources</h3>
+                        <p>Understanding where our food comes from helps us:</p>
+                        <ul>
+                            <li>Make healthier eating choices</li>
+                            <li>Appreciate the effort involved in food production</li>
+                            <li>Understand the importance of agriculture and farming</li>
+                            <li>Reduce food waste by valuing our food resources</li>
+                        </ul>
+                    </div>
+                `
+            },
+            'types': {
+                'title': 'Types of Food',
+                'content': `
+                    <div class="modal-section">
+                        <h3>Different Categories of Food</h3>
+                        <p>Foods can be categorized based on their nutritional content and the role they play in our diet.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Energy-Giving Foods</h3>
+                        <p>These foods provide our body with energy for daily activities:</p>
+                        <ul>
+                            <li><strong>Carbohydrates:</strong> Rice, wheat, potatoes, bread</li>
+                            <li><strong>Fats:</strong> Oils, butter, nuts, seeds</li>
+                        </ul>
+                        <p>Carbohydrates are our main source of energy, while fats provide concentrated energy and help absorb vitamins.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Body-Building Foods</h3>
+                        <p>These foods help in growth and repair of body tissues:</p>
+                        <ul>
+                            <li><strong>Proteins:</strong> Meat, fish, eggs, milk, beans, lentils</li>
+                        </ul>
+                        <p>Proteins are essential for building muscles, organs, and other body tissues.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Protective Foods</h3>
+                        <p>These foods protect our body from diseases and keep us healthy:</p>
+                        <ul>
+                            <li><strong>Vitamins:</strong> Found in fruits and vegetables</li>
+                            <li><strong>Minerals:</strong> Found in various foods including dairy, fruits, and vegetables</li>
+                        </ul>
+                        <p>Vitamins and minerals help in proper functioning of our body and boost our immune system.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Balanced Diet</h3>
+                        <p>A balanced diet includes foods from all these categories in the right proportions to ensure proper growth and health.</p>
+                    </div>
+                `
+            },
+            'chain': {
+                'title': 'Food Chain',
+                'content': `
+                    <div class="modal-section">
+                        <h3>What is a Food Chain?</h3>
+                        <p>A food chain shows how energy and nutrients move from one organism to another in an ecosystem.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Components of a Food Chain</h3>
+                        <p>Every food chain has different levels:</p>
+                        <ul>
+                            <li><strong>Producers:</strong> Plants that make their own food through photosynthesis</li>
+                            <li><strong>Primary Consumers:</strong> Herbivores that eat plants</li>
+                            <li><strong>Secondary Consumers:</strong> Carnivores that eat herbivores</li>
+                            <li><strong>Tertiary Consumers:</strong> Top carnivores that eat other carnivores</li>
+                            <li><strong>Decomposers:</strong> Organisms that break down dead plants and animals</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Examples of Food Chains</h3>
+                        <p>Here are some simple food chain examples:</p>
+                        <ul>
+                            <li>Grass → Grasshopper → Frog → Snake → Hawk</li>
+                            <li>Algae → Small fish → Large fish → Human</li>
+                            <li>Leaves → Caterpillar → Bird → Fox</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Food Web</h3>
+                        <p>In nature, food chains are interconnected forming a food web. This makes ecosystems more stable as organisms have multiple food sources.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Importance of Food Chains</h3>
+                        <p>Understanding food chains helps us:</p>
+                        <ul>
+                            <li>Appreciate the balance in nature</li>
+                            <li>Understand how energy flows through ecosystems</li>
+                            <li>Recognize the impact of human activities on nature</li>
+                            <li>Conserve biodiversity by protecting all levels of food chains</li>
+                        </ul>
+                    </div>
+                `
+            },
+            'review': {
+                'title': 'Review and Quizzes',
+                'content': `
+                    <div class="modal-section">
+                        <h3>Test Your Knowledge</h3>
+                        <p>Let's review what you've learned about food sources, types, and food chains.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Quick Quiz</h3>
+                        <p><strong>Question 1:</strong> Which of these is a plant source of food?</p>
+                        <ul>
+                            <li>A) Milk</li>
+                            <li>B) Eggs</li>
+                            <li>C) Apples</li>
+                            <li>D) Chicken</li>
+                        </ul>
+                        <p><strong>Answer:</strong> C) Apples</p>
+                        
+                        <p><strong>Question 2:</strong> Which food group provides the most energy?</p>
+                        <ul>
+                            <li>A) Proteins</li>
+                            <li>B) Vitamins</li>
+                            <li>C) Carbohydrates</li>
+                            <li>D) Minerals</li>
+                        </ul>
+                        <p><strong>Answer:</strong> C) Carbohydrates</p>
+                        
+                        <p><strong>Question 3:</strong> In a food chain, what are plants called?</p>
+                        <ul>
+                            <li>A) Consumers</li>
+                            <li>B) Decomposers</li>
+                            <li>C) Producers</li>
+                            <li>D) Predators</li>
+                        </ul>
+                        <p><strong>Answer:</strong> C) Producers</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Key Points to Remember</h3>
+                        <ul>
+                            <li>Food comes from plants and animals</li>
+                            <li>Different foods provide different nutrients</li>
+                            <li>A balanced diet includes all food types</li>
+                            <li>Food chains show how energy moves in nature</li>
+                            <li>Every organism plays a role in the food chain</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Interactive Activities</h3>
+                        <p>Try these activities to reinforce your learning:</p>
+                        <ul>
+                            <li>Create a chart of your favorite foods and classify them by source</li>
+                            <li>Draw a food chain from your local environment</li>
+                            <li>Plan a balanced meal for a day</li>
+                            <li>Visit a farm or garden to see food sources firsthand</li>
+                        </ul>
+                    </div>
+                `
+            }
+        };
+
+        // Translations
+        const translations = {
+            en: {
+                'navDashboard': 'Dashboard',
+                'navScience': 'Science',
+                'navCurriculum': 'Curriculum',
+                'navFood': 'Food',
+                'food-title': 'Food: Where Does It Come From?',
+                'food-desc': 'Explore the journey of food from source to plate through interactive activities and games',
+                'breadcrumb-home': 'Dashboard',
+                'breadcrumb-science': 'Science',
+                'breadcrumb-curriculum': 'Curriculum',
+                'breadcrumb-topic': 'Food: Where Does It Come From?',
+                'learning-path-title': 'Your Learning Path',
+                'card1-title': 'Source of Food',
+                'card1-desc': 'Learn about where our food comes from - plants and animals',
+                'card2-title': 'Types of Food',
+                'card2-desc': 'Explore different food categories and their nutritional values',
+                'card3-title': 'Food Chain',
+                'card3-desc': 'Understand how energy flows through different organisms',
+                'card4-title': 'Review and Quizzes',
+                'card4-desc': 'Test your knowledge with interactive quizzes and reviews',
+                'progress-title': 'Your Progress',
+                'progress-sources': 'Sources of Food',
+                'progress-types': 'Types of Food',
+                'progress-chain': 'Food Chain',
+                'progress-overall': 'Overall Mastery',
+                'games-title': 'Interactive Learning Games',
+                'level-basic': 'Basic',
+                'game1-title': 'Source of Food',
+                'game1-desc': 'Identify where different foods come from',
+                'game1-feature1': 'Match food items to their sources',
+                'game1-feature2': '10-15 minutes gameplay',
+                'game1-feature3': 'Earn up to 50 points',
+                'level-intermediate': 'Intermediate',
+                'game2-title': 'Classification of Food',
+                'game2-desc': 'Categorize foods based on their nutrients',
+                'game2-feature1': 'Sort foods into categories',
+                'game2-feature2': '15-20 minutes gameplay',
+                'game2-feature3': 'Earn up to 100 points',
+                'level-hard': 'Hard',
+                'game3-title': 'Purification of Food',
+                'game3-desc': 'Learn how food is purified and processed',
+                'game3-feature1': 'Sequence the purification process',
+                'game3-feature2': '20-25 minutes gameplay',
+                'game3-feature3': 'Earn up to 150 points',
+                'play-game': 'Play Game',
+                'resources-title': 'Learning Resources',
+                'resource1-title': 'Study Notes',
+                'resource1-desc': 'Complete chapter notes for revision',
+                'download-english': 'Download (English)',
+                'resource2-title': 'Study Notes (Odia)',
+                'resource2-desc': 'Complete chapter notes for revision',
+                'download-odia': 'Download (Odia)',
+                'resource3-title': 'Flashcards',
+                'resource3-desc': 'Visual learning cards for key concepts',
+                'download-flashcards': 'Download Flashcards',
+                'footer-desc': 'Making Science and Mathematics education engaging and relevant for Class 6 students in Odisha through localized content and interactive learning.',
+                'quick-links': 'Quick Links',
+                'contact-us': 'Contact Us',
+                'footer-dashboard': 'Dashboard',
+                'footer-science': 'Science',
+                'footer-food': 'Food',
+                'footer-curriculum': 'Curriculum',
+                'footer-address': 'Department of Education, Bhubaneswar',
+                'copyright': '© 2023 STEM Learn Odisha. All rights reserved.'
+            },
+            or: {
+                'navDashboard': 'ଡ୍ୟାସବୋର୍ଡ',
+                'navScience': 'ବିଜ୍ଞାନ',
+                'navCurriculum': 'ପାଠ୍ୟକ୍ରମ',
+                'navFood': 'ଖାଦ୍ୟ',
+                'food-title': 'ଖାଦ୍ୟ: ଏହା କୁଆଡ଼ୁ ଆସୁଛି?',
+                'food-desc': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ କାର୍ଯ୍ୟକଳାପ ଏବଂ ଖେଳ ମାଧ୍ୟମରେ ଖାଦ୍ୟର ଯାତ୍ରା ଉତ୍ସରୁ ପ୍ଲେଟ୍ ପର୍ଯ୍ୟନ୍ତ ଏକ୍ସପ୍ଲୋର୍ କରନ୍ତୁ',
+                'breadcrumb-home': 'ଡ୍ୟାସବୋର୍ଡ',
+                'breadcrumb-science': 'ବିଜ୍ଞାନ',
+                'breadcrumb-curriculum': 'ପାଠ୍ୟକ୍ରମ',
+                'breadcrumb-topic': 'ଖାଦ୍ୟ: ଏହା କୁଆଡ଼ୁ ଆସୁଛି?',
+                'learning-path-title': 'ଆପଣଙ୍କର ଶିକ୍ଷଣ ପଥ',
+                'card1-title': 'ଖାଦ୍ୟର ଉତ୍ସ',
+                'card1-desc': 'ଆମ ଖାଦ୍ୟ କୁଆଡ଼ୁ ଆସୁଛି - ଉଦ୍ଭିଦ ଏବଂ ପ୍ରାଣୀ',
+                'card2-title': 'ଖାଦ୍ୟର ପ୍ରକାରଗୁଡିକ',
+                'card2-desc': 'ବିଭିନ୍ନ ଖାଦ୍ୟ ବର୍ଗ ଏବଂ ସେମାନଙ୍କର ପୋଷଣ ମୂଲ୍ୟ ଏକ୍ସପ୍ଲୋର୍ କରନ୍ତୁ',
+                'card3-title': 'ଖାଦ୍ୟ ଶୃଙ୍ଖଳ',
+                'card3-desc': 'ବିଭିନ୍ନ ଜୀବଙ୍କ ମାଧ୍ୟମରେ ଶକ୍ତି କିପରି ପ୍ରବାହିତ ହୁଏ ବୁଝନ୍ତୁ',
+                'card4-title': 'ସମୀକ୍ଷା ଏବଂ କ୍ୱିଜ୍',
+                'card4-desc': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ କ୍ୱିଜ୍ ଏବଂ ସମୀକ୍ଷା ସହିତ ଆପଣଙ୍କର ଜ୍ଞାନ ପରୀକ୍ଷା କରନ୍ତୁ',
+                'progress-title': 'ଆପଣଙ୍କର ପ୍ରଗତି',
+                'progress-sources': 'ଖାଦ୍ୟର ଉତ୍ସଗୁଡିକ',
+                'progress-types': 'ଖାଦ୍ୟର ପ୍ରକାରଗୁଡିକ',
+                'progress-chain': 'ଖାଦ୍ୟ ଶୃଙ୍ଖଳ',
+                'progress-overall': 'ସର୍ବମୋଟ ଦକ୍ଷତା',
+                'games-title': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ଖେଳଗୁଡିକ',
+                'level-basic': 'ମୌଳିକ',
+                'game1-title': 'ଖାଦ୍ୟର ଉତ୍ସ',
+                'game1-desc': 'ବିଭିନ୍ନ ଖାଦ୍ୟଗୁଡିକ କୁଆଡ଼ୁ ଆସୁଛି ଚିହ୍ନିବା',
+                'game1-feature1': 'ଖାଦ୍ୟ ଜିନିଷଗୁଡିକୁ ସେମାନଙ୍କ ଉତ୍ସ ସହିତ ମିଳାନ୍ତୁ',
+                'game1-feature2': '10-15 ମିନିଟ୍ ଖେଳପଣ',
+                'game1-feature3': '50 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ ଅର୍ଜନ କରନ୍ତୁ',
+                'level-intermediate': 'ମଧ୍ୟମ ସ୍ତର',
+                'game2-title': 'ଖାଦ୍ୟର ଶ୍ରେଣୀବିଭାଗ',
+                'game2-desc': 'ପୋଷକ ପଦାର୍ଥ ଉପରେ ଆଧାରିତ ଖାଦ୍ୟଗୁଡିକୁ ବର୍ଗୀକରଣ କରନ୍ତୁ',
+                'game2-feature1': 'ଖାଦ୍ୟଗୁଡିକୁ ବର୍ଗଗୁଡିକରେ ସଜାନ୍ତୁ',
+                'game2-feature2': '15-20 ମିନିଟ୍ ଖେଳପଣ',
+                'game2-feature3': '100 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ ଅର୍ଜନ କରନ୍ତୁ',
+                'level-hard': 'କଠିନ',
+                'game3-title': 'ଖାଦ୍ୟର ପରିଷ୍କରଣ',
+                'game3-desc': 'ଖାଦ୍ୟକୁ କିପରି ପରିଷ୍କାର ଏବଂ ପ୍ରକ୍ରିୟାକରଣ କରାଯାଏ ଶିଖନ୍ତୁ',
+                'game3-feature1': 'ପରିଷ୍କରଣ ପ୍ରକ୍ରିୟାକୁ କ୍ରମାନ୍ୱୟ କରନ୍ତୁ',
+                'game3-feature2': '20-25 ମିନିଟ୍ ଖେଳପଣ',
+                'game3-feature3': '150 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ ଅର୍ଜନ କରନ୍ତୁ',
+                'play-game': 'ଖେଳନ୍ତୁ',
+                'resources-title': 'ଶିକ୍ଷଣ ସମ୍ବଳ',
+                'resource1-title': 'ଅଧ୍ୟୟନ ଟିପ୍ପଣୀ',
+                'resource1-desc': 'ସଂଶୋଧନ ପାଇଁ ସମ୍ପୂର୍ଣ୍ଣ ଅଧ୍ୟାୟ ଟିପ୍ପଣୀ',
+                'download-english': 'ଡାଉନଲୋଡ୍ (ଇଂରାଜୀ)',
+                'resource2-title': 'ଅଧ୍ୟୟନ ଟିପ୍ପଣୀ (ଓଡ଼ିଆ)',
+                'resource2-desc': 'ସମ୍ପୂର୍ଣ୍ଣ ଅଧ୍ୟାୟ ଟିପ୍ପଣୀ ସଂଶୋଧନ ପାଇଁ',
+                'download-odia': 'ଡାଉନଲୋଡ୍ (ଓଡ଼ିଆ)',
+                'resource3-title': 'ଫ୍ଲାସ୍‌କାର୍ଡଗୁଡିକ',
+                'resource3-desc': 'ମୁଖ୍ୟ ଧାରଣାଗୁଡିକ ପାଇଁ ଭିଜୁଆଲ୍ ଶିକ୍ଷଣ କାର୍ଡଗୁଡିକ',
+                'download-flashcards': 'ଫ୍ଲାସ୍‌କାର୍ଡଗୁଡିକ ଡାଉନଲୋଡ୍ କରନ୍ତୁ',
+                'footer-desc': 'ଓଡ଼ିଶାର ଷଷ୍ଠ ଶ୍ରେଣୀର ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କ ପାଇଁ ସ୍ଥାନୀୟ ବିଷୟବସ୍ତୁ ଏବଂ ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ମାଧ୍ୟମରେ ବିଜ୍ଞାନ ଏବଂ ଗଣିତ ଶିକ୍ଷାକୁ ଆକର୍ଷଣୀୟ ଏବଂ ପ୍ରାସଙ୍ଗିକ କରିବା',
+                'quick-links': 'ଶୀଘ୍ର ଲିଙ୍କ୍',
+                'contact-us': 'ଆମ ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ',
+                'footer-dashboard': 'ଡ୍ୟାସବୋର୍ଡ',
+                'footer-science': 'ବିଜ୍ଞାନ',
+                'footer-food': 'ଖାଦ୍ୟ',
+                'footer-curriculum': 'ପାଠ୍ୟକ୍ରମ',
+                'footer-address': 'ଶିକ୍ଷା ବିଭାଗ, ଭୁବନେଶ୍ୱର',
+                'copyright': '© 2023 STEM ଲର୍ନ ଓଡ଼ିଶା। ସମସ୍ତ ଅଧିକାର ସଂରକ୍ଷିତ।'
+            }
+        };
+
+        // Initialize the page
+        function init() {
+            // Set up language options
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    switchLanguage(lang);
+                    document.getElementById('languageOptions').classList.remove('show');
+                });
+            });
+
+            // Set up path cards
+            const pathCards = document.querySelectorAll('.path-card');
+            pathCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const cardType = this.getAttribute('data-card');
+                    openModal(cardType);
+                });
+            });
+
+            // Set up modal close button
+            document.getElementById('close-modal').addEventListener('click', closeModalFunc);
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === document.getElementById('content-modal')) {
+                    closeModalFunc();
+                }
+            });
+
+            // Dashboard integration event listeners
+            const profileToggle = document.getElementById('profileToggle');
+            const profileDropdown = document.getElementById('profileDropdown');
+            const languageToggle = document.getElementById('languageToggle');
+            const languageOptions = document.getElementById('languageOptions');
+            const dropdownProfile = document.getElementById('dropdownProfile');
+            const dropdownSettings = document.getElementById('dropdownSettings');
+            const dropdownLogout = document.getElementById('dropdownLogout');
+            const navDashboard = document.getElementById('navDashboard');
+            const navScience = document.getElementById('navScience');
+            const navCurriculum = document.getElementById('navCurriculum');
+            const navFood = document.getElementById('navFood');
+
+            // Profile dropdown toggle
+            profileToggle.addEventListener('click', function() {
+                profileDropdown.classList.toggle('show');
+            });
+
+            // Language toggle
+            languageToggle.addEventListener('click', function() {
+                languageOptions.classList.toggle('show');
+            });
+
+            // Navigation between pages
+            dropdownProfile.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#profile';
+            });
+
+            dropdownSettings.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#settings';
+            });
+
+            dropdownLogout.addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('user');
+                window.location.href = 'student-login.html';
+            });
+
+            // Navigation menu items
+            navDashboard.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html';
+            });
+
+            navScience.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'science.html';
+            });
+
+            navCurriculum.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'scienceidx.html';
+            });
+
+            navFood.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'food.html';
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#languageToggle') && !e.target.closest('#languageOptions')) {
+                    languageOptions.classList.remove('show');
+                }
+               
+                if (!e.target.closest('#profileToggle') && !e.target.closest('#profileDropdown')) {
+                    profileDropdown.classList.remove('show');
+                }
+            });
+
+            // Initialize download buttons
+            initDownloadButtons();
+
+            // Initialize flashcards
+            initFlashcards();
+
+            // Initialize with default language
+            switchLanguage('en');
+        }
+
+        // Initialize download buttons
+        function initDownloadButtons() {
+            const downloadButtons = document.querySelectorAll('.download-btn');
+            downloadButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const resourceType = this.getAttribute('onclick').match(/downloadResource\('(.*?)'\)/)[1];
+                    downloadResource(resourceType);
+                });
+            });
+        }
+
+        // Initialize flashcards
+        function initFlashcards() {
+            renderFlashcard();
+            createIndicators();
+            document.getElementById('total-cards').textContent = flashcardsData.length;
+            updateNavigationButtons();
+        }
+
+        // Render current flashcard
+        function renderFlashcard() {
+            const flashcard = document.getElementById('main-flashcard');
+            const cardData = flashcardsData[currentFlashcardIndex];
+            
+            flashcard.className = 'flashcard';
+            
+            flashcard.innerHTML = `
+                <div class="flashcard-category">${cardData.category}</div>
+                <div class="flashcard-counter">${currentFlashcardIndex + 1}/${flashcardsData.length}</div>
+                <div class="flashcard-front">
+                    <div class="flashcard-icon">
+                        <i class="${cardData.icon}"></i>
+                    </div>
+                    <div class="flashcard-question">${cardData.question}</div>
+                    <div class="flashcard-hint">${cardData.hint}</div>
+                    <div class="flashcard-instruction">Click to flip the card</div>
+                </div>
+                <div class="flashcard-back">
+                    <div class="flashcard-icon">
+                        <i class="${cardData.icon}"></i>
+                    </div>
+                    <div class="flashcard-answer">${cardData.answer}</div>
+                    <div class="flashcard-instruction">Click to flip back</div>
+                </div>
+            `;
+            
+            // Update current card number
+            document.getElementById('current-card').textContent = currentFlashcardIndex + 1;
+            
+            // Update indicators
+            updateIndicators();
+        }
+
+        // Create indicators for all flashcards
+        function createIndicators() {
+            const indicatorsContainer = document.getElementById('flashcard-indicators');
+            indicatorsContainer.innerHTML = '';
+            
+            for (let i = 0; i < flashcardsData.length; i++) {
+                const indicator = document.createElement('div');
+                indicator.className = 'flashcard-indicator';
+                if (i === currentFlashcardIndex) indicator.classList.add('active');
+                indicator.onclick = () => goToFlashcard(i);
+                indicatorsContainer.appendChild(indicator);
+            }
+        }
+
+        // Update active indicator
+        function updateIndicators() {
+            const indicators = document.querySelectorAll('.flashcard-indicator');
+            indicators.forEach((indicator, index) => {
+                if (index === currentFlashcardIndex) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            });
+        }
+
+        // Update navigation buttons state
+        function updateNavigationButtons() {
+            document.getElementById('prev-btn').disabled = currentFlashcardIndex === 0;
+            document.getElementById('next-btn').disabled = currentFlashcardIndex === flashcardsData.length - 1;
+        }
+
+        // Flip card function
+        function flipCard() {
+            const flashcard = document.getElementById('main-flashcard');
+            flashcard.classList.toggle('flipped');
+        }
+
+        // Go to specific flashcard
+        function goToFlashcard(index) {
+            currentFlashcardIndex = index;
+            renderFlashcard();
+            updateNavigationButtons();
+        }
+
+        // Next flashcard function
+        function nextFlashcard() {
+            if (currentFlashcardIndex < flashcardsData.length - 1) {
+                currentFlashcardIndex++;
+                renderFlashcard();
+                updateNavigationButtons();
+            }
+        }
+
+        // Previous flashcard function
+        function prevFlashcard() {
+            if (currentFlashcardIndex > 0) {
+                currentFlashcardIndex--;
+                renderFlashcard();
+                updateNavigationButtons();
+            }
+        }
+
+        // Switch language function
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            const map = translations[lang] || translations.en;
+            
+            // Update all text content
+            Object.keys(map).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.textContent = map[key];
+                }
+            });
+            
+            // Add Odia font class for Odia text
+            if (lang === 'or') {
+                document.body.classList.add('odia-text');
+            } else {
+                document.body.classList.remove('odia-text');
+            }
+        }
+
+        // Open modal with content
+        function openModal(cardType) {
+            const content = contentData[cardType];
+            if (content) {
+                document.getElementById('modal-title').textContent = content.title;
+                document.getElementById('modal-body').innerHTML = content.content;
+                document.getElementById('content-modal').style.display = 'flex';
+            }
+        }
+
+        // Close modal function
+        function closeModalFunc() {
+            document.getElementById('content-modal').style.display = 'none';
+        }
+
+        // Download resource function
+        function downloadResource(resourceType) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                showNotification('Please login to download resources', 'error');
+                return;
+            }
+
+            let fileName = '';
+            let content = '';
+            let mimeType = 'text/plain';
+            
+            switch(resourceType) {
+                case 'study_notes_english':
+                    fileName = 'Food_Sources_Study_Notes_English.txt';
+                    content = generateEnglishNotes();
+                    break;
+                case 'study_notes_odia':
+                    fileName = 'Food_Sources_Study_Notes_Odia.txt';
+                    content = generateOdiaNotes();
+                    break;
+                case 'flashcards':
+                    fileName = 'Food_Sources_Flashcards.txt';
+                    content = generateFlashcards();
+                    break;
+            }
+
+            // Create a downloadable file
+            const element = document.createElement('a');
+            const file = new Blob([content], {type: mimeType});
+            element.href = URL.createObjectURL(file);
+            element.download = fileName;
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+            
+            // Show success notification
+            showNotification('Resource downloaded successfully!', 'success');
+            
+            // Log download activity
+            logDownloadActivity(resourceType);
+        }
+
+        function generateEnglishNotes() {
+            return `FOOD: WHERE DOES IT COME FROM?
+====================================
+
+CLASS 6 SCIENCE - CHAPTER 6
+STEM Learn Odisha
+====================================
+
+TABLE OF CONTENTS
+=================
+1. Introduction
+2. Sources of Food
+   - Plant Sources
+   - Animal Sources
+3. Food from Plants
+   - Parts of Plants We Eat
+   - Photosynthesis
+4. Food from Animals
+   - Herbivores, Carnivores, Omnivores
+   - Animal Products
+5. Food Chain and Food Web
+6. Balanced Diet
+7. Key Terms
+8. Revision Questions
+
+====================================
+
+1. INTRODUCTION
+===============
+• Food is essential for all living organisms
+• It provides energy for various activities
+• Helps in growth and repair of body tissues
+• Maintains good health and prevents diseases
+
+2. SOURCES OF FOOD
+==================
+
+A. PLANT SOURCES:
+-----------------
+Plants are the primary source of food. They prepare their own food through photosynthesis.
+
+• Fruits: Apple, Mango, Banana, Orange, Grapes, Papaya
+• Vegetables: Potato, Tomato, Carrot, Spinach, Cabbage, Cauliflower
+• Grains: Rice, Wheat, Maize, Oats, Barley
+• Pulses: Lentils, Beans, Peas, Chickpeas
+• Nuts and Seeds: Almonds, Walnuts, Groundnuts, Sunflower seeds
+• Spices: Turmeric, Cumin, Coriander, Pepper
+
+B. ANIMAL SOURCES:
+------------------
+Animals provide us with various food products.
+
+• Milk and Dairy: Milk, Cheese, Yogurt, Butter, Ghee, Paneer
+• Eggs: Chicken eggs, Duck eggs, Quail eggs
+• Meat: Chicken, Fish, Mutton, Pork, Beef
+• Seafood: Prawns, Crabs, Lobsters
+• Honey: Produced by honey bees
+
+3. FOOD FROM PLANTS
+===================
+
+PARTS OF PLANTS WE EAT:
+-----------------------
+1. Roots: Carrot, Radish, Beetroot, Sweet Potato
+2. Stems: Potato, Ginger, Turmeric, Sugarcane
+3. Leaves: Spinach, Cabbage, Lettuce, Mint
+4. Flowers: Cauliflower, Broccoli, Banana flower
+5. Fruits: Apple, Mango, Banana, Orange
+6. Seeds: Rice, Wheat, Maize, Beans
+
+PHOTOSYNTHESIS:
+---------------
+• Process by which plants make their own food
+• Requires: Sunlight, Water, Carbon Dioxide
+• Produces: Glucose (food) and Oxygen
+• Formula: 
+  Sunlight
+  6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂
+  Chlorophyll
+
+4. FOOD FROM ANIMALS
+====================
+
+TYPES OF ANIMALS BASED ON FOOD HABITS:
+--------------------------------------
+1. Herbivores:
+   • Eat only plants
+   • Examples: Cow, Goat, Rabbit, Deer, Elephant
+   • Have sharp front teeth for biting and flat back teeth for chewing
+
+2. Carnivores:
+   • Eat only other animals
+   • Examples: Lion, Tiger, Eagle, Shark, Snake
+   • Have sharp teeth and claws for hunting
+
+3. Omnivores:
+   • Eat both plants and animals
+   • Examples: Human, Bear, Crow, Cockroach
+   • Have different types of teeth for varied diet
+
+ANIMAL PRODUCTS:
+----------------
+• Milk: Complete food containing proteins, fats, carbohydrates, vitamins
+• Eggs: Rich in proteins and vitamins
+• Meat: Good source of proteins and fats
+• Honey: Natural sweetener with medicinal properties
+
+5. FOOD CHAIN AND FOOD WEB
+==========================
+
+FOOD CHAIN:
+-----------
+• Shows transfer of energy from one organism to another
+• Always starts with a plant (producer)
+• Example: Grass → Grasshopper → Frog → Snake → Eagle
+
+FOOD WEB:
+---------
+• Interconnection of multiple food chains
+• Provides stability to ecosystem
+• Example: Multiple plants → Multiple herbivores → Multiple carnivores
+
+IMPORTANCE:
+-----------
+• Maintains balance in nature
+• Shows interdependence of organisms
+• Helps understand energy flow in ecosystem
+
+6. BALANCED DIET
+================
+
+WHAT IS BALANCED DIET?
+----------------------
+A diet that contains all essential nutrients in proper proportions.
+
+COMPONENTS OF BALANCED DIET:
+----------------------------
+1. Carbohydrates: Energy-giving foods (Rice, Wheat, Potato)
+2. Proteins: Body-building foods (Milk, Eggs, Meat, Pulses)
+3. Fats: Energy storage (Oil, Butter, Ghee, Nuts)
+4. Vitamins: Protective foods (Fruits, Vegetables)
+5. Minerals: Bone and teeth formation (Milk, Leafy vegetables)
+6. Water: Essential for body functions
+7. Dietary Fibre: Aids digestion (Whole grains, Fruits)
+
+BENEFITS OF BALANCED DIET:
+--------------------------
+• Provides energy for daily activities
+• Supports growth and development
+• Boosts immune system
+• Maintains healthy body weight
+• Prevents deficiency diseases
+
+7. KEY TERMS
+============
+• Photosynthesis: Process by which plants make food
+• Herbivore: Plant-eating animal
+• Carnivore: Meat-eating animal
+• Omnivore: Eats both plants and animals
+• Food Chain: Sequence of energy transfer
+• Producer: Organism that makes its own food (plants)
+• Consumer: Organism that eats other organisms
+• Decomposer: Breaks down dead organisms
+• Balanced Diet: Diet with all nutrients in right proportion
+
+8. REVISION QUESTIONS
+=====================
+
+SHORT ANSWER QUESTIONS:
+1. What are the two main sources of food?
+2. Name three plant parts we eat.
+3. What is photosynthesis?
+4. Give two examples each of herbivores and carnivores.
+5. What is a food chain? Give one example.
+
+LONG ANSWER QUESTIONS:
+1. Explain the different sources of food with examples.
+2. Describe the process of photosynthesis.
+3. What is a balanced diet? Why is it important?
+4. Explain food chain and food web with suitable examples.
+5. Classify animals based on their food habits.
+
+PRACTICAL ACTIVITIES:
+1. Prepare a chart of foods you eat and classify them by source.
+2. Collect pictures of different foods and make a collage.
+3. Visit a garden or farm and observe different food sources.
+4. Plan a balanced meal for a day.
+5. Draw a food chain from your local environment.
+
+====================================
+CREDITS AND ACKNOWLEDGEMENTS
+====================================
+Prepared by: STEM Learn Odisha Team
+For: Class 6 Students
+Date: ${new Date().toLocaleDateString()}
+
+====================================
+REMEMBER:
+• Food comes from plants and animals
+• Eat a variety of foods for balanced nutrition
+• Don't waste food - it's precious!
+• Thank farmers who grow our food
+
+====================================
+END OF NOTES
+====================================`;
+        }
+
+        function generateOdiaNotes() {
+            return `ଖାଦ୍ୟ: ଏହା କୁଆଡ଼ୁ ଆସୁଛି?
+====================================
+
+ଷଷ୍ଠ ଶ୍ରେଣୀ ବିଜ୍ଞାନ - ଅଧ୍ୟାୟ 6
+STEM ଲର୍ନ ଓଡ଼ିଶା
+====================================
+
+ବିଷୟ ସୂଚୀ
+===========
+1. ପରିଚୟ
+2. ଖାଦ୍ୟର ଉତ୍ସ
+   - ଉଦ୍ଭିଦ ଉତ୍ସ
+   - ପ୍ରାଣୀ ଉତ୍ସ
+3. ଉଦ୍ଭିଦଠାରୁ ଖାଦ୍ୟ
+   - ଖାଇଲା ଯାଉଥିବା ଉଦ୍ଭିଦର ଅଂଶ
+   - ଫଟୋସିନ୍ଥେସିସ୍
+4. ପ୍ରାଣୀଠାରୁ ଖାଦ୍ୟ
+   - ତୃଣଭୋଜୀ, ମାଂସଭୋଜୀ, ସର୍ବଭୋଜୀ
+   - ପ୍ରାଣୀ ଉତ୍ପାଦ
+5. ଖାଦ୍ୟ ଶୃଙ୍ଖଳ ଏବଂ ଖାଦ୍ୟ ଜାଲ
+6. ସନ୍ତୁଳିତ ଖାଦ୍ୟ
+7. ମୁଖ୍ୟ ପରିଭାଷା
+8. ସମୀକ୍ଷା ପ୍ରଶ୍ନ
+
+====================================
+
+1. ପରିଚୟ
+==========
+• ଖାଦ୍ୟ ସମସ୍ତ ଜୀବନ୍ତ ଜୀବଙ୍କ ପାଇଁ ଆବଶ୍ୟକ
+• ଏହା ବିଭିନ୍ନ କାର୍ଯ୍ୟକଳାପ ପାଇଁ ଶକ୍ତି ଯୋଗାଏ
+• ଶରୀରର ବୃଦ୍ଧି ଏବଂ ମରାମତିରେ ସହାୟକ
+• ଉତ୍ତମ ସ୍ୱାସ୍ଥ୍ୟ ବଜାୟ ରଖେ ଏବଂ ରୋଗ ପ୍ରତିରୋଧ କରେ
+
+2. ଖାଦ୍ୟର ଉତ୍ସ
+================
+
+କ. ଉଦ୍ଭିଦ ଉତ୍ସ:
+------------------
+ଉଦ୍ଭିଦ ଖାଦ୍ୟର ପ୍ରାଥମିକ ଉତ୍ସ। ସେମାନେ ଫଟୋସିନ୍ଥେସିସ୍ ମାଧ୍ୟମରେ ନିଜର ଖାଦ୍ୟ ପ୍ରସ୍ତୁତ କରନ୍ତି।
+
+• ଫଳ: ଆପେଲ, ଆମ୍ବ, କଦଳୀ, କମଳା, ଅଙ୍ଗୁର, ପପିତା
+• ପନିପରିବା: ଆଳୁ, ଟମାଟୋ, ଗାଜର, ପାଳଙ୍ଗ, ବନ୍ଧାକୋବି, ଫୁଲକୋବି
+• ଶସ୍ୟ: ଚାଉଳ, ଗହମ, ମକା, ଓଟ, ଯବ
+• ଡାଳି: ମସୁର, ବିନ୍, ବଟର, ଛୋଟି
+• ବଦାମ ଏବଂ ମୁଗ: ବାଦାମ, ଆଖରୋଟ, ଚିନାବାଦାମ, ସୂର୍ଯ୍ୟମୁଖୀ ବିଜ
+• ମସଲା: ହଳଦୀ, ଜିରା, ଧଣିଆ, ଗୋଲମରିଚ
+
+ଖ. ପ୍ରାଣୀ ଉତ୍ସ:
+------------------
+ପ୍ରାଣୀମାନେ ଆମକୁ ବିଭିନ୍ନ ଖାଦ୍ୟ ଉତ୍ପାଦ ଯୋଗାନ୍ତି।
+
+• କ୍ଷୀର ଏବଂ ଡେୟାରୀ: କ୍ଷୀର, ପନୀର, ଦହି, ମଖନ, ଘିଅ, ପନିର
+• ଅଣ୍ଡା: ମାଇହୁଙ୍କ ଅଣ୍ଡା, ବତକ ଅଣ୍ଡା, କୋଇଲି ଅଣ୍ଡା
+• ମାଂସ: ଚିକେନ, ମାଛ, ମେଣ୍ଢା, ଘୁଷୁରି, ଗୋରୁ
+• ସାମୁଦ୍ରିକ ଖାଦ୍ୟ: ଚିଙ୍ଗୁଡ଼ି, କଙ୍କଡା, ଲବଷ୍ଟର
+• ମହୁ: ମହୁମାଛି ଉତ୍ପାଦନ କରନ୍ତି
+
+3. ଉଦ୍ଭିଦଠାରୁ ଖାଦ୍ୟ
+=====================
+
+ଖାଇଲା ଯାଉଥିବା ଉଦ୍ଭିଦର ଅଂଶ:
+--------------------------------
+1. ମୂଳ: ଗାଜର, ମୂଳା, ବିଟ୍, ମିଠା ଆଳୁ
+2. କାଣ୍ଡ: ଆଳୁ, ଅଦା, ହଳଦୀ, ଆଖୁ
+3. ପତ୍ର: ପାଳଙ୍ଗ, ବନ୍ଧାକୋବି, ଲେଟ୍ୟୁସ, ପୋଦିନା
+4. ଫୁଲ: ଫୁଲକୋବି, ବ୍ରୋକୋଲି, କଦଳୀ ଫୁଲ
+5. ଫଳ: ଆପେଲ, ଆମ୍ବ, କଦଳୀ, କମଳା
+6. ବିଜ: ଚାଉଳ, ଗହମ, ମକା, ବିନ୍
+
+ଫଟୋସିନ୍ଥେସିସ୍:
+-----------------
+• ଉଦ୍ଭିଦ ନିଜର ଖାଦ୍ୟ ପ୍ରସ୍ତୁତ କରୁଥିବା ପ୍ରକ୍ରିୟା
+• ଆବଶ୍ୟକ: ସୂର୍ଯ୍ୟାଲୋକ, ଜଳ, କାର୍ବନ୍ ଡାଇଅକ୍ସାଇଡ୍
+• ଉତ୍ପାଦ: ଗ୍ଲୁକୋଜ୍ (ଖାଦ୍ୟ) ଏବଂ ଅକ୍ସିଜେନ୍
+• ସୂତ୍ର:
+  ସୂର୍ଯ୍ୟାଲୋକ
+  ୬CO₂ + ୬H₂O → C₆H₁₂O₆ + ୬O₂
+  କ୍ଲୋରୋଫିଲ୍
+
+4. ପ୍ରାଣୀଠାରୁ ଖାଦ୍ୟ
+=====================
+
+ଖାଦ୍ୟ ଆଦତ ଉପରେ ଆଧାରିତ ପ୍ରାଣୀର ପ୍ରକାର:
+-------------------------------------------
+1. ତୃଣଭୋଜୀ:
+   • କେବଳ ଉଦ୍ଭିଦ ଖାଆନ୍ତି
+   • ଉଦାହରଣ: ଗାଈ, ଛେଳି, ଶଶା, ହରିଣ, ହାତୀ
+   • ଦାନ୍ତ ପାଇଥାନ୍ତି କାମୁଡିବା ଏବଂ ଚୋବାଇବା ପାଇଁ
+
+2. ମାଂସଭୋଜୀ:
+   • କେବଳ ଅନ୍ୟ ପ୍ରାଣୀ ଖାଆନ୍ତି
+   • ଉଦାହରଣ: ସିଂହ, ବାଘ, ଚିଲ, ଶାର୍କ, ସାପ
+   • ଶିକାର ପାଇଁ ତୀକ୍ଷ୍ଣ ଦାନ୍ତ ଏବଂ ନଖ ଥାଏ
+
+3. ସର୍ବଭୋଜୀ:
+   • ଉଦ୍ଭିଦ ଏବଂ ପ୍ରାଣୀ ଉଭୟ ଖାଆନ୍ତି
+   • ଉଦାହରଣ: ମଣିଷ, ଭାଲୁ, କାଉ, କାକରୋଚା
+   • ବିଭିନ୍ନ ପ୍ରକାର ଦାନ୍ତ ଥାଏ
+
+ପ୍ରାଣୀ ଉତ୍ପାଦ:
+----------------
+• କ୍ଷୀର: ପ୍ରୋଟିନ୍, ଚର୍ବି, କାର୍ବୋହାଇଡ୍ରେଟ୍, ଭିଟାମିନ୍ ଯୁକ୍ତ ସମ୍ପୂର୍ଣ୍ଣ ଖାଦ୍ୟ
+• ଅଣ୍ଡା: ପ୍ରୋଟିନ୍ ଏବଂ ଭିଟାମିନ୍ ରେ ଧନୀ
+• ମାଂସ: ପ୍ରୋଟିନ୍ ଏବଂ ଚର୍ବିର ଭଲ ଉତ୍ସ
+• ମହୁ: ଔଷଧୀୟ ଗୁଣ ଯୁକ୍ତ ପ୍ରାକୃତିକ ମିଠା
+
+5. ଖାଦ୍ୟ ଶୃଙ୍ଖଳ ଏବଂ ଖାଦ୍ୟ ଜାଲ
+==================================
+
+ଖାଦ୍ୟ ଶୃଙ୍ଖଳ:
+---------------
+• ଗୋଟିଏ ଜୀବରୁ ଅନ୍ୟ ଜୀବକୁ ଶକ୍ତି ସ୍ଥାନାନ୍ତର ଦେଖାଏ
+• ସର୍ବଦା ଏକ ଉଦ୍ଭିଦ ସହିତ ଆରମ୍ଭ ହୁଏ (ଉତ୍ପାଦକ)
+• ଉଦାହରଣ: ଘାସ → ଫରିଙ୍ଗା → ବେଙ୍ଗ → ସାପ → ଚିଲ
+
+ଖାଦ୍ୟ ଜାଲ:
+------------
+• ଏକାଧିକ ଖାଦ୍ୟ ଶୃଙ୍ଖଳାର ପରସ୍ପର ସଂଯୋଗ
+• ପରିବେଶ ବ୍ୟବସ୍ଥାକୁ ସ୍ଥିରତା ପ୍ରଦାନ କରେ
+• ଉଦାହରଣ: ଏକାଧିକ ଉଦ୍ଭିଦ → ଏକାଧିକ ତୃଣଭୋଜୀ → ଏକାଧିକ ମାଂସଭୋଜୀ
+
+ଗୁରୁତ୍ୱ:
+----------
+• ପ୍ରକୃତିରେ ସନ୍ତୁଳନ ବଜାୟ ରଖେ
+• ଜୀବମାନଙ୍କର ପରସ୍ପର ନିର୍ଭରତା ଦେଖାଏ
+• ପରିବେଶ ବ୍ୟବସ୍ଥାରେ ଶକ୍ତି ପ୍ରବାହ ବୁଝିବାରେ ସହାୟକ
+
+6. ସନ୍ତୁଳିତ ଖାଦ୍ୟ
+==================
+
+ସନ୍ତୁଳିତ ଖାଦ୍ୟ କ'ଣ?
+-----------------------
+ଏକ ଖାଦ୍ୟ ଯାହା ଉଚିତ ଅନୁପାତରେ ସମସ୍ତ ଆବଶ୍ୟକୀୟ ପୋଷକ ପଦାର୍ଥ ଧାରଣ କରେ।
+
+ସନ୍ତୁଳିତ ଖାଦ୍ୟର ଉପାଦାନ:
+----------------------------
+1. କାର୍ବୋହାଇଡ୍ରେଟ୍: ଶକ୍ତି ପ୍ରଦାନକାରୀ ଖାଦ୍ୟ (ଚାଉଳ, ଗହମ, ଆଳୁ)
+2. ପ୍ରୋଟିନ୍: ଶରୀର ଗଠନକାରୀ ଖାଦ୍ୟ (କ୍ଷୀର, ଅଣ୍ଡା, ମାଂସ, ଡାଳି)
+3. ଚର୍ବି: ଶକ୍ତି ସଂଚୟ (ତେଲ, ମଖନ, ଘିଅ, ବଦାମ)
+4. ଭିଟାମିନ୍: ସୁରକ୍ଷାକାରୀ ଖାଦ୍ୟ (ଫଳ, ପନିପରିବା)
+5. ଖନିଜ: ହାଡ଼ ଏବଂ ଦାନ୍ତ ଗଠନ (କ୍ଷୀର, ପତ୍ରଳ ପନିପରିବା)
+6. ଜଳ: ଶରୀର କାର୍ଯ୍ୟ ପାଇଁ ଆବଶ୍ୟକ
+7. ଖାଦ୍ୟ ତନ୍ତୁ: ପାଚନରେ ସହାୟକ (ପୂରା ଶସ୍ୟ, ଫଳ)
+
+ସନ୍ତୁଳିତ ଖାଦ୍ୟର ଉପକାରିତା:
+-------------------------------
+• ଦୈନିକ କାର୍ଯ୍ୟକଳାପ ପାଇଁ ଶକ୍ତି ଯୋଗାଏ
+• ବୃଦ୍ଧି ଏବଂ ବିକାଶକୁ ସମର୍ଥନ କରେ
+• ପ୍ରତିରୋଧ ଶକ୍ତି ବୃଦ୍ଧି କରେ
+• ସୁସ୍ଥ ଶରୀର ଓଜନ ବଜାୟ ରଖେ
+• ଅଭାବଜନିତ ରୋଗ ପ୍ରତିରୋଧ କରେ
+
+7. ମୁଖ୍ୟ ପରିଭାଷା
+===================
+• ଫଟୋସିନ୍ଥେସିସ୍: ଉଦ୍ଭିଦ ଖାଦ୍ୟ ପ୍ରସ୍ତୁତ କରୁଥିବା ପ୍ରକ୍ରିୟା
+• ତୃଣଭୋଜୀ: ଉଦ୍ଭିଦ ଖାଉଥିବା ପ୍ରାଣୀ
+• ମାଂସଭୋଜୀ: ମାଂସ ଖାଉଥିବା ପ୍ରାଣୀ
+• ସର୍ବଭୋଜୀ: ଉଦ୍ଭିଦ ଏବଂ ପ୍ରାଣୀ ଉଭୟ ଖାଏ
+• ଖାଦ୍ୟ ଶୃଙ୍ଖଳ: ଶକ୍ତି ସ୍ଥାନାନ୍ତରର କ୍ରମ
+• ଉତ୍ପାଦକ: ନିଜର ଖାଦ୍ୟ ପ୍ରସ୍ତୁତ କରୁଥିବା ଜୀବ (ଉଦ୍ଭିଦ)
+• ଉପଭୋକ୍ତା: ଅନ୍ୟ ଜୀବ ଖାଉଥିବା ଜୀବ
+• ବିଘଟକ: ମୃତ ଜୀବଙ୍କୁ ବିଘଟନ କରେ
+• ସନ୍ତୁଳିତ ଖାଦ୍ୟ: ସମସ୍ତ ପୋଷକ ଉଚିତ ଅନୁପାତରେ ଥିବା ଖାଦ୍ୟ
+
+8. ସମୀକ୍ଷା ପ୍ରଶ୍ନ
+===================
+
+ସଂକ୍ଷିପ୍ତ ଉତ୍ତର ପ୍ରଶ୍ନ:
+1. ଖାଦ୍ୟର ଦୁଇଟି ମୁଖ୍ୟ ଉତ୍ସ କ'ଣ?
+2. ଆମେ ଖାଉଥିବା ତିନି ଉଦ୍ଭିଦ ଅଂଶର ନାମ କୁହନ୍ତୁ।
+3. ଫଟୋସିନ୍ଥେସିସ୍ କ'ଣ?
+4. ତୃଣଭୋଜୀ ଏବଂ ମାଂସଭୋଜୀର ପ୍ରତ୍ୟେକରୁ ଦୁଇଟି ଉଦାହରଣ ଦିଅନ୍ତୁ।
+5. ଖାଦ୍ୟ ଶୃଙ୍ଖଳା କ'ଣ? ଗୋଟିଏ ଉଦାହରଣ ଦିଅନ୍ତୁ।
+
+ଦୀର୍ଘ ଉତ୍ତର ପ୍ରଶ୍ନ:
+1. ଉଦାହରଣ ସହ ଖାଦ୍ୟର ବିଭିନ୍ନ ଉତ୍ସ ବ୍ୟାଖ୍ୟା କରନ୍ତୁ।
+2. ଫଟୋସିନ୍ଥେସିସ୍ ପ୍ରକ୍ରିୟା ବର୍ଣ୍ଣନା କରନ୍ତୁ।
+3. ସନ୍ତୁଳିତ ଖାଦ୍ୟ କ'ଣ? ଏହାର ଗୁରୁତ୍ୱ କ'ଣ?
+4. ଉପଯୁକ୍ତ ଉଦାହରଣ ସହ ଖାଦ୍ୟ ଶୃଙ୍ଖଳ ଏବଂ ଖାଦ୍ୟ ଜାଲ ବ୍ୟାଖ୍ୟା କରନ୍ତୁ।
+5. ଖାଦ୍ୟ ଆଦତ ଉପରେ ଆଧାର କରି ପ୍ରାଣୀମାନଙ୍କୁ ବର୍ଗୀକରଣ କରନ୍ତୁ।
+
+ବ୍ୟାବହାରିକ କାର୍ଯ୍ୟକଳାପ:
+1. ଆପଣ ଖାଉଥିବା ଖାଦ୍ୟର ଏକ ଚାର୍ଟ ପ୍ରସ୍ତୁତ କରି ଉତ୍ସ ଅନୁସାରେ ବର୍ଗୀକରଣ କରନ୍ତୁ।
+2. ବିଭିନ୍ନ ଖାଦ୍ୟର ଛବି ସଂଗ୍ରହ କରି ଏକ କୋଲାଜ୍ ପ୍ରସ୍ତୁତ କରନ୍ତୁ।
+3. ଏକ ବଗିଚା କିମ୍ବା କ୍ଷେତରେ ବୁଲି ବିଭିନ୍ନ ଖାଦ୍ୟ ଉତ୍ସ ଦେଖନ୍ତୁ।
+4. ଗୋଟିଏ ଦିନ ପାଇଁ ସନ୍ତୁଳିତ ଖାଦ୍ୟ ଯୋଜନା କରନ୍ତୁ।
+5. ଆପଣଙ୍କ ସ୍ଥାନୀୟ ପରିବେଶରୁ ଏକ ଖାଦ୍ୟ ଶୃଙ୍ଖଳା ଅଙ୍କନ କରନ୍ତୁ।
+
+====================================
+କ୍ରେଡିଟ୍ ଏବଂ କୃତଜ୍ଞତା
+====================================
+ପ୍ରସ୍ତୁତକାରୀ: STEM ଲର୍ନ ଓଡ଼ିଶା ଦଳ
+ପାଇଁ: ଷଷ୍ଠ ଶ୍ରେଣୀର ଛାତ୍ରଛାତ୍ରୀ
+ତାରିଖ: ${new Date().toLocaleDateString()}
+
+====================================
+ମନେରଖିବେ:
+• ଖାଦ୍ୟ ଉଦ୍ଭିଦ ଏବଂ ପ୍ରାଣୀଠାରୁ ଆସେ
+• ସନ୍ତୁଳିତ ପୋଷଣ ପାଇଁ ବିଭିନ୍ନ ପ୍ରକାର ଖାଦ୍ୟ ଖାଆନ୍ତୁ
+• ଖାଦ୍ୟ ନଷ୍ଟ କରିବେ ନାହିଁ - ଏହା ମୂଲ୍ୟବାନ!
+• ଆମ ଖାଦ୍ୟ ଉତ୍ପାଦନ କରୁଥିବା ଚାଷୀଙ୍କୁ ଧନ୍ୟବାଦ ଜଣାନ୍ତୁ
+
+====================================
+ଟିପ୍ପଣୀର ଶେଷ
+====================================`;
+        }
+
+        function generateFlashcards() {
+            return `FOOD SOURCES FLASHCARDS
+====================================
+
+STEM Learn Odisha - Class 6 Science
+====================================
+
+FLASHCARD SET - FOOD: WHERE DOES IT COME FROM?
+Total Cards: 10
+
+====================================
+
+CARD 1:
+Category: Sources of Food
+Question: What are the two main sources of food for humans?
+Answer: The two main sources of food are plants and animals. Plants provide fruits, vegetables, grains, and pulses. Animals provide milk, eggs, meat, and fish. Understanding these sources helps us make healthy food choices and appreciate where our food comes from.
+
+CARD 2:
+Category: Plant Biology
+Question: Explain photosynthesis and why it's important for food production
+Answer: Photosynthesis is the process by which plants make their own food using sunlight, water, and carbon dioxide. The formula is: 6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂ (with sunlight and chlorophyll). This process is crucial because plants are the primary producers in the food chain, providing energy for all other organisms.
+
+CARD 3:
+Category: Animal Types
+Question: What are herbivores, carnivores, and omnivores? Give examples of each
+Answer: Herbivores are animals that eat only plants (e.g., Cow, Goat, Rabbit). Carnivores are animals that eat only other animals (e.g., Lion, Tiger, Eagle). Omnivores are animals that eat both plants and animals (e.g., Humans, Bears, Crows). Each has different teeth adaptations for their diet.
+
+CARD 4:
+Category: Ecology
+Question: Describe a complete food chain with at least four levels
+Answer: A complete food chain shows energy transfer: Grass (producer) → Grasshopper (primary consumer) → Frog (secondary consumer) → Snake (tertiary consumer) → Eagle (quaternary consumer). Each organism eats the one before it, transferring energy through the ecosystem. Decomposers break down dead organisms at the end.
+
+CARD 5:
+Category: Nutrition
+Question: What is a balanced diet and why is it important for health?
+Answer: A balanced diet contains all essential nutrients in proper proportions: carbohydrates for energy, proteins for growth, fats for energy storage, vitamins and minerals for protection, water for body functions, and dietary fiber for digestion. It's important for proper growth, disease prevention, energy maintenance, and overall health.
+
+CARD 6:
+Category: Plant Parts
+Question: Name and explain different parts of plants that we eat as food
+Answer: We eat various plant parts: Roots (carrot, radish), Stems (potato, ginger), Leaves (spinach, cabbage), Flowers (cauliflower, broccoli), Fruits (apple, mango), and Seeds (rice, wheat, beans). Each part provides different nutrients and requires different cultivation methods.
+
+CARD 7:
+Category: Animal Products
+Question: What are the different animal products we get as food?
+Answer: Animal products include: Milk and dairy (milk, cheese, yogurt), Eggs (from chickens, ducks), Meat (chicken, fish, mutton), Seafood (prawns, crabs), and Honey (from bees). These provide high-quality proteins, vitamins, and minerals essential for human health.
+
+CARD 8:
+Category: Ecosystems
+Question: Explain the difference between food chain and food web
+Answer: A food chain is a linear sequence showing energy transfer from one organism to another (e.g., Grass → Rabbit → Fox). A food web is a complex network of interconnected food chains showing multiple feeding relationships. Food webs are more realistic as most organisms eat and are eaten by multiple species.
+
+CARD 9:
+Category: Ecology
+Question: Why are plants called producers and animals called consumers?
+Answer: Plants are called producers because they produce their own food through photosynthesis using sunlight. Animals are called consumers because they consume (eat) plants or other animals to get energy. This classification is based on how organisms obtain their food in an ecosystem.
+
+CARD 10:
+Category: Nutrition
+Question: What are the key nutrients we get from food and their functions?
+Answer: Key nutrients: 1) Carbohydrates - Main energy source (rice, wheat). 2) Proteins - Growth and repair (milk, eggs). 3) Fats - Energy storage and insulation (oil, nuts). 4) Vitamins - Disease prevention (fruits, vegetables). 5) Minerals - Bone health (milk, greens). 6) Water - Body functions. 7) Fiber - Digestion (whole grains).
+
+====================================
+HOW TO USE THESE FLASHCARDS:
+1. Print on thick paper or cardstock
+2. Cut along the dotted lines
+3. Fold each card in half
+4. Glue the front and back together
+5. Use for regular revision
+6. Test yourself by looking at the question and trying to recall the answer
+7. Shuffle cards for random practice
+
+====================================
+TIPS FOR EFFECTIVE LEARNING:
+• Review flashcards daily
+• Start with 5-10 minutes per day
+• Say answers out loud
+• Create your own flashcards for difficult topics
+• Study with friends for group practice
+
+====================================
+Prepared by: STEM Learn Odisha
+Date: ${new Date().toLocaleDateString()}
+====================================`;
+        }
+
+        // Show notification function
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            
+            if (type === 'error') {
+                notification.style.background = '#e53e3e';
+            } else if (type === 'success') {
+                notification.style.background = '#38a169';
+            }
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Log download activity
+        function logDownloadActivity(resourceType) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            const activity = {
+                userId: user.id,
+                resourceType: resourceType,
+                timestamp: new Date().toISOString(),
+                page: 'food.html'
+            };
+            
+            // Save to localStorage
+            let activities = JSON.parse(localStorage.getItem('downloadActivities')) || [];
+            activities.push(activity);
+            localStorage.setItem('downloadActivities', JSON.stringify(activities));
+        }
+
+        // Progress tracking
+        function updateProgress(category, points) {
+            const progressBars = {
+                'sources': document.getElementById('sources-progress'),
+                'types': document.getElementById('types-progress'),
+                'chain': document.getElementById('chain-progress'),
+                'overall': document.getElementById('overall-progress')
+            };
+            
+            const progressValues = {
+                'sources': document.getElementById('sources-progress-value'),
+                'types': document.getElementById('types-progress-value'),
+                'chain': document.getElementById('chain-progress-value'),
+                'overall': document.getElementById('overall-progress-value')
+            };
+            
+            // Update specific category
+            let currentWidth = parseInt(progressBars[category].style.width);
+            if (currentWidth + points <= 100) {
+                progressBars[category].style.width = (currentWidth + points) + '%';
+                progressValues[category].textContent = (currentWidth + points) + '%';
+            } else {
+                progressBars[category].style.width = '100%';
+                progressValues[category].textContent = '100%';
+            }
+            
+            // Update overall progress
+            let overallWidth = (
+                parseInt(progressBars['sources'].style.width) +
+                parseInt(progressBars['types'].style.width) +
+                parseInt(progressBars['chain'].style.width)
+            ) / 3;
+            
+            progressBars['overall'].style.width = overallWidth + '%';
+            progressValues['overall'].textContent = Math.round(overallWidth) + '%';
+        }
+    </script>
+</body>
+</html>

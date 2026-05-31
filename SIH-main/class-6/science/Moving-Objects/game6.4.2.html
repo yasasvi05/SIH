@@ -1,0 +1,2217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Speed Masters - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin:0; padding:0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: #f0f7ff; color:#1e293b; line-height:1.6; overflow-x:hidden; }
+        .container { width:100%; max-width:1200px; margin:0 auto; padding:0 20px; }
+
+        /* HEADER - Consistent with the second structure */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #2a69ac;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text h1 span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .language-switcher {
+            background: rgba(255,255,255,0.15);
+            border-radius:25px;
+            padding:8px;
+            backdrop-filter: blur(6px);
+            display:flex;
+            gap:6px;
+        }
+
+        .lang-btn {
+            padding:8px 12px;
+            border:none;
+            background:transparent;
+            border-radius:16px;
+            cursor:pointer;
+            font-size:0.9rem;
+            font-weight:600;
+            color:white;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn.active {
+            background: rgba(255,255,255,0.25);
+            color:white;
+        }
+
+        .lang-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Profile Container */
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-pic {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 180px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f7fa;
+        }
+
+        .dropdown-item i {
+            color: #3182ce;
+            width: 20px;
+        }
+
+        /* Instructions Modal */
+        .instructions-modal {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .instructions-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 700px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            text-align: center;
+        }
+
+        .instructions-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #1a365d;
+            font-weight: 700;
+        }
+
+        .instructions-text {
+            color: #64748b;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            text-align: left;
+            font-size: 1.1rem;
+        }
+
+        .instructions-list {
+            margin-left: 20px;
+            margin-bottom: 25px;
+        }
+
+        .instructions-list li {
+            margin-bottom: 10px;
+        }
+
+        .start-game-btn {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #38b2ac 0%, #2c9a94 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .start-game-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(56, 178, 172, 0.3);
+        }
+
+        /* game header */
+        .game-header {
+            background: linear-gradient(rgba(14,42,71,0.85),rgba(26,54,93,0.9)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size:cover;
+            background-position:center;
+            color:white;
+            padding:50px 0;
+            text-align:center;
+            display: none;
+        }
+
+        .game-header h1 {
+            font-size:2.8rem;
+            margin-bottom:12px;
+            font-weight:700;
+            text-shadow:0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .game-header p {
+            font-size:1.1rem;
+            max-width:800px;
+            margin:0 auto;
+            font-weight:300;
+            opacity:0.95;
+        }
+
+        /* game stats (second UI) */
+        .game-stats {
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            background:white;
+            padding:15px 25px;
+            border-radius:12px;
+            box-shadow:0 4px 12px rgba(0,0,0,0.08);
+            margin:20px auto;
+            max-width:1000px;
+            gap:12px;
+            flex-wrap:wrap;
+            display: none;
+        }
+
+        .timer, .score, .lives {
+            display:flex;
+            align-items:center;
+            gap:10px;
+            font-size:1.1rem;
+            font-weight:600;
+            color:#1a365d;
+        }
+
+        .timer i { color:#e53e3e; }
+        .score i { color:#38a169; }
+        .lives i { color:#d69e2e; }
+        .progress-container {
+            width:200px;
+            height:12px;
+            background:#e2e8f0;
+            border-radius:10px;
+            overflow:hidden;
+        }
+
+        .progress-bar {
+            height:100%;
+            background:#3182ce;
+            border-radius:10px;
+            transition: width 0.5s ease;
+        }
+
+        /* game area - SPEED SPECIFIC */
+        .game-area {
+            padding:40px 0 60px;
+            display: none;
+        }
+
+        .game-container {
+            max-width:900px;
+            margin:0 auto 40px auto;
+        }
+
+        /* Level Selection */
+        .level-selection {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .level-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border: 3px solid transparent;
+        }
+
+        .level-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            border-color: #4299e1;
+        }
+
+        .level-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .level-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+
+        .level-desc {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .level-card.locked {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .level-card.locked:hover {
+            transform: none;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border-color: transparent;
+        }
+
+        /* Challenge Area */
+        .challenge-area {
+            background: rgba(255,255,255,0.95);
+            border-radius:25px;
+            padding:30px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom:30px;
+            display:none;
+        }
+
+        .challenge-header {
+            display:flex;
+            align-items:center;
+            gap:15px;
+            margin-bottom:25px;
+        }
+
+        .challenge-icon {
+            width:70px;
+            height:70px;
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:1.8rem;
+            background: linear-gradient(45deg,#4299e1,#3182ce);
+            color:white;
+        }
+
+        .challenge-title {
+            font-size:1.6rem;
+            font-weight:700;
+            color:#1a365d;
+        }
+
+        .challenge-desc {
+            color:#4a5568;
+            margin-bottom:25px;
+            font-size:1.1rem;
+            line-height:1.6;
+        }
+
+        /* Formula Display */
+        .formula-display {
+            background: linear-gradient(135deg, #f0f9ff, #e6f7ff);
+            border-radius:15px;
+            padding:20px;
+            margin:25px 0;
+            border-left:5px solid #4299e1;
+        }
+
+        .formula-title {
+            font-weight:700;
+            color:#1a365d;
+            margin-bottom:10px;
+            font-size:1.2rem;
+        }
+
+        .formula-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .formula-box {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            min-width: 200px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .formula {
+            font-size:1.8rem;
+            color:#2d3748;
+            margin:10px 0;
+            font-weight:600;
+        }
+
+        .formula-hint {
+            color:#718096;
+            font-size:0.95rem;
+            margin-top: 10px;
+        }
+
+        /* Triangle Formula Visual */
+        .formula-triangle {
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .triangle {
+            font-family: monospace;
+            font-size: 2.5rem;
+            line-height: 1.2;
+            color: #1a365d;
+            margin: 20px 0;
+        }
+
+        .triangle-label {
+            display: inline-block;
+            margin: 0 15px;
+            font-weight: 600;
+        }
+
+        /* Question Types */
+        .question-area {
+            background:#f8fafc;
+            border-radius:15px;
+            padding:25px;
+            margin:25px 0;
+        }
+
+        .question-text {
+            font-size:1.3rem;
+            font-weight:600;
+            color:#2d3748;
+            margin-bottom:20px;
+        }
+
+        .answer-options {
+            display:grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap:15px;
+            margin-top:20px;
+        }
+
+        .option-btn {
+            padding:15px;
+            background:white;
+            border:2px solid #cbd5e0;
+            border-radius:12px;
+            font-size:1.1rem;
+            cursor:pointer;
+            transition:all 0.2s ease;
+            text-align:center;
+        }
+
+        .option-btn:hover {
+            border-color:#4299e1;
+            background:#ebf8ff;
+        }
+
+        .option-btn.correct {
+            background:#c6f6d5;
+            border-color:#48bb78;
+            color:#22543d;
+        }
+
+        .option-btn.incorrect {
+            background:#fed7d7;
+            border-color:#f56565;
+            color:#742a2a;
+        }
+
+        /* Input Area */
+        .input-area {
+            display:flex;
+            flex-direction:column;
+            gap:20px;
+        }
+
+        .input-row {
+            display:flex;
+            align-items:center;
+            gap:15px;
+            flex-wrap:wrap;
+        }
+
+        .input-label {
+            min-width:100px;
+            font-weight:600;
+            color:#4a5568;
+        }
+
+        .speed-input {
+            padding:12px 15px;
+            border:2px solid #cbd5e0;
+            border-radius:10px;
+            font-size:1.1rem;
+            width:150px;
+        }
+
+        .unit-select {
+            padding:12px 15px;
+            border:2px solid #cbd5e0;
+            border-radius:10px;
+            font-size:1.1rem;
+            background:white;
+        }
+
+        .submit-btn {
+            padding:15px 30px;
+            background:linear-gradient(45deg,#4299e1,#3182ce);
+            color:white;
+            border:none;
+            border-radius:12px;
+            font-size:1.1rem;
+            font-weight:600;
+            cursor:pointer;
+            transition:all 0.3s ease;
+            align-self:flex-start;
+        }
+
+        .submit-btn:hover {
+            transform:translateY(-3px);
+            box-shadow:0 8px 20px rgba(66,153,225,0.3);
+        }
+
+        /* Vehicle Comparison */
+        .vehicle-comparison {
+            display:flex;
+            justify-content:center;
+            gap:30px;
+            flex-wrap:wrap;
+            margin:30px 0;
+        }
+
+        .vehicle-card {
+            background:white;
+            border-radius:16px;
+            padding:20px;
+            width:180px;
+            text-align:center;
+            box-shadow:0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .vehicle-icon {
+            font-size:3.5rem;
+            margin-bottom:15px;
+        }
+
+        .vehicle-name {
+            font-weight:700;
+            color:#1a365d;
+            margin-bottom:10px;
+        }
+
+        .vehicle-speed {
+            font-size:1.2rem;
+            color:#4299e1;
+            font-weight:600;
+        }
+
+        /* modal */
+        .modal {
+            display:none;
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background: rgba(0,0,0,0.75);
+            z-index:2000;
+            align-items:center;
+            justify-content:center;
+        }
+
+        .modal-content {
+            background:linear-gradient(145deg,#ffffff,#f0f8ff);
+            border-radius:24px;
+            width:90%;
+            max-width:700px;
+            padding:36px;
+            text-align:center;
+            position:relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .modal-close {
+            position:absolute;
+            top:16px;
+            right:16px;
+            background:rgba(0,0,0,0.06);
+            border:none;
+            font-size:1.4rem;
+            width:44px;
+            height:44px;
+            border-radius:50%;
+            cursor:pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background:rgba(0,0,0,0.12);
+            transform: rotate(90deg);
+        }
+
+        .modal-icon {
+            font-size:4rem;
+            margin-bottom:20px;
+        }
+
+        .modal-title {
+            font-size:2rem;
+            font-weight:800;
+            color:#1a365d;
+            margin-bottom:15px;
+        }
+
+        .modal-text {
+            color:#4a5568;
+            margin-bottom:20px;
+            font-size:1.1rem;
+            line-height:1.6;
+        }
+
+        .modal-action {
+            padding:15px 40px;
+            background:linear-gradient(45deg,#4facfe,#00f2fe);
+            color:white;
+            border:none;
+            border-radius:14px;
+            font-size:1.1rem;
+            font-weight:600;
+            cursor:pointer;
+            transition: all 0.3s ease;
+            margin-top:10px;
+        }
+
+        .modal-action:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        /* Results */
+        .level-results {
+            display:none;
+            text-align:center;
+            padding:30px;
+            background:linear-gradient(145deg,#ffffff,#f7fafc);
+            border-radius:20px;
+            box-shadow:0 20px 40px rgba(0,0,0,0.08);
+            max-width:700px;
+            margin:30px auto;
+        }
+
+        .results-title {
+            font-size:2rem;
+            color:#1a365d;
+            margin-bottom:20px;
+        }
+
+        .results-details {
+            display:grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap:20px;
+            margin:30px 0;
+        }
+
+        .result-card {
+            background:white;
+            padding:20px;
+            border-radius:12px;
+            box-shadow:0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .result-value {
+            font-size:2rem;
+            font-weight:700;
+            color:#4299e1;
+            margin-bottom:5px;
+        }
+
+        .result-label {
+            color:#718096;
+            font-size:0.9rem;
+        }
+
+        .next-level-btn {
+            padding:15px 40px;
+            background:linear-gradient(45deg,#38b2ac,#2c9a94);
+            color:white;
+            border:none;
+            border-radius:12px;
+            font-size:1.1rem;
+            font-weight:600;
+            cursor:pointer;
+            transition: all 0.3s ease;
+            margin-top:20px;
+        }
+
+        .next-level-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(56, 178, 172, 0.4);
+        }
+
+        /* Navigation */
+        .game-navigation {
+            display:flex;
+            justify-content:space-between;
+            margin-top:30px;
+        }
+
+        .nav-btn {
+            padding:12px 25px;
+            background:#e2e8f0;
+            border:none;
+            border-radius:10px;
+            font-size:1rem;
+            font-weight:600;
+            cursor:pointer;
+            transition:all 0.3s ease;
+            display:flex;
+            align-items:center;
+            gap:8px;
+        }
+
+        .nav-btn:hover {
+            background:#cbd5e0;
+        }
+
+        .nav-btn.primary {
+            background:#4299e1;
+            color:white;
+        }
+
+        .nav-btn.primary:hover {
+            background:#3182ce;
+        }
+
+        .particles {
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            pointer-events:none;
+            z-index:-1;
+        }
+
+        .particle {
+            position:absolute;
+            width:4px;
+            height:4px;
+            background:rgba(255,255,255,0.5);
+            border-radius:50%;
+            animation: float-particle 18s infinite linear;
+        }
+
+        /* Animation for correct answers */
+        @keyframes float-particle {
+            0% { transform: translateY(100vh) translateX(0px); opacity:0; }
+            10%{opacity:1;}
+            90%{opacity:1;}
+            100%{transform:translateY(-100px) translateX(100px); opacity:0;}
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Streak Counter */
+        .streak-counter {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 18px 24px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5);
+            z-index: 500;
+            animation: bounce 2s infinite;
+            display: none;
+        }
+
+        /* Formula popup animation */
+        @keyframes formula-popup {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .formula-popup { animation: formula-popup 0.5s ease-out; }
+
+        @media (max-width:968px) {
+            .level-selection { grid-template-columns: repeat(2, 1fr); }
+            .answer-options { grid-template-columns: 1fr; }
+            .results-details { grid-template-columns: repeat(2, 1fr); }
+            .game-stats { flex-direction:column; gap:10px; align-items:flex-start; }
+            .streak-counter { display: none !important; }
+            .vehicle-comparison { gap:15px; }
+            .vehicle-card { width:140px; }
+            .formula-container { flex-direction: column; }
+            .formula-box { min-width: auto; }
+        }
+
+        @media (max-width:768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            .header-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+           
+            .language-switcher {
+                order: 2;
+            }
+           
+            .profile-container {
+                order: 1;
+            }
+        }
+
+        @media (max-width:600px) {
+            .level-selection { grid-template-columns: 1fr; }
+            .results-details { grid-template-columns: 1fr; }
+            .triangle { font-size: 1.8rem; }
+            .header-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    <div class="streak-counter" id="streak-counter">⚡ <span id="streak-count">0</span> Streak!</div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <!-- Changed to match original STEM Learn Odisha logo -->
+                <i class="fas fa-atom"></i>
+            </div>
+            <div class="logo-text">
+                <h1>STEM <span>Learn</span> Odisha</h1>
+                <p>Gamified Learning Platform</p>
+            </div>
+        </div>
+       
+        <div class="header-controls">
+            <div class="language-switcher">
+                <button class="lang-btn active" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+                <button class="lang-btn" data-lang="hi">हिन्दी</button>
+            </div>
+           
+            <div class="profile-container">
+                <button class="profile-btn" id="profileToggle">
+                    <img src="" alt="Profile" class="profile-pic" id="headerProfilePic">
+                    <span id="headerUserName">Student</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+               
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" class="dropdown-item" id="dropdownProfile">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownSettings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownLogout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Instructions modal -->
+    <div class="instructions-modal" id="instructions-modal">
+        <div class="instructions-content">
+            <!-- Separate language switcher for instructions modal -->
+            <div class="language-switcher" style="position: relative; top: 0; right: 0; margin: 0 auto 20px auto; width: fit-content; background: rgba(26, 54, 93, 0.1);">
+                <button class="lang-btn active" data-lang="en" data-context="instructions">English</button>
+                <button class="lang-btn" data-lang="or" data-context="instructions">ଓଡ଼ିଆ</button>
+                <button class="lang-btn" data-lang="hi" data-context="instructions">हिन्दी</button>
+            </div>
+           
+            <h2 class="instructions-title" id="instructions-title">Speed Masters Challenge</h2>
+            <div class="instructions-text" id="instructions-text">
+                <p id="instructions-intro">Welcome to Speed Masters! Learn all about speed, distance, and time relationships!</p>
+                <ul class="instructions-list" id="instructions-list">
+                    <li id="instruction-1"><strong>Level 1:</strong> Learn the magic triangle - all three formulas: Speed, Distance, Time</li>
+                    <li id="instruction-2"><strong>Level 2:</strong> Calculate speed, distance OR time when two values are given</li>
+                    <li id="instruction-3"><strong>Level 3:</strong> Compare speeds of different vehicles</li>
+                    <li id="instruction-5">Use the magic triangle to find any value!</li>
+                    <li id="instruction-6">Each correct answer earns you points and builds your streak!</li>
+                </ul>
+                <p id="instructions-outro">Get ready to become a Speed Master! Remember: Cover the value you want to find in the triangle!</p>
+            </div>
+            <button class="start-game-btn" id="start-game-btn">Start Learning Speed!</button>
+        </div>
+    </div>
+
+    <!-- Game header -->
+    <section class="game-header" id="game-header">
+        <div class="container">
+            <h1 data-translate="game-title">Speed Masters</h1>
+            <p data-translate="game-desc">Learn the relationships between speed, distance, and time! Use the magic triangle to solve any problem!</p>
+        </div>
+    </section>
+
+    <!-- Game stats (second UI) -->
+    <div class="container" id="game-stats-container">
+        <div class="game-stats" id="game-stats">
+            <div class="timer">
+                <i class="fas fa-clock"></i>
+                <span id="time" data-translate="time">05:00</span>
+            </div>
+
+            <div class="score">
+                <i class="fas fa-star"></i>
+                <span id="score" data-translate="score">Score: 0</span>
+            </div>
+
+            <div class="lives">
+                <i class="fas fa-heart"></i>
+                <span id="lives" data-translate="lives">Lives: 3</span>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar" id="progress" style="width:0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game area -->
+    <section class="game-area" id="game-area">
+        <div class="container">
+            <!-- Level Selection -->
+            <div class="level-selection" id="level-selection">
+                <div class="level-card" data-level="1">
+                    <div class="level-icon">🔺</div>
+                    <h3 class="level-title" data-translate="level1-title">Level 1: Magic Triangle</h3>
+                    <p class="level-desc" data-translate="level1-desc">Learn all three formulas</p>
+                </div>
+               
+                <div class="level-card locked" data-level="2">
+                    <div class="level-icon">📝</div>
+                    <h3 class="level-title" data-translate="level2-title">Level 2: Calculations</h3>
+                    <p class="level-desc" data-translate="level2-desc">Solve speed, distance & time</p>
+                </div>
+               
+                <div class="level-card locked" data-level="3">
+                    <div class="level-icon">🚗</div>
+                    <h3 class="level-title" data-translate="level3-title">Level 3: Compare Speeds</h3>
+                    <p class="level-desc" data-translate="level3-desc">Which is faster?</p>
+                </div>
+            </div>
+
+            <!-- Challenge Area -->
+            <div class="challenge-area" id="challenge-area">
+                <div class="challenge-header">
+                    <div class="challenge-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    <h2 class="challenge-title" id="challenge-title">Level 1: The Magic Triangle</h2>
+                </div>
+               
+                <p class="challenge-desc" id="challenge-desc">The magic triangle helps you remember all three formulas! Cover the value you want to find, and see what's left.</p>
+               
+                <!-- Magic Triangle Visual -->
+                <div class="formula-triangle">
+                    <div class="triangle" id="triangle">
+                        <div style="color: #4299e1; font-weight: 700;">Distance</div>
+                        <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
+                            <span class="triangle-label" style="color: #e53e3e;">Speed</span>
+                            <div style="margin: 0 10px; font-size: 2rem;">×</div>
+                            <span class="triangle-label" style="color: #38b2ac;">Time</span>
+                        </div>
+                    </div>
+                    <div class="triangle-hint" id="triangle-hint">Cover what you want to find!</div>
+                </div>
+               
+                <div class="formula-display formula-popup" id="formula-display">
+                    <div class="formula-title" data-translate="formula-title">All Three Formulas</div>
+                    <div class="formula-container">
+                        <div class="formula-box">
+                            <div data-translate="formula-speed-title">To Find Speed</div>
+                            <div class="formula">Speed = Distance ÷ Time</div>
+                            <div class="formula-hint" data-translate="formula-speed-hint">Divide distance by time</div>
+                        </div>
+                        <div class="formula-box">
+                            <div data-translate="formula-distance-title">To Find Distance</div>
+                            <div class="formula">Distance = Speed × Time</div>
+                            <div class="formula-hint" data-translate="formula-distance-hint">Multiply speed and time</div>
+                        </div>
+                        <div class="formula-box">
+                            <div data-translate="formula-time-title">To Find Time</div>
+                            <div class="formula">Time = Distance ÷ Speed</div>
+                            <div class="formula-hint" data-translate="formula-time-hint">Divide distance by speed</div>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="question-area" id="question-area">
+                    <!-- Questions will be loaded here -->
+                </div>
+               
+                <div class="game-navigation">
+                    <button class="nav-btn" id="back-btn">
+                        <i class="fas fa-arrow-left"></i>
+                        <span data-translate="back-btn">Back to Levels</span>
+                    </button>
+                    <button class="nav-btn primary" id="next-btn">
+                        <span data-translate="next-btn">Next Challenge</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Level Complete -->
+            <div class="level-results" id="level-results">
+                <div class="modal-icon"><i class="fas fa-trophy"></i></div>
+                <h2 class="results-title" id="results-title" data-translate="level-complete">Level Complete!</h2>
+                <p class="modal-text" id="results-text" data-translate="level-complete-text">Congratulations! You've mastered this level of speed calculation!</p>
+               
+                <div class="results-details">
+                    <div class="result-card">
+                        <div class="result-value" id="final-score">0</div>
+                        <div class="result-label" data-translate="total-score">Total Score</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-value" id="correct-answers">0</div>
+                        <div class="result-label" data-translate="correct-answers">Correct Answers</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-value" id="time-bonus">0</div>
+                        <div class="result-label" data-translate="time-bonus">Time Bonus</div>
+                    </div>
+                </div>
+               
+                <button class="next-level-btn" id="continue-btn" data-translate="continue-level">Continue to Next Level</button>
+                <button class="nav-btn" style="margin-top:15px;" id="play-again-btn" data-translate="play-again">Back to Level Selection</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback modal -->
+    <div class="modal" id="feedback-modal">
+        <div class="modal-content" id="modal-content">
+            <button class="modal-close" id="modal-close"><i class="fas fa-times"></i></button>
+
+            <div class="modal-icon" id="modal-icon"><i class="fas fa-check-circle"></i></div>
+            <h2 class="modal-title" id="modal-title" data-translate="correct-title">Correct!</h2>
+            <p class="modal-text" id="modal-text">Great job! You remembered the speed formula correctly!</p>
+
+            <button class="modal-action" id="modal-action" data-translate="continue-btn">Continue</button>
+        </div>
+    </div>
+
+    <script>
+        /* ---- DATA ---- */
+        const gameData = {
+            levels: [
+                {
+                    id: 1,
+                    title: { en: "Magic Triangle", or: "ଜାଦୁ ତ୍ରିଭୁଜ", hi: "जादू त्रिभुज" },
+                    description: { en: "Learn all three formulas using the magic triangle", or: "ଜାଦୁ ତ୍ରିଭୁଜ ବ୍ୟବହାର କରି ସମସ୍ତ ତିନୋଟି ସୂତ୍ର ଶିଖନ୍ତୁ", hi: "जादू त्रिभुज का उपयोग करके सभी तीन सूत्र सीखें" },
+                    type: "triangle",
+                    questions: [
+                        {
+                            question: { en: "What formula do you use to find SPEED?", or: "ଗତି ଖୋଜିବା ପାଇଁ କେଉଁ ସୂତ୍ର ବ୍ୟବହାର କରନ୍ତି?", hi: "गति ज्ञात करने के लिए आप किस सूत्र का उपयोग करते हैं?" },
+                            options: [
+                                { en: "Speed = Distance × Time", or: "ଗତି = ଦୂରତା × ସମୟ", hi: "गति = दूरी × समय" },
+                                { en: "Speed = Distance ÷ Time", or: "ଗତି = ଦୂରତା ÷ ସମୟ", hi: "गति = दूरी ÷ समय" },
+                                { en: "Speed = Time ÷ Distance", or: "ଗତି = ସମୟ ÷ ଦୂରତା", hi: "गति = समय ÷ दूरी" },
+                                { en: "Speed = Distance + Time", or: "ଗତି = ଦୂରତା + ସମୟ", hi: "गति = दूरी + समय" }
+                            ],
+                            correct: 1,
+                            explanation: {
+                                en: "Correct! To find SPEED, cover 'S' in the triangle. You see D over T, which means Speed = Distance ÷ Time",
+                                or: "ଠିକ୍! ଗତି ଖୋଜିବା ପାଇଁ, ତ୍ରିଭୁଜରେ 'S' ଆବରଣ କରନ୍ତୁ। ଆପଣ D ଉପରେ T ଦେଖନ୍ତି, ଯାହାର ଅର୍ଥ ଗତି = ଦୂରତା ÷ ସମୟ",
+                                hi: "सही! गति ज्ञात करने के लिए, त्रिभुज में 'S' को ढकें। आप D को T से विभाजित देखते हैं, जिसका अर्थ है गति = दूरी ÷ समय"
+                            }
+                        },
+                        {
+                            question: { en: "What formula do you use to find DISTANCE?", or: "ଦୂରତା ଖୋଜିବା ପାଇଁ କେଉଁ ସୂତ୍ର ବ୍ୟବହାର କରନ୍ତି?", hi: "दूरी ज्ञात करने के लिए आप किस सूत्र का उपयोग करते हैं?" },
+                            options: [
+                                { en: "Distance = Speed ÷ Time", or: "ଦୂରତା = ଗତି ÷ ସମୟ", hi: "दूरी = गति ÷ समय" },
+                                { en: "Distance = Speed × Time", or: "ଦୂରତା = ଗତି × ସମୟ", hi: "दूरी = गति × समय" },
+                                { en: "Distance = Time ÷ Speed", or: "ଦୂରତା = ସମୟ ÷ ଗତି", hi: "दूरी = समय ÷ गति" },
+                                { en: "Distance = Speed + Time", or: "ଦୂରତା = ଗତି + ସମୟ", hi: "दूरी = गति + समय" }
+                            ],
+                            correct: 1,
+                            explanation: {
+                                en: "Correct! To find DISTANCE, cover 'D' in the triangle. You see S next to T, which means Distance = Speed × Time",
+                                or: "ଠିକ୍! ଦୂରତା ଖୋଜିବା ପାଇଁ, ତ୍ରିଭୁଜରେ 'D' ଆବରଣ କରନ୍ତୁ। ଆପଣ S ଏବଂ T ପାଖାପାଖି ଦେଖନ୍ତି, ଯାହାର ଅର୍ଥ ଦୂରତା = ଗତି × ସମୟ",
+                                hi: "सही! दूरी ज्ञात करने के लिए, त्रिभुज में 'D' को ढकें। आप S और T को साथ देखते हैं, जिसका अर्थ है दूरी = गति × समय"
+                            }
+                        },
+                        {
+                            question: { en: "What formula do you use to find TIME?", or: "ସମୟ ଖୋଜିବା ପାଇଁ କେଉଁ ସୂତ୍ର ବ୍ୟବହାର କରନ୍ତି?", hi: "समय ज्ञात करने के लिए आप किस सूत्र का उपयोग करते हैं?" },
+                            options: [
+                                { en: "Time = Distance × Speed", or: "ସମୟ = ଦୂରତା × ଗତି", hi: "समय = दूरी × गति" },
+                                { en: "Time = Speed ÷ Distance", or: "ସମୟ = ଗତି ÷ ଦୂରତା", hi: "समय = गति ÷ दूरी" },
+                                { en: "Time = Distance ÷ Speed", or: "ସମୟ = ଦୂରତା ÷ ଗତି", hi: "समय = दूरी ÷ गति" },
+                                { en: "Time = Distance + Speed", or: "ସମୟ = ଦୂରତା + ଗତି", hi: "समय = दूरी + गति" }
+                            ],
+                            correct: 2,
+                            explanation: {
+                                en: "Correct! To find TIME, cover 'T' in the triangle. You see D over S, which means Time = Distance ÷ Speed",
+                                or: "ଠିକ୍! ସମୟ ଖୋଜିବା ପାଇଁ, ତ୍ରିଭୁଜରେ 'T' ଆବରଣ କରନ୍ତୁ। ଆପଣ D ଉପରେ S ଦେଖନ୍ତି, ଯାହାର ଅର୍ଥ ସମୟ = ଦୂରତା ÷ ଗତି",
+                                hi: "सही! समय ज्ञात करने के लिए, त्रिभुज में 'T' को ढकें। आप D को S से विभाजित देखते हैं, जिसका अर्थ है समय = दूरी ÷ गति"
+                            }
+                        },
+                        {
+                            question: { en: "If a car travels 120 km at 60 km/h, how long does it take?", or: "ଯଦି ଏକ କାର 60 କିମି/ଘଣ୍ଟା ବେଗରେ 120 କିମି ଯାଏ, ତେବେ ଏହାକୁ କେତେ ସମୟ ଲାଗିବ?", hi: "यदि एक कार 60 किमी/घंटा की गति से 120 किमी चलती है, तो इसमें कितना समय लगेगा?" },
+                            options: [
+                                { en: "2 hours", or: "2 ଘଣ୍ଟା", hi: "2 घंटे" },
+                                { en: "3 hours", or: "3 ଘଣ୍ଟା", hi: "3 घंटे" },
+                                { en: "1.5 hours", or: "1.5 ଘଣ୍ଟା", hi: "1.5 घंटे" },
+                                { en: "4 hours", or: "4 ଘଣ୍ଟା", hi: "4 घंटे" }
+                            ],
+                            correct: 0,
+                            explanation: {
+                                en: "Correct! Time = Distance ÷ Speed = 120 km ÷ 60 km/h = 2 hours",
+                                or: "ଠିକ୍! ସମୟ = ଦୂରତା ÷ ଗତି = 120 କିମି ÷ 60 କିମି/ଘଣ୍ଟା = 2 ଘଣ୍ଟା",
+                                hi: "सही! समय = दूरी ÷ गति = 120 किमी ÷ 60 किमी/घंटा = 2 घंटे"
+                            }
+                        },
+                        {
+                            question: { en: "A cyclist rides at 15 km/h for 3 hours. How far do they travel?", or: "ଜଣେ ସାଇକେଲ ଚାଳକ 3 ଘଣ୍ଟା ପାଇଁ 15 କିମି/ଘଣ୍ଟା ବେଗରେ ଯାଆନ୍ତି। ସେମାନେ କେତେ ଦୂର ଯାଆନ୍ତି?", hi: "एक साइकिल चालक 3 घंटे के लिए 15 किमी/घंटा की गति से चलता है। वह कितनी दूर जाता है?" },
+                            options: [
+                                { en: "45 km", or: "45 କିମି", hi: "45 किमी" },
+                                { en: "30 km", or: "30 କିମି", hi: "30 किमी" },
+                                { en: "5 km", or: "5 କିମି", hi: "5 किमी" },
+                                { en: "60 km", or: "60 କିମି", hi: "60 किमी" }
+                            ],
+                            correct: 0,
+                            explanation: {
+                                en: "Correct! Distance = Speed × Time = 15 km/h × 3 hours = 45 km",
+                                or: "ଠିକ୍! ଦୂରତା = ଗତି × ସମୟ = 15 କିମି/ଘଣ୍ଟା × 3 ଘଣ୍ଟା = 45 କିମି",
+                                hi: "सही! दूरी = गति × समय = 15 किमी/घंटा × 3 घंटे = 45 किमी"
+                            }
+                        }
+                    ]
+                },
+                {
+                    id: 2,
+                    title: { en: "Calculations", or: "ଗଣନା", hi: "गणना" },
+                    description: { en: "Calculate speed, distance, or time when two values are given", or: "ଦୁଇଟି ମୂଲ୍ୟ ଦିଆଯାଇଥିଲେ ଗତି, ଦୂରତା କିମ୍ବା ସମୟ ଗଣନା କରନ୍ତୁ", hi: "जब दो मान दिए गए हों तो गति, दूरी या समय की गणना करें" },
+                    type: "calculation",
+                    questions: [
+                        {
+                            type: "speed",
+                            question: { en: "A train travels 240 km in 4 hours. What is its speed in km/h?", or: "ଏକ ଟ୍ରେନ 4 ଘଣ୍ଟାରେ 240 କିମି ଯାଏ। ଏହାର ଗତି କିମି/ଘଣ୍ଟାରେ କେତେ?", hi: "एक ट्रेन 4 घंटे में 240 किमी चलती है। इसकी गति किमी/घंटा में क्या है?" },
+                            distance: 240,
+                            time: 4,
+                            unit: "km/h",
+                            answer: 60,
+                            explanation: {
+                                en: "Correct! Speed = Distance ÷ Time = 240 km ÷ 4 hours = 60 km/h",
+                                or: "ଠିକ୍! ଗତି = ଦୂରତା ÷ ସମୟ = 240 କିମି ÷ 4 ଘଣ୍ଟା = 60 କିମି/ଘଣ୍ଟା",
+                                hi: "सही! गति = दूरी ÷ समय = 240 किमी ÷ 4 घंटे = 60 किमी/घंटा"
+                            }
+                        },
+                        {
+                            type: "distance",
+                            question: { en: "A bus moves at 40 km/h for 2.5 hours. How far does it travel?", or: "ଏକ ବସ୍ 2.5 ଘଣ୍ଟା ପାଇଁ 40 କିମି/ଘଣ୍ଟା ବେଗରେ ଗତି କରେ। ଏହା କେତେ ଦୂର ଯାଏ?", hi: "एक बस 2.5 घंटे के लिए 40 किमी/घंटा की गति से चलती है। यह कितनी दूर जाती है?" },
+                            speed: 40,
+                            time: 2.5,
+                            unit: "km",
+                            answer: 100,
+                            explanation: {
+                                en: "Correct! Distance = Speed × Time = 40 km/h × 2.5 hours = 100 km",
+                                or: "ଠିକ୍! ଦୂରତା = ଗତି × ସମୟ = 40 କିମି/ଘଣ୍ଟା × 2.5 ଘଣ୍ଟା = 100 କିମି",
+                                hi: "सही! दूरी = गति × समय = 40 किमी/घंटा × 2.5 घंटे = 100 किमी"
+                            }
+                        },
+                        {
+                            type: "time",
+                            question: { en: "A runner completes a 10 km race at 5 km/h. How long does it take in hours?", or: "ଜଣେ ଦୌଡ଼ାଳୀ 5 କିମି/ଘଣ୍ଟା ବେଗରେ 10 କିମି ଦୌଡ଼ ସମାପ୍ତ କରନ୍ତି। ଘଣ୍ଟାରେ କେତେ ସମୟ ଲାଗିବ?", hi: "एक धावक 5 किमी/घंटा की गति से 10 किमी की दौड़ पूरी करता है। घंटों में कितना समय लगेगा?" },
+                            distance: 10,
+                            speed: 5,
+                            unit: "hours",
+                            answer: 2,
+                            explanation: {
+                                en: "Correct! Time = Distance ÷ Speed = 10 km ÷ 5 km/h = 2 hours",
+                                or: "ଠିକ୍! ସମୟ = ଦୂରତା ÷ ଗତି = 10 କିମି ÷ 5 କିମି/ଘଣ୍ଟା = 2 ଘଣ୍ଟା",
+                                hi: "सही! समय = दूरी ÷ गति = 10 किमी ÷ 5 किमी/घंटा = 2 घंटे"
+                            }
+                        },
+                        {
+                            type: "speed",
+                            question: { en: "A bird flies 150 meters in 30 seconds. What is its speed in m/s?", or: "ଏକ ପକ୍ଷୀ 30 ସେକେଣ୍ଡରେ 150 ମିଟର ଉଡ଼େ। ଏହାର ଗତି ମି/ସେ ରେ କେତେ?", hi: "एक पक्षी 30 सेकंड में 150 मीटर उड़ता है। इसकी गति मी/से में क्या है?" },
+                            distance: 150,
+                            time: 30,
+                            unit: "m/s",
+                            answer: 5,
+                            explanation: {
+                                en: "Correct! Speed = Distance ÷ Time = 150 m ÷ 30 s = 5 m/s",
+                                or: "ଠିକ୍! ଗତି = ଦୂରତା ÷ ସମୟ = 150 ମି ÷ 30 ସେ = 5 ମି/ସେ",
+                                hi: "सही! गति = दूरी ÷ समय = 150 मी ÷ 30 से = 5 मी/से"
+                            }
+                        }
+                    ]
+                },
+                {
+                    id: 3,
+                    title: { en: "Compare Speeds", or: "ଗତି ତୁଳନା କରନ୍ତୁ", hi: "गतियों की तुलना करें" },
+                    description: { en: "Compare speeds of different vehicles", or: "ବିଭିନ୍ନ ଯାନର ଗତି ତୁଳନା କରନ୍ତୁ", hi: "विभिन्न वाहनों की गतियों की तुलना करें" },
+                    type: "comparison",
+                    vehicles: [
+                        { name: { en: "Walking", or: "ଚାଲିବା", hi: "चलना" }, icon: "🚶", speed: 5, unit: "km/h" },
+                        { name: { en: "Bicycle", or: "ସାଇକେଲ", hi: "साइकिल" }, icon: "🚲", speed: 15, unit: "km/h" },
+                        { name: { en: "Car", or: "କାର", hi: "कार" }, icon: "🚗", speed: 60, unit: "km/h" },
+                        { name: { en: "Bullet Train", or: "ବୁଲେଟ ଟ୍ରେନ", hi: "बुलेट ट्रेन" }, icon: "🚄", speed: 300, unit: "km/h" }
+                    ],
+                    questions: [
+                        {
+                            question: { en: "Which vehicle is fastest?", or: "କେଉଁ ଯାନ ଅଧିକ ତୀବ୍ର?", hi: "कौन सा वाहन सबसे तेज है?" },
+                            options: [
+                                { en: "Walking (5 km/h)", or: "ଚାଲିବା (5 କିମି/ଘଣ୍ଟା)", hi: "चलना (5 किमी/घंटा)" },
+                                { en: "Bicycle (15 km/h)", or: "ସାଇକେଲ (15 କିମି/ଘଣ୍ଟା)", hi: "साइकिल (15 किमी/घंटा)" },
+                                { en: "Car (60 km/h)", or: "କାର (60 କିମି/ଘଣ୍ଟା)", hi: "कार (60 किमी/घंटा)" },
+                                { en: "Bullet Train (300 km/h)", or: "ବୁଲେଟ ଟ୍ରେନ (300 କିମି/ଘଣ୍ଟା)", hi: "बुलेट ट्रेन (300 किमी/घंटा)" }
+                            ],
+                            correct: 3,
+                            explanation: {
+                                en: "Correct! The bullet train at 300 km/h is much faster than a car at 60 km/h!",
+                                or: "ଠିକ୍! ବୁଲେଟ ଟ୍ରେନ 300 କିମି/ଘଣ୍ଟା ବେଗରେ କାର 60 କିମି/ଘଣ୍ଟା ଅପେକ୍ଷା ଅଧିକ ତୀବ୍ର!",
+                                hi: "सही! बुलेट ट्रेन 300 किमी/घंटा की गति से कार 60 किमी/घंटा से कहीं अधिक तेज है!"
+                            }
+                        },
+                        {
+                            question: { en: "How many times faster is a car than walking?", or: "ଏକ କାର ଚାଲିବା ଅପେକ୍ଷା କେତେ ଗୁଣ ତୀବ୍ର?", hi: "कार चलने से कितने गुना तेज है?" },
+                            options: [
+                                { en: "5 times faster", or: "5 ଗୁଣ ତୀବ୍ର", hi: "5 गुना तेज" },
+                                { en: "10 times faster", or: "10 ଗୁଣ ତୀବ୍ର", hi: "10 गुना तेज" },
+                                { en: "12 times faster", or: "12 ଗୁଣ ତୀବ୍ର", hi: "12 गुना तेज" },
+                                { en: "15 times faster", or: "15 ଗୁଣ ତୀବ୍ର", hi: "15 गुना तेज" }
+                            ],
+                            correct: 2,
+                            explanation: {
+                                en: "Correct! Car (60 km/h) ÷ Walking (5 km/h) = 12 times faster!",
+                                or: "ଠିକ୍! କାର (60 କିମି/ଘଣ୍ଟା) ÷ ଚାଲିବା (5 କିମି/ଘଣ୍ଟା) = 12 ଗୁଣ ତୀବ୍ର!",
+                                hi: "सही! कार (60 किमी/घंटा) ÷ चलना (5 किमी/घंटा) = 12 गुना तेज!"
+                            }
+                        }
+                    ]
+                }
+            ]
+        };
+
+        /* ---- USER DATA FROM LOCAL STORAGE ---- */
+        // Get user data from localStorage (from login)
+        const userData = JSON.parse(localStorage.getItem('user')) || {
+            fullName: "Guest User",
+            profilePicture: ""
+        };
+
+        /* ---- STATE ---- */
+        let currentLanguage = 'en';
+        let score = 0;
+        let lives = 3;
+        let streak = 0;
+        let timeLeft = 300;
+        let timerInterval = null;
+        let currentLevel = 1;
+        let currentQuestion = 0;
+        let levelProgress = [true, false, false];
+        let correctAnswers = 0;
+        let totalQuestions = 0;
+        let isGameStarted = false;
+
+        /* ---- TRANSLATIONS ---- */
+        const translations = {
+            en: {
+                'game-title': 'Speed Masters',
+                'game-desc': 'Learn the relationships between speed, distance, and time! Use the magic triangle to solve any problem!',
+                'level1-title': 'Level 1: Magic Triangle',
+                'level1-desc': 'Learn all three formulas',
+                'level2-title': 'Level 2: Calculations',
+                'level2-desc': 'Solve speed, distance & time',
+                'level3-title': 'Level 3: Compare Speeds',
+                'level3-desc': 'Which is faster?',
+                'formula-title': 'All Three Formulas',
+                'formula-speed-title': 'To Find Speed',
+                'formula-speed-hint': 'Divide distance by time',
+                'formula-distance-title': 'To Find Distance',
+                'formula-distance-hint': 'Multiply speed and time',
+                'formula-time-title': 'To Find Time',
+                'formula-time-hint': 'Divide distance by speed',
+                'back-btn': 'Back to Levels',
+                'next-btn': 'Next Challenge',
+                'level-complete': 'Level Complete!',
+                'level-complete-text': 'Congratulations! You\'ve mastered this level of speed calculation!',
+                'total-score': 'Total Score',
+                'correct-answers': 'Correct Answers',
+                'time-bonus': 'Time Bonus',
+                'continue-level': 'Continue to Next Level',
+                'play-again': 'Back to Level Selection',
+                'correct-title': 'Awesome!',
+                'continue-btn': 'Continue',
+                // Game stats translations
+                'time': '05:00',
+                'score': 'Score: 0',
+                'lives': 'Lives: 3',
+                // Instructions translations
+                'instructions-title': 'Speed Masters Challenge',
+                'instructions-intro': 'Welcome to Speed Masters! Learn all about speed, distance, and time relationships!',
+                'instruction-1': 'Level 1: Learn the magic triangle - all three formulas: Speed, Distance, Time',
+                'instruction-2': 'Level 2: Calculate speed, distance OR time when two values are given',
+                'instruction-3': 'Level 3: Compare speeds of different vehicles',
+                'instruction-5': 'Use the magic triangle to find any value!',
+                'instruction-6': 'Each correct answer earns you points and builds your streak!',
+                'instructions-outro': 'Get ready to become a Speed Master! Remember: Cover the value you want to find in the triangle!',
+                'start-game-btn': 'Start Learning Speed!'
+            },
+            or: {
+                'game-title': 'ସ୍ପିଡ୍ ମାଷ୍ଟର୍ସ',
+                'game-desc': 'ଗତି, ଦୂରତା ଏବଂ ସମୟ ମଧ୍ୟରେ ସମ୍ପର୍କ ଶିଖନ୍ତୁ! ଯେକୌଣସି ସମସ୍ୟା ସମାଧାନ କରିବା ପାଇଁ ଜାଦୁ ତ୍ରିଭୁଜ ବ୍ୟବହାର କରନ୍ତୁ!',
+                'level1-title': 'ସ୍ତର 1: ଜାଦୁ ତ୍ରିଭୁଜ',
+                'level1-desc': 'ସମସ୍ତ ତିନୋଟି ସୂତ୍ର ଶିଖନ୍ତୁ',
+                'level2-title': 'ସ୍ତର 2: ଗଣନା',
+                'level2-desc': 'ଗତି, ଦୂରତା ଏବଂ ସମୟ ସମାଧାନ କରନ୍ତୁ',
+                'level3-title': 'ସ୍ତର 3: ଗତି ତୁଳନା କରନ୍ତୁ',
+                'level3-desc': 'କେଉଁଟି ଅଧିକ ତୀବ୍ର?',
+                'formula-title': 'ସମସ୍ତ ତିନୋଟି ସୂତ୍ର',
+                'formula-speed-title': 'ଗତି ଖୋଜିବା ପାଇଁ',
+                'formula-speed-hint': 'ଦୂରତାକୁ ସମୟ ଦ୍ୱାରା ଭାଗ କରନ୍ତୁ',
+                'formula-distance-title': 'ଦୂରତା ଖୋଜିବା ପାଇଁ',
+                'formula-distance-hint': 'ଗତି ଏବଂ ସମୟକୁ ଗୁଣନ କରନ୍ତୁ',
+                'formula-time-title': 'ସମୟ ଖୋଜିବା ପାଇଁ',
+                'formula-time-hint': 'ଦୂରତାକୁ ଗତି ଦ୍ୱାରା ଭାଗ କରନ୍ତୁ',
+                'back-btn': 'ସ୍ତରଗୁଡିକ ପାଖକୁ ଫେରନ୍ତୁ',
+                'next-btn': 'ପରବର୍ତ୍ତୀ ଚ୍ୟାଲେଞ୍ଜ',
+                'level-complete': 'ସ୍ତର ସମ୍ପୂର୍ଣ୍ଣ!',
+                'level-complete-text': 'ଅଭିନନ୍ଦନ! ଆପଣ ଏହି ସ୍ତରର ଗତି ଗଣନା ଆୟତ୍ତ କରିଛନ୍ତି!',
+                'total-score': 'ସର୍ବମୋଟ ସ୍କୋର',
+                'correct-answers': 'ଠିକ୍ ଉତ୍ତର',
+                'time-bonus': 'ସମୟ ବୋନସ୍',
+                'continue-level': 'ପରବର୍ତ୍ତୀ ସ୍ତରକୁ ଯାଆନ୍ତୁ',
+                'play-again': 'ସ୍ତର ଚୟନକୁ ଫେରନ୍ତୁ',
+                'correct-title': 'ଚମତ୍କାର!',
+                'continue-btn': 'ଜାରି ରଖନ୍ତୁ',
+                // Game stats translations
+                'time': '05:00',
+                'score': 'ସ୍କୋର: 0',
+                'lives': 'ଜୀବନ: 3',
+                // Instructions translations
+                'instructions-title': 'ସ୍ପିଡ୍ ମାଷ୍ଟର୍ସ ଚ୍ୟାଲେଞ୍ଜ',
+                'instructions-intro': 'ସ୍ପିଡ୍ ମାଷ୍ଟର୍ସକୁ ସ୍ୱାଗତ! ଗତି, ଦୂରତା ଏବଂ ସମୟ ସମ୍ପର୍କ ସବୁକିଛି ଶିଖନ୍ତୁ!',
+                'instruction-1': 'ସ୍ତର 1: ଜାଦୁ ତ୍ରିଭୁଜ ଶିଖନ୍ତୁ - ସମସ୍ତ ତିନୋଟି ସୂତ୍ର: ଗତି, ଦୂରତା, ସମୟ',
+                'instruction-2': 'ସ୍ତର 2: ଦୁଇଟି ମୂଲ୍ୟ ଦିଆଯାଇଥିଲେ ଗତି, ଦୂରତା କିମ୍ବା ସମୟ ଗଣନା କରନ୍ତୁ',
+                'instruction-3': 'ସ୍ତର 3: ବିଭିନ୍ନ ଯାନର ଗତି ତୁଳନା କରନ୍ତୁ',
+                'instruction-5': 'ଯେକୌଣସି ମୂଲ୍ୟ ଖୋଜିବା ପାଇଁ ଜାଦୁ ତ୍ରିଭୁଜ ବ୍ୟବହାର କରନ୍ତୁ!',
+                'instruction-6': 'ପ୍ରତ୍ୟେକ ଠିକ୍ ଉତ୍ତର ଆପଣଙ୍କୁ ପଏଣ୍ଟ ପ୍ରଦାନ କରେ ଏବଂ ଆପଣଙ୍କର ଧାରା ନିର୍ମାଣ କରେ!',
+                'instructions-outro': 'ଏକ ସ୍ପିଡ୍ ମାଷ୍ଟର୍ ହେବାକୁ ପ୍ରସ୍ତୁତ ହୁଅନ୍ତୁ! ମନେରଖନ୍ତୁ: ତ୍ରିଭୁଜରେ ଆପଣ ଯାହା ଖୋଜିବାକୁ ଚାହୁଁଛନ୍ତି ତାହା ଆବରଣ କରନ୍ତୁ!',
+                'start-game-btn': 'ଗତି ଶିଖିବା ଆରମ୍ଭ କରନ୍ତୁ!'
+            },
+            hi: {
+                'game-title': 'स्पीड मास्टर्स',
+                'game-desc': 'गति, दूरी और समय के बीच संबंध सीखें! किसी भी समस्या को हल करने के लिए जादू त्रिभुज का उपयोग करें!',
+                'level1-title': 'स्तर 1: जादू त्रिभुज',
+                'level1-desc': 'सभी तीन सूत्र सीखें',
+                'level2-title': 'स्तर 2: गणना',
+                'level2-desc': 'गति, दूरी और समय हल करें',
+                'level3-title': 'स्तर 3: गतियों की तुलना करें',
+                'level3-desc': 'कौन सा तेज है?',
+                'formula-title': 'सभी तीन सूत्र',
+                'formula-speed-title': 'गति ज्ञात करने के लिए',
+                'formula-speed-hint': 'दूरी को समय से विभाजित करें',
+                'formula-distance-title': 'दूरी ज्ञात करने के लिए',
+                'formula-distance-hint': 'गति और समय को गुणा करें',
+                'formula-time-title': 'समय ज्ञात करने के लिए',
+                'formula-time-hint': 'दूरी को गति से विभाजित करें',
+                'back-btn': 'स्तरों पर वापस जाएं',
+                'next-btn': 'अगली चुनौती',
+                'level-complete': 'स्तर पूरा!',
+                'level-complete-text': 'बधाई हो! आपने गति गणना के इस स्तर में महारत हासिल कर ली है!',
+                'total-score': 'कुल स्कोर',
+                'correct-answers': 'सही उत्तर',
+                'time-bonus': 'समय बोनस',
+                'continue-level': 'अगले स्तर पर जारी रखें',
+                'play-again': 'स्तर चयन पर वापस जाएं',
+                'correct-title': 'बहुत बढ़िया!',
+                'continue-btn': 'जारी रखें',
+                // Game stats translations
+                'time': '05:00',
+                'score': 'स्कोर: 0',
+                'lives': 'जीवन: 3',
+                // Instructions translations
+                'instructions-title': 'स्पीड मास्टर्स चैलेंज',
+                'instructions-intro': 'स्पीड मास्टर्स में आपका स्वागत है! गति, दूरी और समय संबंधों के बारे में जानें!',
+                'instruction-1': 'स्तर 1: जादू त्रिभुज सीखें - सभी तीन सूत्र: गति, दूरी, समय',
+                'instruction-2': 'स्तर 2: जब दो मान दिए गए हों तो गति, दूरी या समय की गणना करें',
+                'instruction-3': 'स्तर 3: विभिन्न वाहनों की गतियों की तुलना करें',
+                'instruction-5': 'किसी भी मान को ज्ञात करने के लिए जादू त्रिभुज का उपयोग करें!',
+                'instruction-6': 'प्रत्येक सही उत्तर आपको अंक प्रदान करता है और आपकी लगातार सफलता बनाता है!',
+                'instructions-outro': 'स्पीड मास्टर बनने के लिए तैयार हो जाएं! याद रखें: त्रिभुज में वह मान ढकें जिसे आप ढूंढना चाहते हैं!',
+                'start-game-btn': 'गति सीखना शुरू करें!'
+            }
+        };
+
+        /* ---- ELEMENTS ---- */
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const levelCards = document.querySelectorAll('.level-card');
+        const challengeArea = document.getElementById('challenge-area');
+        const levelSelection = document.getElementById('level-selection');
+        const levelResults = document.getElementById('level-results');
+        const scoreElement = document.getElementById('score');
+        const timeElement = document.getElementById('time');
+        const livesElement = document.getElementById('lives');
+        const progressElement = document.getElementById('progress');
+        const feedbackModal = document.getElementById('feedback-modal');
+        const modalIcon = document.getElementById('modal-icon');
+        const modalTitle = document.getElementById('modal-title');
+        const modalText = document.getElementById('modal-text');
+        const modalAction = document.getElementById('modal-action');
+        const modalClose = document.getElementById('modal-close');
+        const backBtn = document.getElementById('back-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const continueBtn = document.getElementById('continue-btn');
+        const playAgainBtn = document.getElementById('play-again-btn');
+        const instructionsModal = document.getElementById('instructions-modal');
+        const startGameBtn = document.getElementById('start-game-btn');
+        const gameHeader = document.getElementById('game-header');
+        const gameStatsContainer = document.getElementById('game-stats-container');
+        const gameStats = document.getElementById('game-stats');
+        const gameArea = document.getElementById('game-area');
+        const streakCounter = document.getElementById('streak-counter');
+        const streakCountDisplay = document.getElementById('streak-count');
+        const triangleElement = document.getElementById('triangle');
+        const triangleHint = document.getElementById('triangle-hint');
+
+        // Profile elements
+        const profileToggle = document.getElementById('profileToggle');
+        const profileDropdown = document.getElementById('profileDropdown');
+        const headerProfilePic = document.getElementById('headerProfilePic');
+        const headerUserName = document.getElementById('headerUserName');
+        const dropdownProfile = document.getElementById('dropdownProfile');
+        const dropdownSettings = document.getElementById('dropdownSettings');
+        const dropdownLogout = document.getElementById('dropdownLogout');
+
+        /* ---- INITIALIZATION ---- */
+        function init() {
+            createParticles();
+           
+            // Initialize user profile with data from localStorage
+            initUserProfile();
+
+            // Language buttons - Separate handlers for main and instructions
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    const context = this.getAttribute('data-context');
+                    switchLanguage(lang, context);
+                });
+            });
+
+            // Game flow buttons
+            startGameBtn.addEventListener('click', startGame);
+            modalAction.addEventListener('click', closeModal);
+            modalClose.addEventListener('click', closeModal);
+            backBtn.addEventListener('click', showLevelSelection);
+            nextBtn.addEventListener('click', nextQuestion);
+            continueBtn.addEventListener('click', continueToNextLevel);
+            playAgainBtn.addEventListener('click', showLevelSelection);
+
+            // Level selection buttons
+            levelCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    if (this.classList.contains('locked')) return;
+                    const level = parseInt(this.dataset.level);
+                    startLevel(level);
+                });
+            });
+
+            // Profile dropdown toggle
+            profileToggle.addEventListener('click', function() {
+                profileDropdown.classList.toggle('show');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#profileToggle') && !e.target.closest('#profileDropdown')) {
+                    profileDropdown.classList.remove('show');
+                }
+            });
+
+            // Profile dropdown items
+            dropdownProfile.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Profile page will open here (in full application)');
+                profileDropdown.classList.remove('show');
+            });
+
+            dropdownSettings.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Settings page will open here (in full application)');
+                profileDropdown.classList.remove('show');
+            });
+
+            dropdownLogout.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (confirm('Are you sure you want to logout?')) {
+                    // Clear localStorage and redirect to login
+                    localStorage.removeItem('user');
+                    window.location.href = 'student-login.html';
+                }
+                profileDropdown.classList.remove('show');
+            });
+
+            // Start with English language
+            switchLanguage('en', 'main');
+        }
+
+        function initUserProfile() {
+            // Get user data from localStorage
+            const user = JSON.parse(localStorage.getItem('user'));
+           
+            if (user && user.fullName) {
+                // Set user name from localStorage
+                headerUserName.textContent = user.fullName;
+               
+                // If user has profile picture, use it
+                if (user.profilePicture) {
+                    headerProfilePic.src = user.profilePicture;
+                } else {
+                    // Create avatar from name initial
+                    createAvatarInitial(user.fullName);
+                }
+            } else {
+                // Default if no user data
+                headerUserName.textContent = "Guest User";
+                createAvatarInitial("Guest User");
+            }
+        }
+
+        function createAvatarInitial(fullName) {
+            // Create a colored circle with the first letter of the name
+            const canvas = document.createElement('canvas');
+            canvas.width = 35;
+            canvas.height = 35;
+            const ctx = canvas.getContext('2d');
+           
+            // Generate a color based on the name
+            const colors = ['#3182ce', '#38b2ac', '#ed8936', '#9f7aea', '#f56565'];
+            const colorIndex = fullName.charCodeAt(0) % colors.length;
+           
+            // Draw circle
+            ctx.beginPath();
+            ctx.arc(17.5, 17.5, 17.5, 0, Math.PI * 2);
+            ctx.fillStyle = colors[colorIndex];
+            ctx.fill();
+           
+            // Draw letter - handle different language characters
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 16px Arial, "Kalinga", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+           
+            // Get first character for avatar
+            const firstChar = fullName.charAt(0).toUpperCase();
+            ctx.fillText(firstChar, 17.5, 17.5);
+           
+            // Convert to data URL and set as image source
+            headerProfilePic.src = canvas.toDataURL();
+        }
+
+        function createParticles() {
+            const container = document.getElementById('particles');
+            container.innerHTML = '';
+            for (let i=0;i<18;i++){
+                const p = document.createElement('div'); p.className='particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.top = Math.random() * 100 + '%';
+                p.style.animationDelay = `${Math.random()*10}s`;
+                container.appendChild(p);
+            }
+        }
+
+        /* ---- LANGUAGE SWITCHING ---- */
+        function switchLanguage(lang, context = 'main') {
+            currentLanguage = lang;
+           
+            // Update active buttons
+            if (context === 'instructions') {
+                // Update instructions modal language buttons
+                document.querySelectorAll('.lang-btn[data-context="instructions"]').forEach(btn => {
+                    btn.classList.toggle('active', btn.getAttribute('data-lang')===lang);
+                });
+                // Update instructions content
+                updateInstructionsContent(lang);
+            } else {
+                // Update main language buttons
+                document.querySelectorAll('.lang-btn:not([data-context])').forEach(btn => {
+                    btn.classList.toggle('active', btn.getAttribute('data-lang')===lang);
+                });
+            }
+           
+            // Update all page content with translations
+            updatePageTranslations(lang);
+           
+            // Update game content if game is started
+            if (isGameStarted && challengeArea.style.display !== 'none') {
+                loadQuestion();
+            }
+        }
+
+        function updatePageTranslations(lang) {
+            const map = translations[lang] || translations.en;
+           
+            // Update all elements with data-translate attribute
+            Object.keys(map).forEach(key => {
+                document.querySelectorAll(`[data-translate="${key}"]`).forEach(el => {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = map[key];
+                    } else {
+                        // For game stats, we need to preserve the dynamic values
+                        if (key === 'score') {
+                            const scoreText = map[key].split(':')[0] + ': ' + score;
+                            el.textContent = scoreText;
+                        } else if (key === 'lives') {
+                            const livesText = map[key].split(':')[0] + ': ' + lives;
+                            el.textContent = livesText;
+                        } else if (key === 'time') {
+                            // Keep the actual time value
+                            const timeParts = map[key].split(':');
+                            if (timeParts.length === 2) {
+                                el.textContent = `${Math.floor(timeLeft / 60).toString().padStart(2,'0')}:${(timeLeft % 60).toString().padStart(2,'0')}`;
+                            }
+                        } else {
+                            el.textContent = map[key];
+                        }
+                    }
+                });
+            });
+        }
+
+        function updateInstructionsContent(lang) {
+            const map = translations[lang] || translations.en;
+           
+            // Update instructions modal content
+            const instructionElements = {
+                'instructions-title': document.getElementById('instructions-title'),
+                'instructions-intro': document.getElementById('instructions-intro'),
+                'instruction-1': document.getElementById('instruction-1'),
+                'instruction-2': document.getElementById('instruction-2'),
+                'instruction-3': document.getElementById('instruction-3'),
+                'instruction-5': document.getElementById('instruction-5'),
+                'instruction-6': document.getElementById('instruction-6'),
+                'instructions-outro': document.getElementById('instructions-outro'),
+                'start-game-btn': document.getElementById('start-game-btn')
+            };
+           
+            Object.keys(instructionElements).forEach(key => {
+                if (instructionElements[key] && map[key]) {
+                    instructionElements[key].textContent = map[key];
+                }
+            });
+        }
+
+        /* ---- GAME FLOW ---- */
+        function startGame() {
+            instructionsModal.style.display = 'none';
+            gameHeader.style.display = 'block';
+            gameStatsContainer.style.display = 'block';
+            gameStats.style.display = 'flex';
+            gameArea.style.display = 'block';
+            levelResults.style.display = 'none';
+           
+            // Reset game state
+            score = 0;
+            lives = 3;
+            streak = 0;
+            timeLeft = 300;
+            levelProgress = [true, false, false];
+           
+            updateScore();
+            updateLives();
+            updateStreak();
+            updateLevelCards();
+            startTimer();
+           
+            showLevelSelection();
+            isGameStarted = true;
+        }
+
+        function showLevelSelection() {
+            challengeArea.style.display = 'none';
+            levelResults.style.display = 'none';
+            levelSelection.style.display = 'grid';
+        }
+
+        function startLevel(level) {
+            currentLevel = level;
+            currentQuestion = 0;
+            correctAnswers = 0;
+            totalQuestions = gameData.levels[level-1].questions.length;
+           
+            levelSelection.style.display = 'none';
+            challengeArea.style.display = 'block';
+           
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const levelData = gameData.levels[currentLevel-1];
+            const questionData = levelData.questions[currentQuestion];
+           
+            document.getElementById('challenge-title').textContent =
+                `Speed Masters - ${levelData.title[currentLanguage]}`;
+            document.getElementById('challenge-desc').textContent = levelData.description[currentLanguage];
+           
+            // Update triangle display for Level 1
+            if (currentLevel === 1) {
+                updateTriangleDisplay(questionData);
+                document.getElementById('formula-display').style.display = 'block';
+            } else {
+                document.getElementById('formula-display').style.display = 'none';
+            }
+           
+            const questionArea = document.getElementById('question-area');
+            questionArea.innerHTML = '';
+           
+            const questionText = document.createElement('div');
+            questionText.className = 'question-text';
+            questionText.textContent = questionData.question[currentLanguage];
+            questionArea.appendChild(questionText);
+           
+            if (levelData.type === 'triangle' || levelData.type === 'comparison') {
+                createMultipleChoice(questionData);
+            } else if (levelData.type === 'calculation') {
+                createCalculationQuestion(questionData);
+            }
+           
+            updateProgress();
+        }
+
+        function updateTriangleDisplay(questionData) {
+            const triangle = triangleElement;
+            const hint = triangleHint;
+           
+            if (questionData.question[currentLanguage].includes("SPEED") ||
+                questionData.question[currentLanguage].includes("Speed") ||
+                questionData.question[currentLanguage].includes("ଗତି") ||
+                questionData.question[currentLanguage].includes("गति")) {
+               
+                triangle.innerHTML = `
+                    <div style="color: #e53e3e; font-weight: 700; margin-bottom: 5px;">❓ Speed ❓</div>
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <span class="triangle-label" style="color: #4299e1;">Distance</span>
+                        <div style="margin: 0 10px; font-size: 2rem;">/</div>
+                        <span class="triangle-label" style="color: #38b2ac;">Time</span>
+                    </div>
+                `;
+                hint.textContent = currentLanguage === 'en' ? "Cover SPEED: You see Distance ÷ Time" :
+                                 currentLanguage === 'or' ? "ଗତି ଆବରଣ କରନ୍ତୁ: ଆପଣ ଦୂରତା ÷ ସମୟ ଦେଖନ୍ତି" :
+                                 "गति को ढकें: आप दूरी ÷ समय देखते हैं";
+               
+            } else if (questionData.question[currentLanguage].includes("DISTANCE") ||
+                      questionData.question[currentLanguage].includes("Distance") ||
+                      questionData.question[currentLanguage].includes("ଦୂରତା") ||
+                      questionData.question[currentLanguage].includes("दूरी")) {
+               
+                triangle.innerHTML = `
+                    <div style="color: #4299e1; font-weight: 700; margin-bottom: 5px;">❓ Distance ❓</div>
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <span class="triangle-label" style="color: #e53e3e;">Speed</span>
+                        <div style="margin: 0 10px; font-size: 2rem;">×</div>
+                        <span class="triangle-label" style="color: #38b2ac;">Time</span>
+                    </div>
+                `;
+                hint.textContent = currentLanguage === 'en' ? "Cover DISTANCE: You see Speed × Time" :
+                                 currentLanguage === 'or' ? "ଦୂରତା ଆବରଣ କରନ୍ତୁ: ଆପଣ ଗତି × ସମୟ ଦେଖନ୍ତି" :
+                                 "दूरी को ढकें: आप गति × समय देखते हैं";
+               
+            } else if (questionData.question[currentLanguage].includes("TIME") ||
+                      questionData.question[currentLanguage].includes("Time") ||
+                      questionData.question[currentLanguage].includes("ସମୟ") ||
+                      questionData.question[currentLanguage].includes("समय")) {
+               
+                triangle.innerHTML = `
+                    <div style="color: #38b2ac; font-weight: 700; margin-bottom: 5px;">❓ Time ❓</div>
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <span class="triangle-label" style="color: #4299e1;">Distance</span>
+                        <div style="margin: 0 10px; font-size: 2rem;">/</div>
+                        <span class="triangle-label" style="color: #e53e3e;">Speed</span>
+                    </div>
+                `;
+                hint.textContent = currentLanguage === 'en' ? "Cover TIME: You see Distance ÷ Speed" :
+                                 currentLanguage === 'or' ? "ସମୟ ଆବରଣ କରନ୍ତୁ: ଆପଣ ଦୂରତା ÷ ଗତି ଦେଖନ୍ତି" :
+                                 "समय को ढकें: आप दूरी ÷ गति देखते हैं";
+            } else {
+                // Default triangle
+                triangle.innerHTML = `
+                    <div style="color: #4299e1; font-weight: 700;">Distance</div>
+                    <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
+                        <span class="triangle-label" style="color: #e53e3e;">Speed</span>
+                        <div style="margin: 0 10px; font-size: 2rem;">×</div>
+                        <span class="triangle-label" style="color: #38b2ac;">Time</span>
+                    </div>
+                `;
+                hint.textContent = currentLanguage === 'en' ? "Cover what you want to find!" :
+                                 currentLanguage === 'or' ? "ଆପଣ ଯାହା ଖୋଜିବାକୁ ଚାହୁଁଛନ୍ତି ତାହା ଆବରଣ କରନ୍ତୁ!" :
+                                 "जो आप खोजना चाहते हैं उसे ढकें!";
+            }
+        }
+
+        function createMultipleChoice(questionData) {
+            const answerOptions = document.createElement('div');
+            answerOptions.className = 'answer-options';
+            answerOptions.id = 'answer-options';
+           
+            questionData.options.forEach((option, index) => {
+                const optionBtn = document.createElement('button');
+                optionBtn.className = 'option-btn';
+                optionBtn.textContent = option[currentLanguage];
+                optionBtn.dataset.index = index;
+               
+                optionBtn.addEventListener('click', function() {
+                    const isCorrect = parseInt(this.dataset.index) === questionData.correct;
+                    handleAnswer(isCorrect, questionData.explanation);
+                });
+               
+                answerOptions.appendChild(optionBtn);
+            });
+           
+            document.getElementById('question-area').appendChild(answerOptions);
+        }
+
+        function createCalculationQuestion(questionData) {
+            const inputArea = document.createElement('div');
+            inputArea.className = 'input-area';
+           
+            // Show the given values
+            if (questionData.type === 'speed') {
+                inputArea.innerHTML = `
+                    <div class="input-row">
+                        <div class="input-label">${currentLanguage === 'en' ? 'Distance:' : currentLanguage === 'or' ? 'ଦୂରତା:' : 'दूरी:'}</div>
+                        <input type="number" class="speed-input" value="${questionData.distance}" readonly>
+                        <div>${questionData.unit.includes('km') ? 'km' : 'm'}</div>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-label">${currentLanguage === 'en' ? 'Time:' : currentLanguage === 'or' ? 'ସମୟ:' : 'समय:'}</div>
+                        <input type="number" class="speed-input" value="${questionData.time}" readonly>
+                        <div>${questionData.unit.includes('h') ? 'hours' : currentLanguage === 'or' ? 'ସେକେଣ୍ଡ' : 'seconds'}</div>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-label">${currentLanguage === 'en' ? 'Speed:' : currentLanguage === 'or' ? 'ଗତି:' : 'गति:'}</div>
+                        <input type="number" class="speed-input" id="answer-input" placeholder="?">
+                        <div>${questionData.unit}</div>
+                    </div>
+                `;
+            } else if (questionData.type === 'distance') {
+                inputArea.innerHTML = `
+                    <div class="input-row">
+                        <div class="input-label">${currentLanguage === 'en' ? 'Speed:' : currentLanguage === 'or' ? 'ଗତି:' : 'गति:'}</div>
+                        <input type="number" class="speed-input" value="${questionData.speed}" readonly>
+                        <div>km/h</div>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-label">${currentLanguage === 'en' ? 'Time:' : currentLanguage === 'or' ? 'ସମୟ:' : 'समय:'}</div>
+                        <input type="number" class="speed-input" value="${questionData.time}" readonly>
+                        <div>hours</div>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-label">${currentLanguage === 'en' ? 'Distance:' : currentLanguage === 'or' ? 'ଦୂରତା:' : 'दूरी:'}</div>
+                        <input type="number" class="speed-input" id="answer-input" placeholder="?">
+                        <div>km</div>
+                    </div>
+                `;
+            } else if (questionData.type === 'time') {
+                inputArea.innerHTML = `
+                    <div class="input-row">
+                        <div class="input-label">${currentLanguage === 'en' ? 'Distance:' : currentLanguage === 'or' ? 'ଦୂରତା:' : 'दूरी:'}</div>
+                        <input type="number" class="speed-input" value="${questionData.distance}" readonly>
+                        <div>km</div>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-label">${currentLanguage === 'en' ? 'Speed:' : currentLanguage === 'or' ? 'ଗତି:' : 'गति:'}</div>
+                        <input type="number" class="speed-input" value="${questionData.speed}" readonly>
+                        <div>km/h</div>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-label">${currentLanguage === 'en' ? 'Time:' : currentLanguage === 'or' ? 'ସମୟ:' : 'समय:'}</div>
+                        <input type="number" class="speed-input" id="answer-input" placeholder="?">
+                        <div>hours</div>
+                    </div>
+                `;
+            }
+           
+            const submitBtn = document.createElement('button');
+            submitBtn.className = 'submit-btn';
+            submitBtn.textContent = currentLanguage === 'en' ? 'Check Answer' : currentLanguage === 'or' ? 'ଉତ୍ତର ଯାଞ୍ଚ କରନ୍ତୁ' : 'उत्तर जांचें';
+            submitBtn.addEventListener('click', function() {
+                const userAnswer = parseFloat(document.getElementById('answer-input').value);
+                const isCorrect = Math.abs(userAnswer - questionData.answer) < 0.1;
+                handleAnswer(isCorrect, questionData.explanation);
+            });
+            inputArea.appendChild(submitBtn);
+           
+            document.getElementById('question-area').appendChild(inputArea);
+        }
+
+        function handleAnswer(isCorrect, explanation) {
+            if (isCorrect) {
+                streak++;
+                correctAnswers++;
+                score += 10 + Math.min(streak * 2, 20);
+               
+                modalIcon.innerHTML = '<i class="fas fa-check-circle" style="color:#48bb78;"></i>';
+                modalTitle.textContent = translations[currentLanguage]['correct-title'] || 'Correct!';
+                modalText.textContent = explanation[currentLanguage];
+                feedbackModal.style.display = 'flex';
+               
+                createConfetti();
+            } else {
+                streak = 0;
+                lives--;
+               
+                modalIcon.innerHTML = '<i class="fas fa-times-circle" style="color:#f56565;"></i>';
+                modalTitle.textContent = translations[currentLanguage]['correct-title'] || 'Try Again!';
+                modalText.textContent = explanation[currentLanguage];
+                feedbackModal.style.display = 'flex';
+               
+                if (lives <= 0) {
+                    setTimeout(() => {
+                        showLevelSelection();
+                        alert(currentLanguage === 'en' ? 'Game Over! Try again!' :
+                              currentLanguage === 'or' ? 'ଖେଳ ସମାପ୍ତ! ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ!' :
+                              'खेल समाप्त! फिर से कोशिश करें!');
+                        lives = 3;
+                        updateLives();
+                    }, 1500);
+                }
+            }
+           
+            updateScore();
+            updateLives();
+            updateStreak();
+           
+            document.querySelectorAll('.option-btn, .submit-btn').forEach(btn => {
+                btn.disabled = true;
+            });
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            const levelData = gameData.levels[currentLevel-1];
+           
+            if (currentQuestion < levelData.questions.length) {
+                loadQuestion();
+            } else {
+                completeLevel();
+            }
+        }
+
+        function completeLevel() {
+            clearInterval(timerInterval);
+           
+            const timeBonus = Math.max(0, Math.floor(timeLeft / 30) * 5);
+            score += timeBonus;
+            updateScore();
+           
+            if (currentLevel < 3) {
+                levelProgress[currentLevel] = true;
+                updateLevelCards();
+            }
+           
+            challengeArea.style.display = 'none';
+            levelResults.style.display = 'block';
+           
+            document.getElementById('final-score').textContent = score;
+            document.getElementById('correct-answers').textContent = `${correctAnswers}/${totalQuestions}`;
+            document.getElementById('time-bonus').textContent = `+${timeBonus}`;
+           
+            createConfetti();
+        }
+
+        function continueToNextLevel() {
+            if (currentLevel < 3) {
+                currentLevel++;
+                startLevel(currentLevel);
+            } else {
+                alert(currentLanguage === 'en' ? 'Congratulations! You completed all levels!' :
+                      currentLanguage === 'or' ? 'ଅଭିନନ୍ଦନ! ଆପଣ ସମସ୍ତ ସ୍ତର ସମାପ୍ତ କରିଛନ୍ତି!' :
+                      'बधाई हो! आपने सभी स्तर पूरे कर लिए हैं!');
+                showLevelSelection();
+            }
+        }
+
+        /* ---- UI Updates ---- */
+        function updateScore() {
+            const scorePrefix = currentLanguage === 'en' ? 'Score: ' :
+                               currentLanguage === 'or' ? 'ସ୍କୋର: ' : 'स्कोर: ';
+            scoreElement.textContent = scorePrefix + score;
+           
+            const maxPossible = 150;
+            const pct = Math.min(100, Math.round((score / (maxPossible || 1)) * 100));
+            progressElement.style.width = `${pct}%`;
+        }
+
+        function updateLives() {
+            const livesPrefix = currentLanguage === 'en' ? 'Lives: ' :
+                               currentLanguage === 'or' ? 'ଜୀବନ: ' : 'जीवन: ';
+            livesElement.textContent = livesPrefix + lives;
+        }
+
+        function updateStreak() {
+            streakCountDisplay.textContent = streak;
+           
+            if (streak >= 2) {
+                streakCounter.style.display = 'block';
+            } else {
+                streakCounter.style.display = 'none';
+            }
+        }
+
+        function updateProgress() {
+            const levelData = gameData.levels[currentLevel-1];
+            const progress = ((currentQuestion + 1) / levelData.questions.length) * 100;
+           
+            const nextText = currentLanguage === 'en' ? 'Next Challenge' :
+                            currentLanguage === 'or' ? 'ପରବର୍ତ୍ତୀ ଚ୍ୟାଲେଞ୍ଜ' : 'अगली चुनौती';
+            const finishText = currentLanguage === 'en' ? 'Finish Level' :
+                              currentLanguage === 'or' ? 'ସ୍ତର ସମାପ୍ତ କରନ୍ତୁ' : 'स्तर समाप्त करें';
+           
+            nextBtn.innerHTML = currentQuestion < levelData.questions.length - 1 ?
+                `<span>${nextText}</span> <i class="fas fa-arrow-right"></i>` :
+                `<span>${finishText}</span> <i class="fas fa-arrow-right"></i>`;
+        }
+
+        function updateLevelCards() {
+            levelCards.forEach((card, index) => {
+                if (levelProgress[index]) {
+                    card.classList.remove('locked');
+                } else {
+                    card.classList.add('locked');
+                }
+            });
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timeLeft / 60);
+            const s = timeLeft % 60;
+            timeElement.textContent = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+        }
+
+        /* ---- TIMER ---- */
+        function startTimer() {
+            clearInterval(timerInterval);
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    showTimeUpModal();
+                }
+            }, 1000);
+        }
+
+        function showTimeUpModal() {
+            modalIcon.innerHTML = '<i class="fas fa-clock" style="color:#f56565;"></i>';
+            modalTitle.textContent = currentLanguage === 'en' ? "Time's Up!" :
+                                   (currentLanguage === 'or' ? 'ସମୟ ସରିଗଲା!' : 'समय समाप्त!');
+            modalText.textContent = currentLanguage === 'en' ?
+                `Time finished! You scored ${score} points.` :
+                currentLanguage === 'or' ? `ସମୟ ସମାପ୍ତ! ଆପଣ ${score} ପଏଣ୍ଟ ପାଇଛନ୍ତି।` :
+                `समय समाप्त! आपने ${score} अंक प्राप्त किए।`;
+            modalAction.textContent = currentLanguage === 'en' ? 'Try Again' :
+                                    (currentLanguage === 'or' ? 'ପୁଣି ଚେଷ୍ଟା' : 'फिर से कोशिश करें');
+            feedbackModal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            feedbackModal.style.display = 'none';
+           
+            document.querySelectorAll('.option-btn, .submit-btn').forEach(btn => {
+                btn.disabled = false;
+            });
+           
+            if (streak > 0 && challengeArea.style.display !== 'none') {
+                setTimeout(() => {
+                    nextQuestion();
+                }, 500);
+            }
+        }
+
+        /* ---- ANIMATIONS ---- */
+        function createConfetti() {
+            for (let i=0;i<15;i++){
+                const c = document.createElement('div');
+                c.style.position='fixed';
+                c.style.left = Math.random()*100 + 'vw';
+                c.style.top = '-10px';
+                c.style.width='12px'; c.style.height='12px';
+                const colors = ['#4299e1','#38b2ac','#ed8936','#9f7aea','#f56565'];
+                c.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+                c.style.zIndex = 1500;
+                c.style.borderRadius = '50%';
+                c.style.animation = `confetti-fall ${2 + Math.random()}s ease-out forwards`;
+                document.body.appendChild(c);
+                setTimeout(()=> { if (document.body.contains(c)) document.body.removeChild(c); }, 3000);
+            }
+        }
+
+        /* ---- EVENT LISTENERS ---- */
+        document.addEventListener('DOMContentLoaded', () => {
+            init();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+           
+            // Don't switch language if user is typing in an input field
+            const activeElement = document.activeElement;
+            const isInputField = activeElement.tagName === 'INPUT' ||
+                                 activeElement.tagName === 'TEXTAREA' ||
+                                 activeElement.isContentEditable;
+           
+            if (!isInputField) {
+                if (e.key === '1') switchLanguage('en', 'main');
+                if (e.key === '2') switchLanguage('or', 'main');
+                if (e.key === '3') switchLanguage('hi', 'main');
+            }
+        });
+
+        feedbackModal.addEventListener('click', (ev) => {
+            if (ev.target === feedbackModal) closeModal();
+        });
+
+        // Add confetti animation to CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes confetti-fall {
+                0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+                100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

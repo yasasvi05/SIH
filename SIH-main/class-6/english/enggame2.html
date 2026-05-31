@@ -1,0 +1,1987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar Quest - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f0f7ff;
+            color: #1e293b;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles - Matching STEM Learn Odisha */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #2a69ac;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text h1 span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-pic {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 180px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f7fa;
+        }
+
+        .dropdown-item i {
+            color: #3182ce;
+            width: 20px;
+        }
+
+        /* Language Options */
+        .language-options {
+            position: absolute;
+            top: 60px;
+            right: 120px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 120px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .language-options.show {
+            display: block;
+        }
+
+        .language-option {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .language-option:last-child {
+            border-bottom: none;
+        }
+
+        .language-option:hover {
+            background: #f5f7fa;
+        }
+
+        /* Game Header */
+        .game-header {
+            background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9)), url('https://images.unsplash.com/photo-1593118247619-e2d6f056869e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .game-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-header p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Game Stats */
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 1000px;
+        }
+
+        .timer {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        .timer i {
+            color: #e53e3e;
+        }
+
+        .score {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        .score i {
+            color: #38a169;
+        }
+
+        .hints {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        .hints i {
+            color: #d69e2e;
+        }
+
+        .progress-container {
+            width: 200px;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #3182ce;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Game Layout - Modern Sidebar Design */
+        .game-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 25px;
+            padding: 20px 0;
+        }
+
+        /* Left Sidebar - Player Stats */
+        .player-sidebar {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar-section {
+            margin-bottom: 30px;
+        }
+
+        .sidebar-section h3 {
+            color: #1a365d;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .player-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .player-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3182ce, #38b2ac);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            font-size: 2rem;
+            color: white;
+            border: 4px solid white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .player-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 5px;
+        }
+
+        .player-level {
+            display: inline-block;
+            background: #38b2ac;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            color: #1a365d;
+        }
+
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-size: 1.2rem;
+        }
+
+        .badge.earned {
+            background: #38b2ac;
+            color: white;
+        }
+
+        /* Main Game Content */
+        .main-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Quest Selection */
+        .quest-selection {
+            margin-bottom: 30px;
+        }
+
+        .quest-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .quest-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quest-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-color: #3182ce;
+        }
+
+        .quest-card.locked {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .quest-card.completed {
+            border-color: #38a169;
+            background: linear-gradient(to bottom right, #f0fff4, #ffffff);
+        }
+
+        .quest-icon {
+            font-size: 2.5rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .quest-card.completed .quest-icon {
+            color: #38a169;
+        }
+
+        .quest-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 8px;
+        }
+
+        .quest-desc {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .quest-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .quest-reward {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: #f0f9ff;
+            color: #3182ce;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .quest-status {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #38b2ac;
+        }
+
+        .quest-card.locked .quest-status {
+            color: #94a3b8;
+        }
+
+        /* Challenge Screen */
+        .challenge-screen {
+            display: none;
+        }
+
+        .challenge-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .challenge-title {
+            font-size: 1.8rem;
+            color: #1a365d;
+        }
+
+        .challenge-number {
+            color: #3182ce;
+            font-weight: 600;
+        }
+
+        .challenge-content {
+            margin-bottom: 30px;
+        }
+
+        .challenge-question {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 10px;
+            border-left: 4px solid #3182ce;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .option-btn {
+            padding: 18px 20px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            text-align: left;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .option-btn:hover {
+            border-color: #3182ce;
+            background: #f0f9ff;
+        }
+
+        .option-btn.selected {
+            border-color: #3182ce;
+            background: #dbeafe;
+            font-weight: 600;
+        }
+
+        .option-btn.correct {
+            border-color: #38a169;
+            background: #f0fff4;
+            color: #166534;
+        }
+
+        .option-btn.incorrect {
+            border-color: #dc2626;
+            background: #fef2f2;
+            color: #991b1b;
+        }
+
+        .option-letter {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #475569;
+            flex-shrink: 0;
+        }
+
+        .option-btn.selected .option-letter {
+            background: #3182ce;
+            color: white;
+        }
+
+        .challenge-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .control-btn-game {
+            padding: 12px 25px;
+            background: #3182ce;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .control-btn-game:hover {
+            background: #2b6cb0;
+            transform: translateY(-2px);
+        }
+
+        .control-btn-game.hint {
+            background: #d69e2e;
+        }
+
+        .control-btn-game.hint:hover {
+            background: #b3821e;
+        }
+
+        .control-btn-game.secondary {
+            background: #64748b;
+        }
+
+        .control-btn-game.secondary:hover {
+            background: #475569;
+        }
+
+        /* Grammar Monster Duel */
+        .monster-duel {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .monster-container {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .monster {
+            font-size: 5rem;
+            margin-bottom: 15px;
+            animation: bounce 2s infinite;
+        }
+
+        .monster-health {
+            height: 20px;
+            background: #fed7d7;
+            border-radius: 10px;
+            margin: 0 auto 20px;
+            width: 80%;
+            max-width: 400px;
+            overflow: hidden;
+        }
+
+        .health-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #e53e3e, #f6ad55);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .monster-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+
+        /* Grammar Rule Helper */
+        .rule-helper {
+            background: #f0fff4;
+            border: 2px solid #38a169;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .rule-helper h4 {
+            color: #38a169;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+        }
+
+        .rule-text {
+            color: #166534;
+            line-height: 1.6;
+        }
+
+        /* Results Screen */
+        .results-screen {
+            display: none;
+            text-align: center;
+        }
+
+        .results-header {
+            margin-bottom: 30px;
+        }
+
+        .results-title {
+            font-size: 2.2rem;
+            color: #1a365d;
+            margin-bottom: 15px;
+        }
+
+        .score-display {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #d69e2e, #38b2ac);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 20px 0;
+        }
+
+        .results-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+        }
+
+        .result-card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #3182ce;
+        }
+
+        .result-card h3 {
+            font-size: 1.1rem;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a365d;
+        }
+
+        .achievements-earned {
+            margin: 40px 0;
+        }
+
+        .achievement-badge-large {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 15px;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            border: 2px solid #38b2ac;
+            min-width: 150px;
+        }
+
+        .achievement-badge-large i {
+            font-size: 3rem;
+            color: #d69e2e;
+            margin-bottom: 10px;
+        }
+
+        .achievement-badge-large span {
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 14px 30px;
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #38b2ac 0%, #2c9a94 100%);
+        }
+
+        .btn-accent {
+            background: linear-gradient(135deg, #d69e2e 0%, #b3821e 100%);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about {
+            padding-right: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.8rem;
+            background: #38b2ac;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 20px;
+            color: #38b2ac;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2d3748;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .social-links a:hover {
+            background: #38b2ac;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 0.5s;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            nav ul {
+                gap: 15px;
+            }
+            
+            nav a {
+                padding: 8px 10px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .game-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .player-sidebar {
+                position: static;
+                margin-bottom: 25px;
+            }
+            
+            .results-details {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            nav ul {
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+           
+            .game-header h1 {
+                font-size: 2rem;
+            }
+           
+            .game-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            .quest-grid {
+                grid-template-columns: 1fr;
+            }
+           
+            .control-btn-game {
+                padding: 10px 15px;
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .challenge-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+           
+            .control-btn-game {
+                width: 100%;
+                justify-content: center;
+            }
+           
+            .game-header p {
+                font-size: 1rem;
+            }
+            
+            nav ul {
+                gap: 8px;
+            }
+            
+            nav a {
+                padding: 6px 8px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-language"></i>
+            </div>
+            <div class="logo-text">
+                <h1>STEM Learn Odisha</h1>
+                <p>Grammar Quest - Grade 6</p>
+            </div>
+        </div>
+       
+        <nav>
+            <ul>
+                <li><a href="#" id="navDashboard">Dashboard</a></li>
+                <li><a href="#" id="navScience">Science</a></li>
+                <li><a href="#" id="navTechnology">Technology</a></li>
+                <li><a href="#" id="navEngineering">Engineering</a></li>
+                <li><a href="#" class="active" id="navMaths">Maths</a></li>
+            </ul>
+        </nav>
+       
+        <div class="header-controls">
+            <button class="control-btn" id="languageToggle">
+                <i class="fas fa-globe"></i>
+            </button>
+           
+            <div class="profile-container">
+                <button class="profile-btn" id="profileToggle">
+                    <img src="" alt="Profile" class="profile-pic" id="headerProfilePic">
+                    <span id="headerUserName">Student</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+               
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" class="dropdown-item" id="dropdownProfile">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownSettings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownLogout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Language Options -->
+    <div class="language-options" id="languageOptions">
+        <div class="language-option" data-lang="en">English</div>
+        <div class="language-option" data-lang="or">ଓଡ଼ିଆ</div>
+        <div class="language-option" data-lang="hi">हिन्दी</div>
+    </div>
+
+    <!-- Game Header -->
+    <section class="game-header">
+        <div class="container">
+            <h1>Grammar Quest</h1>
+            <p>Embark on an exciting adventure to master grammar! Complete quests, defeat grammar monsters, and become a grammar champion!</p>
+        </div>
+    </section>
+
+    <!-- Game Stats -->
+    <div class="container">
+        <div class="game-stats" id="gameStats">
+            <div class="timer">
+                <i class="fas fa-clock"></i>
+                <span id="timer">30s</span>
+            </div>
+           
+            <div class="score">
+                <i class="fas fa-star"></i>
+                <span id="scoreDisplay">Score: 0</span>
+            </div>
+           
+            <div class="hints">
+                <i class="fas fa-lightbulb"></i>
+                <span id="hintsDisplay">Hints: 3</span>
+            </div>
+           
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Game Content -->
+    <div class="container">
+        <div class="game-layout">
+            <!-- Player Sidebar -->
+            <div class="player-sidebar">
+                <div class="player-info">
+                    <div class="player-avatar">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div class="player-name" id="playerName">Grammar Student</div>
+                    <div class="player-level">Level 1 Explorer</div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3>Your Stats</h3>
+                    <div class="stat-item">
+                        <span class="stat-label">Total Score</span>
+                        <span class="stat-value" id="totalScore">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Quests Completed</span>
+                        <span class="stat-value" id="questsCompleted">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Correct Answers</span>
+                        <span class="stat-value" id="correctAnswers">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Current Streak</span>
+                        <span class="stat-value" id="currentStreak">0 days</span>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3>Badges Earned</h3>
+                    <div class="badge-container">
+                        <div class="badge" id="badge1" title="First Quest"><i class="fas fa-flag"></i></div>
+                        <div class="badge" id="badge2" title="Speed Master"><i class="fas fa-bolt"></i></div>
+                        <div class="badge" id="badge3" title="Perfect Score"><i class="fas fa-star"></i></div>
+                        <div class="badge" id="badge4" title="Noun Expert"><i class="fas fa-home"></i></div>
+                        <div class="badge" id="badge5" title="Verb Master"><i class="fas fa-running"></i></div>
+                        <div class="badge" id="badge6" title="Adjective Ace"><i class="fas fa-palette"></i></div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3>Quick Tips</h3>
+                    <p style="font-size: 0.9rem; color: #64748b; line-height: 1.6;">
+                        <i class="fas fa-lightbulb" style="color: #d69e2e;"></i> 
+                        Read each question carefully. Look for clues in the sentences!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="main-content">
+                <!-- Quest Selection Screen -->
+                <div id="questSelectionScreen" class="quest-selection">
+                    <h2 style="color: #1a365d; margin-bottom: 10px;">Choose Your Grammar Quest</h2>
+                    <p style="color: #64748b; margin-bottom: 25px;">Complete quests in order to unlock new grammar adventures!</p>
+                    
+                    <div class="quest-grid" id="questGrid">
+                        <!-- Quest cards will be generated here -->
+                    </div>
+                </div>
+
+                <!-- Challenge Screen -->
+                <div id="challengeScreen" class="challenge-screen">
+                    <div class="challenge-header">
+                        <h2 class="challenge-title" id="challengeTitle">Grammar Challenge</h2>
+                        <div class="challenge-number" id="challengeNumber">Question 1/3</div>
+                    </div>
+                    
+                    <div class="challenge-content" id="challengeContent">
+                        <!-- Challenge content will be generated here -->
+                    </div>
+                    
+                    <div class="challenge-controls">
+                        <button class="control-btn-game secondary" id="backToQuestsBtn">
+                            <i class="fas fa-arrow-left"></i> Back to Quests
+                        </button>
+                        <button class="control-btn-game hint" id="hintBtn">
+                            <i class="fas fa-lightbulb"></i> Use Hint
+                        </button>
+                        <button class="control-btn-game" id="submitAnswerBtn" disabled>
+                            <i class="fas fa-check-circle"></i> Submit Answer
+                        </button>
+                        <button class="control-btn-game" id="nextQuestionBtn" style="display: none;">
+                            Next Question <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Results Screen -->
+                <div id="resultsScreen" class="results-screen">
+                    <div class="results-header">
+                        <h2 class="results-title">Quest Complete!</h2>
+                        <p style="color: #64748b; font-size: 1.1rem;">Great job! You've mastered this grammar topic.</p>
+                    </div>
+                    
+                    <div class="score-display" id="finalScore">0</div>
+                    
+                    <div class="results-details">
+                        <div class="result-card">
+                            <i class="fas fa-check-circle"></i>
+                            <h3>Correct Answers</h3>
+                            <div class="result-value" id="resultCorrect">0/0</div>
+                        </div>
+                        <div class="result-card">
+                            <i class="fas fa-bolt"></i>
+                            <h3>Speed Bonus</h3>
+                            <div class="result-value" id="resultSpeed">0</div>
+                        </div>
+                        <div class="result-card">
+                            <i class="fas fa-medal"></i>
+                            <h3>Total Points</h3>
+                            <div class="result-value" id="resultTotal">0</div>
+                        </div>
+                    </div>
+                    
+                    <div class="achievements-earned" id="achievementsEarned" style="display: none;">
+                        <h3 style="color: #1a365d; margin-bottom: 20px;">New Badge Earned!</h3>
+                        <div class="achievement-badge-large" id="newBadge">
+                            <i class="fas fa-medal"></i>
+                            <span id="badgeName">Grammar Expert</span>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 40px;">
+                        <button class="btn btn-success" id="playAgainBtn">
+                            <i class="fas fa-redo"></i> Play Again
+                        </button>
+                        <button class="btn" id="nextQuestBtn" style="margin-left: 15px;">
+                            <i class="fas fa-forward"></i> Next Quest
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <div class="footer-logo-text">Grammar Quest</div>
+                    </div>
+                    <p>An interactive game designed to make grammar learning fun and engaging for 6th grade students. Master grammar through exciting quests and challenges!</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Dashboard</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Science Games</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Technology Lab</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Math Challenges</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Help Center</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Tutorials</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 STEM Learn Odisha. All rights reserved. Designed for 6th Grade Grammar Education.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Game Data - Simplified for 6th Grade
+        const gameData = {
+            player: {
+                name: "Grammar Student",
+                totalScore: 0,
+                questsCompleted: 0,
+                correctAnswers: 0,
+                currentStreak: 0,
+                badges: []
+            },
+            currentQuest: null,
+            currentChallengeIndex: 0,
+            selectedOption: null,
+            score: 0,
+            timeLeft: 30,
+            timerInterval: null,
+            speedBonusAvailable: true,
+            hintsLeft: 3
+        };
+
+        // Quests Data - Simplified for 6th Grade
+        const quests = [
+            {
+                id: 1,
+                name: "Noun Village",
+                description: "Learn about common nouns, proper nouns, and plural nouns.",
+                icon: "fa-home",
+                challenges: [
+                    {
+                        type: "multiple-choice",
+                        title: "Common vs. Proper Nouns",
+                        question: "Which word is a proper noun?",
+                        options: ["city", "dog", "New York", "book"],
+                        correctAnswer: 2,
+                        hint: "Proper nouns name specific people, places, or things and start with capital letters.",
+                        grammarRule: "Proper nouns name specific people, places, or things (like New York, Sarah, December). They always start with a capital letter."
+                    },
+                    {
+                        type: "multiple-choice",
+                        title: "Plural Nouns",
+                        question: "What is the correct plural form of 'child'?",
+                        options: ["childs", "childrens", "children", "childes"],
+                        correctAnswer: 2,
+                        hint: "Some nouns have irregular plural forms. 'Child' becomes 'children'.",
+                        grammarRule: "Some nouns have irregular plural forms. For example: child → children, foot → feet, tooth → teeth."
+                    },
+                    {
+                        type: "grammar-duel",
+                        title: "Noun Monster",
+                        question: "How many nouns are in this sentence: 'The cat chased the mouse around the house.'?",
+                        options: ["1", "2", "3", "4"],
+                        correctAnswer: 2,
+                        hint: "Nouns are people, places, things, or animals. Count each one.",
+                        grammarRule: "Nouns are words that name people, places, things, or animals. In this sentence: cat, mouse, house = 3 nouns."
+                    }
+                ],
+                unlocked: true,
+                completed: false,
+                badge: "Noun Expert"
+            },
+            {
+                id: 2,
+                name: "Verb Valley",
+                description: "Master action verbs and helping verbs.",
+                icon: "fa-running",
+                challenges: [
+                    {
+                        type: "multiple-choice",
+                        title: "Action Verbs",
+                        question: "What is the action verb in: 'The birds sing beautifully in the morning.'?",
+                        options: ["birds", "sing", "beautifully", "morning"],
+                        correctAnswer: 1,
+                        hint: "Action verbs show what someone or something is doing.",
+                        grammarRule: "Action verbs show physical or mental action. In this sentence, 'sing' is what the birds are doing."
+                    },
+                    {
+                        type: "multiple-choice",
+                        title: "Helping Verbs",
+                        question: "Which word is a helping verb in: 'She is reading a book.'?",
+                        options: ["She", "is", "reading", "book"],
+                        correctAnswer: 1,
+                        hint: "Helping verbs come before the main verb and help show tense.",
+                        grammarRule: "Helping verbs (like is, am, are, was, were, have, has) help the main verb show action."
+                    },
+                    {
+                        type: "grammar-duel",
+                        title: "Verb Monster",
+                        question: "Choose the correct verb to complete the sentence: 'They _____ to school every day.'",
+                        options: ["walk", "walks", "walking", "walked"],
+                        correctAnswer: 0,
+                        hint: "Use present tense for actions that happen regularly. 'They' needs the base verb form.",
+                        grammarRule: "For present tense with 'they', use the base form of the verb (walk, eat, play)."
+                    }
+                ],
+                unlocked: false,
+                completed: false,
+                badge: "Verb Master"
+            },
+            {
+                id: 3,
+                name: "Adjective Adventure",
+                description: "Discover describing words that make sentences more interesting.",
+                icon: "fa-palette",
+                challenges: [
+                    {
+                        type: "multiple-choice",
+                        title: "Identifying Adjectives",
+                        question: "Which word is an adjective in: 'The red ball bounced high.'?",
+                        options: ["The", "red", "ball", "bounced"],
+                        correctAnswer: 1,
+                        hint: "Adjectives describe nouns. They tell us what kind, how many, or which one.",
+                        grammarRule: "Adjectives describe nouns. They tell us about color (red, blue), size (big, small), shape (round, square), or how many (three, many)."
+                    },
+                    {
+                        type: "multiple-choice",
+                        title: "Comparative Adjectives",
+                        question: "What is the comparative form of 'tall'?",
+                        options: ["tallest", "taller", "more tall", "tallier"],
+                        correctAnswer: 1,
+                        hint: "Comparative adjectives compare two things. Usually add -er or use 'more'.",
+                        grammarRule: "Comparative adjectives compare two things. For short adjectives, add -er (tall → taller, fast → faster)."
+                    },
+                    {
+                        type: "grammar-duel",
+                        title: "Adjective Monster",
+                        question: "Choose the sentence with the adjective in the correct place:",
+                        options: [
+                            "I have a dog brown.",
+                            "I have brown a dog.",
+                            "I have a brown dog.",
+                            "Brown I have a dog."
+                        ],
+                        correctAnswer: 2,
+                        hint: "Adjectives usually come before the noun they describe.",
+                        grammarRule: "Adjectives usually come before the noun they describe (a red apple, the tall building)."
+                    }
+                ],
+                unlocked: false,
+                completed: false,
+                badge: "Adjective Ace"
+            }
+        ];
+
+        // Initialize the game
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load saved game data
+            loadGameData();
+            
+            // Set up header controls
+            setupHeaderControls();
+            
+            // Render quests
+            renderQuests();
+            
+            // Update player stats
+            updatePlayerStats();
+        });
+
+        // Load game data from localStorage
+        function loadGameData() {
+            const savedData = localStorage.getItem('grammarQuestData');
+            if (savedData) {
+                const parsedData = JSON.parse(savedData);
+                gameData.player = { ...gameData.player, ...parsedData.player };
+                quests.forEach((quest, index) => {
+                    if (parsedData.quests && parsedData.quests[index]) {
+                        quest.unlocked = parsedData.quests[index].unlocked;
+                        quest.completed = parsedData.quests[index].completed;
+                    }
+                });
+            }
+        }
+
+        // Save game data to localStorage
+        function saveGameData() {
+            const saveData = {
+                player: gameData.player,
+                quests: quests.map(q => ({ unlocked: q.unlocked, completed: q.completed }))
+            };
+            localStorage.setItem('grammarQuestData', JSON.stringify(saveData));
+        }
+
+        // Set up header controls
+        function setupHeaderControls() {
+            // Profile dropdown toggle
+            document.getElementById('profileToggle').addEventListener('click', function() {
+                document.getElementById('profileDropdown').classList.toggle('show');
+            });
+
+            // Language toggle
+            document.getElementById('languageToggle').addEventListener('click', function() {
+                document.getElementById('languageOptions').classList.toggle('show');
+            });
+
+            // Language selection
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    alert(`Language changed to: ${lang === 'en' ? 'English' : lang === 'or' ? 'Odia' : 'Hindi'}`);
+                    document.getElementById('languageOptions').classList.remove('show');
+                });
+            });
+
+            // Navigation - All 5 subjects
+            document.getElementById('navDashboard').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Navigating to Dashboard');
+            });
+
+            document.getElementById('navScience').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Navigating to Science Section');
+            });
+
+            document.getElementById('navTechnology').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Navigating to Technology Section');
+            });
+
+            document.getElementById('navEngineering').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Navigating to Engineering Section');
+            });
+
+            document.getElementById('navMaths').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Navigating to Maths Section');
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#languageToggle') && !e.target.closest('#languageOptions')) {
+                    document.getElementById('languageOptions').classList.remove('show');
+                }
+                if (!e.target.closest('#profileToggle') && !e.target.closest('#profileDropdown')) {
+                    document.getElementById('profileDropdown').classList.remove('show');
+                }
+            });
+        }
+
+        // Render quests on the quest grid
+        function renderQuests() {
+            const questGrid = document.getElementById('questGrid');
+            questGrid.innerHTML = '';
+            
+            quests.forEach(quest => {
+                const questCard = document.createElement('div');
+                questCard.className = `quest-card ${quest.completed ? 'completed' : ''} ${!quest.unlocked ? 'locked' : ''}`;
+                questCard.innerHTML = `
+                    <div class="quest-icon">
+                        <i class="fas ${quest.icon}"></i>
+                    </div>
+                    <h3 class="quest-title">${quest.name}</h3>
+                    <p class="quest-desc">${quest.description}</p>
+                    <div class="quest-info">
+                        <div class="quest-reward">
+                            <i class="fas fa-star"></i> +${quest.challenges.length * 15} points
+                        </div>
+                        <div class="quest-status">
+                            ${quest.completed ? '<i class="fas fa-check-circle"></i> Completed' : 
+                              quest.unlocked ? '<i class="fas fa-play-circle"></i> Start Quest' : 
+                              '<i class="fas fa-lock"></i> Locked'}
+                        </div>
+                    </div>
+                `;
+                
+                if (quest.unlocked && !quest.completed) {
+                    questCard.addEventListener('click', () => startQuest(quest));
+                }
+                
+                questGrid.appendChild(questCard);
+            });
+        }
+
+        // Start a quest
+        function startQuest(quest) {
+            gameData.currentQuest = quest;
+            gameData.currentChallengeIndex = 0;
+            gameData.score = 0;
+            gameData.timeLeft = 30;
+            gameData.speedBonusAvailable = true;
+            gameData.hintsLeft = 3;
+            
+            // Switch to challenge screen
+            document.getElementById('questSelectionScreen').style.display = 'none';
+            document.getElementById('challengeScreen').style.display = 'block';
+            document.getElementById('resultsScreen').style.display = 'none';
+            
+            // Update game stats
+            updateGameStats();
+            
+            // Start the timer
+            startTimer();
+            
+            // Show the first challenge
+            showChallenge();
+        }
+
+        // Show current challenge
+        function showChallenge() {
+            const challenge = gameData.currentQuest.challenges[gameData.currentChallengeIndex];
+            const challengeContent = document.getElementById('challengeContent');
+            const submitBtn = document.getElementById('submitAnswerBtn');
+            const nextBtn = document.getElementById('nextQuestionBtn');
+            const hintBtn = document.getElementById('hintBtn');
+            
+            // Reset UI
+            submitBtn.disabled = true;
+            submitBtn.style.display = 'block';
+            nextBtn.style.display = 'none';
+            gameData.selectedOption = null;
+            
+            // Update challenge info
+            document.getElementById('challengeTitle').textContent = challenge.title;
+            document.getElementById('challengeNumber').textContent = `Question ${gameData.currentChallengeIndex + 1}/${gameData.currentQuest.challenges.length}`;
+            
+            // Generate challenge HTML
+            let challengeHTML = '';
+            
+            if (challenge.type === 'grammar-duel') {
+                challengeHTML = `
+                    <div class="monster-duel">
+                        <div class="monster-container">
+                            <div class="monster">👾</div>
+                            <div class="monster-health">
+                                <div class="health-bar" id="monsterHealth" style="width: 100%"></div>
+                            </div>
+                            <div class="monster-name">${challenge.title} Monster</div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            challengeHTML += `
+                <div class="challenge-question">${challenge.question}</div>
+                <div class="options-grid" id="optionsGrid"></div>
+            `;
+            
+            if (challenge.grammarRule) {
+                challengeHTML += `
+                    <div class="rule-helper">
+                        <h4><i class="fas fa-book"></i> Grammar Rule</h4>
+                        <p class="rule-text">${challenge.grammarRule}</p>
+                    </div>
+                `;
+            }
+            
+            challengeContent.innerHTML = challengeHTML;
+            
+            // Render options
+            const optionsGrid = document.getElementById('optionsGrid');
+            const letters = ['A', 'B', 'C', 'D'];
+            
+            challenge.options.forEach((option, index) => {
+                const optionBtn = document.createElement('button');
+                optionBtn.className = 'option-btn';
+                optionBtn.innerHTML = `
+                    <div class="option-letter">${letters[index]}</div>
+                    <div>${option}</div>
+                `;
+                optionBtn.dataset.index = index;
+                
+                optionBtn.addEventListener('click', () => {
+                    // Remove selection from all options
+                    document.querySelectorAll('.option-btn').forEach(btn => {
+                        btn.classList.remove('selected');
+                    });
+                    
+                    // Select this option
+                    optionBtn.classList.add('selected');
+                    gameData.selectedOption = index;
+                    submitBtn.disabled = false;
+                });
+                
+                optionsGrid.appendChild(optionBtn);
+            });
+            
+            // Update hints display
+            document.getElementById('hintsDisplay').textContent = `Hints: ${gameData.hintsLeft}`;
+            
+            // Enable hint button if hints available
+            hintBtn.disabled = gameData.hintsLeft <= 0;
+        }
+
+        // Start the timer
+        function startTimer() {
+            clearInterval(gameData.timerInterval);
+            gameData.timeLeft = 30;
+            updateTimerDisplay();
+            
+            gameData.timerInterval = setInterval(() => {
+                gameData.timeLeft--;
+                updateTimerDisplay();
+                
+                if (gameData.timeLeft <= 0) {
+                    clearInterval(gameData.timerInterval);
+                    submitAnswer();
+                }
+                
+                // Speed bonus is only available for first 15 seconds
+                if (gameData.timeLeft <= 15) {
+                    gameData.speedBonusAvailable = false;
+                }
+            }, 1000);
+        }
+
+        // Update timer display
+        function updateTimerDisplay() {
+            const timerElement = document.getElementById('timer');
+            if (timerElement) {
+                timerElement.textContent = `${gameData.timeLeft}s`;
+                
+                // Change color when time is running low
+                if (gameData.timeLeft <= 10) {
+                    timerElement.style.color = '#e53e3e';
+                } else if (gameData.timeLeft <= 20) {
+                    timerElement.style.color = '#d69e2e';
+                } else {
+                    timerElement.style.color = '#1a365d';
+                }
+            }
+        }
+
+        // Submit answer
+        document.getElementById('submitAnswerBtn').addEventListener('click', submitAnswer);
+
+        function submitAnswer() {
+            clearInterval(gameData.timerInterval);
+            
+            const challenge = gameData.currentQuest.challenges[gameData.currentChallengeIndex];
+            const options = document.querySelectorAll('.option-btn');
+            const submitBtn = document.getElementById('submitAnswerBtn');
+            const nextBtn = document.getElementById('nextQuestionBtn');
+            
+            submitBtn.style.display = 'none';
+            nextBtn.style.display = 'block';
+            
+            // Disable all options
+            options.forEach(option => {
+                option.style.pointerEvents = 'none';
+            });
+            
+            // Mark correct and incorrect answers
+            options.forEach((option, index) => {
+                if (index === challenge.correctAnswer) {
+                    option.classList.add('correct');
+                } else if (index === gameData.selectedOption) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            // Calculate score
+            let challengeScore = 0;
+            const isCorrect = gameData.selectedOption === challenge.correctAnswer;
+            
+            if (isCorrect) {
+                challengeScore += 15; // Base points
+                gameData.player.correctAnswers++;
+                
+                // Add speed bonus if applicable
+                if (gameData.speedBonusAvailable && gameData.timeLeft > 15) {
+                    challengeScore += 5;
+                }
+                
+                // Update monster health for grammar duel
+                if (challenge.type === 'grammar-duel') {
+                    const healthBar = document.getElementById('monsterHealth');
+                    const currentWidth = parseInt(healthBar.style.width);
+                    const newWidth = Math.max(0, currentWidth - 33);
+                    healthBar.style.width = `${newWidth}%`;
+                    
+                    // Add shake animation
+                    document.querySelector('.monster').classList.add('shake');
+                    setTimeout(() => {
+                        document.querySelector('.monster').classList.remove('shake');
+                    }, 500);
+                }
+            } else {
+                // Show grammar rule again for incorrect answers
+                const ruleHelper = document.createElement('div');
+                ruleHelper.className = 'rule-helper';
+                ruleHelper.innerHTML = `
+                    <h4><i class="fas fa-book"></i> Remember This Rule</h4>
+                    <p class="rule-text">${challenge.grammarRule}</p>
+                `;
+                document.getElementById('challengeContent').appendChild(ruleHelper);
+            }
+            
+            gameData.score += challengeScore;
+            updateGameStats();
+        }
+
+        // Next question
+        document.getElementById('nextQuestionBtn').addEventListener('click', nextQuestion);
+
+        function nextQuestion() {
+            gameData.currentChallengeIndex++;
+            
+            if (gameData.currentChallengeIndex < gameData.currentQuest.challenges.length) {
+                showChallenge();
+                startTimer();
+            } else {
+                completeQuest();
+            }
+        }
+
+        // Use hint
+        document.getElementById('hintBtn').addEventListener('click', useHint);
+
+        function useHint() {
+            if (gameData.hintsLeft > 0) {
+                gameData.hintsLeft--;
+                updateGameStats();
+                
+                const challenge = gameData.currentQuest.challenges[gameData.currentChallengeIndex];
+                alert(`Hint: ${challenge.hint}`);
+            }
+        }
+
+        // Complete quest
+        function completeQuest() {
+            // Update quest status
+            gameData.currentQuest.completed = true;
+            gameData.player.questsCompleted++;
+            gameData.player.totalScore += gameData.score;
+            
+            // Unlock next quest
+            const nextQuestIndex = quests.findIndex(q => q.id === gameData.currentQuest.id) + 1;
+            if (nextQuestIndex < quests.length) {
+                quests[nextQuestIndex].unlocked = true;
+            }
+            
+            // Check for badge
+            if (!gameData.player.badges.includes(gameData.currentQuest.badge)) {
+                gameData.player.badges.push(gameData.currentQuest.badge);
+                document.getElementById('achievementsEarned').style.display = 'block';
+                document.getElementById('badgeName').textContent = gameData.currentQuest.badge;
+                
+                // Update badge in sidebar
+                const badgeIndex = gameData.currentQuest.id;
+                const badgeElement = document.getElementById(`badge${badgeIndex}`);
+                if (badgeElement) {
+                    badgeElement.classList.add('earned');
+                }
+            }
+            
+            // Show results screen
+            document.getElementById('questSelectionScreen').style.display = 'none';
+            document.getElementById('challengeScreen').style.display = 'none';
+            document.getElementById('resultsScreen').style.display = 'block';
+            
+            // Update results
+            document.getElementById('finalScore').textContent = gameData.score;
+            document.getElementById('resultCorrect').textContent = `${gameData.player.correctAnswers - (gameData.player.correctAnswers - gameData.currentQuest.challenges.length)}/${gameData.currentQuest.challenges.length}`;
+            document.getElementById('resultSpeed').textContent = gameData.speedBonusAvailable ? "+15" : "+0";
+            document.getElementById('resultTotal').textContent = gameData.score;
+            
+            // Save game data
+            saveGameData();
+            
+            // Update player stats
+            updatePlayerStats();
+        }
+
+        // Back to quests
+        document.getElementById('backToQuestsBtn').addEventListener('click', backToQuests);
+
+        function backToQuests() {
+            document.getElementById('questSelectionScreen').style.display = 'block';
+            document.getElementById('challengeScreen').style.display = 'none';
+            document.getElementById('resultsScreen').style.display = 'none';
+            
+            // Re-render quests to show updated status
+            renderQuests();
+        }
+
+        // Play again
+        document.getElementById('playAgainBtn').addEventListener('click', () => {
+            startQuest(gameData.currentQuest);
+        });
+
+        // Next quest
+        document.getElementById('nextQuestBtn').addEventListener('click', () => {
+            backToQuests();
+        });
+
+        // Update game stats during play
+        function updateGameStats() {
+            document.getElementById('scoreDisplay').textContent = `Score: ${gameData.score}`;
+            document.getElementById('hintsDisplay').textContent = `Hints: ${gameData.hintsLeft}`;
+            
+            const progress = (gameData.currentChallengeIndex / gameData.currentQuest.challenges.length) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+        }
+
+        // Update player stats in sidebar
+        function updatePlayerStats() {
+            document.getElementById('totalScore').textContent = gameData.player.totalScore;
+            document.getElementById('questsCompleted').textContent = gameData.player.questsCompleted;
+            document.getElementById('correctAnswers').textContent = gameData.player.correctAnswers;
+            document.getElementById('currentStreak').textContent = `${gameData.player.currentStreak} days`;
+            document.getElementById('playerName').textContent = gameData.player.name;
+            
+            // Update badges
+            gameData.player.badges.forEach((badge, index) => {
+                const badgeElement = document.getElementById(`badge${index + 1}`);
+                if (badgeElement) {
+                    badgeElement.classList.add('earned');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

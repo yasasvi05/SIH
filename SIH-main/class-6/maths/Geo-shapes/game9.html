@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEM Learn Odisha - Geometry Detective</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Oriya:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+   
+    <style>
+        /* --- CORE THEME --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+       
+        body {
+            background-color: #f0f7ff;
+            color: #1e293b;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+       
+        body.lang-or, body.lang-or * { font-family: 'Noto Sans Oriya', sans-serif; }
+
+        /* --- HEADER (STEM ODISHA STYLE) --- */
+        header {
+            background-color: #0f172a;
+            color: white;
+            padding: 12px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: sticky; top: 0; z-index: 100;
+        }
+       
+        .header-container {
+            display: flex; justify-content: space-between; align-items: center;
+            max-width: 1200px; margin: 0 auto; padding: 0 25px;
+        }
+       
+        .logo-section { display: flex; align-items: center; gap: 12px; }
+       
+        .logo-icon {
+            background: white; color: #0f172a;
+            width: 35px; height: 35px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .logo-text { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.5px; }
+        .logo-text span { color: #2dd4bf; }
+
+        .nav-section { display: flex; align-items: center; gap: 20px; }
+       
+        .nav-link {
+            color: rgba(255,255,255,0.9); text-decoration: none;
+            font-weight: 500; font-size: 0.95rem; transition: 0.3s;
+        }
+        .nav-link:hover { color: #2dd4bf; }
+
+        /* Language Switcher Pill */
+        .lang-pill {
+            background: rgba(255,255,255,0.15);
+            border-radius: 50px;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .lang-option {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lang-option:hover { color: white; }
+        .lang-option.active { background: rgba(255,255,255,0.3); color: white; font-weight: 600; }
+
+        /* --- GAME CONTAINER --- */
+        .container { max-width: 800px; margin: 40px auto; padding: 0 20px; flex-grow: 1; }
+
+        .game-title-area { text-align: center; margin-bottom: 30px; }
+        .game-title-area h1 { color: #0f172a; font-size: 2rem; margin-bottom: 5px; font-weight: 700; }
+        .game-title-area p { color: #64748b; font-size: 1rem; }
+
+        /* Stats Bar */
+        .game-stats {
+            background: white; border-radius: 12px; padding: 15px 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 25px; border-left: 5px solid #2dd4bf;
+        }
+
+        .stat-item { display: flex; align-items: center; gap: 8px; font-weight: 600; color: #334155; }
+        .stat-item i { color: #2dd4bf; }
+
+        /* Progress Bar */
+        .progress-container { width: 150px; }
+        .progress-track { width: 100%; height: 6px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin-top: 5px; }
+        .progress-fill { height: 100%; background: #2dd4bf; width: 0%; transition: width 0.5s ease; border-radius: 10px; }
+
+        /* Level Tabs */
+        .level-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; }
+        .level-tab {
+            padding: 8px 25px; border-radius: 50px; border: 1px solid #e2e8f0;
+            background: white; color: #94a3b8; font-weight: 500; cursor: pointer; transition: 0.3s;
+        }
+        .level-tab.active { background: #0f172a; color: white; border-color: #0f172a; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2); }
+        .level-tab.locked { background: #f1f5f9; cursor: not-allowed; opacity: 0.6; }
+
+        /* Game Card */
+        .game-card {
+            background: white; border-radius: 20px; padding: 35px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center;
+            position: relative; overflow: hidden; border: 1px solid #e2e8f0;
+        }
+
+        .visual-area {
+            height: 150px; display: flex; align-items: center; justify-content: center;
+            margin-bottom: 20px; background: #f8fafc; border-radius: 15px; border: 2px dashed #cbd5e0;
+            position: relative;
+        }
+       
+        .visual-content { font-size: 4.5rem; animation: float 3s infinite ease-in-out; }
+       
+        .question-text { font-size: 1.3rem; color: #0f172a; font-weight: 600; margin-bottom: 25px; line-height: 1.5; }
+
+        /* Angle Visualizer */
+        .angle-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+        }
+
+        .angle-base-line {
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background: #0f172a;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transform-origin: left center;
+        }
+
+        .angle-rotating-line {
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background: #ef4444;
+            top: 50%;
+            left: 50%;
+            transform-origin: left center;
+            transition: transform 1s ease;
+        }
+
+        .angle-vertex {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #0f172a;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .angle-degree {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            color: #0f172a;
+            font-size: 1.2rem;
+        }
+
+        .protractor {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Interactive Elements */
+        .interactive-area {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        /* Options */
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+       
+        .option-btn {
+            padding: 18px; background: white; border: 2px solid #e2e8f0;
+            border-radius: 10px; font-size: 1rem; color: #475569;
+            font-weight: 600; cursor: pointer; transition: all 0.2s;
+        }
+
+        .option-btn:hover:not(.disabled) { border-color: #2dd4bf; background: #f0fdfa; }
+        .option-btn.correct { background: #f0fdf4; border-color: #22c55e; color: #15803d; }
+        .option-btn.wrong { background: #fef2f2; border-color: #ef4444; color: #b91c1c; opacity: 0.7; }
+        .option-btn.disabled { pointer-events: none; }
+
+        /* Measurement Tools */
+        .measurement-tool {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .measurement-input {
+            padding: 10px 15px;
+            border: 2px solid #cbd5e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            width: 120px;
+            text-align: center;
+        }
+
+        /* Angle Meter */
+        .angle-meter {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 20px auto;
+            justify-content: center;
+        }
+
+        .angle-slider {
+            width: 200px;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: #e2e8f0;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .angle-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: #3b82f6;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* Feedback & Controls */
+        .feedback-box {
+            display: none; background: #f1f5f9; border-left: 4px solid #3b82f6;
+            padding: 15px; border-radius: 8px; text-align: left; margin-top: 20px;
+            animation: slideUp 0.3s ease;
+        }
+        .feedback-box.correct { background: #f0fdf4; border-color: #22c55e; }
+        .feedback-box.wrong { background: #fef2f2; border-color: #ef4444; }
+
+        .next-btn {
+            background: #0f172a; color: white; border: none; padding: 12px 30px;
+            border-radius: 8px; font-size: 1rem; font-weight: 500; margin-top: 20px;
+            cursor: pointer; transition: 0.3s; width: 100%; display: none;
+        }
+        .next-btn:hover { background: #334155; }
+
+        /* Score Display */
+        .score-display {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #2dd4bf;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.85); z-index: 2000; display: none;
+            justify-content: center; align-items: center; backdrop-filter: blur(5px);
+        }
+
+        .modal-card {
+            background: white; width: 90%; max-width: 450px; border-radius: 20px;
+            padding: 30px; text-align: center; border-top: 6px solid #2dd4bf;
+            animation: popIn 0.4s ease;
+        }
+
+        .score-badge {
+            width: 90px; height: 90px; border-radius: 50%; background: #ccfbf1;
+            color: #0f766e; display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem; font-weight: 800; margin: 0 auto 15px; border: 5px solid #2dd4bf;
+        }
+
+        .modal-btn {
+            background: #0f172a; color: white; padding: 12px 25px; border-radius: 50px;
+            border: none; font-size: 1rem; font-weight: 500; cursor: pointer;
+            transition: 0.3s; margin-top: 15px; width: 100%;
+        }
+        .modal-btn:hover { background: #334155; }
+
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        @media (max-width: 600px) {
+            .header-container { padding: 0 15px; }
+            .nav-link { display: none; }
+            .logo-text { font-size: 1.2rem; }
+            .options-grid { grid-template-columns: 1fr; }
+            .measurement-tool { flex-direction: column; }
+            .angle-meter { flex-direction: column; }
+            .angle-slider { width: 100%; }
+        }
+    </style>
+</head>
+<body class="lang-en">
+
+    <header>
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo-icon"><i class="fas fa-atom"></i></div>
+                <div class="logo-text">STEM <span>Learn</span> Odisha</div>
+            </div>
+            <div class="nav-section">
+                <a href="#" class="nav-link">Dashboard</a>
+                <a href="#" class="nav-link">About</a>
+                <div class="lang-pill">
+                    <div class="lang-option active" onclick="setLanguage('en')">English</div>
+                    <div class="lang-option" onclick="setLanguage('or')">ଓଡ଼ିଆ</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="game-title-area">
+            <h1 id="game-main-title">Geometry Detective</h1>
+            <p id="game-desc">Identify shapes, angles, and solve geometry puzzles!</p>
+        </div>
+
+        <div class="level-tabs">
+            <button class="level-tab active" id="tab-easy" onclick="changeLevel(0)">Level 1: Shape Explorer</button>
+            <button class="level-tab locked" id="tab-medium" onclick="changeLevel(1)">Level 2: Angle Analyzer</button>
+            <button class="level-tab locked" id="tab-hard" onclick="changeLevel(2)">Level 3: Geometry Master</button>
+        </div>
+
+        <div class="game-stats">
+            <div class="stat-item" id="level-display"><i class="fas fa-layer-group"></i> <span>Level 1: Shape Explorer</span></div>
+            <div class="stat-item"><i class="fas fa-star"></i> <span id="score-text">Score: 0</span></div>
+            <div class="progress-container">
+                <div class="progress-track"><div class="progress-fill" id="progress-bar"></div></div>
+            </div>
+        </div>
+
+        <div class="game-card">
+            <div class="score-display" id="current-score">0</div>
+            <div class="visual-area" id="visual-area">
+                <div class="visual-content" id="visual-content"></div>
+            </div>
+            <h2 class="question-text" id="question-text">Loading...</h2>
+           
+            <!-- Dynamic content area for different game types -->
+            <div id="game-content-area"></div>
+           
+            <div class="feedback-box" id="feedback-box">
+                <h4 id="fb-title" style="margin-bottom:5px; color:#1e293b;">Feedback</h4>
+                <p id="fb-text" style="color:#475569; line-height:1.6;"></p>
+            </div>
+            <button class="next-btn" id="next-btn" onclick="nextQuestion()">Next Question <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="report-modal">
+        <div class="modal-card">
+            <div class="score-badge" id="final-percent">100%</div>
+            <h2 id="report-title" style="color:#0f172a; margin-bottom:10px;">Level Complete!</h2>
+            <div style="background:#f1f5f9; padding:15px; border-radius:12px; text-align:left;">
+                <h4 style="color:#334155; margin-bottom:5px;">💡 Analysis:</h4>
+                <p id="analysis-text" style="color:#475569; font-size:0.95rem;"></p>
+            </div>
+            <button class="modal-btn" id="modal-action-btn">Unlock Next Level 🚀</button>
+        </div>
+    </div>
+
+    <script>
+        // =============== ENHANCED GAME DATA FOR 6TH GRADE ===============
+       
+        const dictionary = {
+            en: {
+                title: "Geometry Detective",
+                easy: "Level 1: Shape Explorer",
+                medium: "Level 2: Angle Analyzer",
+                hard: "Level 3: Geometry Master",
+                level: "Level",
+                correct: "Correct! 🎉",
+                wrong: "Not Quite! 🕵️",
+                ansWas: "Correct Answer:",
+                score: "Score:",
+                next: "Next Question",
+                finish: "See Results",
+                unlock: "Unlock Next Level 🔓",
+                replay: "Play Again 🔄",
+                analysis: "Analysis:",
+                focus: "Focus Area:",
+                dragInstruction: "Drag the properties to match the shapes:",
+                dropHere: "Drop here",
+                enterValue: "Enter the value:",
+                constructShape: "Construct the shape using these properties:",
+                calculateArea: "Calculate the area:",
+                findPerimeter: "Find the perimeter:",
+                identifyAngle: "Identify the type of angle:",
+                matchProperties: "Match properties to shapes:",
+                measureAngle: "Measure the angle:",
+                classifyAngle: "Classify this angle:",
+                estimateAngle: "Estimate the angle (in degrees):",
+                setAngle: "Set the angle to:",
+                acuteExample: "Examples: 30°, 45°, 60°",
+                rightExample: "Exactly 90°",
+                obtuseExample: "Examples: 110°, 135°, 150°",
+                straightExample: "Exactly 180°",
+                reflexExample: "Examples: 250°, 300°"
+            },
+            or: {
+                title: "ଜ୍ୟାମିତି ଗୁପ୍ତଚର",
+                easy: "ପ୍ରଥମ ସ୍ତର: ଆକାର ଅନୁସନ୍ଧାନ",
+                medium: "ଦ୍ୱିତୀୟ ସ୍ତର: କୋଣ ବିଶ୍ଲେଷଣ",
+                hard: "ତୃତୀୟ ସ୍ତର: ଜ୍ୟାମିତି ବିଶାରଦ",
+                level: "ଲେଭଲ୍",
+                correct: "ସଠିକ୍! 🎉",
+                wrong: "ଭୁଲ୍ ହେଇଗଲା! 🕵️",
+                ansWas: "ସଠିକ୍ ଉତ୍ତର:",
+                score: "ସ୍କୋର:",
+                next: "ପରବର୍ତ୍ତୀ ପ୍ରଶ୍ନ",
+                finish: "ଫଳାଫଳ ଦେଖନ୍ତୁ",
+                unlock: "ପରବର୍ତ୍ତୀ ଲେଭଲ୍ ଖୋଲନ୍ତୁ 🔓",
+                replay: "ପୁଣି ଖେଳନ୍ତୁ 🔄",
+                analysis: "ବିଶ୍ଳେଷଣ:",
+                focus: "ଏଥିରେ ଧ୍ୟାନ ଦିଅନ୍ତୁ:",
+                dragInstruction: "ଆକାର ସହିତ ଗୁଣଗୁଡ଼ିକୁ ମେଳ କରନ୍ତୁ:",
+                dropHere: "ଏଠାରେ ଛାଡନ୍ତୁ",
+                enterValue: "ମୂଲ୍ୟ ପ୍ରବେଶ କରନ୍ତୁ:",
+                constructShape: "ଏହି ଗୁଣଗୁଡ଼ିକୁ ବ୍ୟବହାର କରି ଆକାର ଗଠନ କରନ୍ତୁ:",
+                calculateArea: "କ୍ଷେତ୍ରଫଳ ଗଣନା କରନ୍ତୁ:",
+                findPerimeter: "ପରିଧି ଖୋଜନ୍ତୁ:",
+                identifyAngle: "କୋଣର ପ୍ରକାର ଚିହ୍ନଟ କରନ୍ତୁ:",
+                matchProperties: "ଆକାର ସହିତ ଗୁଣଗୁଡ଼ିକୁ ମେଳ କରନ୍ତୁ:",
+                measureAngle: "କୋଣ ମାପନ କରନ୍ତୁ:",
+                classifyAngle: "ଏହି କୋଣକୁ ବର୍ଗୀକରଣ କରନ୍ତୁ:",
+                estimateAngle: "କୋଣର ଅନୁମାନ କରନ୍ତୁ (ଡିଗ୍ରୀରେ):",
+                setAngle: "କୋଣକୁ ସେଟ୍ କରନ୍ତୁ:",
+                acuteExample: "ଉଦାହରଣ: 30°, 45°, 60°",
+                rightExample: "ଠିକ୍ 90°",
+                obtuseExample: "ଉଦାହରଣ: 110°, 135°, 150°",
+                straightExample: "ଠିକ୍ 180°",
+                reflexExample: "ଉଦାହରଣ: 250°, 300°"
+            }
+        };
+
+        // Enhanced geometry data for 6th grade
+        const shapesData = [
+            {id: "tri", names: {en:"Triangle", or:"ତ୍ରିଭୁଜ"}, sides: 3, vertices: 3, icon: "△", angleSum: 180, areaFormula: "½ × base × height", properties: ["3 sides", "3 vertices", "Angle sum: 180°"]},
+            {id: "sq", names: {en:"Square", or:"ବର୍ଗଚିତ୍ର"}, sides: 4, vertices: 4, icon: "□", angleSum: 360, areaFormula: "side × side", properties: ["4 equal sides", "4 right angles", "Opposite sides parallel"]},
+            {id: "rect", names: {en:"Rectangle", or:"ଆୟତଚିତ୍ର"}, sides: 4, vertices: 4, icon: "▭", angleSum: 360, areaFormula: "length × width", properties: ["Opposite sides equal", "4 right angles", "Opposite sides parallel"]},
+            {id: "pent", names: {en:"Pentagon", or:"ପଞ୍ଚଭୁଜ"}, sides: 5, vertices: 5, icon: "⬠", angleSum: 540, areaFormula: "Complex formula", properties: ["5 sides", "5 vertices", "Interior angle sum: 540°"]},
+            {id: "hex", names: {en:"Hexagon", or:"ଷଡଭୁଜ"}, sides: 6, vertices: 6, icon: "⬡", angleSum: 720, areaFormula: "Complex formula", properties: ["6 sides", "6 vertices", "Interior angle sum: 720°"]},
+            {id: "oct", names: {en:"Octagon", or:"ଅଷ୍ଟଭୁଜ"}, sides: 8, vertices: 8, icon: "🛑", angleSum: 1080, areaFormula: "Complex formula", properties: ["8 sides", "8 vertices", "Interior angle sum: 1080°"]},
+            {id: "circle", names: {en:"Circle", or:"ବୃତ୍ତ"}, sides: 0, vertices: 0, icon: "○", angleSum: 360, areaFormula: "π × radius²", properties: ["No sides", "No vertices", "Circumference: 2πr"]},
+            {id: "rhombus", names: {en:"Rhombus", or:"ରମ୍ବସ୍"}, sides: 4, vertices: 4, icon: "🔶", angleSum: 360, areaFormula: "½ × diagonal1 × diagonal2", properties: ["All sides equal", "Opposite angles equal", "Diagonals bisect at 90°"]}
+        ];
+
+        const anglesData = [
+            {type: "Acute", names: {en:"Acute Angle", or:"ସୂକ୍ଷ୍ମ କୋଣ"}, range: "0° to 90°", examples: "30°, 45°, 60°", icon: "∠", description: "Less than 90 degrees", color: "#10b981", minDeg: 1, maxDeg: 89},
+            {type: "Right", names: {en:"Right Angle", or:"ସମ କୋଣ"}, range: "Exactly 90°", examples: "Corner of a book", icon: "∟", description: "Exactly 90 degrees", color: "#3b82f6", minDeg: 90, maxDeg: 90},
+            {type: "Obtuse", names: {en:"Obtuse Angle", or:"ସ୍ଥୂଳ କୋଣ"}, range: "90° to 180°", examples: "110°, 135°, 150°", icon: "∡", description: "Between 90 and 180 degrees", color: "#f59e0b", minDeg: 91, maxDeg: 179},
+            {type: "Straight", names: {en:"Straight Angle", or:"ସରଳ କୋଣ"}, range: "Exactly 180°", examples: "Straight line", icon: "—", description: "Exactly 180 degrees", color: "#8b5cf6", minDeg: 180, maxDeg: 180},
+            {type: "Reflex", names: {en:"Reflex Angle", or:"ପ୍ରବୃଦ୍ଧ କୋଣ"}, range: "180° to 360°", examples: "250°, 300°", icon: "↺", description: "Between 180 and 360 degrees", color: "#ef4444", minDeg: 181, maxDeg: 359}
+        ];
+
+        // Measurement problems for realistic geometry applications
+        const measurementProblems = [
+            {type: "area", shape: "square", dimension: {side: 5}, answer: 25, unit: "cm²", question: {en: "A square has sides of 5cm. What is its area?", or: "ଏକ ବର୍ଗର ବାହୁ 5 ସେ.ମି.। ଏହାର କ୍ଷେତ୍ରଫଳ କେତେ?"}},
+            {type: "area", shape: "rectangle", dimension: {length: 8, width: 3}, answer: 24, unit: "cm²", question: {en: "A rectangle is 8cm long and 3cm wide. What is its area?", or: "ଏକ ଆୟତର ଦୈର୍ଘ୍ୟ 8 ସେ.ମି. ଓ ପ୍ରସ୍ଥ 3 ସେ.ମି.। କ୍ଷେତ୍ରଫଳ କେତେ?"}},
+            {type: "perimeter", shape: "square", dimension: {side: 6}, answer: 24, unit: "cm", question: {en: "A square has sides of 6cm. What is its perimeter?", or: "ଏକ ବର୍ଗର ବାହୁ 6 ସେ.ମି.। ଏହାର ପରିଧି କେତେ?"}},
+            {type: "perimeter", shape: "rectangle", dimension: {length: 10, width: 4}, answer: 28, unit: "cm", question: {en: "A rectangle is 10cm long and 4cm wide. What is its perimeter?", or: "ଏକ ଆୟତର ଦୈର୍ଘ୍ୟ 10 ସେ.ମି. ଓ ପ୍ରସ୍ଥ 4 ସେ.ମି.। ପରିଧି କେତେ?"}},
+            {type: "angle_sum", shape: "triangle", answer: 180, unit: "°", question: {en: "What is the sum of interior angles in a triangle?", or: "ଏକ ତ୍ରିଭୁଜର ଅନ୍ତଃସ୍ଥ କୋଣମାନଙ୍କର ସମଷ୍ଟି କେତେ?"}},
+            {type: "angle_sum", shape: "quadrilateral", answer: 360, unit: "°", question: {en: "What is the sum of interior angles in a quadrilateral?", or: "ଏକ ଚତୁର୍ଭୁଜର ଅନ୍ତଃସ୍ଥ କୋଣମାନଙ୍କର ସମଷ୍ଟି କେତେ?"}}
+        ];
+
+        // Geometry riddles and puzzles
+        const geometryPuzzles = [
+            {question: {en: "I have 4 equal sides and 4 right angles. What am I?", or: "ମୋର 4ଟି ସମାନ ବାହୁ ଓ 4ଟି ସମକୋଣ ଅଛି। ମୁଁ କଣ?"}, answer: "Square", options: ["Rectangle", "Rhombus", "Square", "Trapezoid"]},
+            {question: {en: "I am a triangle with all sides equal. What am I called?", or: "ମୁଁ ଏକ ତ୍ରିଭୁଜ ଯାହାର ସମସ୍ତ ବାହୁ ସମାନ। ମୋର ନାମ କଣ?"}, answer: "Equilateral", options: ["Isosceles", "Scalene", "Equilateral", "Right"]},
+            {question: {en: "I have no vertices and my boundary is always equidistant from center. What am I?", or: "ମୋର କୌଣସି ଶୀର୍ଷ ନାହିଁ ଓ ମୋର ସୀମା ସର୍ବଦା କେନ୍ଦ୍ରରୁ ସମାନ ଦୂରତାରେ ଅଛି। ମୁଁ କଣ?"}, answer: "Circle", options: ["Oval", "Circle", "Sphere", "Ellipse"]},
+            {question: {en: "Lines that never meet are called...?", or: "ଯେଉଁ ରେଖାଗୁଡ଼ିକ କେବେ ମିଶନ୍ତି ନାହିଁ ସେଗୁଡ଼ିକୁ କଣ କୁହାଯାଏ?"}, answer: "Parallel", options: ["Parallel", "Perpendicular", "Intersecting", "Converging"]},
+            {question: {en: "An angle measuring 135° is...?", or: "135° ମାପ ଥିବା ଏକ କୋଣ କଣ?"}, answer: "Obtuse", options: ["Acute", "Right", "Obtuse", "Straight"]}
+        ];
+
+        // =============== GAME STATE & CONFIGURATION ===============
+        let currentLang = 'en';
+        let currentLevel = 0; // 0: Easy, 1: Medium, 2: Hard
+        let score = 0;
+        let questionsAnswered = 0;
+        let totalQuestions = 0;
+        let currentQuestion = null;
+        let isAnswered = false;
+        let mistakes = [];
+        let currentAngleDegrees = 0;
+       
+        // Level configurations
+        const levelConfig = {
+            0: { name: "easy", questionsPerLevel: 8, minPass: 6, nextLevel: 1 },
+            1: { name: "medium", questionsPerLevel: 10, minPass: 7, nextLevel: 2 },
+            2: { name: "hard", questionsPerLevel: 12, minPass: 9, nextLevel: null }
+        };
+
+        // =============== GAME INITIALIZATION ===============
+        function initGame() {
+            score = 0;
+            questionsAnswered = 0;
+            totalQuestions = levelConfig[currentLevel].questionsPerLevel;
+            mistakes = [];
+            updateUI();
+            generateQuestion();
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-option').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.lang-option[onclick="setLanguage('${lang}')"]`).classList.add('active');
+            if(lang === 'or') document.body.classList.add('lang-or');
+            else document.body.classList.remove('lang-or');
+            updateUI();
+            generateQuestion();
+        }
+
+        function updateUI() {
+            const d = dictionary[currentLang];
+            document.getElementById('game-main-title').innerText = d.title;
+            document.getElementById('tab-easy').innerText = d.easy;
+            document.getElementById('tab-medium').innerText = d.medium;
+            document.getElementById('tab-hard').innerText = d.hard;
+            document.getElementById('score-text').innerText = `Score: ${score}`;
+            document.getElementById('current-score').innerText = score;
+           
+            // Update level display
+            const levelNames = [d.easy, d.medium, d.hard];
+            document.getElementById('level-display').innerHTML = `<i class="fas fa-layer-group"></i> <span>${levelNames[currentLevel]}</span>`;
+           
+            // Update level tabs
+            ['easy', 'medium', 'hard'].forEach((lvl, idx) => {
+                const btn = document.getElementById(`tab-${lvl}`);
+                btn.className = 'level-tab';
+                if(idx === currentLevel) btn.classList.add('active');
+                else if (idx > currentLevel) btn.classList.add('locked');
+                else btn.classList.remove('locked'); // Unlock completed levels
+            });
+           
+            // Update progress bar
+            const progress = (questionsAnswered / totalQuestions) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+        }
+
+        // =============== ANGLE VISUALIZATION FUNCTIONS ===============
+        function createAngleVisualization(degrees) {
+            const angleInRadians = (degrees * Math.PI) / 180;
+           
+            return `
+                <div class="angle-container">
+                    <div class="protractor"></div>
+                    <div class="angle-base-line"></div>
+                    <div class="angle-rotating-line" style="transform: translate(-50%, -50%) rotate(${degrees}deg); background: ${getAngleColor(degrees)};"></div>
+                    <div class="angle-vertex"></div>
+                    <div class="angle-degree">${degrees}°</div>
+                </div>
+            `;
+        }
+
+        function getAngleColor(degrees) {
+            if (degrees < 90) return "#10b981"; // Acute - Green
+            if (degrees === 90) return "#3b82f6"; // Right - Blue
+            if (degrees < 180) return "#f59e0b"; // Obtuse - Orange
+            if (degrees === 180) return "#8b5cf6"; // Straight - Purple
+            return "#ef4444"; // Reflex - Red
+        }
+
+        function getAngleType(degrees) {
+            if (degrees > 0 && degrees < 90) return "Acute";
+            if (degrees === 90) return "Right";
+            if (degrees > 90 && degrees < 180) return "Obtuse";
+            if (degrees === 180) return "Straight";
+            if (degrees > 180 && degrees < 360) return "Reflex";
+            return "Unknown";
+        }
+
+        function updateAngleVisualization(sliderId, displayId) {
+            const slider = document.getElementById(sliderId);
+            const display = document.getElementById(displayId);
+            if (slider && display) {
+                const degrees = parseInt(slider.value);
+                display.textContent = `${degrees}°`;
+                const rotatingLine = document.querySelector('.angle-rotating-line');
+                if (rotatingLine) {
+                    rotatingLine.style.transform = `translate(-50%, -50%) rotate(${degrees}deg)`;
+                    rotatingLine.style.background = getAngleColor(degrees);
+                }
+                currentAngleDegrees = degrees;
+            }
+        }
+
+        // =============== QUESTION GENERATORS ===============
+        function generateQuestion() {
+            isAnswered = false;
+            document.getElementById('feedback-box').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+           
+            // Clear previous game content
+            document.getElementById('game-content-area').innerHTML = '';
+            document.getElementById('visual-area').innerHTML = '';
+           
+            // Generate question based on current level
+            switch(currentLevel) {
+                case 0: // Level 1: Shape Explorer
+                    generateShapeQuestion();
+                    break;
+                case 1: // Level 2: Angle Analyzer
+                    generateAngleQuestion();
+                    break;
+                case 2: // Level 3: Geometry Master
+                    generateMasterQuestion();
+                    break;
+            }
+           
+            updateUI();
+        }
+
+        function generateShapeQuestion() {
+            const shape = shapesData[Math.floor(Math.random() * shapesData.length)];
+            const questionTypes = ['identify', 'properties', 'count'];
+            const qType = questionTypes[Math.floor(Math.random() * questionTypes.length)];
+           
+            let questionHTML = '';
+            let answer = '';
+            let options = [];
+           
+            switch(qType) {
+                case 'identify':
+                    // Identify the shape from icon
+                    currentQuestion = {
+                        type: 'identify',
+                        answer: shape.names[currentLang],
+                        explanation: shape.names[currentLang] + ' - ' + (currentLang === 'en' ?
+                            `It has ${shape.sides} sides and ${shape.vertices} vertices.` :
+                            `ଏହାର ${shape.sides}ଟି ବାହୁ ଓ ${shape.vertices}ଟି ଶୀର୍ଷ ଅଛି।`)
+                    };
+                   
+                    document.getElementById('visual-area').innerHTML = `<span style="font-size:5rem; color:#2dd4bf;">${shape.icon}</span>`;
+                    document.getElementById('question-text').innerHTML = currentLang === 'en' ?
+                        "Identify this shape:" : "ଏହି ଆକାରର ନାମ କଣ?";
+                   
+                    // Generate options
+                    options = [shape.names[currentLang]];
+                    while(options.length < 4) {
+                        const randomShape = shapesData[Math.floor(Math.random() * shapesData.length)];
+                        if(!options.includes(randomShape.names[currentLang])) {
+                            options.push(randomShape.names[currentLang]);
+                        }
+                    }
+                    shuffleArray(options);
+                   
+                    questionHTML = options.map(opt =>
+                        `<button class="option-btn" onclick="checkAnswer('${opt}')">${opt}</button>`
+                    ).join('');
+                   
+                    document.getElementById('game-content-area').innerHTML = `
+                        <div class="options-grid">
+                            ${questionHTML}
+                        </div>
+                    `;
+                    break;
+                   
+                case 'properties':
+                    // Match properties to shape
+                    currentQuestion = {
+                        type: 'properties',
+                        answer: shape.names[currentLang],
+                        explanation: shape.properties.join(', ')
+                    };
+                   
+                    document.getElementById('visual-area').innerHTML = `<span style="font-size:4rem; color:#8b5cf6;">${shape.icon}</span>`;
+                    document.getElementById('question-text').innerHTML = dictionary[currentLang].matchProperties;
+                   
+                    const allProperties = [];
+                    shapesData.forEach(s => {
+                        s.properties.forEach(p => {
+                            if(!allProperties.includes(p)) allProperties.push(p);
+                        });
+                    });
+                   
+                    const correctProps = shape.properties.slice(0, 2);
+                    const wrongProps = allProperties.filter(p => !correctProps.includes(p))
+                        .sort(() => 0.5 - Math.random()).slice(0, 4);
+                    const allProps = [...correctProps, ...wrongProps].sort(() => 0.5 - Math.random());
+                   
+                    questionHTML = allProps.map(prop =>
+                        `<div class="option-btn" style="text-align:center;" onclick="selectProperty('${prop}', '${shape.names[currentLang]}')">${prop}</div>`
+                    ).join('');
+                   
+                    document.getElementById('game-content-area').innerHTML = `
+                        <div class="options-grid">
+                            ${questionHTML}
+                        </div>
+                        <p style="margin-top:10px; color:#64748b; text-align:center;"><i class="fas fa-mouse-pointer"></i> ${dictionary[currentLang].dragInstruction}</p>
+                    `;
+                    break;
+                   
+                case 'count':
+                    // Count sides or vertices
+                    const countType = Math.random() > 0.5 ? 'sides' : 'vertices';
+                    const countValue = countType === 'sides' ? shape.sides : shape.vertices;
+                   
+                    currentQuestion = {
+                        type: 'count',
+                        answer: countValue.toString(),
+                        explanation: shape.names[currentLang] + ' has ' + countValue + ' ' + countType
+                    };
+                   
+                    document.getElementById('visual-area').innerHTML = `<span style="font-size:5rem; color:#f59e0b;">${shape.icon}</span>`;
+                    document.getElementById('question-text').innerHTML = currentLang === 'en' ?
+                        `How many ${countType} does a ${shape.names[currentLang]} have?` :
+                        `ଏକ ${shape.names[currentLang]}ର କେତୋଟି ${countType === 'sides' ? 'ବାହୁ' : 'ଶୀର୍ଷ'} ଅଛି?`;
+                   
+                    // Generate number options
+                    options = [countValue];
+                    while(options.length < 4) {
+                        const randomNum = Math.max(0, countValue + Math.floor(Math.random() * 5) - 2);
+                        if(!options.includes(randomNum) && randomNum !== countValue) {
+                            options.push(randomNum);
+                        }
+                    }
+                    shuffleArray(options);
+                   
+                    questionHTML = options.map(opt =>
+                        `<button class="option-btn" onclick="checkAnswer('${opt}')">${opt}</button>`
+                    ).join('');
+                   
+                    document.getElementById('game-content-area').innerHTML = `
+                        <div class="options-grid">
+                            ${questionHTML}
+                        </div>
+                    `;
+                    break;
+            }
+        }
+
+        function generateAngleQuestion() {
+            const questionTypes = ['identify', 'measure', 'classify', 'set_angle'];
+            const qType = questionTypes[Math.floor(Math.random() * questionTypes.length)];
+            const d = dictionary[currentLang];
+           
+            switch(qType) {
+                case 'identify':
+                    // Identify angle type from visual
+                    const angleType = anglesData[Math.floor(Math.random() * anglesData.length)];
+                    const angleDegrees = angleType.type === "Acute" ? Math.floor(Math.random() * 88) + 1 :
+                                        angleType.type === "Right" ? 90 :
+                                        angleType.type === "Obtuse" ? Math.floor(Math.random() * 88) + 91 :
+                                        angleType.type === "Straight" ? 180 :
+                                        Math.floor(Math.random() * 179) + 181;
+                   
+                    currentQuestion = {
+                        type: 'identify',
+                        answer: angleType.names[currentLang],
+                        explanation: d[angleType.type.toLowerCase() + 'Example'] + " - " + angleType.description
+                    };
+                   
+                    document.getElementById('visual-area').innerHTML = createAngleVisualization(angleDegrees);
+                    document.getElementById('question-text').innerHTML = d.identifyAngle;
+                   
+                    const allAngles = anglesData.map(a => a.names[currentLang]);
+                    const wrongAngles = allAngles.filter(a => a !== angleType.names[currentLang])
+                        .sort(() => 0.5 - Math.random()).slice(0, 3);
+                    const options = [angleType.names[currentLang], ...wrongAngles];
+                    shuffleArray(options);
+                   
+                    const questionHTML = options.map(opt =>
+                        `<button class="option-btn" onclick="checkAnswer('${opt}')">${opt}</button>`
+                    ).join('');
+                   
+                    document.getElementById('game-content-area').innerHTML = `
+                        <div class="options-grid">
+                            ${questionHTML}
+                        </div>
+                    `;
+                    break;
+                   
+                case 'measure':
+                    // Enter angle measurement
+                    const randomAngle = Math.floor(Math.random() * 359) + 1;
+                    const correctType = getAngleType(randomAngle);
+                   
+                    currentQuestion = {
+                        type: 'measure',
+                        answer: randomAngle.toString(),
+                        explanation: `${randomAngle}° is a ${correctType.toLowerCase()} angle`
+                    };
+                   
+                    document.getElementById('visual-area').innerHTML = createAngleVisualization(randomAngle);
+                    document.getElementById('question-text').innerHTML = d.estimateAngle;
+                   
+                    document.getElementById('game-content-area').innerHTML = `
+                        <div class="measurement-tool">
+                            <input type="number" id="angle-input" class="measurement-input" placeholder="Degrees" min="1" max="359" value="">
+                            <span style="font-size:1.2rem; font-weight:bold;">°</span>
+                            <button class="option-btn" onclick="submitMeasurement()" style="margin-left:10px;">${d.enterValue}</button>
+                        </div>
+                        <div style="color:#64748b; font-size:0.9rem; margin-top:10px;">
+                            <i class="fas fa-lightbulb"></i> ${currentLang === 'en' ?
+                                "Hint: Look at how far the line has rotated from the base line" :
+                                "ସୂଚନା: ରେଖାଟି କେତେ ଦୂର ଘୂରିଛି ତାହା ଦେଖନ୍ତୁ"}
+                        </div>
+                    `;
+                    break;
+                   
+                case 'classify':
+                    // Classify angle by measurement
+                    const angleTypes = ['Acute', 'Right', 'Obtuse', 'Straight', 'Reflex'];
+                    const correctAngleType = angleTypes[Math.floor(Math.random() * angleTypes.length)];
+                    let angleMeasurement;
+                   
+                    switch(correctAngleType) {
+                        case 'Acute': angleMeasurement = Math.floor(Math.random() * 88) + 1; break;
+                        case 'Right': angleMeasurement = 90; break;
+                        case 'Obtuse': angleMeasurement = Math.floor(Math.random() * 88) + 91; break;
+                        case 'Straight': angleMeasurement = 180; break;
+                        case 'Reflex': angleMeasurement = Math.floor(Math.random() * 179) + 181; break;
+                    }
+                   
+                    const angleData = anglesData.find(a => a.type === correctAngleType);
+                   
+                    currentQuestion = {
+                        type: 'classify',
+                        answer: angleData.names[currentLang],
+                        explanation: `${angleMeasurement}° is ${angleData.description} (${d[correctAngleType.toLowerCase() + 'Example']})`
+                    };
+                   
+                    document.getElementById('visual-area').innerHTML = createAngleVisualization(angleMeasurement);
+                    document.getElementById('question-text').innerHTML = d.classifyAngle;
+                   
+                    const allAngleOptions = anglesData.map(a => a.names[currentLang]);
+                    shuffleArray(allAngleOptions);
+                   
+                    const classifyHTML = allAngleOptions.map(opt =>
+                        `<button class="option-btn" onclick="checkAnswer('${opt}')">${opt}</button>`
+                    ).join('');
+                   
+                    document.getElementById('game-content-area').innerHTML = `
+                        <div class="options-grid">
+                            ${classifyHTML}
+                        </div>
+                    `;
+                    break;
+                   
+                case 'set_angle':
+                    // Interactive angle setting
+                    const targetAngleType = anglesData[Math.floor(Math.random() * anglesData.length)];
+                    const targetAngle = targetAngleType.type === "Acute" ? Math.floor(Math.random() * 88) + 1 :
+                                      targetAngleType.type === "Right" ? 90 :
+                                      targetAngleType.type === "Obtuse" ? Math.floor(Math.random() * 88) + 91 :
+                                      targetAngleType.type === "Straight" ? 180 :
+                                      Math.floor(Math.random() * 179) + 181;
+                   
+                    currentQuestion = {
+                        type: 'set_angle',
+                        answer: targetAngle.toString(),
+                        explanation: `${targetAngle}° - ${targetAngleType.description}`
+                    };
+                   
+                    document.getElementById('visual-area').innerHTML = createAngleVisualization(0);
+                    document.getElementById('question-text').innerHTML = `${d.setAngle} ${targetAngle}°`;
+                   
+                    document.getElementById('game-content-area').innerHTML = `
+                        <div class="angle-meter">
+                            <input type="range" id="angle-slider" class="angle-slider" min="0" max="359" value="0"
+                                   oninput="updateAngleVisualization('angle-slider', 'angle-value')">
+                            <div id="angle-value" style="font-size:1.2rem; font-weight:bold; min-width:60px;">0°</div>
+                        </div>
+                        <div class="measurement-tool">
+                            <button class="option-btn" onclick="checkAngleSet()" style="margin-top:10px;">
+                                ${currentLang === 'en' ? "Check My Angle" : "ମୋର କୋଣ ଯାଞ୍ଚ କରନ୍ତୁ"}
+                            </button>
+                        </div>
+                        <div style="color:#64748b; font-size:0.9rem; margin-top:10px; text-align:center;">
+                            <i class="fas fa-arrows-rotate"></i> ${currentLang === 'en' ?
+                                "Drag the slider to rotate the angle" :
+                                "ସ୍ଲାଇଡର ଟାଣି କୋଣ ଘୂରାନ୍ତୁ"}
+                        </div>
+                    `;
+                   
+                    // Initialize slider
+                    setTimeout(() => {
+                        updateAngleVisualization('angle-slider', 'angle-value');
+                    }, 100);
+                    break;
+            }
+        }
+
+        function generateMasterQuestion() {
+            const questionTypes = ['puzzle', 'calculation', 'construction'];
+            const qType = questionTypes[Math.floor(Math.random() * questionTypes.length)];
+           
+            switch(qType) {
+                case 'puzzle':
+                    // Geometry riddle
+                    const puzzle = geometryPuzzles[Math.floor(Math.random() * geometryPuzzles.length)];
+                   
+                    currentQuestion = {
+                        type: 'puzzle',
+                        answer: puzzle.answer,
+                        explanation: currentLang === 'en' ? 'Think about the properties mentioned.' : 'ଉଲ୍ଲେଖ କରାଯାଇଥିବା ଗୁଣଗୁଡ଼ିକ ବିଷୟରେ ଚିନ୍ତା କରନ୍ତୁ।'
+                    };
+                   
+                    document.getElementById('visual-area').innerHTML = `<i class="fas fa-question-circle" style="color:#0f172a; font-size:4rem;"></i>`;
+                    document.getElementById('question-text').innerHTML = puzzle.question[currentLang];
+                   
+                    const puzzleOptions = [...puzzle.options];
+                    shuffleArray(puzzleOptions);
+                   
+                    const puzzleHTML = puzzleOptions.map(opt =>
+                        `<button class="option-btn" onclick="checkAnswer('${opt}')">${opt}</button>`
+                    ).join('');
+                   
+                    document.getElementById('game-content-area').innerHTML = `
+                        <div class="options-grid">
+                            ${puzzleHTML}
+                        </div>
+                    `;
+                    break;
+                   
+                case 'calculation':
+                    // Area or perimeter calculation
+                    const problem = measurementProblems[Math.floor(Math.random() * measurementProblems.length)];
+                   
+                    currentQuestion = {
+                        type: 'calculation',
+                        answer: problem.answer.toString(),
+                        explanation: problem.unit + ' ' + (currentLang === 'en' ?
+                            `Formula: ${problem.shape === 'square' ? 'side × side' : problem.shape === 'rectangle' ? 'length × width' : 'Special formula'}` :
+                            `ସୂତ୍ର: ${problem.shape === 'square' ? 'ବାହୁ × ବାହୁ' : problem.shape === 'rectangle' ? 'ଦୈର୍ଘ୍ୟ × ପ୍ରସ୍ଥ' : 'ବିଶେଷ ସୂତ୍ର'}`)
+                    };
+                   
+                    document.getElementById('visual-area').innerHTML = problem.shape === 'square' ? '□' :
+                                                                        problem.shape === 'rectangle' ? '▭' :
+                                                                        problem.shape === 'triangle' ? '△' : '▢';
+                    document.getElementById('question-text').innerHTML = problem.question[currentLang];
+                   
+                    // Generate answer options
+                    const correctAnswer = problem.answer;
+                    const options = [correctAnswer];
+                    while(options.length < 4) {
+                        const randomAnswer = Math.max(1, correctAnswer + Math.floor(Math.random() * 10) - 5);
+                        if(!options.includes(randomAnswer)) {
+                            options.push(randomAnswer);
+                        }
+                    }
+                    shuffleArray(options);
+                   
+                    const calculationHTML = options.map(opt =>
+                        `<button class="option-btn" onclick="checkAnswer('${opt}')">${opt} ${problem.unit}</button>`
+                    ).join('');
+                   
+                    document.getElementById('game-content-area').innerHTML = `
+                        <div class="options-grid">
+                            ${calculationHTML}
+                        </div>
+                    `;
+                    break;
+                   
+                case 'construction':
+                    // Construct shape from properties
+                    const shape = shapesData[Math.floor(Math.random() * shapesData.length)];
+                    const properties = shape.properties.sort(() => 0.5 - Math.random()).slice(0, 3);
+                   
+                    currentQuestion = {
+                        type: 'construction',
+                        answer: shape.names[currentLang],
+                        explanation: properties.join(', ')
+                    };
+                   
+                    document.getElementById('visual-area').innerHTML = `<i class="fas fa-drafting-compass" style="color:#0f172a; font-size:4rem;"></i>`;
+                    document.getElementById('question-text').innerHTML = dictionary[currentLang].constructShape;
+                   
+                    const allShapes = shapesData.map(s => s.names[currentLang]);
+                    const wrongShapes = allShapes.filter(s => s !== shape.names[currentLang])
+                        .sort(() => 0.5 - Math.random()).slice(0, 3);
+                    const shapeOptions = [shape.names[currentLang], ...wrongShapes];
+                    shuffleArray(shapeOptions);
+                   
+                    const propertiesHTML = properties.map(prop =>
+                        `<div style="background:#f1f5f9; padding:8px 12px; border-radius:6px; margin:5px; border-left:3px solid #2dd4bf;">${prop}</div>`
+                    ).join('');
+                   
+                    const constructionHTML = shapeOptions.map(opt =>
+                        `<button class="option-btn" onclick="checkAnswer('${opt}')">${opt}</button>`
+                    ).join('');
+                   
+                    document.getElementById('game-content-area').innerHTML = `
+                        <div style="margin-bottom:20px;">
+                            ${propertiesHTML}
+                        </div>
+                        <div class="options-grid">
+                            ${constructionHTML}
+                        </div>
+                    `;
+                    break;
+            }
+        }
+
+        // =============== GAME LOGIC ===============
+        function checkAnswer(userAnswer) {
+            if(isAnswered) return;
+            isAnswered = true;
+           
+            const isCorrect = userAnswer.toString() === currentQuestion.answer.toString();
+            const d = dictionary[currentLang];
+            const fbBox = document.getElementById('feedback-box');
+            const fbTitle = document.getElementById('fb-title');
+            const fbText = document.getElementById('fb-text');
+           
+            // Disable all buttons
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.style.pointerEvents = 'none';
+            });
+           
+            if(isCorrect) {
+                score += 10;
+                fbBox.className = 'feedback-box correct';
+                fbTitle.innerHTML = `${d.correct} +10 points!`;
+                fbText.innerHTML = currentQuestion.explanation;
+            } else {
+                score = Math.max(0, score - 5);
+                fbBox.className = 'feedback-box wrong';
+                fbTitle.innerHTML = `${d.wrong} -5 points`;
+                fbText.innerHTML = `${d.ansWas} ${currentQuestion.answer}. ${currentQuestion.explanation}`;
+                mistakes.push(currentQuestion.type);
+            }
+           
+            fbBox.style.display = 'block';
+            questionsAnswered++;
+           
+            // Show next button or finish button
+            const nextBtn = document.getElementById('next-btn');
+            if(questionsAnswered >= totalQuestions) {
+                nextBtn.innerHTML = `${d.finish} <i class="fas fa-trophy"></i>`;
+                nextBtn.onclick = showResults;
+            } else {
+                nextBtn.innerHTML = `${d.next} <i class="fas fa-arrow-right"></i>`;
+                nextBtn.onclick = nextQuestion;
+            }
+            nextBtn.style.display = 'block';
+           
+            updateUI();
+        }
+
+        function submitMeasurement() {
+            const input = document.getElementById('angle-input');
+            if(input && input.value) {
+                checkAnswer(input.value);
+            }
+        }
+
+        function checkAngleSet() {
+            const slider = document.getElementById('angle-slider');
+            if(slider) {
+                checkAnswer(slider.value);
+            }
+        }
+
+        function selectProperty(property, shapeName) {
+            // For property matching game
+            checkAnswer(shapeName);
+        }
+
+        function nextQuestion() {
+            generateQuestion();
+        }
+
+        function changeLevel(levelIndex) {
+            if(levelIndex > currentLevel) {
+                // Check if previous level is completed
+                if(currentLevel < levelIndex && questionsAnswered < totalQuestions) {
+                    alert(currentLang === 'en' ?
+                        "Please complete the current level first!" :
+                        "ଦୟାକରି ପ୍ରଥମେ ବର୍ତ୍ତମାନର ସ୍ତର ସମାପ୍ତ କରନ୍ତୁ!");
+                    return;
+                }
+            }
+           
+            currentLevel = levelIndex;
+            initGame();
+        }
+
+        function showResults() {
+            const d = dictionary[currentLang];
+            const percentage = Math.round((score / (totalQuestions * 10)) * 100);
+            const passed = score >= (levelConfig[currentLevel].minPass * 10);
+           
+            document.getElementById('final-percent').innerText = percentage + "%";
+            document.getElementById('report-title').innerText = passed ?
+                (currentLang === 'en' ? "Level Complete!" : "ସ୍ତର ସମାପ୍ତ!") :
+                (currentLang === 'en' ? "Level Results" : "ସ୍ତର ଫଳାଫଳ");
+           
+            let analysis = "";
+            if(passed) {
+                if(percentage >= 90) {
+                    analysis = currentLang === 'en' ?
+                        "Excellent! You're a Geometry Master! 🏆" :
+                        "ଅତି ଉତ୍ତମ! ଆପଣ ଜ୍ୟାମିତି ବିଶାରଦ! 🏆";
+                } else if(percentage >= 70) {
+                    analysis = currentLang === 'en' ?
+                        "Great job! You understand geometry concepts well. 📐" :
+                        "ବହୁତ ଭଲ! ଆପଣ ଜ୍ୟାମିତି ଧାରଣାଗୁଡ଼ିକୁ ଭଲ ଭାବରେ ବୁଝିଛନ୍ତି। 📐";
+                } else {
+                    analysis = currentLang === 'en' ?
+                        "Good effort! Keep practicing to improve. 💪" :
+                        "ଭଲ ଚେଷ୍ଟା! ଉନ୍ନତି କରିବା ପାଇଁ ଅଭ୍ୟାସ ଜାରି ରଖନ୍ତୁ। 💪";
+                }
+            } else {
+                analysis = currentLang === 'en' ?
+                    "You need more practice. Try again to unlock the next level! 📚" :
+                    "ଆପଣଙ୍କୁ ଅଧିକ ଅଭ୍ୟାସ ଆବଶ୍ୟକ। ପରବର୍ତ୍ତୀ ସ୍ତର ଖୋଲିବା ପାଇଁ ପୁନର୍ବାର ଚେଷ୍ଟା କରନ୍ତୁ! 📚";
+            }
+           
+            if(mistakes.length > 0) {
+                const commonMistake = mistakes.reduce((a, b, i, arr) =>
+                    arr.filter(v => v === a).length >= arr.filter(v => v === b).length ? a : b
+                );
+                analysis += `<br><br><b>${d.focus}</b> ${commonMistake}`;
+            }
+           
+            document.getElementById('analysis-text').innerHTML = analysis;
+           
+            const modalBtn = document.getElementById('modal-action-btn');
+            if(passed && levelConfig[currentLevel].nextLevel !== null) {
+                modalBtn.innerText = d.unlock;
+                modalBtn.onclick = function() {
+                    currentLevel = levelConfig[currentLevel].nextLevel;
+                    document.getElementById('report-modal').style.display = 'none';
+                    initGame();
+                };
+            } else {
+                modalBtn.innerText = currentLevel === 2 && passed ? d.replay : "Try Again";
+                modalBtn.onclick = function() {
+                    document.getElementById('report-modal').style.display = 'none';
+                    initGame();
+                };
+            }
+           
+            document.getElementById('report-modal').style.display = 'flex';
+        }
+
+        // =============== UTILITY FUNCTIONS ===============
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Initialize the game
+        initGame();
+    </script>
+</body>
+</html>

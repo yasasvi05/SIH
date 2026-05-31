@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 6 Maths Index - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            color: #1e293b;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #2a69ac;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text h1 span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-pic {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 180px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f7fa;
+        }
+
+        .dropdown-item i {
+            color: #3182ce;
+            width: 20px;
+        }
+
+        /* Language Options */
+        .language-options {
+            position: absolute;
+            top: 60px;
+            right: 120px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 120px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .language-options.show {
+            display: block;
+        }
+
+        .language-option {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .language-option:last-child {
+            border-bottom: none;
+        }
+
+        .language-option:hover {
+            background: #f5f7fa;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin: 30px 0;
+            color: #1a365d;
+            font-size: 2rem;
+            font-weight: 700;
+            position: relative;
+        }
+        
+        .page-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #38b2ac;
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+        
+        .language-toggle {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .toggle-btn {
+            background: #38b2ac;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .toggle-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .index-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .topic-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+        
+        .topic-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            background: linear-gradient(to right, #3182ce, #38b2ac);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .card-content {
+            padding: 25px;
+        }
+        
+        .chapter-list {
+            list-style-type: none;
+        }
+        
+        .chapter-item {
+            padding: 14px 15px;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            transition: background 0.2s ease;
+            border-radius: 8px;
+        }
+        
+        .chapter-item:hover {
+            background: #f8fafc;
+        }
+        
+        .chapter-item:last-child {
+            border-bottom: none;
+        }
+        
+        .chapter-item i {
+            margin-right: 12px;
+            color: #3182ce;
+            font-size: 1.1rem;
+            width: 25px;
+            text-align: center;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #3182ce;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        
+        .btn:hover {
+            background: #2b6cb0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-view {
+            background: #38b2ac;
+        }
+        
+        .btn-view:hover {
+            background: #2c9a94;
+        }
+        
+        .card-actions {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            border-top: 1px solid #f1f5f9;
+        }
+        
+        .game-badge {
+            background: #38b2ac;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: auto;
+            margin-right: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            color: #64748b;
+            font-size: 0.9rem;
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        /* Odia language styling */
+        .odia-text {
+            font-family: 'Kalinga', 'Nirmala UI', sans-serif;
+            display: none;
+        }
+        
+        .odia-text.active {
+            display: block;
+        }
+        
+        .english-text {
+            display: block;
+        }
+        
+        .odia-text .chapter-item {
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .index-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .card-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            nav ul {
+                gap: 15px;
+            }
+            
+            .game-badge {
+                margin-left: auto;
+                margin-right: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-calculator"></i>
+            </div>
+            <div class="logo-text">
+                <h1>STEM Learn Odisha</h1>
+                <p>Gamified Learning Platform</p>
+            </div>
+        </div>
+       
+        <nav>
+            <ul>
+                <li><a href="student-dashboard.html" id="navHome">Dashboard</a></li>
+                <li><a href="science.html" id="navScience">Science</a></li>
+                <li><a href="math.html" class="active">Mathematics</a></li>
+                <li><a href="scienceidx.html">Curriculum</a></li>
+                <li><a href="about.html" id="navAbout">About</a></li>
+                <li><a href="contact.html" id="navContact">Contact</a></li>
+            </ul>
+        </nav>
+       
+        <div class="header-controls">
+            <button class="control-btn" id="languageToggle">
+                <i class="fas fa-globe"></i>
+            </button>
+           
+            <div class="profile-container">
+                <button class="profile-btn" id="profileToggle">
+                    <img src="" alt="Profile" class="profile-pic" id="headerProfilePic">
+                    <span id="headerUserName">Student</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+               
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" class="dropdown-item" id="dropdownProfile">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownSettings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownLogout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Language Options -->
+    <div class="language-options" id="languageOptions">
+        <div class="language-option" data-lang="en">English</div>
+        <div class="language-option" data-lang="or">ଓଡ଼ିଆ</div>
+    </div>
+
+    <div class="container">
+        <h2 class="page-title" id="page-title">Class 6 Mathematics Curriculum</h2>
+        
+        <div class="language-toggle">
+            <button class="toggle-btn" id="contentLanguageToggle">
+                <i class="fas fa-language"></i> <span class="english-text">Switch to Odia</span><span class="odia-text">ଇଂରାଜୀକୁ ବଦଳାନ୍ତୁ</span>
+            </button>
+        </div>
+        
+        <div class="index-container">
+            <!-- Topic 1: Knowing numbers -->
+            <div class="topic-card">
+                <div class="card-header">
+                    <span class="english-text">1. Knowing numbers</span>
+                    <span class="odia-text">୧. ସଂଖ୍ୟା ଜାଣିବା</span>
+                </div>
+                <div class="card-content">
+                    <ul class="chapter-list english-text">
+                        <li class="chapter-item"><i class="fas fa-sort-numeric-down"></i> 1.1. Place Value System</li>
+                        <li class="chapter-item"><i class="fas fa-sort-amount-down"></i> 1.2. Comparing Numbers</li>
+                        <li class="chapter-item"><i class="fas fa-calculator"></i> 1.3. Number Operations</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> Game Link
+                            <span class="game-badge">Game 1</span>
+                        </li>
+                    </ul>
+                    <ul class="chapter-list odia-text">
+                        <li class="chapter-item"><i class="fas fa-sort-numeric-down"></i> ୧.୧. ସ୍ଥାନ ମୂଲ୍ୟ ପ୍ରଣାଳୀ</li>
+                        <li class="chapter-item"><i class="fas fa-sort-amount-down"></i> ୧.୨. ସଂଖ୍ୟା ତୁଳନା</li>
+                        <li class="chapter-item"><i class="fas fa-calculator"></i> ୧.୩. ସଂଖ୍ୟା କାର୍ଯ୍ୟ</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> ଖେଳ ଲିଙ୍କ୍
+                            <span class="game-badge">ଖେଳ ୧</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-actions">
+                    <a href="knowing-number/knowing-number.html" class="btn btn-view"><i class="fas fa-eye"></i> <span class="english-text">View Topic</span><span class="odia-text">ଟପିକ୍ ଦେଖନ୍ତୁ</span></a>
+                </div>
+            </div>
+
+            <!-- Topic 2: Further discussion of tools -->
+            <div class="topic-card">
+                <div class="card-header">
+                    <span class="english-text">2. Further discussion of tools</span>
+                    <span class="odia-text">୨. ସାଧନଗୁଡ଼ିକର ଅଧିକ ଆଲୋଚନା</span>
+                </div>
+                <div class="card-content">
+                    <ul class="chapter-list english-text">
+                        <li class="chapter-item"><i class="fas fa-tools"></i> 2.1. Mathematical Tools</li>
+                        <li class="chapter-item"><i class="fas fa-ruler-combined"></i> 2.2. Measuring Instruments</li>
+                        <li class="chapter-item"><i class="fas fa-drafting-compass"></i> 2.3. Drawing Tools</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> Game Link
+                            <span class="game-badge">Game 2</span>
+                        </li>
+                    </ul>
+                    <ul class="chapter-list odia-text">
+                        <li class="chapter-item"><i class="fas fa-tools"></i> ୨.୧. ଗଣିତ ସାଧନ</li>
+                        <li class="chapter-item"><i class="fas fa-ruler-combined"></i> ୨.୨. ମାପନ ଯନ୍ତ୍ର</li>
+                        <li class="chapter-item"><i class="fas fa-drafting-compass"></i> ୨.୩. ଚିତ୍ରଣ ସାଧନ</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> ଖେଳ ଲିଙ୍କ୍
+                            <span class="game-badge">ଖେଳ ୨</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-actions">
+                    <a href="further-disscusion/further-disscusion.html" class="btn btn-view"><i class="fas fa-eye"></i> <span class="english-text">View Topic</span><span class="odia-text">ଟପିକ୍ ଦେଖନ୍ତୁ</span></a>
+                </div>
+            </div>
+
+            <!-- Topic 3: Basic concepts in geometry -->
+            <div class="topic-card">
+                <div class="card-header">
+                    <span class="english-text">3. Basic concepts in geometry</span>
+                    <span class="odia-text">୩. ଜ୍ୟାମିତିରେ ମୌଳିକ ଧାରଣା</span>
+                </div>
+                <div class="card-content">
+                    <ul class="chapter-list english-text">
+                        <li class="chapter-item"><i class="fas fa-draw-polygon"></i> 3.1. Points, Lines, Planes</li>
+                        <li class="chapter-item"><i class="fas fa-angle-right"></i> 3.2. Angles and Types</li>
+                        <li class="chapter-item"><i class="fas fa-shapes"></i> 3.3. Basic Shapes</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> Game Link
+                            <span class="game-badge">Game 3</span>
+                        </li>
+                    </ul>
+                    <ul class="chapter-list odia-text">
+                        <li class="chapter-item"><i class="fas fa-draw-polygon"></i> ୩.୧. ବିନ୍ଦୁ, ରେଖା, ତଳ</li>
+                        <li class="chapter-item"><i class="fas fa-angle-right"></i> ୩.୨. କୋଣ ଏବଂ ପ୍ରକାର</li>
+                        <li class="chapter-item"><i class="fas fa-shapes"></i> ୩.୩. ମୌଳିକ ଆକୃତି</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> ଖେଳ ଲିଙ୍କ୍
+                            <span class="game-badge">ଖେଳ ୩</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-actions">
+                    <a href="basic-geometry/basic-geometry.html" class="btn btn-view"><i class="fas fa-eye"></i> <span class="english-text">View Topic</span><span class="odia-text">ଟପିକ୍ ଦେଖନ୍ତୁ</span></a>
+                </div>
+            </div>
+
+            <!-- Topic 4: Natural numbers -->
+            <div class="topic-card">
+                <div class="card-header">
+                    <span class="english-text">4. Natural numbers</span>
+                    <span class="odia-text">୪. ପ୍ରାକୃତିକ ସଂଖ୍ୟା</span>
+                </div>
+                <div class="card-content">
+                    <ul class="chapter-list english-text">
+                        <li class="chapter-item"><i class="fas fa-leaf"></i> 4.1. Properties of Natural Numbers</li>
+                        <li class="chapter-item"><i class="fas fa-sort-numeric-up"></i> 4.2. Operations</li>
+                        <li class="chapter-item"><i class="fas fa-infinity"></i> 4.3. Patterns</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> Game Link
+                            <span class="game-badge">Game 4</span>
+                        </li>
+                    </ul>
+                    <ul class="chapter-list odia-text">
+                        <li class="chapter-item"><i class="fas fa-leaf"></i> ୪.୧. ପ୍ରାକୃତିକ ସଂଖ୍ୟାର ଗୁଣଧର୍ମ</li>
+                        <li class="chapter-item"><i class="fas fa-sort-numeric-up"></i> ୪.୨. କାର୍ଯ୍ୟ</li>
+                        <li class="chapter-item"><i class="fas fa-infinity"></i> ୪.୩. ପ୍ୟାଟର୍ନ</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> ଖେଳ ଲିଙ୍କ୍
+                            <span class="game-badge">ଖେଳ ୪</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-actions">
+                    <a href="natural-number/natural-number.html" class="btn btn-view"><i class="fas fa-eye"></i> <span class="english-text">View Topic</span><span class="odia-text">ଟପିକ୍ ଦେଖନ୍ତୁ</span></a>
+                </div>
+            </div>
+
+            <!-- Topic 5: Fractions -->
+            <div class="topic-card">
+                <div class="card-header">
+                    <span class="english-text">5. Fractions</span>
+                    <span class="odia-text">୫. ଭଗ୍ନାଂଶ</span>
+                </div>
+                <div class="card-content">
+                    <ul class="chapter-list english-text">
+                        <li class="chapter-item"><i class="fas fa-divide"></i> 5.1. Understanding Fractions</li>
+                        <li class="chapter-item"><i class="fas fa-equals"></i> 5.2. Equivalent Fractions</li>
+                        <li class="chapter-item"><i class="fas fa-plus"></i> 5.3. Operations</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> Game Link
+                            <span class="game-badge">Game 5</span>
+                        </li>
+                    </ul>
+                    <ul class="chapter-list odia-text">
+                        <li class="chapter-item"><i class="fas fa-divide"></i> ୫.୧. ଭଗ୍ନାଂଶ ବୁଝିବା</li>
+                        <li class="chapter-item"><i class="fas fa-equals"></i> ୫.୨. ସମାନ ଭଗ୍ନାଂଶ</li>
+                        <li class="chapter-item"><i class="fas fa-plus"></i> ୫.୩. କାର୍ଯ୍ୟ</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> ଖେଳ ଲିଙ୍କ୍
+                            <span class="game-badge">ଖେଳ ୫</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-actions">
+                    <a href="Fractions/fractions.html" class="btn btn-view"><i class="fas fa-eye"></i> <span class="english-text">View Topic</span><span class="odia-text">ଟପିକ୍ ଦେଖନ୍ତୁ</span></a>
+                </div>
+            </div>
+
+            <!-- Topic 6: Decimal number -->
+            <div class="topic-card">
+                <div class="card-header">
+                    <span class="english-text">6. Decimal number</span>
+                    <span class="odia-text">୬. ଦଶମିକ ସଂଖ୍ୟା</span>
+                </div>
+                <div class="card-content">
+                    <ul class="chapter-list english-text">
+                        <li class="chapter-item"><i class="fas fa-decimal"></i> 6.1. Place Value in Decimals</li>
+                        <li class="chapter-item"><i class="fas fa-calculator"></i> 6.2. Decimal Operations</li>
+                        <li class="chapter-item"><i class="fas fa-money-bill"></i> 6.3. Real-life Applications</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> Game Link
+                            <span class="game-badge">Game 6</span>
+                        </li>
+                    </ul>
+                    <ul class="chapter-list odia-text">
+                        <li class="chapter-item"><i class="fas fa-decimal"></i> ୬.୧. ଦଶମିକରେ ସ୍ଥାନ ମୂଲ୍ୟ</li>
+                        <li class="chapter-item"><i class="fas fa-calculator"></i> ୬.୨. ଦଶମିକ କାର୍ଯ୍ୟ</li>
+                        <li class="chapter-item"><i class="fas fa-money-bill"></i> ୬.୩. ବାସ୍ତବ ଜୀବନର ପ୍ରୟୋଗ</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> ଖେଳ ଲିଙ୍କ୍
+                            <span class="game-badge">ଖେଳ ୬</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-actions">
+                    <a href="decimal-number/decimal-numer.html" class="btn btn-view"><i class="fas fa-eye"></i> <span class="english-text">View Topic</span><span class="odia-text">ଟପିକ୍ ଦେଖନ୍ତୁ</span></a>
+                </div>
+            </div>
+
+            <!-- Topic 7: Business Mathematics -->
+            <div class="topic-card">
+                <div class="card-header">
+                    <span class="english-text">7. Business Mathematics</span>
+                    <span class="odia-text">୭. ବ୍ୟବସାୟ ଗଣିତ</span>
+                </div>
+                <div class="card-content">
+                    <ul class="chapter-list english-text">
+                        <li class="chapter-item"><i class="fas fa-chart-line"></i> 7.1. Profit and Loss</li>
+                        <li class="chapter-item"><i class="fas fa-percentage"></i> 7.2. Interest Calculation</li>
+                        <li class="chapter-item"><i class="fas fa-balance-scale"></i> 7.3. Commercial Transactions</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> Game Link
+                            <span class="game-badge">Game 7</span>
+                        </li>
+                    </ul>
+                    <ul class="chapter-list odia-text">
+                        <li class="chapter-item"><i class="fas fa-chart-line"></i> ୭.୧. ଲାଭ ଏବଂ କ୍ଷତି</li>
+                        <li class="chapter-item"><i class="fas fa-percentage"></i> ୭.୨. ସୁଧ ଗଣନା</li>
+                        <li class="chapter-item"><i class="fas fa-balance-scale"></i> ୭.୩. ବ୍ୟବସାୟିକ କାରବାର</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> ଖେଳ ଲିଙ୍କ୍
+                            <span class="game-badge">ଖେଳ ୭</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-actions">
+                    <a href="#" class="btn btn-view"><i class="fas fa-eye"></i> <span class="english-text">View Topic</span><span class="odia-text">ଟପିକ୍ ଦେଖନ୍ତୁ</span></a>
+                </div>
+            </div>
+
+            <!-- Topic 8: Integer -->
+            <div class="topic-card">
+                <div class="card-header">
+                    <span class="english-text">8. Integer</span>
+                    <span class="odia-text">୮. ପୂର୍ଣ୍ଣସଂଖ୍ୟା</span>
+                </div>
+                <div class="card-content">
+                    <ul class="chapter-list english-text">
+                        <li class="chapter-item"><i class="fas fa-plus-minus"></i> 8.1. Positive and Negative Numbers</li>
+                        <li class="chapter-item"><i class="fas fa-number-line"></i> 8.2. Number Line Representation</li>
+                        <li class="chapter-item"><i class="fas fa-calculator"></i> 8.3. Integer Operations</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> Game Link
+                            <span class="game-badge">Game 8</span>
+                        </li>
+                    </ul>
+                    <ul class="chapter-list odia-text">
+                        <li class="chapter-item"><i class="fas fa-plus-minus"></i> ୮.୧. ଧନାତ୍ମକ ଏବଂ ଋଣାତ୍ମକ ସଂଖ୍ୟା</li>
+                        <li class="chapter-item"><i class="fas fa-number-line"></i> ୮.୨. ସଂଖ୍ୟା ରେଖା ପ୍ରତିନିଧିତ୍ୱ</li>
+                        <li class="chapter-item"><i class="fas fa-calculator"></i> ୮.୩. ପୂର୍ଣ୍ଣସଂଖ୍ୟା କାର୍ଯ୍ୟ</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> ଖେଳ ଲିଙ୍କ୍
+                            <span class="game-badge">ଖେଳ ୮</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-actions">
+                    <a href="#" class="btn btn-view"><i class="fas fa-eye"></i> <span class="english-text">View Topic</span><span class="odia-text">ଟପିକ୍ ଦେଖନ୍ତୁ</span></a>
+                </div>
+            </div>
+
+            <!-- Topic 9: Geometric shapes on a flat surface -->
+            <div class="topic-card">
+                <div class="card-header">
+                    <span class="english-text">9. Geometric shapes on a flat surface</span>
+                    <span class="odia-text">୯. ସମତଳ ଉପରେ ଜ୍ୟାମିତିକ ଆକୃତି</span>
+                </div>
+                <div class="card-content">
+                    <ul class="chapter-list english-text">
+                        <li class="chapter-item"><i class="fas fa-square"></i> 9.1. 2D Shapes</li>
+                        <li class="chapter-item"><i class="fas fa-draw-polygon"></i> 9.2. Polygons</li>
+                        <li class="chapter-item"><i class="fas fa-circle"></i> 9.3. Circles</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> Game Link
+                            <span class="game-badge">Game 9</span>
+                        </li>
+                    </ul>
+                    <ul class="chapter-list odia-text">
+                        <li class="chapter-item"><i class="fas fa-square"></i> ୯.୧. ଦ୍ୱିମାନ ଆକୃତି</li>
+                        <li class="chapter-item"><i class="fas fa-draw-polygon"></i> ୯.୨. ବହୁଭୁଜ</li>
+                        <li class="chapter-item"><i class="fas fa-circle"></i> ୯.୩. ବୃତ୍ତ</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> ଖେଳ ଲିଙ୍କ୍
+                            <span class="game-badge">ଖେଳ ୯</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-actions">
+                    <a href="Geo-shapes/geometic.html" class="btn btn-view"><i class="fas fa-eye"></i> <span class="english-text">View Topic</span><span class="odia-text">ଟପିକ୍ ଦେଖନ୍ତୁ</span></a>
+                </div>
+            </div>
+
+            <!-- Topic 10: Intro to algebra -->
+            <div class="topic-card">
+                <div class="card-header">
+                    <span class="english-text">10. Intro to algebra</span>
+                    <span class="odia-text">୧୦. ବୀଜଗଣିତର ପରିଚୟ</span>
+                </div>
+                <div class="card-content">
+                    <ul class="chapter-list english-text">
+                        <li class="chapter-item"><i class="fas fa-variable"></i> 10.1. Variables and Expressions</li>
+                        <li class="chapter-item"><i class="fas fa-equals"></i> 10.2. Simple Equations</li>
+                        <li class="chapter-item"><i class="fas fa-puzzle-piece"></i> 10.3. Algebraic Patterns</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> Game Link
+                            <span class="game-badge">Game 10</span>
+                        </li>
+                    </ul>
+                    <ul class="chapter-list odia-text">
+                        <li class="chapter-item"><i class="fas fa-variable"></i> ୧୦.୧. ଚଳ ଏବଂ ପ୍ରକାଶ</li>
+                        <li class="chapter-item"><i class="fas fa-equals"></i> ୧୦.୨. ସରଳ ସମୀକରଣ</li>
+                        <li class="chapter-item"><i class="fas fa-puzzle-piece"></i> ୧୦.୩. ବୀଜଗାଣିତିକ ପ୍ୟାଟର୍ନ</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> ଖେଳ ଲିଙ୍କ୍
+                            <span class="game-badge">ଖେଳ ୧୦</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-actions">
+                    <a href="#" class="btn btn-view"><i class="fas fa-eye"></i> <span class="english-text">View Topic</span><span class="odia-text">ଟପିକ୍ ଦେଖନ୍ତୁ</span></a>
+                </div>
+            </div>
+
+            <!-- Topic 11: Designing -->
+            <div class="topic-card">
+                <div class="card-header">
+                    <span class="english-text">11. Designing</span>
+                    <span class="odia-text">୧୧. ଡିଜାଇନିଂ</span>
+                </div>
+                <div class="card-content">
+                    <ul class="chapter-list english-text">
+                        <li class="chapter-item"><i class="fas fa-pencil-ruler"></i> 11.1. Pattern Creation</li>
+                        <li class="chapter-item"><i class="fas fa-shapes"></i> 11.2. Geometric Designs</li>
+                        <li class="chapter-item"><i class="fas fa-palette"></i> 11.3. Creative Mathematics</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> Game Link
+                            <span class="game-badge">Game 11</span>
+                        </li>
+                    </ul>
+                    <ul class="chapter-list odia-text">
+                        <li class="chapter-item"><i class="fas fa-pencil-ruler"></i> ୧୧.୧. ପ୍ୟାଟର୍ନ ସୃଷ୍ଟି</li>
+                        <li class="chapter-item"><i class="fas fa-shapes"></i> ୧୧.୨. ଜ୍ୟାମିତିକ ଡିଜାଇନ୍</li>
+                        <li class="chapter-item"><i class="fas fa-palette"></i> ୧୧.୩. ସୃଜନଶୀଳ ଗଣିତ</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> ଖେଳ ଲିଙ୍କ୍
+                            <span class="game-badge">ଖେଳ ୧୧</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-actions">
+                    <a href="weighing/weighing.html" class="btn btn-view"><i class="fas fa-eye"></i> <span class="english-text">View Topic</span><span class="odia-text">ଟପିକ୍ ଦେଖନ୍ତୁ</span></a>
+                </div>
+            </div>
+
+            <!-- Topic 12: Data management & structure -->
+            <div class="topic-card">
+                <div class="card-header">
+                    <span class="english-text">12. Data management & structure</span>
+                    <span class="odia-text">୧୨. ତଥ୍ୟ ପରିଚାଳନା ଏବଂ ଗଠନ</span>
+                </div>
+                <div class="card-content">
+                    <ul class="chapter-list english-text">
+                        <li class="chapter-item"><i class="fas fa-chart-bar"></i> 12.1. Data Collection</li>
+                        <li class="chapter-item"><i class="fas fa-chart-pie"></i> 12.2. Data Representation</li>
+                        <li class="chapter-item"><i class="fas fa-table"></i> 12.3. Data Organization</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> Game Link
+                            <span class="game-badge">Game 12</span>
+                        </li>
+                    </ul>
+                    <ul class="chapter-list odia-text">
+                        <li class="chapter-item"><i class="fas fa-chart-bar"></i> ୧୨.୧. ତଥ୍ୟ ସଂଗ୍ରହ</li>
+                        <li class="chapter-item"><i class="fas fa-chart-pie"></i> ୧୨.୨. ତଥ୍ୟ ପ୍ରତିନିଧିତ୍ୱ</li>
+                        <li class="chapter-item"><i class="fas fa-table"></i> ୧୨.୩. ତଥ୍ୟ ସଂଗଠନ</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> ଖେଳ ଲିଙ୍କ୍
+                            <span class="game-badge">ଖେଳ ୧୨</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-actions">
+                    <a href="data-manage/data-manage.html" class="btn btn-view"><i class="fas fa-eye"></i> <span class="english-text">View Topic</span><span class="odia-text">ଟପିକ୍ ଦେଖନ୍ତୁ</span></a>
+                </div>
+            </div>
+
+            <!-- Topic 13: Geometric drawing -->
+            <div class="topic-card">
+                <div class="card-header">
+                    <span class="english-text">13. Geometric drawing</span>
+                    <span class="odia-text">୧୩. ଜ୍ୟାମିତିକ ଚିତ୍ରଣ</span>
+                </div>
+                <div class="card-content">
+                    <ul class="chapter-list english-text">
+                        <li class="chapter-item"><i class="fas fa-drafting-compass"></i> 13.1. Using Geometric Tools</li>
+                        <li class="chapter-item"><i class="fas fa-ruler"></i> 13.2. Construction of Shapes</li>
+                        <li class="chapter-item"><i class="fas fa-draw-polygon"></i> 13.3. Accurate Drawings</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> Game Link
+                            <span class="game-badge">Game 13</span>
+                        </li>
+                    </ul>
+                    <ul class="chapter-list odia-text">
+                        <li class="chapter-item"><i class="fas fa-drafting-compass"></i> ୧୩.୧. ଜ୍ୟାମିତିକ ସାଧନ ବ୍ୟବହାର</li>
+                        <li class="chapter-item"><i class="fas fa-ruler"></i> ୧୩.୨. ଆକୃତି ନିର୍ମାଣ</li>
+                        <li class="chapter-item"><i class="fas fa-draw-polygon"></i> ୧୩.୩. ସଠିକ୍ ଚିତ୍ରଣ</li>
+                        <li class="chapter-item">
+                            <i class="fas fa-gamepad"></i> ଖେଳ ଲିଙ୍କ୍
+                            <span class="game-badge">ଖେଳ ୧୩</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-actions">
+                    <a href="geo-drawings/geo-drawings.html" class="btn btn-view"><i class="fas fa-eye"></i> <span class="english-text">View Topic</span><span class="odia-text">ଟପିକ୍ ଦେଖନ୍ତୁ</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 STEM Learn Odisha - Gamified Learning Platform</p>
+            <p>Designed for Class 6 Mathematics Curriculum</p>
+        </div>
+    </footer>
+
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+           
+            if (!user) {
+                // Redirect to login if not authenticated
+                window.location.href = 'student-login.html';
+                return;
+            }
+           
+            // Load user data
+            loadUserData(user);
+            
+            // Initialize the page
+            initPage();
+        });
+
+        // Load user data into the page
+        function loadUserData(user) {
+            document.getElementById('headerUserName').textContent = user.fullName;
+            document.getElementById('headerProfilePic').src = user.profilePicture ? `uploads/${user.profilePicture}` : 'default-profile.png';
+        }
+
+        function initPage() {
+            // Initialize content language toggle
+            const contentToggleButton = document.getElementById('contentLanguageToggle');
+            const englishElements = document.querySelectorAll('.english-text');
+            const odiaElements = document.querySelectorAll('.odia-text');
+            const toggleEnglish = contentToggleButton.querySelector('.english-text');
+            const toggleOdia = contentToggleButton.querySelector('.odia-text');
+            
+            let isOdia = false;
+            
+            // Initially hide Odia elements
+            englishElements.forEach(el => el.style.display = 'block');
+            odiaElements.forEach(el => el.style.display = 'none');
+            toggleEnglish.style.display = 'inline';
+            toggleOdia.style.display = 'none';
+            
+            contentToggleButton.addEventListener('click', function() {
+                isOdia = !isOdia;
+                
+                if (isOdia) {
+                    englishElements.forEach(el => el.style.display = 'none');
+                    odiaElements.forEach(el => el.style.display = 'block');
+                    toggleEnglish.style.display = 'none';
+                    toggleOdia.style.display = 'inline';
+                    document.body.classList.add('odia-text');
+                } else {
+                    englishElements.forEach(el => el.style.display = 'block');
+                    odiaElements.forEach(el => el.style.display = 'none');
+                    toggleEnglish.style.display = 'inline';
+                    toggleOdia.style.display = 'none';
+                    document.body.classList.remove('odia-text');
+                }
+            });
+
+            // Dashboard integration event listeners
+            const profileToggle = document.getElementById('profileToggle');
+            const profileDropdown = document.getElementById('profileDropdown');
+            const languageToggle = document.getElementById('languageToggle');
+            const languageOptions = document.getElementById('languageOptions');
+            const dropdownProfile = document.getElementById('dropdownProfile');
+            const dropdownSettings = document.getElementById('dropdownSettings');
+            const dropdownLogout = document.getElementById('dropdownLogout');
+            const navHome = document.getElementById('navHome');
+            const navScience = document.getElementById('navScience');
+            const navMath = document.querySelector('a[href="math.html"]');
+            const navCurriculum = document.querySelector('a[href="scienceidx.html"]');
+            const navAbout = document.getElementById('navAbout');
+            const navContact = document.getElementById('navContact');
+
+            // Profile dropdown toggle
+            profileToggle.addEventListener('click', function() {
+                profileDropdown.classList.toggle('show');
+            });
+
+            // Language toggle
+            languageToggle.addEventListener('click', function() {
+                languageOptions.classList.toggle('show');
+            });
+
+            // Language selection
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    switchLanguage(lang);
+                    languageOptions.classList.remove('show');
+                });
+            });
+
+            // Navigation between pages
+            dropdownProfile.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#profile';
+            });
+
+            dropdownSettings.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#settings';
+            });
+
+            dropdownLogout.addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('user');
+                window.location.href = 'student-login.html';
+            });
+
+            // Navigation menu items
+            navHome.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html';
+            });
+
+            navScience.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'science.html';
+            });
+
+            navMath.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Already on math page
+            });
+
+            navCurriculum.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'scienceidx.html';
+            });
+
+            navAbout.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('About page would open here');
+            });
+
+            navContact.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Contact page would open here');
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#languageToggle') && !e.target.closest('#languageOptions')) {
+                    languageOptions.classList.remove('show');
+                }
+               
+                if (!e.target.closest('#profileToggle') && !e.target.closest('#profileDropdown')) {
+                    profileDropdown.classList.remove('show');
+                }
+            });
+        }
+
+        // Language translations
+        function switchLanguage(lang) {
+            const translations = {
+                en: {
+                    'navHome': 'Dashboard',
+                    'navScience': 'Science',
+                    'navAbout': 'About',
+                    'navContact': 'Contact',
+                    'dropdownProfile': 'Profile',
+                    'dropdownSettings': 'Settings',
+                    'dropdownLogout': 'Logout',
+                    'page-title': 'Class 6 Mathematics Curriculum'
+                },
+                or: {
+                    'navHome': 'ଡ୍ୟାସବୋର୍ଡ',
+                    'navScience': 'ବିଜ୍ଞାନ',
+                    'navAbout': 'ଆମ ବିଷୟରେ',
+                    'navContact': 'ଯୋଗାଯୋଗ',
+                    'dropdownProfile': 'ପ୍ରୋଫାଇଲ୍',
+                    'dropdownSettings': 'ସେଟିଂସ୍',
+                    'dropdownLogout': 'ଲଗଆଉଟ୍',
+                    'page-title': 'କ୍ଲାସ ୬ ଗଣିତ ପାଠ୍ୟକ୍ରମ'
+                }
+            };
+
+            const map = translations[lang] || translations.en;
+            
+            // Update navigation and dropdown text
+            if (map['navHome']) document.getElementById('navHome').textContent = map['navHome'];
+            if (map['navScience']) document.getElementById('navScience').textContent = map['navScience'];
+            if (map['navAbout']) document.getElementById('navAbout').textContent = map['navAbout'];
+            if (map['navContact']) document.getElementById('navContact').textContent = map['navContact'];
+            if (map['dropdownProfile']) document.getElementById('dropdownProfile').querySelector('span').textContent = map['dropdownProfile'];
+            if (map['dropdownSettings']) document.getElementById('dropdownSettings').querySelector('span').textContent = map['dropdownSettings'];
+            if (map['dropdownLogout']) document.getElementById('dropdownLogout').querySelector('span').textContent = map['dropdownLogout'];
+            if (map['page-title']) document.getElementById('page-title').textContent = map['page-title'];
+        }
+    </script>
+</body>
+</html>

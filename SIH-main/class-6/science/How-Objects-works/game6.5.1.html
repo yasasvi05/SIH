@@ -1,0 +1,3533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Circuit Builder - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin:0; padding:0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: #f0f7ff; color:#1e293b; line-height:1.6; overflow-x:hidden; }
+        .container { width:100%; max-width:1400px; margin:0 auto; padding:0 20px; }
+
+        /* Language Switcher */
+        .language-switcher { position:absolute; top:20px; right:20px; background: rgba(255,255,255,0.15); border-radius:25px; padding:8px; backdrop-filter: blur(6px); z-index:1000; display:flex; gap:6px; }
+        .lang-btn { padding:8px 12px; border:none; background:transparent; border-radius:16px; cursor:pointer; font-size:0.9rem; font-weight:600; color:white; }
+        .lang-btn.active { background: rgba(255,255,255,0.25); color:white; }
+        
+        /* header */
+        header { background: linear-gradient(135deg,#0e2a47 0%,#1a365d 100%); color:white; padding:15px 0; position:sticky; top:0; z-index:100; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+        .header-content { display:flex; justify-content:space-between; align-items:center; position:relative; }
+        .logo { display:flex; gap:12px; align-items:center; }
+        .logo-icon { font-size:2.2rem; background:white; color:#2a69ac; width:55px; height:55px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+        .logo-text { font-size:1.6rem; font-weight:700; }
+        .logo-text span { color:#38b2ac; font-weight:800; }
+        nav ul { display:flex; gap:18px; list-style:none; }
+        nav a { color:white; text-decoration:none; font-weight:500; padding:8px 12px; border-radius:8px; }
+        
+        /* Instructions Modal */
+        .instructions-modal { 
+            display: flex; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0, 0, 0, 0.85); 
+            z-index: 2000; 
+            align-items: center; 
+            justify-content: center; 
+        }
+        .instructions-content { 
+            background: white; 
+            border-radius: 20px; 
+            width: 90%; 
+            max-width: 700px; 
+            padding: 30px; 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); 
+            position: relative; 
+            text-align: center; 
+        }
+        .instructions-title { font-size: 2rem; margin-bottom: 20px; color: #1a365d; font-weight: 700; }
+        .instructions-text { color: #64748b; margin-bottom: 25px; line-height: 1.6; text-align: left; font-size: 1.1rem; }
+        .instructions-list { margin-left: 20px; margin-bottom: 25px; }
+        .instructions-list li { margin-bottom: 10px; }
+        .start-game-btn { 
+            padding: 15px 40px; 
+            background: linear-gradient(135deg, #38b2ac 0%, #2c9a94 100%); 
+            color: white; 
+            border: none; 
+            border-radius: 10px; 
+            font-size: 1.2rem; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            margin-top: 20px; 
+        }
+        .start-game-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(56, 178, 172, 0.3); }
+
+        /* Demo Overlay */
+        .demo-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 3000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .demo-step {
+            background: white;
+            color: #1a365d;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 600px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: none;
+        }
+
+        .demo-step.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .demo-step h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #2a69ac;
+        }
+
+        .demo-step p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: #4a5568;
+        }
+
+        .demo-step-image {
+            width: 100%;
+            height: 200px;
+            background: #f7fafc;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            border: 2px dashed #4299e1;
+        }
+
+        .demo-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .demo-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+
+        .demo-next {
+            background: linear-gradient(45deg, #38b2ac, #2c9a94);
+            color: white;
+        }
+
+        .demo-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(56, 178, 172, 0.4);
+        }
+
+        .demo-skip {
+            background: transparent;
+            color: #718096;
+            border: 2px solid #718096;
+        }
+
+        .demo-skip:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .demo-start-game {
+            background: linear-gradient(45deg, #d69e2e, #b7791f);
+            color: white;
+            min-width: 180px;
+        }
+
+        .demo-start-game:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(214, 158, 46, 0.4);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Post-Demo Message */
+        .post-demo-message {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 50px auto;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .post-demo-message.active {
+            display: block;
+        }
+
+        .post-demo-icon {
+            font-size: 5rem;
+            color: #38b2ac;
+            margin-bottom: 20px;
+        }
+
+        .post-demo-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        /* game header */
+        .game-header { 
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%); 
+            color:white; 
+            padding:40px 0; 
+            text-align:center; 
+        }
+        .game-header h1 { font-size:2.5rem; margin-bottom:12px; font-weight:700; text-shadow:0 2px 4px rgba(0,0,0,0.2); }
+        .game-header p { font-size:1.1rem; max-width:800px; margin:0 auto; font-weight:300; opacity:0.95; }
+
+        /* game stats (second UI) */
+        .game-stats { display:flex; justify-content:space-between; align-items:center; background:white; padding:15px 25px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.08); margin:20px auto; max-width:1200px; gap:12px; flex-wrap:wrap; }
+        .timer, .score, .hints { display:flex; align-items:center; gap:10px; font-size:1.1rem; font-weight:600; color:#1a365d; }
+        .timer i { color:#e53e3e; }
+        .score i { color:#38a169; }
+        .hints i { color:#d69e2e; }
+        .progress-container { flex:1; max-width:300px; height:12px; background:#e2e8f0; border-radius:10px; overflow:hidden; }
+        .progress-bar { height:100%; background:#3182ce; border-radius:10px; transition: width 0.5s ease; }
+
+        /* game area */
+        .game-area { 
+            padding:30px 0 50px; 
+            background-color: #f0f7ff;
+        }
+        .game-container { display:grid; grid-template-columns:300px 1fr; gap:30px; max-width:1200px; margin:0 auto 40px auto; height:600px; }
+        
+        /* Components Library */
+        .components-zone { 
+            background: rgba(255,255,255,0.95); 
+            border-radius:25px; 
+            padding:25px; 
+            box-shadow:0 10px 30px rgba(0,0,0,0.08); 
+            display:flex; 
+            flex-direction:column; 
+            border:3px solid #cbd5e0; 
+            overflow-y: auto;
+        }
+        
+        .zone-header { 
+            display:flex; 
+            align-items:center; 
+            gap:15px; 
+            margin-bottom:20px; 
+        }
+        
+        .zone-icon { 
+            width:50px; 
+            height:50px; 
+            border-radius:50%; 
+            display:flex; 
+            align-items:center; 
+            justify-content:center; 
+            font-size:1.4rem; 
+        }
+        
+        .components-icon { 
+            background: linear-gradient(45deg,#48bb78,#38a169); 
+            color:white; 
+        }
+        
+        .zone-title { 
+            font-size:1.3rem; 
+            font-weight:700; 
+            color:#1a365d; 
+        }
+
+        /* Circuit Board Zone */
+        .circuit-zone { 
+            background: rgba(255,255,255,0.95); 
+            border-radius:25px; 
+            padding:25px; 
+            box-shadow:0 10px 30px rgba(0,0,0,0.08); 
+            display:flex; 
+            flex-direction:column; 
+            border:3px solid #cbd5e0;
+            overflow: hidden;
+        }
+
+        .circuit-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .circuit-icon { 
+            background: linear-gradient(45deg,#4facfe,#00f2fe); 
+            color:white; 
+        }
+
+        /* Circuit Board - Large with grid */
+        .circuit-board {
+            width: 100%;
+            height: 400px;
+            background: 
+                repeating-linear-gradient(0deg, rgba(66, 153, 225, 0.05) 0px, rgba(66, 153, 225, 0.05) 1px, transparent 1px, transparent 40px),
+                repeating-linear-gradient(90deg, rgba(66, 153, 225, 0.05) 0px, rgba(66, 153, 225, 0.05) 1px, transparent 1px, transparent 40px);
+            border-radius: 15px;
+            position: relative;
+            overflow: auto;
+            border: 2px solid #cbd5e0;
+            flex: 1;
+            min-height: 400px;
+        }
+
+        /* Circuit Component */
+        .circuit-component {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: move;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 10;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            user-select: none;
+        }
+
+        .circuit-component:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-color: #4299e1;
+            z-index: 100;
+        }
+
+        .circuit-component.dragging {
+            opacity: 0.7;
+            transform: scale(1.05) rotate(5deg);
+            z-index: 1000;
+        }
+
+        .circuit-component.powered {
+            animation: pulseGlow 2s infinite;
+            border-color: #38a169;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(56, 161, 105, 0.5); }
+            50% { box-shadow: 0 0 25px rgba(56, 161, 105, 0.8); }
+        }
+
+        .circuit-component.placed {
+            animation: placeComponent 0.5s ease;
+        }
+
+        @keyframes placeComponent {
+            0% { transform: scale(0) rotate(180deg); opacity: 0; }
+            70% { transform: scale(1.1) rotate(-10deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .component-icon {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+        }
+
+        .component-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #1a365d;
+            text-align: center;
+            padding: 0 5px;
+        }
+
+        /* Component Terminals */
+        .terminal {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #718096;
+            border: 3px solid white;
+            cursor: pointer;
+            z-index: 20;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .terminal:hover {
+            transform: scale(1.5);
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        .terminal.positive {
+            background: #e53e3e;
+        }
+
+        .terminal.negative {
+            background: #4299e1;
+        }
+
+        .terminal.neutral {
+            background: #718096;
+        }
+
+        .terminal.selected {
+            background: #38a169;
+            animation: terminalPulse 1s infinite;
+            box-shadow: 0 0 0 5px rgba(56, 161, 105, 0.3);
+        }
+
+        .terminal.connected {
+            background: #38a169;
+            box-shadow: 0 0 10px #38a169;
+        }
+
+        /* Wires - Visible connections */
+        .wire {
+            position: absolute;
+            background: #a0aec0;
+            height: 6px;
+            border-radius: 3px;
+            transform-origin: 0 0;
+            z-index: 5;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .wire.connected {
+            background: #718096;
+        }
+
+        .wire.powered {
+            background: linear-gradient(90deg, #e53e3e, #ed8936, #38a169);
+            background-size: 200% 100%;
+            animation: currentFlow 1s linear infinite;
+            box-shadow: 0 0 15px rgba(56, 161, 105, 0.7);
+            height: 8px;
+        }
+
+        /* Wire Creation Helper */
+        .wire-helper {
+            position: absolute;
+            background: #d69e2e;
+            height: 6px;
+            border-radius: 3px;
+            transform-origin: 0 0;
+            z-index: 15;
+            pointer-events: none;
+            display: none;
+        }
+
+        .wire-helper.visible {
+            display: block;
+        }
+
+        @keyframes currentFlow {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 0%; }
+        }
+
+        /* Current Flow Particles */
+        .current-particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, #38a169 40%, transparent 70%);
+            border-radius: 50%;
+            box-shadow: 0 0 10px #38a169;
+            z-index: 6;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        /* Components Library */
+        .components-library {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .library-item {
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(145deg,#ffffff,#f0f4f8);
+            border-radius:16px;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            cursor:grab;
+            box-shadow:0 8px 20px rgba(0,0,0,0.06);
+            transition:all 0.25s ease;
+            user-select:none;
+            border:2px solid rgba(66, 153, 225, 0.1);
+            padding: 10px;
+        }
+
+        .library-item:hover {
+            transform:translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+            border-color: rgba(66, 153, 225, 0.3);
+        }
+
+        .library-item.dragging {
+            opacity:0.7;
+            transform:scale(1.05) rotate(8deg);
+            z-index:1200;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .library-icon {
+            font-size:2.5rem;
+            margin-bottom:8px;
+        }
+
+        .library-name {
+            font-size:0.85rem;
+            font-weight:700;
+            color:#2d3748;
+            text-align:center;
+        }
+
+        /* Control Buttons - Fixed visibility */
+        .control-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 2px solid #e2e8f0;
+            background-color: #f0f7ff;
+        }
+
+        .control-btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+            min-width: 160px;
+            justify-content: center;
+        }
+
+        .test-btn {
+            background: linear-gradient(45deg,#38b2ac,#2c9a94);
+            color: white;
+        }
+
+        .test-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(56, 178, 172, 0.4);
+        }
+
+        .clear-btn {
+            background: linear-gradient(45deg,#e53e3e,#c53030);
+            color: white;
+        }
+
+        .clear-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(229, 62, 62, 0.4);
+        }
+
+        .hint-btn {
+            background: linear-gradient(45deg,#d69e2e,#b7791f);
+            color: white;
+        }
+
+        .hint-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(214, 158, 46, 0.4);
+        }
+
+        /* Status Indicator */
+        .status-indicator {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(66, 153, 225, 0.1);
+            border: 2px solid rgba(66, 153, 225, 0.2);
+            color: #2a69ac;
+        }
+
+        .status-indicator.on {
+            background: rgba(56, 161, 105, 0.1);
+            border-color: rgba(56, 161, 105, 0.3);
+            color: #38a169;
+            animation: statusPulse 2s infinite;
+        }
+
+        .status-indicator.off {
+            background: rgba(229, 62, 62, 0.1);
+            border-color: rgba(229, 62, 62, 0.2);
+            color: #e53e3e;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Connection Instructions */
+        .connection-instruction {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px 24px;
+            border-radius: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            font-size: 0.95rem;
+            color: #4a5568;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            z-index: 1000;
+            border: 2px solid #4299e1;
+        }
+
+        .connection-instruction.show {
+            display: flex;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        /* Analysis Panel */
+        .analysis-panel {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 2px solid #e2e8f0;
+        }
+
+        .analysis-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .meter {
+            width: 100%;
+            height: 25px;
+            background: #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            border: 2px solid #cbd5e0;
+        }
+
+        .current-flow-meter {
+            height: 100%;
+            background: linear-gradient(90deg, #e53e3e, #ed8936, #38a169);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        .readings {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            font-size: 0.9rem;
+        }
+
+        .reading-item {
+            background: #f7fafc;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        .reading-label {
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 5px;
+            font-size: 0.8rem;
+        }
+
+        .reading-value {
+            font-weight: 700;
+            color: #1a365d;
+            font-size: 1.1rem;
+        }
+
+        /* Level Complete */
+        .level-complete { 
+            display:none; 
+            text-align:center; 
+            padding:28px; 
+            background:linear-gradient(145deg,#ffffff,#f7fafc); 
+            border-radius:20px; 
+            box-shadow:0 20px 40px rgba(0,0,0,0.08); 
+            max-width:700px; 
+            margin:24px auto; 
+        }
+        
+        .next-level-btn { 
+            padding:12px 24px; 
+            background:linear-gradient(45deg,#38b2ac,#2c9a94); 
+            color:white; 
+            border:none; 
+            border-radius:12px; 
+            font-weight:700; 
+            cursor:pointer; 
+            transition: all 0.3s ease; 
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px;
+        }
+        
+        .next-level-btn:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 20px rgba(56, 178, 172, 0.4); 
+        }
+
+        .view-scores-btn {
+            padding:12px 24px; 
+            background:linear-gradient(45deg,#d69e2e,#b7791f); 
+            color:white; 
+            border:none; 
+            border-radius:12px; 
+            font-weight:700; 
+            cursor:pointer; 
+            transition: all 0.3s ease; 
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px;
+        }
+
+        .view-scores-btn:hover {
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 20px rgba(214, 158, 46, 0.4);
+        }
+
+        .start-real-game-btn {
+            padding:12px 24px; 
+            background:linear-gradient(45deg,#d69e2e,#b7791f); 
+            color:white; 
+            border:none; 
+            border-radius:12px; 
+            font-weight:700; 
+            cursor:pointer; 
+            transition: all 0.3s ease; 
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px;
+        }
+
+        .start-real-game-btn:hover {
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 20px rgba(214, 158, 46, 0.4);
+        }
+
+        /* Challenge Requirements */
+        .challenge-section {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 2px solid #e2e8f0;
+        }
+
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .requirement-item {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .requirement-item.completed {
+            background: rgba(56, 161, 105, 0.1);
+            border-color: rgba(56, 161, 105, 0.3);
+        }
+
+        .requirement-icon {
+            font-size: 1.5rem;
+        }
+
+        .requirement-text {
+            flex: 1;
+        }
+
+        .requirement-name {
+            font-weight: 600;
+            color: #1a365d;
+            font-size: 0.9rem;
+        }
+
+        .requirement-count {
+            font-size: 0.8rem;
+            color: #718096;
+        }
+
+        .requirement-check {
+            color: #38a169;
+            font-size: 1.2rem;
+        }
+
+        /* Hint System */
+        .hint-system {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .hint-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            z-index: 2000;
+            max-width: 500px;
+            width: 90%;
+            display: none;
+        }
+
+        .hint-popup.active {
+            display: block;
+            animation: popupIn 0.3s ease;
+        }
+
+        .hint-popup h3 {
+            color: #2a69ac;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hint-popup p {
+            color: #4a5568;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .hint-popup .hint-diagram {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            border: 2px dashed #cbd5e0;
+        }
+
+        .hint-popup .hint-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .hint-popup button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .hint-popup .close-hint {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .hint-popup .close-hint:hover {
+            background: #cbd5e0;
+        }
+
+        @keyframes popupIn {
+            from { opacity: 0; transform: translate(-50%, -60%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+
+        /* Overlay for popup */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1999;
+            display: none;
+        }
+
+        .popup-overlay.active {
+            display: block;
+        }
+
+        /* Scoreboard - Fixed Layout */
+        .scoreboard {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 4000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.5s ease;
+            overflow: auto;
+            padding: 20px;
+        }
+
+        .scoreboard.active {
+            display: flex;
+        }
+
+        .scoreboard-content {
+            background: white;
+            border-radius: 25px;
+            padding: 30px;
+            max-width: 800px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            animation: slideUp 0.5s ease;
+            overflow: hidden;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .scoreboard-title {
+            font-size: 2.2rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .scoreboard-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+            width: 100%;
+        }
+
+        .scoreboard-stat {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #e2e8f0;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .scoreboard-stat-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: #2a69ac;
+            word-break: break-all;
+            line-height: 1.2;
+        }
+
+        .scoreboard-stat-label {
+            font-size: 0.9rem;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .scoreboard-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .scoreboard-btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 140px;
+            font-size: 1rem;
+        }
+
+        .scoreboard-restart {
+            background: linear-gradient(45deg, #38b2ac, #2c9a94);
+            color: white;
+        }
+
+        .scoreboard-restart:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(56, 178, 172, 0.4);
+        }
+
+        .scoreboard-menu {
+            background: linear-gradient(45deg, #d69e2e, #b7791f);
+            color: white;
+        }
+
+        .scoreboard-menu:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(214, 158, 46, 0.4);
+        }
+
+        /* Short Circuit Effect */
+        .short-circuit {
+            animation: shortCircuit 0.5s ease;
+        }
+
+        @keyframes shortCircuit {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            border-left: 4px solid #4299e1;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+            animation: toastIn 0.3s ease;
+        }
+
+        .toast.success {
+            border-left-color: #38a169;
+        }
+
+        .toast.error {
+            border-left-color: #e53e3e;
+        }
+
+        .toast.info {
+            border-left-color: #4299e1;
+        }
+
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .game-container { 
+                grid-template-columns: 1fr; 
+                height: auto;
+                gap: 20px;
+            }
+            
+            .circuit-board {
+                height: 400px;
+            }
+            
+            .components-library {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .scoreboard-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .scoreboard-stat-value {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .components-library {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .library-item {
+                height: 90px;
+            }
+            
+            .control-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .control-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .scoreboard-content {
+                padding: 20px;
+            }
+            
+            .scoreboard-stats {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .scoreboard-stat-value {
+                font-size: 1.8rem;
+            }
+            
+            .scoreboard-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .scoreboard-btn {
+                width: 100%;
+                max-width: 250px;
+            }
+            
+            .scoreboard-title {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .scoreboard-stat-value {
+                font-size: 1.5rem;
+            }
+            
+            .scoreboard-stat-label {
+                font-size: 0.8rem;
+            }
+            
+            .scoreboard-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="language-switcher">
+        <button class="lang-btn active" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+        <button class="lang-btn" data-lang="hi">हिन्दी</button>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+                    <div class="logo-text">STEM <span>Circuit</span> Builder</div>
+                </div>
+
+                <nav>
+                    <ul>
+                        <li><a href="student-dashboard.html" data-translate="nav-dashboard">Dashboard</a></li>
+                        <li><a href="about.html" data-translate="nav-about">About</a></li>
+                        <li><a href="contact.html" data-translate="nav-contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Instructions modal - SHOW FIRST -->
+    <div class="instructions-modal" id="instructions-modal">
+        <div class="instructions-content">
+            <div class="language-switcher" style="position: relative; top: 0; right: 0; margin: 0 auto 20px auto; width: fit-content; background: rgba(26, 54, 93, 0.1);">
+                <button class="lang-btn active" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+                <button class="lang-btn" data-lang="hi">हिन्दी</button>
+            </div>
+            
+            <h2 class="instructions-title" id="instructions-title">How to Build Circuits</h2>
+            <div class="instructions-text" id="instructions-text">
+                <p id="instructions-intro">Welcome to Circuit Builder! Here's how to build circuits:</p>
+                <ul class="instructions-list" id="instructions-list">
+                    <li id="instruction-1">📦 Drag components from the library to the circuit board</li>
+                    <li id="instruction-2">⚡ Click on a terminal (colored dots) to start a connection</li>
+                    <li id="instruction-3">🔗 Click another terminal to complete the wire connection</li>
+                    <li id="instruction-4">🔋 Build complete circuits: Battery(+) → Load(+) → Load(-) → Battery(-)</li>
+                    <li id="instruction-5">🚀 Click "Test Circuit" to see current flow</li>
+                    <li id="instruction-6">💡 Connect switches between battery and load to control circuit</li>
+                </ul>
+                <p id="instructions-outro">Build working circuits to complete each challenge!</p>
+            </div>
+            <button class="start-game-btn" id="start-game-btn">Start Demo Level</button>
+        </div>
+    </div>
+
+    <!-- Demo Overlay - HIDDEN UNTIL USER CLICKS "Start Demo Level" -->
+    <div class="demo-overlay" id="demo-overlay">
+        <div class="demo-step active" id="demo-step-1">
+            <h3 id="demo-step-1-title">Welcome to Circuit Builder!</h3>
+            <p id="demo-step-1-text">Let's learn how to build circuits step by step. Follow the highlighted elements.</p>
+            <div class="demo-step-image">
+                <i class="fas fa-bolt" style="color: #d69e2e; font-size: 5rem;"></i>
+            </div>
+            <p id="demo-step-1-desc">In this demo, we'll build a simple circuit with a battery and a bulb.</p>
+            <div class="demo-buttons">
+                <button class="demo-btn demo-skip" id="skip-demo">Skip Demo</button>
+                <button class="demo-btn demo-next" id="next-demo-1">Let's Start!</button>
+            </div>
+        </div>
+
+        <div class="demo-step" id="demo-step-2">
+            <h3 id="demo-step-2-title">Step 1: Add a Battery</h3>
+            <p id="demo-step-2-text">First, drag the <strong>Battery</strong> from the Components Library to the Circuit Board.</p>
+            <div class="demo-step-image">
+                <div style="font-size: 4rem;">🔋</div>
+            </div>
+            <p id="demo-step-2-desc">Look for the battery component in the library on the left.</p>
+            <div class="demo-buttons">
+                <button class="demo-btn demo-skip" id="back-demo-1">Back</button>
+                <button class="demo-btn demo-next" id="next-demo-2">Got it!</button>
+            </div>
+        </div>
+
+        <div class="demo-step" id="demo-step-3">
+            <h3 id="demo-step-3-title">Step 2: Add a Light Bulb</h3>
+            <p id="demo-step-3-text">Now drag the <strong>Light Bulb</strong> to the circuit board, next to the battery.</p>
+            <div class="demo-step-image">
+                <div style="font-size: 4rem;">💡</div>
+            </div>
+            <p id="demo-step-3-desc">The bulb will light up when connected correctly to the battery.</p>
+            <div class="demo-buttons">
+                <button class="demo-btn demo-skip" id="back-demo-2">Back</button>
+                <button class="demo-btn demo-next" id="next-demo-3">Next</button>
+            </div>
+        </div>
+
+        <div class="demo-step" id="demo-step-4">
+            <h3 id="demo-step-4-title">Step 3: Connect Positive Terminals</h3>
+            <p id="demo-step-4-text">Click on the battery's <strong style="color: #e53e3e;">positive terminal (red +)</strong> first.</p>
+            <div class="demo-step-image">
+                <div style="display: flex; gap: 20px;">
+                    <div style="width: 80px; height: 80px; background: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 2rem;">🔋</div>
+                    <div style="display: flex; align-items: center; font-size: 2rem; color: #d69e2e;">→</div>
+                    <div style="width: 80px; height: 80px; background: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 2rem;">💡</div>
+                </div>
+            </div>
+            <p id="demo-step-4-desc">Then click on the bulb's <strong style="color: #e53e3e;">positive terminal (red +)</strong> to create a wire.</p>
+            <div class="demo-buttons">
+                <button class="demo-btn demo-skip" id="back-demo-3">Back</button>
+                <button class="demo-btn demo-next" id="next-demo-4">Next</button>
+            </div>
+        </div>
+
+        <div class="demo-step" id="demo-step-5">
+            <h3 id="demo-step-5-title">Step 4: Connect Negative Terminals</h3>
+            <p id="demo-step-5-text">Click on the bulb's <strong style="color: #4299e1;">negative terminal (blue -)</strong> first.</p>
+            <div class="demo-step-image">
+                <div style="display: flex; gap: 20px;">
+                    <div style="width: 80px; height: 80px; background: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 2rem;">💡</div>
+                    <div style="display: flex; align-items: center; font-size: 2rem; color: #d69e2e;">→</div>
+                    <div style="width: 80px; height: 80px; background: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 2rem;">🔋</div>
+                </div>
+            </div>
+            <p id="demo-step-5-desc">Then click on the battery's <strong style="color: #4299e1;">negative terminal (blue -)</strong> to complete the circuit.</p>
+            <div class="demo-buttons">
+                <button class="demo-btn demo-skip" id="back-demo-4">Back</button>
+                <button class="demo-btn demo-next" id="next-demo-5">Next</button>
+            </div>
+        </div>
+
+        <div class="demo-step" id="demo-step-6">
+            <h3 id="demo-step-6-title">Step 5: Test Your Circuit</h3>
+            <p id="demo-step-6-text">Click the <strong style="color: #38b2ac;">"Test Circuit"</strong> button to see if electricity flows.</p>
+            <div class="demo-step-image">
+                <i class="fas fa-play-circle" style="color: #38b2ac; font-size: 5rem;"></i>
+            </div>
+            <p id="demo-step-6-desc">If everything is connected correctly, you'll see current flowing and the bulb will light up!</p>
+            <div class="demo-buttons">
+                <button class="demo-btn demo-skip" id="back-demo-5">Back</button>
+                <button class="demo-btn demo-start-game" id="complete-demo">Start Real Game!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Post-Demo Message -->
+    <div class="post-demo-message" id="post-demo-message">
+        <div class="post-demo-icon">
+            <i class="fas fa-graduation-cap"></i>
+        </div>
+        <h2 id="post-demo-title">Demo Completed!</h2>
+        <p id="post-demo-text" style="color: #4a5568; margin: 20px 0; font-size: 1.1rem; line-height: 1.6;">
+            Great job! You've learned how to build basic circuits. Now you're ready for the real game challenges!
+        </p>
+        <div style="background: #f7fafc; padding: 20px; border-radius: 15px; margin: 25px 0; border: 2px solid #e2e8f0;">
+            <h3 id="post-demo-next-title" style="color: #2a69ac; margin-bottom: 15px;">What's Next?</h3>
+            <ul id="post-demo-list" style="text-align: left; color: #4a5568; margin-left: 20px;">
+                <li style="margin-bottom: 10px;"><strong>Level 1:</strong> Simple circuit with timer</li>
+                <li style="margin-bottom: 10px;"><strong>Level 2:</strong> Circuit with switch control</li>
+                <li style="margin-bottom: 10px;"><strong>Level 3:</strong> Motor circuit challenge</li>
+                <li><strong>Level 4:</strong> Complete circuit with all components</li>
+            </ul>
+        </div>
+        <div class="post-demo-buttons">
+            <button class="control-btn test-btn" id="start-real-game-btn">
+                <i class="fas fa-play-circle"></i>
+                Start Real Game
+            </button>
+            <button class="control-btn hint-btn" id="repeat-demo-btn">
+                <i class="fas fa-redo"></i>
+                Repeat Demo
+            </button>
+        </div>
+    </div>
+
+    <!-- Scoreboard -->
+    <div class="scoreboard" id="scoreboard">
+        <div class="scoreboard-content">
+            <h2 class="scoreboard-title" id="scoreboard-title">Game Completed!</h2>
+            <div style="font-size: 5rem; color: #d69e2e; margin: 20px 0;">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <p id="scoreboard-message" style="color: #4a5568; font-size: 1.2rem; margin-bottom: 30px;">
+                Congratulations! You've completed all levels.
+            </p>
+            <div class="scoreboard-stats">
+                <div class="scoreboard-stat">
+                    <div class="scoreboard-stat-value" id="final-total-score">0</div>
+                    <div class="scoreboard-stat-label" id="scoreboard-total-label">Total Score</div>
+                </div>
+                <div class="scoreboard-stat">
+                    <div class="scoreboard-stat-value" id="final-levels-completed">0/4</div>
+                    <div class="scoreboard-stat-label" id="scoreboard-levels-label">Levels Completed</div>
+                </div>
+                <div class="scoreboard-stat">
+                    <div class="scoreboard-stat-value" id="final-total-time">0s</div>
+                    <div class="scoreboard-stat-label" id="scoreboard-time-label">Total Time</div>
+                </div>
+                <div class="scoreboard-stat">
+                    <div class="scoreboard-stat-value" id="final-perfect-circuits">0</div>
+                    <div class="scoreboard-stat-label" id="scoreboard-perfect-label">Perfect Circuits</div>
+                </div>
+            </div>
+            <div class="scoreboard-buttons">
+                <button class="scoreboard-btn scoreboard-restart" id="scoreboard-restart">
+                    <i class="fas fa-redo"></i>
+                    Play Again
+                </button>
+                <button class="scoreboard-btn scoreboard-menu" id="scoreboard-menu">
+                    <i class="fas fa-home"></i>
+                    Main Menu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hint System -->
+    <div class="popup-overlay" id="popup-overlay"></div>
+    <div class="hint-popup" id="hint-popup">
+        <h3><i class="fas fa-lightbulb"></i> <span id="hint-title">Circuit Hint</span></h3>
+        <div id="hint-content">
+            <!-- Hint content will be loaded here -->
+        </div>
+        <div class="hint-buttons">
+            <button class="close-hint" id="close-hint">Got it!</button>
+        </div>
+    </div>
+
+    <!-- Game header -->
+    <section class="game-header" style="display:none;" id="game-header">
+        <div class="container">
+            <h1 data-translate="game-title">Interactive Circuit Builder</h1>
+            <p data-translate="game-desc">Build real circuits! Drag components, connect terminals with wires, and watch electricity flow from positive to negative.</p>
+        </div>
+    </section>
+
+    <!-- Game stats -->
+    <div class="container" style="display:none;" id="game-stats-container">
+        <div class="game-stats">
+            <div class="timer">
+                <i class="fas fa-clock"></i>
+                <span id="time">05:00</span>
+            </div>
+
+            <div class="score">
+                <i class="fas fa-star"></i>
+                <span id="score">Score: 0</span>
+            </div>
+
+            <div class="hints">
+                <i class="fas fa-fire"></i>
+                <span id="streak">Streak: 0</span>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar" id="progress" style="width:0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game area -->
+    <section class="game-area" style="display:none;" id="game-area">
+        <div class="container">
+            <div class="game-container">
+                <!-- Components Library -->
+                <div class="components-zone">
+                    <div class="zone-header">
+                        <div class="zone-icon components-icon"><i class="fas fa-toolbox"></i></div>
+                        <h2 class="zone-title" data-translate="components-library">Components Library</h2>
+                    </div>
+                    <p style="color: #718096; font-size: 0.9rem; margin-bottom: 15px;">Drag components to the circuit board</p>
+                    <div class="components-library" id="components-library">
+                        <!-- Components loaded here -->
+                    </div>
+                </div>
+
+                <!-- Circuit Board Zone -->
+                <div class="circuit-zone">
+                    <div class="circuit-header">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div class="zone-icon circuit-icon"><i class="fas fa-microchip"></i></div>
+                            <h2 class="zone-title" data-translate="circuit-board">Circuit Board</h2>
+                        </div>
+                        <div class="status-indicator off" id="circuit-status">
+                            <i class="fas fa-times-circle"></i>
+                            <span>No Circuit</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Connection Instruction -->
+                    <div class="connection-instruction" id="connection-instruction">
+                        <i class="fas fa-mouse-pointer"></i>
+                        <span id="connection-text">Click another terminal to connect</span>
+                        <button id="cancel-connection" style="margin-left: auto; background: none; border: none; color: #e53e3e; cursor: pointer; font-size: 0.9rem;">
+                            <i class="fas fa-times"></i> ESC
+                        </button>
+                    </div>
+                    
+                    <!-- Wire Helper -->
+                    <div class="wire-helper" id="wire-helper"></div>
+                    
+                    <!-- Circuit Board -->
+                    <div class="circuit-board" id="circuit-board">
+                        <!-- Components and wires appear here -->
+                    </div>
+                    
+                    <!-- Analysis Panel -->
+                    <div class="analysis-panel">
+                        <div class="analysis-title">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Circuit Analysis</span>
+                        </div>
+                        <div class="meter">
+                            <div class="current-flow-meter" id="current-meter"></div>
+                        </div>
+                        <div class="readings">
+                            <div class="reading-item">
+                                <div class="reading-label">VOLTAGE</div>
+                                <div class="reading-value" id="voltage-reading">0V</div>
+                            </div>
+                            <div class="reading-item">
+                                <div class="reading-label">CURRENT</div>
+                                <div class="reading-value" id="current-reading">0mA</div>
+                            </div>
+                            <div class="reading-item">
+                                <div class="reading-label">STATUS</div>
+                                <div class="reading-value" id="status-reading">Open</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Control Buttons -->
+            <div class="control-buttons">
+                <button class="control-btn test-btn" id="test-circuit-btn">
+                    <i class="fas fa-play"></i>
+                    <span id="test-btn-text">Test Circuit</span>
+                </button>
+                <button class="control-btn clear-btn" id="clear-circuit-btn">
+                    <i class="fas fa-trash"></i>
+                    <span id="clear-btn-text">Clear Board</span>
+                </button>
+                <button class="control-btn hint-btn" id="hint-btn">
+                    <i class="fas fa-lightbulb"></i>
+                    <span id="hint-btn-text">Get Hint</span>
+                </button>
+            </div>
+
+            <!-- Challenge Requirements -->
+            <div class="challenge-section" id="challenge-section">
+                <h2 class="level-title" id="challenge-title">Demo Level: Build Your First Circuit</h2>
+                <p class="level-text" id="challenge-description">
+                    Follow the step-by-step guide to build a working circuit. Connect battery (+) to bulb (+), bulb (-) to battery (-).
+                </p>
+                <div class="requirements-grid" id="requirements-grid">
+                    <!-- Requirements loaded here -->
+                </div>
+            </div>
+
+            <!-- Level Complete -->
+            <div class="level-complete" id="level-complete" style="display: none;">
+                <div style="font-size: 4rem; color: #d69e2e; margin-bottom: 20px;">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h2 style="font-size: 2rem; color: #1a365d; margin-bottom: 15px;" id="complete-title">Level Complete!</h2>
+                <p style="color: #4a5568; margin-bottom: 25px; font-size: 1.1rem;" id="level-complete-text">
+                    Great job! Your circuit is working perfectly.
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 30px 0;">
+                    <div>
+                        <div style="font-size: 2.5rem; color: #38a169; font-weight: 800;" id="final-score">+100</div>
+                        <div style="font-size: 0.9rem; color: #718096;">SCORE</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 2.5rem; color: #4299e1; font-weight: 800;" id="final-time">45s</div>
+                        <div style="font-size: 0.9rem; color: #718096;">TIME</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 2.5rem; color: #d69e2e; font-weight: 800;" id="final-streak">3</div>
+                        <div style="font-size: 0.9rem; color: #718096;">STREAK</div>
+                    </div>
+                </div>
+                <div id="level-complete-buttons">
+                    <!-- Buttons will be added dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Complete Circuit Components Data
+        const circuitComponents = [
+            { 
+                id: 1, 
+                name: { en: "Battery", or: "ବ୍ୟାଟେରୀ", hi: "बैटरी" }, 
+                icon: "🔋", 
+                type: "power", 
+                voltage: 9,
+                terminals: [
+                    { id: "positive", type: "positive", label: "+", position: "right", color: "#e53e3e", x: 90, y: 40 },
+                    { id: "negative", type: "negative", label: "-", position: "left", color: "#4299e1", x: 10, y: 60 }
+                ],
+                info: { en: "9V Battery - Provides electrical energy", or: "9V ବ୍ୟାଟେରୀ - ବିଦ୍ୟୁତ ଶକ୍ତି ଯୋଗାଏ", hi: "9V बैटरी - विद्युत ऊर्जा प्रदान करती है" }
+            },
+            { 
+                id: 2, 
+                name: { en: "Light Bulb", or: "ବଲ୍ବ", hi: "बल्ब" }, 
+                icon: "💡", 
+                type: "load", 
+                voltage: 3,
+                terminals: [
+                    { id: "positive", type: "positive", label: "+", position: "top", color: "#e53e3e", x: 50, y: 15 },
+                    { id: "negative", type: "negative", label: "-", position: "bottom", color: "#4299e1", x: 50, y: 85 }
+                ],
+                info: { en: "Light Bulb - Converts electrical energy to light", or: "ବଲ୍ବ - ବିଦ୍ୟୁତ ଶକ୍ତିକୁ ଆଲୋକରେ ପରିଣତ କରେ", hi: "बल्ब - विद्युत ऊर्जा को प्रकाश में बदलता है" }
+            },
+            { 
+                id: 3, 
+                name: { en: "Switch", or: "ସୁଇଚ୍", hi: "स्विच" }, 
+                icon: "⚡", 
+                type: "control", 
+                voltage: 0,
+                terminals: [
+                    { id: "in", type: "neutral", label: "IN", position: "left", color: "#718096", x: 15, y: 50 },
+                    { id: "out", type: "neutral", label: "OUT", position: "right", color: "#718096", x: 85, y: 50 }
+                ],
+                info: { en: "Toggle Switch - Controls current flow", or: "ସୁଇଚ୍ - କରେଣ୍ଟ ପ୍ରବାହକୁ ନିୟନ୍ତ୍ରଣ କରେ", hi: "स्विच - करंट प्रवाह को नियंत्रित करता है" }
+            },
+            { 
+                id: 4, 
+                name: { en: "Motor", or: "ମୋଟର", hi: "मोटर" }, 
+                icon: "🔄", 
+                type: "load", 
+                voltage: 6,
+                terminals: [
+                    { id: "positive", type: "positive", label: "+", position: "left", color: "#e53e3e", x: 20, y: 40 },
+                    { id: "negative", type: "negative", label: "-", position: "right", color: "#4299e1", x: 80, y: 60 }
+                ],
+                info: { en: "DC Motor - Converts electrical to mechanical energy", or: "DC ମୋଟର - ବିଦ୍ୟୁତକୁ ଯାନ୍ତ୍ରିକ ଶକ୍ତିରେ ପରିଣତ କରେ", hi: "DC मोटर - विद्युत को यांत्रिक ऊर्जा में बदलती है" }
+            },
+            { 
+                id: 5, 
+                name: { en: "Resistor", or: "ରେଜିଷ୍ଟର", hi: "रोकनेवाला" }, 
+                icon: "⏚", 
+                type: "resistance", 
+                voltage: 0,
+                terminals: [
+                    { id: "end1", type: "neutral", label: "•", position: "left", color: "#718096", x: 20, y: 50 },
+                    { id: "end2", type: "neutral", label: "•", position: "right", color: "#718096", x: 85, y: 50 }
+                ],
+                info: { en: "Resistor - Limits current flow", or: "ରେଜିଷ୍ଟର - କରେଣ୍ଟ ପ୍ରବାହକୁ ସୀମିତ କରେ", hi: "रोकनेवाला - करंट प्रवाह को सीमित करता है" }
+            }
+        ];
+
+        // Game Levels
+        const gameLevels = [
+            {
+                id: 0,
+                title: { en: "Demo: Learn to Build Circuits", or: "ଡେମୋ: ସର୍କିଟ୍ ତିଆରି କରିବା ଶିଖନ୍ତୁ", hi: "डेमो: सर्किट बनाना सीखें" },
+                description: { 
+                    en: "Follow the step-by-step guide to build your first circuit. This is a learning level with no time limit.",
+                    or: "ଆପଣଙ୍କର ପ୍ରଥମ ସର୍କିଟ୍ ତିଆରି କରିବା ପାଇଁ ପଦକ୍ଷେପ ଅନୁସାରେ ଗାଇଡ୍ ଅନୁସରଣ କରନ୍ତୁ",
+                    hi: "अपना पहला सर्किट बनाने के लिए चरण-dदर-चरण मार्गदर्शिका का पालन करें"
+                },
+                requirements: [
+                    { type: "power", count: 1, name: "Battery" },
+                    { type: "load", count: 1, name: "Light Bulb" }
+                ],
+                points: 50,
+                timeLimit: 0,
+                isDemo: true,
+                hints: [
+                    { en: "Start by dragging a battery from the components library to the circuit board", or: "ପ୍ରଥମେ କମ୍ପୋନେଣ୍ଟ ଲାଇବ୍ରେରୀରୁ ଏକ ବ୍ୟାଟେରୀ ସର୍କିଟ୍ ବୋର୍ଡକୁ ଟାଣନ୍ତୁ", hi: "पहले घटक लाइब्रेरी से बैटरी को सर्किट बोर्ड पर खींचें" },
+                    { en: "Drag a light bulb next to the battery", or: "ବ୍ୟାଟେରୀ ପାଖରେ ଏକ ବଲ୍ବ ଟାଣନ୍ତୁ", hi: "बैटरी के बगल में बल्ब खींचें" },
+                    { en: "Connect battery positive (+) to bulb positive (+) by clicking on the red terminals", or: "ଲାଲ୍ ଟର୍ମିନାଲ୍‌ଗୁଡିକୁ କ୍ଲିକ୍ କରି ବ୍ୟାଟେରୀ ପଜିଟିଭ୍ (+) କୁ ବଲ୍ବ ପଜିଟିଭ୍ (+) ସହିତ ସଂଯୋଗ କରନ୍ତୁ", hi: "लाल टर्मिनलों पर क्लिक करके बैटरी पॉजिटिव (+) को बल्ब पॉजिटिव (+) से कनेक्ट करें" },
+                    { en: "Connect bulb negative (-) to battery negative (-) by clicking on the blue terminals", or: "ନୀଳ ଟର୍ମିନାଲ୍‌ଗୁଡିକୁ କ୍ଲିକ୍ କରି ବଲ୍ବ ନେଗେଟିଭ୍ (-) କୁ ବ୍ୟାଟେରୀ ନେଗେଟିଭ୍ (-) ସହିତ ସଂଯୋଗ କରନ୍ତୁ", hi: "नीले टर्मिनलों पर क्लिक करके बल्ब नेगेटिव (-) को बैटरी नेगेटिव (-) से कनेक्ट करें" },
+                    { en: "Click 'Test Circuit' to check if your circuit works", or: "ଆପଣଙ୍କର ସର୍କିଟ୍ କାମ କରୁଛି କି ନାହିଁ ଯାଞ୍ଚ କରିବାକୁ 'ଟେଷ୍ଟ ସର୍କିଟ୍' କ୍ଲିକ୍ କରନ୍ତୁ", hi: "यह जांचने के लिए 'टेस्ट सर्किट' पर क्लिक करें कि आपका सर्किट काम कर रहा है या नहीं" }
+                ]
+            },
+            {
+                id: 1,
+                title: { en: "Level 1: Simple Circuit", or: "ସ୍ତର ୧: ସରଳ ସର୍କିଟ୍", hi: "स्तर 1: सरल सर्किट" },
+                description: { 
+                    en: "Build a simple circuit: Connect battery to bulb with wires. Remember: Current flows from positive (+) to negative (-).",
+                    or: "ଏକ ସରଳ ସର୍କିଟ୍ ତିଆରି କରନ୍ତୁ: ବ୍ୟାଟେରୀକୁ ବଲ୍ବ ସହିତ ତାରରେ ସଂଯୋଗ କରନ୍ତୁ",
+                    hi: "एक सरल सर्किट बनाएं: बैटरी को बल्ब से तारों से जोड़ें"
+                },
+                requirements: [
+                    { type: "power", count: 1, name: "Battery" },
+                    { type: "load", count: 1, name: "Light Bulb" }
+                ],
+                points: 100,
+                timeLimit: 300,
+                isDemo: false,
+                unlocked: true,
+                hints: [
+                    { en: "You need 1 battery and 1 light bulb for this level", or: "ଏହି ସ୍ତର ପାଇଁ ଆପଣଙ୍କୁ 1 ଟି ବ୍ୟାଟେରୀ ଏବଂ 1 ଟି ବଲ୍ବ ଦରକାର", hi: "इस स्तर के लिए आपको 1 बैटरी और 1 बल्ब की आवश्यकता है" },
+                    { en: "Connect battery positive (+) to bulb positive (+)", or: "ବ୍ୟାଟେରୀ ପଜିଟିଭ୍ (+) କୁ ବଲ୍ବ ପଜିଟିଭ୍ (+) ସହିତ ସଂଯୋଗ କରନ୍ତୁ", hi: "बैटरी पॉजिटिव (+) को बल्ब पॉजिटिव (+) से कनेक्ट करें" },
+                    { en: "Connect bulb negative (-) to battery negative (-)", or: "ବଲ୍ବ ନେଗେଟିଭ୍ (-) କୁ ବ୍ୟାଟେରୀ ନେଗେଟିଭ୍ (-) ସହିତ ସଂଯୋଗ କରନ୍ତୁ", hi: "बल्ब नेगेटिव (-) को बैटरी नेगेटिव (-) से कनेक्ट करें" },
+                    { en: "Make sure all connections are complete before testing", or: "ପରୀକ୍ଷା କରିବା ପୂର୍ବରୁ ସମସ୍ତ ସଂଯୋଗ ସମ୍ପୂର୍ଣ୍ଣ କରନ୍ତୁ", hi: "टेस्ट करने से पहले सुनिश्चित करें कि सभी कनेक्शन पूरे हैं" },
+                    { en: "Electricity flows from positive to negative terminals", or: "ବିଦ୍ୟୁତ୍ ପଜିଟିଭ୍ ରୁ ନେଗେଟିଭ୍ ଟର୍ମିନାଲ୍ ପର୍ଯ୍ୟନ୍ତ ପ୍ରବାହିତ ହୁଏ", hi: "बिजली पॉजिटिव से नेगेटिव टर्मिनलों तक बहती है" }
+                ]
+            },
+            {
+                id: 2,
+                title: { en: "Level 2: Circuit with Switch", or: "ସ୍ତର ୨: ସୁଇଚ୍ ସହିତ ସର୍କିଟ୍", hi: "स्तर 2: स्विच के साथ सर्किट" },
+                description: { 
+                    en: "Add a switch to control the circuit. Connect switch between battery and bulb.",
+                    or: "ସର୍କିଟ୍ ନିୟନ୍ତ୍ରଣ କରିବା ପାଇଁ ଏକ ସୁଇଚ୍ ଯୋଡନ୍ତୁ",
+                    hi: "सर्किट को नियंत्रित करने के लिए एक स्विच जोड़ें"
+                },
+                requirements: [
+                    { type: "power", count: 1, name: "Battery" },
+                    { type: "load", count: 1, name: "Light Bulb" },
+                    { type: "control", count: 1, name: "Switch" }
+                ],
+                points: 150,
+                timeLimit: 300,
+                isDemo: false,
+                unlocked: false,
+                hints: [
+                    { en: "Place the switch between the battery and bulb", or: "ବ୍ୟାଟେରୀ ଏବଂ ବଲ୍ବ ମଧ୍ୟରେ ସୁଇଚ୍ ରଖନ୍ତୁ", hi: "बैटरी और बल्ब के बीच स्विच रखें" },
+                    { en: "Connect battery positive to switch IN terminal", or: "ବ୍ୟାଟେରୀ ପଜିଟିଭ୍ କୁ ସୁଇଚ୍ IN ଟର୍ମିନାଲ୍ ସହିତ ସଂଯୋଗ କରନ୍ତୁ", hi: "बैटरी पॉजिटिव को स्विच IN टर्मिनल से कनेक्ट करें" },
+                    { en: "Connect switch OUT terminal to bulb positive", or: "ସୁଇଚ୍ OUT ଟର୍ମିନାଲ୍ କୁ ବଲ୍ବ ପଜିଟିଭ୍ ସହିତ ସଂଯୋଗ କରନ୍ତୁ", hi: "स्विच OUT टर्मिनल को बल्ब पॉजिटिव से कनेक्ट करें" },
+                    { en: "Connect bulb negative to battery negative", or: "ବଲ୍ବ ନେଗେଟିଭ୍ କୁ ବ୍ୟାଟେରୀ ନେଗେଟିଭ୍ ସହିତ ସଂଯୋଗ କରନ୍ତୁ", hi: "बल्ब नेगेटिव को बैटरी नेगेटिव से कनेक्ट करें" },
+                    { en: "Switches have no polarity - IN/OUT terminals can connect either way", or: "ସୁଇଚ୍‌ଗୁଡିକର ପୋଲାରିଟି ନାହିଁ - IN/OUT ଟର୍ମିନାଲ୍‌ଗୁଡିକ ଯେକୌଣସି ଉପାୟରେ ସଂଯୋଗ ହୋଇପାରେ", hi: "स्विच में कोई पोलैरिटी नहीं होती - IN/OUT टर्मिनल किसी भी तरह से जुड़ सकते हैं" }
+                ]
+            },
+            {
+                id: 3,
+                title: { en: "Level 3: Motor Circuit", or: "ସ୍ତର ୩: ମୋଟର ସର୍କିଟ୍", hi: "स्तर 3: मोटर सर्किट" },
+                description: { 
+                    en: "Build a circuit with a motor. The motor converts electrical energy to motion.",
+                    or: "ଏକ ମୋଟର ସହିତ ସର୍କିଟ୍ ତିଆରି କରନ୍ତୁ",
+                    hi: "मोटर के साथ एक सर्किट बनाएं"
+                },
+                requirements: [
+                    { type: "power", count: 1, name: "Battery" },
+                    { type: "load", count: 1, name: "Motor" }
+                ],
+                points: 200,
+                timeLimit: 300,
+                isDemo: false,
+                unlocked: false,
+                hints: [
+                    { en: "Motors work just like bulbs - they need positive and negative connections", or: "ମୋଟରଗୁଡିକ ବଲ୍ବ ପରି କାମ କରେ - ସେଗୁଡିକୁ ପଜିଟିଭ୍ ଏବଂ ନେଗେଟିଭ୍ ସଂଯୋଗ ଦରକାର", hi: "मोटर बल्ब की तरह काम करती हैं - उन्हें पॉजिटिव और नेगेटिव कनेक्शन की आवश्यकता होती है" },
+                    { en: "Connect battery positive to motor positive (red terminal)", or: "ବ୍ୟାଟେରୀ ପଜିଟିଭ୍ କୁ ମୋଟର ପଜିଟିଭ୍ (ଲାଲ୍ ଟର୍ମିନାଲ୍) ସହିତ ସଂଯୋଗ କରନ୍ତୁ", hi: "बैटरी पॉजिटिव को मोटर पॉजिटिव (लाल टर्मिनल) से कनेक्ट करें" },
+                    { en: "Connect motor negative to battery negative (blue terminal)", or: "ମୋଟର ନେଗେଟିଭ୍ କୁ ବ୍ୟାଟେରୀ ନେଗେଟିଭ୍ (ନୀଳ ଟର୍ମିନାଲ୍) ସହିତ ସଂଯୋଗ କରନ୍ତୁ", hi: "मोटर नेगेटिव को बैटरी नेगेटिव (नीला टर्मिनल) से कनेक्ट करें" },
+                    { en: "Make sure connections are tight for the motor to spin", or: "ମୋଟର ଘୂର୍ଣ୍ଣନ ପାଇଁ ସଂଯୋଗଗୁଡିକ ଟାଣ ଅଛି କି ନାହିଁ ନିଶ୍ଚିତ କରନ୍ତୁ", hi: "मोटर के घूमने के लिए सुनिश्चित करें कि कनेक्शन टाइट हैं" },
+                    { en: "If motor doesn't work, check all connections are complete", or: "ଯଦି ମୋଟର କାମ କରେ ନାହିଁ, ସମସ୍ତ ସଂଯୋଗ ସମ୍ପୂର୍ଣ୍ଣ ଅଛି କି ନାହିଁ ଯାଞ୍ଚ କରନ୍ତୁ", hi: "यदि मोटर काम नहीं करती है, तो जांचें कि सभी कनेक्शन पूरे हैं" }
+                ]
+            },
+            {
+                id: 4,
+                title: { en: "Level 4: Complete Circuit", or: "ସ୍ତର ୪: ସମ୍ପୂର୍ଣ୍ଣ ସର୍କିଟ୍", hi: "स्तर 4: पूर्ण सर्किट" },
+                description: { 
+                    en: "Build a complete circuit with battery, bulb, switch and motor. Test your skills!",
+                    or: "ବ୍ୟାଟେରୀ, ବଲ୍ବ, ସୁଇଚ୍ ଏବଂ ମୋଟର ସହିତ ଏକ ସମ୍ପୂର୍ଣ୍ଣ ସର୍କିଟ୍ ତିଆରି କରନ୍ତୁ",
+                    hi: "बैटरी, बल्ब, स्विच और मोटर के साथ एक पूर्ण सर्किट बनाएं"
+                },
+                requirements: [
+                    { type: "power", count: 1, name: "Battery" },
+                    { type: "load", count: 1, name: "Light Bulb" },
+                    { type: "load", count: 1, name: "Motor" },
+                    { type: "control", count: 1, name: "Switch" }
+                ],
+                points: 300,
+                timeLimit: 400,
+                isDemo: false,
+                unlocked: false,
+                hints: [
+                    { en: "Place all components: Battery, Bulb, Motor, and Switch", or: "ସମସ୍ତ କମ୍ପୋନେଣ୍ଟ ରଖନ୍ତୁ: ବ୍ୟାଟେରୀ, ବଲ୍ବ, ମୋଟର, ଏବଂ ସୁଇଚ୍", hi: "सभी घटक रखें: बैटरी, बल्ब, मोटर और स्विच" },
+                    { en: "Connect battery positive to switch IN", or: "ବ୍ୟାଟେରୀ ପଜିଟିଭ୍ କୁ ସୁଇଚ୍ IN ସହିତ ସଂଯୋଗ କରନ୍ତୁ", hi: "बैटरी पॉजिटिव को स्विच IN से कनेक्ट करें" },
+                    { en: "Connect switch OUT to both bulb and motor positives", or: "ସୁଇଚ୍ OUT କୁ ଉଭୟ ବଲ୍ବ ଏବଂ ମୋଟର ପଜିଟିଭ୍ ସହିତ ସଂଯୋଗ କରନ୍ତୁ", hi: "स्विच OUT को दोनों बल्ब और मोटर पॉजिटिव से कनेक्ट करें" },
+                    { en: "Connect bulb negative and motor negative to battery negative", or: "ବଲ୍ବ ନେଗେଟିଭ୍ ଏବଂ ମୋଟର ନେଗେଟିଭ୍ କୁ ବ୍ୟାଟେରୀ ନେଗେଟିଭ୍ ସହିତ ସଂଯୋଗ କରନ୍ତୁ", hi: "बल्ब नेगेटिव और मोटर नेगेटिव को बैटरी नेगेटिव से कनेक्ट करें" },
+                    { en: "All loads should be connected in parallel with the battery", or: "ସମସ୍ତ ଲୋଡ୍ ବ୍ୟାଟେରୀ ସହିତ ସମାନ୍ତରାଳରେ ସଂଯୋଗ ହେବା ଉଚିତ୍", hi: "सभी लोड बैटरी के साथ समानांतर में जुड़े होने चाहिए" }
+                ]
+            }
+        ];
+
+        // Game State
+        let currentLanguage = 'en';
+        let score = 0;
+        let streak = 0;
+        let timeLeft = 0;
+        let timerInterval = null;
+        let currentLevel = 0;
+        let placedComponents = [];
+        let wires = [];
+        let selectedTerminal = null;
+        let isTesting = false;
+        let currentFlowInterval = null;
+        let levelStartTime = null;
+        let levelCompleted = false;
+        
+        // Demo State
+        let demoStep = 1;
+        let isDemoMode = false;
+        let demoCompleted = false;
+        let perfectCircuits = 0;
+        let totalTimePlayed = 0;
+        let levelsCompleted = 0;
+
+        // DOM Elements
+        const componentsLibrary = document.getElementById('components-library');
+        const circuitBoard = document.getElementById('circuit-board');
+        const scoreElement = document.getElementById('score');
+        const timeElement = document.getElementById('time');
+        const streakElement = document.getElementById('streak');
+        const progressElement = document.getElementById('progress');
+        const circuitStatusElement = document.getElementById('circuit-status');
+        const currentMeter = document.getElementById('current-meter');
+        const voltageReading = document.getElementById('voltage-reading');
+        const currentReading = document.getElementById('current-reading');
+        const statusReading = document.getElementById('status-reading');
+        const connectionInstruction = document.getElementById('connection-instruction');
+        const wireHelper = document.getElementById('wire-helper');
+        const challengeDescription = document.getElementById('challenge-description');
+        const requirementsGrid = document.getElementById('requirements-grid');
+        const challengeTitle = document.getElementById('challenge-title');
+        const demoOverlay = document.getElementById('demo-overlay');
+        const postDemoMessage = document.getElementById('post-demo-message');
+        const levelComplete = document.getElementById('level-complete');
+        const completeTitle = document.getElementById('complete-title');
+        const gameHeader = document.getElementById('game-header');
+        const gameStatsContainer = document.getElementById('game-stats-container');
+        const gameArea = document.getElementById('game-area');
+        const instructionsModal = document.getElementById('instructions-modal');
+        const hintPopup = document.getElementById('hint-popup');
+        const popupOverlay = document.getElementById('popup-overlay');
+        const hintContent = document.getElementById('hint-content');
+        const closeHint = document.getElementById('close-hint');
+        const scoreboard = document.getElementById('scoreboard');
+        const finalTotalScore = document.getElementById('final-total-score');
+        const finalLevelsCompleted = document.getElementById('final-levels-completed');
+        const finalTotalTime = document.getElementById('final-total-time');
+        const finalPerfectCircuits = document.getElementById('final-perfect-circuits');
+        const levelCompleteButtons = document.getElementById('level-complete-buttons');
+
+        // Demo Content Translations
+        const demoTranslations = {
+            en: {
+                'demo-step-1-title': 'Welcome to Circuit Builder!',
+                'demo-step-1-text': 'Let\'s learn how to build circuits step by step. Follow the highlighted elements.',
+                'demo-step-1-desc': 'In this demo, we\'ll build a simple circuit with a battery and a bulb.',
+                'demo-step-2-title': 'Step 1: Add a Battery',
+                'demo-step-2-text': 'First, drag the <strong>Battery</strong> from the Components Library to the Circuit Board.',
+                'demo-step-2-desc': 'Look for the battery component in the library on the left.',
+                'demo-step-3-title': 'Step 2: Add a Light Bulb',
+                'demo-step-3-text': 'Now drag the <strong>Light Bulb</strong> to the circuit board, next to the battery.',
+                'demo-step-3-desc': 'The bulb will light up when connected correctly to the battery.',
+                'demo-step-4-title': 'Step 3: Connect Positive Terminals',
+                'demo-step-4-text': 'Click on the battery\'s <strong style="color: #e53e3e;">positive terminal (red +)</strong> first.',
+                'demo-step-4-desc': 'Then click on the bulb\'s <strong style="color: #e53e3e;">positive terminal (red +)</strong> to create a wire.',
+                'demo-step-5-title': 'Step 4: Connect Negative Terminals',
+                'demo-step-5-text': 'Click on the bulb\'s <strong style="color: #4299e1;">negative terminal (blue -)</strong> first.',
+                'demo-step-5-desc': 'Then click on the battery\'s <strong style="color: #4299e1;">negative terminal (blue -)</strong> to complete the circuit.',
+                'demo-step-6-title': 'Step 5: Test Your Circuit',
+                'demo-step-6-text': 'Click the <strong style="color: #38b2ac;">"Test Circuit"</strong> button to see if electricity flows.',
+                'demo-step-6-desc': 'If everything is connected correctly, you\'ll see current flowing and the bulb will light up!',
+                'skip-demo': 'Skip Demo',
+                'back': 'Back',
+                'next': 'Next',
+                'got-it': 'Got it!',
+                'lets-start': 'Let\'s Start!',
+                'complete-demo': 'Start Real Game!',
+                'post-demo-title': 'Demo Completed!',
+                'post-demo-text': 'Great job! You\'ve learned how to build basic circuits. Now you\'re ready for the real game challenges!',
+                'post-demo-next-title': 'What\'s Next?',
+                'post-demo-list-item-1': 'Level 1: Simple circuit with timer',
+                'post-demo-list-item-2': 'Level 2: Circuit with switch control',
+                'post-demo-list-item-3': 'Level 3: Motor circuit challenge',
+                'post-demo-list-item-4': 'Level 4: Complete circuit with all components',
+                'start-real-game': 'Start Real Game',
+                'repeat-demo': 'Repeat Demo',
+                'scoreboard-title': 'Game Completed!',
+                'scoreboard-message': 'Congratulations! You\'ve completed all levels.',
+                'scoreboard-total-label': 'Total Score',
+                'scoreboard-levels-label': 'Levels Completed',
+                'scoreboard-time-label': 'Total Time',
+                'scoreboard-perfect-label': 'Perfect Circuits',
+                'play-again': 'Play Again',
+                'main-menu': 'Main Menu',
+                'hint-title': 'Circuit Hint',
+                'connection-text': 'Click another terminal to connect',
+                'test-btn-text': 'Test Circuit',
+                'clear-btn-text': 'Clear Board',
+                'hint-btn-text': 'Get Hint',
+                'got-it-btn': 'Got it!'
+            },
+            or: {
+                'demo-step-1-title': 'ସର୍କିଟ୍ ବିଲଡରକୁ ସ୍ୱାଗତ!',
+                'demo-step-1-text': 'ଚାଲନ୍ତୁ ପଦକ୍ଷେପ ଅନୁସାରେ ସର୍କିଟ୍ କିପରି ତିଆରି କରିବେ ଶିଖିବା। ହାଇଲାଇଟ୍ ହୋଇଥିବା ଉପାଦାନଗୁଡିକୁ ଅନୁସରଣ କରନ୍ତୁ।',
+                'demo-step-1-desc': 'ଏହି ଡେମୋରେ, ଆମେ ଏକ ବ୍ୟାଟେରୀ ଏବଂ ଏକ ବଲ୍ବ ସହିତ ଏକ ସରଳ ସର୍କିଟ୍ ତିଆରି କରିବା।',
+                'demo-step-2-title': 'ପଦକ୍ଷେପ ୧: ଏକ ବ୍ୟାଟେରୀ ଯୋଡନ୍ତୁ',
+                'demo-step-2-text': 'ପ୍ରଥମେ, କମ୍ପୋନେଣ୍ଟ ଲାଇବ୍ରେରୀରୁ <strong>ବ୍ୟାଟେରୀ</strong>କୁ ସର୍କିଟ୍ ବୋର୍ଡକୁ ଟାଣନ୍ତୁ।',
+                'demo-step-2-desc': 'ବାମ ପାର୍ଶ୍ୱରେ ଥିବା ଲାଇବ୍ରେରୀରେ ବ୍ୟାଟେରୀ ଘଟକଟି ଖୋଜନ୍ତୁ।',
+                'demo-step-3-title': 'ପଦକ୍ଷେପ ୨: ଏକ ବଲ୍ବ ଯୋଡନ୍ତୁ',
+                'demo-step-3-text': 'ବର୍ତ୍ତମାନ <strong>ବଲ୍ବ</strong>କୁ ସର୍କିଟ୍ ବୋର୍ଡକୁ ଟାଣନ୍ତୁ, ବ୍ୟାଟେରୀ ପାଖରେ।',
+                'demo-step-3-desc': 'ବ୍ୟାଟେରୀ ସହିତ ସଠିକ୍ ଭାବରେ ସଂଯୋଗ ହେଲେ ବଲ୍ବ ଜଳିବ।',
+                'demo-step-4-title': 'ପଦକ୍ଷେପ ୩: ପଜିଟିଭ୍ ଟର୍ମିନାଲ୍‌ଗୁଡିକୁ ସଂଯୋଗ କରନ୍ତୁ',
+                'demo-step-4-text': 'ପ୍ରଥମେ ବ୍ୟାଟେରୀର <strong style="color: #e53e3e;">ପଜିଟିଭ୍ ଟର୍ମିନାଲ୍ (ଲାଲ୍ +)</strong> ଉପରେ କ୍ଲିକ୍ କରନ୍ତୁ।',
+                'demo-step-4-desc': 'ତା\'ପରେ ବଲ୍ବର <strong style="color: #e53e3e;">ପଜିଟିଭ୍ ଟର୍ମିନାଲ୍ (ଲାଲ୍ +)</strong> ଉପରେ କ୍ଲିକ୍ କରି ଏକ ତାର ସୃଷ୍ଟି କରନ୍ତୁ।',
+                'demo-step-5-title': 'ପଦକ୍ଷେପ ୪: ନେଗେଟିଭ୍ ଟର୍ମିନାଲ୍‌ଗୁଡିକୁ ସଂଯୋଗ କରନ୍ତୁ',
+                'demo-step-5-text': 'ପ୍ରଥମେ ବଲ୍ବର <strong style="color: #4299e1;">ନେଗେଟିଭ୍ ଟର୍ମିନାଲ୍ (ନୀଳ -)</strong> ଉପରେ କ୍ଲିକ୍ କରନ୍ତୁ।',
+                'demo-step-5-desc': 'ତା\'ପରେ ବ୍ୟାଟେରୀର <strong style="color: #4299e1;">ନେଗେଟିଭ୍ ଟର୍ମିନାଲ୍ (ନୀଳ -)</strong> ଉପରେ କ୍ଲିକ୍ କରି ସର୍କିଟ୍ ସମ୍ପୂର୍ଣ୍ଣ କରନ୍ତୁ।',
+                'demo-step-6-title': 'ପଦକ୍ଷେପ ୫: ଆପଣଙ୍କର ସର୍କିଟ୍ ପରୀକ୍ଷା କରନ୍ତୁ',
+                'demo-step-6-text': 'ବିଦ୍ୟୁତ୍ ପ୍ରବାହିତ ହେଉଛି କି ନାହିଁ ଦେଖିବା ପାଇଁ <strong style="color: #38b2ac;">"ଟେଷ୍ଟ ସର୍କିଟ୍"</strong> ବଟନ୍ କ୍ଲିକ୍ କରନ୍ତୁ।',
+                'demo-step-6-desc': 'ଯଦି ସବୁକିଛି ସଠିକ୍ ଭାବରେ ସଂଯୋଗ ହୋଇଛି, ତେବେ ଆପଣ କରେଣ୍ଟ ପ୍ରବାହିତ ହେଉଥିବା ଦେଖିବେ ଏବଂ ବଲ୍ବ ଜଳିବ!',
+                'skip-demo': 'ଡେମୋ ଛାଡନ୍ତୁ',
+                'back': 'ପିଛା',
+                'next': 'ପରବର୍ତ୍ତୀ',
+                'got-it': 'ବୁଝିଗଲି!',
+                'lets-start': 'ଚାଲନ୍ତୁ ଆରମ୍ଭ କରିବା!',
+                'complete-demo': 'ପ୍ରକୃତ ଖେଳ ଆରମ୍ଭ କରନ୍ତୁ!',
+                'post-demo-title': 'ଡେମୋ ସମାପ୍ତ!',
+                'post-demo-text': 'ବହୁତ ବଢିଆ! ଆପଣ ମୌଳିକ ସର୍କିଟ୍ କିପରି ତିଆରି କରିବେ ଶିଖିଛନ୍ତି। ବର୍ତ୍ତମାନ ଆପଣ ପ୍ରକୃତ ଖେଳ ଚ୍ୟାଲେଞ୍ଜ୍‌ଗୁଡିକ ପାଇଁ ପ୍ରସ୍ତୁତ!',
+                'post-demo-next-title': 'ଆଗେ କ\'ଣ?',
+                'post-demo-list-item-1': 'ସ୍ତର ୧: ଟାଇମର୍ ସହିତ ସରଳ ସର୍କିଟ୍',
+                'post-demo-list-item-2': 'ସ୍ତର ୨: ସୁଇଚ୍ ନିୟନ୍ତ୍ରଣ ସହିତ ସର୍କିଟ୍',
+                'post-demo-list-item-3': 'ସ୍ତର ୩: ମୋଟର ସର୍କିଟ୍ ଚ୍ୟାଲେଞ୍ଜ୍',
+                'post-demo-list-item-4': 'ସ୍ତର ୪: ସମସ୍ତ ଘଟକ ସହିତ ସମ୍ପୂର୍ଣ୍ଣ ସର୍କିଟ୍',
+                'start-real-game': 'ପ୍ରକୃତ ଖେଳ ଆରମ୍ଭ କରନ୍ତୁ',
+                'repeat-demo': 'ଡେମୋ ପୁନରାବୃତ୍ତି କରନ୍ତୁ',
+                'scoreboard-title': 'ଖେଳ ସମାପ୍ତ!',
+                'scoreboard-message': 'ଅଭିନନ୍ଦନ! ଆପଣ ସମସ୍ତ ସ୍ତର ସମାପ୍ତ କରିଛନ୍ତି।',
+                'scoreboard-total-label': 'ମୋଟ ସ୍କୋର',
+                'scoreboard-levels-label': 'ସମାପ୍ତ ସ୍ତର',
+                'scoreboard-time-label': 'ମୋଟ ସମୟ',
+                'scoreboard-perfect-label': 'ନିର୍ଭୁଲ ସର୍କିଟ୍',
+                'play-again': 'ପୁନର୍ବାର ଖେଳନ୍ତୁ',
+                'main-menu': 'ମୁଖ୍ୟ ମେନୁ',
+                'hint-title': 'ସର୍କିଟ୍ ସୂଚନା',
+                'connection-text': 'ସଂଯୋଗ କରିବା ପାଇଁ ଅନ୍ୟ ଏକ ଟର୍ମିନାଲ୍ କ୍ଲିକ୍ କରନ୍ତୁ',
+                'test-btn-text': 'ଟେଷ୍ଟ ସର୍କିଟ୍',
+                'clear-btn-text': 'ବୋର୍ଡ ସଫା କରନ୍ତୁ',
+                'hint-btn-text': 'ସୂଚନା ପାଆନ୍ତୁ',
+                'got-it-btn': 'ବୁଝିଗଲି!'
+            },
+            hi: {
+                'demo-step-1-title': 'सर्किट बिल्डर में आपका स्वागत है!',
+                'demo-step-1-text': 'चलिए चरण दर चरण सर्किट कैसे बनाते हैं सीखते हैं। हाइलाइट किए गए तत्वों का पालन करें।',
+                'demo-step-1-desc': 'इस डेमो में, हम एक बैटरी और एक बल्ब के साथ एक साधारण सर्किट बनाएंगे।',
+                'demo-step-2-title': 'चरण 1: एक बैटरी जोड़ें',
+                'demo-step-2-text': 'पहले, कंपोनेंट लाइब्रेरी से <strong>बैटरी</strong> को सर्किट बोर्ड पर खींचें।',
+                'demo-step-2-desc': 'बाईं ओर लाइब्रेरी में बैटरी घटक देखें।',
+                'demo-step-3-title': 'चरण 2: एक बल्ब जोड़ें',
+                'demo-step-3-text': 'अब <strong>बल्ब</strong> को सर्किट बोर्ड पर, बैटरी के बगल में खींचें।',
+                'demo-step-3-desc': 'बैटरी से सही ढंग से जुड़ने पर बल्ब जलेगा।',
+                'demo-step-4-title': 'चरण 3: पॉजिटिव टर्मिनल कनेक्ट करें',
+                'demo-step-4-text': 'पहले बैटरी के <strong style="color: #e53e3e;">पॉजिटिव टर्मिनल (लाल +)</strong> पर क्लिक करें।',
+                'demo-step-4-desc': 'फिर बल्ब के <strong style="color: #e53e3e;">पॉजिटिव टर्मिनल (लाल +)</strong> पर क्लिक करके एक तार बनाएं।',
+                'demo-step-5-title': 'चरण 4: नेगेटिव टर्मिनल कनेक्ट करें',
+                'demo-step-5-text': 'पहले बल्ब के <strong style="color: #4299e1;">नेगेटिव टर्मिनल (नीला -)</strong> पर क्लिक करें।',
+                'demo-step-5-desc': 'फिर बैटरी के <strong style="color: #4299e1;">नेगेटिव टर्मिनल (नीला -)</strong> पर क्लिक करके सर्किट पूरा करें।',
+                'demo-step-6-title': 'चरण 5: अपने सर्किट का परीक्षण करें',
+                'demo-step-6-text': 'यह देखने के लिए कि बिजली बह रही है या नहीं, <strong style="color: #38b2ac;">"टेस्ट सर्किट"</strong> बटन पर क्लिक करें।',
+                'demo-step-6-desc': 'यदि सब कुछ सही ढंग से जुड़ा है, तो आप करंट बहता हुआ देखेंगे और बल्ब जल जाएगा!',
+                'skip-demo': 'डेमो छोड़ें',
+                'back': 'पीछे',
+                'next': 'आगे',
+                'got-it': 'समझ गया!',
+                'lets-start': 'चलिए शुरू करते हैं!',
+                'complete-demo': 'असली खेल शुरू करें!',
+                'post-demo-title': 'डेमो पूरा हो गया!',
+                'post-demo-text': 'बहुत बढ़िया! आपने बुनियादी सर्किट बनाना सीख लिया है। अब आप वास्तविक खेल चुनौतियों के लिए तैयार हैं!',
+                'post-demo-next-title': 'आगे क्या है?',
+                'post-demo-list-item-1': 'स्तर 1: टाइमर के साथ सरल सर्किट',
+                'post-demo-list-item-2': 'स्तर 2: स्विच नियंत्रण के साथ सर्किट',
+                'post-demo-list-item-3': 'स्तर 3: मोटर सर्किट चुनौती',
+                'post-demo-list-item-4': 'स्तर 4: सभी घटकों के साथ पूर्ण सर्किट',
+                'start-real-game': 'असली खेल शुरू करें',
+                'repeat-demo': 'डेमो दोहराएं',
+                'scoreboard-title': 'खेल पूरा हो गया!',
+                'scoreboard-message': 'बधाई हो! आपने सभी स्तर पूरे कर लिए हैं।',
+                'scoreboard-total-label': 'कुल स्कोर',
+                'scoreboard-levels-label': 'पूर्ण स्तर',
+                'scoreboard-time-label': 'कुल समय',
+                'scoreboard-perfect-label': 'सही सर्किट',
+                'play-again': 'फिर से खेलें',
+                'main-menu': 'मुख्य मेनू',
+                'hint-title': 'सर्किट संकेत',
+                'connection-text': 'कनेक्ट करने के लिए दूसरे टर्मिनल पर क्लिक करें',
+                'test-btn-text': 'टेस्ट सर्किट',
+                'clear-btn-text': 'बोर्ड साफ करें',
+                'hint-btn-text': 'संकेत प्राप्त करें',
+                'got-it-btn': 'समझ गया!'
+            }
+        };
+
+        // Initialize Game - SHOW INSTRUCTIONS FIRST
+        function initGame() {
+            loadComponentsLibrary();
+            setupEventListeners();
+            
+            // Show instructions modal first (already visible in CSS)
+            instructionsModal.style.display = 'flex';
+        }
+
+        // Load Components into Library
+        function loadComponentsLibrary() {
+            componentsLibrary.innerHTML = '';
+            
+            circuitComponents.forEach((component) => {
+                const item = document.createElement('div');
+                item.className = 'library-item';
+                item.draggable = true;
+                item.dataset.id = component.id;
+                item.dataset.type = component.type;
+                item.innerHTML = `
+                    <div class="library-icon">${component.icon}</div>
+                    <div class="library-name">${component.name[currentLanguage]}</div>
+                `;
+                
+                item.addEventListener('dragstart', handleDragStart);
+                item.addEventListener('dragend', handleDragEnd);
+                
+                componentsLibrary.appendChild(item);
+            });
+        }
+
+        // Setup Event Listeners
+        function setupEventListeners() {
+            // Game Controls
+            document.getElementById('start-game-btn').addEventListener('click', startDemo);
+            document.getElementById('test-circuit-btn').addEventListener('click', testCircuit);
+            document.getElementById('clear-circuit-btn').addEventListener('click', clearCircuit);
+            document.getElementById('hint-btn').addEventListener('click', showHint);
+            document.getElementById('cancel-connection').addEventListener('click', cancelConnection);
+            
+            // Demo Controls
+            document.getElementById('skip-demo').addEventListener('click', skipDemo);
+            document.getElementById('complete-demo').addEventListener('click', completeDemo);
+            
+            // Post-Demo Controls
+            document.getElementById('start-real-game-btn').addEventListener('click', startRealGame);
+            document.getElementById('repeat-demo-btn').addEventListener('click', repeatDemo);
+            
+            // Scoreboard Controls
+            document.getElementById('scoreboard-restart').addEventListener('click', restartGame);
+            document.getElementById('scoreboard-menu').addEventListener('click', showInstructions);
+            
+            // Demo navigation buttons
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById(`next-demo-${i}`)?.addEventListener('click', () => nextDemoStep(i + 1));
+                if (i > 1) {
+                    document.getElementById(`back-demo-${i}`)?.addEventListener('click', () => nextDemoStep(i - 1));
+                }
+            }
+            
+            // Hint System
+            closeHint.addEventListener('click', closeHintHandler);
+            popupOverlay.addEventListener('click', closeHintHandler);
+            
+            // Circuit Board Events
+            circuitBoard.addEventListener('dragover', handleDragOver);
+            circuitBoard.addEventListener('dragenter', handleDragEnter);
+            circuitBoard.addEventListener('dragleave', handleDragLeave);
+            circuitBoard.addEventListener('drop', handleDrop);
+            
+            // Language Switcher
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', () => switchLanguage(btn.dataset.lang));
+            });
+            
+            // Keyboard Support
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    cancelConnection();
+                    closeHintHandler();
+                }
+                if (e.key === 'Delete') deleteSelectedComponent();
+                if (e.key === 't' || e.key === 'T') testCircuit();
+                if (e.key === 'r' || e.key === 'R') clearCircuit();
+                if (e.key === 'h' || e.key === 'H') showHint();
+            });
+        }
+
+        function closeHintHandler() {
+            hintPopup.classList.remove('active');
+            popupOverlay.classList.remove('active');
+        }
+
+        // Demo Functions
+        function nextDemoStep(step) {
+            demoStep = step;
+            updateDemoStep();
+        }
+
+        function updateDemoStep() {
+            document.querySelectorAll('.demo-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            
+            document.getElementById(`demo-step-${demoStep}`).classList.add('active');
+        }
+
+        // Start Demo (from instructions)
+        function startDemo() {
+            instructionsModal.style.display = 'none';
+            
+            // Reset game stats
+            score = 0;
+            streak = 0;
+            currentLevel = 0;
+            
+            // Load demo level
+            loadLevel(0);
+            updateScore();
+            updateStreak();
+            
+            showToast('Starting Demo Level. Follow the step-by-step guide!', 'info');
+        }
+
+        // Skip Demo
+        function skipDemo() {
+            demoOverlay.style.display = 'none';
+            isDemoMode = false;
+            demoCompleted = true;
+            
+            // Show post-demo message
+            showPostDemoMessage();
+            
+            showToast('Demo skipped. Ready for real game?', 'info');
+        }
+
+        // Complete Demo
+        function completeDemo() {
+            demoOverlay.style.display = 'none';
+            isDemoMode = false;
+            demoCompleted = true;
+            
+            // Give points for completing demo
+            score += 50;
+            updateScore();
+            
+            // Show post-demo message
+            showPostDemoMessage();
+            
+            showToast('Demo completed successfully!', 'success');
+        }
+
+        // Show post-demo message
+        function showPostDemoMessage() {
+            postDemoMessage.classList.add('active');
+            gameHeader.style.display = 'none';
+            gameStatsContainer.style.display = 'none';
+            gameArea.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            document.body.style.backgroundColor = '#f0f7ff';
+        }
+
+        // Start real game after demo
+        function startRealGame() {
+            postDemoMessage.classList.remove('active');
+            isDemoMode = false;
+            demoCompleted = true;
+            currentLevel = 1;
+            gameLevels[1].unlocked = true;
+            loadLevel(currentLevel);
+            showToast('Starting Level 1! Good luck!', 'success');
+        }
+
+        // Repeat demo
+        function repeatDemo() {
+            postDemoMessage.classList.remove('active');
+            demoCompleted = false;
+            currentLevel = 0;
+            loadLevel(0);
+        }
+
+        // Show scoreboard when all levels completed
+        function showScoreboard() {
+            // Calculate stats
+            const totalScore = score;
+            const completedLevels = levelsCompleted;
+            const perfect = perfectCircuits;
+            
+            // Update scoreboard
+            finalTotalScore.textContent = totalScore;
+            finalLevelsCompleted.textContent = `${completedLevels}/4`;
+            finalTotalTime.textContent = `${totalTimePlayed}s`;
+            finalPerfectCircuits.textContent = perfect;
+            
+            // Show scoreboard
+            scoreboard.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Restart game from scoreboard
+        function restartGame() {
+            scoreboard.classList.remove('active');
+            
+            // Reset game stats
+            score = 0;
+            streak = 0;
+            perfectCircuits = 0;
+            totalTimePlayed = 0;
+            levelsCompleted = 0;
+            
+            // Reset all levels except demo
+            gameLevels.forEach(level => {
+                if (level.id !== 0) {
+                    level.unlocked = level.id === 1;
+                }
+            });
+            
+            // Start from level 1
+            currentLevel = 1;
+            loadLevel(currentLevel);
+            updateScore();
+            updateStreak();
+            
+            showToast('Game restarted!', 'info');
+        }
+
+        // Drag and Drop Functions
+        function handleDragStart(e) {
+            this.classList.add('dragging');
+            e.dataTransfer.setData('text/plain', this.dataset.id);
+        }
+
+        function handleDragEnd() {
+            this.classList.remove('dragging');
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            circuitBoard.style.borderColor = '#4299e1';
+        }
+
+        function handleDragEnter(e) {
+            e.preventDefault();
+        }
+
+        function handleDragLeave() {
+            circuitBoard.style.borderColor = '#cbd5e0';
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            circuitBoard.style.borderColor = '#cbd5e0';
+            
+            const componentId = parseInt(e.dataTransfer.getData('text/plain'));
+            const componentData = circuitComponents.find(c => c.id === componentId);
+            
+            if (!componentData) return;
+            
+            const rect = circuitBoard.getBoundingClientRect();
+            let x = e.clientX - rect.left - 50;
+            let y = e.clientY - rect.top - 50;
+            
+            placeComponent(componentData, x, y);
+        }
+
+        // Place Component on Board
+        function placeComponent(componentData, x, y) {
+            const componentId = Date.now();
+            const component = {
+                id: componentId,
+                data: componentData,
+                x: Math.max(20, Math.min(x, 800)),
+                y: Math.max(20, Math.min(y, 300)),
+                connections: [],
+                powered: false
+            };
+            
+            placedComponents.push(component);
+            
+            // Create Component Element
+            const element = document.createElement('div');
+            element.className = 'circuit-component placed';
+            element.dataset.componentId = componentId;
+            element.style.left = `${component.x}px`;
+            element.style.top = `${component.y}px`;
+            
+            element.innerHTML = `
+                <div class="component-icon">${componentData.icon}</div>
+                <div class="component-label">${componentData.name[currentLanguage]}</div>
+            `;
+            
+            // Add Terminals
+            componentData.terminals.forEach(terminal => {
+                const terminalEl = document.createElement('div');
+                terminalEl.className = `terminal ${terminal.type}`;
+                terminalEl.dataset.componentId = componentId;
+                terminalEl.dataset.terminalId = terminal.id;
+                terminalEl.dataset.type = terminal.type;
+                terminalEl.title = `${terminal.label} (${terminal.type})`;
+                
+                terminalEl.style.left = `${terminal.x - 10}px`;
+                terminalEl.style.top = `${terminal.y - 10}px`;
+                terminalEl.textContent = terminal.label;
+                
+                terminalEl.addEventListener('click', (e) => handleTerminalClick(e, terminalEl));
+                element.appendChild(terminalEl);
+            });
+            
+            // Make Draggable
+            makeDraggable(element, component);
+            
+            circuitBoard.appendChild(element);
+            
+            showToast(`Added ${componentData.name[currentLanguage]}`, 'success');
+            updateRequirements();
+            updateCircuitStatus();
+        }
+
+        // Make Component Draggable
+        function makeDraggable(element, component) {
+            let isDragging = false;
+            let startX, startY;
+            
+            element.addEventListener('mousedown', startDrag);
+            
+            function startDrag(e) {
+                if (e.target.classList.contains('terminal')) return;
+                
+                isDragging = true;
+                element.classList.add('dragging');
+                
+                startX = e.clientX;
+                startY = e.clientY;
+                
+                document.addEventListener('mousemove', drag);
+                document.addEventListener('mouseup', stopDrag);
+            }
+            
+            function drag(e) {
+                if (!isDragging) return;
+                
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+                
+                component.x += dx;
+                component.y += dy;
+                
+                component.x = Math.max(20, Math.min(component.x, 800));
+                component.y = Math.max(20, Math.min(component.y, 300));
+                
+                element.style.left = `${component.x}px`;
+                element.style.top = `${component.y}px`;
+                
+                startX = e.clientX;
+                startY = e.clientY;
+                
+                updateWires(component);
+            }
+            
+            function stopDrag() {
+                isDragging = false;
+                element.classList.remove('dragging');
+                
+                document.removeEventListener('mousemove', drag);
+                document.removeEventListener('mouseup', stopDrag);
+                
+                snapToGrid(component, element);
+            }
+        }
+
+        // Snap to Grid
+        function snapToGrid(component, element) {
+            const gridSize = 40;
+            component.x = Math.round(component.x / gridSize) * gridSize;
+            component.y = Math.round(component.y / gridSize) * gridSize;
+            
+            element.style.left = `${component.x}px`;
+            element.style.top = `${component.y}px`;
+            
+            updateWires(component);
+        }
+
+        // Handle Terminal Click
+        function handleTerminalClick(e, terminalEl) {
+            e.stopPropagation();
+            
+            const componentId = parseInt(terminalEl.dataset.componentId);
+            const terminalId = terminalEl.dataset.terminalId;
+            const terminalType = terminalEl.dataset.type;
+            
+            if (!selectedTerminal) {
+                selectedTerminal = { componentId, terminalId, terminalType, element: terminalEl };
+                terminalEl.classList.add('selected');
+                connectionInstruction.classList.add('show');
+                showWireHelper(terminalEl);
+                showToast('Click another terminal to connect', 'info');
+            } else {
+                if (selectedTerminal.componentId === componentId && selectedTerminal.terminalId === terminalId) {
+                    cancelConnection();
+                    return;
+                }
+                
+                createWire(selectedTerminal, { componentId, terminalId, terminalType, element: terminalEl });
+                cancelConnection();
+            }
+        }
+
+        // Show Wire Helper
+        function showWireHelper(terminalEl) {
+            const rect = terminalEl.getBoundingClientRect();
+            const boardRect = circuitBoard.getBoundingClientRect();
+            
+            wireHelper.style.left = `${rect.left - boardRect.left + 10}px`;
+            wireHelper.style.top = `${rect.top - boardRect.top + 10}px`;
+            wireHelper.classList.add('visible');
+            
+            function updateHelper(e) {
+                const x = e.clientX - boardRect.left;
+                const y = e.clientY - boardRect.top;
+                
+                const dx = x - (rect.left - boardRect.left + 10);
+                const dy = y - (rect.top - boardRect.top + 10);
+                const length = Math.sqrt(dx * dx + dy * dy);
+                const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+                
+                wireHelper.style.width = `${length}px`;
+                wireHelper.style.transform = `rotate(${angle}deg)`;
+            }
+            
+            document.addEventListener('mousemove', updateHelper);
+            wireHelper.updateFunction = updateHelper;
+        }
+
+        // Create Wire Connection
+        function createWire(terminal1, terminal2) {
+            const existingWire = wires.find(w => 
+                (w.from.componentId === terminal1.componentId && w.from.terminalId === terminal1.terminalId &&
+                 w.to.componentId === terminal2.componentId && w.to.terminalId === terminal2.terminalId) ||
+                (w.from.componentId === terminal2.componentId && w.from.terminalId === terminal2.terminalId &&
+                 w.to.componentId === terminal1.componentId && w.to.terminalId === terminal1.terminalId)
+            );
+            
+            if (existingWire) {
+                showToast('Already connected!', 'error');
+                return;
+            }
+            
+            const comp1 = placedComponents.find(c => c.id === terminal1.componentId);
+            const comp2 = placedComponents.find(c => c.id === terminal2.componentId);
+            
+            if (!comp1 || !comp2) return;
+            
+            const pos1 = getTerminalPosition(comp1, terminal1.terminalId);
+            const pos2 = getTerminalPosition(comp2, terminal2.terminalId);
+            
+            const wireElement = document.createElement('div');
+            wireElement.className = 'wire connected';
+            
+            const dx = pos2.x - pos1.x;
+            const dy = pos2.y - pos1.y;
+            const length = Math.sqrt(dx * dx + dy * dy);
+            const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+            
+            wireElement.style.width = `${length}px`;
+            wireElement.style.left = `${pos1.x}px`;
+            wireElement.style.top = `${pos1.y}px`;
+            wireElement.style.transform = `rotate(${angle}deg)`;
+            
+            circuitBoard.appendChild(wireElement);
+            
+            const wireId = Date.now();
+            const wire = {
+                id: wireId,
+                element: wireElement,
+                from: {
+                    componentId: terminal1.componentId,
+                    terminalId: terminal1.terminalId,
+                    type: terminal1.terminalType
+                },
+                to: {
+                    componentId: terminal2.componentId,
+                    terminalId: terminal2.terminalId,
+                    type: terminal2.terminalType
+                },
+                powered: false
+            };
+            
+            wires.push(wire);
+            
+            comp1.connections.push({
+                terminalId: terminal1.terminalId,
+                connectedTo: {
+                    componentId: terminal2.componentId,
+                    terminalId: terminal2.terminalId
+                },
+                wireId: wireId
+            });
+            
+            comp2.connections.push({
+                terminalId: terminal2.terminalId,
+                connectedTo: {
+                    componentId: terminal1.componentId,
+                    terminalId: terminal1.terminalId
+                },
+                wireId: wireId
+            });
+            
+            terminal1.element.classList.remove('selected');
+            terminal1.element.classList.add('connected');
+            terminal2.element.classList.add('connected');
+            
+            showToast('Wire connected successfully!', 'success');
+            streak++;
+            updateStreak();
+            updateCircuitStatus();
+        }
+
+        // Get Terminal Position
+        function getTerminalPosition(component, terminalId) {
+            const terminal = component.data.terminals.find(t => t.id === terminalId);
+            if (!terminal) return { x: component.x + 50, y: component.y + 50 };
+            
+            return {
+                x: component.x + terminal.x,
+                y: component.y + terminal.y
+            };
+        }
+
+        // Update Wires when Component Moves
+        function updateWires(component) {
+            component.connections.forEach(conn => {
+                const wire = wires.find(w => w.id === conn.wireId);
+                if (!wire) return;
+                
+                const isFrom = wire.from.componentId === component.id;
+                const termId = isFrom ? wire.from.terminalId : wire.to.terminalId;
+                const termPos = getTerminalPosition(component, termId);
+                
+                if (isFrom) {
+                    const toComp = placedComponents.find(c => c.id === wire.to.componentId);
+                    const toPos = getTerminalPosition(toComp, wire.to.terminalId);
+                    
+                    const dx = toPos.x - termPos.x;
+                    const dy = toPos.y - termPos.y;
+                    const length = Math.sqrt(dx * dx + dy * dy);
+                    const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+                    
+                    wire.element.style.width = `${length}px`;
+                    wire.element.style.left = `${termPos.x}px`;
+                    wire.element.style.top = `${termPos.y}px`;
+                    wire.element.style.transform = `rotate(${angle}deg)`;
+                } else {
+                    const fromComp = placedComponents.find(c => c.id === wire.from.componentId);
+                    const fromPos = getTerminalPosition(fromComp, wire.from.terminalId);
+                    
+                    const dx = termPos.x - fromPos.x;
+                    const dy = termPos.y - fromPos.y;
+                    const length = Math.sqrt(dx * dx + dy * dy);
+                    const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+                    
+                    wire.element.style.width = `${length}px`;
+                    wire.element.style.transform = `rotate(${angle}deg)`;
+                }
+            });
+        }
+
+        // Cancel Connection
+        function cancelConnection() {
+            if (selectedTerminal) {
+                selectedTerminal.element.classList.remove('selected');
+                selectedTerminal = null;
+            }
+            connectionInstruction.classList.remove('show');
+            wireHelper.classList.remove('visible');
+            
+            if (wireHelper.updateFunction) {
+                document.removeEventListener('mousemove', wireHelper.updateFunction);
+                wireHelper.updateFunction = null;
+            }
+        }
+
+        // Test Circuit
+        function testCircuit() {
+            if (isTesting) {
+                stopCurrentFlow();
+                return;
+            }
+            
+            const analysis = analyzeCircuit();
+            
+            if (analysis.isComplete) {
+                startCurrentFlow(analysis);
+                
+                circuitStatusElement.className = 'status-indicator on';
+                circuitStatusElement.innerHTML = '<i class="fas fa-check-circle"></i> Circuit Working';
+                currentMeter.style.width = '100%';
+                voltageReading.textContent = '9V';
+                currentReading.textContent = `${Math.round(analysis.current)}mA`;
+                statusReading.textContent = 'Closed';
+                
+                score += analysis.points;
+                updateScore();
+                
+                if (analysis.perfect) {
+                    perfectCircuits++;
+                }
+                
+                if (checkLevelCompletion()) {
+                    setTimeout(() => {
+                        completeLevel(analysis);
+                    }, 1500);
+                }
+                
+                showToast(analysis.message, 'success');
+            } else {
+                showShortCircuit();
+                
+                circuitStatusElement.className = 'status-indicator off';
+                circuitStatusElement.innerHTML = '<i class="fas fa-times-circle"></i> Circuit Error';
+                currentMeter.style.width = '30%';
+                voltageReading.textContent = '0V';
+                currentReading.textContent = '0mA';
+                statusReading.textContent = analysis.error;
+                
+                streak = 0;
+                updateStreak();
+                
+                showToast(analysis.message, 'error');
+            }
+        }
+
+        // Analyze Circuit
+        function analyzeCircuit() {
+            const battery = placedComponents.find(c => c.data.type === 'power');
+            if (!battery) {
+                return {
+                    isComplete: false,
+                    error: 'No Power',
+                    message: 'Add a battery to provide power!'
+                };
+            }
+
+            const loads = placedComponents.filter(c => c.data.type === 'load');
+            if (loads.length === 0) {
+                return {
+                    isComplete: false,
+                    error: 'No Load',
+                    message: 'Add a bulb or motor to use the electricity!'
+                };
+            }
+
+            const positiveConnected = battery.connections.some(conn => 
+                conn.terminalId === 'positive'
+            );
+            const negativeConnected = battery.connections.some(conn => 
+                conn.terminalId === 'negative'
+            );
+
+            if (!positiveConnected || !negativeConnected) {
+                return {
+                    isComplete: false,
+                    error: 'Battery Not Fully Connected',
+                    message: 'Connect both battery terminals! Positive (+) and Negative (-)'
+                };
+            }
+
+            let connectedLoads = 0;
+            let perfect = true;
+            
+            for (let load of loads) {
+                if (isLoadInCompleteCircuit(load, battery)) {
+                    connectedLoads++;
+                } else {
+                    perfect = false;
+                }
+            }
+
+            if (connectedLoads === 0) {
+                return {
+                    isComplete: false,
+                    error: 'No Complete Circuit',
+                    message: 'Loads must be connected in a complete loop back to the battery!'
+                };
+            }
+
+            const current = (9 / (100 * connectedLoads)) * 1000;
+
+            return {
+                isComplete: true,
+                current: current,
+                points: isDemoMode ? 50 : 100 + (streak * 10) + (connectedLoads * 20),
+                perfect: perfect && connectedLoads === loads.length,
+                message: `Perfect! ${connectedLoads} load${connectedLoads > 1 ? 's' : ''} working. Current: ${Math.round(current)}mA`
+            };
+        }
+
+        // Check if load is in complete circuit
+        function isLoadInCompleteCircuit(load, battery) {
+            const hasPositiveWire = load.connections.some(conn => 
+                conn.terminalId === 'positive'
+            );
+            const hasNegativeWire = load.connections.some(conn => 
+                conn.terminalId === 'negative'
+            );
+            return hasPositiveWire && hasNegativeWire;
+        }
+
+        // Start Current Flow Animation
+        function startCurrentFlow(analysis) {
+            isTesting = true;
+            document.getElementById('test-circuit-btn').innerHTML = '<i class="fas fa-stop"></i> Stop Test';
+            
+            wires.forEach(wire => {
+                wire.element.classList.add('powered');
+                wire.powered = true;
+                createCurrentParticles(wire);
+            });
+            
+            placedComponents.forEach(comp => {
+                if (comp.data.type === 'load') {
+                    comp.powered = true;
+                    const compEl = document.querySelector(`[data-component-id="${comp.id}"]`);
+                    if (compEl) {
+                        compEl.classList.add('powered');
+                        if (comp.data.icon === '🔄') {
+                            compEl.querySelector('.component-icon').style.animation = 'spin 2s linear infinite';
+                        }
+                    }
+                }
+            });
+            
+            currentFlowInterval = setInterval(() => {
+                wires.forEach(wire => {
+                    if (wire.powered) {
+                        createCurrentParticles(wire);
+                    }
+                });
+            }, 500);
+        }
+
+        // Create Current Particles
+        function createCurrentParticles(wire) {
+            const wireEl = wire.element;
+            const rect = wireEl.getBoundingClientRect();
+            const boardRect = circuitBoard.getBoundingClientRect();
+            
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'current-particle';
+                    
+                    const progress = Math.random();
+                    const x = rect.left - boardRect.left + rect.width * progress;
+                    const y = rect.top - boardRect.top;
+                    
+                    particle.style.left = `${x}px`;
+                    particle.style.top = `${y}px`;
+                    
+                    circuitBoard.appendChild(particle);
+                    
+                    const speed = 2 + Math.random() * 2;
+                    let pos = 0;
+                    
+                    function animate() {
+                        pos += speed;
+                        particle.style.left = `${x + pos}px`;
+                        particle.style.opacity = 1 - (pos / rect.width);
+                        
+                        if (pos < rect.width) {
+                            requestAnimationFrame(animate);
+                        } else {
+                            particle.remove();
+                        }
+                    }
+                    
+                    animate();
+                }, i * 200);
+            }
+        }
+
+        // Stop Current Flow
+        function stopCurrentFlow() {
+            isTesting = false;
+            document.getElementById('test-circuit-btn').innerHTML = '<i class="fas fa-play"></i> Test Circuit';
+            
+            if (currentFlowInterval) {
+                clearInterval(currentFlowInterval);
+                currentFlowInterval = null;
+            }
+            
+            wires.forEach(wire => {
+                wire.element.classList.remove('powered');
+                wire.powered = false;
+            });
+            
+            placedComponents.forEach(comp => {
+                comp.powered = false;
+                const compEl = document.querySelector(`[data-component-id="${comp.id}"]`);
+                if (compEl) {
+                    compEl.classList.remove('powered');
+                    compEl.querySelector('.component-icon').style.animation = '';
+                }
+            });
+            
+            document.querySelectorAll('.current-particle').forEach(p => p.remove());
+        }
+
+        // Show Short Circuit Effect
+        function showShortCircuit() {
+            placedComponents.forEach(comp => {
+                const compEl = document.querySelector(`[data-component-id="${comp.id}"]`);
+                if (compEl) {
+                    compEl.classList.add('short-circuit');
+                    setTimeout(() => compEl.classList.remove('short-circuit'), 500);
+                }
+            });
+            
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const spark = document.createElement('div');
+                    spark.style.position = 'absolute';
+                    spark.style.left = `${Math.random() * circuitBoard.clientWidth}px`;
+                    spark.style.top = `${Math.random() * circuitBoard.clientHeight}px`;
+                    spark.style.width = '12px';
+                    spark.style.height = '12px';
+                    spark.style.background = 'radial-gradient(circle, #e53e3e, transparent)';
+                    spark.style.borderRadius = '50%';
+                    spark.style.boxShadow = '0 0 15px #e53e3e';
+                    
+                    circuitBoard.appendChild(spark);
+                    setTimeout(() => spark.remove(), 300);
+                }, i * 100);
+            }
+        }
+
+        // Update Circuit Status
+        function updateCircuitStatus() {
+            const battery = placedComponents.find(c => c.data.type === 'power');
+            const loads = placedComponents.filter(c => c.data.type === 'load');
+            const wireCount = wires.length;
+            
+            if (!battery) {
+                circuitStatusElement.className = 'status-indicator off';
+                circuitStatusElement.innerHTML = '<i class="fas fa-times-circle"></i> No Power';
+            } else if (loads.length === 0) {
+                circuitStatusElement.className = 'status-indicator off';
+                circuitStatusElement.innerHTML = '<i class="fas fa-times-circle"></i> No Load';
+            } else if (wireCount < 2) {
+                circuitStatusElement.className = 'status-indicator off';
+                circuitStatusElement.innerHTML = '<i class="fas fa-times-circle"></i> Need Connections';
+            } else {
+                circuitStatusElement.className = 'status-indicator';
+                circuitStatusElement.innerHTML = '<i class="fas fa-check-circle"></i> Ready to Test';
+            }
+        }
+
+        // Update Requirements Display
+        function updateRequirements() {
+            if (currentLevel < 0 || currentLevel >= gameLevels.length) return;
+            
+            const level = gameLevels[currentLevel];
+            requirementsGrid.innerHTML = '';
+            
+            level.requirements.forEach(req => {
+                const count = placedComponents.filter(c => c.data.type === req.type).length;
+                const completed = count >= req.count;
+                
+                const item = document.createElement('div');
+                item.className = `requirement-item ${completed ? 'completed' : ''}`;
+                
+                const icon = document.createElement('div');
+                icon.className = 'requirement-icon';
+                icon.textContent = getComponentIcon(req.type);
+                
+                const text = document.createElement('div');
+                text.className = 'requirement-text';
+                
+                const name = document.createElement('div');
+                name.className = 'requirement-name';
+                name.textContent = req.name;
+                
+                const countEl = document.createElement('div');
+                countEl.className = 'requirement-count';
+                countEl.textContent = `${count}/${req.count}`;
+                
+                text.appendChild(name);
+                text.appendChild(countEl);
+                
+                const check = document.createElement('div');
+                check.className = 'requirement-check';
+                check.innerHTML = completed ? '✓' : '';
+                
+                item.appendChild(icon);
+                item.appendChild(text);
+                item.appendChild(check);
+                
+                requirementsGrid.appendChild(item);
+            });
+            
+            const totalRequired = level.requirements.reduce((sum, req) => sum + req.count, 0);
+            const totalPlaced = placedComponents.filter(c => 
+                level.requirements.some(req => req.type === c.data.type)
+            ).length;
+            const progress = Math.min(100, (totalPlaced / totalRequired) * 100);
+            progressElement.style.width = `${progress}%`;
+        }
+
+        function getComponentIcon(type) {
+            const component = circuitComponents.find(c => c.type === type);
+            return component ? component.icon : '⚛️';
+        }
+
+        // Check Level Completion
+        function checkLevelCompletion() {
+            if (currentLevel < 0 || currentLevel >= gameLevels.length) return false;
+            if (levelCompleted) return false;
+            
+            const level = gameLevels[currentLevel];
+            const allRequirementsMet = level.requirements.every(req => {
+                const count = placedComponents.filter(c => c.data.type === req.type).length;
+                return count >= req.count;
+            });
+            
+            const battery = placedComponents.find(c => c.data.type === 'power');
+            const loads = placedComponents.filter(c => c.data.type === 'load');
+            const hasConnections = wires.length >= 2;
+            
+            return allRequirementsMet && battery && loads.length > 0 && hasConnections;
+        }
+
+        // Complete Level
+        function completeLevel(analysis) {
+            levelCompleted = true;
+            stopCurrentFlow();
+            
+            const timeTaken = Math.floor((Date.now() - levelStartTime) / 1000);
+            totalTimePlayed += timeTaken;
+            const timeBonus = isDemoMode ? 0 : Math.max(0, 100 - timeTaken);
+            const totalScore = analysis.points + timeBonus;
+            
+            score += totalScore;
+            levelsCompleted++;
+            updateScore();
+            
+            document.getElementById('final-score').textContent = `+${totalScore}`;
+            document.getElementById('final-time').textContent = `${timeTaken}s`;
+            document.getElementById('final-streak').textContent = streak;
+            
+            // Clear previous buttons
+            levelCompleteButtons.innerHTML = '';
+            
+            if (isDemoMode) {
+                document.getElementById('complete-title').textContent = 'Demo Complete!';
+                document.getElementById('level-complete-text').textContent = 
+                    'Great job! You\'ve built your first circuit. Now you\'re ready for Level 1!';
+                
+                const nextBtn = document.createElement('button');
+                nextBtn.className = 'next-level-btn';
+                nextBtn.innerHTML = '<i class="fas fa-forward"></i> Start Level 1';
+                nextBtn.addEventListener('click', () => {
+                    document.getElementById('level-complete').style.display = 'none';
+                    showPostDemoMessage();
+                });
+                levelCompleteButtons.appendChild(nextBtn);
+                
+                document.getElementById('level-complete').style.display = 'block';
+            } else if (currentLevel === 4) {
+                // After Level 4, show View Scores button
+                document.getElementById('complete-title').textContent = 'All Levels Complete!';
+                document.getElementById('level-complete-text').textContent = 
+                    'Congratulations! You\'ve completed all levels. View your final scores.';
+                
+                const viewScoresBtn = document.createElement('button');
+                viewScoresBtn.className = 'view-scores-btn';
+                viewScoresBtn.innerHTML = '<i class="fas fa-chart-bar"></i> View Scores';
+                viewScoresBtn.addEventListener('click', () => {
+                    document.getElementById('level-complete').style.display = 'none';
+                    showScoreboard();
+                });
+                levelCompleteButtons.appendChild(viewScoresBtn);
+                
+                const playAgainBtn = document.createElement('button');
+                playAgainBtn.className = 'next-level-btn';
+                playAgainBtn.innerHTML = '<i class="fas fa-redo"></i> Play Again';
+                playAgainBtn.addEventListener('click', playAgain);
+                levelCompleteButtons.appendChild(playAgainBtn);
+                
+                document.getElementById('level-complete').style.display = 'block';
+            } else {
+                document.getElementById('complete-title').textContent = `Level ${currentLevel} Complete!`;
+                document.getElementById('level-complete-text').textContent = 
+                    `Perfect circuit! ${analysis.message}`;
+                
+                const nextBtn = document.createElement('button');
+                nextBtn.className = 'next-level-btn';
+                nextBtn.innerHTML = '<i class="fas fa-forward"></i> Next Level';
+                nextBtn.addEventListener('click', nextLevel);
+                levelCompleteButtons.appendChild(nextBtn);
+                
+                const playAgainBtn = document.createElement('button');
+                playAgainBtn.className = 'view-scores-btn';
+                playAgainBtn.innerHTML = '<i class="fas fa-redo"></i> Play Again';
+                playAgainBtn.addEventListener('click', playAgain);
+                levelCompleteButtons.appendChild(playAgainBtn);
+                
+                document.getElementById('level-complete').style.display = 'block';
+                
+                if (currentLevel + 1 < gameLevels.length) {
+                    gameLevels[currentLevel + 1].unlocked = true;
+                }
+            }
+            
+            createConfetti();
+        }
+
+        // Clear Circuit
+        function clearCircuit() {
+            placedComponents = [];
+            wires = [];
+            selectedTerminal = null;
+            stopCurrentFlow();
+            cancelConnection();
+            levelCompleted = false;
+            
+            circuitBoard.innerHTML = '';
+            
+            updateCircuitStatus();
+            updateRequirements();
+            streak = 0;
+            updateStreak();
+            
+            showToast('Circuit board cleared', 'info');
+        }
+
+        // Show Hint
+        function showHint() {
+            if (hintPopup.classList.contains('active')) {
+                closeHintHandler();
+                return;
+            }
+            
+            if (currentLevel < 0 || currentLevel >= gameLevels.length) return;
+            
+            const level = gameLevels[currentLevel];
+            const missingRequirements = level.requirements.filter(req => {
+                const count = placedComponents.filter(c => c.data.type === req.type).length;
+                return count < req.count;
+            });
+            
+            let hintHTML = '';
+            
+            if (missingRequirements.length > 0) {
+                const req = missingRequirements[0];
+                const needed = req.count - placedComponents.filter(c => c.data.type === req.type).length;
+                hintHTML = `
+                    <p>You need to add <strong>${needed} more ${req.name}</strong> to complete this level.</p>
+                    <div class="hint-diagram">
+                        <div style="font-size: 3rem;">${getComponentIcon(req.type)}</div>
+                        <p style="margin-top: 10px;">Drag ${needed} ${req.name}${needed > 1 ? 's' : ''} from the library</p>
+                    </div>
+                    <p>The ${req.name.toLowerCase()} ${req.type === 'power' ? 'provides electrical energy to the circuit' : 
+                        req.type === 'load' ? 'uses the electricity (lights up or spins)' : 
+                        'controls the flow of electricity'}.</p>
+                `;
+            } else if (wires.length < 2) {
+                hintHTML = `
+                    <p>You have all components but need to <strong>connect them with wires</strong>.</p>
+                    <div class="hint-diagram">
+                        <div style="display: flex; justify-content: center; gap: 20px; align-items: center;">
+                            <div style="font-size: 2rem;">🔋</div>
+                            <div style="color: #d69e2e; font-size: 1.5rem;">→</div>
+                            <div style="font-size: 2rem;">💡</div>
+                            <div style="color: #d69e2e; font-size: 1.5rem;">→</div>
+                            <div style="font-size: 2rem;">🔋</div>
+                        </div>
+                        <p style="margin-top: 10px;">Connect battery (+) to load (+), load (-) to battery (-)</p>
+                    </div>
+                    <p><strong>Click terminals to create wires:</strong> Red (+) to Red (+), Blue (-) to Blue (-)</p>
+                `;
+            } else {
+                if (level.id === 2) {
+                    hintHTML = `
+                        <p><strong>How to Connect a Switch:</strong></p>
+                        <div class="hint-diagram">
+                            <div style="display: flex; justify-content: center; gap: 10px; align-items: center;">
+                                <div style="text-align: center;">
+                                    <div style="font-size: 2rem;">🔋</div>
+                                    <div style="font-size: 0.8rem; color: #e53e3e;">+</div>
+                                </div>
+                                <div style="color: #d69e2e; font-size: 1.5rem;">→</div>
+                                <div style="text-align: center;">
+                                    <div style="font-size: 2rem;">⚡</div>
+                                    <div style="font-size: 0.8rem;">IN</div>
+                                </div>
+                                <div style="color: #d69e2e; font-size: 1.5rem;">→</div>
+                                <div style="text-align: center;">
+                                    <div style="font-size: 2rem;">⚡</div>
+                                    <div style="font-size: 0.8rem;">OUT</div>
+                                </div>
+                                <div style="color: #d69e2e; font-size: 1.5rem;">→</div>
+                                <div style="text-align: center;">
+                                    <div style="font-size: 2rem;">💡</div>
+                                    <div style="font-size: 0.8rem; color: #e53e3e;">+</div>
+                                </div>
+                            </div>
+                            <p style="margin-top: 10px;">Place switch between battery and bulb</p>
+                        </div>
+                        <p><strong>Connection order:</strong><br>
+                        1. Battery (+) → Switch IN<br>
+                        2. Switch OUT → Bulb (+)<br>
+                        3. Bulb (-) → Battery (-)</p>
+                        <p>Switches control the flow - they have no polarity (IN/OUT can connect either way).</p>
+                    `;
+                } else if (level.id === 4) {
+                    hintHTML = `
+                        <p><strong>Complete Circuit with Multiple Loads:</strong></p>
+                        <div class="hint-diagram">
+                            <div style="font-size: 3rem; margin-bottom: 10px;">🔋 ⚡ 💡 🔄</div>
+                            <p>Connect all components in parallel</p>
+                        </div>
+                        <p><strong>Correct Connections:</strong><br>
+                        1. Battery (+) → Switch IN<br>
+                        2. Switch OUT → Bulb (+) AND Motor (+)<br>
+                        3. Bulb (-) → Battery (-)<br>
+                        4. Motor (-) → Battery (-)</p>
+                        <p>Both loads (bulb and motor) share the same battery and switch.</p>
+                    `;
+                } else {
+                    hintHTML = `
+                        <p><strong>Your circuit is almost complete!</strong></p>
+                        <div class="hint-diagram">
+                            <div style="font-size: 3rem;">✅</div>
+                            <p style="margin-top: 10px;">Click "Test Circuit" to check if it works</p>
+                        </div>
+                        <p>Make sure:<br>
+                        • All components are properly connected<br>
+                        • Red (+) terminals connect to Red (+)<br>
+                        • Blue (-) terminals connect to Blue (-)<br>
+                        • There's a complete loop back to the battery</p>
+                        <p>Electricity flows from battery (+) through components back to battery (-).</p>
+                    `;
+                }
+            }
+            
+            hintContent.innerHTML = hintHTML;
+            hintPopup.classList.add('active');
+            popupOverlay.classList.add('active');
+        }
+
+        // Next Level
+        function nextLevel() {
+            document.getElementById('level-complete').style.display = 'none';
+            levelCompleted = false;
+            
+            if (currentLevel + 1 < gameLevels.length && gameLevels[currentLevel + 1].unlocked) {
+                currentLevel++;
+                loadLevel(currentLevel);
+                showToast(`Starting Level ${currentLevel}`, 'success');
+            } else {
+                showToast('🎉 All available levels completed!', 'success');
+            }
+        }
+
+        // Play Again
+        function playAgain() {
+            document.getElementById('level-complete').style.display = 'none';
+            levelCompleted = false;
+            loadLevel(currentLevel);
+            showToast(`Playing Level ${currentLevel} again`, 'info');
+        }
+
+        // Load Level - FIXED FLOW
+        function loadLevel(levelIndex) {
+            currentLevel = levelIndex;
+            const level = gameLevels[levelIndex];
+            
+            // Hide everything first
+            gameHeader.style.display = 'none';
+            gameStatsContainer.style.display = 'none';
+            gameArea.style.display = 'none';
+            demoOverlay.style.display = 'none';
+            postDemoMessage.classList.remove('active');
+            instructionsModal.style.display = 'none';
+            levelComplete.style.display = 'none';
+            
+            if (level.id === 0) {
+                challengeTitle.textContent = `Demo: ${level.title[currentLanguage]}`;
+                isDemoMode = true;
+                demoStep = 1;
+                updateDemoStep();
+                demoOverlay.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            } else {
+                challengeTitle.textContent = `Level ${level.id}: ${level.title[currentLanguage]}`;
+                gameHeader.style.display = 'block';
+                gameStatsContainer.style.display = 'block';
+                gameArea.style.display = 'block';
+                isDemoMode = false;
+                document.body.style.overflow = 'auto';
+            }
+            
+            challengeDescription.textContent = level.description[currentLanguage];
+            
+            clearCircuit();
+            levelStartTime = Date.now();
+            
+            timeLeft = level.timeLimit;
+            updateTimerDisplay();
+            
+            if (level.timeLimit > 0) {
+                startTimer();
+            }
+            
+            updateRequirements();
+        }
+
+        // Timer Functions
+        function startTimer() {
+            clearInterval(timerInterval);
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    showTimeUp();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timeLeft / 60);
+            const s = timeLeft % 60;
+            timeElement.textContent = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        function showTimeUp() {
+            showToast("Time's up! Try again.", 'error');
+            clearCircuit();
+        }
+
+        // Update Score and Streak
+        function updateScore() {
+            scoreElement.textContent = `Score: ${score}`;
+        }
+
+        function updateStreak() {
+            streakElement.textContent = `Streak: ${streak}`;
+        }
+
+        // Show Toast
+        function showToast(message, type) {
+            document.querySelectorAll('.toast').forEach(toast => toast.remove());
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'times-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Show Instructions (from scoreboard)
+        function showInstructions() {
+            scoreboard.classList.remove('active');
+            instructionsModal.style.display = 'flex';
+        }
+
+        // Switch Language
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+            
+            const translations = {
+                en: {
+                    'nav-dashboard': 'Dashboard','nav-about':'About','nav-contact':'Contact',
+                    'game-title':'Interactive Circuit Builder','game-desc':'Build real circuits! Drag components, connect terminals with wires, and watch electricity flow.',
+                    'correct-title':'Circuit Working!','incorrect-title':'Circuit Error!',
+                    'continue-btn':'Continue','level-title':'Circuit Complete!','level-text':'Perfect! Your circuit is working.',
+                    'next-level':'Next Level','instructions-title':'How to Build Circuits','instructions-intro':'Welcome to Circuit Builder!',
+                    'instruction-1':'📦 Drag components from the library to the circuit board',
+                    'instruction-2':'⚡ Click on a terminal (colored dots) to start a connection',
+                    'instruction-3':'🔗 Click another terminal to complete the wire connection',
+                    'instruction-4':'🔋 Build complete circuits: Battery(+) → Load(+) → Load(-) → Battery(-)',
+                    'instruction-5':'🚀 Click "Test Circuit" to see current flow',
+                    'instruction-6':'💡 Connect switches between battery and load to control circuit',
+                    'instructions-outro':'Build working circuits to complete each challenge!','start-game-btn':'Start Demo Level',
+                    'circuit-board':'Circuit Board','components-library':'Components Library'
+                },
+                or: {
+                    'nav-dashboard':'ଡ୍ୟାସବୋର୍ଡ','nav-about':'ବିଷୟରେ','nav-contact':'ଯୋଗାଯୋଗ',
+                    'game-title':'ଇଣ୍ଟରାକ୍ଟିଭ୍ ସର୍କିଟ୍ ବିଲଡର୍','game-desc':'ପ୍ରକୃତ ସର୍କିଟ୍ ତିଆରି କରନ୍ତୁ! ଘଟକଗୁଡିକୁ ଟାଣନ୍ତୁ, ଟର୍ମିନାଲ୍‌ଗୁଡିକୁ ତାରରେ ସଂଯୋଗ କରନ୍ତୁ ଏବଂ ବିଦ୍ୟୁତ୍ ପ୍ରବାହ ଦେଖନ୍ତୁ।',
+                    'correct-title':'ସର୍କିଟ୍ କାମ କରୁଛି!','incorrect-title':'ସର୍କିଟ୍ ତ୍ରୁଟି!',
+                    'continue-btn':'ଜାରି ରଖନ୍ତୁ','level-title':'ସର୍କିଟ୍ ସମ୍ପୂର୍ଣ୍ଣ!','level-text':'ପରଫେକ୍ଟ! ଆପଣଙ୍କର ସର୍କିଟ୍ କାମ କରୁଛି।',
+                    'next-level':'ପରବର୍ତ୍ତୀ ସ୍ତର','instructions-title':'କିପରି ସର୍କିଟ୍ ତିଆରି କରିବେ','instructions-intro':'ସର୍କିଟ୍ ବିଲଡରକୁ ସ୍ୱାଗତ!',
+                    'instruction-1':'📦 ଲାଇବ୍ରେରୀରୁ ଘଟକଗୁଡିକୁ ସର୍କିଟ୍ ବୋର୍ଡକୁ ଟାଣନ୍ତୁ',
+                    'instruction-2':'⚡ ଏକ ଟର୍ମିନାଲ୍ (ରଙ୍ଗୀନ ବିନ୍ଦୁ) ଉପରେ କ୍ଲିକ୍ କରି ଏକ ସଂଯୋଗ ଆରମ୍ଭ କରନ୍ତୁ',
+                    'instruction-3':'🔗 ଅନ୍ୟ ଏକ ଟର୍ମିନାଲ୍ ଉପରେ କ୍ଲିକ୍ କରି ତାର ସଂଯୋଗ ସମ୍ପୂର୍ଣ୍ଣ କରନ୍ତୁ',
+                    'instruction-4':'🔋 ସମ୍ପୂର୍ଣ୍ଣ ସର୍କିଟ୍ ତିଆରି କରନ୍ତୁ: ବ୍ୟାଟେରୀ(+) → ଲୋଡ୍(+) → ଲୋଡ୍(-) → ବ୍ୟାଟେରୀ(-)',
+                    'instruction-5':'🚀 କରେଣ୍ଟ ପ୍ରବାହ ଦେଖିବା ପାଇଁ "ଟେଷ୍ଟ ସର୍କିଟ୍" କ୍ଲିକ୍ କରନ୍ତୁ',
+                    'instruction-6':'💡 ସୁଇଚ୍‌ଗୁଡିକୁ ବ୍ୟାଟେରୀ ଏବଂ ଲୋଡ୍ ମଧ୍ୟରେ ସଂଯୋଗ କରନ୍ତୁ',
+                    'instructions-outro':'ପ୍ରତ୍ୟେକ ଚ୍ୟାଲେଞ୍ଜ୍ ସମାପ୍ତ କରିବା ପାଇଁ କାର୍ଯ୍ୟକାରୀ ସର୍କିଟ୍ ତିଆରି କରନ୍ତୁ!','start-game-btn':'ଡେମୋ ଲେବଲ୍ ଆରମ୍ଭ କରନ୍ତୁ',
+                    'circuit-board':'ସର୍କିଟ୍ ବୋର୍ଡ','components-library':'ଘଟକ ଲାଇବ୍ରେରୀ'
+                },
+                hi: {
+                    'nav-dashboard':'डैशबोर्ड','nav-about':'हमारे बारे में','nav-contact':'संपर्क करें',
+                    'game-title':'इंटरएक्टिव सर्किट बिल्डर','game-desc':'असली सर्किट बनाएं! घटकों को खींचें, टर्मिनलों को तारों से जोड़ें और बिजली का प्रवाह देखें।',
+                    'correct-title':'सर्किट कार्य कर रहा है!','incorrect-title':'सर्किट त्रुटि!',
+                    'continue-btn':'जारी रखें','level-title':'सर्किट पूर्ण!','level-text':'बिल्कुल सही! आपका सर्किट काम कर रहा है।',
+                    'next-level':'अगला स्तर','instructions-title':'सर्किट कैसे बनाएं','instructions-intro':'सर्किट बिल्डर में आपका स्वागत है!',
+                    'instruction-1':'📦 लाइब्रेरी से घटकों को सर्किट बोर्ड पर खींचें',
+                    'instruction-2':'⚡ एक टर्मिनल (रंगीन बिंदु) पर क्लिक करके कनेक्शन शुरू करें',
+                    'instruction-3':'🔗 तार कनेक्शन पूरा करने के लिए दूसरे टर्मिनल पर क्लिक करें',
+                    'instruction-4':'🔋 पूर्ण सर्किट बनाएं: बैटरी(+) → लोड(+) → लोड(-) → बैटरी(-)',
+                    'instruction-5':'🚀 करंट प्रवाह देखने के लिए "टेस्ट सर्किट" क्लिक करें',
+                    'instruction-6':'💡 बैटरी और लोड के बीच स्विच कनेक्ट करें',
+                    'instructions-outro':'प्रत्येक चैलेंज को पूरा करने के लिए कार्यशील सर्किट बनाएं!','start-game-btn':'डेमो स्तर शुरू करें',
+                    'circuit-board':'सर्किट बोर्ड','components-library':'घटक लाइब्रेरी'
+                }
+            };
+            
+            const map = translations[lang] || translations.en;
+            Object.keys(map).forEach(key => {
+                const elements = document.querySelectorAll(`[data-translate="${key}"]`);
+                elements.forEach(el => {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = map[key];
+                    } else {
+                        el.textContent = map[key];
+                    }
+                });
+            });
+            
+            // Update instructions modal
+            if (document.getElementById('instructions-title')) {
+                document.getElementById('instructions-title').textContent = map['instructions-title'];
+                document.getElementById('instructions-intro').textContent = map['instructions-intro'];
+                for (let i = 1; i <= 6; i++) {
+                    if (document.getElementById(`instruction-${i}`)) {
+                        document.getElementById(`instruction-${i}`).textContent = map[`instruction-${i}`];
+                    }
+                }
+                document.getElementById('instructions-outro').textContent = map['instructions-outro'];
+                document.getElementById('start-game-btn').textContent = map['start-game-btn'];
+            }
+            
+            // Update demo content
+            const demoMap = demoTranslations[lang] || demoTranslations.en;
+            for (let i = 1; i <= 6; i++) {
+                const titleEl = document.getElementById(`demo-step-${i}-title`);
+                const textEl = document.getElementById(`demo-step-${i}-text`);
+                const descEl = document.getElementById(`demo-step-${i}-desc`);
+                
+                if (titleEl) titleEl.innerHTML = demoMap[`demo-step-${i}-title`];
+                if (textEl) textEl.innerHTML = demoMap[`demo-step-${i}-text`];
+                if (descEl) descEl.innerHTML = demoMap[`demo-step-${i}-desc`];
+            }
+            
+            // Update demo buttons
+            document.getElementById('skip-demo').textContent = demoMap['skip-demo'];
+            document.getElementById('complete-demo').textContent = demoMap['complete-demo'];
+            for (let i = 1; i <= 5; i++) {
+                const backBtn = document.getElementById(`back-demo-${i}`);
+                const nextBtn = document.getElementById(`next-demo-${i}`);
+                if (backBtn) backBtn.textContent = demoMap['back'];
+                if (nextBtn) {
+                    if (i === 1) nextBtn.textContent = demoMap['lets-start'];
+                    else if (i === 2) nextBtn.textContent = demoMap['got-it'];
+                    else nextBtn.textContent = demoMap['next'];
+                }
+            }
+            
+            // Update post-demo content
+            document.getElementById('post-demo-title').textContent = demoMap['post-demo-title'];
+            document.getElementById('post-demo-text').textContent = demoMap['post-demo-text'];
+            document.getElementById('post-demo-next-title').textContent = demoMap['post-demo-next-title'];
+            
+            const listItems = document.getElementById('post-demo-list').querySelectorAll('li');
+            listItems[0].innerHTML = `<strong>Level 1:</strong> ${demoMap['post-demo-list-item-1']}`;
+            listItems[1].innerHTML = `<strong>Level 2:</strong> ${demoMap['post-demo-list-item-2']}`;
+            listItems[2].innerHTML = `<strong>Level 3:</strong> ${demoMap['post-demo-list-item-3']}`;
+            listItems[3].innerHTML = `<strong>Level 4:</strong> ${demoMap['post-demo-list-item-4']}`;
+            
+            document.getElementById('start-real-game-btn').innerHTML = `<i class="fas fa-play-circle"></i> ${demoMap['start-real-game']}`;
+            document.getElementById('repeat-demo-btn').innerHTML = `<i class="fas fa-redo"></i> ${demoMap['repeat-demo']}`;
+            
+            // Update scoreboard
+            document.getElementById('scoreboard-title').textContent = demoMap['scoreboard-title'];
+            document.getElementById('scoreboard-message').textContent = demoMap['scoreboard-message'];
+            document.getElementById('scoreboard-total-label').textContent = demoMap['scoreboard-total-label'];
+            document.getElementById('scoreboard-levels-label').textContent = demoMap['scoreboard-levels-label'];
+            document.getElementById('scoreboard-time-label').textContent = demoMap['scoreboard-time-label'];
+            document.getElementById('scoreboard-perfect-label').textContent = demoMap['scoreboard-perfect-label'];
+            document.getElementById('scoreboard-restart').innerHTML = `<i class="fas fa-redo"></i> ${demoMap['play-again']}`;
+            document.getElementById('scoreboard-menu').innerHTML = `<i class="fas fa-home"></i> ${demoMap['main-menu']}`;
+            
+            // Update game UI
+            document.getElementById('hint-title').textContent = demoMap['hint-title'];
+            document.getElementById('connection-text').textContent = demoMap['connection-text'];
+            document.getElementById('test-btn-text').textContent = demoMap['test-btn-text'];
+            document.getElementById('clear-btn-text').textContent = demoMap['clear-btn-text'];
+            document.getElementById('hint-btn-text').textContent = demoMap['hint-btn-text'];
+            document.getElementById('close-hint').textContent = demoMap['got-it-btn'];
+            
+            // Update components on board
+            document.querySelectorAll('.component-label').forEach(el => {
+                const componentId = parseInt(el.closest('.circuit-component').dataset.componentId);
+                const component = placedComponents.find(c => c.id === componentId);
+                if (component) {
+                    el.textContent = component.data.name[lang] || component.data.name.en;
+                }
+            });
+            
+            // Update library items
+            document.querySelectorAll('.library-name').forEach((el, index) => {
+                if (circuitComponents[index]) {
+                    el.textContent = circuitComponents[index].name[lang] || circuitComponents[index].name.en;
+                }
+            });
+            
+            // Update level info
+            if (currentLevel >= 0 && gameLevels[currentLevel]) {
+                const level = gameLevels[currentLevel];
+                if (level.id === 0) {
+                    challengeTitle.textContent = `Demo: ${level.title[lang] || level.title.en}`;
+                } else {
+                    challengeTitle.textContent = `Level ${level.id}: ${level.title[lang] || level.title.en}`;
+                }
+                challengeDescription.textContent = level.description[lang] || level.description.en;
+            }
+        }
+
+        // Create Confetti
+        function createConfetti() {
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const c = document.createElement('div');
+                    c.style.position = 'fixed';
+                    c.style.left = Math.random() * 100 + 'vw';
+                    c.style.top = '-10px';
+                    c.style.width = '10px';
+                    c.style.height = '10px';
+                    const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#4facfe'];
+                    c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    c.style.zIndex = '1500';
+                    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                    c.style.animation = `confetti-fall ${2 + Math.random() * 3}s ease-out forwards`;
+                    
+                    document.body.appendChild(c);
+                    setTimeout(() => c.remove(), 4000);
+                }, i * 100);
+            }
+        }
+
+        // Delete Selected Component
+        function deleteSelectedComponent() {
+            if (selectedTerminal) {
+                cancelConnection();
+            }
+            
+            if (placedComponents.length > 0) {
+                const lastComponent = placedComponents[placedComponents.length - 1];
+                deleteComponent(lastComponent.id);
+            }
+        }
+
+        // Delete Component
+        function deleteComponent(componentId) {
+            const component = placedComponents.find(c => c.id === componentId);
+            if (!component) return;
+            
+            component.connections.forEach(conn => {
+                const wire = wires.find(w => w.id === conn.wireId);
+                if (wire) {
+                    wire.element.remove();
+                    wires = wires.filter(w => w.id !== wire.id);
+                    
+                    const otherComp = placedComponents.find(c => c.id === 
+                        (wire.from.componentId === componentId ? wire.to.componentId : wire.from.componentId));
+                    if (otherComp) {
+                        otherComp.connections = otherComp.connections.filter(c => c.wireId !== wire.id);
+                    }
+                }
+            });
+            
+            const element = document.querySelector(`[data-component-id="${componentId}"]`);
+            if (element) {
+                element.style.transform = 'scale(0) rotate(180deg)';
+                element.style.opacity = '0';
+                setTimeout(() => element.remove(), 300);
+            }
+            
+            placedComponents = placedComponents.filter(c => c.id !== componentId);
+            
+            showToast(`Removed ${component.data.name[currentLanguage]}`, 'info');
+            updateRequirements();
+            updateCircuitStatus();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initGame();
+            
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes spin {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(360deg); }
+                }
+                @keyframes spark {
+                    0% { transform: scale(0); opacity: 1; }
+                    50% { transform: scale(2); opacity: 0.5; }
+                    100% { transform: scale(0); opacity: 0; }
+                }
+                @keyframes confetti-fall {
+                    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+                    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+                }
+                @keyframes pulse {
+                    0%, 100% { transform: scale(1); }
+                    50% { transform: scale(1.1); }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+
+    </script>
+</body>
+</html>

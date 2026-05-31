@@ -1,0 +1,2972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Objects Work - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #2a69ac;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text h1 span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-pic {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 180px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f7fa;
+        }
+
+        .dropdown-item i {
+            color: #3182ce;
+            width: 20px;
+        }
+
+        /* Language Options */
+        .language-options {
+            position: absolute;
+            top: 60px;
+            right: 120px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 120px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .language-options.show {
+            display: block;
+        }
+
+        .language-option {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .language-option:last-child {
+            border-bottom: none;
+        }
+
+        .language-option:hover {
+            background: #f5f7fa;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9)), url('https://images.unsplash.com/photo-1562408590-e32931084e23?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .breadcrumb-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .breadcrumb a {
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #3182ce;
+        }
+
+        .breadcrumb span {
+            color: #64748b;
+        }
+
+        /* Interactive Content */
+        .interactive-content {
+            padding: 50px 0;
+        }
+
+        .learning-path {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .learning-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .path-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .path-card {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .path-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-color: #3182ce;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .card-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+            flex-grow: 1;
+        }
+
+        /* Popup Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-section {
+            margin-bottom: 30px;
+        }
+
+        .modal-section h3 {
+            color: #1a365d;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .modal-section p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .modal-section ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .modal-section li {
+            margin-bottom: 8px;
+        }
+
+        /* Progress Tracking */
+        .progress-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .progress-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .progress-bars {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .progress-item {
+            margin-bottom: 15px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        .progress-bar-container {
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #3182ce;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        /* Games Section */
+        .games-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .game-level {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .game-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .game-desc {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .game-body {
+            padding: 20px;
+        }
+
+        .game-features {
+            margin-bottom: 20px;
+        }
+
+        .game-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .game-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .game-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Resources Section */
+        .resources-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .resource-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .resource-icon {
+            font-size: 2.5rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .resource-title {
+            font-size: 1.1rem;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+
+        .resource-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .download-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Resource Preview Styles */
+        .resource-preview {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 1px solid #e2e8f0;
+            max-height: 200px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .preview-title {
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+
+        .preview-content {
+            line-height: 1.5;
+            color: #4a5568;
+            font-size: 0.85rem;
+        }
+
+        .preview-content ul {
+            padding-left: 15px;
+            margin: 5px 0;
+        }
+
+        .preview-content li {
+            margin-bottom: 3px;
+        }
+
+        /* ENHANCED FLASHCARD STYLES */
+        .flashcard-preview {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .flashcards-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            min-height: 280px;
+        }
+
+        .flashcard-wrapper {
+            width: 100%;
+            max-width: 500px;
+            height: 280px;
+            perspective: 1500px;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .flashcard-front {
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+        }
+
+        .flashcard-back {
+            background: linear-gradient(135deg, #38b2ac 0%, #2c9a94 100%);
+            color: white;
+            transform: rotateY(180deg);
+            overflow-y: auto;
+        }
+
+        .flashcard-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .flashcard-question {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .flashcard-answer {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .flashcard-hint {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .flashcard-instruction {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            margin-top: 15px;
+        }
+
+        .flashcard-category {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .flashcard-counter {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Flashcard Navigation */
+        .flashcard-navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .flashcard-nav-btn {
+            background: #3182ce;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .flashcard-nav-btn:hover {
+            background: #2b6cb0;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .flashcard-nav-btn:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .flashcard-indicators {
+            display: flex;
+            gap: 8px;
+        }
+
+        .flashcard-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .flashcard-indicator.active {
+            background: #3182ce;
+            transform: scale(1.2);
+        }
+
+        .flashcard-progress {
+            font-size: 1rem;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about {
+            padding-right: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.8rem;
+            background: #38b2ac;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 20px;
+            color: #38b2ac;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2d3748;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .social-links a:hover {
+            background: #38b2ac;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .games-grid, .resources-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .path-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .flashcard-wrapper {
+                max-width: 400px;
+                height: 250px;
+            }
+            
+            .flashcard-question {
+                font-size: 1.2rem;
+            }
+            
+            .flashcard-answer {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            nav ul {
+                gap: 15px;
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .flashcard-wrapper {
+                max-width: 350px;
+                height: 220px;
+            }
+            
+            .flashcard-front, .flashcard-back {
+                padding: 20px;
+            }
+            
+            .flashcard-question {
+                font-size: 1.1rem;
+            }
+            
+            .flashcard-answer {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .flashcard-wrapper {
+                max-width: 300px;
+                height: 200px;
+            }
+            
+            .flashcard-front, .flashcard-back {
+                padding: 15px;
+            }
+            
+            .flashcard-question {
+                font-size: 1rem;
+            }
+            
+            .flashcard-answer {
+                font-size: 0.9rem;
+            }
+            
+            .flashcard-nav-btn {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #38b2ac;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        /* Odia font support */
+        .odia-text {
+            font-family: 'Kalinga', 'Nirmala UI', 'Segoe UI', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-atom"></i>
+            </div>
+            <div class="logo-text">
+                <h1>STEM Learn Odisha</h1>
+                <p>Gamified Learning Platform</p>
+            </div>
+        </div>
+       
+        <nav>
+            <ul>
+                <li><a href="student-dashboard.html" id="navDashboard">Dashboard</a></li>
+                <li><a href="science.html" id="navScience">Science</a></li>
+                <li><a href="scienceidx.html" id="navCurriculum">Curriculum</a></li>
+                <li><a href="how-objects-work.html" class="active" id="navHowObjectsWork">How Objects Work</a></li>
+            </ul>
+        </nav>
+       
+        <div class="header-controls">
+            <button class="control-btn" id="languageToggle">
+                <i class="fas fa-globe"></i>
+            </button>
+           
+            <div class="profile-container">
+                <button class="profile-btn" id="profileToggle">
+                    <img src="" alt="Profile" class="profile-pic" id="headerProfilePic">
+                    <span id="headerUserName">Student</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+               
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" class="dropdown-item" id="dropdownProfile">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownSettings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownLogout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Language Options -->
+    <div class="language-options" id="languageOptions">
+        <div class="language-option" data-lang="en">English</div>
+        <div class="language-option" data-lang="or">ଓଡ଼ିଆ</div>
+    </div>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 id="objects-title">How Objects Work: Electricity and Magnetism</h1>
+            <p id="objects-desc">Explore the fascinating world of electricity and magnets through interactive activities and experiments</p>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <a href="student-dashboard.html" id="breadcrumb-home">Dashboard</a>
+                <span>/</span>
+                <a href="science.html" id="breadcrumb-science">Science</a>
+                <span>/</span>
+                <a href="scienceidx.html" id="breadcrumb-curriculum">Curriculum</a>
+                <span>/</span>
+                <span id="breadcrumb-topic">How Objects Work</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Content -->
+    <section class="interactive-content">
+        <div class="container">
+            <!-- Learning Path -->
+            <div class="learning-path">
+                <h2 class="learning-title">
+                    <i class="fas fa-road"></i>
+                    <span id="learning-path-title">Your Learning Path</span>
+                </h2>
+                <div class="path-cards">
+                    <div class="path-card" data-card="electricity">
+                        <div class="card-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="card-title" id="card1-title">Electricity Basics</div>
+                        <div class="card-desc" id="card1-desc">Learn about electric circuits, conductors, insulators, and electrical safety</div>
+                    </div>
+                    <div class="path-card" data-card="circuits">
+                        <div class="card-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <div class="card-title" id="card2-title">Electric Circuits</div>
+                        <div class="card-desc" id="card2-desc">Understand series and parallel circuits, switches, and electrical components</div>
+                    </div>
+                    <div class="path-card" data-card="magnetism">
+                        <div class="card-icon">
+                            <i class="fas fa-magnet"></i>
+                        </div>
+                        <div class="card-title" id="card3-title">Magnetism</div>
+                        <div class="card-desc" id="card3-desc">Discover magnetic materials, poles, electromagnets, and their applications</div>
+                    </div>
+                    <div class="path-card" data-card="review">
+                        <div class="card-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="card-title" id="card4-title">Review and Quizzes</div>
+                        <div class="card-desc" id="card4-desc">Test your knowledge with interactive quizzes and reviews</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Games Section -->
+            <div class="games-section">
+                <h2 class="section-title">
+                    <i class="fas fa-gamepad"></i>
+                    <span id="games-title">Interactive Learning Games</span>
+                </h2>
+
+                <div class="games-grid">
+                    <div class="game-card">
+                        <div class="game-header">
+                            <div class="game-level" id="level-basic">Basic</div>
+                            <h3 class="game-title" id="game1-title">Electric Circuit Builder</h3>
+                            <p class="game-desc" id="game1-desc">Build simple circuits and learn about conductors and insulators</p>
+                        </div>
+                        <div class="game-body">
+                            <div class="game-features">
+                                <div class="game-feature">
+                                    <i class="fas fa-star"></i>
+                                    <span id="game1-feature1">Connect wires, batteries, and bulbs</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-clock"></i>
+                                    <span id="game1-feature2">10-15 minutes gameplay</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-trophy"></i>
+                                    <span id="game1-feature3">Earn up to 50 points</span>
+                                </div>
+                            </div>
+                            <a href="game6.5.1.html" class="game-btn" id="play-game1">Play Game</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card">
+                        <div class="game-header">
+                            <div class="game-level" id="level-intermediate">Intermediate</div>
+                            <h3 class="game-title" id="game2-title">Magnetic Field Explorer</h3>
+                            <p class="game-desc" id="game2-desc">Discover magnetic fields and learn about magnetic materials</p>
+                        </div>
+                        <div class="game-body">
+                            <div class="game-features">
+                                <div class="game-feature">
+                                    <i class="fas fa-star"></i>
+                                    <span id="game2-feature1">Identify magnetic and non-magnetic materials</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-clock"></i>
+                                    <span id="game2-feature2">15-20 minutes gameplay</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-trophy"></i>
+                                    <span id="game2-feature3">Earn up to 100 points</span>
+                                </div>
+                            </div>
+                            <a href="game6.5.2.html" class="game-btn" id="play-game2">Play Game</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Resources Section -->
+            <div class="resources-section">
+                <h2 class="section-title">
+                    <i class="fas fa-download"></i>
+                    <span id="resources-title">Learning Resources</span>
+                </h2>
+
+                <div class="resources-grid">
+                    <!-- Study Notes (English) -->
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <h3 class="resource-title" id="resource1-title">Study Notes</h3>
+                        <p class="resource-desc" id="resource1-desc">Complete chapter notes for revision</p>
+                        
+                        <!-- Resource Preview -->
+                        <div class="resource-preview">
+                            <div class="preview-title">Preview - Chapter Summary</div>
+                            <div class="preview-content">
+                                <strong>Electricity Basics:</strong>
+                                <ul>
+                                    <li>Electric current: Flow of electric charge</li>
+                                    <li>Voltage: Electrical pressure that pushes current</li>
+                                    <li>Resistance: Opposition to current flow</li>
+                                    <li>Circuit: Complete path for current</li>
+                                </ul>
+                                
+                                <strong>Magnetism:</strong>
+                                <ul>
+                                    <li>All magnets have north and south poles</li>
+                                    <li>Like poles repel, unlike poles attract</li>
+                                    <li>Magnetic field: Area around a magnet</li>
+                                    <li>Electromagnets: Temporary magnets created by electricity</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <button class="download-btn" onclick="downloadResource('study_notes_english')">
+                            <i class="fas fa-download"></i>
+                            <span id="download-english">Download (English)</span>
+                        </button>
+                    </div>
+
+                    <!-- Study Notes (Odia) -->
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3 class="resource-title" id="resource2-title">Study Notes (Odia)</h3>
+                        <p class="resource-desc" id="resource2-desc">Complete chapter notes for revision</p>
+                        
+                        <!-- Resource Preview -->
+                        <div class="resource-preview odia-text">
+                            <div class="preview-title">ପ୍ରିଭ୍ୟୁ - ଅଧ୍ୟାୟ ସାରାଂଶ</div>
+                            <div class="preview-content">
+                                <strong>ବିଦ୍ୟୁତ୍ ମୂଳଭୂତ:</strong>
+                                <ul>
+                                    <li>ବିଦ୍ୟୁତ୍ ସ୍ରୋତ: ବିଦ୍ୟୁତ୍ ଚାର୍ଜର ପ୍ରବାହ</li>
+                                    <li>ଭୋଲ୍ଟେଜ୍: ବିଦ୍ୟୁତ୍ ଚାପ ଯାହା ସ୍ରୋତକୁ ଠେଲି ଦିଏ</li>
+                                    <li>ପ୍ରତିରୋଧ: ସ୍ରୋତ ପ୍ରବାହର ବିରୋଧ</li>
+                                    <li>ସର୍କିଟ୍: ସ୍ରୋତ ପାଇଁ ସମ୍ପୂର୍ଣ୍ଣ ପଥ</li>
+                                </ul>
+                                
+                                <strong>ଚୁମ୍ବକତ୍ୱ:</strong>
+                                <ul>
+                                    <li>ସମସ୍ତ ଚୁମ୍ବକର ଉତ୍ତର ଏବଂ ଦକ୍ଷିଣ ମେରୁ ଅଛି</li>
+                                    <li>ସମାନ ମେରୁ ବିକର୍ଷଣ କରେ, ବିପରୀତ ମେରୁ ଆକର୍ଷଣ କରେ</li>
+                                    <li>ଚୁମ୍ବକୀୟ କ୍ଷେତ୍ର: ଚୁମ୍ବକର ଚାରିପାଖରେ ଥିବା କ୍ଷେତ୍ର</li>
+                                    <li>ଇଲେକ୍ଟ୍ରୋମ୍ୟାଗ୍ନେଟ୍: ବିଦ୍ୟୁତ୍ ଦ୍ୱାରା ସୃଷ୍ଟି କରାଯାଇଥିବା ଅସ୍ଥାୟୀ ଚୁମ୍ବକ</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <button class="download-btn" onclick="downloadResource('study_notes_odia')">
+                            <i class="fas fa-download"></i>
+                            <span id="download-odia">Download (Odia)</span>
+                        </button>
+                    </div>
+
+                    <!-- Flashcards -->
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <h3 class="resource-title" id="resource3-title">Flashcards</h3>
+                        <p class="resource-desc" id="resource3-desc">Visual learning cards for key concepts</p>
+                        
+                        <!-- Flashcard Preview -->
+                        <div class="resource-preview">
+                            <div class="flashcard-preview">
+                                <div class="flashcards-container">
+                                    <div class="flashcard-wrapper">
+                                        <div class="flashcard" id="main-flashcard" onclick="flipCard()">
+                                            <!-- Content will be dynamically inserted here -->
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flashcard-navigation">
+                                    <button class="flashcard-nav-btn" id="prev-btn" onclick="prevFlashcard()">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    
+                                    <div class="flashcard-progress">
+                                        <span id="current-card">1</span> / <span id="total-cards">10</span>
+                                    </div>
+                                    
+                                    <button class="flashcard-nav-btn" id="next-btn" onclick="nextFlashcard()">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                                
+                                <div class="flashcard-indicators" id="flashcard-indicators">
+                                    <!-- Indicators will be dynamically inserted here -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="download-btn" onclick="downloadResource('flashcards')">
+                            <i class="fas fa-download"></i>
+                            <span id="download-flashcards">Download Flashcards</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <div class="footer-logo-text">STEM Learn Odisha</div>
+                    </div>
+                    <p id="footer-desc">Making Science and Mathematics education engaging and relevant for Class 6 students in Odisha through localized content and interactive learning.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h3 id="quick-links">Quick Links</h3>
+                    <ul>
+                        <li><a href="student-dashboard.html"><i class="fas fa-tachometer-alt"></i> <span id="footer-dashboard">Dashboard</span></a></li>
+                        <li><a href="science.html"><i class="fas fa-flask"></i> <span id="footer-science">Science</span></a></li>
+                        <li><a href="how-objects-work.html"><i class="fas fa-cogs"></i> <span id="footer-objects">How Objects Work</span></a></li>
+                        <li><a href="scienceidx.html"><i class="fas fa-book"></i> <span id="footer-curriculum">Curriculum</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h3 id="contact-us">Contact Us</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> <span id="footer-address">Department of Education, Bhubaneswar</span></a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +91 674 123 4567</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@stemlearnodisha.com</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p id="copyright">© 2023 STEM Learn Odisha. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Popup -->
+    <div class="modal" id="content-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">Electricity Basics</h2>
+                <button class="close-modal" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced Flashcard data for Electricity and Magnetism
+        const flashcardsData = [
+            {
+                question: "What is electric current and how is it measured?",
+                answer: "Electric current is the flow of electric charge through a conductor. It is measured in amperes (A) using an ammeter. Current flows from positive to negative terminal in conventional current flow, while electrons actually flow from negative to positive. The direction of current is opposite to the direction of electron flow.",
+                hint: "Think about flow of charge",
+                category: "Electricity Basics",
+                icon: "fas fa-bolt"
+            },
+            {
+                question: "Explain the difference between conductors and insulators with examples",
+                answer: "Conductors allow electricity to flow through them easily because they have free electrons. Examples: Copper, aluminum, silver, gold, iron, graphite. Insulators do not allow electricity to flow through them easily because they have tightly bound electrons. Examples: Rubber, plastic, glass, wood, air, ceramic. Water is a conductor when it contains salts or minerals.",
+                hint: "Materials that allow vs. resist current",
+                category: "Materials",
+                icon: "fas fa-exchange-alt"
+            },
+            {
+                question: "What is the difference between series and parallel circuits?",
+                answer: "In series circuits, components are connected one after another in a single path. Current is same throughout, voltage divides. If one component fails, entire circuit stops. In parallel circuits, components are connected separately across the voltage source. Voltage is same across all components, current divides. If one component fails, others continue working.",
+                hint: "Single path vs. multiple paths",
+                category: "Circuits",
+                icon: "fas fa-microchip"
+            },
+            {
+                question: "Describe the properties of magnets and magnetic field lines",
+                answer: "Properties: 1) Two poles (north and south), 2) Like poles repel, unlike attract, 3) Cannot be isolated (break magnet → two magnets), 4) Strength maximum at poles. Magnetic field lines: 1) Flow from north to south pole, 2) Never intersect, 3) Density indicates strength, 4) Form closed loops, 5) Direction given by tangent at any point.",
+                hint: "Think about pole behavior and field patterns",
+                category: "Magnetism",
+                icon: "fas fa-magnet"
+            },
+            {
+                question: "What is an electromagnet and how does it work?",
+                answer: "An electromagnet is a temporary magnet created by passing electric current through a coil wrapped around an iron core. When current flows, it creates a magnetic field. Strength depends on: 1) Current amount, 2) Number of coil turns, 3) Core material. Turning current off removes magnetism. Used in: Electric bells, motors, generators, MRI machines, speakers.",
+                hint: "Temporary magnet created by electricity",
+                category: "Electromagnetism",
+                icon: "fas fa-bolt"
+            },
+            {
+                question: "Explain Ohm's Law and its mathematical formula",
+                answer: "Ohm's Law states that current through a conductor is directly proportional to voltage across it and inversely proportional to resistance, provided temperature remains constant. Formula: V = I × R, where V = Voltage (volts), I = Current (amperes), R = Resistance (ohms). Derived formulas: I = V/R and R = V/I. Named after German physicist Georg Simon Ohm.",
+                hint: "Relationship between voltage, current, resistance",
+                category: "Laws",
+                icon: "fas fa-balance-scale"
+            },
+            {
+                question: "What are the different sources of electricity?",
+                answer: "Sources: 1) Chemical (batteries - convert chemical to electrical), 2) Mechanical (generators - convert motion to electrical), 3) Solar (solar cells - convert light to electrical), 4) Thermal (thermocouples - convert heat to electrical), 5) Nuclear (nuclear reactors - use nuclear reactions), 6) Wind (wind turbines), 7) Hydro (hydroelectric dams), 8) Tidal (tidal power).",
+                hint: "Different ways to generate electrical energy",
+                category: "Energy Sources",
+                icon: "fas fa-plug"
+            },
+            {
+                question: "What is electromagnetic induction and its applications?",
+                answer: "Electromagnetic induction is the process of generating electric current in a conductor by changing the magnetic field around it. Discovered by Michael Faraday. Applications: 1) Generators (convert mechanical to electrical), 2) Transformers (change AC voltage), 3) Induction cooktops, 4) Wireless charging, 5) Electric guitar pickups, 6) MRI machines, 7) Metal detectors.",
+                hint: "Generating electricity from changing magnetic fields",
+                category: "Electromagnetism",
+                icon: "fas fa-wave-square"
+            },
+            {
+                question: "What are the safety precautions when working with electricity?",
+                answer: "Safety rules: 1) Never touch electrical appliances with wet hands, 2) Don't insert objects into sockets, 3) Use insulated tools, 4) Turn off power before repairs, 5) Stay away from fallen power lines, 6) Use proper fuses/circuit breakers, 7) Ground electrical appliances, 8) Don't overload circuits, 9) Keep water away from electricity, 10) Use rubber gloves when needed.",
+                hint: "Preventing electrical accidents",
+                category: "Safety",
+                icon: "fas fa-shield-alt"
+            },
+            {
+                question: "What are the applications of magnets in daily life?",
+                answer: "Applications: 1) Compasses (navigation), 2) Electric motors (fans, mixers), 3) Generators (electricity production), 4) Speakers and headphones, 5) Refrigerator doors, 6) Credit/debit cards (magnetic stripe), 7) MRI machines (medical imaging), 8) Magnetic levitation trains, 9) Magnetic separation (recycling), 10) Door locks, 11) Toys, 12) Hard drives (data storage).",
+                hint: "Everyday uses of magnets",
+                category: "Applications",
+                icon: "fas fa-home"
+            }
+        ];
+
+        let currentFlashcardIndex = 0;
+        let currentLanguage = 'en';
+
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+           
+            if (!user) {
+                // Redirect to login if not authenticated
+                window.location.href = 'student-login.html';
+                return;
+            }
+           
+            // Load user data
+            loadUserData(user);
+            
+            // Initialize the page
+            init();
+        });
+
+        // Load user data into the page
+        function loadUserData(user) {
+            document.getElementById('headerUserName').textContent = user.fullName;
+            document.getElementById('headerProfilePic').src = user.profilePicture ? `uploads/${user.profilePicture}` : 'default-profile.png';
+        }
+
+        // Content for modal popups
+        const contentData = {
+            'electricity': {
+                'title': 'Electricity Basics',
+                'content': `
+                    <div class="modal-section">
+                        <h3>What is Electricity?</h3>
+                        <p>Electricity is a form of energy that results from the movement of charged particles called electrons. It powers many devices we use every day.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Basic Concepts</h3>
+                        <p>Understanding electricity starts with these key concepts:</p>
+                        <ul>
+                            <li><strong>Electric Current:</strong> Flow of electric charge through a conductor</li>
+                            <li><strong>Voltage:</strong> Electrical pressure that pushes current through a circuit</li>
+                            <li><strong>Resistance:</strong> Opposition to the flow of electric current</li>
+                            <li><strong>Circuit:</strong> Complete path for electric current to flow</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Conductors and Insulators</h3>
+                        <p>Materials behave differently with electricity:</p>
+                        <ul>
+                            <li><strong>Conductors:</strong> Allow electricity to flow through them easily
+                                <ul>
+                                    <li>Metals (copper, aluminum, iron)</li>
+                                    <li>Graphite</li>
+                                    <li>Water (when containing salts)</li>
+                                </ul>
+                            </li>
+                            <li><strong>Insulators:</strong> Do not allow electricity to flow through them easily
+                                <ul>
+                                    <li>Rubber</li>
+                                    <li>Plastic</li>
+                                    <li>Wood</li>
+                                    <li>Glass</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Sources of Electricity</h3>
+                        <p>Electricity can be generated from various sources:</p>
+                        <ul>
+                            <li><strong>Batteries:</strong> Convert chemical energy to electrical energy</li>
+                            <li><strong>Generators:</strong> Convert mechanical energy to electrical energy</li>
+                            <li><strong>Solar Cells:</strong> Convert light energy to electrical energy</li>
+                            <li><strong>Power Plants:</strong> Use coal, water, wind, or nuclear energy</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Electrical Safety</h3>
+                        <p>Always remember these safety rules:</p>
+                        <ul>
+                            <li>Never touch electrical appliances with wet hands</li>
+                            <li>Don't insert objects into electrical sockets</li>
+                            <li>Use insulated tools when working with electricity</li>
+                            <li>Turn off power before repairing electrical devices</li>
+                            <li>Stay away from fallen power lines</li>
+                        </ul>
+                    </div>
+                `
+            },
+            'circuits': {
+                'title': 'Electric Circuits',
+                'content': `
+                    <div class="modal-section">
+                        <h3>What is an Electric Circuit?</h3>
+                        <p>An electric circuit is a complete path through which electric current can flow. It must have a power source, conductors, and a load (like a bulb).</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Components of a Circuit</h3>
+                        <p>Basic components needed for a simple circuit:</p>
+                        <ul>
+                            <li><strong>Power Source:</strong> Battery or cell that provides energy</li>
+                            <li><strong>Conducting Wires:</strong> Allow current to flow through the circuit</li>
+                            <li><strong>Switch:</strong> Controls the flow of current (on/off)</li>
+                            <li><strong>Load/Bulb:</strong> Device that uses electrical energy</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Types of Circuits</h3>
+                        <p>There are two main types of circuits:</p>
+                        <ul>
+                            <li><strong>Series Circuit:</strong>
+                                <ul>
+                                    <li>Components are connected one after another</li>
+                                    <li>Current has only one path to follow</li>
+                                    <li>If one bulb goes out, all bulbs go out</li>
+                                    <li>Example: Old Christmas tree lights</li>
+                                </ul>
+                            </li>
+                            <li><strong>Parallel Circuit:</strong>
+                                <ul>
+                                    <li>Components are connected separately</li>
+                                    <li>Current has multiple paths to follow</li>
+                                    <li>If one bulb goes out, others stay lit</li>
+                                    <li>Example: House wiring</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Circuit Symbols</h3>
+                        <p>Electricians use symbols to represent circuit components:</p>
+                        <ul>
+                            <li><strong>Cell/Battery:</strong> Long line (+) and short line (-)</li>
+                            <li><strong>Bulb:</strong> Circle with cross inside</li>
+                            <li><strong>Switch:</strong> Line with break that can be connected</li>
+                            <li><strong>Wire:</strong> Straight line connecting components</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Making a Simple Circuit</h3>
+                        <p>Steps to create a basic circuit:</p>
+                        <ol>
+                            <li>Connect one end of a wire to the positive terminal of a battery</li>
+                            <li>Connect the other end of this wire to one terminal of a bulb</li>
+                            <li>Connect a second wire from the other terminal of the bulb</li>
+                            <li>Connect this wire to the negative terminal of the battery</li>
+                            <li>The bulb should light up if all connections are proper</li>
+                        </ol>
+                    </div>
+                `
+            },
+            'magnetism': {
+                'title': 'Magnetism',
+                'content': `
+                    <div class="modal-section">
+                        <h3>What is Magnetism?</h3>
+                        <p>Magnetism is a force that can attract or repel certain materials. Magnets have been used for thousands of years for navigation and other purposes.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Properties of Magnets</h3>
+                        <p>All magnets share these properties:</p>
+                        <ul>
+                            <li><strong>Two Poles:</strong> Every magnet has a north and south pole</li>
+                            <li><strong>Like Poles Repel:</strong> North repels north, south repels south</li>
+                            <li><strong>Unlike Poles Attract:</strong> North attracts south</li>
+                            <li><strong>Magnetic Field:</strong> Area around a magnet where its force can be felt</li>
+                            <li><strong>Cannot be Separated:</strong> If you break a magnet, you get two smaller magnets</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Types of Magnets</h3>
+                        <p>Magnets come in different forms:</p>
+                        <ul>
+                            <li><strong>Natural Magnets:</strong> Found in nature (lodestone/magnetite)</li>
+                            <li><strong>Artificial Magnets:</strong> Made by humans from magnetic materials
+                                <ul>
+                                    <li>Bar magnets</li>
+                                    <li>Horseshoe magnets</li>
+                                    <li>Ring magnets</li>
+                                    <li>Cylindrical magnets</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Magnetic and Non-Magnetic Materials</h3>
+                        <p>Materials can be classified based on their magnetic properties:</p>
+                        <ul>
+                            <li><strong>Magnetic Materials:</strong> Attracted to magnets
+                                <ul>
+                                    <li>Iron (most magnetic)</li>
+                                    <li>Nickel</li>
+                                    <li>Cobalt</li>
+                                    <li>Steel (contains iron)</li>
+                                </ul>
+                            </li>
+                            <li><strong>Non-Magnetic Materials:</strong> Not attracted to magnets
+                                <ul>
+                                    <li>Wood</li>
+                                    <li>Plastic</li>
+                                    <li>Glass</li>
+                                    <li>Copper</li>
+                                    <li>Aluminum</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Electromagnets</h3>
+                        <p>Electromagnets are temporary magnets created by electricity:</p>
+                        <ul>
+                            <li>Made by wrapping wire around an iron core</li>
+                            <li>Only magnetic when electric current flows through the wire</li>
+                            <li>Strength can be controlled by changing current or number of wire turns</li>
+                            <li>Used in many devices: electric bells, motors, MRI machines</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Uses of Magnets</h3>
+                        <p>Magnets have many important uses:</p>
+                        <ul>
+                            <li><strong>Compass:</strong> For navigation (always points north)</li>
+                            <li><strong>Electric Motors:</strong> Convert electrical energy to motion</li>
+                            <li><strong>Generators:</strong> Convert motion to electrical energy</li>
+                            <li><strong>Magnetic Separation:</strong> Separate magnetic materials from waste</li>
+                            <li><strong>Medical Equipment:</strong> MRI machines for body scanning</li>
+                            <li><strong>Household Items:</strong> Refrigerator doors, speakers, credit cards</li>
+                        </ul>
+                    </div>
+                `
+            },
+            'review': {
+                'title': 'Review and Quizzes',
+                'content': `
+                    <div class="modal-section">
+                        <h3>Test Your Knowledge</h3>
+                        <p>Let's review what you've learned about electricity and magnetism.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Quick Quiz</h3>
+                        <p><strong>Question 1:</strong> Which material is a good conductor of electricity?</p>
+                        <ul>
+                            <li>A) Rubber</li>
+                            <li>B) Plastic</li>
+                            <li>C) Copper</li>
+                            <li>D) Wood</li>
+                        </ul>
+                        <p><strong>Answer:</strong> C) Copper</p>
+                        
+                        <p><strong>Question 2:</strong> What happens when north poles of two magnets are brought close?</p>
+                        <ul>
+                            <li>A) They attract</li>
+                            <li>B) They repel</li>
+                            <li>C) Nothing happens</li>
+                            <li>D) They stick together</li>
+                        </ul>
+                        <p><strong>Answer:</strong> B) They repel</p>
+                        
+                        <p><strong>Question 3:</strong> In a series circuit, what happens if one bulb goes out?</p>
+                        <ul>
+                            <li>A) All other bulbs stay lit</li>
+                            <li>B) Only some bulbs go out</li>
+                            <li>C) All bulbs go out</li>
+                            <li>D) The circuit works better</li>
+                        </ul>
+                        <p><strong>Answer:</strong> C) All bulbs go out</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Key Points to Remember</h3>
+                        <ul>
+                            <li>Electricity flows through conductors but not through insulators</li>
+                            <li>A complete circuit is needed for electricity to flow</li>
+                            <li>Magnets have north and south poles</li>
+                            <li>Like poles repel, unlike poles attract</li>
+                            <li>Iron, nickel, and cobalt are magnetic materials</li>
+                            <li>Electromagnets are temporary magnets created by electricity</li>
+                            <li>Always follow electrical safety rules</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Interactive Activities</h3>
+                        <p>Try these activities to reinforce your learning:</p>
+                        <ul>
+                            <li>Build a simple circuit with a battery, wire, and bulb</li>
+                            <li>Test different materials to see which are magnetic</li>
+                            <li>Make a simple electromagnet with a nail and wire</li>
+                            <li>Draw circuit diagrams for different devices</li>
+                            <li>Create a list of electrical safety rules for your home</li>
+                        </ul>
+                    </div>
+                `
+            }
+        };
+
+        // Translations
+        const translations = {
+            en: {
+                'navDashboard': 'Dashboard',
+                'navScience': 'Science',
+                'navCurriculum': 'Curriculum',
+                'navHowObjectsWork': 'How Objects Work',
+                'objects-title': 'How Objects Work: Electricity and Magnetism',
+                'objects-desc': 'Explore the fascinating world of electricity and magnets through interactive activities and experiments',
+                'breadcrumb-home': 'Dashboard',
+                'breadcrumb-science': 'Science',
+                'breadcrumb-curriculum': 'Curriculum',
+                'breadcrumb-topic': 'How Objects Work',
+                'learning-path-title': 'Your Learning Path',
+                'card1-title': 'Electricity Basics',
+                'card1-desc': 'Learn about electric circuits, conductors, insulators, and electrical safety',
+                'card2-title': 'Electric Circuits',
+                'card2-desc': 'Understand series and parallel circuits, switches, and electrical components',
+                'card3-title': 'Magnetism',
+                'card3-desc': 'Discover magnetic materials, poles, electromagnets, and their applications',
+                'card4-title': 'Review and Quizzes',
+                'card4-desc': 'Test your knowledge with interactive quizzes and reviews',
+                'progress-title': 'Your Progress',
+                'progress-electricity': 'Electricity Basics',
+                'progress-circuits': 'Electric Circuits',
+                'progress-magnetism': 'Magnetism',
+                'progress-overall': 'Overall Mastery',
+                'games-title': 'Interactive Learning Games',
+                'level-basic': 'Basic',
+                'game1-title': 'Electric Circuit Builder',
+                'game1-desc': 'Build simple circuits and learn about conductors and insulators',
+                'game1-feature1': 'Connect wires, batteries, and bulbs',
+                'game1-feature2': '10-15 minutes gameplay',
+                'game1-feature3': 'Earn up to 50 points',
+                'level-intermediate': 'Intermediate',
+                'game2-title': 'Magnetic Field Explorer',
+                'game2-desc': 'Discover magnetic fields and learn about magnetic materials',
+                'game2-feature1': 'Identify magnetic and non-magnetic materials',
+                'game2-feature2': '15-20 minutes gameplay',
+                'game2-feature3': 'Earn up to 100 points',
+                'play-game1': 'Play Game',
+                'play-game2': 'Play Game',
+                'resources-title': 'Learning Resources',
+                'resource1-title': 'Study Notes',
+                'resource1-desc': 'Complete chapter notes for revision',
+                'download-english': 'Download (English)',
+                'resource2-title': 'Study Notes (Odia)',
+                'resource2-desc': 'Complete chapter notes for revision',
+                'download-odia': 'Download (Odia)',
+                'resource3-title': 'Flashcards',
+                'resource3-desc': 'Visual learning cards for key concepts',
+                'download-flashcards': 'Download Flashcards',
+                'footer-desc': 'Making Science and Mathematics education engaging and relevant for Class 6 students in Odisha through localized content and interactive learning.',
+                'quick-links': 'Quick Links',
+                'contact-us': 'Contact Us',
+                'footer-dashboard': 'Dashboard',
+                'footer-science': 'Science',
+                'footer-objects': 'How Objects Work',
+                'footer-curriculum': 'Curriculum',
+                'footer-address': 'Department of Education, Bhubaneswar',
+                'copyright': '© 2023 STEM Learn Odisha. All rights reserved.'
+            },
+            or: {
+                'navDashboard': 'ଡ୍ୟାସବୋର୍ଡ',
+                'navScience': 'ବିଜ୍ଞାନ',
+                'navCurriculum': 'ପାଠ୍ୟକ୍ରମ',
+                'navHowObjectsWork': 'କିପରି ବସ୍ତୁ କାମ କରେ',
+                'objects-title': 'କିପରି ବସ୍ତୁ କାମ କରେ: ବିଦ୍ୟୁତ୍ ଏବଂ ଚୁମ୍ବକତ୍ୱ',
+                'objects-desc': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ କାର୍ଯ୍ୟକଳାପ ଏବଂ ପ୍ରୟୋଗଗୁଡ଼ିକ ମାଧ୍ୟମରେ ବିଦ୍ୟୁତ୍ ଏବଂ ଚୁମ୍ବକର ଆକର୍ଷଣୀୟ ଦୁନିଆକୁ ଅନୁସନ୍ଧାନ କରନ୍ତୁ',
+                'breadcrumb-home': 'ଡ୍ୟାସବୋର୍ଡ',
+                'breadcrumb-science': 'ବିଜ୍ଞାନ',
+                'breadcrumb-curriculum': 'ପାଠ୍ୟକ୍ରମ',
+                'breadcrumb-topic': 'କିପରି ବସ୍ତୁ କାମ କରେ',
+                'learning-path-title': 'ଆପଣଙ୍କର ଶିକ୍ଷଣ ପଥ',
+                'card1-title': 'ବିଦ୍ୟୁତ୍ ମୂଳଭୂତ',
+                'card1-desc': 'ବିଦ୍ୟୁତ୍ ସର୍କିଟ୍, କଣ୍ଡକ୍ଟର୍, ଇନସୁଲେଟର୍, ଏବଂ ବିଦ୍ୟୁତ୍ ସୁରକ୍ଷା ବିଷୟରେ ଶିଖନ୍ତୁ',
+                'card2-title': 'ବିଦ୍ୟୁତ୍ ସର୍କିଟ୍',
+                'card2-desc': 'ଶ୍ରେଣୀ ଏବଂ ସମାନ୍ତରାଳ ସର୍କିଟ୍, ସୁଇଚ୍, ଏବଂ ବିଦ୍ୟୁତ୍ ଉପାଦାନଗୁଡ଼ିକୁ ବୁଝନ୍ତୁ',
+                'card3-title': 'ଚୁମ୍ବକତ୍ୱ',
+                'card3-desc': 'ଚୁମ୍ବକୀୟ ସାମଗ୍ରୀ, ମେରୁ, ଇଲେକ୍ଟ୍ରୋମ୍ୟାଗ୍ନେଟ୍, ଏବଂ ସେମାନଙ୍କର ପ୍ରୟୋଗଗୁଡ଼ିକ ଆବିଷ୍କାର କରନ୍ତୁ',
+                'card4-title': 'ସମୀକ୍ଷା ଏବଂ କ୍ୱିଜ୍',
+                'card4-desc': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ କ୍ୱିଜ୍ ଏବଂ ସମୀକ୍ଷା ସହିତ ଆପଣଙ୍କର ଜ୍ଞାନ ପରୀକ୍ଷା କରନ୍ତୁ',
+                'progress-title': 'ଆପଣଙ୍କର ପ୍ରଗତି',
+                'progress-electricity': 'ବିଦ୍ୟୁତ୍ ମୂଳଭୂତ',
+                'progress-circuits': 'ବିଦ୍ୟୁତ୍ ସର୍କିଟ୍',
+                'progress-magnetism': 'ଚୁମ୍ବକତ୍ୱ',
+                'progress-overall': 'ସର୍ବମୋଟ ଦକ୍ଷତା',
+                'games-title': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ଖେଳଗୁଡିକ',
+                'level-basic': 'ମୌଳିକ',
+                'game1-title': 'ବିଦ୍ୟୁତ୍ ସର୍କିଟ୍ ନିର୍ମାଣକାରୀ',
+                'game1-desc': 'ସରଳ ସର୍କିଟ୍ ନିର୍ମାଣ କରନ୍ତୁ ଏବଂ କଣ୍ଡକ୍ଟର୍ ଏବଂ ଇନସୁଲେଟର୍ ବିଷୟରେ ଶିଖନ୍ତୁ',
+                'game1-feature1': 'ତାର, ବ୍ୟାଟେରୀ, ଏବଂ ବଲ୍ବଗୁଡିକୁ ସଂଯୋଗ କରନ୍ତୁ',
+                'game1-feature2': '10-15 ମିନିଟ୍ ଖେଳପଣ',
+                'game1-feature3': '50 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ ଅର୍ଜନ କରନ୍ତୁ',
+                'level-intermediate': 'ମଧ୍ୟମ ସ୍ତର',
+                'game2-title': 'ଚୁମ୍ବକୀୟ କ୍ଷେତ୍ର ଅନୁସନ୍ଧାନକାରୀ',
+                'game2-desc': 'ଚୁମ୍ବକୀୟ କ୍ଷେତ୍ର ଆବିଷ୍କାର କରନ୍ତୁ ଏବଂ ଚୁମ୍ବକୀୟ ସାମଗ୍ରୀ ବିଷୟରେ ଶିଖନ୍ତୁ',
+                'game2-feature1': 'ଚୁମ୍ବକୀୟ ଏବଂ ଅଚୁମ୍ବକୀୟ ସାମଗ୍ରୀ ଚିହ୍ନିବା',
+                'game2-feature2': '15-20 ମିନିଟ୍ ଖେଳପଣ',
+                'game2-feature3': '100 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ ଅର୍ଜନ କରନ୍ତୁ',
+                'play-game1': 'ଖେଳନ୍ତୁ',
+                'play-game2': 'ଖେଳନ୍ତୁ',
+                'resources-title': 'ଶିକ୍ଷଣ ସମ୍ବଳ',
+                'resource1-title': 'ଅଧ୍ୟୟନ ଟିପ୍ପଣୀ',
+                'resource1-desc': 'ସଂଶୋଧନ ପାଇଁ ସମ୍ପୂର୍ଣ୍ଣ ଅଧ୍ୟାୟ ଟିପ୍ପଣୀ',
+                'download-english': 'ଡାଉନଲୋଡ୍ (ଇଂରାଜୀ)',
+                'resource2-title': 'ଅଧ୍ୟୟନ ଟିପ୍ପଣୀ (ଓଡ଼ିଆ)',
+                'resource2-desc': 'ସଂଶୋଧନ ପାଇଁ ସମ୍ପୂର୍ଣ୍ଣ ଅଧ୍ୟାୟ ଟିପ୍ପଣୀ',
+                'download-odia': 'ଡାଉନଲୋଡ୍ (ଓଡ଼ିଆ)',
+                'resource3-title': 'ଫ୍ଲାସ୍‌କାର୍ଡଗୁଡିକ',
+                'resource3-desc': 'ମୁଖ୍ୟ ଧାରଣାଗୁଡିକ ପାଇଁ ଭିଜୁଆଲ୍ ଶିକ୍ଷଣ କାର୍ଡଗୁଡିକ',
+                'download-flashcards': 'ଫ୍ଲାସ୍‌କାର୍ଡଗୁଡିକ ଡାଉନଲୋଡ୍ କରନ୍ତୁ',
+                'footer-desc': 'ଓଡ଼ିଶାର ଷଷ୍ଠ ଶ୍ରେଣୀର ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କ ପାଇଁ ସ୍ଥାନୀୟ ବିଷୟବସ୍ତୁ ଏବଂ ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ମାଧ୍ୟମରେ ବିଜ୍ଞାନ ଏବଂ ଗଣିତ ଶିକ୍ଷାକୁ ଆକର୍ଷଣୀୟ ଏବଂ ପ୍ରାସଙ୍ଗିକ କରିବା',
+                'quick-links': 'ଶୀଘ୍ର ଲିଙ୍କ୍',
+                'contact-us': 'ଆମ ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ',
+                'footer-dashboard': 'ଡ୍ୟାସବୋର୍ଡ',
+                'footer-science': 'ବିଜ୍ଞାନ',
+                'footer-objects': 'କିପରି ବସ୍ତୁ କାମ କରେ',
+                'footer-curriculum': 'ପାଠ୍ୟକ୍ରମ',
+                'footer-address': 'ଶିକ୍ଷା ବିଭାଗ, ଭୁବନେଶ୍ୱର',
+                'copyright': '© 2023 STEM ଲର୍ନ ଓଡ଼ିଶା। ସମସ୍ତ ଅଧିକାର ସଂରକ୍ଷିତ।'
+            }
+        };
+
+        // Initialize the page
+        function init() {
+            // Set up language options
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    switchLanguage(lang);
+                    document.getElementById('languageOptions').classList.remove('show');
+                });
+            });
+
+            // Set up path cards
+            const pathCards = document.querySelectorAll('.path-card');
+            pathCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const cardType = this.getAttribute('data-card');
+                    openModal(cardType);
+                });
+            });
+
+            // Set up modal close button
+            document.getElementById('close-modal').addEventListener('click', closeModalFunc);
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === document.getElementById('content-modal')) {
+                    closeModalFunc();
+                }
+            });
+
+            // Dashboard integration event listeners
+            const profileToggle = document.getElementById('profileToggle');
+            const profileDropdown = document.getElementById('profileDropdown');
+            const languageToggle = document.getElementById('languageToggle');
+            const languageOptions = document.getElementById('languageOptions');
+            const dropdownProfile = document.getElementById('dropdownProfile');
+            const dropdownSettings = document.getElementById('dropdownSettings');
+            const dropdownLogout = document.getElementById('dropdownLogout');
+            const navDashboard = document.getElementById('navDashboard');
+            const navScience = document.getElementById('navScience');
+            const navCurriculum = document.getElementById('navCurriculum');
+            const navHowObjectsWork = document.getElementById('navHowObjectsWork');
+
+            // Profile dropdown toggle
+            profileToggle.addEventListener('click', function() {
+                profileDropdown.classList.toggle('show');
+            });
+
+            // Language toggle
+            languageToggle.addEventListener('click', function() {
+                languageOptions.classList.toggle('show');
+            });
+
+            // Navigation between pages
+            dropdownProfile.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#profile';
+            });
+
+            dropdownSettings.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#settings';
+            });
+
+            dropdownLogout.addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('user');
+                window.location.href = 'student-login.html';
+            });
+
+            // Navigation menu items
+            navDashboard.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html';
+            });
+
+            navScience.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'science.html';
+            });
+
+            navCurriculum.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'scienceidx.html';
+            });
+
+            navHowObjectsWork.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'how-objects-work.html';
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#languageToggle') && !e.target.closest('#languageOptions')) {
+                    languageOptions.classList.remove('show');
+                }
+               
+                if (!e.target.closest('#profileToggle') && !e.target.closest('#profileDropdown')) {
+                    profileDropdown.classList.remove('show');
+                }
+            });
+
+            // Initialize download buttons
+            initDownloadButtons();
+
+            // Initialize flashcards
+            initFlashcards();
+
+            // Initialize with default language
+            switchLanguage('en');
+        }
+
+        // Initialize download buttons
+        function initDownloadButtons() {
+            const downloadButtons = document.querySelectorAll('.download-btn');
+            downloadButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const resourceType = this.getAttribute('onclick').match(/downloadResource\('(.*?)'\)/)[1];
+                    downloadResource(resourceType);
+                });
+            });
+        }
+
+        // Initialize flashcards
+        function initFlashcards() {
+            renderFlashcard();
+            createIndicators();
+            document.getElementById('total-cards').textContent = flashcardsData.length;
+            updateNavigationButtons();
+        }
+
+        // Render current flashcard
+        function renderFlashcard() {
+            const flashcard = document.getElementById('main-flashcard');
+            const cardData = flashcardsData[currentFlashcardIndex];
+            
+            flashcard.className = 'flashcard';
+            
+            flashcard.innerHTML = `
+                <div class="flashcard-category">${cardData.category}</div>
+                <div class="flashcard-counter">${currentFlashcardIndex + 1}/${flashcardsData.length}</div>
+                <div class="flashcard-front">
+                    <div class="flashcard-icon">
+                        <i class="${cardData.icon}"></i>
+                    </div>
+                    <div class="flashcard-question">${cardData.question}</div>
+                    <div class="flashcard-hint">${cardData.hint}</div>
+                    <div class="flashcard-instruction">Click to flip the card</div>
+                </div>
+                <div class="flashcard-back">
+                    <div class="flashcard-icon">
+                        <i class="${cardData.icon}"></i>
+                    </div>
+                    <div class="flashcard-answer">${cardData.answer}</div>
+                    <div class="flashcard-instruction">Click to flip back</div>
+                </div>
+            `;
+            
+            // Update current card number
+            document.getElementById('current-card').textContent = currentFlashcardIndex + 1;
+            
+            // Update indicators
+            updateIndicators();
+        }
+
+        // Create indicators for all flashcards
+        function createIndicators() {
+            const indicatorsContainer = document.getElementById('flashcard-indicators');
+            indicatorsContainer.innerHTML = '';
+            
+            for (let i = 0; i < flashcardsData.length; i++) {
+                const indicator = document.createElement('div');
+                indicator.className = 'flashcard-indicator';
+                if (i === currentFlashcardIndex) indicator.classList.add('active');
+                indicator.onclick = () => goToFlashcard(i);
+                indicatorsContainer.appendChild(indicator);
+            }
+        }
+
+        // Update active indicator
+        function updateIndicators() {
+            const indicators = document.querySelectorAll('.flashcard-indicator');
+            indicators.forEach((indicator, index) => {
+                if (index === currentFlashcardIndex) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            });
+        }
+
+        // Update navigation buttons state
+        function updateNavigationButtons() {
+            document.getElementById('prev-btn').disabled = currentFlashcardIndex === 0;
+            document.getElementById('next-btn').disabled = currentFlashcardIndex === flashcardsData.length - 1;
+        }
+
+        // Flip card function
+        function flipCard() {
+            const flashcard = document.getElementById('main-flashcard');
+            flashcard.classList.toggle('flipped');
+        }
+
+        // Go to specific flashcard
+        function goToFlashcard(index) {
+            currentFlashcardIndex = index;
+            renderFlashcard();
+            updateNavigationButtons();
+        }
+
+        // Next flashcard function
+        function nextFlashcard() {
+            if (currentFlashcardIndex < flashcardsData.length - 1) {
+                currentFlashcardIndex++;
+                renderFlashcard();
+                updateNavigationButtons();
+            }
+        }
+
+        // Previous flashcard function
+        function prevFlashcard() {
+            if (currentFlashcardIndex > 0) {
+                currentFlashcardIndex--;
+                renderFlashcard();
+                updateNavigationButtons();
+            }
+        }
+
+        // Switch language function
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            const map = translations[lang] || translations.en;
+            
+            // Update all text content
+            Object.keys(map).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.textContent = map[key];
+                }
+            });
+            
+            // Add Odia font class for Odia text
+            if (lang === 'or') {
+                document.body.classList.add('odia-text');
+            } else {
+                document.body.classList.remove('odia-text');
+            }
+        }
+
+        // Open modal with content
+        function openModal(cardType) {
+            const content = contentData[cardType];
+            if (content) {
+                document.getElementById('modal-title').textContent = content.title;
+                document.getElementById('modal-body').innerHTML = content.content;
+                document.getElementById('content-modal').style.display = 'flex';
+            }
+        }
+
+        // Close modal function
+        function closeModalFunc() {
+            document.getElementById('content-modal').style.display = 'none';
+        }
+
+        // Download resource function
+        function downloadResource(resourceType) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                showNotification('Please login to download resources', 'error');
+                return;
+            }
+
+            let fileName = '';
+            let content = '';
+            let mimeType = 'text/plain';
+            
+            switch(resourceType) {
+                case 'study_notes_english':
+                    fileName = 'Electricity_Magnetism_Study_Notes_English.txt';
+                    content = generateEnglishNotes();
+                    break;
+                case 'study_notes_odia':
+                    fileName = 'Electricity_Magnetism_Study_Notes_Odia.txt';
+                    content = generateOdiaNotes();
+                    break;
+                case 'flashcards':
+                    fileName = 'Electricity_Magnetism_Flashcards.txt';
+                    content = generateFlashcards();
+                    break;
+            }
+
+            // Create a downloadable file
+            const element = document.createElement('a');
+            const file = new Blob([content], {type: mimeType});
+            element.href = URL.createObjectURL(file);
+            element.download = fileName;
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+            
+            // Show success notification
+            showNotification('Resource downloaded successfully!', 'success');
+            
+            // Log download activity
+            logDownloadActivity(resourceType);
+        }
+
+        function generateEnglishNotes() {
+            return `HOW OBJECTS WORK: ELECTRICITY AND MAGNETISM
+====================================================
+
+CLASS 6 SCIENCE - CHAPTER 12
+STEM Learn Odisha
+====================================================
+
+TABLE OF CONTENTS
+=================
+1. Introduction to Electricity
+2. Electric Current and Circuits
+3. Conductors and Insulators
+4. Types of Circuits
+5. Introduction to Magnetism
+6. Properties of Magnets
+7. Electromagnets
+8. Applications
+9. Safety Rules
+10. Key Terms
+11. Revision Questions
+
+====================================================
+
+1. INTRODUCTION TO ELECTRICITY
+==============================
+• Electricity is a form of energy resulting from movement of electrons
+• Essential for modern life - powers homes, industries, transportation
+• Can be generated from various sources
+• Must be handled with care due to potential dangers
+
+2. ELECTRIC CURRENT AND CIRCUITS
+================================
+
+ELECTRIC CURRENT:
+----------------
+• Flow of electric charge through a conductor
+• Measured in amperes (A)
+• Direction: Conventional current flows positive to negative
+• Actually electrons flow negative to positive
+
+VOLTAGE:
+--------
+• Electrical pressure that pushes current
+• Measured in volts (V)
+• Provided by batteries, generators, power sources
+
+RESISTANCE:
+-----------
+• Opposition to current flow
+• Measured in ohms (Ω)
+• Depends on material, length, thickness, temperature
+
+ELECTRIC CIRCUIT:
+-----------------
+• Complete path for current flow
+• Essential components:
+  1. Power source (battery/generator)
+  2. Conductors (wires)
+  3. Load (bulb/motor)
+  4. Switch (controls flow)
+
+3. CONDUCTORS AND INSULATORS
+============================
+
+CONDUCTORS:
+-----------
+• Allow electricity to flow easily
+• Have free electrons
+• Examples:
+  - Metals: Copper, aluminum, silver, gold, iron
+  - Graphite
+  - Water with dissolved salts
+
+INSULATORS:
+-----------
+• Do not allow electricity to flow easily
+• Have tightly bound electrons
+• Examples:
+  - Rubber
+  - Plastic
+  - Glass
+  - Wood
+  - Dry air
+  - Ceramic
+
+4. TYPES OF CIRCUITS
+====================
+
+SERIES CIRCUIT:
+---------------
+• Components connected one after another
+• Single path for current
+• Current same throughout
+• Voltage divides
+• Disadvantage: One component fails → whole circuit fails
+• Example: Old Christmas lights
+
+PARALLEL CIRCUIT:
+-----------------
+• Components connected separately across voltage source
+• Multiple paths for current
+• Voltage same across all components
+• Current divides
+• Advantage: One component fails → others continue working
+• Example: House wiring
+
+5. INTRODUCTION TO MAGNETISM
+============================
+• Magnetism is a force that attracts or repels certain materials
+• Known since ancient times (lodestone)
+• Used for navigation (compasses)
+• Basis for many modern technologies
+
+6. PROPERTIES OF MAGNETS
+========================
+1. Two Poles: Every magnet has north and south poles
+2. Like Poles Repel: North repels north, south repels south
+3. Unlike Poles Attract: North attracts south
+4. Magnetic Field: Area around magnet where force can be felt
+5. Cannot be Isolated: Break magnet → get two smaller magnets
+6. Strength Maximum at Poles
+7. Freely Suspended Magnet Aligns North-South
+
+TYPES OF MAGNETS:
+-----------------
+1. Natural Magnets: Found in nature (magnetite/lodestone)
+2. Artificial Magnets: Made by humans
+   - Bar magnets
+   - Horseshoe magnets
+   - Ring magnets
+   - Cylindrical magnets
+
+MAGNETIC MATERIALS:
+-------------------
+• Strongly attracted: Iron, nickel, cobalt, steel
+• Weakly attracted: Some alloys
+• Not attracted: Wood, plastic, glass, copper, aluminum
+
+7. ELECTROMAGNETS
+=================
+
+WHAT ARE ELECTROMAGNETS?
+------------------------
+• Temporary magnets created by electricity
+• Made by wrapping wire around iron core
+• Magnetic only when current flows
+• Strength can be controlled
+
+FACTORS AFFECTING STRENGTH:
+---------------------------
+1. Current: More current → stronger magnet
+2. Number of Turns: More turns → stronger magnet
+3. Core Material: Iron core → strongest magnet
+
+USES:
+-----
+• Electric bells
+• Electric motors
+• Generators
+• MRI machines
+• Speakers
+• Magnetic cranes
+• Relays
+
+8. APPLICATIONS
+===============
+
+ELECTRICITY APPLICATIONS:
+-------------------------
+• Lighting (bulbs, tubes, LEDs)
+• Heating (heaters, geysers)
+• Cooling (fans, AC, refrigerators)
+• Communication (phones, radio, TV)
+• Transportation (electric trains, cars)
+• Industry (machines, robots)
+
+MAGNETISM APPLICATIONS:
+-----------------------
+• Navigation (compasses)
+• Medical (MRI machines)
+• Data storage (hard drives, credit cards)
+• Transportation (Maglev trains)
+• Household (refrigerator doors, speakers)
+• Industry (magnetic separation, cranes)
+
+9. SAFETY RULES
+===============
+
+ELECTRICAL SAFETY:
+------------------
+1. Never touch appliances with wet hands
+2. Don't insert objects into sockets
+3. Use insulated tools
+4. Turn off power before repairs
+5. Stay away from fallen power lines
+6. Use proper fuses/circuit breakers
+7. Ground electrical appliances
+8. Don't overload circuits
+9. Keep water away from electricity
+10. Use rubber gloves when needed
+
+MAGNET SAFETY:
+--------------
+1. Keep away from electronic devices
+2. Don't place near credit cards
+3. Keep away from pacemakers
+4. Handle strong magnets carefully
+5. Store properly to maintain strength
+
+10. KEY TERMS
+=============
+• Current: Flow of electric charge
+• Voltage: Electrical pressure
+• Resistance: Opposition to current
+• Conductor: Allows current flow
+• Insulator: Resists current flow
+• Circuit: Complete path for current
+• Magnet: Object with magnetic properties
+• Magnetic Field: Area of magnetic influence
+• Electromagnet: Temporary magnet from electricity
+• Poles: Ends of magnet (north/south)
+
+11. REVISION QUESTIONS
+======================
+
+SHORT ANSWER QUESTIONS:
+1. What is electric current?
+2. Name three conductors and three insulators.
+3. What happens when like poles of magnets are brought close?
+4. What is an electromagnet?
+5. Give two safety rules for electricity.
+
+LONG ANSWER QUESTIONS:
+1. Explain series and parallel circuits with diagrams.
+2. Describe the properties of magnets.
+3. How can you make an electromagnet? What factors affect its strength?
+4. What are the applications of electricity and magnetism in daily life?
+5. Explain the difference between conductors and insulators.
+
+PRACTICAL ACTIVITIES:
+1. Build a simple circuit with battery, wire, and bulb.
+2. Test different materials to identify conductors and insulators.
+3. Make a simple electromagnet using nail and wire.
+4. Draw magnetic field lines using iron filings.
+5. Create a poster on electrical safety rules.
+
+====================================================
+CREDITS AND ACKNOWLEDGEMENTS
+====================================================
+Prepared by: STEM Learn Odisha Team
+For: Class 6 Students
+Date: ${new Date().toLocaleDateString()}
+
+====================================================
+REMEMBER:
+• Electricity is useful but dangerous - always be careful
+• Magnets have many practical applications
+• Understanding circuits helps in troubleshooting
+• Safety first when working with electricity
+
+====================================================
+END OF NOTES
+====================================================`;
+        }
+
+        function generateOdiaNotes() {
+            return `କିପରି ବସ୍ତୁ କାମ କରେ: ବିଦ୍ୟୁତ୍ ଏବଂ ଚୁମ୍ବକତ୍ୱ
+====================================================
+
+ଷଷ୍ଠ ଶ୍ରେଣୀ ବିଜ୍ଞାନ - ଅଧ୍ୟାୟ 12
+STEM ଲର୍ନ ଓଡ଼ିଶା
+====================================================
+
+ବିଷୟ ସୂଚୀ
+===========
+1. ବିଦ୍ୟୁତ୍ ପରିଚୟ
+2. ବିଦ୍ୟୁତ୍ ସ୍ରୋତ ଏବଂ ସର୍କିଟ୍
+3. କଣ୍ଡକ୍ଟର୍ ଏବଂ ଇନସୁଲେଟର୍
+4. ସର୍କିଟ୍ର ପ୍ରକାରଗୁଡିକ
+5. ଚୁମ୍ବକତ୍ୱ ପରିଚୟ
+6. ଚୁମ୍ବକର ଗୁଣଗୁଡିକ
+7. ଇଲେକ୍ଟ୍ରୋମ୍ୟାଗ୍ନେଟ୍
+8. ପ୍ରୟୋଗଗୁଡିକ
+9. ସୁରକ୍ଷା ନିୟମ
+10. ମୁଖ୍ୟ ପରିଭାଷା
+11. ସମୀକ୍ଷା ପ୍ରଶ୍ନ
+
+====================================================
+
+1. ବିଦ୍ୟୁତ୍ ପରିଚୟ
+===================
+• ବିଦ୍ୟୁତ୍ ହେଉଛି ଇଲେକ୍ଟ୍ରନ୍ ଗୁଡିକର ଗତିରୁ ଉତ୍ପନ୍ନ ହେଉଥିବା ଶକ୍ତିର ଏକ ରୂପ
+• ଆଧୁନିକ ଜୀବନ ପାଇଁ ଅତ୍ୟନ୍ତ ଜରୁରୀ - ଘର, ଶିଳ୍ପ, ପରିବହନକୁ ଶକ୍ତି ଯୋଗାଏ
+• ବିଭିନ୍ନ ଉତ୍ସରୁ ଉତ୍ପାଦିତ ହୋଇପାରେ
+• ସମ୍ଭାବ୍ୟ ବିପଦ ଯୋଗୁଁ ସାବଧାନତାର ସହିତ ହାତଲଗାଇବା ଉଚିତ
+
+2. ବିଦ୍ୟୁତ୍ ସ୍ରୋତ ଏବଂ ସର୍କିଟ୍
+==============================
+
+ବିଦ୍ୟୁତ୍ ସ୍ରୋତ:
+----------------
+• କଣ୍ଡକ୍ଟର୍ ମାଧ୍ୟମରେ ବିଦ୍ୟୁତ୍ ଚାର୍ଜର ପ୍ରବାହ
+• ଆମ୍ପିୟର୍ (A) ରେ ମାପାଯାଏ
+• ଦିଗ: ପାରମ୍ପରିକ ସ୍ରୋତ ଧନାତ୍ମକରୁ ଋଣାତ୍ମକ ଆଡକୁ ପ୍ରବାହିତ ହୁଏ
+• ପ୍ରକୃତରେ ଇଲେକ୍ଟ୍ରନ୍ ଋଣାତ୍ମକରୁ ଧନାତ୍ମକ ଆଡକୁ ପ୍ରବାହିତ ହୁଏ
+
+ଭୋଲ୍ଟେଜ୍:
+----------
+• ବିଦ୍ୟୁତ୍ ଚାପ ଯାହା ସ୍ରୋତକୁ ଠେଲି ଦିଏ
+• ଭୋଲ୍ଟ୍ (V) ରେ ମାପାଯାଏ
+• ବ୍ୟାଟେରୀ, ଜେନେରେଟର୍, ଶକ୍ତି ଉତ୍ସଦ୍ୱାରା ପ୍ରଦାନ କରାଯାଏ
+
+ପ୍ରତିରୋଧ:
+------------
+• ସ୍ରୋତ ପ୍ରବାହର ବିରୋଧ
+• ଓମ୍ (Ω) ରେ ମାପାଯାଏ
+• ସାମଗ୍ରୀ, ଦୈର୍ଘ୍ୟ, ମୋଟାଇ, ତାପମାତ୍ରା ଉପରେ ନିର୍ଭର କରେ
+
+ବିଦ୍ୟୁତ୍ ସର୍କିଟ୍:
+--------------------
+• ସ୍ରୋତ ପ୍ରବାହ ପାଇଁ ସମ୍ପୂର୍ଣ୍ଣ ପଥ
+• ଆବଶ୍ୟକୀୟ ଉପାଦାନ:
+  1. ଶକ୍ତି ଉତ୍ସ (ବ୍ୟାଟେରୀ/ଜେନେରେଟର୍)
+  2. କଣ୍ଡକ୍ଟର୍ (ତାର)
+  3. ଭାର (ବଲ୍ବ/ମୋଟର୍)
+  4. ସୁଇଚ୍ (ପ୍ରବାହ ନିୟନ୍ତ୍ରଣ କରେ)
+
+3. କଣ୍ଡକ୍ଟର୍ ଏବଂ ଇନସୁଲେଟର୍
+================================
+
+କଣ୍ଡକ୍ଟର୍:
+------------
+• ବିଦ୍ୟୁତ୍ ସହଜରେ ପ୍ରବାହିତ ହେବା ପାଇଁ ଅନୁମତି ଦିଅନ୍ତି
+• ମୁକ୍ତ ଇଲେକ୍ଟ୍ରନ୍ ଥାଏ
+• ଉଦାହରଣ:
+  - ଧାତୁ: ତମ୍ବା, ଆଲୁମିନିୟମ୍, ରୂପା, ସ୍ୱର୍ଣ୍ଣ, ଲୌହ
+  - ଗ୍ରାଫାଇଟ୍
+  - ଲବଣ ମିଶ୍ରିତ ଜଳ
+
+ଇନସୁଲେଟର୍:
+--------------
+• ବିଦ୍ୟୁତ୍ ସହଜରେ ପ୍ରବାହିତ ହେବା ପାଇଁ ଅନୁମତି ଦିଅନ୍ତି ନାହିଁ
+• ଦୃଢ଼ଭାବରେ ବନ୍ଧା ହୋଇଥିବା ଇଲେକ୍ଟ୍ରନ୍ ଥାଏ
+• ଉଦାହରଣ:
+  - ରବର
+  - ପ୍ଲାଷ୍ଟିକ୍
+  - କାଚ
+  - କାଠ
+  - ଶୁଖିଲା ବାୟୁ
+  - ସେରାମିକ୍
+
+4. ସର୍କିଟ୍ର ପ୍ରକାରଗୁଡିକ
+==========================
+
+ଶ୍ରେଣୀ ସର୍କିଟ୍:
+-----------------
+• ଉପାଦାନଗୁଡିକ ଗୋଟିଏ ପରେ ଗୋଟିଏ ସଂଯୋଗ କରାଯାଇଥାଏ
+• ସ୍ରୋତ ପାଇଁ ଗୋଟିଏ ପଥ
+• ସମସ୍ତ ଅଂଶରେ ସ୍ରୋତ ସମାନ
+• ଭୋଲ୍ଟେଜ୍ ବିଭକ୍ତ ହୁଏ
+• ଅସୁବିଧା: ଗୋଟିଏ ଉପାଦାନ ବିଫଳ → ସମସ୍ତ ସର୍କିଟ୍ ବିଫଳ
+• ଉଦାହରଣ: ପୁରୁଣା ଖ୍ରୀଷ୍ଟମାସ୍ ଆଲୋକ
+
+ସମାନ୍ତରାଳ ସର୍କିଟ୍:
+-----------------------
+• ଉପାଦାନଗୁଡିକ ଭୋଲ୍ଟେଜ୍ ଉତ୍ସ ପାର୍ଶ୍ୱରେ ପୃଥକ୍ ଭାବରେ ସଂଯୋଗ କରାଯାଇଥାଏ
+• ସ୍ରୋତ ପାଇଁ ଏକାଧିକ ପଥ
+• ସମସ୍ତ ଉପାଦାନରେ ଭୋଲ୍ଟେଜ୍ ସମାନ
+• ସ୍ରୋତ ବିଭକ୍ତ ହୁଏ
+• ସୁବିଧା: ଗୋଟିଏ ଉପାଦାନ ବିଫଳ → ଅନ୍ୟଗୁଡିକ କାମ କରିବା ଜାରି ରଖେ
+• ଉଦାହରଣ: ଘର ତାରିଂ
+
+5. ଚୁମ୍ବକତ୍ୱ ପରିଚୟ
+=======================
+• ଚୁମ୍ବକତ୍ୱ ହେଉଛି ଏକ ଶକ୍ତି ଯାହା କେତେକ ସାମଗ୍ରୀକୁ ଆକର୍ଷଣ କିମ୍ବା ବିକର୍ଷଣ କରେ
+• ପ୍ରାଚୀନ କାଳରୁ ଜଣା (ଲୋଡେଷ୍ଟୋନ୍)
+• ନେଭିଗେସନ୍ ପାଇଁ ବ୍ୟବହୃତ (କମ୍ପାସ୍)
+• ଅନେକ ଆଧୁନିକ ପ୍ରଯୁକ୍ତିର ଆଧାର
+
+6. ଚୁମ୍ବକର ଗୁଣଗୁଡିକ
+========================
+1. ଦୁଇ ମେରୁ: ପ୍ରତ୍ୟେକ ଚୁମ୍ବକର ଉତ୍ତର ଏବଂ ଦକ୍ଷିଣ ମେରୁ ଥାଏ
+2. ସମାନ ମେରୁ ବିକର୍ଷଣ କରେ: ଉତ୍ତର ଉତ୍ତରକୁ ବିକର୍ଷଣ କରେ, ଦକ୍ଷିଣ ଦକ୍ଷିଣକୁ ବିକର୍ଷଣ କରେ
+3. ବିପରୀତ ମେରୁ ଆକର୍ଷଣ କରେ: ଉତ୍ତର ଦକ୍ଷିଣକୁ ଆକର୍ଷଣ କରେ
+4. ଚୁମ୍ବକୀୟ କ୍ଷେତ୍ର: ଚୁମ୍ବକର ଚାରିପାଖରେ ଥିବା କ୍ଷେତ୍ର ଯେଉଁଠାରେ ଶକ୍ତି ଅନୁଭବ କରାଯାଇପାରେ
+5. ବିଚ୍ଛିନ୍ନ କରାଯାଇପାରିବ ନାହିଁ: ଚୁମ୍ବକ ଭାଙ୍ଗନ୍ତୁ → ଦୁଇଟି ସାନ ଚୁମ୍ବକ ମିଳେ
+6. ମେରୁରେ ଶକ୍ତି ସର୍ବାଧିକ
+7. ମୁକ୍ତ ଭାବରେ ଲଟକାଯାଇଥିବା ଚୁମ୍ବକ ଉତ୍ତର-ଦକ୍ଷିଣରେ ସଜାଇ ହୁଏ
+
+ଚୁମ୍ବକର ପ୍ରକାରଗୁଡିକ:
+---------------------------
+1. ପ୍ରାକୃତିକ ଚୁମ୍ବକ: ପ୍ରକୃତିରେ ମିଳେ (ମ୍ୟାଗ୍ନେଟାଇଟ୍/ଲୋଡେଷ୍ଟୋନ୍)
+2. କୃତ୍ରିମ ଚୁମ୍ବକ: ମନୁଷ୍ୟ ତିଆରି କରନ୍ତି
+   - ବାର ଚୁମ୍ବକ
+   - ଘୋଡାନାଲ ଚୁମ୍ବକ
+   - ରିଙ୍ଗ୍ ଚୁମ୍ବକ
+   - ସିଲିଣ୍ଡ୍ରିକାଲ୍ ଚୁମ୍ବକ
+
+ଚୁମ୍ବକୀୟ ସାମଗ୍ରୀ:
+---------------------
+• ଦୃଢ଼ଭାବରେ ଆକର୍ଷିତ: ଲୌହ, ନିକେଲ୍, କୋବାଲ୍ଟ୍, ଇସ୍ପାତ
+• ଦୁର୍ବଳ ଭାବରେ ଆକର୍ଷିତ: କେତେକ ମିଶ୍ରଧାତୁ
+• ଆକର୍ଷିତ ନୁହେଁ: କାଠ, ପ୍ଲାଷ୍ଟିକ୍, କାଚ, ତମ୍ବା, ଆଲୁମିନିୟମ୍
+
+7. ଇଲେକ୍ଟ୍ରୋମ୍ୟାଗ୍ନେଟ୍
+=======================
+
+ଇଲେକ୍ଟ୍ରୋମ୍ୟାଗ୍ନେଟ୍ କ'ଣ?
+---------------------------
+• ବିଦ୍ୟୁତ୍ ଦ୍ୱାରା ସୃଷ୍ଟି କରାଯାଇଥିବା ଅସ୍ଥାୟୀ ଚୁମ୍ବକ
+• ଲୌହ କୋର୍ ଚାରିପାଖରେ ତାର ଗୁଡ଼ାଇ ତିଆରି କରାଯାଏ
+• କେବଳ ସ୍ରୋତ ପ୍ରବାହିତ ହେବାବେଳେ ଚୁମ୍ବକୀୟ
+• ଶକ୍ତି ନିୟନ୍ତ୍ରଣ କରାଯାଇପାରେ
+
+ଶକ୍ତି ଉପରେ ପ୍ରଭାବ ପକାଉଥିବା କାରକଗୁଡିକ:
+-------------------------------------------------
+1. ସ୍ରୋତ: ଅଧିକ ସ୍ରୋତ → ଶକ୍ତିଶାଳୀ ଚୁମ୍ବକ
+2. ମୋଡ଼ ସଂଖ୍ୟା: ଅଧିକ ମୋଡ଼ → ଶକ୍ତିଶାଳୀ ଚୁମ୍ବକ
+3. କୋର୍ ସାମଗ୍ରୀ: ଲୌହ କୋର୍ → ସବୁଠାରୁ ଶକ୍ତିଶାଳୀ ଚୁମ୍ବକ
+
+ବ୍ୟବହାର:
+----------
+• ବିଦ୍ୟୁତ୍ ଘଣ୍ଟି
+• ବିଦ୍ୟୁତ୍ ମୋଟର୍
+• ଜେନେରେଟର୍
+• ଏମ୍.ଆର୍.ଆଇ. ମେସିନ୍
+• ସ୍ପିକର୍
+• ଚୁମ୍ବକୀୟ କ୍ରେନ୍
+• ରିଲେ
+
+8. ପ୍ରୟୋଗଗୁଡିକ
+==================
+
+ବିଦ୍ୟୁତ୍ ପ୍ରୟୋଗ:
+--------------------
+• ଆଲୋକିତ କରିବା (ବଲ୍ବ, ଟ୍ୟୁବ୍, ଏଲ୍.ଇ.ଡି.)
+• ତାପନ (ହିଟର୍, ଗିଜର୍)
+• ଶୀତଳନ (ପଖା, ଏ.ସି., ରେଫ୍ରିଜରେଟର୍)
+• ସଂଚାର (ଫୋନ୍, ରେଡିଓ, ଟିଭି)
+• ପରିବହନ (ବିଦ୍ୟୁତ୍ ଟ୍ରେନ୍, କାର୍)
+• ଶିଳ୍ପ (ମେସିନ୍, ରୋବଟ୍)
+
+ଚୁମ୍ବକତ୍ୱ ପ୍ରୟୋଗ:
+-----------------------
+• ନେଭିଗେସନ୍ (କମ୍ପାସ୍)
+• ଚିକିତ୍ସା (ଏମ୍.ଆର୍.ଆଇ. ମେସିନ୍)
+• ଡାଟା ସ୍ଟୋରେଜ୍ (ହାର୍ଡ୍ ଡ୍ରାଇଭ୍, କ୍ରେଡିଟ୍ କାର୍ଡ)
+• ପରିବହନ (ମ୍ୟାଗଲେଭ୍ ଟ୍ରେନ୍)
+• ଗୃହ (ରେଫ୍ରିଜରେଟର୍ ଦ୍ଵାର, ସ୍ପିକର୍)
+• ଶିଳ୍ପ (ଚୁମ୍ବକୀୟ ପୃଥକ୍ କରଣ, କ୍ରେନ୍)
+
+9. ସୁରକ୍ଷା ନିୟମ
+==================
+
+ବିଦ୍ୟୁତ୍ ସୁରକ୍ଷା:
+-------------------
+1. କେବେବି ଓଦା ହାତରେ ଉପକରଣ ସ୍ପର୍ଶ କରିବେ ନାହିଁ
+2. ସକେଟ୍ ରେ ବସ୍ତୁ ଭର୍ତ୍ତି କରିବେ ନାହିଁ
+3. ଇନସୁଲେଟେଡ୍ ଟୁଲ୍ ବ୍ୟବହାର କରନ୍ତୁ
+4. ମରାମତି କରିବା ପୂର୍ବରୁ ଶକ୍ତି ବନ୍ଦ କରନ୍ତୁ
+5. ପଡିଯାଇଥିବା ପାୱାର୍ ଲାଇନ୍ ଠାରୁ ଦୂରରେ ରହନ୍ତୁ
+6. ଉଚିତ ଫ୍ୟୁଜ୍/ସର୍କିଟ୍ ବ୍ରେକର୍ ବ୍ୟବହାର କରନ୍ତୁ
+7. ବିଦ୍ୟୁତ୍ ଉପକରଣ ଗ୍ରାଉଣ୍ଡ୍ କରନ୍ତୁ
+8. ସର୍କିଟ୍ ଅତ୍ୟଧିକ ଭାର କରିବେ ନାହିଁ
+9. ବିଦ୍ୟୁତ୍ ଠାରୁ ଜଳ ଦୂରରେ ରଖନ୍ତୁ
+10. ଆବଶ୍ୟକ ସମୟରେ ରବର୍ ଗ୍ଲୋଭ୍ ବ୍ୟବହାର କରନ୍ତୁ
+
+ଚୁମ୍ବକ ସୁରକ୍ଷା:
+-------------------
+1. ଇଲେକ୍ଟ୍ରୋନିକ୍ ଉପକରଣଠାରୁ ଦୂରରେ ରଖନ୍ତୁ
+2. କ୍ରେଡିଟ୍ କାର୍ଡ୍ ନିକଟରେ ରଖିବେ ନାହିଁ
+3. ପେସ୍ ମେକର୍ ଠାରୁ ଦୂରରେ ରଖନ୍ତୁ
+4. ଶକ୍ତିଶାଳୀ ଚୁମ୍ବକ ସାବଧାନତାର ସହିତ ହାତଲଗାନ୍ତୁ
+5. ଶକ୍ତି ବଜାୟ ରଖିବା ପାଇଁ ସଠିକ୍ ଭାବରେ ସଂରକ୍ଷଣ କରନ୍ତୁ
+
+10. ମୁଖ୍ୟ ପରିଭାଷା
+====================
+• ସ୍ରୋତ: ବିଦ୍ୟୁତ୍ ଚାର୍ଜର ପ୍ରବାହ
+• ଭୋଲ୍ଟେଜ୍: ବିଦ୍ୟୁତ୍ ଚାପ
+• ପ୍ରତିରୋଧ: ସ୍ରୋତର ବିରୋଧ
+• କଣ୍ଡକ୍ଟର୍: ସ୍ରୋତ ପ୍ରବାହ ଅନୁମତି ଦିଏ
+• ଇନସୁଲେଟର୍: ସ୍ରୋତ ପ୍ରବାହର ବିରୋଧ କରେ
+• ସର୍କିଟ୍: ସ୍ରୋତ ପାଇଁ ସମ୍ପୂର୍ଣ୍ଣ ପଥ
+• ଚୁମ୍ବକ: ଚୁମ୍ବକୀୟ ଗୁଣ ଥିବା ବସ୍ତୁ
+• ଚୁମ୍ବକୀୟ କ୍ଷେତ୍ର: ଚୁମ୍ବକୀୟ ପ୍ରଭାବର କ୍ଷେତ୍ର
+• ଇଲେକ୍ଟ୍ରୋମ୍ୟାଗ୍ନେଟ୍: ବିଦ୍ୟୁତ୍ ଠାରୁ ଅସ୍ଥାୟୀ ଚୁମ୍ବକ
+• ମେରୁ: ଚୁମ୍ବକର ଶେଷ (ଉତ୍ତର/ଦକ୍ଷିଣ)
+
+11. ସମୀକ୍ଷା ପ୍ରଶ୍ନ
+===================
+
+ସଂକ୍ଷିପ୍ତ ଉତ୍ତର ପ୍ରଶ୍ନ:
+1. ବିଦ୍ୟୁତ୍ ସ୍ରୋତ କ'ଣ?
+2. ତିନୋଟି କଣ୍ଡକ୍ଟର୍ ଏବଂ ତିନୋଟି ଇନସୁଲେଟର୍ ର ନାମ କୁହନ୍ତୁ।
+3. ଚୁମ୍ବକର ସମାନ ମେରୁ ନିକଟରେ ଆଣିଲେ କ'ଣ ହୁଏ?
+4. ଇଲେକ୍ଟ୍ରୋମ୍ୟାଗ୍ନେଟ୍ କ'ଣ?
+5. ବିଦ୍ୟୁତ୍ ପାଇଁ ଦୁଇଟି ସୁରକ୍ଷା ନିୟମ ଦିଅନ୍ତୁ।
+
+ଦୀର୍ଘ ଉତ୍ତର ପ୍ରଶ୍ନ:
+1. ଚିତ୍ର ସହ ଶ୍ରେଣୀ ଏବଂ ସମାନ୍ତରାଳ ସର୍କିଟ୍ ବ୍ୟାଖ୍ୟା କରନ୍ତୁ।
+2. ଚୁମ୍ବକର ଗୁଣଗୁଡିକ ବର୍ଣ୍ଣନା କରନ୍ତୁ।
+3. ଆପଣ କିପରି ଏକ ଇଲେକ୍ଟ୍ରୋମ୍ୟାଗ୍ନେଟ୍ ତିଆରି କରିପାରିବେ? ଏହାର ଶକ୍ତି ଉପରେ କେଉଁ କାରକଗୁଡିକ ପ୍ରଭାବ ପକାଏ?
+4. ଦୈନିକ ଜୀବନରେ ବିଦ୍ୟୁତ୍ ଏବଂ ଚୁମ୍ବକତ୍ୱର ପ୍ରୟୋଗଗୁଡିକ କ'ଣ?
+5. କଣ୍ଡକ୍ଟର୍ ଏବଂ ଇନସୁଲେଟର୍ ମଧ୍ୟରେ ପାର୍ଥକ୍ୟ ବ୍ୟାଖ୍ୟା କରନ୍ତୁ।
+
+ବ୍ୟାବହାରିକ କାର୍ଯ୍ୟକଳାପ:
+1. ବ୍ୟାଟେରୀ, ତାର, ଏବଂ ବଲ୍ବ ସହିତ ଏକ ସରଳ ସର୍କିଟ୍ ନିର୍ମାଣ କରନ୍ତୁ।
+2. ବିଭିନ୍ନ ସାମଗ୍ରୀ ପରୀକ୍ଷା କରି କଣ୍ଡକ୍ଟର୍ ଏବଂ ଇନସୁଲେଟର୍ ଚିହ୍ନଟ କରନ୍ତୁ।
+3. କିଳ ଏବଂ ତାର ବ୍ୟବହାର କରି ଏକ ସରଳ ଇଲେକ୍ଟ୍ରୋମ୍ୟାଗ୍ନେଟ୍ ତିଆରି କରନ୍ତୁ।
+4. ଲୌହ କଣିକା ବ୍ୟବହାର କରି ଚୁମ୍ବକୀୟ କ୍ଷେତ୍ର ରେଖା ଅଙ୍କନ କରନ୍ତୁ।
+5. ବିଦ୍ୟୁତ୍ ସୁରକ୍ଷା ନିୟମ ଉପରେ ଏକ ପୋଷ୍ଟର୍ ତିଆରି କରନ୍ତୁ।
+
+====================================================
+କ୍ରେଡିଟ୍ ଏବଂ କୃତଜ୍ଞତା
+====================================================
+ପ୍ରସ୍ତୁତକାରୀ: STEM ଲର୍ନ ଓଡ଼ିଶା ଦଳ
+ପାଇଁ: ଷଷ୍ଠ ଶ୍ରେଣୀର ଛାତ୍ରଛାତ୍ରୀ
+ତାରିଖ: ${new Date().toLocaleDateString()}
+
+====================================================
+ମନେରଖିବେ:
+• ବିଦ୍ୟୁତ୍ ଉପଯୋଗୀ କିନ୍ତୁ ବିପଦଜନକ - ସର୍ବଦା ସାବଧାନ ରୁହନ୍ତୁ
+• ଚୁମ୍ବକର ଅନେକ ବ୍ୟାବହାରିକ ପ୍ରୟୋଗ ଅଛି
+• ସର୍କିଟ୍ ବୁଝିବା ସମସ୍ୟା ସମାଧାନରେ ସହାୟକ ହୁଏ
+• ବିଦ୍ୟୁତ୍ ସହିତ କାମ କରିବା ସମୟରେ ସୁରକ୍ଷା ପ୍ରଥମ
+
+====================================================
+ଟିପ୍ପଣୀର ଶେଷ
+====================================================`;
+        }
+
+        function generateFlashcards() {
+            return `ELECTRICITY AND MAGNETISM FLASHCARDS
+====================================================
+
+STEM Learn Odisha - Class 6 Science
+====================================================
+
+FLASHCARD SET - HOW OBJECTS WORK: ELECTRICITY AND MAGNETISM
+Total Cards: 10
+
+====================================================
+
+CARD 1:
+Category: Electricity Basics
+Question: What is electric current and how is it measured?
+Answer: Electric current is the flow of electric charge through a conductor. It is measured in amperes (A) using an ammeter. Current flows from positive to negative terminal in conventional current flow, while electrons actually flow from negative to positive. The direction of current is opposite to the direction of electron flow.
+
+CARD 2:
+Category: Materials
+Question: Explain the difference between conductors and insulators with examples
+Answer: Conductors allow electricity to flow through them easily because they have free electrons. Examples: Copper, aluminum, silver, gold, iron, graphite. Insulators do not allow electricity to flow through them easily because they have tightly bound electrons. Examples: Rubber, plastic, glass, wood, air, ceramic. Water is a conductor when it contains salts or minerals.
+
+CARD 3:
+Category: Circuits
+Question: What is the difference between series and parallel circuits?
+Answer: In series circuits, components are connected one after another in a single path. Current is same throughout, voltage divides. If one component fails, entire circuit stops. In parallel circuits, components are connected separately across the voltage source. Voltage is same across all components, current divides. If one component fails, others continue working.
+
+CARD 4:
+Category: Magnetism
+Question: Describe the properties of magnets and magnetic field lines
+Answer: Properties: 1) Two poles (north and south), 2) Like poles repel, unlike attract, 3) Cannot be isolated (break magnet → two magnets), 4) Strength maximum at poles. Magnetic field lines: 1) Flow from north to south pole, 2) Never intersect, 3) Density indicates strength, 4) Form closed loops, 5) Direction given by tangent at any point.
+
+CARD 5:
+Category: Electromagnetism
+Question: What is an electromagnet and how does it work?
+Answer: An electromagnet is a temporary magnet created by passing electric current through a coil wrapped around an iron core. When current flows, it creates a magnetic field. Strength depends on: 1) Current amount, 2) Number of coil turns, 3) Core material. Turning current off removes magnetism. Used in: Electric bells, motors, generators, MRI machines, speakers.
+
+CARD 6:
+Category: Laws
+Question: Explain Ohm's Law and its mathematical formula
+Answer: Ohm's Law states that current through a conductor is directly proportional to voltage across it and inversely proportional to resistance, provided temperature remains constant. Formula: V = I × R, where V = Voltage (volts), I = Current (amperes), R = Resistance (ohms). Derived formulas: I = V/R and R = V/I. Named after German physicist Georg Simon Ohm.
+
+CARD 7:
+Category: Energy Sources
+Question: What are the different sources of electricity?
+Answer: Sources: 1) Chemical (batteries - convert chemical to electrical), 2) Mechanical (generators - convert motion to electrical), 3) Solar (solar cells - convert light to electrical), 4) Thermal (thermocouples - convert heat to electrical), 5) Nuclear (nuclear reactors - use nuclear reactions), 6) Wind (wind turbines), 7) Hydro (hydroelectric dams), 8) Tidal (tidal power).
+
+CARD 8:
+Category: Electromagnetism
+Question: What is electromagnetic induction and its applications?
+Answer: Electromagnetic induction is the process of generating electric current in a conductor by changing the magnetic field around it. Discovered by Michael Faraday. Applications: 1) Generators (convert mechanical to electrical), 2) Transformers (change AC voltage), 3) Induction cooktops, 4) Wireless charging, 5) Electric guitar pickups, 6) MRI machines, 7) Metal detectors.
+
+CARD 9:
+Category: Safety
+Question: What are the safety precautions when working with electricity?
+Answer: Safety rules: 1) Never touch electrical appliances with wet hands, 2) Don't insert objects into sockets, 3) Use insulated tools, 4) Turn off power before repairs, 5) Stay away from fallen power lines, 6) Use proper fuses/circuit breakers, 7) Ground electrical appliances, 8) Don't overload circuits, 9) Keep water away from electricity, 10) Use rubber gloves when needed.
+
+CARD 10:
+Category: Applications
+Question: What are the applications of magnets in daily life?
+Answer: Applications: 1) Compasses (navigation), 2) Electric motors (fans, mixers), 3) Generators (electricity production), 4) Speakers and headphones, 5) Refrigerator doors, 6) Credit/debit cards (magnetic stripe), 7) MRI machines (medical imaging), 8) Magnetic levitation trains, 9) Magnetic separation (recycling), 10) Door locks, 11) Toys, 12) Hard drives (data storage).
+
+====================================================
+HOW TO USE THESE FLASHCARDS:
+1. Print on thick paper or cardstock
+2. Cut along the dotted lines
+3. Fold each card in half
+4. Glue the front and back together
+5. Use for regular revision
+6. Test yourself by looking at the question and trying to recall the answer
+7. Shuffle cards for random practice
+
+====================================================
+TIPS FOR EFFECTIVE LEARNING:
+• Review flashcards daily
+• Start with 5-10 minutes per day
+• Say answers out loud
+• Create your own flashcards for difficult topics
+• Study with friends for group practice
+
+====================================================
+Prepared by: STEM Learn Odisha
+Date: ${new Date().toLocaleDateString()}
+====================================================`;
+        }
+
+        // Show notification function
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            
+            if (type === 'error') {
+                notification.style.background = '#e53e3e';
+            } else if (type === 'success') {
+                notification.style.background = '#38a169';
+            }
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Log download activity
+        function logDownloadActivity(resourceType) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            const activity = {
+                userId: user.id,
+                resourceType: resourceType,
+                timestamp: new Date().toISOString(),
+                page: 'how-objects-work.html'
+            };
+            
+            // Save to localStorage
+            let activities = JSON.parse(localStorage.getItem('downloadActivities')) || [];
+            activities.push(activity);
+            localStorage.setItem('downloadActivities', JSON.stringify(activities));
+        }
+
+        // Progress tracking
+        function updateProgress(category, points) {
+            const progressBars = {
+                'electricity': document.getElementById('electricity-progress'),
+                'circuits': document.getElementById('circuits-progress'),
+                'magnetism': document.getElementById('magnetism-progress'),
+                'overall': document.getElementById('overall-progress')
+            };
+            
+            const progressValues = {
+                'electricity': document.getElementById('electricity-progress-value'),
+                'circuits': document.getElementById('circuits-progress-value'),
+                'magnetism': document.getElementById('magnetism-progress-value'),
+                'overall': document.getElementById('overall-progress-value')
+            };
+            
+            // Update specific category
+            let currentWidth = parseInt(progressBars[category].style.width);
+            if (currentWidth + points <= 100) {
+                progressBars[category].style.width = (currentWidth + points) + '%';
+                progressValues[category].textContent = (currentWidth + points) + '%';
+            } else {
+                progressBars[category].style.width = '100%';
+                progressValues[category].textContent = '100%';
+            }
+            
+            // Update overall progress
+            let overallWidth = (
+                parseInt(progressBars['electricity'].style.width) +
+                parseInt(progressBars['circuits'].style.width) +
+                parseInt(progressBars['magnetism'].style.width)
+            ) / 3;
+            
+            progressBars['overall'].style.width = overallWidth + '%';
+            progressValues['overall'].textContent = Math.round(overallWidth) + '%';
+        }
+    </script>
+</body>
+</html>

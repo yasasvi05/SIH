@@ -1,0 +1,4208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        background-color: #f8fafc;
+        color: #1e293b;
+        line-height: 1.6;
+    }
+
+    /* Header Styles */
+    header {
+        background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+        color: white;
+        padding: 15px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .logo {
+        width: 50px;
+        height: 50px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .logo i {
+        font-size: 1.8rem;
+        color: #2a69ac;
+    }
+
+    .logo-text h1 {
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+
+    .logo-text h1 span {
+        color: #38b2ac;
+        font-weight: 800;
+    }
+
+    .logo-text p {
+        font-size: 0.8rem;
+        opacity: 0.9;
+    }
+
+    nav ul {
+        display: flex;
+        list-style: none;
+        gap: 30px;
+    }
+
+    nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        padding: 8px 12px;
+        border-radius: 6px;
+    }
+
+    nav a:hover, nav a.active {
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateY(-2px);
+    }
+
+    .header-controls {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .control-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: white;
+        font-size: 1rem;
+    }
+
+    .control-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+    }
+
+    .profile-container {
+        position: relative;
+    }
+
+    .profile-btn {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 30px;
+        padding: 8px 15px;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .profile-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .profile-pic {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid white;
+    }
+
+    .profile-dropdown {
+        position: absolute;
+        top: 55px;
+        right: 0;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        width: 180px;
+        display: none;
+        z-index: 1001;
+        overflow: hidden;
+        border: 1px solid #e2e8f0;
+    }
+
+    .profile-dropdown.show {
+        display: block;
+    }
+
+    .dropdown-item {
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #333;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .dropdown-item:last-child {
+        border-bottom: none;
+    }
+
+    .dropdown-item:hover {
+        background: #f5f7fa;
+    }
+
+    .dropdown-item i {
+        color: #3182ce;
+        width: 20px;
+    }
+
+    /* Main Content */
+    .container {
+        max-width: 1200px;
+        margin: 30px auto;
+        padding: 0 20px;
+    }
+
+    .welcome-section {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        border: 1px solid #e2e8f0;
+    }
+
+    .welcome-section h2 {
+        color: #1a365d;
+        margin-bottom: 10px;
+    }
+
+    .welcome-section p {
+        color: #64748b;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+        margin-bottom: 30px;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        text-align: center;
+        transition: all 0.3s ease;
+        border: 1px solid #e2e8f0;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #3182ce;
+        margin-bottom: 10px;
+    }
+
+    .stat-label {
+        font-size: 1.1rem;
+        color: #64748b;
+        margin-bottom: 10px;
+    }
+
+    .stat-change {
+        font-size: 0.9rem;
+        color: #38b2ac;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .dashboard-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 30px;
+    }
+
+    .main-content {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .card {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        border: 1px solid #e2e8f0;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .card-title {
+        font-size: 1.4rem;
+        color: #1a365d;
+        font-weight: 600;
+        position: relative;
+    }
+
+    .card-title:after {
+        content: '';
+        display: block;
+        width: 80px;
+        height: 4px;
+        background: #38b2ac;
+        margin: 15px 0 0;
+        border-radius: 2px;
+    }
+
+    .nav-tabs {
+        display: flex;
+        gap: 20px;
+        list-style: none;
+    }
+
+    .nav-tabs a {
+        color: #64748b;
+        text-decoration: none;
+        font-weight: 500;
+        padding: 8px 0;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .nav-tabs a.active {
+        color: #3182ce;
+    }
+
+    .nav-tabs a.active:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: #3182ce;
+        border-radius: 3px;
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    .student-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .student-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        background: #f8fafc;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        border: 1px solid #e2e8f0;
+    }
+
+    .student-item:hover {
+        background: #edf2f7;
+        transform: translateY(-2px);
+    }
+
+    .student-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: #3182ce;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        margin-right: 15px;
+        flex-shrink: 0;
+    }
+
+    .student-info {
+        flex: 1;
+    }
+
+    .student-name {
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: #1a365d;
+    }
+
+    .student-progress {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 5px;
+    }
+
+    .progress-bar {
+        height: 8px;
+        background: #e2e8f0;
+        border-radius: 4px;
+        flex: 1;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: #38b2ac;
+        border-radius: 4px;
+    }
+
+    .progress-value {
+        font-size: 0.9rem;
+        color: #64748b;
+        min-width: 40px;
+    }
+
+    .view-btn {
+        padding: 8px 15px;
+        background: #3182ce;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .view-btn:hover {
+        background: #2c5282;
+        transform: translateY(-2px);
+    }
+
+    .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 15px;
+    }
+
+    .action-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 15px;
+        background: #f8fafc;
+        border-radius: 10px;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: 1px solid #e2e8f0;
+    }
+
+    .action-btn:hover {
+        background: #edf2f7;
+        transform: translateY(-3px);
+    }
+
+    .action-icon {
+        font-size: 1.5rem;
+        color: #3182ce;
+        margin-bottom: 10px;
+    }
+
+    .action-label {
+        font-size: 0.9rem;
+        color: #64748b;
+    }
+
+    .assignment-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .assignment-item {
+        padding: 15px;
+        background: #f8fafc;
+        border-radius: 10px;
+        border-left: 4px solid #d69e2e;
+        border: 1px solid #e2e8f0;
+    }
+
+    .assignment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .assignment-title {
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: #1a365d;
+        font-size: 1.1rem;
+    }
+
+    .assignment-subject {
+        display: inline-block;
+        padding: 4px 8px;
+        background: #e6f7ff;
+        color: #1890ff;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .assignment-due {
+        font-size: 0.9rem;
+        color: #64748b;
+    }
+
+    .assignment-stats {
+        font-size: 0.85rem;
+        color: #666;
+        margin-top: 5px;
+    }
+
+    .assignment-actions {
+        margin-top: 10px;
+    }
+
+    .help-links {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .help-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 15px;
+        background: #f8fafc;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #64748b;
+        transition: all 0.3s ease;
+        border: 1px solid #e2e8f0;
+    }
+
+    .help-link:hover {
+        background: #edf2f7;
+        color: #3182ce;
+        transform: translateY(-2px);
+    }
+
+    .help-icon {
+        font-size: 1.2rem;
+    }
+
+    /* Game Scores Styles */
+    .scores-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .scores-filters {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 15px;
+        background: #f8fafc;
+        border-radius: 10px;
+        border: 1px solid #e2e8f0;
+    }
+
+    .filter-select {
+        padding: 10px 15px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        background: white;
+        color: #1e293b;
+        min-width: 150px;
+    }
+
+    .scores-table-container {
+        overflow-x: auto;
+        border-radius: 10px;
+        border: 1px solid #e2e8f0;
+    }
+
+    .scores-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+    }
+
+    .scores-table thead {
+        background: #f1f5f9;
+    }
+
+    .scores-table th {
+        padding: 15px;
+        text-align: left;
+        font-weight: 600;
+        color: #475569;
+        border-bottom: 2px solid #e2e8f0;
+    }
+
+    .scores-table td {
+        padding: 15px;
+        border-bottom: 1px solid #e2e8f0;
+        color: #475569;
+    }
+
+    .scores-table tbody tr:hover {
+        background: #f8fafc;
+    }
+
+    .score-badge {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-weight: 500;
+        font-size: 0.9rem;
+    }
+
+    .score-excellent {
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    .score-good {
+        background: #fef3c7;
+        color: #92400e;
+    }
+
+    .score-average {
+        background: #fef9c3;
+        color: #854d0e;
+    }
+
+    .score-poor {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+
+    /* Modal Styles */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .modal-content {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        width: 90%;
+        max-width: 800px;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        border: 1px solid #e2e8f0;
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .modal-title {
+        font-size: 1.5rem;
+        color: #1a365d;
+        font-weight: 600;
+        position: relative;
+    }
+
+    .modal-title:after {
+        content: '';
+        display: block;
+        width: 80px;
+        height: 4px;
+        background: #38b2ac;
+        margin: 15px 0 0;
+        border-radius: 2px;
+    }
+
+    .close-btn {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #64748b;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #1a365d;
+    }
+
+    .form-group input, .form-group select, .form-group textarea {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 1rem;
+    }
+
+    .form-group textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background: #3182ce;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background: #2c5282;
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+        background: #e2e8f0;
+        color: #64748b;
+    }
+
+    .btn-secondary:hover {
+        background: #cbd5e0;
+        transform: translateY(-2px);
+    }
+
+    /* Student Profile Modal */
+    .student-profile {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 30px;
+    }
+
+    .student-profile-left {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .student-profile-avatar {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background: #3182ce;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 3rem;
+        font-weight: bold;
+    }
+
+    .student-profile-info {
+        text-align: center;
+    }
+
+    .student-profile-name {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .student-profile-class {
+        color: #64748b;
+        margin-bottom: 15px;
+    }
+
+    .student-profile-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .student-stat {
+        background: #f8fafc;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        border: 1px solid #e2e8f0;
+    }
+
+    .student-stat-value {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #3182ce;
+        margin-bottom: 5px;
+    }
+
+    .student-stat-label {
+        font-size: 0.9rem;
+        color: #64748b;
+    }
+
+    .student-profile-right {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .student-assignments {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .student-assignment {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        background: #f8fafc;
+        border-radius: 10px;
+        border: 1px solid #e2e8f0;
+    }
+
+    .student-assignment-info h4 {
+        margin-bottom: 5px;
+        color: #1a365d;
+    }
+
+    .student-assignment-score {
+        font-weight: 600;
+        color: #3182ce;
+    }
+
+    /* Grade Assignment Modal */
+    .submission-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .submission-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        background: #f8fafc;
+        border-radius: 10px;
+        border: 1px solid #e2e8f0;
+    }
+
+    .submission-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .submission-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #3182ce;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+    }
+
+    .grade-input {
+        width: 80px;
+        padding: 8px;
+        border: 1px solid #e2e8f0;
+        border-radius: 5px;
+    }
+
+    /* Quiz Options */
+    .quiz-options {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .quiz-option {
+        padding: 20px;
+        background: #f8fafc;
+        border-radius: 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 1px solid #e2e8f0;
+    }
+
+    .quiz-option:hover {
+        background: #edf2f7;
+        transform: translateY(-3px);
+    }
+
+    .quiz-option-icon {
+        font-size: 2rem;
+        color: #3182ce;
+        margin-bottom: 10px;
+    }
+
+    .quiz-option-label {
+        font-weight: 600;
+        color: #1a365d;
+        margin-bottom: 5px;
+    }
+
+    .quiz-option-desc {
+        font-size: 0.9rem;
+        color: #64748b;
+    }
+
+    /* Reports Grid */
+    .reports-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .report-card {
+        padding: 25px;
+        background: #f8fafc;
+        border-radius: 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 1px solid #e2e8f0;
+    }
+
+    .report-card:hover {
+        background: #edf2f7;
+        transform: translateY(-3px);
+    }
+
+    .report-card-icon {
+        font-size: 2.5rem;
+        color: #3182ce;
+        margin-bottom: 15px;
+    }
+
+    .report-card-title {
+        font-weight: 600;
+        color: #1a365d;
+        margin-bottom: 10px;
+    }
+
+    .report-card-desc {
+        font-size: 0.9rem;
+        color: #64748b;
+    }
+
+    /* Quiz Questions */
+    .question-item {
+        background: #f8fafc;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        border: 1px solid #e2e8f0;
+    }
+
+    .question-options {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .question-options input, .question-options select {
+        padding: 10px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+    }
+
+    /* Language Options */
+    .language-options {
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        display: none;
+        z-index: 101;
+        border: 1px solid #e2e8f0;
+    }
+
+    .language-options.show {
+        display: block;
+    }
+
+    .language-option {
+        padding: 10px 15px;
+        cursor: pointer;
+        border-radius: 6px;
+        transition: background 0.3s ease;
+    }
+
+    .language-option:hover {
+        background: #f3f4f6;
+    }
+
+    /* Odia font support */
+    .odia-text {
+        font-family: 'Kalinga', 'Nirmala UI', 'Segoe UI', sans-serif;
+    }
+
+    /* Submissions Modal Styles */
+    .submissions-list {
+        max-height: 400px;
+        overflow-y: auto;
+        margin: 20px 0;
+    }
+
+    .submission-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        background: #f8fafc;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #e2e8f0;
+    }
+
+    .submission-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .submission-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: #3182ce;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+    .submission-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .grade-input {
+        width: 80px;
+        padding: 8px 12px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        text-align: center;
+    }
+
+    .btn-save-grade {
+        padding: 8px 16px;
+        background: #38b2ac;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+    }
+
+    .btn-save-grade:hover {
+        background: #319795;
+    }
+
+    .grade-badge {
+        background: #38b2ac;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-weight: 500;
+    }
+
+    .no-submissions {
+        text-align: center;
+        padding: 40px;
+        color: #666;
+        font-size: 1.1rem;
+    }
+
+    /* Doubt List Styles */
+    .doubt-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        max-height: 500px;
+        overflow-y: auto;
+    }
+
+    .doubt-item {
+        background: #f8fafc;
+        border-radius: 10px;
+        padding: 15px;
+        border: 1px solid #e2e8f0;
+        transition: all 0.3s ease;
+        border-left: 4px solid #38b2ac;
+    }
+
+    .doubt-item:hover {
+        background: #edf2f7;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .doubt-item.pending {
+        border-left-color: #ed8936;
+    }
+
+    .doubt-item.in-progress {
+        border-left-color: #3182ce;
+    }
+
+    .doubt-item.resolved {
+        border-left-color: #38a169;
+    }
+
+    .doubt-item.urgent {
+        border-left-color: #e53e3e;
+    }
+
+    .doubt-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 10px;
+    }
+
+    .doubt-title {
+        font-weight: 600;
+        color: #1a365d;
+        font-size: 1.1rem;
+        flex: 1;
+    }
+
+    .doubt-subject {
+        display: inline-block;
+        padding: 4px 8px;
+        background: #e6f7ff;
+        color: #1890ff;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .doubt-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-top: 5px;
+    }
+
+    .doubt-student {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #64748b;
+        font-size: 0.9rem;
+    }
+
+    .doubt-time {
+        color: #94a3b8;
+        font-size: 0.85rem;
+    }
+
+    .doubt-status {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        margin-top: 8px;
+    }
+
+    .status-pending {
+        background: #fff7e6;
+        color: #fa8c16;
+    }
+
+    .status-in-progress {
+        background: #e6f7ff;
+        color: #1890ff;
+    }
+
+    .status-resolved {
+        background: #f6ffed;
+        color: #52c41a;
+    }
+
+    .doubt-priority {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 10px;
+        font-size: 0.7rem;
+        font-weight: 500;
+        margin-left: 8px;
+    }
+
+    .priority-low {
+        background: #f0f0f0;
+        color: #666;
+    }
+
+    .priority-normal {
+        background: #e6f7ff;
+        color: #1890ff;
+    }
+
+    .priority-high {
+        background: #fff7e6;
+        color: #fa8c16;
+    }
+
+    .priority-urgent {
+        background: #fff1f0;
+        color: #ff4d4f;
+    }
+
+    .doubt-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 12px;
+    }
+
+    .btn-view-doubt {
+        padding: 6px 12px;
+        background: #3182ce;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: all 0.3s ease;
+    }
+
+    .btn-view-doubt:hover {
+        background: #2c5282;
+        transform: translateY(-2px);
+    }
+
+    /* Doubt Details Modal Styles */
+    .doubt-details {
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+
+    .doubt-content {
+        background: #f8fafc;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .doubt-meta {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+    }
+
+    .doubt-meta-item {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .meta-label {
+        font-size: 0.8rem;
+        color: #64748b;
+    }
+
+    .meta-value {
+        font-weight: 500;
+        color: #1a365d;
+    }
+
+    .doubt-description {
+        line-height: 1.6;
+        color: #333;
+    }
+
+    .doubt-attachment {
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .attachment-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #3182ce;
+        text-decoration: none;
+        padding: 8px 12px;
+        background: #f0f7ff;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+
+    .attachment-link:hover {
+        background: #e6f0ff;
+        text-decoration: underline;
+    }
+
+    .comments-section {
+        margin-top: 25px;
+    }
+
+    .comments-title {
+        font-size: 1.1rem;
+        color: #1a365d;
+        margin-bottom: 15px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #e2e8f0;
+    }
+
+    .comments-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        max-height: 300px;
+        overflow-y: auto;
+        margin-bottom: 20px;
+    }
+
+    .comment-item {
+        background: white;
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid #e2e8f0;
+    }
+
+    .comment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .comment-author {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .author-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #3182ce;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+
+    .author-name {
+        font-weight: 500;
+        color: #1a365d;
+    }
+
+    .author-role {
+        font-size: 0.75rem;
+        color: #64748b;
+    }
+
+    .comment-time {
+        font-size: 0.75rem;
+        color: #94a3b8;
+    }
+
+    .comment-content {
+        line-height: 1.5;
+        color: #333;
+    }
+
+    .new-comment-form {
+        margin-top: 20px;
+    }
+
+    .new-comment-form textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        min-height: 80px;
+        resize: vertical;
+        margin-bottom: 10px;
+    }
+
+    .comment-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    .resolution-section {
+        margin-top: 20px;
+        padding: 15px;
+        background: #f6ffed;
+        border-radius: 8px;
+        border: 1px solid #b7eb8f;
+    }
+
+    .resolution-text {
+        color: #389e0d;
+        font-weight: 500;
+    }
+
+    /* Recent Activity */
+    .recent-activity {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .activity-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .activity-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #f0f7ff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #3182ce;
+        flex-shrink: 0;
+    }
+
+    .activity-content {
+        flex: 1;
+    }
+
+    .activity-text {
+        font-size: 0.9rem;
+        color: #333;
+        margin-bottom: 4px;
+    }
+
+    .activity-time {
+        font-size: 0.75rem;
+        color: #94a3b8;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+        .dashboard-content {
+            grid-template-columns: 1fr;
+        }
+        
+        .student-profile {
+            grid-template-columns: 1fr;
+        }
+        
+        .doubt-meta {
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .scores-filters {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        
+        .filter-select {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 768px) {
+        header {
+            padding: 15px 20px;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        nav ul {
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .student-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .student-progress {
+            width: 100%;
+        }
+        
+        .view-btn {
+            align-self: flex-end;
+        }
+        
+        .card-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .nav-tabs {
+            width: 100%;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .submission-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .submission-actions {
+            width: 100%;
+            justify-content: flex-end;
+        }
+        
+        .doubt-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .doubt-info {
+            flex-wrap: wrap;
+        }
+        
+        .quick-actions {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .quiz-options {
+            grid-template-columns: 1fr;
+        }
+        
+        .reports-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-chalkboard-teacher"></i>
+            </div>
+            <div class="logo-text">
+                <h1>STEM Learn Odisha</h1>
+                <p>Teacher Portal</p>
+            </div>
+        </div>
+        
+        <nav>
+            <ul>
+                <li><a href="#" id="navDashboard" data-translate="nav-dashboard">Dashboard</a></li>
+                <li><a href="#" id="navStudents" data-translate="nav-students">Students</a></li>
+                <li><a href="#" id="navAssignments" data-translate="nav-assignments">Assignments</a></li>
+            </ul>
+        </nav>
+        
+        <div class="header-controls">
+            <button class="control-btn" id="languageToggle">
+                <i class="fas fa-globe"></i>
+            </button>
+            
+            <div class="profile-container">
+                <button class="profile-btn" id="profileToggle">
+                    <img src="" alt="Profile" class="profile-pic" id="headerProfilePic">
+                    <span id="headerTeacherName">Teacher</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" class="dropdown-item" id="dropdownProfile">
+                        <i class="fas fa-user"></i>
+                        <span data-translate="dropdown-profile">Profile</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownSettings">
+                        <i class="fas fa-cog"></i>
+                        <span data-translate="dropdown-settings">Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownLogout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span data-translate="dropdown-logout">Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Language Options -->
+    <div class="language-options" id="languageOptions">
+        <div class="language-option" data-lang="en">English</div>
+        <div class="language-option" data-lang="or">ଓଡ଼ିଆ</div>
+    </div>
+
+    <!-- Main Dashboard Content -->
+    <div class="container" id="dashboardContent">
+        <div class="welcome-section">
+            <h2 data-translate="welcome-title">Welcome back, <span id="teacherName">Teacher</span>!</h2>
+            <p data-translate="welcome-subtitle">Manage your classes and track student progress</p>
+        </div>
+        
+        <!-- Stats Overview -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalStudents">0</div>
+                <div class="stat-label" data-translate="total-students">Total Students</div>
+                <div class="stat-change">
+                    <i class="fas fa-arrow-up"></i>
+                    <span data-translate="student-increase">+0 from last month</span>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-number" id="activeToday">0</div>
+                <div class="stat-label" data-translate="active-today">Active Today</div>
+                <div class="stat-change">
+                    <i class="fas fa-arrow-up"></i>
+                    <span data-translate="active-increase">+0 from yesterday</span>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-number" id="pendingDoubts">0</div>
+                <div class="stat-label" data-translate="pending-doubts">Pending Doubts</div>
+                <div class="stat-change">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span data-translate="doubt-urgent">0 urgent</span>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-number" id="avgProgress">0%</div>
+                <div class="stat-label" data-translate="avg-progress">Avg. Progress</div>
+                <div class="stat-change">
+                    <i class="fas fa-arrow-up"></i>
+                    <span data-translate="progress-increase">+0% from last week</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <div class="main-content">
+                <!-- Class Overview Tabs -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title" data-translate="class-overview">Class Overview</h2>
+                        <ul class="nav-tabs">
+                            <li><a href="#" class="tab-link active" data-tab="students" data-translate="students">Students</a></li>
+                            <li><a href="#" class="tab-link" data-tab="assignments" data-translate="assignments">Assignments</a></li>
+                            <li><a href="#" class="tab-link" data-tab="doubts" data-translate="student-doubts">Student Doubts</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Students Tab -->
+                    <div id="students-tab" class="tab-content active">
+                        <div class="student-list" id="studentList">
+                            <!-- Students will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <!-- Assignments Tab -->
+                    <div id="assignments-tab" class="tab-content">
+                        <div class="assignment-list" id="assignmentList">
+                            <!-- Assignments will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <!-- Doubts Tab -->
+                    <div id="doubts-tab" class="tab-content">
+                        <div class="doubt-list" id="doubtList">
+                            <!-- Doubts will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <!-- Game Scores Tab -->
+                    <div id="game-scores-tab" class="tab-content">
+                        <div class="scores-container" id="gameScoresContainer">
+                            <div class="scores-filters">
+                                <select id="scoreFilterGame" class="filter-select">
+                                    <option value="">All Games</option>
+                                    <option value="Food Detective">Food Detective</option>
+                                    <option value="Living or Non-Living?">Living or Non-Living?</option>
+                                    <option value="Habitat Match">Habitat Match</option>
+                                    <option value="Math Adventure">Math Adventure</option>
+                                    <option value="Science Explorer">Science Explorer</option>
+                                </select>
+                                <select id="scoreFilterSubject" class="filter-select">
+                                    <option value="">All Subjects</option>
+                                    <option value="Science">Science</option>
+                                    <option value="Mathematics">Mathematics</option>
+                                    <option value="Geography">Geography</option>
+                                    <option value="Computer Science">Computer Science</option>
+                                </select>
+                                <select id="scoreFilterGrade" class="filter-select">
+                                    <option value="">All Grades</option>
+                                    <option value="6">Grade 6</option>
+                                    <option value="7">Grade 7</option>
+                                    <option value="8">Grade 8</option>
+                                    <option value="9">Grade 9</option>
+                                    <option value="10">Grade 10</option>
+                                </select>
+                                <button id="refreshScores" class="btn btn-primary" data-translate="refresh">Refresh</button>
+                            </div>
+                            
+                            <div class="scores-table-container">
+                                <table class="scores-table">
+                                    <thead>
+                                        <tr>
+                                            <th data-translate="student">Student</th>
+                                            <th data-translate="grade">Grade</th>
+                                            <th data-translate="game">Game</th>
+                                            <th data-translate="subject">Subject</th>
+                                            <th data-translate="score">Score (%)</th>
+                                            <th data-translate="time-taken">Time Taken</th>
+                                            <th data-translate="date-played">Date Played</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="gameScoresTable">
+                                        <!-- Scores will be populated by JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Analytics Tab -->
+                    <div id="analytics-tab" class="tab-content">
+                        <div class="chart-container" style="height: 300px; margin-bottom: 30px;">
+                            <canvas id="performance-chart"></canvas>
+                        </div>
+                        <div class="chart-container" style="height: 300px;">
+                            <canvas id="progress-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <!-- Quick Actions -->
+                <div class="card">
+                    <h2 class="card-title" data-translate="quick-actions">Quick Actions</h2>
+                    
+                    <div class="quick-actions">
+                        <div class="action-btn" id="create-assignment-btn">
+                            <div class="action-icon">
+                                <i class="fas fa-tasks"></i>
+                            </div>
+                            <div class="action-label" data-translate="create-assignment">Create Assignment</div>
+                        </div>
+                        
+                        <div class="action-btn" id="create-quiz-btn">
+                            <div class="action-icon">
+                                <i class="fas fa-pen"></i>
+                            </div>
+                            <div class="action-label" data-translate="create-quiz">Create Quiz</div>
+                        </div>
+                        
+                        <div class="action-btn" id="view-reports-btn">
+                            <div class="action-icon">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <div class="action-label" data-translate="view-reports">View Reports</div>
+                        </div>
+                        
+                        <div class="action-btn" id="send-announcement-btn">
+                            <div class="action-icon">
+                                <i class="fas fa-bullhorn"></i>
+                            </div>
+                            <div class="action-label" data-translate="send-announcement">Send Announcement</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Activity -->
+                <div class="card">
+                    <h2 class="card-title" data-translate="recent-activity">Recent Activity</h2>
+                    <div class="recent-activity" id="recentActivity">
+                        <!-- Recent activity will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Help Section -->
+                <div class="card">
+                    <h2 class="card-title" data-translate="need-help">Need Help?</h2>
+                    
+                    <div class="help-links">
+                        <a href="#" class="help-link">
+                            <i class="fas fa-book help-icon"></i>
+                            <span data-translate="teaching-resources">Teaching Resources</span>
+                        </a>
+                        
+                        <a href="#" class="help-link">
+                            <i class="fas fa-headset help-icon"></i>
+                            <span data-translate="contact-support">Contact Support</span>
+                        </a>
+                        
+                        <a href="#" class="help-link">
+                            <i class="fas fa-book-open help-icon"></i>
+                            <span data-translate="user-guide">User Guide</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Profile Modal -->
+    <div class="modal" id="student-profile-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" data-translate="student-profile">Student Profile</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="student-profile">
+                <div class="student-profile-left">
+                    <div class="student-profile-avatar" id="student-profile-avatar">SN</div>
+                    <div class="student-profile-info">
+                        <h3 class="student-profile-name" id="student-profile-name">Student Name</h3>
+                        <p class="student-profile-class" id="student-profile-class">Class 6</p>
+                    </div>
+                    <div class="student-profile-stats">
+                        <div class="student-stat">
+                            <div class="student-stat-value" id="student-progress-value">0%</div>
+                            <div class="student-stat-label" data-translate="overall-progress">Overall Progress</div>
+                        </div>
+                        <div class="student-stat">
+                            <div class="student-stat-value" id="student-performance-value">0%</div>
+                            <div class="student-stat-label" data-translate="avg-performance">Avg. Performance</div>
+                        </div>
+                        <div class="student-stat">
+                            <div class="student-stat-value" id="student-assignments-completed">0/0</div>
+                            <div class="student-stat-label" data-translate="assignments-completed">Assignments Completed</div>
+                        </div>
+                        <div class="student-stat">
+                            <div class="student-stat-value" id="student-attendance">0%</div>
+                            <div class="student-stat-label" data-translate="attendance">Attendance</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="student-profile-right">
+                    <h3 data-translate="recent-assignments">Recent Assignments</h3>
+                    <div class="student-assignments" id="student-assignments-list">
+                        <!-- Assignment items will be populated by JavaScript -->
+                    </div>
+                    <h3 data-translate="performance-trend">Performance Trend</h3>
+                    <div class="chart-container" style="height: 200px;">
+                        <canvas id="student-performance-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Assignment Modal -->
+    <div class="modal" id="create-assignment-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" data-translate="create-assignment">Create Assignment</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="assignmentForm">
+                <div class="form-group">
+                    <label for="assignmentTitle" data-translate="assignment-title">Assignment Title</label>
+                    <input type="text" id="assignmentTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="assignmentSubject" data-translate="subject">Subject</label>
+                    <select id="assignmentSubject" required>
+                        <option value="">Select Subject</option>
+                        <option value="Science">Science</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Geography">Geography</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="English">English</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="assignmentTopic" data-translate="topic">Topic</label>
+                    <input type="text" id="assignmentTopic" required>
+                </div>
+                <div class="form-group">
+                    <label for="assignmentDescription" data-translate="description">Description</label>
+                    <textarea id="assignmentDescription" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="assignmentDueDate" data-translate="due-date">Due Date</label>
+                    <input type="date" id="assignmentDueDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="assignmentClass" data-translate="class">Class</label>
+                    <select id="assignmentClass" required>
+                        <option value="6">Class 6</option>
+                        <option value="7">Class 7</option>
+                        <option value="8">Class 8</option>
+                        <option value="9">Class 9</option>
+                        <option value="10">Class 10</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="assignmentFile" data-translate="attachment">Attachment (Optional)</label>
+                    <input type="file" id="assignmentFile">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelAssignment" data-translate="cancel">Cancel</button>
+                    <button type="submit" class="btn btn-primary" data-translate="create-assignment">Create Assignment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Quiz Modal -->
+    <div class="modal" id="create-quiz-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" data-translate="create-quiz">Create Quiz</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="quiz-options">
+                <div class="quiz-option" id="quiz-math">
+                    <div class="quiz-option-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <div class="quiz-option-label" data-translate="math-quiz">Mathematics Quiz</div>
+                    <div class="quiz-option-desc" data-translate="math-quiz-desc">Create a quiz on mathematics topics</div>
+                </div>
+                
+                <div class="quiz-option" id="quiz-science">
+                    <div class="quiz-option-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <div class="quiz-option-label" data-translate="science-quiz">Science Quiz</div>
+                    <div class="quiz-option-desc" data-translate="science-quiz-desc">Create a quiz on science topics</div>
+                </div>
+                
+                <div class="quiz-option" id="quiz-computer">
+                    <div class="quiz-option-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div class="quiz-option-label" data-translate="computer-quiz">Computer Quiz</div>
+                    <div class="quiz-option-desc" data-translate="computer-quiz-desc">Create a quiz on computer topics</div>
+                </div>
+                
+                <div class="quiz-option" id="quiz-custom">
+                    <div class="quiz-option-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <div class="quiz-option-label" data-translate="custom-quiz">Custom Quiz</div>
+                    <div class="quiz-option-desc" data-translate="custom-quiz-desc">Create your own custom quiz</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Reports Modal -->
+    <div class="modal" id="view-reports-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" data-translate="view-reports">View Reports</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="reports-grid">
+                <div class="report-card" id="report-performance">
+                    <div class="report-card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="report-card-title" data-translate="performance-report">Performance Report</div>
+                    <div class="report-card-desc" data-translate="performance-report-desc">View detailed student performance analysis</div>
+                </div>
+                
+                <div class="report-card" id="report-attendance">
+                    <div class="report-card-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="report-card-title" data-translate="attendance-report">Attendance Report</div>
+                    <div class="report-card-desc" data-translate="attendance-report-desc">Track student attendance records</div>
+                </div>
+                
+                <div class="report-card" id="report-progress">
+                    <div class="report-card-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="report-card-title" data-translate="progress-report">Progress Report</div>
+                    <div class="report-card-desc" data-translate="progress-report-desc">Monitor student learning progress</div>
+                </div>
+                
+                <div class="report-card" id="report-submissions">
+                    <div class="report-card-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="report-card-title" data-translate="submissions-report">Submissions Report</div>
+                    <div class="report-card-desc" data-translate="submissions-report-desc">View assignment submission status</div>
+                </div>
+                
+                <div class="report-card" id="report-analytics">
+                    <div class="report-card-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <div class="report-card-title" data-translate="analytics-report">Analytics Report</div>
+                    <div class="report-card-desc" data-translate="analytics-report-desc">Comprehensive class analytics</div>
+                </div>
+                
+                <div class="report-card" id="report-export">
+                    <div class="report-card-icon">
+                        <i class="fas fa-file-export"></i>
+                    </div>
+                    <div class="report-card-title" data-translate="export-report">Export Report</div>
+                    <div class="report-card-desc" data-translate="export-report-desc">Export reports in PDF/Excel format</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Send Announcement Modal -->
+    <div class="modal" id="send-announcement-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" data-translate="send-announcement">Send Announcement</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="announcementForm">
+                <div class="form-group">
+                    <label for="announcementTitle" data-translate="announcement-title">Announcement Title</label>
+                    <input type="text" id="announcementTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="announcementMessage" data-translate="message">Message</label>
+                    <textarea id="announcementMessage" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="announcementType" data-translate="announcement-type">Announcement Type</label>
+                    <select id="announcementType" required>
+                        <option value="">Select Type</option>
+                        <option value="general" data-translate="general">General</option>
+                        <option value="important" data-translate="important">Important</option>
+                        <option value="urgent" data-translate="urgent">Urgent</option>
+                        <option value="reminder" data-translate="reminder">Reminder</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="announcementClasses" data-translate="target-classes">Target Classes</label>
+                    <select id="announcementClasses" multiple required>
+                        <option value="6" data-translate="class-6">Class 6</option>
+                        <option value="7" data-translate="class-7">Class 7</option>
+                        <option value="8" data-translate="class-8">Class 8</option>
+                        <option value="9" data-translate="class-9">Class 9</option>
+                        <option value="10" data-translate="class-10">Class 10</option>
+                    </select>
+                    <small data-translate="select-multiple">Hold Ctrl/Cmd to select multiple classes</small>
+                </div>
+                <div class="form-group">
+                    <label for="announcementSchedule" data-translate="schedule">Schedule</label>
+                    <select id="announcementSchedule" required>
+                        <option value="immediate" data-translate="send-immediately">Send Immediately</option>
+                        <option value="scheduled" data-translate="schedule-later">Schedule for later</option>
+                    </select>
+                </div>
+                <div class="form-group" id="scheduleDateGroup" style="display: none;">
+                    <label for="announcementDate" data-translate="schedule-date">Schedule Date & Time</label>
+                    <input type="datetime-local" id="announcementDate">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelAnnouncement" data-translate="cancel">Cancel</button>
+                    <button type="submit" class="btn btn-primary" data-translate="send-announcement">Send Announcement</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Quiz Creation Modal (for custom quiz) -->
+    <div class="modal" id="custom-quiz-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" data-translate="create-custom-quiz">Create Custom Quiz</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="customQuizForm">
+                <div class="form-group">
+                    <label for="quizTitle" data-translate="quiz-title">Quiz Title</label>
+                    <input type="text" id="quizTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="quizSubject" data-translate="subject">Subject</label>
+                    <input type="text" id="quizSubject" required>
+                </div>
+                <div class="form-group">
+                    <label for="quizDescription" data-translate="description">Description</label>
+                    <textarea id="quizDescription" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="quizDuration" data-translate="duration">Duration (minutes)</label>
+                    <input type="number" id="quizDuration" min="5" max="180" value="30" required>
+                </div>
+                <div class="form-group">
+                    <label for="quizClass" data-translate="class">Class</label>
+                    <select id="quizClass" required>
+                        <option value="6">Class 6</option>
+                        <option value="7">Class 7</option>
+                        <option value="8">Class 8</option>
+                        <option value="9">Class 9</option>
+                        <option value="10">Class 10</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label data-translate="add-questions">Add Questions</label>
+                    <div id="quizQuestionsContainer">
+                        <div class="question-item">
+                            <input type="text" class="question-text" placeholder="Question 1" required>
+                            <div class="question-options">
+                                <input type="text" class="option" placeholder="Option A" required>
+                                <input type="text" class="option" placeholder="Option B" required>
+                                <input type="text" class="option" placeholder="Option C" required>
+                                <input type="text" class="option" placeholder="Option D" required>
+                                <select class="correct-answer" required>
+                                    <option value="">Correct Answer</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-secondary" id="addQuestion" data-translate="add-question">Add Another Question</button>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelCustomQuiz" data-translate="cancel">Cancel</button>
+                    <button type="submit" class="btn btn-primary" data-translate="create-quiz">Create Quiz</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- View Doubt Details Modal -->
+    <div class="modal" id="view-doubt-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" data-translate="doubt-details">Doubt Details</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="doubt-details" id="doubtDetailsContent">
+                <!-- Doubt details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Resolve Doubt Modal -->
+    <div class="modal" id="resolve-doubt-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" data-translate="resolve-doubt">Resolve Doubt</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="resolveDoubtForm">
+                <div class="form-group">
+                    <label for="resolutionText" data-translate="resolution">Resolution</label>
+                    <textarea id="resolutionText" required placeholder="Provide a detailed resolution or answer to the student's doubt..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelResolveDoubt" data-translate="cancel">Cancel</button>
+                    <button type="submit" class="btn btn-primary" data-translate="mark-resolved">Mark as Resolved</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Check if teacher is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const teacher = JSON.parse(localStorage.getItem('teacher'));
+            
+            if (!teacher) {
+                // Redirect to login if not authenticated
+                window.location.href = 'teacher-login.html';
+                return;
+            }
+            
+            // Load teacher data
+            loadTeacherData(teacher);
+            
+            // Fetch real students data from server
+            fetchRealStudentsData();
+            
+            // Setup event listeners for quick actions
+            setupQuickActionsListeners();
+            
+            // Initialize other event listeners
+            setupOtherEventListeners();
+            
+            // Load teacher's assignments and quizzes
+            loadTeacherAssignments(teacher.id);
+            loadTeacherQuizzes(teacher.id);
+            
+            // Initialize game scores tab
+            initializeGameScoresTab();
+            
+            // Load student doubts
+            loadStudentDoubts();
+            
+            // Load doubt statistics
+            loadDoubtStatistics();
+            
+            // Load recent activity
+            loadRecentActivity();
+        });
+
+        // Load teacher data into the dashboard
+        function loadTeacherData(teacher) {
+            document.getElementById('teacherName').textContent = teacher.fullName;
+            document.getElementById('headerTeacherName').textContent = teacher.fullName;
+            document.getElementById('headerProfilePic').src = teacher.profilePicture ? `uploads/${teacher.profilePicture}` : 'default-profile.png';
+        }
+
+        // Fetch real students data from the server
+        async function fetchRealStudentsData() {
+            try {
+                const response = await fetch('http://localhost:5000/api/teachers/students');
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch students');
+                }
+                
+                const students = await response.json();
+                console.log('Fetched students:', students); // Debug log
+                
+                updateStudentsList(students);
+                updateDashboardStats(students);
+                initCharts(students);
+                
+            } catch (error) {
+                console.error('Error fetching students:', error);
+                console.log('Falling back to demo data...');
+                useFallbackStudentsData();
+            }
+        }
+
+        // Load teacher's assignments
+        async function loadTeacherAssignments(teacherId) {
+            try {
+                const response = await fetch(`http://localhost:5000/api/teachers/assignments/${teacherId}`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch assignments');
+                }
+                
+                const assignments = await response.json();
+                updateAssignmentsList(assignments);
+                
+            } catch (error) {
+                console.error('Error fetching assignments:', error);
+                // Fallback data
+                const fallbackAssignments = [
+                    { title: 'Science Homework - Chapter 1', due_date: '2024-12-20', submissions_count: 25, submitted_count: 20 },
+                    { title: 'Math Practice - Fractions', due_date: '2024-12-18', submissions_count: 25, submitted_count: 18 },
+                    { title: 'Geography Project - Continents', due_date: '2024-12-25', submissions_count: 25, submitted_count: 15 }
+                ];
+                updateAssignmentsList(fallbackAssignments);
+            }
+        }
+
+        // Load teacher's quizzes
+        async function loadTeacherQuizzes(teacherId) {
+            try {
+                const response = await fetch(`http://localhost:5000/api/teachers/quizzes/${teacherId}`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch quizzes');
+                }
+                
+                const quizzes = await response.json();
+                // You could update a quizzes list if you add one
+                
+            } catch (error) {
+                console.error('Error fetching quizzes:', error);
+            }
+        }
+
+        // Initialize game scores tab
+        function initializeGameScoresTab() {
+            // Add event listeners for game scores filters
+            document.getElementById('refreshScores')?.addEventListener('click', loadGameScores);
+            document.getElementById('scoreFilterGame')?.addEventListener('change', loadGameScores);
+            document.getElementById('scoreFilterSubject')?.addEventListener('change', loadGameScores);
+            document.getElementById('scoreFilterGrade')?.addEventListener('change', loadGameScores);
+        }
+
+        // Load game scores from server
+        async function loadGameScores() {
+            try {
+                const response = await fetch('http://localhost:5000/api/teachers/game-scores');
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch game scores');
+                }
+                
+                const scoresData = await response.json();
+                updateGameScoresTable(scoresData);
+                
+            } catch (error) {
+                console.error('Error fetching game scores:', error);
+                // Show fallback data or error message
+                updateGameScoresTable([]);
+            }
+        }
+
+        // Update game scores table
+        function updateGameScoresTable(scoresData) {
+            const tableBody = document.getElementById('gameScoresTable');
+            if (!tableBody) return;
+            
+            let tableHTML = '';
+            
+            if (scoresData && scoresData.length > 0) {
+                // Flatten the data for the table
+                const allScores = [];
+                scoresData.forEach(student => {
+                    if (student.scores && student.scores.length > 0) {
+                        student.scores.forEach(score => {
+                            allScores.push({
+                                ...score,
+                                student_name: student.student_name,
+                                grade: student.grade,
+                                profilePicture: student.profilePicture
+                            });
+                        });
+                    }
+                });
+                
+                // Sort by date (most recent first)
+                allScores.sort((a, b) => new Date(b.played_at) - new Date(a.played_at));
+                
+                // Filter if filters are applied
+                let filteredScores = allScores;
+                const gameFilter = document.getElementById('scoreFilterGame')?.value;
+                const subjectFilter = document.getElementById('scoreFilterSubject')?.value;
+                const gradeFilter = document.getElementById('scoreFilterGrade')?.value;
+                
+                if (gameFilter) {
+                    filteredScores = filteredScores.filter(score => score.game_name === gameFilter);
+                }
+                if (subjectFilter) {
+                    filteredScores = filteredScores.filter(score => score.subject === subjectFilter);
+                }
+                if (gradeFilter) {
+                    filteredScores = filteredScores.filter(score => score.grade === gradeFilter);
+                }
+                
+                // Generate table rows
+                filteredScores.forEach(score => {
+                    const scoreClass = score.score >= 90 ? 'score-excellent' : 
+                                      score.score >= 70 ? 'score-good' : 
+                                      score.score >= 50 ? 'score-average' : 'score-poor';
+                    
+                    const timeTaken = score.time_taken ? `${score.time_taken}s` : 'N/A';
+                    const datePlayed = score.played_at ? 
+                        new Date(score.played_at).toLocaleDateString('en-IN', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        }) : 'N/A';
+                    
+                    tableHTML += `
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    ${score.profilePicture ? 
+                                        `<img src="http://localhost:5000/uploads/${score.profilePicture}" alt="${score.student_name}" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">` : 
+                                        `<div style="width: 40px; height: 40px; border-radius: 50%; background: #3182ce; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold;">${getInitials(score.student_name)}</div>`
+                                    }
+                                    <span>${score.student_name}</span>
+                                </div>
+                            </td>
+                            <td>Grade ${score.grade}</td>
+                            <td>${score.game_name}</td>
+                            <td>${score.subject}</td>
+                            <td>
+                                <span class="score-badge ${scoreClass}">
+                                    ${score.score}%
+                                </span>
+                            </td>
+                            <td>${timeTaken}</td>
+                            <td>${datePlayed}</td>
+                        </tr>
+                    `;
+                });
+                
+                if (filteredScores.length === 0) {
+                    tableHTML = `
+                        <tr>
+                            <td colspan="7" style="text-align: center; padding: 40px; color: #64748b;">
+                                No game scores found with the current filters
+                            </td>
+                        </tr>
+                    `;
+                }
+            } else {
+                tableHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 40px; color: #64748b;">
+                            No game scores available yet
+                        </td>
+                    </tr>
+                `;
+            }
+            
+            tableBody.innerHTML = tableHTML;
+        }
+
+        // Load student doubts
+        async function loadStudentDoubts() {
+            try {
+                const response = await fetch('http://localhost:5000/api/teachers/doubts');
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch doubts');
+                }
+                
+                const doubts = await response.json();
+                updateDoubtsList(doubts);
+                
+            } catch (error) {
+                console.error('Error fetching student doubts:', error);
+            }
+        }
+
+        // Load doubt statistics
+        async function loadDoubtStatistics() {
+            try {
+                const response = await fetch('http://localhost:5000/api/teachers/doubt-stats');
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch doubt statistics');
+                }
+                
+                const stats = await response.json();
+                updateDoubtStats(stats);
+                
+            } catch (error) {
+                console.error('Error fetching doubt statistics:', error);
+            }
+        }
+
+        // Load recent activity
+        async function loadRecentActivity() {
+            try {
+                const response = await fetch('http://localhost:5000/api/teachers/recent-activity');
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch recent activity');
+                }
+                
+                const activities = await response.json();
+                updateRecentActivity(activities);
+                
+            } catch (error) {
+                console.error('Error fetching recent activity:', error);
+            }
+        }
+
+        // Update doubts list
+        function updateDoubtsList(doubts) {
+            const doubtList = document.getElementById('doubtList');
+            if (!doubtList) return;
+            
+            let doubtsHTML = '';
+            
+            if (doubts && doubts.length > 0) {
+                doubts.forEach(doubt => {
+                    const createdDate = new Date(doubt.created_at);
+                    const timeAgo = getTimeAgo(createdDate);
+                    
+                    let priorityClass = 'priority-normal';
+                    if (doubt.priority === 'low') priorityClass = 'priority-low';
+                    else if (doubt.priority === 'high') priorityClass = 'priority-high';
+                    else if (doubt.priority === 'urgent') priorityClass = 'priority-urgent';
+                    
+                    doubtsHTML += `
+                        <div class="doubt-item ${doubt.status} ${doubt.priority}">
+                            <div class="doubt-header">
+                                <h3 class="doubt-title">${doubt.title}</h3>
+                                <span class="doubt-subject">${doubt.subject}</span>
+                            </div>
+                            <div class="doubt-info">
+                                <div class="doubt-student">
+                                    <i class="fas fa-user"></i>
+                                    <span>${doubt.student_name} (Grade ${doubt.grade})</span>
+                                </div>
+                                <div class="doubt-time">
+                                    <i class="far fa-clock"></i>
+                                    <span>${timeAgo}</span>
+                                </div>
+                            </div>
+                            <div class="doubt-description">
+                                ${doubt.description.substring(0, 150)}${doubt.description.length > 150 ? '...' : ''}
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                                <div>
+                                    <span class="doubt-status status-${doubt.status}">
+                                        ${doubt.status.charAt(0).toUpperCase() + doubt.status.slice(1)}
+                                    </span>
+                                    <span class="doubt-priority ${priorityClass}">
+                                        ${doubt.priority.charAt(0).toUpperCase() + doubt.priority.slice(1)}
+                                    </span>
+                                </div>
+                                <div class="doubt-actions">
+                                    <button class="btn-view-doubt view-doubt" data-doubt-id="${doubt.id}">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                    ${doubt.status !== 'resolved' ? `
+                                    <button class="btn-view-doubt resolve-doubt" data-doubt-id="${doubt.id}" style="background: #38a169;">
+                                        <i class="fas fa-check"></i> Resolve
+                                    </button>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                doubtsHTML = '<p style="text-align: center; color: #666; padding: 20px;">No student doubts at the moment</p>';
+            }
+            
+            doubtList.innerHTML = doubtsHTML;
+            
+            // Add event listeners to view doubt buttons
+            document.querySelectorAll('.view-doubt').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const doubtId = this.getAttribute('data-doubt-id');
+                    showDoubtDetails(doubtId);
+                });
+            });
+            
+            // Add event listeners to resolve doubt buttons
+            document.querySelectorAll('.resolve-doubt').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const doubtId = this.getAttribute('data-doubt-id');
+                    showResolveDoubtModal(doubtId);
+                });
+            });
+        }
+
+        // Update doubt statistics
+        function updateDoubtStats(stats) {
+            if (stats && stats.total_doubts !== undefined) {
+                document.getElementById('pendingDoubts').textContent = stats.pending_doubts || 0;
+                
+                // Update the urgent count in the text
+                const urgentText = document.querySelector('.stat-change span[data-translate="doubt-urgent"]');
+                if (urgentText) {
+                    urgentText.textContent = `${stats.urgent_doubts || 0} urgent`;
+                }
+            }
+        }
+
+        // Update recent activity
+        function updateRecentActivity(activities) {
+            const recentActivityDiv = document.getElementById('recentActivity');
+            if (!recentActivityDiv || !activities) return;
+            
+            let activityHTML = '';
+            
+            if (activities.length > 0) {
+                activities.slice(0, 5).forEach(activity => {
+                    activityHTML += `
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas ${activity.icon || 'fa-bell'}"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-text">${activity.text || 'New activity'}</div>
+                                <div class="activity-time">${activity.time || 'Just now'}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                activityHTML = '<p style="text-align: center; color: #666; padding: 10px;">No recent activity</p>';
+            }
+            
+            recentActivityDiv.innerHTML = activityHTML;
+        }
+
+        // Show doubt details
+        async function showDoubtDetails(doubtId) {
+            try {
+                const response = await fetch(`http://localhost:5000/api/doubts/${doubtId}`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch doubt details');
+                }
+                
+                const doubt = await response.json();
+                displayDoubtDetails(doubt);
+                
+            } catch (error) {
+                console.error('Error fetching doubt details:', error);
+                alert('Could not load doubt details. Please try again.');
+            }
+        }
+
+        // Display doubt details
+        function displayDoubtDetails(doubt) {
+            const createdDate = new Date(doubt.created_at);
+            const formattedDate = createdDate.toLocaleDateString('en-IN', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            let resolvedInfo = '';
+            if (doubt.status === 'resolved') {
+                const resolvedDate = new Date(doubt.resolved_at);
+                const resolvedFormattedDate = resolvedDate.toLocaleDateString('en-IN', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                resolvedInfo = `
+                    <div class="resolution-section">
+                        <h4>Resolution Details</h4>
+                        <p><strong>Resolved by:</strong> ${doubt.resolved_by_name || 'Teacher'}</p>
+                        <p><strong>Resolved on:</strong> ${resolvedFormattedDate}</p>
+                        <p><strong>Resolution:</strong></p>
+                        <p class="resolution-text">${doubt.resolution_text || 'No resolution text provided.'}</p>
+                    </div>
+                `;
+            }
+            
+            let commentsHTML = '';
+            if (doubt.comments && doubt.comments.length > 0) {
+                doubt.comments.forEach(comment => {
+                    const commentDate = new Date(comment.created_at);
+                    const commentFormattedDate = commentDate.toLocaleDateString('en-IN', {
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    
+                    commentsHTML += `
+                        <div class="comment-item">
+                            <div class="comment-header">
+                                <div class="comment-author">
+                                    <div class="author-avatar">${getInitials(comment.user_name)}</div>
+                                    <div>
+                                        <div class="author-name">${comment.user_name}</div>
+                                        <div class="author-role">${comment.user_type}</div>
+                                    </div>
+                                </div>
+                                <div class="comment-time">${commentFormattedDate}</div>
+                            </div>
+                            <div class="comment-content">${comment.comment}</div>
+                            ${comment.attachment ? `
+                                <div class="doubt-attachment">
+                                    <a href="/doubts/${comment.attachment}" class="attachment-link" target="_blank">
+                                        <i class="fas fa-paperclip"></i> View Attachment
+                                    </a>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                });
+            } else {
+                commentsHTML = '<p style="text-align: center; color: #666; padding: 20px;">No comments yet.</p>';
+            }
+            
+            let priorityClass = 'priority-normal';
+            if (doubt.priority === 'low') priorityClass = 'priority-low';
+            else if (doubt.priority === 'high') priorityClass = 'priority-high';
+            else if (doubt.priority === 'urgent') priorityClass = 'priority-urgent';
+            
+            const detailsHTML = `
+                <div class="doubt-content">
+                    <h3>${doubt.title}</h3>
+                    <div class="doubt-meta">
+                        <div class="doubt-meta-item">
+                            <span class="meta-label">Subject</span>
+                            <span class="meta-value">${doubt.subject}</span>
+                        </div>
+                        <div class="doubt-meta-item">
+                            <span class="meta-label">Student</span>
+                            <span class="meta-value">${doubt.student_name} (Grade ${doubt.grade})</span>
+                        </div>
+                        <div class="doubt-meta-item">
+                            <span class="meta-label">Posted</span>
+                            <span class="meta-value">${formattedDate}</span>
+                        </div>
+                        <div class="doubt-meta-item">
+                            <span class="meta-label">Status</span>
+                            <span class="meta-value doubt-status status-${doubt.status}">
+                                ${doubt.status.charAt(0).toUpperCase() + doubt.status.slice(1)}
+                            </span>
+                        </div>
+                        <div class="doubt-meta-item">
+                            <span class="meta-label">Priority</span>
+                            <span class="meta-value doubt-priority ${priorityClass}">
+                                ${doubt.priority.charAt(0).toUpperCase() + doubt.priority.slice(1)}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="doubt-description">
+                        ${doubt.description}
+                    </div>
+                    
+                    ${doubt.attachment ? `
+                        <div class="doubt-attachment">
+                            <a href="/doubts/${doubt.attachment}" class="attachment-link" target="_blank">
+                                <i class="fas fa-paperclip"></i> View Student's Attachment
+                            </a>
+                        </div>
+                    ` : ''}
+                </div>
+                
+                <div class="comments-section">
+                    <h4 class="comments-title">Comments</h4>
+                    <div class="comments-list" id="doubtCommentsList">
+                        ${commentsHTML}
+                    </div>
+                    
+                    ${doubt.status !== 'resolved' ? `
+                    <div class="new-comment-form">
+                        <textarea id="newCommentText" placeholder="Add a comment or answer to help the student..."></textarea>
+                        <div class="comment-actions">
+                            <button type="button" class="btn btn-secondary" id="cancelComment">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="submitComment" data-doubt-id="${doubt.id}">Add Comment</button>
+                        </div>
+                    </div>
+                    ` : ''}
+                </div>
+                
+                ${resolvedInfo}
+            `;
+            
+            document.getElementById('doubtDetailsContent').innerHTML = detailsHTML;
+            document.getElementById('view-doubt-modal').style.display = 'flex';
+            
+            // Add event listeners for comments
+            if (doubt.status !== 'resolved') {
+                const submitBtn = document.getElementById('submitComment');
+                if (submitBtn) {
+                    submitBtn.addEventListener('click', function() {
+                        const doubtId = this.getAttribute('data-doubt-id');
+                        const commentText = document.getElementById('newCommentText').value.trim();
+                        
+                        if (!commentText) {
+                            alert('Please enter a comment');
+                            return;
+                        }
+                        
+                        addCommentToDoubt(doubtId, commentText);
+                    });
+                }
+                
+                const cancelBtn = document.getElementById('cancelComment');
+                if (cancelBtn) {
+                    cancelBtn.addEventListener('click', function() {
+                        document.getElementById('newCommentText').value = '';
+                    });
+                }
+            }
+        }
+
+        // Add comment to doubt
+        async function addCommentToDoubt(doubtId, commentText) {
+            try {
+                const teacher = JSON.parse(localStorage.getItem('teacher'));
+                if (!teacher) return;
+                
+                const response = await fetch(`http://localhost:5000/api/doubts/${doubtId}/comments`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        user_id: teacher.id,
+                        user_type: 'teacher',
+                        comment: commentText
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to add comment');
+                }
+                
+                // Clear comment textarea
+                document.getElementById('newCommentText').value = '';
+                
+                // Reload doubt details
+                showDoubtDetails(doubtId);
+                
+                // Show success message
+                alert('Comment added successfully!');
+                
+            } catch (error) {
+                console.error('Error adding comment:', error);
+                alert('Failed to add comment. Please try again.');
+            }
+        }
+
+        // Show resolve doubt modal
+        function showResolveDoubtModal(doubtId) {
+            document.getElementById('resolveDoubtForm').dataset.doubtId = doubtId;
+            document.getElementById('resolve-doubt-modal').style.display = 'flex';
+        }
+
+        // Helper function to get time ago
+        function getTimeAgo(date) {
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / (1000 * 60));
+            const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+            const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+            
+            if (diffMins < 1) return 'Just now';
+            if (diffMins < 60) return `${diffMins} minute${diffMins !== 1 ? 's' : ''} ago`;
+            if (diffHours < 24) return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
+            if (diffDays < 7) return `${diffDays} day${diffDays !== 1 ? 's' : ''} ago`;
+            
+            return date.toLocaleDateString('en-IN', { month: 'short', day: 'numeric' });
+        }
+
+        // Helper function to get initials
+        function getInitials(name) {
+            return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        }
+
+        // Fallback function for when server is not available
+        function useFallbackStudentsData() {
+            const fallbackStudents = [
+                {
+                    id: 1,
+                    name: "V. Akshaya Reddy",
+                    class: "Class 6",
+                },
+                {
+                    id: 2,
+                    name: "R. Bhanu Sri",
+                    class: "Class 6", 
+                },
+                {
+                    id: 3,
+                    name: "S. Sai Sruthi",
+                    class: "Class 6", 
+                }
+            ];
+            
+            updateStudentsList(fallbackStudents);
+            updateDashboardStats(fallbackStudents);
+            initCharts(fallbackStudents);
+        }
+
+        // Update dashboard stats based on real student data
+        function updateDashboardStats(students) {
+            document.getElementById('totalStudents').textContent = students.length;
+            
+            // Calculate active today (students who played games today)
+            const today = new Date().toISOString().split('T')[0];
+            const activeToday = students.filter(s => s.totalGamesPlayed > 0).length;
+            document.getElementById('activeToday').textContent = activeToday;
+            
+            // Calculate averages
+            const avgProgress = students.length > 0 ? 
+                Math.round(students.reduce((sum, s) => sum + (s.averageScore || 0), 0) / students.length) : 0;
+            
+            document.getElementById('avgProgress').textContent = avgProgress + '%';
+        }
+
+        // Update students list - FIXED VERSION
+        function updateStudentsList(students) {
+            const studentList = document.getElementById('studentList');
+            if (!studentList) return;
+            
+            studentList.innerHTML = '';
+            
+            if (!students || students.length === 0) {
+                studentList.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">No students found</p>';
+                return;
+            }
+            
+            console.log('Updating student list with:', students); // Debug log
+            
+            students.forEach(student => {
+                const studentEl = document.createElement('div');
+                studentEl.className = 'student-item';
+                
+                // Use profile picture if available, otherwise show initials
+                const avatarHTML = student.profilePicture 
+                    ? `<img src="http://localhost:5000/uploads/${student.profilePicture}" alt="${student.fullName || student.name}" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">` 
+                    : `<div class="student-avatar">${getInitials(student.fullName || student.name)}</div>`;
+                
+                // Calculate progress percentage from average score
+                const progress = Math.min(student.averageScore || 0, 100);
+                const studentName = student.fullName || student.name || 'Unknown Student';
+                const studentClass = `Grade ${student.grade}`;
+                
+                studentEl.innerHTML = `
+                    ${avatarHTML}
+                    <div class="student-info">
+                        <h3 class="student-name">${studentName}</h3>
+                        <p>${studentClass}</p>
+                        <div class="student-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${progress}%"></div>
+                            </div>
+                            <span class="progress-value">${progress}%</span>
+                        </div>
+                    </div>
+                    <button class="view-btn view-profile" data-student-id="${student.id}" data-translate="view-profile">View Profile</button>
+                `;
+                studentList.appendChild(studentEl);
+            });
+            
+            // Add event listeners to view profile buttons
+            document.querySelectorAll('.view-profile').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const studentId = this.getAttribute('data-student-id');
+                    showStudentProfile(studentId);
+                });
+            });
+        }
+
+        // Initialize charts
+        function initCharts(students) {
+            // Performance chart
+            const performanceCtx = document.getElementById('performance-chart');
+            if (performanceCtx && students && students.length > 0) {
+                // Use only first 5 students for better display
+                const displayStudents = students.slice(0, Math.min(5, students.length));
+                
+                new Chart(performanceCtx.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: displayStudents.map(s => {
+                            const name = s.fullName || s.name || 'Unknown';
+                            return name.split(' ').pop(); // Get last name
+                        }),
+                        datasets: [{
+                            label: 'Performance (%)',
+                            data: displayStudents.map(s => s.averageScore || 0),
+                            backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100
+                            }
+                        }
+                    }
+                });
+            } else if (performanceCtx) {
+                // Empty chart if no students
+                new Chart(performanceCtx.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['No Data'],
+                        datasets: [{
+                            label: 'Performance (%)',
+                            data: [0],
+                            backgroundColor: 'rgba(54, 162, 235, 0.7)'
+                        }]
+                    }
+                });
+            }
+            
+            // Progress chart
+            const progressCtx = document.getElementById('progress-chart');
+            if (progressCtx) {
+                new Chart(progressCtx.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'],
+                        datasets: [{
+                            label: 'Class Average Progress (%)',
+                            data: [65, 70, 72, 75, 78, 85],
+                            fill: false,
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Show student profile
+        async function showStudentProfile(studentId) {
+            try {
+                const response = await fetch(`http://localhost:5000/api/teachers/students/${studentId}`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch student details');
+                }
+                
+                const data = await response.json();
+                displayStudentProfile(data);
+                
+            } catch (error) {
+                console.error('Error fetching student details:', error);
+                alert('Could not load student details. Please try again.');
+            }
+        }
+
+        // Display student profile with real data
+        function displayStudentProfile(data) {
+            const student = data.student;
+            const progress = data.progress || [];
+            const recentGames = data.recentGames || [];
+            
+            // Calculate overall progress
+            const avgProgress = progress.length > 0 
+                ? Math.round(progress.reduce((sum, p) => sum + (p.completion_percentage || 0), 0) / progress.length)
+                : 0;
+            
+            const avgPerformance = progress.length > 0
+                ? Math.round(progress.reduce((sum, p) => sum + (p.average_score || 0), 0) / progress.length)
+                : 0;
+            
+            const totalGamesPlayed = progress.reduce((sum, p) => sum + (p.games_played || 0), 0);
+            
+            // Update student profile modal
+            const avatarEl = document.getElementById('student-profile-avatar');
+            if (student.profilePicture) {
+                avatarEl.innerHTML = `<img src="http://localhost:5000/uploads/${student.profilePicture}" alt="${student.fullName}" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;">`;
+            } else {
+                avatarEl.textContent = getInitials(student.fullName);
+            }
+            
+            document.getElementById('student-profile-name').textContent = student.fullName;
+            document.getElementById('student-profile-class').textContent = `Grade ${student.grade}`;
+            document.getElementById('student-progress-value').textContent = avgProgress + '%';
+            document.getElementById('student-performance-value').textContent = avgPerformance + '%';
+            document.getElementById('student-assignments-completed').textContent = `${totalGamesPlayed}/15`;
+            document.getElementById('student-attendance').textContent = '90%';
+            
+            // Display recent games
+            const assignmentsList = document.getElementById('student-assignments-list');
+            assignmentsList.innerHTML = '';
+            
+            if (recentGames.length > 0) {
+                recentGames.forEach(game => {
+                    const gameEl = document.createElement('div');
+                    gameEl.className = 'student-assignment';
+                    gameEl.innerHTML = `
+                        <div class="student-assignment-info">
+                            <h4>${game.name || 'Game'}</h4>
+                            <p>${game.subject || 'Subject'} - ${game.topic || 'Topic'}</p>
+                            <small>${game.played_at ? new Date(game.played_at).toLocaleDateString() : 'Recent'}</small>
+                        </div>
+                        <div class="student-assignment-score">${game.score || 0}%</div>
+                    `;
+                    assignmentsList.appendChild(gameEl);
+                });
+            } else {
+                assignmentsList.innerHTML = '<p>No recent games played yet.</p>';
+            }
+            
+            // Initialize student performance chart
+            const ctx = document.getElementById('student-performance-chart').getContext('2d');
+            if (window.studentChart) {
+                window.studentChart.destroy();
+            }
+            
+            // Use real scores from recent games for the chart
+            const chartLabels = recentGames.slice(0, 6).reverse().map((g, i) => `Game ${i + 1}`);
+            const chartData = recentGames.slice(0, 6).reverse().map(g => g.score || 0);
+            
+            window.studentChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: chartLabels.length > 0 ? chartLabels : ['No data'],
+                    datasets: [{
+                        label: 'Performance (%)',
+                        data: chartData.length > 0 ? chartData : [0],
+                        fill: false,
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+            
+            // Show modal
+            document.getElementById('student-profile-modal').style.display = 'flex';
+        }
+
+        // Setup event listeners for quick actions
+        function setupQuickActionsListeners() {
+            // Quick Actions - Create Assignment
+            document.getElementById('create-assignment-btn').addEventListener('click', function() {
+                // Set minimum date to today
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('assignmentDueDate').min = today;
+                document.getElementById('create-assignment-modal').style.display = 'flex';
+            });
+
+            // Quick Actions - Create Quiz
+            document.getElementById('create-quiz-btn').addEventListener('click', function() {
+                document.getElementById('create-quiz-modal').style.display = 'flex';
+            });
+
+            // Quick Actions - View Reports
+            document.getElementById('view-reports-btn').addEventListener('click', function() {
+                document.getElementById('view-reports-modal').style.display = 'flex';
+            });
+
+            // Quick Actions - Send Announcement
+            document.getElementById('send-announcement-btn').addEventListener('click', function() {
+                document.getElementById('send-announcement-modal').style.display = 'flex';
+            });
+
+            // Quiz options selection
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const quizType = this.id.replace('quiz-', '');
+                    if (quizType === 'custom') {
+                        document.getElementById('create-quiz-modal').style.display = 'none';
+                        document.getElementById('custom-quiz-modal').style.display = 'flex';
+                    } else {
+                        // For predefined quizzes, show the custom quiz modal with pre-filled data
+                        const quizData = getPredefinedQuizData(quizType);
+                        document.getElementById('create-quiz-modal').style.display = 'none';
+                        document.getElementById('custom-quiz-modal').style.display = 'flex';
+                        prefillQuizForm(quizData);
+                    }
+                });
+            });
+
+            // Report cards selection
+            document.querySelectorAll('.report-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const reportType = this.id.replace('report-', '');
+                    alert(`Generating ${reportType} report...`);
+                });
+            });
+
+            // Schedule date toggle for announcements
+            document.getElementById('announcementSchedule').addEventListener('change', function() {
+                const scheduleDateGroup = document.getElementById('scheduleDateGroup');
+                if (this.value === 'scheduled') {
+                    scheduleDateGroup.style.display = 'block';
+                    // Set minimum date to today
+                    const today = new Date().toISOString().slice(0, 16);
+                    document.getElementById('announcementDate').min = today;
+                } else {
+                    scheduleDateGroup.style.display = 'none';
+                }
+            });
+
+            // Add question button for custom quiz
+            document.getElementById('addQuestion').addEventListener('click', function() {
+                const container = document.getElementById('quizQuestionsContainer');
+                const questionCount = container.children.length + 1;
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-item';
+                questionDiv.innerHTML = `
+                    <input type="text" class="question-text" placeholder="Question ${questionCount}" required>
+                    <div class="question-options">
+                        <input type="text" class="option" placeholder="Option A" required>
+                        <input type="text" class="option" placeholder="Option B" required>
+                        <input type="text" class="option" placeholder="Option C" required>
+                        <input type="text" class="option" placeholder="Option D" required>
+                        <select class="correct-answer" required>
+                            <option value="">Correct Answer</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                        </select>
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            // Form submissions - Assignment Creation
+            document.getElementById('assignmentForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const teacher = JSON.parse(localStorage.getItem('teacher'));
+                if (!teacher) {
+                    alert('Teacher not logged in');
+                    return;
+                }
+                
+                const assignmentData = {
+                    teacher_id: teacher.id,
+                    title: document.getElementById('assignmentTitle').value,
+                    subject: document.getElementById('assignmentSubject').value,
+                    topic: document.getElementById('assignmentTopic').value,
+                    description: document.getElementById('assignmentDescription').value,
+                    due_date: document.getElementById('assignmentDueDate').value,
+                    class_grade: document.getElementById('assignmentClass').value
+                };
+                
+                // Validate due date
+                const dueDate = new Date(assignmentData.due_date);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                if (dueDate < today) {
+                    alert('Due date cannot be in the past');
+                    return;
+                }
+                
+                try {
+                    // Create form data for file upload
+                    const formData = new FormData();
+                    for (const key in assignmentData) {
+                        formData.append(key, assignmentData[key]);
+                    }
+                    
+                    const fileInput = document.getElementById('assignmentFile');
+                    if (fileInput.files[0]) {
+                        formData.append('attachment', fileInput.files[0]);
+                    }
+                    
+                    const response = await fetch('http://localhost:5000/api/assignments/create', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to create assignment');
+                    }
+                    
+                    const result = await response.json();
+                    
+                    alert(`Assignment "${assignmentData.title}" created successfully! It will appear in student dashboards.`);
+                    document.getElementById('create-assignment-modal').style.display = 'none';
+                    this.reset();
+                    
+                    // Reload assignments list
+                    loadTeacherAssignments(teacher.id);
+                    
+                } catch (error) {
+                    console.error('Error creating assignment:', error);
+                    alert('Failed to create assignment. Please try again.');
+                }
+            });
+
+            // Form submissions - Quiz Creation
+            document.getElementById('customQuizForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const teacher = JSON.parse(localStorage.getItem('teacher'));
+                if (!teacher) {
+                    alert('Teacher not logged in');
+                    return;
+                }
+                
+                // Collect questions
+                const questions = [];
+                const questionItems = document.querySelectorAll('#quizQuestionsContainer .question-item');
+                questionItems.forEach(item => {
+                    const questionText = item.querySelector('.question-text').value;
+                    const options = item.querySelectorAll('.option');
+                    const correctAnswer = item.querySelector('.correct-answer').value;
+                    
+                    if (questionText && options[0].value && options[1].value && options[2].value && options[3].value && correctAnswer) {
+                        questions.push({
+                            question_text: questionText,
+                            option_a: options[0].value,
+                            option_b: options[1].value,
+                            option_c: options[2].value,
+                            option_d: options[3].value,
+                            correct_answer: correctAnswer,
+                            points: 10
+                        });
+                    }
+                });
+                
+                if (questions.length === 0) {
+                    alert('Please add at least one question');
+                    return;
+                }
+                
+                const quizData = {
+                    teacher_id: teacher.id,
+                    title: document.getElementById('quizTitle').value,
+                    subject: document.getElementById('quizSubject').value,
+                    description: document.getElementById('quizDescription').value,
+                    duration: parseInt(document.getElementById('quizDuration').value),
+                    class_grade: document.getElementById('quizClass').value,
+                    questions: questions
+                };
+                
+                try {
+                    const response = await fetch('http://localhost:5000/api/quizzes/create', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(quizData)
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to create quiz');
+                    }
+                    
+                    const result = await response.json();
+                    
+                    alert(`Quiz "${quizData.title}" created successfully! It will appear in student dashboards.`);
+                    document.getElementById('custom-quiz-modal').style.display = 'none';
+                    this.reset();
+                    
+                    // Reset to one question
+                    const container = document.getElementById('quizQuestionsContainer');
+                    container.innerHTML = `
+                        <div class="question-item">
+                            <input type="text" class="question-text" placeholder="Question 1" required>
+                            <div class="question-options">
+                                <input type="text" class="option" placeholder="Option A" required>
+                                <input type="text" class="option" placeholder="Option B" required>
+                                <input type="text" class="option" placeholder="Option C" required>
+                                <input type="text" class="option" placeholder="Option D" required>
+                                <select class="correct-answer" required>
+                                    <option value="">Correct Answer</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                </select>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Reload quizzes list
+                    loadTeacherQuizzes(teacher.id);
+                    
+                } catch (error) {
+                    console.error('Error creating quiz:', error);
+                    alert('Failed to create quiz. Please try again.');
+                }
+            });
+
+            // Announcement form submission
+            document.getElementById('announcementForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const announcementData = {
+                    title: document.getElementById('announcementTitle').value,
+                    message: document.getElementById('announcementMessage').value,
+                    type: document.getElementById('announcementType').value,
+                    classes: Array.from(document.getElementById('announcementClasses').selectedOptions).map(opt => opt.value),
+                    schedule: document.getElementById('announcementSchedule').value,
+                    date: document.getElementById('announcementDate').value
+                };
+                
+                // Validate schedule date
+                if (announcementData.schedule === 'scheduled' && !announcementData.date) {
+                    alert('Please select a schedule date and time');
+                    return;
+                }
+                
+                // Here you would send the announcement to the server
+                // For now, we'll just show a success message
+                alert(`Announcement "${announcementData.title}" sent successfully to classes: ${announcementData.classes.join(', ')}`);
+                document.getElementById('send-announcement-modal').style.display = 'none';
+                this.reset();
+            });
+
+            // Resolve doubt form submission
+            document.getElementById('resolveDoubtForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const doubtId = this.dataset.doubtId;
+                const resolutionText = document.getElementById('resolutionText').value.trim();
+                
+                if (!resolutionText) {
+                    alert('Please provide a resolution text');
+                    return;
+                }
+                
+                try {
+                    const teacher = JSON.parse(localStorage.getItem('teacher'));
+                    if (!teacher) return;
+                    
+                    const response = await fetch(`http://localhost:5000/api/doubts/${doubtId}/status`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            status: 'resolved',
+                            resolved_by: teacher.id,
+                            resolution_text: resolutionText
+                        })
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to resolve doubt');
+                    }
+                    
+                    // Close modal
+                    document.getElementById('resolve-doubt-modal').style.display = 'none';
+                    document.getElementById('resolutionText').value = '';
+                    
+                    // Reload doubts list
+                    loadStudentDoubts();
+                    loadDoubtStatistics();
+                    
+                    // Show success message
+                    alert('Doubt marked as resolved successfully!');
+                    
+                } catch (error) {
+                    console.error('Error resolving doubt:', error);
+                    alert('Failed to resolve doubt. Please try again.');
+                }
+            });
+
+            // Cancel buttons
+            document.getElementById('cancelAssignment').addEventListener('click', function() {
+                document.getElementById('create-assignment-modal').style.display = 'none';
+                document.getElementById('assignmentForm').reset();
+            });
+
+            document.getElementById('cancelAnnouncement').addEventListener('click', function() {
+                document.getElementById('send-announcement-modal').style.display = 'none';
+                document.getElementById('announcementForm').reset();
+            });
+
+            document.getElementById('cancelCustomQuiz').addEventListener('click', function() {
+                document.getElementById('custom-quiz-modal').style.display = 'none';
+                document.getElementById('customQuizForm').reset();
+                // Reset to one question
+                const container = document.getElementById('quizQuestionsContainer');
+                container.innerHTML = `
+                    <div class="question-item">
+                        <input type="text" class="question-text" placeholder="Question 1" required>
+                        <div class="question-options">
+                            <input type="text" class="option" placeholder="Option A" required>
+                            <input type="text" class="option" placeholder="Option B" required>
+                            <input type="text" class="option" placeholder="Option C" required>
+                            <input type="text" class="option" placeholder="Option D" required>
+                            <select class="correct-answer" required>
+                                <option value="">Correct Answer</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                            </select>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('cancelResolveDoubt').addEventListener('click', function() {
+                document.getElementById('resolve-doubt-modal').style.display = 'none';
+                document.getElementById('resolutionText').value = '';
+            });
+        }
+
+        // Helper function for predefined quizzes
+        function getPredefinedQuizData(quizType) {
+            const quizzes = {
+                'math': {
+                    title: 'Mathematics Quiz - Basic Operations',
+                    subject: 'Mathematics',
+                    description: 'Test your knowledge of basic mathematical operations',
+                    questions: [
+                        {
+                            question_text: 'What is 15 + 27?',
+                            option_a: '40',
+                            option_b: '42',
+                            option_c: '45',
+                            option_d: '32',
+                            correct_answer: 'B'
+                        },
+                        {
+                            question_text: 'What is 48 ÷ 6?',
+                            option_a: '6',
+                            option_b: '7',
+                            option_c: '8',
+                            option_d: '9',
+                            correct_answer: 'C'
+                        },
+                        {
+                            question_text: 'What is 9 × 7?',
+                            option_a: '56',
+                            option_b: '63',
+                            option_c: '72',
+                            option_d: '81',
+                            correct_answer: 'B'
+                        }
+                    ]
+                },
+                'science': {
+                    title: 'Science Quiz - Living Things',
+                    subject: 'Science',
+                    description: 'Test your knowledge about living organisms',
+                    questions: [
+                        {
+                            question_text: 'Which is a characteristic of living things?',
+                            option_a: 'They can breathe',
+                            option_b: 'They can grow',
+                            option_c: 'They can reproduce',
+                            option_d: 'All of the above',
+                            correct_answer: 'D'
+                        },
+                        {
+                            question_text: 'Plants make food through:',
+                            option_a: 'Respiration',
+                            option_b: 'Photosynthesis',
+                            option_c: 'Digestion',
+                            option_d: 'Transpiration',
+                            correct_answer: 'B'
+                        }
+                    ]
+                },
+                'computer': {
+                    title: 'Computer Quiz - Basics',
+                    subject: 'Computer Science',
+                    description: 'Test your basic computer knowledge',
+                    questions: [
+                        {
+                            question_text: 'What does CPU stand for?',
+                            option_a: 'Central Processing Unit',
+                            option_b: 'Computer Personal Unit',
+                            option_c: 'Central Program Unit',
+                            option_d: 'Computer Processing Unit',
+                            correct_answer: 'A'
+                        },
+                        {
+                            question_text: 'Which of these is an input device?',
+                            option_a: 'Monitor',
+                            option_b: 'Printer',
+                            option_c: 'Keyboard',
+                            option_d: 'Speaker',
+                            correct_answer: 'C'
+                        }
+                    ]
+                }
+            };
+            
+            return quizzes[quizType] || {
+                title: 'Custom Quiz',
+                subject: 'General',
+                description: '',
+                questions: []
+            };
+        }
+
+        // Prefill quiz form
+        function prefillQuizForm(quizData) {
+            document.getElementById('quizTitle').value = quizData.title;
+            document.getElementById('quizSubject').value = quizData.subject;
+            document.getElementById('quizDescription').value = quizData.description;
+            document.getElementById('quizDuration').value = 30;
+            document.getElementById('quizClass').value = '6';
+            
+            // Clear existing questions
+            const container = document.getElementById('quizQuestionsContainer');
+            container.innerHTML = '';
+            
+            // Add questions from quizData
+            quizData.questions.forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-item';
+                questionDiv.innerHTML = `
+                    <input type="text" class="question-text" placeholder="Question ${index + 1}" value="${question.question_text}" required>
+                    <div class="question-options">
+                        <input type="text" class="option" placeholder="Option A" value="${question.option_a}" required>
+                        <input type="text" class="option" placeholder="Option B" value="${question.option_b}" required>
+                        <input type="text" class="option" placeholder="Option C" value="${question.option_c}" required>
+                        <input type="text" class="option" placeholder="Option D" value="${question.option_d}" required>
+                        <select class="correct-answer" required>
+                            <option value="">Correct Answer</option>
+                            <option value="A" ${question.correct_answer === 'A' ? 'selected' : ''}>A</option>
+                            <option value="B" ${question.correct_answer === 'B' ? 'selected' : ''}>B</option>
+                            <option value="C" ${question.correct_answer === 'C' ? 'selected' : ''}>C</option>
+                            <option value="D" ${question.correct_answer === 'D' ? 'selected' : ''}>D</option>
+                        </select>
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+            
+            // Add one empty question
+            if (quizData.questions.length === 0) {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-item';
+                questionDiv.innerHTML = `
+                    <input type="text" class="question-text" placeholder="Question 1" required>
+                    <div class="question-options">
+                        <input type="text" class="option" placeholder="Option A" required>
+                        <input type="text" class="option" placeholder="Option B" required>
+                        <input type="text" class="option" placeholder="Option C" required>
+                        <input type="text" class="option" placeholder="Option D" required>
+                        <select class="correct-answer" required>
+                            <option value="">Correct Answer</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                        </select>
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            }
+        }
+
+        // Setup other event listeners
+        function setupOtherEventListeners() {
+            // Profile dropdown toggle
+            document.getElementById('profileToggle').addEventListener('click', function() {
+                document.getElementById('profileDropdown').classList.toggle('show');
+            });
+
+            // Navigation tabs
+            document.querySelectorAll('.tab-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const tab = this.getAttribute('data-tab');
+                    
+                    // Update active tab
+                    document.querySelectorAll('.tab-link').forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show corresponding content
+                    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                    document.getElementById(`${tab}-tab`).classList.add('active');
+                    
+                    // Load game scores when tab is selected
+                    if (tab === 'game-scores') {
+                        loadGameScores();
+                    }
+                    
+                    // If analytics tab is selected, refresh charts
+                    if (tab === 'analytics') {
+                        setTimeout(() => {
+                            const performanceChart = Chart.getChart('performance-chart');
+                            const progressChart = Chart.getChart('progress-chart');
+                            if (performanceChart) performanceChart.resize();
+                            if (progressChart) progressChart.resize();
+                        }, 100);
+                    }
+                    
+                    // If doubts tab is selected, refresh doubts
+                    if (tab === 'doubts') {
+                        loadStudentDoubts();
+                    }
+                });
+            });
+
+            // Close modals
+            document.querySelectorAll('.close-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.closest('.modal').style.display = 'none';
+                });
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target.classList.contains('modal')) {
+                    e.target.style.display = 'none';
+                }
+            });
+
+            // Logout functionality
+            document.getElementById('dropdownLogout').addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('teacher');
+                window.location.href = 'teacher-login.html';
+            });
+
+            // Language toggle
+            document.getElementById('languageToggle').addEventListener('click', function() {
+                document.getElementById('languageOptions').classList.toggle('show');
+            });
+
+            // Language selection
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    switchLanguage(lang);
+                    document.getElementById('languageOptions').classList.remove('show');
+                });
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#languageToggle') && !e.target.closest('#languageOptions')) {
+                    document.getElementById('languageOptions').classList.remove('show');
+                }
+                
+                if (!e.target.closest('#profileToggle') && !e.target.closest('#profileDropdown')) {
+                    document.getElementById('profileDropdown').classList.remove('show');
+                }
+            });
+        }
+
+        // Update assignments list
+        function updateAssignmentsList(assignments) {
+            const assignmentsTab = document.getElementById('assignments-tab');
+            if (!assignmentsTab) return;
+            
+            let assignmentsHTML = '';
+            
+            if (assignments && assignments.length > 0) {
+                assignments.forEach(assignment => {
+                    const dueDate = new Date(assignment.due_date);
+                    const formattedDate = dueDate.toLocaleDateString('en-IN', { 
+                        year: 'numeric', 
+                        month: 'short', 
+                        day: 'numeric' 
+                    });
+                    
+                    const submissionRate = assignment.submissions_count > 0 ? 
+                        Math.round((assignment.submitted_count / assignment.submissions_count) * 100) : 0;
+                    
+                    assignmentsHTML += `
+                        <div class="assignment-item">
+                            <div class="assignment-header">
+                                <div class="assignment-title">${assignment.title}</div>
+                                <span class="assignment-subject">${assignment.subject}</span>
+                            </div>
+                            <div class="assignment-due">Due: ${formattedDate}</div>
+                            <div class="assignment-stats">
+                                <small>Submissions: ${assignment.submitted_count}/${assignment.submissions_count} (${submissionRate}%)</small>
+                                <br>
+                                <small>Submitted by: ${assignment.submitted_students || 'No submissions yet'}</small>
+                            </div>
+                            <div class="assignment-actions">
+                                <button class="view-btn view-submissions" data-assignment-id="${assignment.id}">
+                                    View Submissions
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                assignmentsHTML = '<p style="text-align: center; color: #666; padding: 20px;">No assignments created yet</p>';
+            }
+            
+            // Update assignments tab content
+            const assignmentListDiv = assignmentsTab.querySelector('.assignment-list') || assignmentsTab;
+            assignmentListDiv.innerHTML = assignmentsHTML;
+            
+            // Add event listeners to view submissions buttons
+            document.querySelectorAll('.view-submissions').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const assignmentId = this.getAttribute('data-assignment-id');
+                    showAssignmentSubmissions(assignmentId);
+                });
+            });
+        }
+
+        // Show assignment submissions with student names
+        async function showAssignmentSubmissions(assignmentId) {
+            try {
+                const response = await fetch(`http://localhost:5000/api/teachers/assignments/${assignmentId}/submissions`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch assignment submissions');
+                }
+                
+                const submissions = await response.json();
+                
+                // Create a modal to show submissions
+                const modal = document.createElement('div');
+                modal.className = 'modal';
+                modal.style.display = 'flex';
+                
+                let submissionsHTML = '';
+                if (submissions.length > 0) {
+                    submissionsHTML = `
+                        <h3>Assignment Submissions</h3>
+                        <div class="submissions-list">
+                            ${submissions.map(submission => `
+                                <div class="submission-item">
+                                    <div class="submission-info">
+                                        <div class="submission-avatar">${getInitials(submission.student_name)}</div>
+                                        <div>
+                                            <h4>${submission.student_name}</h4>
+                                            <p>Grade ${submission.grade}</p>
+                                            <p>Submitted: ${new Date(submission.submission_date).toLocaleDateString()}</p>
+                                            ${submission.attachment ? `<p><a href="/assignments/${submission.attachment}" target="_blank">Download Attachment</a></p>` : ''}
+                                        </div>
+                                    </div>
+                                    <div class="submission-actions">
+                                        ${submission.grade ? `<span class="grade-badge">Grade: ${submission.grade}</span>` : `
+                                        <input type="number" class="grade-input" placeholder="Grade" data-submission-id="${submission.id}" min="0" max="100">
+                                        <button class="btn-save-grade" data-submission-id="${submission.id}">Save Grade</button>
+                                        `}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                } else {
+                    submissionsHTML = '<p class="no-submissions">No submissions yet.</p>';
+                }
+                
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title">Assignment Submissions</h2>
+                            <button class="close-btn">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            ${submissionsHTML}
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                // Add event listeners
+                modal.querySelector('.close-btn').addEventListener('click', () => {
+                    modal.remove();
+                });
+                
+                // Close modal when clicking outside
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.remove();
+                    }
+                });
+                
+                // Add event listeners for grade saving
+                modal.querySelectorAll('.btn-save-grade').forEach(btn => {
+                    btn.addEventListener('click', async function() {
+                        const submissionId = this.getAttribute('data-submission-id');
+                        const gradeInput = document.querySelector(`.grade-input[data-submission-id="${submissionId}"]`);
+                        const grade = gradeInput.value;
+                        
+                        if (!grade || grade < 0 || grade > 100) {
+                            alert('Please enter a valid grade between 0 and 100');
+                            return;
+                        }
+                        
+                        try {
+                            const response = await fetch(`http://localhost:5000/api/teachers/submissions/${submissionId}/grade`, {
+                                method: 'PUT',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ grade: parseInt(grade) })
+                            });
+                            
+                            if (!response.ok) {
+                                throw new Error('Failed to save grade');
+                            }
+                            
+                            alert('Grade saved successfully!');
+                            this.closest('.submission-item').querySelector('.grade-input').style.display = 'none';
+                            this.style.display = 'none';
+                            const gradeBadge = document.createElement('span');
+                            gradeBadge.className = 'grade-badge';
+                            gradeBadge.textContent = `Grade: ${grade}`;
+                            this.closest('.submission-actions').prepend(gradeBadge);
+                            
+                            // Send notification to student
+                            const result = await response.json();
+                            if (result.notification_id) {
+                                console.log('Notification sent to student');
+                            }
+                            
+                        } catch (error) {
+                            console.error('Error saving grade:', error);
+                            alert('Failed to save grade. Please try again.');
+                        }
+                    });
+                });
+                
+            } catch (error) {
+                console.error('Error fetching assignment submissions:', error);
+                alert('Could not load assignment submissions. Please try again.');
+            }
+        }
+
+        // Language translations
+        const translations = {
+            en: {
+                'nav-dashboard': 'Dashboard',
+                'nav-students': 'Students',
+                'nav-assignments': 'Assignments',
+                'nav-doubts': 'Student Doubts',
+                'game-scores': 'Game Scores',
+                'nav-reports': 'Reports',
+                'dropdown-profile': 'Profile',
+                'dropdown-settings': 'Settings',
+                'dropdown-logout': 'Logout',
+                'welcome-title': 'Welcome back,',
+                'welcome-subtitle': 'Manage your classes and track student progress',
+                'total-students': 'Total Students',
+                'student-increase': '+0 from last month',
+                'active-today': 'Active Today',
+                'active-increase': '+0 from yesterday',
+                'pending-doubts': 'Pending Doubts',
+                'doubt-urgent': '0 urgent',
+                'avg-progress': 'Avg. Progress',
+                'progress-increase': '+0% from last week',
+                'class-overview': 'Class Overview',
+                'students': 'Students',
+                'assignments': 'Assignments',
+                'student-doubts': 'Student Doubts',
+                'analytics': 'Analytics',
+                'view-profile': 'View Profile',
+                'quick-actions': 'Quick Actions',
+                'create-assignment': 'Create Assignment',
+                'create-quiz': 'Create Quiz',
+                'view-reports': 'View Reports',
+                'send-announcement': 'Send Announcement',
+                'recent-activity': 'Recent Activity',
+                'need-help': 'Need Help?',
+                'teaching-resources': 'Teaching Resources',
+                'contact-support': 'Contact Support',
+                'user-guide': 'User Guide',
+                'student-profile': 'Student Profile',
+                'overall-progress': 'Overall Progress',
+                'avg-performance': 'Avg. Performance',
+                'assignments-completed': 'Assignments Completed',
+                'attendance': 'Attendance',
+                'recent-assignments': 'Recent Assignments',
+                'performance-trend': 'Performance Trend',
+                'grade-assignment': 'Grade Assignment',
+                'cancel': 'Cancel',
+                'save-grades': 'Save Grades',
+                'assignment-title': 'Assignment Title',
+                'subject': 'Subject',
+                'topic': 'Topic',
+                'description': 'Description',
+                'due-date': 'Due Date',
+                'class': 'Class',
+                'attachment': 'Attachment (Optional)',
+                'math-quiz': 'Mathematics Quiz',
+                'math-quiz-desc': 'Create a quiz on mathematics topics',
+                'science-quiz': 'Science Quiz',
+                'science-quiz-desc': 'Create a quiz on science topics',
+                'computer-quiz': 'Computer Quiz',
+                'computer-quiz-desc': 'Create a quiz on computer topics',
+                'custom-quiz': 'Custom Quiz',
+                'custom-quiz-desc': 'Create your own custom quiz',
+                'performance-report': 'Performance Report',
+                'performance-report-desc': 'View detailed student performance analysis',
+                'attendance-report': 'Attendance Report',
+                'attendance-report-desc': 'Track student attendance records',
+                'progress-report': 'Progress Report',
+                'progress-report-desc': 'Monitor student learning progress',
+                'submissions-report': 'Submissions Report',
+                'submissions-report-desc': 'View assignment submission status',
+                'analytics-report': 'Analytics Report',
+                'analytics-report-desc': 'Comprehensive class analytics',
+                'export-report': 'Export Report',
+                'export-report-desc': 'Export reports in PDF/Excel format',
+                'announcement-title': 'Announcement Title',
+                'message': 'Message',
+                'announcement-type': 'Announcement Type',
+                'general': 'General',
+                'important': 'Important',
+                'urgent': 'Urgent',
+                'reminder': 'Reminder',
+                'target-classes': 'Target Classes',
+                'select-multiple': 'Hold Ctrl/Cmd to select multiple classes',
+                'schedule': 'Schedule',
+                'send-immediately': 'Send Immediately',
+                'schedule-later': 'Schedule for later',
+                'schedule-date': 'Schedule Date & Time',
+                'create-custom-quiz': 'Create Custom Quiz',
+                'quiz-title': 'Quiz Title',
+                'duration': 'Duration (minutes)',
+                'add-questions': 'Add Questions',
+                'add-question': 'Add Another Question',
+                'doubt-details': 'Doubt Details',
+                'resolve-doubt': 'Resolve Doubt',
+                'resolution': 'Resolution',
+                'mark-resolved': 'Mark as Resolved',
+                'class-6': 'Class 6',
+                'class-7': 'Class 7',
+                'class-8': 'Class 8',
+                'class-9': 'Class 9',
+                'class-10': 'Class 10',
+                'refresh': 'Refresh',
+                'student': 'Student',
+                'grade': 'Grade',
+                'game': 'Game',
+                'score': 'Score',
+                'time-taken': 'Time Taken',
+                'date-played': 'Date Played'
+            },
+            or: {
+                'nav-dashboard': 'ଡ୍ୟାସବୋର୍ଡ',
+                'nav-students': 'ଛାତ୍ରଗଣ',
+                'nav-assignments': 'ଅସାଇନମେଣ୍ଟଗୁଡିକ',
+                'nav-doubts': 'ଛାତ୍ର ପ୍ରଶ୍ନଗୁଡିକ',
+                'game-scores': 'ଗେମ୍ ସ୍କୋର୍',
+                'nav-reports': 'ରିପୋର୍ଟଗୁଡିକ',
+                'dropdown-profile': 'ପ୍ରୋଫାଇଲ୍',
+                'dropdown-settings': 'ସେଟିଂସ୍',
+                'dropdown-logout': 'ଲଗଆଉଟ୍',
+                'welcome-title': 'ପୁନର୍ବାର ସ୍ୱାଗତ,',
+                'welcome-subtitle': 'ଆପଣଙ୍କର ଶ୍ରେଣୀଗୁଡିକ ପରିଚାଳନା କରନ୍ତୁ ଏବଂ ଛାତ୍ର ପ୍ରଗତି ଟ୍ରାକ୍ କରନ୍ତୁ',
+                'total-students': 'ମୋଟ ଛାତ୍ର',
+                'student-increase': 'ଗତ ମାସରୁ +୦',
+                'active-today': 'ଆଜି ସକ୍ରିୟ',
+                'active-increase': 'ଗତକାଲିରୁ +୦',
+                'pending-doubts': 'ବିଚାରାଧୀନ ପ୍ରଶ୍ନ',
+                'doubt-urgent': '୦ ଜରୁରୀ',
+                'avg-progress': 'ହାରାହାରି ପ୍ରଗତି',
+                'progress-increase': 'ଗତ ସପ୍ତାହରୁ +୦%',
+                'class-overview': 'ଶ୍ରେଣୀ ସମୀକ୍ଷା',
+                'students': 'ଛାତ୍ରଗଣ',
+                'assignments': 'ଅସାଇନମେଣ୍ଟଗୁଡିକ',
+                'student-doubts': 'ଛାତ୍ର ପ୍ରଶ୍ନଗୁଡିକ',
+                'analytics': 'ବିଶ୍ଳେଷଣ',
+                'view-profile': 'ପ୍ରୋଫାଇଲ୍ ଦେଖନ୍ତୁ',
+                'quick-actions': 'ଶୀଘ୍ର କାର୍ଯ୍ୟଗୁଡିକ',
+                'create-assignment': 'ଅସାଇନମେଣ୍ଟ ସୃଷ୍ଟି କରନ୍ତୁ',
+                'create-quiz': 'କୁଇଜ୍ ସୃଷ୍ଟି କରନ୍ତୁ',
+                'view-reports': 'ରିପୋର୍ଟଗୁଡିକ ଦେଖନ୍ତୁ',
+                'send-announcement': 'ଘୋଷଣା ପଠାନ୍ତୁ',
+                'recent-activity': 'ସାମ୍ପ୍ରତିକ କାର୍ଯ୍ୟକଳାପ',
+                'need-help': 'ସାହାଯ୍ୟ ଆବଶ୍ୟକ?',
+                'teaching-resources': 'ଶିକ୍ଷଣ ସମ୍ବଳ',
+                'contact-support': 'ସମର୍ଥନ ସଂପର୍କ କରନ୍ତୁ',
+                'user-guide': 'ବ୍ୟବହାରକାରୀ ଗାଇଡ୍',
+                'student-profile': 'ଛାତ୍ର ପ୍ରୋଫାଇଲ୍',
+                'overall-progress': 'ସର୍ବମୋଟ ପ୍ରଗତି',
+                'avg-performance': 'ହାରାହାରି ପ୍ରଦର୍ଶନ',
+                'assignments-completed': 'ସମାପ୍ତ ଅସାଇନମେଣ୍ଟଗୁଡିକ',
+                'attendance': 'ଉପସ୍ଥିତି',
+                'recent-assignments': 'ସାମ୍ପ୍ରତିକ ଅସାଇନମେଣ୍ଟଗୁଡିକ',
+                'performance-trend': 'ପ୍ରଦର୍ଶନ ପ୍ରବୃତ୍ତି',
+                'grade-assignment': 'ଅସାଇନମେଣ୍ଟ ଗ୍ରେଡ୍ କରନ୍ତୁ',
+                'cancel': 'ବାତିଲ୍ କରନ୍ତୁ',
+                'save-grades': 'ଗ୍ରେଡ୍ ସଂରକ୍ଷଣ କରନ୍ତୁ',
+                'assignment-title': 'ଅସାଇନମେଣ୍ଟ ଶୀର୍ଷକ',
+                'subject': 'ବିଷୟ',
+                'topic': 'ଟୋପିକ୍',
+                'description': 'ବର୍ଣ୍ଣନା',
+                'due-date': 'ସମାପ୍ତି ତାରିଖ',
+                'class': 'ଶ୍ରେଣୀ',
+                'attachment': 'ଅଟାଚମେଣ୍ଟ (ବାଧ୍ୟତାମୂଳକ ନୁହେଁ)',
+                'math-quiz': 'ଗଣିତ କୁଇଜ୍',
+                'math-quiz-desc': 'ଗଣିତ ଟୋପିକ୍ ଉପରେ ଏକ କୁଇଜ୍ ସୃଷ୍ଟି କରନ୍ତୁ',
+                'science-quiz': 'ବିଜ୍ଞାନ କୁଇଜ୍',
+                'science-quiz-desc': 'ବିଜ୍ଞାନ ଟୋପିକ୍ ଉପରେ ଏକ କୁଇଜ୍ ସୃଷ୍ଟି କରନ୍ତୁ',
+                'computer-quiz': 'କମ୍ପ୍ୟୁଟର କୁଇଜ୍',
+                'computer-quiz-desc': 'କମ୍ପ୍ୟୁଟର ଟୋପିକ୍ ଉପରେ ଏକ କୁଇଜ୍ ସୃଷ୍ଟି କରନ୍ତୁ',
+                'custom-quiz': 'କଷ୍ଟମ୍ କୁଇଜ୍',
+                'custom-quiz-desc': 'ନିଜର କଷ୍ଟମ୍ କୁଇଜ୍ ସୃଷ୍ଟି କରନ୍ତୁ',
+                'performance-report': 'ପ୍ରଦର୍ଶନ ରିପୋର୍ଟ',
+                'performance-report-desc': 'ଛାତ୍ର ପ୍ରଦର୍ଶନ ବିଶ୍ଳେଷଣ ଦେଖନ୍ତୁ',
+                'attendance-report': 'ଉପସ୍ଥିତି ରିପୋର୍ଟ',
+                'attendance-report-desc': 'ଛାତ୍ର ଉପସ୍ଥିତି ରେକର୍ଡ ଟ୍ରାକ୍ କରନ୍ତୁ',
+                'progress-report': 'ପ୍ରଗତି ରିପୋର୍ଟ',
+                'progress-report-desc': 'ଛାତ୍ର ଶିଖିବା ପ୍ରଗତି ମନିଟର୍ କରନ୍ତୁ',
+                'submissions-report': 'ସବମିଶନ୍ ରିପୋର୍ଟ',
+                'submissions-report-desc': 'ଅସାଇନମେଣ୍ଟ ସବମିଶନ୍ ସ୍ଥିତି ଦେଖନ୍ତୁ',
+                'analytics-report': 'ଆନାଲିଟିକ୍ସ ରିପୋର୍ଟ',
+                'analytics-report-desc': 'ସମ୍ପୂର୍ଣ୍ଣ ଶ୍ରେଣୀ ଆନାଲିଟିକ୍ସ',
+                'export-report': 'ରିପୋର୍ଟ ଏକ୍ସପୋର୍ଟ କରନ୍ତୁ',
+                'export-report-desc': 'PDF/Excel ଫର୍ମାଟରେ ରିପୋର୍ଟ ଏକ୍ସପୋର୍ଟ କରନ୍ତୁ',
+                'announcement-title': 'ଘୋଷଣା ଶୀର୍ଷକ',
+                'message': 'ସନ୍ଦେଶ',
+                'announcement-type': 'ଘୋଷଣା ପ୍ରକାର',
+                'general': 'ସାଧାରଣ',
+                'important': 'ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ',
+                'urgent': 'ଜରୁରୀ',
+                'reminder': 'ରିମାଇଣ୍ଡର୍',
+                'target-classes': 'ଲକ୍ଷ୍ୟ ଶ୍ରେଣୀଗୁଡିକ',
+                'select-multiple': 'ଏକାଧିକ ଶ୍ରେଣୀ ବାଛିବା ପାଇଁ Ctrl/Cmd ଚାପି ରଖନ୍ତୁ',
+                'schedule': 'ସ୍କେଡ୍ୟୁଲ୍',
+                'send-immediately': 'ତୁରନ୍ତ ପଠାନ୍ତୁ',
+                'schedule-later': 'ପରେ ପାଇଁ ସ୍କେଡ୍ୟୁଲ୍ କରନ୍ତୁ',
+                'schedule-date': 'ସ୍କେଡ୍ୟୁଲ୍ ତାରିଖ ଏବଂ ସମୟ',
+                'create-custom-quiz': 'କଷ୍ଟମ୍ କୁଇଜ୍ ସୃଷ୍ଟି କରନ୍ତୁ',
+                'quiz-title': 'କୁଇଜ୍ ଶୀର୍ଷକ',
+                'duration': 'ଅବଧି (ମିନିଟ୍)',
+                'add-questions': 'ପ୍ରଶ୍ନ ଯୋଡନ୍ତୁ',
+                'add-question': 'ଅନ୍ୟ ଏକ ପ୍ରଶ୍ନ ଯୋଡନ୍ତୁ',
+                'doubt-details': 'ପ୍ରଶ୍ନ ବିବରଣୀ',
+                'resolve-doubt': 'ପ୍ରଶ୍ନ ସମାଧାନ କରନ୍ତୁ',
+                'resolution': 'ସମାଧାନ',
+                'mark-resolved': 'ସମାଧାନ ଭାବେ ଚିହ୍ନିତ କରନ୍ତୁ',
+                'class-6': 'ଶ୍ରେଣୀ ୬',
+                'class-7': 'ଶ୍ରେଣୀ ୭',
+                'class-8': 'ଶ୍ରେଣୀ ୮',
+                'class-9': 'ଶ୍ରେଣୀ ୯',
+                'class-10': 'ଶ୍ରେଣୀ ୧୦',
+                'refresh': 'ରିଫ୍ରେଶ୍',
+                'student': 'ଛାତ୍ର',
+                'grade': 'ଶ୍ରେଣୀ',
+                'game': 'ଗେମ୍',
+                'score': 'ସ୍କୋର୍',
+                'time-taken': 'ସମୟ ନିଆଯାଇଥିଲା',
+                'date-played': 'ଖେଳାଯାଇଥିବା ତାରିଖ'
+            }
+        };
+
+        function switchLanguage(lang) {
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update select options
+            document.querySelectorAll('option[data-translate]').forEach(option => {
+                const key = option.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    option.textContent = translations[lang][key];
+                }
+            });
+            
+            if (lang === 'or') {
+                document.body.classList.add('odia-text');
+            } else {
+                document.body.classList.remove('odia-text');
+            }
+        }
+    </script>
+</body>
+</html>

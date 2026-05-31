@@ -1,0 +1,2126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadow Lab – Intermediate - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f0f7ff;
+            color: #1e293b;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(15, 23, 42, 0.85);
+            border-radius: 25px;
+            padding: 6px;
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: flex;
+            gap: 5px;
+        }
+
+        .lang-btn {
+            padding: 6px 12px;
+            border: none;
+            background: transparent;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: white;
+            white-space: nowrap;
+        }
+
+        .lang-btn.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .lang-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            gap: 16px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+            background: white;
+            color: #2a69ac;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo-text span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 24px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-size: 0.98rem;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.6rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9)),
+                        url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.4rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-header p {
+            font-size: 1.05rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: 12px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+        }
+
+        .breadcrumb-content {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb a {
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #3182ce;
+        }
+
+        .breadcrumb span {
+            color: #64748b;
+        }
+
+        /* Instructions Modal (from Code 1 style) */
+        .instructions-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1500;
+        }
+
+        .instructions-content {
+            background: white;
+            border-radius: 18px;
+            padding: 24px 22px 26px;
+            max-width: 650px;
+            width: 92%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+        }
+
+        .instructions-title {
+            font-size: 1.6rem;
+            color: #1a365d;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .instructions-subtitle {
+            font-size: 0.95rem;
+            color: #64748b;
+            margin-bottom: 14px;
+        }
+
+        .instructions-list {
+            margin-left: 18px;
+            margin-bottom: 14px;
+            font-size: 0.93rem;
+            color: #4b5563;
+        }
+
+        .instructions-list li {
+            margin-bottom: 6px;
+        }
+
+        .instructions-highlight {
+            background: #eff6ff;
+            border-radius: 10px;
+            padding: 10px 10px;
+            font-size: 0.9rem;
+            color: #1d4ed8;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .instructions-highlight i {
+            margin-top: 2px;
+        }
+
+        .start-btn {
+            margin-top: 6px;
+            padding: 10px 22px;
+            border-radius: 999px;
+            border: none;
+            background: #2563eb;
+            color: white;
+            font-size: 0.98rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .start-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        /* GAME SECTION (Shadow Lab) – wrapped in quiz-section like Code 1 */
+        .shadow-game-section {
+            padding: 32px 0 50px;
+        }
+
+        .quiz-section {
+            padding: 32px 0 50px;
+            display: none; /* shown after instructions start */
+        }
+
+        /* Stats bar from Code 1 */
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+
+        .timer-box {
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #fee2e2;
+            color: #b91c1c;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hints-box {
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #fef3c7;
+            color: #92400e;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .game-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .game-title-block {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .game-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1a365d;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge-level {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            background: #fef2f2;
+            color: #b91c1c;
+            font-weight: 600;
+        }
+
+        .game-subtitle {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 16px;
+            padding: 18px 16px 20px;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+            border: 1px solid #e2e8f0;
+        }
+
+        .game-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr);
+            gap: 14px;
+            align-items: stretch;
+        }
+
+        /* SIMULATOR AREA */
+        #gameContainer {
+            width: 100%;
+            height: 420px;
+            display: flex;
+            flex-direction: column;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(15,23,42,0.15);
+            background: #87CEEB;
+        }
+
+        /* Give more height to ground so object is not cut by sky */
+        #skySection {
+            flex: 2.2;
+            position: relative;
+            background: linear-gradient(to bottom, #87CEEB, #6BB6FF);
+            transition: background 0.3s ease;
+        }
+
+        #groundSection {
+            flex: 2.8;
+            background:
+                linear-gradient(to top, rgba(0,0,0,0.25), transparent 35%),
+                linear-gradient(to bottom, #2e7d32, #1b5e20);
+            position: relative;
+            overflow: visible; /* allow full tree to show */
+            border-top: 4px solid #14532d;
+        }
+
+        /* Sun */
+        #sun {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #FFD700, #FFA500);
+            border-radius: 50%;
+            cursor: move;
+            box-shadow: 0 0 60px rgba(255, 215, 0, 0.8);
+            z-index: 30;
+            transition: left 0.1s ease, top 0.1s ease;
+        }
+
+        #sun::before {
+            content: '';
+            position: absolute;
+            inset: -20px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.3), transparent);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        /* ===================== OBJECT TREE DESIGN ===================== */
+        .object-tree {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 160px;
+            z-index: 5;
+        }
+
+        .object-tree .trunk {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 26px;
+            height: 70px;
+            background: linear-gradient(to right, #5b3412, #7a4a1f);
+            border-radius: 10px;
+            transform: translateX(-50%);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .object-tree .canopy {
+            position: absolute;
+            background: radial-gradient(circle at 30% 20%, #76d87a, #2f7d32);
+            border-radius: 50%;
+            box-shadow: 0 8px 10px rgba(0,0,0,0.25);
+        }
+
+        .object-tree .canopy.main {
+            width: 120px;
+            height: 100px;
+            bottom: 50px;
+            left: 0;
+        }
+
+        .object-tree .canopy.left {
+            width: 70px;
+            height: 70px;
+            bottom: 80px;
+            left: -10px;
+        }
+
+        .object-tree .canopy.right {
+            width: 70px;
+            height: 70px;
+            bottom: 80px;
+            right: -10px;
+        }
+
+        .object-tree .canopy.top {
+            width: 90px;
+            height: 70px;
+            bottom: 110px;
+            left: 15px;
+        }
+
+        /* Shadow of object */
+        #objectShadow {
+            position:absolute;
+            bottom:40px;
+            left:50%;
+            width:170px;
+            height:80px;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.88), rgba(0,0,0,0.45), transparent);
+            transform-origin:center bottom;
+            z-index:5;
+            filter:blur(4px);
+            opacity:0.95;
+            transition: transform 0.12s ease, opacity 0.12s ease;
+        }
+
+        /* Clock */
+        #clockDisplay {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+            z-index: 20;
+        }
+
+        .analog-clock {
+            width: 78px;
+            height: 78px;
+            border: 4px solid #333;
+            border-radius: 50%;
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        .clock-marker {
+            position: absolute;
+            width: 2px;
+            height: 8px;
+            background: #666;
+            left: 50%;
+            top: 4px;
+            transform-origin: center 35px;
+        }
+
+        .hour-hand {
+            position: absolute;
+            width: 4px;
+            height: 24px;
+            background: #333;
+            left: 50%;
+            top: 50%;
+            transform-origin: center bottom;
+            border-radius: 2px;
+        }
+
+        .minute-hand {
+            position: absolute;
+            width: 3px;
+            height: 32px;
+            background: #1e90ff;
+            left: 50%;
+            top: 50%;
+            transform-origin: center bottom;
+            border-radius: 2px;
+        }
+
+        .clock-center {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #333;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+
+        #digitalTime {
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* HUD (numeric info) */
+        .hud-bar {
+            position: absolute;
+            left: 14px;
+            top: 14px;
+            background: rgba(15,23,42,0.85);
+            color: #e5e7eb;
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 25;
+        }
+
+        .hud-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .hud-label {
+            opacity: 0.8;
+        }
+
+        .hud-value {
+            font-weight: 600;
+        }
+
+        /* Info / Challenge Panel */
+        .info-panel {
+            background: #f8fafc;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            padding: 14px 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .info-panel h2 {
+            font-size: 1.1rem;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+
+        .info-panel p {
+            color: #64748b;
+            font-size: 0.92rem;
+        }
+
+        .stat-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .stat-pill {
+            background: #eff6ff;
+            border-radius: 999px;
+            padding: 4px 10px;
+            font-size: 0.78rem;
+            color: #1f2933;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .stat-pill span.emoji {
+            font-size: 0.9rem;
+        }
+
+        #questionText {
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #111827;
+            font-size: 0.95rem;
+        }
+
+        #hintText {
+            font-size: 0.86rem;
+            color: #92400e;
+            background: #fffbeb;
+            border-radius: 10px;
+            padding: 7px 9px;
+            display: none;
+            margin-top: 6px;
+        }
+
+        .panel-buttons {
+            margin-top: 6px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 999px;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-hint {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .btn-hint:hover:not(:disabled) {
+            background: #fde68a;
+        }
+
+        .btn-hint:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Success Popup */
+        #successPopup {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+        }
+
+        #successPopup.show {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .success-content {
+            background: white;
+            padding: 32px 28px;
+            border-radius: 26px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: bounceIn 0.5s ease;
+            max-width: 360px;
+        }
+
+        .success-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .success-content h3 {
+            font-size: 1.45rem;
+            color: #22c55e;
+            margin-bottom: 4px;
+        }
+
+        .success-content p {
+            color: #374151;
+            font-size: 0.92rem;
+            margin-bottom: 4px;
+        }
+
+        .success-fact {
+            margin-top: 6px;
+            font-size: 0.88rem;
+            color: #0f172a;
+            background:#eff6ff;
+            border-radius:12px;
+            padding:6px 10px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 40px 0 18px;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+
+        .footer-about {
+            padding-right: 10px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.6rem;
+            background: #38b2ac;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 12px;
+            color: #38b2ac;
+            font-size: 1rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 10px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.8rem;
+        }
+
+        /* Indic font helper */
+        .indic-text {
+            font-family: 'Nirmala UI', 'Kalinga', 'Segoe UI', sans-serif;
+        }
+
+        @media (max-width: 900px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+            .game-layout {
+                grid-template-columns: 1fr;
+            }
+            #gameContainer {
+                height: 380px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                gap: 10px;
+                background: #0f172a;
+                position: absolute;
+                top: 55px;
+                right: 10px;
+                padding: 10px 12px;
+                border-radius: 10px;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+                min-width: 150px;
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .language-switcher {
+                top: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button class="lang-btn active" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+        <button class="lang-btn" data-lang="hi">हिन्दी</button>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <div class="logo-text">STEM <span>Learn</span> Odisha</div>
+                </div>
+
+                <nav>
+                    <ul>
+                        <li><a href="student-dashboard.html" data-i18n="nav-dashboard">Dashboard</a></li>
+                        <li><a href="about.html" data-i18n="nav-about">About</a></li>
+                        <li><a href="contact.html" data-i18n="nav-contact">Contact</a></li>
+                    </ul>
+                </nav>
+
+                <button class="mobile-menu-btn" aria-label="Toggle navigation menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 data-i18n="page-title">Shadow Lab – Sun, Shadow & Time</h1>
+            <p data-i18n="page-desc">
+                Drag the Sun and watch how the object’s shadow and the time on the clock change. Then explore scenario-based and numeric shadow challenges.
+            </p>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <a href="student-dashboard.html" data-i18n="breadcrumb-dashboard">Dashboard</a>
+                <span>/</span>
+                <span data-i18n="breadcrumb-natural">Natural Phenomena</span>
+                <span>/</span>
+                <span data-i18n="breadcrumb-shadow">Shadow Lab – Intermediate</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instructions Modal in Code 1 style -->
+    <div class="instructions-modal" id="instructions-modal">
+        <div class="instructions-content">
+            <h2 class="instructions-title" data-i18n="instr-title">How to Play – Shadow Lab</h2>
+            <p class="instructions-subtitle" data-i18n="instr-subtitle">
+                This is an interactive sun–shadow simulator with scene-based challenges. Read these steps before you start.
+            </p>
+            <ul class="instructions-list">
+                <li data-i18n="instr-1">Drag the Sun left and right in the sky to see how the shadow changes in length and direction.</li>
+                <li data-i18n="instr-2">Notice how the clock time changes from early morning to evening as you move the Sun.</li>
+                <li data-i18n="instr-3">Tap “Start Scenes” to begin the game. You will match real-life scenes and numeric shadow challenges.</li>
+                <li data-i18n="instr-4">You have limited time and limited hints. Use hints only when you are stuck.</li>
+                <li data-i18n="instr-5">After every correct match, you will see a short science fact about shadows and the Sun.</li>
+            </ul>
+            <div class="instructions-highlight">
+                <i class="fas fa-lightbulb"></i>
+                <span data-i18n="instr-tip">
+                    Tip: First explore freely by moving the Sun. When you feel confident, start the scenes and try to solve them without hints!
+                </span>
+            </div>
+            <button class="start-btn" id="intro-start-btn">
+                <i class="fas fa-play-circle"></i>
+                <span data-i18n="instr-start-btn">Start Shadow Lab</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- GAME SECTION now in Code 1 "quiz-section" style -->
+    <section class="shadow-game-section quiz-section" id="quiz-section">
+        <div class="container">
+            <!-- Top stats bar like Code 1 -->
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="timer-box">
+                        <i class="fas fa-clock"></i>
+                        <span data-i18n="time-label">Time left:</span>
+                        <span id="time-remaining">15:00</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="hints-box">
+                        <i class="fas fa-lightbulb"></i>
+                        <span data-i18n="hints-label">Hints left:</span>
+                        <span id="hints-remaining">3</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span data-i18n="score-label">Scenes solved:</span>
+                    <span id="score-value">0</span> / <span id="score-total">6</span>
+                </div>
+            </div>
+
+            <div class="game-header-row">
+                <div class="game-title-block">
+                    <div class="game-title">
+                        <i class="fas fa-sun"></i>
+                        <span data-i18n="game-title">Shadow Lab – Intermediate Level</span>
+                    </div>
+                    <div class="game-subtitle" data-i18n="game-subtitle">
+                        Move the Sun, observe the object’s shadow, and match real-life scenes plus length/angle questions.
+                    </div>
+                </div>
+                <div class="badge-level">
+                    <i class="fas fa-signal"></i>
+                    <span data-i18n="level-intermediate">Intermediate</span>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-layout">
+                    <!-- Left: Simulation -->
+                    <div>
+                        <div id="gameContainer">
+                            <!-- Sky Section -->
+                            <div id="skySection">
+                                <!-- HUD -->
+                                <div class="hud-bar">
+                                    <div class="hud-pill">
+                                        <span class="hud-label">☀ %</span>
+                                        <span class="hud-value" id="hudPos">50</span>
+                                    </div>
+                                    <div class="hud-pill">
+                                        <span class="hud-label">⏱</span>
+                                        <span class="hud-value" id="hudTimeShort">12:00</span>
+                                    </div>
+                                    <div class="hud-pill">
+                                        <span class="hud-label">📏</span>
+                                        <span class="hud-value" id="hudLen">1.0</span>
+                                    </div>
+                                    <div class="hud-pill">
+                                        <span class="hud-label">↗</span>
+                                        <span class="hud-value" id="hudAngle">0°</span>
+                                    </div>
+                                </div>
+
+                                <!-- Sun -->
+                                <div id="sun"></div>
+
+                                <!-- Clock Display -->
+                                <div id="clockDisplay">
+                                    <div class="analog-clock" id="analogClock">
+                                        <!-- markers by JS -->
+                                        <div class="hour-hand" id="hourHand"></div>
+                                        <div class="minute-hand" id="minuteHand"></div>
+                                        <div class="clock-center"></div>
+                                    </div>
+                                    <div id="digitalTime">12:00 PM</div>
+                                </div>
+                            </div>
+
+                            <!-- Ground Section -->
+                            <div id="groundSection">
+                                <!-- Object shadow + tree-shaped object -->
+                                <div id="objectShadow"></div>
+                                <div class="object-tree">
+                                    <div class="trunk"></div>
+                                    <div class="canopy main"></div>
+                                    <div class="canopy left"></div>
+                                    <div class="canopy right"></div>
+                                    <div class="canopy top"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Info / Challenge -->
+                    <div>
+                        <div class="info-panel">
+                            <!-- Intro -->
+                            <div id="introContent">
+                                <h2 data-i18n="intro-title">How this works</h2>
+                                <p data-i18n="intro-text">
+                                    Drag the Sun left and right in the sky. Watch how the object’s shadow changes in length and direction, and how the clock shows the time.
+                                </p>
+                                <p data-i18n="intro-tip">
+                                    First explore freely. Then tap “Start Scenes” to match everyday scenes and solve length/angle shadow questions. After each correct answer, you’ll see a science fact.
+                                </p>
+                                <div class="panel-buttons">
+                                    <button class="btn btn-primary" id="startBtn">
+                                        <i class="fas fa-play-circle"></i>
+                                        <span data-i18n="btn-start">Start Scenes</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Challenge -->
+                            <div id="challengeContent" style="display:none;">
+                                <div class="stat-row" style="display:none;">
+                                    <span class="stat-pill">
+                                        <span class="emoji">📌</span>
+                                        <span data-i18n="label-question">Scene</span>
+                                        <span id="qIndex">1</span>/<span id="qTotal">6</span>
+                                    </span>
+                                    <span class="stat-pill">
+                                        <span class="emoji">⏱</span>
+                                        <span id="timerText">15:00</span>
+                                    </span>
+                                    <span class="stat-pill">
+                                        <span class="emoji">💡</span>
+                                        <span id="hintsLeft">3</span>
+                                        <span data-i18n="label-hints">hints</span>
+                                    </span>
+                                    <span class="stat-pill">
+                                        <span class="emoji">⭐</span>
+                                        <span data-i18n="label-score">Score:</span>
+                                        <span id="scoreText">0</span>
+                                    </span>
+                                </div>
+
+                                <p style="font-weight:600; font-size:0.95rem; margin-bottom:4px;" data-i18n="challenge-heading">
+                                    Scene to match:
+                                </p>
+                                <p id="questionText"></p>
+
+                                <div class="panel-buttons">
+                                    <button class="btn btn-hint" id="hintBtn">
+                                        <i class="fas fa-lightbulb"></i>
+                                        <span data-i18n="btn-hint">Use Hint</span>
+                                    </button>
+                                </div>
+                                <div id="hintText"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Popup -->
+    <div id="successPopup">
+        <div class="success-content">
+            <div class="success-icon" id="successIcon">🏆</div>
+            <h3 id="successTitle">Correct!</h3>
+            <p id="successMessage">Scene matched.</p>
+            <div id="successFact" class="success-fact"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <div class="footer-logo-text">STEM Learn Odisha</div>
+                    </div>
+                    <p data-i18n="footer-desc">
+                        Making Science and Mathematics education engaging and relevant for students in Odisha through localized content and interactive learning.
+                    </p>
+                </div>
+
+                <div class="footer-links">
+                    <h3 data-i18n="quick-links">Quick Links</h3>
+                    <ul>
+                        <li><a href="student-dashboard.html"><i class="fas fa-home"></i> <span data-i18n="nav-dashboard">Dashboard</span></a></li>
+                        <li><a href="about.html"><i class="fas fa-info-circle"></i> <span data-i18n="nav-about">About</span></a></li>
+                        <li><a href="contact.html"><i class="fas fa-envelope"></i> <span data-i18n="nav-contact">Contact</span></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p data-i18n="copyright">© 2023 STEM Learn Odisha. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --------- LANGUAGE + TRANSLATIONS ----------
+        let currentLanguage = 'en';
+
+        const translations = {
+            en: {
+                'nav-dashboard': 'Dashboard',
+                'nav-about': 'About',
+                'nav-contact': 'Contact',
+                'page-title': 'Shadow Lab – Sun, Shadow & Time',
+                'page-desc': 'Drag the Sun and watch how the object’s shadow and the time on the clock change. Then explore scenario-based and numeric shadow challenges.',
+                'breadcrumb-dashboard': 'Dashboard',
+                'breadcrumb-natural': 'Natural Phenomena',
+                'breadcrumb-shadow': 'Shadow Lab – Intermediate',
+                'game-title': 'Shadow Lab – Intermediate Level',
+                'game-subtitle': 'Move the Sun, observe the object’s shadow, and match real-life scenes plus length/angle questions.',
+                'level-intermediate': 'Intermediate',
+
+                'intro-title': 'How this works',
+                'intro-text': 'Drag the Sun left and right in the sky. Watch how the object’s shadow changes in length and direction, and how the clock shows the time.',
+                'intro-tip': 'First explore freely. Then tap “Start Scenes” to match everyday scenes and solve length/angle shadow questions. After each correct answer, you’ll see a science fact.',
+                'btn-start': 'Start Scenes',
+                'label-question': 'Scene',
+                'label-hints': 'hints',
+                'label-score': 'Score:',
+                'challenge-heading': 'Scene to match:',
+                'btn-hint': 'Use Hint',
+
+                /* New: instructions modal text (Code 1 style) */
+                'instr-title': 'How to Play – Shadow Lab',
+                'instr-subtitle': 'This is an interactive sun–shadow simulator with scene-based challenges. Read these steps before you start.',
+                'instr-1': 'Drag the Sun left and right in the sky to see how the shadow changes in length and direction.',
+                'instr-2': 'Observe how the clock time moves from early morning to evening as you move the Sun.',
+                'instr-3': 'Tap “Start Scenes” in the side panel to begin matching real-life scenes and numeric shadow challenges.',
+                'instr-4': 'You have limited time and a limited number of hints. Use hints only when you are stuck.',
+                'instr-5': 'After every correct answer, you will see a quick science fact about shadows and the Sun.',
+                'instr-tip': 'Tip: First play freely. When you feel confident, start the scenes and try to solve as many as you can without hints!',
+                'instr-start-btn': 'Start Shadow Lab',
+
+                /* Top stats bar labels */
+                'time-label': 'Time left:',
+                'hints-label': 'Hints left:',
+                'score-label': 'Scenes solved:',
+
+                'footer-desc': 'Making Science and Mathematics education engaging and relevant for students in Odisha through localized content and interactive learning.',
+                'quick-links': 'Quick Links',
+                'copyright': '© 2023 STEM Learn Odisha. All rights reserved.'
+            },
+            or: {
+                'nav-dashboard': 'ଡ୍ୟାଶବୋର୍ଡ',
+                'nav-about': 'ଆମ ବିଷୟରେ',
+                'nav-contact': 'ଯୋଗାଯୋଗ',
+                'page-title': 'ଶ୍ୟାଡୋ ଲ୍ୟାବ୍ – ସୂର୍ଯ୍ୟ, ଛାୟା ଏବଂ ସମୟ',
+                'page-desc': 'ଆକାଶରେ ସୂର୍ଯ୍ୟକୁ ବାମ–ଡାହାଣ କରନ୍ତୁ। ଅବଜେକ୍ଟର ଛାୟା ଏବଂ ଘଡ଼ିର ସମୟ କିପରି ବଦଳୁଛି ଦେଖନ୍ତୁ। ପରେ ଦୃଶ୍ୟ ଆଧାରିତ ସିନ୍ ଓ ଲମ୍ବ/କୋଣ ଆଧାରିତ ପ୍ରଶ୍ନ ମିଳାନ କରନ୍ତୁ।',
+                'breadcrumb-dashboard': 'ଡ୍ୟାଶବୋର୍ଡ',
+                'breadcrumb-natural': 'ପ୍ରାକୃତିକ ଘଟଣା',
+                'breadcrumb-shadow': 'ଶ୍ୟାଡୋ ଲ୍ୟାବ୍ – ମଧ୍ୟମ ସ୍ତର',
+                'game-title': 'ଶ୍ୟାଡୋ ଲ୍ୟାବ୍ – ମଧ୍ୟମ ସ୍ତର',
+                'game-subtitle': 'ସୂର୍ଯ୍ୟକୁ ଡ୍ରାଗ୍ କରନ୍ତୁ, ଅବଜେକ୍ଟର ଛାୟାକୁ ଲକ୍ଷ୍ୟ କରନ୍ତୁ ଏବଂ ସକାଳ, ଦୁପୁର, ସନ୍ଧ୍ୟା ସହ ଛାୟାର ଲମ୍ବ/କୋଣ ପ୍ରଶ୍ନ ମିଳାନ କରନ୍ତୁ।',
+                'level-intermediate': 'ମଧ୍ୟମ ସ୍ତର',
+
+                'intro-title': 'ଏହା କିପରି କାମ କରେ',
+                'intro-text': 'ଆକାଶରେ ସୂର୍ଯ୍ୟକୁ ବାମ ଓ ଡାହାଣକୁ ଡ୍ରାଗ୍ କରନ୍ତୁ। ଅବଜେକ୍ଟର ଛାୟାର ଲମ୍ବ ଓ ଦିଗ ଏବଂ ଘଡ଼ିର ସମୟ କିପରି ବଦଳୁଛି ଦେଖନ୍ତୁ।',
+                'intro-tip': 'ପ୍ରଥମେ ଅଭ୍ୟାସ କରନ୍ତୁ। ତାପରେ “Start Scenes” ଉପରେ ଦବାଇ ଦୈନିକ ସିନ୍ ଓ ଛାୟାର ଲମ୍ବ/କୋଣ ପ୍ରଶ୍ନ ମିଳାନ କରନ୍ତୁ। ପ୍ରତ୍ୟେକ ଠିକ୍ ଉତ୍ତର ପରେ ଏକ ବୈଜ୍ଞାନିକ ତଥ୍ୟ ଦେଖାଯିବ।',
+                'btn-start': 'Scenes ଆରମ୍ଭ କରନ୍ତୁ',
+                'label-question': 'ସିନ୍',
+                'label-hints': 'ହିଣ୍ଟ',
+                'label-score': 'ସ୍କୋର:',
+                'challenge-heading': 'ଯେଉଁ ସିନ୍ ମିଳାନ କରିବେ:',
+                'btn-hint': 'ହିଣ୍ଟ ବ୍ୟବହାର କରନ୍ତୁ',
+
+                /* Instructions modal */
+                'instr-title': 'ଶ୍ୟାଡୋ ଲ୍ୟାବ୍ – କିପରି ଖେଳିବେ',
+                'instr-subtitle': 'ଏହା ଏକ ସୂର୍ଯ୍ୟ–ଛାୟା ସିମ୍ୟୁଲେଟର୍ ସହ ଦୃଶ୍ୟ ଆଧାରିତ ଚ୍ୟାଲେଞ୍ଜ ଆଛି। ଆରମ୍ଭ ପୂର୍ବରୁ ଏହି ପଦକ୍ରମ ପଢ଼ନ୍ତୁ।',
+                'instr-1': 'ଆକାଶରେ ସୂର୍ଯ୍ୟକୁ ବାମ–ଡାହାଣକୁ ଡ୍ରାଗ୍ କରନ୍ତୁ ଏବଂ ଛାୟାର ଲମ୍ବ ଓ ଦିଗ କିପରି ବଦଳୁଛି ଦେଖନ୍ତୁ।',
+                'instr-2': 'ସୂର୍ଯ୍ୟ ଘୁଞ୍ଚିବା ସହ ଘଡ଼ିର ସମୟ କିପରି ସକାଳରୁ ସନ୍ଧ୍ୟା ପର୍ଯ୍ୟନ୍ତ ଯାଉଛି ଲକ୍ଷ୍ୟ କରନ୍ତୁ।',
+                'instr-3': 'ପାର୍ଶ୍ୱ ପ୍ୟାନେଲ୍‌ରେ “Start Scenes” ଉପରେ କ୍ଲିକ୍ କରି ସିନ୍ ଓ ସଂଖ୍ୟାତ୍ମକ ପ୍ରଶ୍ନ ମିଳାନ କରନ୍ତୁ।',
+                'instr-4': 'ଆପଣଙ୍କ ପାଖରେ ସମୟ ଏବଂ ହିଣ୍ଟ ସିମିତ। ଅଧିକ ଘୋଳାଳି ହେଲେ ମାତ୍ର ହିଣ୍ଟ ବ୍ୟବହାର କରନ୍ତୁ।',
+                'instr-5': 'ପ୍ରତ୍ୟେକ ଠିକ୍ ଉତ୍ତର ପରେ ସୂର୍ଯ୍ୟ ଓ ଛାୟା ବିଷୟରେ ଏକ ଛୋଟ ବୈଜ୍ଞାନିକ ତଥ୍ୟ ଦେଖିବେ।',
+                'instr-tip': 'ସୁପାରିଶ: ପ୍ରଥମେ କେବଳ ସୂର୍ଯ୍ୟକୁ ଘୁଞ୍ଚାଇ ଅଭ୍ୟାସ କରନ୍ତୁ। ପରେ ସିନ୍ ଆରମ୍ଭ କରି ହିଣ୍ଟ ବିନା ଏପର୍ଯ୍ୟନ୍ତ ସମାଧାନ କରନ୍ତୁ।',
+                'instr-start-btn': 'Shadow Lab ଆରମ୍ଭ କରନ୍ତୁ',
+
+                'time-label': 'ଅବଶିଷ୍ଟ ସମୟ:',
+                'hints-label': 'ଅବଶିଷ୍ଟ ହିଣ୍ଟ:',
+                'score-label': 'ସମାଧାନ ହୋଇଥିବା ସିନ୍:',
+
+                'footer-desc': 'ସ୍ଥାନୀୟ ବିଷୟବସ୍ତୁ ଏବଂ ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ମାଧ୍ୟମରେ ଓଡ଼ିଶାର ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କ ପାଇଁ ବିଜ୍ଞାନ ଏବଂ ଗଣିତ ଶିକ୍ଷାକୁ ଆକର୍ଷଣୀୟ ଏବଂ ପ୍ରାସଙ୍ଗିକ କରିବା।',
+                'quick-links': 'ଶୀଘ୍ର ଲିଙ୍କ୍',
+                'copyright': '© 2023 STEM ଲର୍ନ ଓଡ଼ିଶା। ସମସ୍ତ ଅଧିକାର ସଂରକ୍ଷିତ।'
+            },
+            hi: {
+                'nav-dashboard': 'डैशबोर्ड',
+                'nav-about': 'हमारे बारे में',
+                'nav-contact': 'संपर्क',
+                'page-title': 'शैडो लैब – सूर्य, छाया और समय',
+                'page-desc': 'आकाश में सूर्य को बाएँ–दाएँ खींचिए। देखिए ऑब्जेक्ट की छाया और घड़ी का समय कैसे बदलता है, फिर सीन और लम्बाई/कोण वाले प्रश्न हल कीजिए।',
+                'breadcrumb-dashboard': 'डैशबोर्ड',
+                'breadcrumb-natural': 'प्राकृतिक घटनाएँ',
+                'breadcrumb-shadow': 'शैडो लैब – इंटरमीडिएट',
+                'game-title': 'शैडो लैब – इंटरमीडिएट स्तर',
+                'game-subtitle': 'सूर्य को घुमाइए, ऑब्जेक्ट की छाया को देखिए और सुबह–दोपहर–शाम के सीन व छाया की लम्बाई/कोण से जुड़े प्रश्न मिलाइए।',
+                'level-intermediate': 'इंटरमीडिएट',
+
+                'intro-title': 'यह कैसे काम करता है',
+                'intro-text': 'आकाश में सूर्य को बाएँ–दाएँ ड्रैग कीजिए। ऑब्जेक्ट की छाया की लम्बाई और दिशा कैसे बदलती है और घड़ी में समय कैसे बदलता है, ध्यान से देखिए।',
+                'intro-tip': 'पहले थोड़ा फ्री-प्ले कीजिए। फिर “Start Scenes” पर टैप करके अलग–अलग सीन और छाया की लम्बाई/कोण वाले प्रश्न से मिलान कीजिए। हर सही उत्तर के बाद एक विज्ञान तथ्य दिखेगा।',
+                'btn-start': 'सीन शुरू करें',
+                'label-question': 'सीन',
+                'label-hints': 'हिंट',
+                'label-score': 'स्कोर:',
+                'challenge-heading': 'जिस सीन से मिलान करना है:',
+                'btn-hint': 'हिंट उपयोग करें',
+
+                'instr-title': 'शैडो लैब – कैसे खेलें',
+                'instr-subtitle': 'यह सूर्य–छाया सिम्युलेटर है जिसमें सीन-आधारित चुनौतियाँ हैं। शुरू करने से पहले इन चरणों को पढ़ें।',
+                'instr-1': 'आकाश में सूर्य को बाएँ–दाएँ खींचिए और देखिए कि छाया की लम्बाई और दिशा कैसे बदलती है।',
+                'instr-2': 'ध्यान दीजिए कि सूर्य के साथ घड़ी का समय सुबह से शाम तक कैसे बदलता है।',
+                'instr-3': 'साइड पैनल में “Start Scenes” दबाकर सीन और संख्यात्मक छाया-प्रश्न हल कीजिए।',
+                'instr-4': 'आपके पास समय और हिंट सीमित हैं। हिंट तभी लें जब आप फँस जाएँ।',
+                'instr-5': 'हर सही उत्तर के बाद आपको सूर्य और छाया से जुड़ा एक छोटा विज्ञान तथ्य दिखेगा।',
+                'instr-tip': 'सुझाव: पहले सिर्फ़ सूर्य को घुमाकर अभ्यास कीजिए। फिर सीन शुरू करके बिना हिंट के अधिक से अधिक प्रश्न हल करने की कोशिश करें।',
+                'instr-start-btn': 'शैडो लैब शुरू करें',
+
+                'time-label': 'शेष समय:',
+                'hints-label': 'शेष हिंट:',
+                'score-label': 'सुलझे हुए सीन:',
+
+                'footer-desc': 'स्थानीय सामग्री और इंटरैक्टिव गतिविधियों के माध्यम से ओडिशा के छात्रों के लिए विज्ञान और गणित की पढ़ाई को रोचक और उपयोगी बनाना।',
+                'quick-links': 'त्वरित लिंक',
+                'copyright': '© 2023 STEM Learn Odisha. सर्वाधिकार सुरक्षित।'
+            }
+        };
+
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const i18nElements = document.querySelectorAll('[data-i18n]');
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navList = document.querySelector('header nav ul');
+
+        function t(key) {
+            const pack = translations[currentLanguage] || translations.en;
+            return pack[key] || translations.en[key] || key;
+        }
+
+        function applyTranslations() {
+            i18nElements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (!key) return;
+                el.textContent = t(key);
+            });
+
+            const startBtnSpan = document.getElementById('startBtn')?.querySelector('span');
+            if (startBtnSpan) startBtnSpan.textContent = t('btn-start');
+
+            const hintBtnSpan = document.getElementById('hintBtn')?.querySelector('span');
+            if (hintBtnSpan) hintBtnSpan.textContent = t('btn-hint');
+
+            const introStartSpan = document.getElementById('intro-start-btn')?.querySelector('span');
+            if (introStartSpan) introStartSpan.textContent = t('instr-start-btn');
+
+            if (gameMode === 'challenge' && currentQuestion) {
+                loadCurrentQuestion(true);
+            }
+        }
+
+        langButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+                if (lang === currentLanguage) return;
+                currentLanguage = lang;
+
+                langButtons.forEach(b => b.classList.toggle('active', b === btn));
+
+                if (lang === 'or' || lang === 'hi') {
+                    document.body.classList.add('indic-text');
+                } else {
+                    document.body.classList.remove('indic-text');
+                }
+
+                applyTranslations();
+            });
+        });
+
+        if (mobileMenuBtn && navList) {
+            mobileMenuBtn.addEventListener('click', () => {
+                navList.classList.toggle('show');
+            });
+        }
+
+        // --------- SHADOW GAME LOGIC ----------
+        let sunPosition = 50; // 0–100
+        let currentTime = { hours: 12, minutes: 0 };
+        let gameMode = 'intro';
+        let currentQuestion = null;
+        let isDragging = false;
+
+        const TOTAL_QUESTIONS = 6;           // show only 6 per game
+        const MAX_HINTS = 3;
+        const TOTAL_TIME_SECONDS = 15 * 60;  // 15 minutes
+        const POINTS_PER_QUESTION = 100 / TOTAL_QUESTIONS;
+
+        let questionSequence = [];
+        let questionIndex = 0;
+        let hintsLeft = MAX_HINTS;
+        let score = 0;           // 0-100
+        let correctCount = 0;    // number of correctly matched questions
+        let timeLeft = TOTAL_TIME_SECONDS;
+        let timerInterval = null;
+
+        const sun = document.getElementById('sun');
+        const skySection = document.getElementById('skySection');
+        const objectShadow = document.getElementById('objectShadow');
+        const digitalTime = document.getElementById('digitalTime');
+        const hourHand = document.getElementById('hourHand');
+        const minuteHand = document.getElementById('minuteHand');
+        const successPopup = document.getElementById('successPopup');
+        const successTitle = document.getElementById('successTitle');
+        const successMessage = document.getElementById('successMessage');
+        const successIcon = document.getElementById('successIcon');
+        const successFact = document.getElementById('successFact');
+
+        const introContent = document.getElementById('introContent');
+        const challengeContent = document.getElementById('challengeContent');
+        const questionText = document.getElementById('questionText');
+        const hintText = document.getElementById('hintText');
+        const hintBtn = document.getElementById('hintBtn');
+        const qIndexEl = document.getElementById('qIndex');
+        const qTotalEl = document.getElementById('qTotal');
+        const hintsLeftEl = document.getElementById('hintsLeft');
+        const timerText = document.getElementById('timerText');
+        const scoreText = document.getElementById('scoreText');
+        const startBtn = document.getElementById('startBtn');
+        const analogClock = document.getElementById('analogClock');
+
+        const hudPosEl = document.getElementById('hudPos');
+        const hudTimeShortEl = document.getElementById('hudTimeShort');
+        const hudLenEl = document.getElementById('hudLen');
+        const hudAngleEl = document.getElementById('hudAngle');
+
+        // NEW: Code 1 style elements
+        const instructionsModal = document.getElementById('instructions-modal');
+        const introStartBtn = document.getElementById('intro-start-btn');
+        const quizSection = document.getElementById('quiz-section');
+        const topTimeRemainingEl = document.getElementById('time-remaining');
+        const topHintsRemainingEl = document.getElementById('hints-remaining');
+        const topScoreValueEl = document.getElementById('score-value');
+        const topScoreTotalEl = document.getElementById('score-total');
+
+        // QUESTION BANK: scenario + numeric (length & angle), ~10 total per language
+        const QUESTION_BANK = {
+            en: [
+                // Scenario-based (5)
+                {
+                    id: 'early_morning_long_right',
+                    type: 'scenario',
+                    conditions: { time: 'early-morning', lengthCat: 'long', side: 'right', minAngle: 55 },
+                    text: 'Early morning: make the object’s shadow long and strongly slanting towards the right side of the screen.',
+                    hint: 'Keep the Sun low on the left side near the horizon so the shadow tilts a lot to the right.',
+                    fact: 'In early morning, the Sun is low in the sky, so objects cast long shadows that can tilt by about 60° or more.'
+                },
+                {
+                    id: 'late_morning_medium_right',
+                    type: 'scenario',
+                    conditions: { time: 'morning', lengthCat: 'medium', side: 'right' },
+                    text: 'Late-morning playtime: the object’s shadow should still fall to the right, but not very long or very short.',
+                    hint: 'Place the Sun slightly left of the middle of the sky so the shadow is medium in size to the right.',
+                    fact: 'As the Sun climbs higher between early morning and noon, shadows become shorter and less tilted.'
+                },
+                {
+                    id: 'noon_short',
+                    type: 'scenario',
+                    conditions: { time: 'noon', lengthCat: 'short' },
+                    text: 'Midday noon: make the object’s shadow very short, almost under the object itself.',
+                    hint: 'Move the Sun to the centre of the sky above the object so the shadow shrinks.',
+                    fact: 'Around noon, the Sun is almost overhead, so vertical objects produce the shortest shadows of the day.'
+                },
+                {
+                    id: 'afternoon_medium_left',
+                    type: 'scenario',
+                    conditions: { time: 'afternoon', lengthCat: 'medium', side: 'left' },
+                    text: 'Afternoon rest: the object’s shadow should point to the left side with a medium length.',
+                    hint: 'Shift the Sun to the right side of the sky but not too low, so the shadow is medium and falls to the left.',
+                    fact: 'In afternoon, the Sun moves to the west side of the sky, so shadows swing around to the east side.'
+                },
+                {
+                    id: 'evening_long_left_steep',
+                    type: 'scenario',
+                    conditions: { time: 'evening', lengthCat: 'long', side: 'left', minAngle: 55 },
+                    text: 'Evening sunset: make the object’s shadow long and strongly slanting towards the left side.',
+                    hint: 'Place the Sun very low on the right side near the horizon so the shadow leans sharply to the left.',
+                    fact: 'Near sunset, shadows stretch out and can make a steep angle, close to 60°, on the opposite side of the Sun.'
+                },
+                // Numeric – shadow length (2)
+                {
+                    id: 'numeric_short_length',
+                    type: 'numeric',
+                    conditions: {},
+                    numeric: { kind: 'length', min: 0.7, max: 1.0, targetDisplay: '0.8' },
+                    text: 'Length challenge: adjust the Sun until the shadow length meter is close to 0.8 (a short shadow).',
+                    hint: 'Keep the Sun fairly high in the sky near the middle so the shadow becomes short.',
+                    fact: 'When the Sun is higher in the sky, light hits objects from above, so the same object makes a smaller shadow.'
+                },
+                {
+                    id: 'numeric_long_length',
+                    type: 'numeric',
+                    conditions: {},
+                    numeric: { kind: 'length', min: 1.7, max: 2.1, targetDisplay: '2.0' },
+                    text: 'Length challenge: make the shadow length meter show about 2.0 (a very long shadow).',
+                    hint: 'Move the Sun close to sunrise or sunset on either side so the object makes a long shadow.',
+                    fact: 'When the Sun is low near the horizon, light travels almost sideways and stretches shadows to be very long.'
+                },
+                // Numeric – shadow angle (3)
+                {
+                    id: 'numeric_angle_right_60',
+                    type: 'numeric',
+                    conditions: {},
+                    numeric: { kind: 'angle', min: 50, max: 70, side: 'right', targetDisplay: '60° right' },
+                    text: 'Angle challenge: make the shadow tilt at about 60° towards the right side. Watch the angle in the HUD.',
+                    hint: 'Place the Sun low on the left side so the angle in the HUD becomes close to +60° and the shadow leans strongly right.',
+                    fact: 'The angle of a shadow on the ground depends on the sideways position of the Sun, not just how high it is.'
+                },
+                {
+                    id: 'numeric_angle_left_60',
+                    type: 'numeric',
+                    conditions: {},
+                    numeric: { kind: 'angle', min: 50, max: 70, side: 'left', targetDisplay: '60° left' },
+                    text: 'Angle challenge: make the shadow tilt at about 60° towards the left side.',
+                    hint: 'Slide the Sun low on the right so the HUD shows an angle close to -60° and the shadow leans left.',
+                    fact: 'Shadows always point away from the Sun: if the Sun is to the right, the shadow leans to the left, and vice versa.'
+                },
+                {
+                    id: 'numeric_angle_small',
+                    type: 'numeric',
+                    conditions: {},
+                    numeric: { kind: 'angle', min: -15, max: 15, side: null, targetDisplay: '0°' },
+                    text: 'Angle challenge: adjust the Sun until the shadow angle in the HUD is close to 0° (almost straight behind the object).',
+                    hint: 'Keep the Sun near the middle of the sky so the shadow points almost straight away from the object.',
+                    fact: 'When the Sun is almost directly in front or behind an object, the shadow lines up nearly straight with it.'
+                }
+            ],
+            or: [
+                {
+                    id: 'early_morning_long_right',
+                    type: 'scenario',
+                    conditions: { time: 'early-morning', lengthCat: 'long', side: 'right', minAngle: 55 },
+                    text: 'ସକାଳ ସକାଳ: ଅବଜେକ୍ଟର ଛାୟାକୁ ଲମ୍ବା ଏବଂ ଭଲ ଭାବରେ ଡାହାଣ ପାଖକୁ ଝୁକିଥିବା ପରି କରନ୍ତୁ।',
+                    hint: 'ସୂର୍ଯ୍ୟକୁ ବାମ ପାଟିରେ ଖୁବ ତଳକୁ, ହରିଜନ୍‌ ପାଖରେ ରଖନ୍ତୁ, ତାହେଲେ ଛାୟା ଡାହାଣକୁ ଅଧିକ କୋଣରେ ପଡ଼ିବ।',
+                    fact: 'ସକାଳେ ସୂର୍ଯ୍ୟ ଆକାଶରେ ଖୁବ ତଳେ ଥାଏ, ତେଣୁ ଅବଜେକ୍ଟମାନେ ଲମ୍ବା ଏବଂ ପ୍ରାୟ 60° ପର୍ଯ୍ୟନ୍ତ ଝୁକିଥିବା ଛାୟା ଦେଇଥାନ୍ତି।'
+                },
+                {
+                    id: 'late_morning_medium_right',
+                    type: 'scenario',
+                    conditions: { time: 'morning', lengthCat: 'medium', side: 'right' },
+                    text: 'ଅପରାହ୍ନ ପୂର୍ବ ସକାଳୀନ ଖେଳ: ଅବଜେକ୍ଟର ଛାୟା ଡାହାଣକୁ ପଡ଼ୁ, କିନ୍ତୁ ଭଲ ଲମ୍ବା ନୁହେଁ, ଖୁବ ଛୋଟ ମଧ୍ୟ ନୁହେଁ।',
+                    hint: 'ସୂର୍ଯ୍ୟକୁ ଆକାଶର ବାମ ପଟରୁ ଅଳ୍ପ ମଧ୍ୟଭାଗ ଦିଗକୁ ନେଇଆସନ୍ତୁ, ତାହେଲେ ଛାୟା ଡାହାଣକୁ ମଧ୍ୟମ ଲମ୍ବରେ ପଡ଼ିବ।',
+                    fact: 'ସକାଳରୁ ଦୁପୁର ଦିଗକୁ ସୂର୍ଯ୍ୟ ଉପରକୁ ଯାଇବା ସହ ଛାୟା ଧୀରେ ଧୀରେ ଛୋଟ ହୁଏ ଏବଂ କୋଣ କମିଯାଏ।'
+                },
+                {
+                    id: 'noon_short',
+                    type: 'scenario',
+                    conditions: { time: 'noon', lengthCat: 'short' },
+                    text: 'ଦୁପୁର ସମୟ: ଅବଜେକ୍ଟର ଛାୟାକୁ ଖୁବ ଛୋଟ କରନ୍ତୁ, ପ୍ରାୟ ଅବଜେକ୍ଟ ତଳେ ହିଁ ଥିବା ପରି।',
+                    hint: 'ସୂର୍ଯ୍ୟକୁ ଆକାଶର ମଧ୍ୟ ଉପରେ, ଅବଜେକ୍ଟ ଉପରେ ରଖନ୍ତୁ, ତାହେଲେ ଛାୟା ଛୋଟ ହେବ।',
+                    fact: 'ଦୁପୁର ବେଳେ ସୂର୍ଯ୍ୟ ପ୍ରାୟ ମୁଣ୍ଡ ଉପରେ ଥାଏ, ତେଣୁ ସମ ଅବଜେକ୍ଟମାନଙ୍କ ଛାୟା ଦିନର ସବୁଠାରୁ ଛୋଟ ଥାଏ।'
+                },
+                {
+                    id: 'afternoon_medium_left',
+                    type: 'scenario',
+                    conditions: { time: 'afternoon', lengthCat: 'medium', side: 'left' },
+                    text: 'ଅପରାହ୍ନ ବିଶ୍ରାମ: ଅବଜେକ୍ଟର ଛାୟାକୁ ବାମ ପାଖକୁ ପଡ଼ିବା ପରି କରନ୍ତୁ, ଯାହା ନା ଖୁବ ଲମ୍ବା, ନା ଖୁବ ଛୋଟ।',
+                    hint: 'ସୂର୍ଯ୍ୟକୁ ଆକାଶର ଡାହାଣ ପଟକୁ, କିନ୍ତୁ ଖୁବ ତଳକୁ ନୁହେଁ, ରଖନ୍ତୁ, ତାହେଲେ ଛାୟା ବାମକୁ ସମାଞ୍ଜସ୍ୟ ଲମ୍ବରେ ପଡ଼ିବ।',
+                    fact: 'ଅପରାହ୍ନ ସମୟରେ ସୂର୍ଯ୍ୟ ପଶ୍ଚିମ ଦିଗକୁ ଯାଏ, ତେଣୁ ଛାୟା ପୂର୍ବ ପାର୍ଶ୍ୱ (ବାମ ପାଟି) ଦିଗକୁ ସରିଯାଏ।'
+                },
+                {
+                    id: 'evening_long_left_steep',
+                    type: 'scenario',
+                    conditions: { time: 'evening', lengthCat: 'long', side: 'left', minAngle: 55 },
+                    text: 'ସନ୍ଧ୍ୟା ସମୟ: ଅବଜେକ୍ଟର ଛାୟାକୁ ଲମ୍ବା ଏବଂ ଭଲ ଭାବରେ ବାମ ପାଖକୁ ଝୁକିଥିବା ପରି କରନ୍ତୁ।',
+                    hint: 'ସୂର୍ଯ୍ୟକୁ ଡାହାଣ କୋଣରେ ତଳକୁ, ସୂର୍ଯ୍ୟାସ୍ତ ନିକଟରେ ନେଇଯାଆନ୍ତୁ, ତାହେଲେ ଛାୟା ବାମ ପଟକୁ ଅଧିକ କୋଣରେ ପଡ଼ିବ।',
+                    fact: 'ସୂର୍ଯ୍ୟାସ୍ତ ସମୟରେ ଛାୟା ଖୁବ ଦୂର ପର୍ଯ୍ୟନ୍ତ ଯାଏ ଏବଂ ଭଲ ଭାବରେ ଝୁକିଥାଏ।'
+                },
+                {
+                    id: 'numeric_short_length',
+                    type: 'numeric',
+                    conditions: {},
+                    numeric: { kind: 'length', min: 0.7, max: 1.0, targetDisplay: '0.8' },
+                    text: 'ଲମ୍ବ ପ୍ରଶ୍ନ: ଏମିତି ସ୍ଥାନ ବାଛନ୍ତୁ ଯେଉଁଠାରେ ଛାୟାର ମାପ ପ୍ରାୟ 0.8 ହୁଏ (ଛୋଟ ଛାୟା)।',
+                    hint: 'ସୂର୍ଯ୍ୟକୁ ଆକାଶର ମଧ୍ୟ ଉପରେ ଲାଗିଥିବା ପରି ରଖନ୍ତୁ, ତାହେଲେ ଛାୟା ଛୋଟ ହେବ।',
+                    fact: 'ସୂର୍ଯ୍ୟ ଯେତେ ଉପରେ ଯାଏ, ଛାୟା ସେତେ ଛୋଟ ହୁଏ, କାରଣ ଆଲୋକ ପ୍ରାୟ ସିଧା ଉପରୁ ପଡ଼ିଥାଏ।'
+                },
+                {
+                    id: 'numeric_long_length',
+                    type: 'numeric',
+                    conditions: {},
+                    numeric: { kind: 'length', min: 1.7, max: 2.1, targetDisplay: '2.0' },
+                    text: 'ଲମ୍ବ ପ୍ରଶ୍ନ: ଏମିତି ସ୍ଥାନ ବାଛନ୍ତୁ ଯେଉଁଠାରେ ଛାୟାର ମାପ ପ୍ରାୟ 2.0 ହୁଏ (ଖୁବ ଲମ୍ବା ଛାୟା)।',
+                    hint: 'ସୂର୍ଯ୍ୟକୁ ଉଦୟ କିମ୍ବା ଅସ୍ତ ନିକଟରେ, ଆକାଶର କଣା ନିକଟକୁ ନେଇଯାଆନ୍ତୁ।',
+                    fact: 'ସୂର୍ଯ୍ୟ ଯେତେ ତଳକୁ ଥାଏ, ଆଲୋକ ପ୍ରାୟ ସାଇଡ୍‌ରୁ ଆସିଥାଏ, ତେଣୁ ଛାୟା ଲମ୍ବା ଏବଂ ଦୂର ପର୍ଯ୍ୟନ୍ତ ଯାଏ।'
+                },
+                {
+                    id: 'numeric_angle_right_60',
+                    type: 'numeric',
+                    conditions: {},
+                    numeric: { kind: 'angle', min: 50, max: 70, side: 'right', targetDisplay: '60° ଡାହାଣ' },
+                    text: 'କୋଣ ପ୍ରଶ୍ନ: ଛାୟାକୁ ପ୍ରାୟ 60° କୋଣରେ ଡାହାଣ ପାଟିକୁ ଝୁକିଥିବା ପରି କରନ୍ତୁ। HUD ରେ କୋଣକୁ ଦେଖନ୍ତୁ।',
+                    hint: 'ସୂର୍ଯ୍ୟକୁ ବାମ ପାଟିରେ ତଳକୁ ରଖନ୍ତୁ ଯାହାରେ HUD ରେ କୋଣ ପ୍ରାୟ 60° ହୁଏ ଏବଂ ଛାୟା ଡାହାଣକୁ ଭଲ ଭାବରେ ଝୁକିଯାଏ।',
+                    fact: 'ଛାୟାର କୋଣ ସୂର୍ଯ୍ୟ କେଉଁ ପାଟିରେ ରହିଛି ତାହାରୁ ପ୍ରଭାବିତ ହୁଏ, ମାତ୍ର ସୂର୍ଯ୍ୟ ଉଚ୍ଚତାରୁ ନୁହେଁ।'
+                },
+                {
+                    id: 'numeric_angle_left_60',
+                    type: 'numeric',
+                    conditions: {},
+                    numeric: { kind: 'angle', min: 50, max: 70, side: 'left', targetDisplay: '60° ବାମ' },
+                    text: 'କୋଣ ପ୍ରଶ୍ନ: ଛାୟାକୁ ପ୍ରାୟ 60° କୋଣରେ ବାମ ପାଟିକୁ ଝୁକିଥିବା ପରି କରନ୍ତୁ।',
+                    hint: 'ସୂର୍ଯ୍ୟକୁ ଡାହାଣ ପାଟିରେ ତଳକୁ ରଖି ଦେଖନ୍ତୁ, HUD ରେ କୋଣ ପ୍ରାୟ -60° ନିକଟକୁ ଆସୁଥାଏ କି ନା।',
+                    fact: 'ସୂର୍ଯ୍ୟ ଡାହାଣ ପାଟିରେ ଥିଲେ ଛାୟା ବାମ ପାଟିକୁ ପଡ଼େ ଏବଂ ବିପରୀତ୍।'
+                },
+                {
+                    id: 'numeric_angle_small',
+                    type: 'numeric',
+                    conditions: {},
+                    numeric: { kind: 'angle', min: -15, max: 15, side: null, targetDisplay: '0°' },
+                    text: 'କୋଣ ପ୍ରଶ୍ନ: HUD ରେ କୋଣ ପ୍ରାୟ 0° ହେଉଅ ଯାଏଁ ସୂର୍ଯ୍ୟକୁ ସମନ୍ୱୟ କରନ୍ତୁ (ଛାୟା ପ୍ରାୟ ସିଧା ପଛକୁ)।',
+                    hint: 'ସୂର୍ଯ୍ୟକୁ ଆକାଶର ମଧ୍ୟ ପାଖରେ ରଖନ୍ତୁ ଯାହାରେ ଛାୟା ପ୍ରାୟ ସିଧା ପଛ ଦିଗକୁ ଥାଏ।',
+                    fact: 'ସୂର୍ଯ୍ୟ ଅବଜେକ୍ଟର ସମ୍ମୁଖ କିମ୍ବା ପଛ ପଟକୁ ନିକଟକୁ ଥିଲେ ଛାୟା ପ୍ରାୟ ସିଧା ରେଖାରେ ପଡ଼ିଥାଏ।'
+                }
+            ],
+            hi: [
+                {
+                    id: 'early_morning_long_right',
+                    type: 'scenario',
+                    conditions: { time: 'early-morning', lengthCat: 'long', side: 'right', minAngle: 55 },
+                    text: 'सुबह–सुबह: ऑब्जेक्ट की छाया को लम्बी और ज़्यादा झुकी हुई बनाइए, जो स्क्रीन के दाईं तरफ़ पड़े।',
+                    hint: 'सूर्य को बाईं तरफ़ कम ऊँचाई पर, क्षितिज के पास रखिए ताकि छाया दाईं ओर लगभग 60° के बड़े कोण पर झुके।',
+                    fact: 'सुबह के समय सूर्य नीचे होता है, इसलिए ऑब्जेक्ट लम्बी और तेज़ कोण वाली छाया बनाते हैं जो लगभग 60° तक झुक सकती है।'
+                },
+                {
+                    id: 'late_morning_medium_right',
+                    type: 'scenario',
+                    conditions: { time: 'morning', lengthCat: 'medium', side: 'right' },
+                    text: 'लेट–मॉर्निंग खेल का समय: ऑब्जेक्ट की छाया अभी भी दाईं ओर हो, लेकिन न बहुत लम्बी, न बहुत छोटी।',
+                    hint: 'सूर्य को आसमान में बीच की ओर, पर थोड़ा बाईं तरफ़ रखिए ताकि छाया दाईं ओर मध्यम लम्बाई की हो।',
+                    fact: 'सुबह से दोपहर तक सूर्य ऊपर चढ़ता जाता है, इसलिए छाया धीरे–धीरे छोटी और कम झुकी हुई हो जाती है।'
+                },
+                {
+                    id: 'noon_short',
+                    type: 'scenario',
+                    conditions: { time: 'noon', lengthCat: 'short' },
+                    text: 'दोपहर का समय: ऑब्जेक्ट की छाया को बहुत छोटी बनाइए, लगभग ऑब्जेक्ट के ठीक नीचे जैसी।',
+                    hint: 'सूर्य को आसमान के बीच, ऑब्जेक्ट के ऊपर रखिए ताकि छाया सिकुड़ कर छोटी हो जाए।',
+                    fact: 'दोपहर के आसपास सूर्य लगभग सिर के ऊपर होता है, इसलिए लम्बवत ऑब्जेक्ट की छाया दिन की सबसे छोटी होती है।'
+                },
+                {
+                    id: 'afternoon_medium_left',
+                    type: 'scenario',
+                    conditions: { time: 'afternoon', lengthCat: 'medium', side: 'left' },
+                    text: 'दोपहर बाद आराम: ऑब्जेक्ट की छाया बाईं तरफ़ पड़े और उसकी लम्बाई मध्यम हो।',
+                    hint: 'सूर्य को दाईं तरफ़ रखें लेकिन बहुत नीचे नहीं, ताकि छाया बाईं ओर मध्यम लम्बाई में दिखे।',
+                    fact: 'दोपहर के बाद सूर्य पश्चिम की ओर जाता है, इसलिए छाया पूर्व दिशा (बाएँ) की ओर घूमने लगती है।'
+                },
+                {
+                    id: 'evening_long_left_steep',
+                    type: 'scenario',
+                    conditions: { time: 'evening', lengthCat: 'long', side: 'left', minAngle: 55 },
+                    text: 'शाम का समय: ऑब्जेक्ट की छाया को लम्बी और तेज़ी से बाईं तरफ़ झुकी हुई बनाइए।',
+                    hint: 'सूर्य को दाईं तरफ़ नीचे, सूर्यास्त के पास लाएँ ताकि छाया बाईं ओर तेज़ कोण (लगभग 60°) से फैले।',
+                    fact: 'सूर्यास्त के पास छाया बहुत लम्बी हो जाती है और ज़मीन पर दूर तक फैल जाती है, क्योंकि सूर्य लगभग क्षितिज पर होता है।'
+                },
+                {
+                    id: 'numeric_short_length',
+                    type: 'numeric',
+                    conditions: {},
+                    numeric: { kind: 'length', min: 0.7, max: 1.0, targetDisplay: '0.8' },
+                    text: 'लम्बाई प्रश्न: सूर्य को इस तरह समायोजित कीजिए कि छाया की लम्बाई का मीटर लगभग 0.8 दिखाए (छोटी छाया)।',
+                    hint: 'सूर्य को आसमान के बीच की ओर काफ़ी ऊपर रखिए ताकि छाया छोटी हो जाए।',
+                    fact: 'जब सूर्य आसमान में ऊपर होता है, तो रोशनी लगभग ऊपर से आती है और छाया छोटी दिखती है।'
+                },
+                {
+                    id: 'numeric_long_length',
+                    type: 'numeric',
+                    conditions: {},
+                    numeric: { kind: 'length', min: 1.7, max: 2.1, targetDisplay: '2.0' },
+                    text: 'लम्बाई प्रश्न: ऐसी स्थिति चुनिए जहाँ मीटर लगभग 2.0 दिखाए (बहुत लम्बी छाया)।',
+                    hint: 'सूर्य को सूर्योदय या सूर्यास्त के पास, यानी आसमान के किनारे की ओर ले जाइए।',
+                    fact: 'जब सूर्य क्षितिज के पास होता है, तो उसकी किरणें तिरछी आती हैं और छाया बहुत लम्बी हो जाती है।'
+                },
+                {
+                    id: 'numeric_angle_right_60',
+                    type: 'numeric',
+                    conditions: {},
+                    numeric: { kind: 'angle', min: 50, max: 70, side: 'right', targetDisplay: '60° दाईं ओर' },
+                    text: 'कोण प्रश्न: छाया का कोण HUD में लगभग 60° दाईं तरफ़ दिखने तक सूर्य को समायोजित कीजिए।',
+                    hint: 'सूर्य को बाईं तरफ़ नीचे की ओर रखिए ताकि HUD में कोण लगभग +60° के पास आ जाए और छाया दाईं ओर तेज़ी से झुके।',
+                    fact: 'छाया का कोण सिर्फ़ सूर्य की ऊँचाई से नहीं, बल्कि वह दाएँ या बाएँ कितनी दूर है, इस पर भी निर्भर करता है।'
+                },
+                {
+                    id: 'numeric_angle_left_60',
+                    type: 'numeric',
+                    conditions: {},
+                    numeric: { kind: 'angle', min: 50, max: 70, side: 'left', targetDisplay: '60° बाईं ओर' },
+                    text: 'कोण प्रश्न: छाया का कोण लगभग 60° बाईं तरफ़ की ओर बनाइए।',
+                    hint: 'सूर्य को दाईं तरफ़ नीचे रखिए ताकि HUD में कोण लगभग -60° के पास आए और छाया बाईं ओर झुके।',
+                    fact: 'सूर्य अगर दाईं तरफ़ होगा तो छाया बाईं ओर जाएगी और अगर सूर्य बाईं तरफ़ होगा तो छाया दाईं ओर जाएगी।'
+                },
+                {
+                    id: 'numeric_angle_small',
+                    type: 'numeric',
+                    conditions: {},
+                    numeric: { kind: 'angle', min: -15, max: 15, side: null, targetDisplay: '0°' },
+                    text: 'कोण प्रश्न: सूर्य को तब तक बदलिए जब तक HUD में कोण लगभग 0° न दिखे (छाया लगभग सीधी पीछे जाए)।',
+                    hint: 'सूर्य को आसमान के बीच के पास रखिए ताकि छाया लगभग सीधी दिशा में लगे।',
+                    fact: 'जब सूर्य लगभग सामने या पीछे होता है तो छाया वस्तु की दिशा में ही लगभग सीधी दिखाई देती है।'
+                }
+            ]
+        };
+
+        function getQuestionById(id, lang) {
+            const bank = QUESTION_BANK[lang] || QUESTION_BANK.en;
+            return bank.find(q => q.id === id);
+        }
+
+        function shuffleArray(arr) {
+            return arr
+                .map(v => ({ v, sort: Math.random() }))
+                .sort((a, b) => a.sort - b.sort)
+                .map(({ v }) => v);
+        }
+
+        function initGame() {
+            // clock markers
+            for (let i = 0; i < 12; i++) {
+                const marker = document.createElement('div');
+                marker.className = 'clock-marker';
+                marker.style.transform = `translateX(-50%) rotate(${i * 30}deg)`;
+                analogClock.appendChild(marker);
+            }
+
+            updateSunPosition(50);
+            topScoreTotalEl.textContent = TOTAL_QUESTIONS;
+
+            sun.addEventListener('mousedown', startDrag);
+            sun.addEventListener('touchstart', startDrag, { passive: false });
+
+            startBtn.addEventListener('click', startGame);
+            hintBtn.addEventListener('click', useHint);
+
+            // Modal start -> show game
+            introStartBtn.addEventListener('click', () => {
+    // Hide the instructions overlay
+    instructionsModal.style.display = 'none';
+
+    // Show the main game section
+    quizSection.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Immediately start the game (this hides "How this works"
+    // and shows the challenge panel)
+    startGame();
+});
+
+
+            applyTranslations();
+            updateStatsDisplay();
+        }
+
+        // DRAG
+        function startDrag(e) {
+            isDragging = true;
+            e.preventDefault();
+
+            document.addEventListener('mousemove', dragMove);
+            document.addEventListener('mouseup', stopDrag);
+            document.addEventListener('touchmove', dragMove, { passive: false });
+            document.addEventListener('touchend', stopDrag);
+        }
+
+        function dragMove(e) {
+            if (!isDragging) return;
+            e.preventDefault();
+
+            const rect = skySection.getBoundingClientRect();
+            const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+            const x = clientX - rect.left;
+            const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
+
+            updateSunPosition(percentage);
+        }
+
+        function stopDrag() {
+            if (!isDragging) return;
+            isDragging = false;
+
+            document.removeEventListener('mousemove', dragMove);
+            document.removeEventListener('mouseup', stopDrag);
+            document.removeEventListener('touchmove', dragMove);
+            document.removeEventListener('touchend', stopDrag);
+
+            if (gameMode === 'challenge' && currentQuestion) {
+                checkAnswer();
+            }
+        }
+
+        // VISUALS
+        function updateSunPosition(percentage) {
+            sunPosition = percentage;
+            const verticalPos = 22 + Math.abs(percentage - 50) * 0.3;
+            sun.style.left = percentage + '%';
+            sun.style.top = verticalPos + '%';
+
+            const totalMinutes = 6 * 60 + (sunPosition / 100) * 12 * 60;
+            currentTime.hours = Math.floor(totalMinutes / 60);
+            currentTime.minutes = Math.round(totalMinutes % 60);
+
+            updateClock();
+            updateShadow();
+            updateSkyGradient();
+            updateHud();
+        }
+
+        function updateClock() {
+            const period = currentTime.hours >= 12 ? 'PM' : 'AM';
+            const displayHours = currentTime.hours > 12 ? currentTime.hours - 12 :
+                (currentTime.hours === 0 ? 12 : currentTime.hours);
+            const displayMinutes = currentTime.minutes.toString().padStart(2, '0');
+            digitalTime.textContent = `${displayHours}:${displayMinutes} ${period}`;
+
+            const hourAngle = ((currentTime.hours % 12) + currentTime.minutes / 60) * 30;
+            const minuteAngle = currentTime.minutes * 6;
+            hourHand.style.transform = `translateX(-50%) translateY(-100%) rotate(${hourAngle}deg)`;
+            minuteHand.style.transform = `translateX(-50%) translateY(-100%) rotate(${minuteAngle}deg)`;
+        }
+
+        function updateShadow() {
+            const shadowAngle = (sunPosition - 50) * -1.8;
+            const distanceFromCenter = Math.abs(sunPosition - 50);
+            const shadowLength = 0.6 + (distanceFromCenter / 50) * 1.8;
+            const shadowOpacity = 0.45 + (distanceFromCenter / 50) * 0.35;
+
+            objectShadow.style.transform =
+                `translateX(-50%) rotate(${shadowAngle}deg) scaleX(${shadowLength})`;
+            objectShadow.style.opacity = shadowOpacity;
+        }
+
+        function updateSkyGradient() {
+            let gradient;
+            if (sunPosition < 20) {
+                gradient = 'linear-gradient(to bottom, #FFA07A, #87CEEB, #6BB6FF)';
+            } else if (sunPosition < 40) {
+                gradient = 'linear-gradient(to bottom, #FFE4B5, #B0E0E6, #87CEEB)';
+            } else if (sunPosition < 60) {
+                gradient = 'linear-gradient(to bottom, #87CEEB, #6BB6FF, #4A9FD8)';
+            } else if (sunPosition < 80) {
+                gradient = 'linear-gradient(to bottom, #FFE4B5, #FFCBA4, #87CEEB)';
+            } else {
+                gradient = 'linear-gradient(to bottom, #FF8C42, #FFB6C1, #87CEEB)';
+            }
+            skySection.style.background = gradient;
+        }
+
+        // META + HUD
+        function getShadowMeta() {
+            const pos = sunPosition;
+            const side = pos < 50 ? 'right' : 'left';
+            const dist = Math.abs(pos - 50);
+
+            const shadowLength = 0.6 + (dist / 50) * 1.8;
+            let lengthCat;
+            if (shadowLength < 0.9) lengthCat = 'short';
+            else if (shadowLength < 1.7) lengthCat = 'medium';
+            else lengthCat = 'long';
+
+            const shadowAngle = (sunPosition - 50) * -1.8;
+
+            let time;
+            if (pos < 20) time = 'early-morning';
+            else if (pos < 40) time = 'morning';
+            else if (pos < 60) time = 'noon';
+            else if (pos < 80) time = 'afternoon';
+            else time = 'evening';
+
+            return {
+                side,
+                lengthCat,
+                time,
+                pos,
+                dist,
+                shadowLength,
+                shadowAngle
+            };
+        }
+
+        function updateHud() {
+            const meta = getShadowMeta();
+            hudPosEl.textContent = Math.round(sunPosition);
+            const displayHours = currentTime.hours > 12 ? currentTime.hours - 12 :
+                (currentTime.hours === 0 ? 12 : currentTime.hours);
+            const displayMinutes = currentTime.minutes.toString().padStart(2, '0');
+            hudTimeShortEl.textContent = `${displayHours}:${displayMinutes}`;
+            hudLenEl.textContent = meta.shadowLength.toFixed(1);
+            hudAngleEl.textContent = `${Math.round(meta.shadowAngle)}°`;
+        }
+
+        // GAME FLOW
+        function startGame() {
+            gameMode = 'challenge';
+
+            const baseIds = QUESTION_BANK.en.map(q => q.id); // master list (~10)
+            const shuffledIds = shuffleArray(baseIds);
+            questionSequence = shuffledIds.slice(0, TOTAL_QUESTIONS); // pick 6 randomly
+
+            questionIndex = 0;
+            score = 0;
+            correctCount = 0;
+            hintsLeft = MAX_HINTS;
+            timeLeft = TOTAL_TIME_SECONDS;
+
+            introContent.style.display = 'none';
+            challengeContent.style.display = 'block';
+
+            qTotalEl.textContent = TOTAL_QUESTIONS;
+            updateStatsDisplay();
+
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(tickTimer, 1000);
+
+            loadCurrentQuestion(false);
+        }
+
+        function loadCurrentQuestion(languageOnly) {
+            const qid = questionSequence[questionIndex];
+            const qObj = getQuestionById(qid, currentLanguage);
+            currentQuestion = qObj;
+
+            qIndexEl.textContent = questionIndex + 1;
+            questionText.textContent = qObj.text;
+
+            if (!languageOnly) {
+                hintText.style.display = 'none';
+                hintText.textContent = '';
+                hintBtn.disabled = hintsLeft <= 0;
+            } else {
+                if (hintText.style.display === 'block') {
+                    hintText.textContent = qObj.hint || '';
+                }
+            }
+        }
+
+        function updateStatsDisplay() {
+            hintsLeftEl.textContent = hintsLeft;
+            scoreText.textContent = Math.round(score);
+            timerText.textContent = formatTime(timeLeft);
+
+            // Update Code 1 style top stats bar
+            if (topTimeRemainingEl) topTimeRemainingEl.textContent = formatTime(timeLeft);
+            if (topHintsRemainingEl) topHintsRemainingEl.textContent = hintsLeft;
+            if (topScoreValueEl && topScoreTotalEl) {
+                topScoreValueEl.textContent = correctCount;
+                topScoreTotalEl.textContent = TOTAL_QUESTIONS;
+            }
+        }
+
+        function tickTimer() {
+            if (timeLeft <= 0) {
+                timeLeft = 0;
+                updateStatsDisplay();
+                clearInterval(timerInterval);
+                endGame(false);
+                return;
+            }
+            timeLeft--;
+            updateStatsDisplay();
+        }
+
+        function formatTime(sec) {
+            const m = Math.floor(sec / 60);
+            const s = sec % 60;
+            return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        function useHint() {
+            if (hintsLeft <= 0 || !currentQuestion) return;
+            hintsLeft--;
+            hintBtn.disabled = hintsLeft <= 0;
+            hintsLeftEl.textContent = hintsLeft;
+
+            const qid = questionSequence[questionIndex];
+            const qObj = getQuestionById(qid, currentLanguage);
+            hintText.textContent = qObj.hint || '';
+            hintText.style.display = 'block';
+
+            updateStatsDisplay();
+        }
+
+        function checkAnswer() {
+            const meta = getShadowMeta();
+            const q = currentQuestion;
+
+            let ok = true;
+
+            if (q.type === 'scenario') {
+                const cond = q.conditions;
+                if (cond.time && meta.time !== cond.time) ok = false;
+                if (cond.lengthCat && meta.lengthCat !== cond.lengthCat) ok = false;
+                if (cond.side && meta.side !== cond.side) ok = false;
+                if (cond.minAngle !== undefined) {
+                    const angleMag = Math.abs(meta.shadowAngle);
+                    if (angleMag < cond.minAngle) ok = false;
+                }
+            }
+
+            if (q.type === 'numeric' && q.numeric) {
+                const num = q.numeric;
+                if (num.kind === 'length') {
+                    const len = meta.shadowLength;
+                    if (!(len >= num.min && len <= num.max)) ok = false;
+                } else if (num.kind === 'angle') {
+                    const angleMag = Math.abs(meta.shadowAngle);
+                    if (!(angleMag >= Math.abs(num.min) && angleMag <= Math.abs(num.max))) ok = false;
+                    if (num.side === 'right' && meta.side !== 'right') ok = false;
+                    if (num.side === 'left' && meta.side !== 'left') ok = false;
+                }
+            }
+
+            if (ok) {
+                correctCount++;
+                score += POINTS_PER_QUESTION;
+                if (score > 100) score = 100;
+                updateStatsDisplay();
+
+                const last = questionIndex === TOTAL_QUESTIONS - 1;
+                const title = last
+                    ? (currentLanguage === 'or' ? 'Level ଶେଷ!' :
+                       currentLanguage === 'hi' ? 'लेवल पूरा!' : 'All Challenges Complete!')
+                    : (currentLanguage === 'or' ? 'ଠିକ୍ ଉତ୍ତର!' :
+                       currentLanguage === 'hi' ? 'सही उत्तर!' : 'Correct!');
+
+                const qid = questionSequence[questionIndex];
+                const qObjLang = getQuestionById(qid, currentLanguage);
+                const fact = qObjLang.fact || '';
+
+                const displayScore = Math.round(score);
+
+                const msg = last
+                    ? (currentLanguage === 'or'
+                        ? `ଆପଣ ${TOTAL_QUESTIONS} ମଧ୍ୟରୁ ସମସ୍ତ ପ୍ରଶ୍ନ ଠିକ୍ ଭାବେ କରିଛନ୍ତି। ସ୍କୋର: ${displayScore}/100`
+                        : currentLanguage === 'hi'
+                            ? `आपने सभी ${TOTAL_QUESTIONS} प्रश्न सही हल किए। स्कोर: ${displayScore}/100`
+                            : `You solved all ${TOTAL_QUESTIONS} challenges. Score: ${displayScore}/100`)
+                    : (currentLanguage === 'or'
+                        ? 'ଦୁର୍ଦ୍ଦାନ୍ତ! ଏବେ ପରବର୍ତ୍ତୀ ପ୍ରଶ୍ନ ପାଇଁ ପ୍ରସ୍ତୁତ ହୁନ୍ତୁ।'
+                        : currentLanguage === 'hi'
+                            ? 'बहुत बढ़िया! अब अगला प्रश्न हल कीजिए।'
+                            : 'Great! Get ready for the next challenge.');
+
+                showPopup(title, msg, fact, last);
+            }
+        }
+
+        function showPopup(title, message, fact, isFinal) {
+            successTitle.textContent = title;
+            successMessage.textContent = message;
+            successIcon.textContent = isFinal ? '🎉' : '✅';
+            successFact.textContent = fact;
+            successPopup.classList.add('show');
+
+            setTimeout(() => {
+                successPopup.classList.remove('show');
+                if (isFinal) {
+                    endGame(true);
+                } else {
+                    goToNextQuestion();
+                }
+            }, 2600);
+        }
+
+        function goToNextQuestion() {
+            questionIndex++;
+            if (questionIndex >= TOTAL_QUESTIONS) {
+                endGame(true);
+            } else {
+                loadCurrentQuestion(false);
+                updateStatsDisplay();
+            }
+        }
+
+        function endGame(completed) {
+            gameMode = 'intro';
+            if (timerInterval) clearInterval(timerInterval);
+
+            if (!completed) {
+                const displayScore = Math.round(score);
+                const msg = currentLanguage === 'or'
+                    ? `ଆପଣ ${TOTAL_QUESTIONS} ପ୍ରଶ୍ନ ମଧ୍ୟରୁ ${correctCount} ଟି ଠିକ୍ କରିଛନ୍ତି। ସ୍କୋର: ${displayScore}/100। ପୁନି Scenes ଚେଷ୍ଟା କରନ୍ତୁ!`
+                    : currentLanguage === 'hi'
+                        ? `आपने ${TOTAL_QUESTIONS} में से ${correctCount} प्रश्न सही हल किए। स्कोर: ${displayScore}/100। दोबारा सीन ट्राई कीजिए!`
+                        : `You solved ${correctCount} out of ${TOTAL_QUESTIONS} challenges. Score: ${displayScore}/100. Try the scenes again!`;
+
+                successTitle.textContent = currentLanguage === 'or'
+                    ? 'ସମୟ ଶେଷ!'
+                    : currentLanguage === 'hi'
+                        ? 'समय समाप्त!'
+                        : 'Time Up!';
+                successMessage.textContent = msg;
+                successIcon.textContent = '⏰';
+                successFact.textContent = '';
+                successPopup.classList.add('show');
+
+                setTimeout(() => {
+                    successPopup.classList.remove('show');
+                }, 2600);
+            }
+
+            introContent.style.display = 'block';
+            challengeContent.style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initGame();
+        });
+    </script>
+</body>
+</html>

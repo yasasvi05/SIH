@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural Numbers - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles with Profile Controls */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #2a69ac;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text h1 span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-pic {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 180px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f7fa;
+        }
+
+        .dropdown-item i {
+            color: #3182ce;
+            width: 20px;
+        }
+
+        /* Language Options */
+        .language-options {
+            position: absolute;
+            top: 60px;
+            right: 120px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 120px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .language-options.show {
+            display: block;
+        }
+
+        .language-option {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .language-option:last-child {
+            border-bottom: none;
+        }
+
+        .language-option:hover {
+            background: #f5f7fa;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9)), url('https://images.unsplash.com/photo-1518133910546-b6c2fb7d79e3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .breadcrumb-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .breadcrumb a {
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #3182ce;
+        }
+
+        .breadcrumb span {
+            color: #64748b;
+        }
+
+        /* Interactive Content */
+        .interactive-content {
+            padding: 50px 0;
+        }
+
+        .learning-path {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .learning-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .path-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .path-card {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .path-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-color: #3182ce;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .card-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+            flex-grow: 1;
+        }
+
+        /* Popup Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-section {
+            margin-bottom: 30px;
+        }
+
+        .modal-section h3 {
+            color: #1a365d;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .modal-section p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .modal-section ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .modal-section li {
+            margin-bottom: 8px;
+        }
+
+        /* Progress Tracking */
+        .progress-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .progress-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .progress-bars {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .progress-item {
+            margin-bottom: 15px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        .progress-bar-container {
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #3182ce;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        /* Games Section */
+        .games-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .game-level {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .game-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .game-desc {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .game-body {
+            padding: 20px;
+        }
+
+        .game-features {
+            margin-bottom: 20px;
+        }
+
+        .game-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .game-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .game-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Resources Section */
+        .resources-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .resource-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .resource-icon {
+            font-size: 2.5rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .resource-title {
+            font-size: 1.1rem;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+
+        .resource-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .download-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about {
+            padding-right: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.8rem;
+            background: #38b2ac;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 20px;
+            color: #38b2ac;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2d3748;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .social-links a:hover {
+            background: #38b2ac;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .games-grid, .resources-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .path-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            nav ul {
+                gap: 15px;
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* Odia font support */
+        .odia-text {
+            font-family: 'Kalinga', 'Nirmala UI', 'Segoe UI', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-atom"></i>
+            </div>
+            <div class="logo-text">
+                <h1>STEM Learn Odisha</h1>
+                <p>Gamified Learning Platform</p>
+            </div>
+        </div>
+       
+        <nav>
+            <ul>
+                <li><a href="student-dashboard.html" id="navDashboard">Dashboard</a></li>
+                <li><a href="mathematics.html" id="navMathematics">Mathematics</a></li>
+                <li><a href="scienceidx.html" id="navCurriculum">Curriculum</a></li>
+                <li><a href="natural-numbers.html" class="active" id="navNumbers">Natural Numbers</a></li>
+            </ul>
+        </nav>
+       
+        <div class="header-controls">
+            <button class="control-btn" id="languageToggle">
+                <i class="fas fa-globe"></i>
+            </button>
+           
+            <div class="profile-container">
+                <button class="profile-btn" id="profileToggle">
+                    <img src="" alt="Profile" class="profile-pic" id="headerProfilePic">
+                    <span id="headerUserName">Student</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+               
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" class="dropdown-item" id="dropdownProfile">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownSettings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownLogout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Language Options -->
+    <div class="language-options" id="languageOptions">
+        <div class="language-option" data-lang="en">English</div>
+        <div class="language-option" data-lang="or">ଓଡ଼ିଆ</div>
+    </div>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 data-translate="numbers-title">Natural Numbers</h1>
+            <p data-translate="numbers-desc">Master the properties, operations, and patterns of natural numbers through interactive learning</p>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <a href="student-dashboard.html" data-translate="breadcrumb-home">Home</a>
+                <span>/</span>
+                <a href="mathematics.html" data-translate="breadcrumb-math">Mathematics</a>
+                <span>/</span>
+                <span data-translate="breadcrumb-topic">Natural Numbers</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Content -->
+    <section class="interactive-content">
+        <div class="container">
+            <!-- Learning Path -->
+            <div class="learning-path">
+                <h2 class="learning-title">
+                    <i class="fas fa-road"></i>
+                    <span data-translate="learning-path-title">Your Learning Path</span>
+                </h2>
+                <div class="path-cards">
+                    <div class="path-card" data-card="properties">
+                        <div class="card-icon">
+                            <i class="fas fa-list-ol"></i>
+                        </div>
+                        <div class="card-title" data-translate="card1-title">Properties of Natural Numbers</div>
+                        <div class="card-desc" data-translate="card1-desc">Understand the fundamental characteristics and special properties of natural numbers</div>
+                    </div>
+                    <div class="path-card" data-card="operations">
+                        <div class="card-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div class="card-title" data-translate="card2-title">Operations with Natural Numbers</div>
+                        <div class="card-desc" data-translate="card2-desc">Learn addition, subtraction, multiplication, and division of natural numbers</div>
+                    </div>
+                    <div class="path-card" data-card="patterns">
+                        <div class="card-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <div class="card-title" data-translate="card3-title">Patterns in Natural Numbers</div>
+                        <div class="card-desc" data-translate="card3-desc">Discover interesting patterns and sequences formed by natural numbers</div>
+                    </div>
+                    <div class="path-card" data-card="review">
+                        <div class="card-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="card-title" data-translate="card4-title">Review and Practice</div>
+                        <div class="card-desc" data-translate="card4-desc">Test your knowledge with interactive exercises and real-world applications</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Games Section -->
+            <div class="games-section">
+                <h2 class="section-title">
+                    <i class="fas fa-gamepad"></i>
+                    <span data-translate="games-title">Interactive Learning Game</span>
+                </h2>
+
+                <div class="games-grid">
+                    <div class="game-card">
+                        <div class="game-header">
+                            <div class="game-level" data-translate="level-interactive">Interactive</div>
+                            <h3 class="game-title" data-translate="game1-title">Number Pattern Challenge</h3>
+                            <p class="game-desc" data-translate="game1-desc">Identify patterns and complete number sequences</p>
+                        </div>
+                        <div class="game-body">
+                            <div class="game-features">
+                                <div class="game-feature">
+                                    <i class="fas fa-star"></i>
+                                    <span data-translate="game1-feature1">Pattern recognition exercises</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-clock"></i>
+                                    <span data-translate="game1-feature2">10-15 minutes gameplay</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-trophy"></i>
+                                    <span data-translate="game1-feature3">Earn up to 100 points</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-layer-group"></i>
+                                    <span data-translate="game1-feature4">Multiple difficulty levels</span>
+                                </div>
+                            </div>
+                            <a href="game4.html" class="game-btn" data-translate="play-game">Play Game</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Section -->
+            <div class="resources-section">
+                <h2 class="section-title">
+                    <i class="fas fa-download"></i>
+                    <span data-translate="resources-title">Learning Resources</span>
+                </h2>
+
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <h3 class="resource-title" data-translate="resource1-title">Natural Numbers Guide</h3>
+                        <p class="resource-desc" data-translate="resource1-desc">Complete chapter notes with properties and operations</p>
+                        <a href="#" class="download-btn">
+                            <i class="fas fa-download"></i>
+                            <span data-translate="download-english">Download (English)</span>
+                        </a>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3 class="resource-title" data-translate="resource2-title">ପ୍ରାକୃତିକ ସଂଖ୍ୟା ଗାଇଡ୍</h3>
+                        <p class="resource-desc" data-translate="resource2-desc">ଗୁଣଧର୍ମ ଏବଂ କାର୍ଯ୍ୟ ସହିତ ସମ୍ପୂର୍ଣ୍ଣ ଅଧ୍ୟାୟ ଟିପ୍ପଣୀ</p>
+                        <a href="#" class="download-btn">
+                            <i class="fas fa-download"></i>
+                            <span data-translate="download-odia">Download (ଓଡ଼ିଆ)</span>
+                        </a>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <h3 class="resource-title" data-translate="resource3-title">Pattern Worksheets</h3>
+                        <p class="resource-desc" data-translate="resource3-desc">Practice worksheets for identifying number patterns</p>
+                        <a href="#" class="download-btn">
+                            <i class="fas fa-download"></i>
+                            <span data-translate="download-worksheets">Download Worksheets</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <div class="footer-logo-text">STEM Learn Odisha</div>
+                    </div>
+                    <p data-translate="footer-desc">Making Science and Mathematics education engaging and relevant for Class 6 students in Odisha through localized content and interactive learning.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h3 data-translate="quick-links">Quick Links</h3>
+                    <ul>
+                        <li><a href="student-dashboard.html"><i class="fas fa-tachometer-alt"></i> <span data-translate="nav-dashboard">Dashboard</span></a></li>
+                        <li><a href="mathematics.html"><i class="fas fa-calculator"></i> <span data-translate="nav-mathematics">Mathematics</span></a></li>
+                        <li><a href="natural-numbers.html"><i class="fas fa-sort-numeric-up"></i> <span data-translate="nav-numbers">Natural Numbers</span></a></li>
+                        <li><a href="scienceidx.html"><i class="fas fa-book"></i> <span data-translate="nav-curriculum">Curriculum</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h3 data-translate="contact-us">Contact Us</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> <span data-translate="footer-address">Department of Education, Bhubaneswar</span></a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +91 674 123 4567</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@stemlearnodisha.com</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p data-translate="copyright">© 2023 STEM Learn Odisha. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Popup -->
+    <div class="modal" id="content-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">Properties of Natural Numbers</h2>
+                <button class="close-modal" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+           
+            if (!user) {
+                // Redirect to login if not authenticated
+                window.location.href = 'student-login.html';
+                return;
+            }
+           
+            // Load user data
+            loadUserData(user);
+            
+            // Initialize the page
+            init();
+        });
+
+        // Load user data into the page
+        function loadUserData(user) {
+            document.getElementById('headerUserName').textContent = user.fullName;
+            document.getElementById('headerProfilePic').src = user.profilePicture ? `uploads/${user.profilePicture}` : 'default-profile.png';
+        }
+
+        // Content for modal popups
+        const contentData = {
+            'properties': {
+                'title': 'Properties of Natural Numbers',
+                'content': `
+                    <div class="modal-section">
+                        <h3>What are Natural Numbers?</h3>
+                        <p>Natural numbers are the counting numbers that start from 1 and go on infinitely: 1, 2, 3, 4, 5, 6, ...</p>
+                        <p>Key characteristics of natural numbers:</p>
+                        <ul>
+                            <li><strong>Counting Numbers:</strong> Used for counting objects</li>
+                            <li><strong>Positive Integers:</strong> Always greater than 0</li>
+                            <li><strong>Infinite Set:</strong> They never end</li>
+                            <li><strong>Successor:</strong> Every number has a next number (n+1)</li>
+                            <li><strong>Predecessor:</strong> Every number except 1 has a previous number (n-1)</li>
+                        </ul>
+                        <p>The set of natural numbers is denoted by ℕ = {1, 2, 3, 4, 5, ...}</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Closure Property</h3>
+                        <p>A set is closed under an operation if performing that operation on members of the set always produces a member of the same set.</p>
+                        <p>For natural numbers:</p>
+                        <ul>
+                            <li><strong>Addition:</strong> Closed (3 + 4 = 7, which is natural)</li>
+                            <li><strong>Multiplication:</strong> Closed (3 × 4 = 12, which is natural)</li>
+                            <li><strong>Subtraction:</strong> NOT closed (3 - 5 = -2, which is not natural)</li>
+                            <li><strong>Division:</strong> NOT closed (3 ÷ 2 = 1.5, which is not natural)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Commutative Property</h3>
+                        <p>The order of numbers doesn't change the result:</p>
+                        <ul>
+                            <li><strong>Addition:</strong> a + b = b + a</li>
+                            <li>Example: 5 + 8 = 8 + 5 = 13</li>
+                            <li><strong>Multiplication:</strong> a × b = b × a</li>
+                            <li>Example: 4 × 7 = 7 × 4 = 28</li>
+                            <li><strong>Subtraction:</strong> NOT commutative (5 - 3 ≠ 3 - 5)</li>
+                            <li><strong>Division:</strong> NOT commutative (8 ÷ 4 ≠ 4 ÷ 8)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Associative Property</h3>
+                        <p>Grouping of numbers doesn't change the result:</p>
+                        <ul>
+                            <li><strong>Addition:</strong> (a + b) + c = a + (b + c)</li>
+                            <li>Example: (2 + 3) + 4 = 2 + (3 + 4) = 9</li>
+                            <li><strong>Multiplication:</strong> (a × b) × c = a × (b × c)</li>
+                            <li>Example: (2 × 3) × 4 = 2 × (3 × 4) = 24</li>
+                            <li><strong>Subtraction:</strong> NOT associative (8 - (3 - 2) ≠ (8 - 3) - 2)</li>
+                            <li><strong>Division:</strong> NOT associative (12 ÷ (4 ÷ 2) ≠ (12 ÷ 4) ÷ 2)</li>
+                        </ul>
+                    </div>
+                `
+            },
+            'operations': {
+                'title': 'Operations with Natural Numbers',
+                'content': `
+                    <div class="modal-section">
+                        <h3>Addition of Natural Numbers</h3>
+                        <p>Addition combines two or more numbers to find their total sum.</p>
+                        <p><strong>Properties of Addition:</strong></p>
+                        <ul>
+                            <li>Closure: Sum of two natural numbers is always natural</li>
+                            <li>Commutative: Order doesn't matter</li>
+                            <li>Associative: Grouping doesn't matter</li>
+                        </ul>
+                        <p><strong>Addition Techniques:</strong></p>
+                        <ol>
+                            <li><strong>Counting Forward:</strong> Start from the larger number and count forward</li>
+                            <li><strong>Place Value:</strong> Add ones, then tens, then hundreds</li>
+                            <li><strong>Carrying Over:</strong> When sum in a place is 10 or more</li>
+                        </ol>
+                        <p>Example: 345 + 278 = 623</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Subtraction of Natural Numbers</h3>
+                        <p>Subtraction finds the difference between numbers.</p>
+                        <p><strong>Important Rules:</strong></p>
+                        <ul>
+                            <li>Minuend must be greater than or equal to subtrahend for natural number result</li>
+                            <li>Subtraction is the inverse of addition</li>
+                            <li>Check: Minuend = Difference + Subtrahend</li>
+                        </ul>
+                        <p><strong>Subtraction Techniques:</strong></p>
+                        <ol>
+                            <li><strong>Counting Backward:</strong> Start from minuend and count backward</li>
+                            <li><strong>Place Value:</strong> Subtract ones, then tens, then hundreds</li>
+                            <li><strong>Borrowing:</strong> When digit in minuend is smaller</li>
+                        </ol>
+                        <p>Example: 567 - 289 = 278</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Multiplication of Natural Numbers</h3>
+                        <p>Multiplication is repeated addition.</p>
+                        <p><strong>Properties of Multiplication:</strong></p>
+                        <ul>
+                            <li>Closure: Product of two natural numbers is natural</li>
+                            <li>Commutative: Order doesn't matter</li>
+                            <li>Associative: Grouping doesn't matter</li>
+                            <li>Distributive: a × (b + c) = (a × b) + (a × c)</li>
+                            <li>Identity: a × 1 = a</li>
+                            <li>Zero Property: a × 0 = 0</li>
+                        </ul>
+                        <p><strong>Multiplication Tables:</strong> Essential for quick calculations</p>
+                        <p>Example: 23 × 14 = 322</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Division of Natural Numbers</h3>
+                        <p>Division splits a number into equal parts.</p>
+                        <p><strong>Division Terms:</strong></p>
+                        <ul>
+                            <li><strong>Dividend:</strong> Number being divided</li>
+                            <li><strong>Divisor:</strong> Number dividing by</li>
+                            <li><strong>Quotient:</strong> Result of division</li>
+                            <li><strong>Remainder:</strong> Leftover part</li>
+                        </ul>
+                        <p><strong>Properties:</strong></p>
+                        <ul>
+                            <li>Division by 1: a ÷ 1 = a</li>
+                            <li>Division by itself: a ÷ a = 1 (a ≠ 0)</li>
+                            <li>Division by 0 is undefined</li>
+                            <li>Check: Dividend = Divisor × Quotient + Remainder</li>
+                        </ul>
+                        <p>Example: 84 ÷ 7 = 12 with remainder 0</p>
+                    </div>
+                `
+            },
+            'patterns': {
+                'title': 'Patterns in Natural Numbers',
+                'content': `
+                    <div class="modal-section">
+                        <h3>Number Sequences</h3>
+                        <p>Patterns in natural numbers form interesting sequences:</p>
+                        <ul>
+                            <li><strong>Even Numbers:</strong> 2, 4, 6, 8, 10, ... (add 2 each time)</li>
+                            <li><strong>Odd Numbers:</strong> 1, 3, 5, 7, 9, ... (add 2 each time)</li>
+                            <li><strong>Square Numbers:</strong> 1, 4, 9, 16, 25, ... (n²)</li>
+                            <li><strong>Cube Numbers:</strong> 1, 8, 27, 64, 125, ... (n³)</li>
+                            <li><strong>Triangular Numbers:</strong> 1, 3, 6, 10, 15, ...</li>
+                            <li><strong>Fibonacci Sequence:</strong> 1, 1, 2, 3, 5, 8, 13, ...</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Square Numbers Pattern</h3>
+                        <p>Square numbers are obtained by multiplying a number by itself:</p>
+                        <p>1² = 1 × 1 = 1<br>
+                        2² = 2 × 2 = 4<br>
+                        3² = 3 × 3 = 9<br>
+                        4² = 4 × 4 = 16<br>
+                        5² = 5 × 5 = 25</p>
+                        <p><strong>Interesting Pattern:</strong> The difference between consecutive square numbers forms odd numbers:</p>
+                        <p>4 - 1 = 3<br>
+                        9 - 4 = 5<br>
+                        16 - 9 = 7<br>
+                        25 - 16 = 9<br>
+                        36 - 25 = 11</p>
+                        <p>The differences are 3, 5, 7, 9, 11, ... (consecutive odd numbers)</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Triangular Numbers Pattern</h3>
+                        <p>Triangular numbers represent dots that can form equilateral triangles:</p>
+                        <p>• = 1 (first triangular number)<br>
+                        • • = 3 (second triangular number)<br>
+                        • • • = 6 (third triangular number)<br>
+                        • • • • = 10 (fourth triangular number)</p>
+                        <p><strong>Formula:</strong> Tₙ = n(n+1)/2</p>
+                        <p>T₁ = 1(1+1)/2 = 1<br>
+                        T₂ = 2(2+1)/2 = 3<br>
+                        T₃ = 3(3+1)/2 = 6<br>
+                        T₄ = 4(4+1)/2 = 10<br>
+                        T₅ = 5(5+1)/2 = 15</p>
+                        <p><strong>Interesting Fact:</strong> Sum of two consecutive triangular numbers gives a square number</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Prime Number Patterns</h3>
+                        <p>Prime numbers have unique patterns:</p>
+                        <ul>
+                            <li><strong>Twin Primes:</strong> Pairs of primes differing by 2 (3,5), (5,7), (11,13), (17,19)</li>
+                            <li><strong>Cousin Primes:</strong> Differing by 4 (3,7), (7,11), (13,17)</li>
+                            <li><strong>Prime Triplets:</strong> Three primes with smallest difference (3,5,7)</li>
+                            <li><strong>Goldbach's Conjecture:</strong> Every even number > 2 is sum of two primes</li>
+                        </ul>
+                        <p><strong>Prime Factorization:</strong> Every natural number > 1 can be expressed as product of primes</p>
+                        <p>Example: 12 = 2 × 2 × 3 = 2² × 3</p>
+                    </div>
+                `
+            },
+            'review': {
+                'title': 'Review and Practice',
+                'content': `
+                    <div class="modal-section">
+                        <h3>Quick Quiz</h3>
+                        <p><strong>Question 1:</strong> Which property is shown by 8 × 5 = 5 × 8?</p>
+                        <ul>
+                            <li>A) Associative</li>
+                            <li>B) Commutative</li>
+                            <li>C) Distributive</li>
+                            <li>D) Closure</li>
+                        </ul>
+                        <p><strong>Answer:</strong> B) Commutative</p>
+                        
+                        <p><strong>Question 2:</strong> What is the 6th triangular number?</p>
+                        <ul>
+                            <li>A) 15</li>
+                            <li>B) 21</li>
+                            <li>C) 28</li>
+                            <li>D) 36</li>
+                        </ul>
+                        <p><strong>Answer:</strong> B) 21 (T₆ = 6×7/2 = 21)</p>
+                        
+                        <p><strong>Question 3:</strong> Which operation is NOT closed for natural numbers?</p>
+                        <ul>
+                            <li>A) Addition</li>
+                            <li>B) Multiplication</li>
+                            <li>C) Subtraction</li>
+                            <li>D) All of the above</li>
+                        </ul>
+                        <p><strong>Answer:</strong> C) Subtraction</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Practice Problems</h3>
+                        <p><strong>Properties:</strong></p>
+                        <ol>
+                            <li>Name the property: (7 + 3) + 5 = 7 + (3 + 5) (Answer: Associative)</li>
+                            <li>Is subtraction commutative? Give example (Answer: No, 5-3 ≠ 3-5)</li>
+                        </ol>
+                        
+                        <p><strong>Operations:</strong></p>
+                        <ol>
+                            <li>345 + 278 = ? (Answer: 623)</li>
+                            <li>567 - 289 = ? (Answer: 278)</li>
+                            <li>34 × 15 = ? (Answer: 510)</li>
+                            <li>96 ÷ 8 = ? (Answer: 12)</li>
+                        </ol>
+                        
+                        <p><strong>Patterns:</strong></p>
+                        <ol>
+                            <li>Next number: 2, 4, 8, 16, 32, ? (Answer: 64)</li>
+                            <li>Square of 13 = ? (Answer: 169)</li>
+                            <li>Prime numbers between 20 and 30 = ? (Answer: 23, 29)</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Key Points to Remember</h3>
+                        <ul>
+                            <li>Natural numbers: 1, 2, 3, 4, 5, ... (counting numbers)</li>
+                            <li>Properties: Closure, commutative, associative, distributive</li>
+                            <li>Operations: Practice all four basic operations</li>
+                            <li>Patterns: Look for sequences in even, odd, square, triangular numbers</li>
+                            <li>Prime numbers: Numbers with exactly two factors</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Interactive Activities</h3>
+                        <p>Try these to reinforce learning:</p>
+                        <ul>
+                            <li>Play the Number Pattern Challenge game</li>
+                            <li>Create your own number patterns</li>
+                            <li>Practice multiplication tables daily</li>
+                            <li>Find patterns in real-life situations (stairs, tiles, etc.)</li>
+                            <li>Solve word problems using natural numbers</li>
+                        </ul>
+                    </div>
+                `
+            }
+        };
+
+        // Translations
+        const translations = {
+            en: {
+                'nav-dashboard': 'Dashboard',
+                'nav-mathematics': 'Mathematics',
+                'nav-curriculum': 'Curriculum',
+                'nav-numbers': 'Natural Numbers',
+                'numbers-title': 'Natural Numbers',
+                'numbers-desc': 'Master the properties, operations, and patterns of natural numbers through interactive learning',
+                'breadcrumb-home': 'Home',
+                'breadcrumb-math': 'Mathematics',
+                'breadcrumb-topic': 'Natural Numbers',
+                'learning-path-title': 'Your Learning Path',
+                'card1-title': 'Properties of Natural Numbers',
+                'card1-desc': 'Understand the fundamental characteristics and special properties of natural numbers',
+                'card2-title': 'Operations with Natural Numbers',
+                'card2-desc': 'Learn addition, subtraction, multiplication, and division of natural numbers',
+                'card3-title': 'Patterns in Natural Numbers',
+                'card3-desc': 'Discover interesting patterns and sequences formed by natural numbers',
+                'card4-title': 'Review and Practice',
+                'card4-desc': 'Test your knowledge with interactive exercises and real-world applications',
+                'progress-title': 'Your Progress',
+                'progress-properties': 'Properties of Natural Numbers',
+                'progress-operations': 'Operations with Natural Numbers',
+                'progress-patterns': 'Patterns in Natural Numbers',
+                'progress-overall': 'Overall Mastery',
+                'games-title': 'Interactive Learning Game',
+                'level-interactive': 'Interactive',
+                'game1-title': 'Number Pattern Challenge',
+                'game1-desc': 'Identify patterns and complete number sequences',
+                'game1-feature1': 'Pattern recognition exercises',
+                'game1-feature2': '10-15 minutes gameplay',
+                'game1-feature3': 'Earn up to 100 points',
+                'game1-feature4': 'Multiple difficulty levels',
+                'play-game': 'Play Game',
+                'resources-title': 'Learning Resources',
+                'resource1-title': 'Natural Numbers Guide',
+                'resource1-desc': 'Complete chapter notes with properties and operations',
+                'download-english': 'Download (English)',
+                'resource2-title': 'Natural Numbers Guide',
+                'resource2-desc': 'Complete chapter notes with properties and operations',
+                'download-odia': 'Download (Odia)',
+                'resource3-title': 'Pattern Worksheets',
+                'resource3-desc': 'Practice worksheets for identifying number patterns',
+                'download-worksheets': 'Download Worksheets',
+                'footer-desc': 'Making Science and Mathematics education engaging and relevant for Class 6 students in Odisha through localized content and interactive learning.',
+                'quick-links': 'Quick Links',
+                'contact-us': 'Contact Us',
+                'footer-address': 'Department of Education, Bhubaneswar',
+                'copyright': '© 2023 STEM Learn Odisha. All rights reserved.'
+            },
+            or: {
+                'nav-dashboard': 'ଡ୍ୟାସବୋର୍ଡ',
+                'nav-mathematics': 'ଗଣିତ',
+                'nav-curriculum': 'ପାଠ୍ୟକ୍ରମ',
+                'nav-numbers': 'ପ୍ରାକୃତିକ ସଂଖ୍ୟା',
+                'numbers-title': 'ପ୍ରାକୃତିକ ସଂଖ୍ୟା',
+                'numbers-desc': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ମାଧ୍ୟମରେ ପ୍ରାକୃତିକ ସଂଖ୍ୟାର ଗୁଣଧର୍ମ, କାର୍ଯ୍ୟ, ଏବଂ ପ୍ୟାଟର୍ନ୍ ଆୟତ୍ତ କରନ୍ତୁ',
+                'breadcrumb-home': 'ମୁଖ୍ୟ ପୃଷ୍ଠା',
+                'breadcrumb-math': 'ଗଣିତ',
+                'breadcrumb-topic': 'ପ୍ରାକୃତିକ ସଂଖ୍ୟା',
+                'learning-path-title': 'ଆପଣଙ୍କର ଶିକ୍ଷଣ ପଥ',
+                'card1-title': 'ପ୍ରାକୃତିକ ସଂଖ୍ୟାର ଗୁଣଧର୍ମ',
+                'card1-desc': 'ପ୍ରାକୃତିକ ସଂଖ୍ୟାର ମୌଳିକ ବିଶେଷତା ଏବଂ ବିଶେଷ ଗୁଣଧର୍ମ ବୁଝନ୍ତୁ',
+                'card2-title': 'ପ୍ରାକୃତିକ ସଂଖ୍ୟା ସହିତ କାର୍ଯ୍ୟ',
+                'card2-desc': 'ପ୍ରାକୃତିକ ସଂଖ୍ୟାର ଯୋଗ, ବିୟୋଗ, ଗୁଣନ, ଏବଂ ଭାଗ ଶିଖନ୍ତୁ',
+                'card3-title': 'ପ୍ରାକୃତିକ ସଂଖ୍ୟାରେ ପ୍ୟାଟର୍ନ୍',
+                'card3-desc': 'ପ୍ରାକୃତିକ ସଂଖ୍ୟା ଦ୍ୱାରା ଗଠିତ ଆକର୍ଷଣୀୟ ପ୍ୟାଟର୍ନ୍ ଏବଂ କ୍ରମ ଆବିଷ୍କାର କରନ୍ତୁ',
+                'card4-title': 'ସମୀକ୍ଷା ଏବଂ ଅଭ୍ୟାସ',
+                'card4-desc': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ ଅଭ୍ୟାସ ଏବଂ ବାସ୍ତବ ପୃଷ୍ଠଭୂମିର ପ୍ରୟୋଗ ସହିତ ଆପଣଙ୍କର ଜ୍ଞାନ ପରୀକ୍ଷା କରନ୍ତୁ',
+                'progress-title': 'ଆପଣଙ୍କର ପ୍ରଗତି',
+                'progress-properties': 'ପ୍ରାକୃତିକ ସଂଖ୍ୟାର ଗୁଣଧର୍ମ',
+                'progress-operations': 'ପ୍ରାକୃତିକ ସଂଖ୍ୟା ସହିତ କାର୍ଯ୍ୟ',
+                'progress-patterns': 'ପ୍ରାକୃତିକ ସଂଖ୍ୟାରେ ପ୍ୟାଟର୍ନ୍',
+                'progress-overall': 'ସର୍ବମୋଟ ଦକ୍ଷତା',
+                'games-title': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ଖେଳ',
+                'level-interactive': 'ଇଣ୍ଟରାକ୍ଟିଭ୍',
+                'game1-title': 'ନମ୍ବର ପ୍ୟାଟର୍ନ୍ ଚ୍ୟାଲେଞ୍ଜ୍',
+                'game1-desc': 'ପ୍ୟାଟର୍ନ୍ ଚିହ୍ନଟ କରନ୍ତୁ ଏବଂ ସଂଖ୍ୟା କ୍ରମ ପୂରଣ କରନ୍ତୁ',
+                'game1-feature1': 'ପ୍ୟାଟର୍ନ୍ ଚିହ୍ନଟ ଅଭ୍ୟାସ',
+                'game1-feature2': '10-15 ମିନିଟ୍ ଖେଳପଣ',
+                'game1-feature3': '100 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ ଅର୍ଜନ କରନ୍ତୁ',
+                'game1-feature4': 'ଏକାଧିକ କଠିନତା ସ୍ତର',
+                'play-game': 'ଖେଳନ୍ତୁ',
+                'resources-title': 'ଶିକ୍ଷଣ ସମ୍ବଳ',
+                'resource1-title': 'ପ୍ରାକୃତିକ ସଂଖ୍ୟା ଗାଇଡ୍',
+                'resource1-desc': 'ଗୁଣଧର୍ମ ଏବଂ କାର୍ଯ୍ୟ ସହିତ ସମ୍ପୂର୍ଣ୍ଣ ଅଧ୍ୟାୟ ଟିପ୍ପଣୀ',
+                'download-english': 'ଡାଉନଲୋଡ୍ (ଇଂରାଜୀ)',
+                'resource2-title': 'ପ୍ରାକୃତିକ ସଂଖ୍ୟା ଗାଇଡ୍',
+                'resource2-desc': 'ଗୁଣଧର୍ମ ଏବଂ କାର୍ଯ୍ୟ ସହିତ ସମ୍ପୂର୍ଣ୍ଣ ଅଧ୍ୟାୟ ଟିପ୍ପଣୀ',
+                'download-odia': 'ଡାଉନଲୋଡ୍ (ଓଡ଼ିଆ)',
+                'resource3-title': 'ପ୍ୟାଟର୍ନ୍ କାର୍ଯ୍ୟପତ୍ର',
+                'resource3-desc': 'ସଂଖ୍ୟା ପ୍ୟାଟର୍ନ୍ ଚିହ୍ନଟ ପାଇଁ ଅଭ୍ୟାସ କାର୍ଯ୍ୟପତ୍ର',
+                'download-worksheets': 'କାର୍ଯ୍ୟପତ୍ର ଡାଉନଲୋଡ୍ କରନ୍ତୁ',
+                'footer-desc': 'ଓଡ଼ିଶାର ଷଷ୍ଠ ଶ୍ରେଣୀର ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କ ପାଇଁ ସ୍ଥାନୀୟ ବିଷୟବସ୍ତୁ ଏବଂ ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ମାଧ୍ୟମରେ ବିଜ୍ଞାନ ଏବଂ ଗଣିତ ଶିକ୍ଷାକୁ ଆକର୍ଷଣୀୟ ଏବଂ ପ୍ରାସଙ୍ଗିକ କରିବା',
+                'quick-links': 'ଶୀଘ୍ର ଲିଙ୍କ୍',
+                'contact-us': 'ଆମ ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ',
+                'footer-address': 'ଶିକ୍ଷା ବିଭାଗ, ଭୁବନେଶ୍ୱର',
+                'copyright': '© 2023 STEM ଲର୍ନ ଓଡ଼ିଶା। ସମସ୍ତ ଅଧିକାର ସଂରକ୍ଷିତ।'
+            }
+        };
+
+        let currentLanguage = 'en';
+
+        // Initialize the page
+        function init() {
+            // Set up language options
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    switchLanguage(lang);
+                    document.getElementById('languageOptions').classList.remove('show');
+                });
+            });
+
+            // Set up path cards
+            const pathCards = document.querySelectorAll('.path-card');
+            pathCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const cardType = this.getAttribute('data-card');
+                    openModal(cardType);
+                });
+            });
+
+            // Set up modal close button
+            document.getElementById('close-modal').addEventListener('click', closeModalFunc);
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === document.getElementById('content-modal')) {
+                    closeModalFunc();
+                }
+            });
+
+            // Dashboard integration event listeners
+            const profileToggle = document.getElementById('profileToggle');
+            const profileDropdown = document.getElementById('profileDropdown');
+            const languageToggle = document.getElementById('languageToggle');
+            const languageOptions = document.getElementById('languageOptions');
+            const dropdownProfile = document.getElementById('dropdownProfile');
+            const dropdownSettings = document.getElementById('dropdownSettings');
+            const dropdownLogout = document.getElementById('dropdownLogout');
+            const navDashboard = document.getElementById('navDashboard');
+            const navMathematics = document.getElementById('navMathematics');
+            const navCurriculum = document.getElementById('navCurriculum');
+            const navNumbers = document.getElementById('navNumbers');
+
+            // Profile dropdown toggle
+            profileToggle.addEventListener('click', function() {
+                profileDropdown.classList.toggle('show');
+            });
+
+            // Language toggle
+            languageToggle.addEventListener('click', function() {
+                languageOptions.classList.toggle('show');
+            });
+
+            // Navigation between pages
+            dropdownProfile.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#profile';
+            });
+
+            dropdownSettings.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#settings';
+            });
+
+            dropdownLogout.addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('user');
+                window.location.href = 'student-login.html';
+            });
+
+            // Navigation menu items
+            navDashboard.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html';
+            });
+
+            navMathematics.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'mathematics.html';
+            });
+
+            navCurriculum.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'scienceidx.html';
+            });
+
+            navNumbers.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'natural-numbers.html';
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#languageToggle') && !e.target.closest('#languageOptions')) {
+                    languageOptions.classList.remove('show');
+                }
+               
+                if (!e.target.closest('#profileToggle') && !e.target.closest('#profileDropdown')) {
+                    profileDropdown.classList.remove('show');
+                }
+            });
+
+            // Initialize with default language
+            switchLanguage('en');
+        }
+
+        // Switch language function
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            const map = translations[lang] || translations.en;
+            
+            // Update all text content
+            Object.keys(map).forEach(key => {
+                const elements = document.querySelectorAll(`[data-translate="${key}"]`);
+                elements.forEach(element => {
+                    element.textContent = map[key];
+                });
+            });
+            
+            // Add Odia font class for Odia text
+            if (lang === 'or') {
+                document.body.classList.add('odia-text');
+            } else {
+                document.body.classList.remove('odia-text');
+            }
+        }
+
+        // Open modal with content
+        function openModal(cardType) {
+            const content = contentData[cardType];
+            if (content) {
+                document.getElementById('modal-title').textContent = content.title;
+                document.getElementById('modal-body').innerHTML = content.content;
+                document.getElementById('content-modal').style.display = 'flex';
+            }
+        }
+
+        // Close modal function
+        function closeModalFunc() {
+            document.getElementById('content-modal').style.display = 'none';
+        }
+
+        // Progress tracking
+        function updateProgress(category, points) {
+            const progressBars = {
+                'properties': document.getElementById('properties-progress'),
+                'operations': document.getElementById('operations-progress'),
+                'patterns': document.getElementById('patterns-progress'),
+                'overall': document.getElementById('overall-progress')
+            };
+            
+            const progressValues = {
+                'properties': document.getElementById('properties-progress-value'),
+                'operations': document.getElementById('operations-progress-value'),
+                'patterns': document.getElementById('patterns-progress-value'),
+                'overall': document.getElementById('overall-progress-value')
+            };
+            
+            // Update specific category
+            let currentWidth = parseInt(progressBars[category].style.width);
+            if (currentWidth + points <= 100) {
+                progressBars[category].style.width = (currentWidth + points) + '%';
+                progressValues[category].textContent = (currentWidth + points) + '%';
+            } else {
+                progressBars[category].style.width = '100%';
+                progressValues[category].textContent = '100%';
+            }
+            
+            // Update overall progress
+            let overallWidth = (
+                parseInt(progressBars['properties'].style.width) +
+                parseInt(progressBars['operations'].style.width) +
+                parseInt(progressBars['patterns'].style.width)
+            ) / 3;
+            
+            progressBars['overall'].style.width = overallWidth + '%';
+            progressValues['overall'].textContent = Math.round(overallWidth) + '%';
+        }
+    </script>
+</body>
+</html>

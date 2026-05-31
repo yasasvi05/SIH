@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spot the Phenomenon - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f0f7ff;
+            color: #1e293b;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(15, 23, 42, 0.85);
+            border-radius: 25px;
+            padding: 6px;
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: flex;
+            gap: 5px;
+        }
+
+        .lang-btn {
+            padding: 6px 12px;
+            border: none;
+            background: transparent;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: white;
+            white-space: nowrap;
+        }
+
+        .lang-btn.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .lang-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            gap: 16px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+            background: white;
+            color: #2a69ac;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo-text span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 24px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-size: 0.98rem;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.6rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9)),
+                        url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.4rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-header p {
+            font-size: 1.05rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: 12px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+        }
+
+        .breadcrumb-content {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb a {
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #3182ce;
+        }
+
+        .breadcrumb span {
+            color: #64748b;
+        }
+
+        /* Instructions Modal */
+        .instructions-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1500;
+        }
+
+        .instructions-content {
+            background: white;
+            border-radius: 18px;
+            padding: 24px 22px 26px;
+            max-width: 650px;
+            width: 92%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+        }
+
+        .instructions-title {
+            font-size: 1.6rem;
+            color: #1a365d;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .instructions-subtitle {
+            font-size: 0.95rem;
+            color: #64748b;
+            margin-bottom: 14px;
+        }
+
+        .instructions-list {
+            margin-left: 18px;
+            margin-bottom: 14px;
+            font-size: 0.93rem;
+            color: #4b5563;
+        }
+
+        .instructions-list li {
+            margin-bottom: 6px;
+        }
+
+        .instructions-highlight {
+            background: #eff6ff;
+            border-radius: 10px;
+            padding: 10px 10px;
+            font-size: 0.9rem;
+            color: #1d4ed8;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .instructions-highlight i {
+            margin-top: 2px;
+        }
+
+        .start-btn {
+            margin-top: 6px;
+            padding: 10px 22px;
+            border-radius: 999px;
+            border: none;
+            background: #2563eb;
+            color: white;
+            font-size: 0.98rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .start-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        /* Game Section */
+        .quiz-section {
+            padding: 32px 0 50px;
+            display: none; /* show after start */
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+
+        .timer-box {
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #fee2e2;
+            color: #b91c1c;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hints-box {
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #fef3c7;
+            color: #92400e;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .quiz-card {
+            background: white;
+            border-radius: 16px;
+            padding: 22px 18px 26px;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+            border: 1px solid #e2e8f0;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .quiz-title-area {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .quiz-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1a365d;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge-level {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            background: #fef2f2;
+            color: #b91c1c;
+            font-weight: 600;
+        }
+
+        .quiz-meta {
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+
+        .quiz-score {
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+
+        .quiz-score span {
+            font-weight: 600;
+            color: #1d4ed8;
+        }
+
+        .quiz-intro {
+            font-size: 0.95rem;
+            color: #64748b;
+            margin-bottom: 16px;
+        }
+
+        .question-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+            gap: 14px;
+            align-items: stretch;
+        }
+
+        .image-box {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .image-box-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #6b7280;
+        }
+
+        .image-wrapper {
+            border-radius: 10px;
+            overflow: hidden;
+            background: #000;
+            max-height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .question-box {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 12px 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .question-number {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #6b7280;
+            margin-bottom: 4px;
+        }
+
+        .question-text {
+            font-size: 1.02rem;
+            color: #111827;
+            font-weight: 500;
+        }
+
+        .options-list {
+            margin-top: 14px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .option-btn {
+            width: 100%;
+            text-align: left;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            cursor: pointer;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .option-letter {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1d4ed8;
+        }
+
+        .option-text {
+            flex: 1;
+        }
+
+        .option-btn:hover {
+            background: #f1f5f9;
+            transform: translateY(-1px);
+        }
+
+        .option-btn.selected {
+            border-color: #2563eb;
+            background: #eff6ff;
+        }
+
+        .option-btn.correct {
+            border-color: #16a34a;
+            background: #ecfdf3;
+        }
+
+        .option-btn.wrong {
+            border-color: #dc2626;
+            background: #fef2f2;
+        }
+
+        .feedback {
+            min-height: 22px;
+            font-size: 0.9rem;
+            margin-top: 6px;
+        }
+
+        .feedback.correct {
+            color: #16a34a;
+        }
+
+        .feedback.wrong {
+            color: #dc2626;
+        }
+
+        .hint-box {
+            margin-top: 6px;
+            font-size: 0.9rem;
+            color: #92400e;
+            background: #fffbeb;
+            border-radius: 10px;
+            padding: 8px 10px;
+            display: none;
+        }
+
+        .fact-box {
+            margin-top: 8px;
+            font-size: 0.9rem;
+            color: #0369a1;
+            background: #e0f2fe;
+            border-radius: 10px;
+            padding: 8px 10px;
+            display: none;
+        }
+
+        .fact-box strong {
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+
+        .nav-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 999px;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:disabled {
+            background: #bfdbfe;
+            cursor: not-allowed;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #111827;
+        }
+
+        .btn-secondary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #d1d5db;
+        }
+
+        .btn-hint {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .btn-hint:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-hint:hover:not(:disabled) {
+            background: #fde68a;
+        }
+
+        .result-box {
+            margin-top: 16px;
+            padding: 12px 12px;
+            border-radius: 10px;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            font-size: 0.93rem;
+            display: none;
+        }
+
+        .result-box strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .play-again-btn {
+            margin-top: 8px;
+            padding: 8px 16px;
+            border-radius: 999px;
+            border: none;
+            background: #38b2ac;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .play-again-btn:hover {
+            background: #2c9a94;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 40px 0 18px;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+
+        .footer-about {
+            padding-right: 10px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.6rem;
+            background: #38b2ac;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 12px;
+            color: #38b2ac;
+            font-size: 1rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 10px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.8rem;
+        }
+
+        /* Indic font helper */
+        .indic-text {
+            font-family: 'Nirmala UI', 'Kalinga', 'Segoe UI', sans-serif;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+
+            .question-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                gap: 10px;
+                background: #0f172a;
+                position: absolute;
+                top: 55px;
+                right: 10px;
+                padding: 10px 12px;
+                border-radius: 10px;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+                min-width: 150px;
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .language-switcher {
+                top: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button class="lang-btn active" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+        <button class="lang-btn" data-lang="hi">हिन्दी</button>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <div class="logo-text">STEM <span>Learn</span> Odisha</div>
+                </div>
+
+                <nav>
+                    <ul>
+                        <li><a href="student-dashboard.html" data-i18n="nav-dashboard">Dashboard</a></li>
+                        <li><a href="about.html" data-i18n="nav-about">About</a></li>
+                        <li><a href="contact.html" data-i18n="nav-contact">Contact</a></li>
+                    </ul>
+                </nav>
+
+                <button class="mobile-menu-btn" aria-label="Toggle navigation menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 data-i18n="page-title">Spot the Phenomenon</h1>
+            <p data-i18n="page-desc">
+                Look at the picture and the situation. Can you spot which natural phenomenon is happening?
+            </p>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <a href="student-dashboard.html" data-i18n="breadcrumb-dashboard">Dashboard</a>
+                <span>/</span>
+                <span data-i18n="breadcrumb-natural">Natural Phenomena</span>
+                <span>/</span>
+                <span data-i18n="breadcrumb-game">Spot the Phenomenon</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instructions Modal -->
+    <div class="instructions-modal" id="instructions-modal">
+        <div class="instructions-content">
+            <h2 class="instructions-title" data-i18n="instr-title">How to Play – Spot the Phenomenon</h2>
+            <p class="instructions-subtitle" data-i18n="instr-subtitle">
+                This is a timed picture game with hints and fun facts. Read carefully before you start.
+            </p>
+            <ul class="instructions-list">
+                <li data-i18n="instr-1">You will play through 5 picture-based challenges about natural phenomena.</li>
+                <li data-i18n="instr-2">You have 10 minutes to complete all challenges.</li>
+                <li data-i18n="instr-3">For each picture and situation, tap the correct phenomenon card.</li>
+                <li data-i18n="instr-4">You have 3 hints in total. Using a hint will show a clue for that challenge.</li>
+                <li data-i18n="instr-5">After you answer, a fun fact will appear to help you learn more.</li>
+            </ul>
+            <div class="instructions-highlight">
+                <i class="fas fa-lightbulb"></i>
+                <span data-i18n="instr-tip">
+                    Tip: Try to spot the phenomenon on your own. Use hints only when you really get stuck!
+                </span>
+            </div>
+            <button class="start-btn" id="start-btn">
+                <i class="fas fa-play-circle"></i>
+                <span data-i18n="instr-start-btn">Start Game</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Game Section -->
+    <section class="quiz-section" id="quiz-section">
+        <div class="container">
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="timer-box">
+                        <i class="fas fa-clock"></i>
+                        <span data-i18n="time-label">Time left:</span>
+                        <span id="time-remaining">10:00</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="hints-box">
+                        <i class="fas fa-lightbulb"></i>
+                        <span data-i18n="hints-label">Hints left:</span>
+                        <span id="hints-remaining">3</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span data-i18n="score-label">Phenomena spotted:</span>
+                    <span id="score-value">0</span> / <span id="score-total">5</span>
+                </div>
+            </div>
+
+            <div class="quiz-card">
+                <div class="quiz-header">
+                    <div class="quiz-title-area">
+                        <div class="quiz-title">
+                            <i class="fas fa-meteor"></i>
+                            <span data-i18n="quiz-title">Spot the Phenomenon – Intermediate Game</span>
+                        </div>
+                        <div class="badge-level">
+                            <i class="fas fa-signal"></i>
+                            <span data-i18n="level-intermediate">Intermediate</span>
+                        </div>
+                        <div class="quiz-meta" data-i18n="quiz-meta">
+                            5 picture-based challenges • Observe the scene and pick the phenomenon
+                        </div>
+                    </div>
+                    <div class="quiz-score">
+                        <span data-i18n="progress-label">Challenge</span>
+                        <span id="progress-count">1 / 5</span>
+                    </div>
+                </div>
+
+                <p class="quiz-intro" data-i18n="quiz-intro">
+                    Each challenge shows a real-life scene and a picture. Study them and tap the correct phenomenon card from the options.
+                </p>
+
+                <div class="question-layout">
+                    <div class="image-box">
+                        <div class="image-box-title" data-i18n="image-label">Picture</div>
+                        <div class="image-wrapper">
+                            <img id="phenomenon-image" src="" alt="Phenomenon Image">
+                        </div>
+                    </div>
+                    <div class="question-box">
+                        <div class="question-number" id="question-number">Challenge 1 / 5</div>
+                        <div class="question-text" id="question-text">
+                            <!-- text injected by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="options-list">
+                    <button class="option-btn" data-index="0">
+                        <span class="option-letter">A</span>
+                        <span class="option-text"></span>
+                    </button>
+                    <button class="option-btn" data-index="1">
+                        <span class="option-letter">B</span>
+                        <span class="option-text"></span>
+                    </button>
+                    <button class="option-btn" data-index="2">
+                        <span class="option-letter">C</span>
+                        <span class="option-text"></span>
+                    </button>
+                    <button class="option-btn" data-index="3">
+                        <span class="option-letter">D</span>
+                        <span class="option-text"></span>
+                    </button>
+                </div>
+
+                <div id="feedback" class="feedback"></div>
+                <div id="hint-box" class="hint-box"></div>
+                <div id="fact-box" class="fact-box">
+                    <strong data-i18n="fact-label">Did you know?</strong>
+                    <span id="fact-text"></span>
+                </div>
+
+                <div class="quiz-controls">
+                    <div class="nav-group">
+                        <button class="btn btn-secondary" id="prev-btn">
+                            <i class="fas fa-arrow-left"></i>
+                            <span data-i18n="btn-prev">Previous</span>
+                        </button>
+                        <button class="btn btn-secondary" id="next-btn">
+                            <span id="next-btn-text" data-i18n="btn-next">Next</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    <button class="btn btn-hint" id="hint-btn">
+                        <i class="fas fa-lightbulb"></i>
+                        <span data-i18n="btn-hint">Use Hint</span>
+                    </button>
+                </div>
+
+                <div class="result-box" id="result-box">
+                    <strong data-i18n="result-title">Your Game Summary</strong>
+                    <p id="result-text"></p>
+                    <button class="play-again-btn" id="play-again-btn">
+                        <i class="fas fa-redo"></i>
+                        <span data-i18n="btn-play-again">Play Again with New Challenges</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <div class="footer-logo-text">STEM Learn Odisha</div>
+                    </div>
+                    <p data-i18n="footer-desc">
+                        Making Science and Mathematics education engaging and relevant for students in Odisha through localized content and interactive learning.
+                    </p>
+                </div>
+
+                <div class="footer-links">
+                    <h3 data-i18n="quick-links">Quick Links</h3>
+                    <ul>
+                        <li><a href="student-dashboard.html"><i class="fas fa-home"></i> <span data-i18n="nav-dashboard">Dashboard</span></a></li>
+                        <li><a href="about.html"><i class="fas fa-info-circle"></i> <span data-i18n="nav-about">About</span></a></li>
+                        <li><a href="contact.html"><i class="fas fa-envelope"></i> <span data-i18n="nav-contact">Contact</span></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p data-i18n="copyright">© 2023 STEM Learn Odisha. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --------- GLOBAL STATE ----------
+        let currentLanguage = 'en';
+        let totalChallengesPerGame = 5;
+        let maxHints = 3;
+        let totalTimeSeconds = 600; // 10 minutes
+
+        let selectedChallengeIndices = [];
+        let currentChallengePos = 0; // 0..selectedChallengeIndices.length-1
+        let answers = {}; // key: challengeIndex, value: {selectedIndex, correct, hintUsed}
+        let hintsLeft = maxHints;
+        let timerInterval = null;
+        let timeRemaining = totalTimeSeconds;
+
+        // --------- TRANSLATIONS ----------
+        const translations = {
+            en: {
+                'nav-dashboard': 'Dashboard',
+                'nav-about': 'About',
+                'nav-contact': 'Contact',
+                'page-title': 'Spot the Phenomenon',
+                'page-desc': 'Look at the picture and the situation. Can you spot which natural phenomenon is happening?',
+                'breadcrumb-dashboard': 'Dashboard',
+                'breadcrumb-natural': 'Natural Phenomena',
+                'breadcrumb-game': 'Spot the Phenomenon',
+                'instr-title': 'How to Play – Spot the Phenomenon',
+                'instr-subtitle': 'This is a timed picture game with hints and fun facts. Read carefully before you start.',
+                'instr-1': 'You will play through 5 picture-based challenges about natural phenomena.',
+                'instr-2': 'You have 10 minutes to complete all challenges.',
+                'instr-3': 'For each picture and situation, tap the correct phenomenon card.',
+                'instr-4': 'You have 3 hints in total. Using a hint will show a clue for that challenge.',
+                'instr-5': 'After you answer, a fun fact will appear to help you learn more.',
+                'instr-tip': 'Tip: Try to spot the phenomenon on your own. Use hints only when you really get stuck!',
+                'instr-start-btn': 'Start Game',
+                'time-label': 'Time left:',
+                'hints-label': 'Hints left:',
+                'score-label': 'Phenomena spotted:',
+                'quiz-title': 'Spot the Phenomenon – Intermediate Game',
+                'level-intermediate': 'Intermediate',
+                'quiz-meta': '5 picture-based challenges • Observe the scene and pick the phenomenon',
+                'quiz-intro': 'Each challenge shows a real-life scene and a picture. Study them and tap the correct phenomenon card from the options.',
+                'progress-label': 'Challenge',
+                'image-label': 'Picture',
+                'btn-prev': 'Previous',
+                'btn-next': 'Next',
+                'btn-finish': 'Finish',
+                'btn-hint': 'Use Hint',
+                'result-title': 'Your Game Summary',
+                'result-perfect': 'Amazing! You can easily spot natural phenomena in real-life scenes.',
+                'result-good': 'Nice work! You understood most of the scenes. A little revision will make you even better.',
+                'result-try-again': 'Good attempt! Revise the topic and play again to improve.',
+                'btn-play-again': 'Play Again with New Challenges',
+                'fact-label': 'Did you know?',
+                'time-up-message': 'Time is up! Your game has ended.',
+                'footer-desc': 'Making Science and Mathematics education engaging and relevant for students in Odisha through localized content and interactive learning.',
+                'quick-links': 'Quick Links',
+                'copyright': '© 2023 STEM Learn Odisha. All rights reserved.'
+            },
+            or: {
+                'nav-dashboard': 'ଡ୍ୟାଶବୋର୍ଡ',
+                'nav-about': 'ଆମ ବିଷୟରେ',
+                'nav-contact': 'ଯୋଗାଯୋଗ',
+                'page-title': 'ଘଟଣାକୁ ପହିଚାରନ୍ତୁ',
+                'page-desc': 'ଚିତ୍ର ଏବଂ ପରିସ୍ଥିତିକୁ ଭଲଭାବେ ଦେଖନ୍ତୁ। କେଉଁ ପ୍ରାକୃତିକ ଘଟଣା ଘଟୁଛି ଆପଣ ପହିଚାରିପାରିବେ କି?',
+                'breadcrumb-dashboard': 'ଡ୍ୟାଶବୋର୍ଡ',
+                'breadcrumb-natural': 'ପ୍ରାକୃତିକ ଘଟଣା',
+                'breadcrumb-game': 'ଘଟଣା ପହିଚାର ଖେଳ',
+                'instr-title': 'ଘଟଣା ପହିଚାର – ଖେଳ କିପରି ଖେଳିବେ',
+                'instr-subtitle': 'ଏହା ଏକ ପିକ୍ଚର ଆଧାରିତ ସମୟ ନିର୍ଦ୍ଦିଷ୍ଟ ଖେଳ, ଯେଠାରେ ହିଣ୍ଟ ଏବଂ ମଜାଦାର ତଥ୍ୟ ରହିଛି। ଆରମ୍ଭ କରିବା ପୂର୍ବରୁ ଭଲଭାବରେ ପଢ଼ନ୍ତୁ।',
+                'instr-1': 'ଆପଣ ୫ଟି ପ୍ରାକୃତିକ ଘଟଣା ସହ ଜଡିତ ପିକ୍ଚର ଆଧାରିତ challenge ଖେଳିବେ।',
+                'instr-2': 'ସମସ୍ତ challenge ଶେଷ କରିବା ପାଇଁ ଆପଣଙ୍କ ପାଖରେ 10 ମିନିଟ୍ ସମୟ ରହିଛି।',
+                'instr-3': 'ପ୍ରତ୍ୟେକ ଚିତ୍ର ଏବଂ ପରିସ୍ଥିତି ପାଇଁ ଠିକ୍ ପ୍ରାକୃତିକ ଘଟଣା କାର୍ଡକୁ ଟାପ୍ କରନ୍ତୁ।',
+                'instr-4': 'ଆପଣଙ୍କ ପାଖରେ ମୋଟ 3ଟି ହିଣ୍ଟ ଅଛି। ହିଣ୍ଟ ବ୍ୟବହାର କଲେ ସେହି challenge ପାଇଁ ଆଧାର ସୂତ୍ର ଦେଖିବେ।',
+                'instr-5': 'ଆପଣ ଉତ୍ତର ଦେବା ପରେ, ସେହି ଘଟଣା ବିଷୟରେ ଏକ ମଜାଦାର ତଥ୍ୟ ଦେଖିବେ।',
+                'instr-tip': 'ସୁପାରିଶ: ପ୍ରଥମେ ନିଜେ ଘଟଣା ପହିଚାରିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ। ବହୁତ ଘୋଳାଳି ହେଲେ ମାତ୍ର ହିଣ୍ଟ ବ୍ୟବହାର କରନ୍ତୁ!',
+                'instr-start-btn': 'ଖେଳ ଆରମ୍ଭ କରନ୍ତୁ',
+                'time-label': 'ଅବଶିଷ୍ଟ ସମୟ:',
+                'hints-label': 'ଅବଶିଷ୍ଟ ହିଣ୍ଟ:',
+                'score-label': 'ପହିଚାରିତ ଘଟଣା:',
+                'quiz-title': 'ଘଟଣା ପହିଚାର – ମଧ୍ୟମ ସ୍ତର ଖେଳ',
+                'level-intermediate': 'ମଧ୍ୟମ ସ୍ତର',
+                'quiz-meta': '୫ଟି ପିକ୍ଚର ଆଧାରିତ challenge • ପରିସ୍ଥିତିକୁ ଦେଖନ୍ତୁ ଏବଂ ଠିକ୍ ଘଟଣା ବାଛନ୍ତୁ',
+                'quiz-intro': 'ପ୍ରତ୍ୟେକ challenge ରେ ଏକ ବାସ୍ତବ ପରିସ୍ଥିତି ଏବଂ ଚିତ୍ର ଦିଆଯାଇଛି। ସେଗୁଡ଼ିକୁ ଭଲଭାବରେ ପଢ଼ି ଠିକ୍ ଘଟଣା କାର୍ଡ ବାଛନ୍ତୁ।',
+                'progress-label': 'Challenge',
+                'image-label': 'ଚିତ୍ର',
+                'btn-prev': 'ପୂର୍ବ',
+                'btn-next': 'ପରବର୍ତ୍ତୀ',
+                'btn-finish': 'ଶେଷ',
+                'btn-hint': 'ହିଣ୍ଟ ବ୍ୟବହାର କରନ୍ତୁ',
+                'result-title': 'ଆପଣଙ୍କ ଖେଳ ସାରାଂଶ',
+                'result-perfect': 'ଦୁର୍ଦ୍ଦାନ୍ତ! ଆପଣ ବାସ୍ତବ ପରିସ୍ଥିତିରେ ପ୍ରାକୃତିକ ଘଟଣାକୁ ସହଜରେ ପହିଚାରିପାରୁଛନ୍ତି।',
+                'result-good': 'ଭଲ କାମ! ଅଧିକାଂଶ ପରିସ୍ଥିତିକୁ ବୁଝିଛନ୍ତି। ଥୋଡ଼ା ପୁନଃରାବୃତ୍ତି କଲେ ଆଉ ଭଲ ହେବେ।',
+                'result-try-again': 'ଭଲ ଚେଷ୍ଟା! ବିଷୟଟିକୁ ଆଉଥରେ ପଢ଼ି ପୁନି ଖେଳନ୍ତୁ।',
+                'btn-play-again': 'ନୂଆ Challenge ସହ ଆଉଥରେ ଖେଳନ୍ତୁ',
+                'fact-label': 'ଜାଣିଛନ୍ତି କି?',
+                'time-up-message': 'ସମୟ ସମାପ୍ତ! ଆପଣଙ୍କ ଖେଳ ଶେଷ ହୋଇଗଲା।',
+                'footer-desc': 'ସ୍ଥାନୀୟ ବିଷୟବସ୍ତୁ ଏବଂ ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ମାଧ୍ୟମରେ ଓଡ଼ିଶାର ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କ ପାଇଁ ବିଜ୍ଞାନ ଏବଂ ଗଣିତ ଶିକ୍ଷାକୁ ଆକର୍ଷଣୀୟ ଏବଂ ପ୍ରାସଙ୍ଗିକ କରିବା।',
+                'quick-links': 'ଶୀଘ୍ର ଲିଙ୍କ୍',
+                'copyright': '© 2023 STEM ଲର୍ନ ଓଡ଼ିଶା। ସମସ୍ତ ଅଧିକାର ସଂରକ୍ଷିତ।'
+            },
+            hi: {
+                'nav-dashboard': 'डैशबोर्ड',
+                'nav-about': 'हमारे बारे में',
+                'nav-contact': 'संपर्क',
+                'page-title': 'घटना पहचानें',
+                'page-desc': 'चित्र और स्थिति को ध्यान से देखिए। क्या आप पहचान सकते हैं कि कौन-सी प्राकृतिक घटना हो रही है?',
+                'breadcrumb-dashboard': 'डैशबोर्ड',
+                'breadcrumb-natural': 'प्राकृतिक घटनाएँ',
+                'breadcrumb-game': 'घटना पहचानें खेल',
+                'instr-title': 'घटना पहचानें – खेलने का तरीका',
+                'instr-subtitle': 'यह एक पिक्चर-बेस्ड टाइम्ड गेम है जिसमें हिंट और मज़ेदार तथ्य हैं। शुरू करने से पहले ध्यान से पढ़ें।',
+                'instr-1': 'आप प्राकृतिक घटनाओं पर आधारित 5 पिक्चर चुनौतियाँ (challenges) खेलेंगे।',
+                'instr-2': 'सभी चुनौतियाँ पूरी करने के लिए आपके पास 10 मिनट हैं।',
+                'instr-3': 'हर चित्र और स्थिति के लिए सही घटना वाला कार्ड टैप करें।',
+                'instr-4': 'आपके पास कुल 3 हिंट हैं। किसी challenge पर हिंट लेने से एक संकेत दिखेगा।',
+                'instr-5': 'उत्तर देने के बाद उस घटना से जुड़ा एक मज़ेदार तथ्य दिखाई देगा।',
+                'instr-tip': 'टिप: पहले खुद घटना पहचानने की कोशिश करें। बहुत कन्फ्यूज़ होने पर ही हिंट लें!',
+                'instr-start-btn': 'खेल शुरू करें',
+                'time-label': 'शेष समय:',
+                'hints-label': 'शेष हिंट:',
+                'score-label': 'पहचानी गई घटनाएँ:',
+                'quiz-title': 'घटना पहचानें – मध्यम स्तर खेल',
+                'level-intermediate': 'मध्यम स्तर',
+                'quiz-meta': '5 पिक्चर-आधारित चुनौतियाँ • दृश्य देखें और सही घटना चुनें',
+                'quiz-intro': 'हर challenge में एक वास्तविक स्थिति और चित्र दिया है। इन्हें ध्यान से देखकर सही घटना वाला कार्ड चुनिए।',
+                'progress-label': 'Challenge',
+                'image-label': 'चित्र',
+                'btn-prev': 'पिछला',
+                'btn-next': 'अगला',
+                'btn-finish': 'समाप्त',
+                'btn-hint': 'हिंट उपयोग करें',
+                'result-title': 'आपका गेम सारांश',
+                'result-perfect': 'बहुत बढ़िया! आप वास्तविक परिस्थितियों में प्राकृतिक घटनाओं को आसानी से पहचान सकते हैं।',
+                'result-good': 'शानदार! आपने ज़्यादातर स्थितियाँ सही समझीं। थोड़ा रीविज़न करेंगे तो और बेहतर बनेंगे।',
+                'result-try-again': 'अच्छा प्रयास! पाठ को फिर से पढ़िए और दोबारा खेलकर सुधार कीजिए।',
+                'btn-play-again': 'नई चुनौतियों के साथ फिर से खेलें',
+                'fact-label': 'क्या आप जानते हैं?',
+                'time-up-message': 'समय समाप्त! आपका खेल खत्म हो गया है।',
+                'footer-desc': 'स्थानीय सामग्री और इंटरैक्टिव गतिविधियों के माध्यम से ओडिशा के छात्रों के लिए विज्ञान और गणित की पढ़ाई को रोचक और उपयोगी बनाना।',
+                'quick-links': 'त्वरित लिंक',
+                'copyright': '© 2023 STEM Learn Odisha. सर्वाधिकार सुरक्षित।'
+            }
+        };
+
+        // --------- CHALLENGE POOL ----------
+        // All images now point to local GIFs in assets/gif/
+        const challengePool = {
+            en: [
+                {
+                    id: 'rbow',
+                    image: "assets/gif/rainbow.gif",
+                    text: "After a short rain, the Sun comes out and you see coloured bands in the sky opposite the Sun. Which phenomenon is this?",
+                    options: ["Solar eclipse", "Rainbow", "Lightning", "Fog"],
+                    correctIndex: 1,
+                    hint: "It appears when raindrops split sunlight into different colours.",
+                    fact: "A rainbow is formed due to refraction, reflection and dispersion of sunlight inside raindrops."
+                },
+                {
+                    id: 'lunecl',
+                    image: "assets/gif/lunar_eclipse.gif",
+                    text: "At night, you see the Moon slowly become dark as it passes into Earth's shadow. What phenomenon is happening?",
+                    options: ["Lunar eclipse", "Solar eclipse", "Rotation of Earth", "Tides"],
+                    correctIndex: 0,
+                    hint: "The Earth comes between the Sun and the Moon.",
+                    fact: "A lunar eclipse can only occur on a full moon day."
+                },
+                {
+                    id: 'refraction',
+                    image: "assets/gif/refraction.gif",
+                    text: "A pencil kept in a glass of water looks bent at the surface of water. Which phenomenon explains this?",
+                    options: ["Reflection of light", "Refraction of light", "Shadow formation", "Dispersion only"],
+                    correctIndex: 1,
+                    hint: "Light changes its speed when it enters water from air.",
+                    fact: "Refraction is the bending of light when it passes from one medium to another, like air to water."
+                },
+                {
+                    id: 'reflection',
+                    image: "assets/gif/reflection.gif",
+                    text: "You stand in front of a plane mirror and see yourself. What is this phenomenon called?",
+                    options: ["Refraction", "Dispersion", "Reflection", "Scattering"],
+                    correctIndex: 2,
+                    hint: "Light bounces back from the smooth surface.",
+                    fact: "Plane mirrors always form virtual, upright, same-size images."
+                },
+                {
+                    id: 'thunder',
+                    image: "assets/gif/thunder_lightning.gif",
+                    text: "Dark clouds gather in the sky, you hear a loud sound and see a bright flash almost at the same place. Which two phenomena are you mainly observing?",
+                    options: [
+                        "Rainbow and eclipse",
+                        "Thunder and lightning",
+                        "Earthquake and tsunami",
+                        "Cyclone and flood"
+                    ],
+                    correctIndex: 1,
+                    hint: "The sound comes later, the light is seen first.",
+                    fact: "Lightning heats the air rapidly, causing it to expand and produce the sound we call thunder."
+                },
+                {
+                    id: 'mirage',
+                    image: "assets/gif/mirage.gif",
+                    text: "On a very hot day, a driver sees a shining water-like patch on the road far ahead, but as he goes closer, it disappears. What is this phenomenon?",
+                    options: ["Mirage", "Rain", "Flood", "Reflection from mirror"],
+                    correctIndex: 0,
+                    hint: "It is an optical illusion caused by hot air near the ground.",
+                    fact: "Mirages occur due to refraction of light in layers of air at different temperatures."
+                },
+                {
+                    id: 'earthquake',
+                    image: "assets/gif/earthquake.gif",
+                    text: "Suddenly, you feel the ground shaking, hanging objects start swinging and small cracks appear in the walls. Which phenomenon is this?",
+                    options: ["Volcano", "Earthquake", "Cyclone", "Landslide"],
+                    correctIndex: 1,
+                    hint: "It is caused by sudden movement under the Earth's crust.",
+                    fact: "Earthquakes are measured using the Richter scale or moment magnitude scale."
+                },
+                {
+                    id: 'cyclone',
+                    image: "assets/gif/cyclone.gif",
+                    text: "Very strong winds blow, trees are uprooted, and heavy rain continues for many hours over a coastal area. Which natural phenomenon is this?",
+                    options: ["Earthquake", "Cyclone", "Lunar eclipse", "Fog"],
+                    correctIndex: 1,
+                    hint: "It is a violent storm forming over warm ocean water.",
+                    fact: "Cyclones are known by different names: hurricanes, typhoons, or simply tropical storms in different regions."
+                },
+                {
+                    id: 'fog',
+                    image: "assets/gif/fog.gif",
+                    text: "Early in the winter morning, you see tiny droplets of water suspended in air near the ground, making it hard to see distant objects. Which phenomenon is this?",
+                    options: ["Fog", "Rainbow", "Thunder", "Mirage"],
+                    correctIndex: 0,
+                    hint: "It is like a cloud at ground level.",
+                    fact: "Fog forms when air near the ground cools and water vapour condenses into tiny droplets."
+                },
+                {
+                    id: 'scattering',
+                    image: "assets/gif/scattering.gif",
+                    text: "During sunset, the sky near the Sun looks orange or red instead of blue. Which phenomenon mostly causes this?",
+                    options: ["Reflection", "Refraction", "Scattering of light", "Dispersion in raindrops"],
+                    correctIndex: 2,
+                    hint: "Shorter wavelengths scatter away, longer wavelengths reach your eye.",
+                    fact: "The blue colour of the sky and the red colour of sunrise/sunset are due to scattering of sunlight by air molecules and dust."
+                }
+            ],
+            or: [],
+            hi: []
+        };
+
+        // Reuse English images for Odia & Hindi, but change texts (you can localize options later if you want)
+        challengePool.or = challengePool.en.map((q, i) => ({
+            ...q,
+            text: [
+                "ଛୋଟ ଝଡ଼ ପରେ ସୂର୍ଯ୍ୟ ଆସିଯାଏ ଏବଂ ସୂର୍ଯ୍ୟର ବିପରୀତ ଦିଗରେ ଆକାଶରେ ବିଭିନ୍ନ ରଙ୍ଗର ବ୍ୟାଣ୍ଡ ଦେଖନ୍ତି। ଏହା କେଉଁ ଘଟଣା?",
+                "ରାତିରେ ଆପଣ ଦେଖନ୍ତି ଯେ ଚନ୍ଦ୍ର ଧୀରେ ଧୀରେ ଅନ୍ଧାର ହେଉଛି, କାରଣ ସେ ପୃଥିବୀର ଛାୟା ଭିତରକୁ ଯାଉଛି। କେଉଁ ଘଟଣା ଘଟୁଛି?",
+                "ପାଣି ଭରା ଗ୍ଲାସ୍ରେ ରଖା ପେନ୍ସିଲ୍ ସତହରେ ଭାଙ୍ଗିଯାଇଥିବା ପରି ଦେଖାଯାଏ। କେଉଁ ଘଟଣା ଦ୍ୱାରା ଏହା ବ୍ୟାଖ୍ୟା ହୁଏ?",
+                "ଆପଣ ଏକ ସମତଳ ଆଇନା ଆଗରେ ଦାଢିଯାଇ ନିଜକୁ ଦେଖନ୍ତି। ଏହା କେଉଁ ଘଟଣା?",
+                "ଆକାଶରେ କଳା ମେଘ ଜମାହେଉଛି, ଆପଣ ଜୋର ସବ୍ଦ ଶୁଣନ୍ତି ଏବଂ ପ୍ରାୟ ସେଇ ସ୍ଥାନରେ ତୀବ୍ର ଆଲୋକ ଚମକ ଦେଖନ୍ତି। ଆପଣ ପ୍ରଧାନତଃ କେଉଁ ଦୁଇଟି ଘଟଣାକୁ ଦେଖୁଛନ୍ତି?",
+                "ଅତ୍ୟଧିକ ଗରମ ଦିନରେ ଗାଡ଼ି ଚାଳକ ଦୂରରେ ରାସ୍ତା ଉପରେ ପାଣି ଥିବା ପରି ଚମକୁଥିବା ଭାଗ ଦେଖିଥାଏ, କିନ୍ତୁ ନିକଟକୁ ଗଲେ ସେଠାରେ କିଛି ନାହିଁ। ଏହା କେଉଁ ଘଟଣା?",
+                "ହଠାତ୍ ଆପଣ ଭୂମିକୁ କମ୍ପିତ ହେଉଥିବା ଅନୁଭବ କରନ୍ତି, ଲଟକିଥିବା ବସ୍ତୁ ଦୋଲିଯାଉଛି ଏବଂ ଦିଵାଲରେ ସାଣଖିଆ ଫାଟ ଦେଖାଯାଉଛି। କେଉଁ ଘଟଣା ଏହା?",
+                "ଅତ୍ୟନ୍ତ ଜୋର ବାତାସ ବହୁଛି, ଗଛଗୁଡ଼ିକ ଉଖଳିଯାଉଛି ଏବଂ ସମୁଦ୍ର କୂଳଞ୍ଚଳରେ ଦୀର୍ଘ ସମୟ ଧରି ଭାରି ବର୍ଷା ହେଉଛି। କେଉଁ ପ୍ରାକୃତିକ ଘଟଣା?",
+                "ଶୀତ ଋତୁର ଖୁବ ସକାଳେ ଆପଣ ଭୂମି ନିକଟରେ ହାୱାର ଭିତରେ ଛୋଟ ଜଳ ବୁନ୍ଦ ଝୁଲିଥିବା ପରି ଦେଖନ୍ତି, ଦୂରର ବସ୍ତୁ ସ୍ପଷ୍ଟ ଦେଖାଯାଏ ନାହିଁ। କେଉଁ ଘଟଣା?",
+                "ସୂର୍ଯ୍ୟାସ୍ତ ସମୟରେ ସୂର୍ଯ୍ୟ ନିକଟର ଆକାଶ ନୀଳ ପରି ନୁହେଁ, ଲାଲ କିମ୍ବା କେଶରି ଦେଖାଯାଏ। ପ୍ରଧାନତଃ କେଉଁ ଘଟଣା ଦ୍ୱାରା ଏହା ହୁଏ?"
+            ][i]
+        }));
+
+        challengePool.hi = challengePool.en.map((q, i) => ({
+            ...q,
+            text: [
+                "हल्की बारिश के बाद सूरज निकल आता है और आप सूरज के विपरीत दिशा में आकाश में रंग-बिरंगे पट्टे देखते हैं। यह कौन-सी घटना है?",
+                "रात में आप देखते हैं कि चाँद धीरे-धीरे अँधेरा हो रहा है क्योंकि वह पृथ्वी की छाया में जा रहा है। यह कौन-सी घटना है?",
+                "पानी से भरे गिलास में रखी पेंसिल सतह पर टूटी हुई सी दिखाई देती है। यह किस घटना के कारण होता है?",
+                "आप समतल दर्पण के सामने खड़े होकर खुद को देखते हैं। यह कौन-सी घटना है?",
+                "आसमान में काले बादल जमा हो गए, आपको तेज़ आवाज़ सुनाई देती है और लगभग उसी जगह चमकीली रोशनी दिखती है। आप मुख्य रूप से कौन-सी दो घटनाएँ देख रहे हैं?",
+                "बहुत गर्म दिन में चालक सड़क पर दूर चमकता हुआ ऐसा हिस्सा देखता है जो पानी जैसा लगता है, लेकिन पास जाने पर गायब हो जाता है। यह कौन-सी घटना है?",
+                "अचानक आपको ज़मीन हिलती हुई महसूस होती है, लटकती हुई वस्तुएँ झूलने लगती हैं और दीवारों में दरारें दिखने लगती हैं। यह कौन-सी घटना है?",
+                "बहुत तेज़ हवा चल रही है, पेड़ उखड़ रहे हैं और समुद्र तटीय क्षेत्र में कई घंटों तक भारी बारिश हो रही है। यह कौन-सी प्राकृतिक घटना है?",
+                "सर्दियों की सुबह आप ज़मीन के पास हवा में छोटे-छोटे जलकणों को तैरते हुए देखते हैं, जिससे दूर की वस्तुएँ साफ नहीं दिखतीं। यह कौन-सी घटना है?",
+                "सूर्यास्त के समय सूरज के पास का आसमान नीला न होकर नारंगी या लाल दिखाई देता है। यह मुख्य रूप से किस घटना के कारण होता है?"
+            ][i]
+        }));
+
+        // --------- DOM ELEMENTS ----------
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const i18nElements = document.querySelectorAll('[data-i18n]');
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navList = document.querySelector('header nav ul');
+
+        const instructionsModal = document.getElementById('instructions-modal');
+        const startBtn = document.getElementById('start-btn');
+
+        const quizSection = document.getElementById('quiz-section');
+        const timeRemainingEl = document.getElementById('time-remaining');
+        const hintsRemainingEl = document.getElementById('hints-remaining');
+        const scoreValueEl = document.getElementById('score-value');
+        const scoreTotalEl = document.getElementById('score-total');
+        const progressCountEl = document.getElementById('progress-count');
+        const questionNumberEl = document.getElementById('question-number');
+        const questionTextEl = document.getElementById('question-text');
+        const phenomenonImageEl = document.getElementById('phenomenon-image');
+        const optionButtons = document.querySelectorAll('.option-btn');
+        const feedbackEl = document.getElementById('feedback');
+        const hintBoxEl = document.getElementById('hint-box');
+        const factBoxEl = document.getElementById('fact-box');
+        const factTextEl = document.getElementById('fact-text');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const nextBtnText = document.getElementById('next-btn-text');
+        const hintBtn = document.getElementById('hint-btn');
+        const resultBox = document.getElementById('result-box');
+        const resultTextEl = document.getElementById('result-text');
+        const playAgainBtn = document.getElementById('play-again-btn');
+
+        // --------- HELPERS ----------
+        function t(key) {
+            const pack = translations[currentLanguage] || translations.en;
+            return pack[key] || translations.en[key] || key;
+        }
+
+        function applyTranslations() {
+            i18nElements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (!key) return;
+                el.textContent = t(key);
+            });
+
+            if (currentChallengePos === selectedChallengeIndices.length - 1) {
+                nextBtnText.textContent = t('btn-finish');
+            } else {
+                nextBtnText.textContent = t('btn-next');
+            }
+
+            if (resultBox.style.display === 'block') {
+                showResult();
+            }
+
+            renderChallenge();
+        }
+
+        function shuffleArray(arr) {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function arraysEqual(a, b) {
+            if (!a || !b) return false;
+            if (a.length !== b.length) return false;
+            for (let i = 0; i < a.length; i++) {
+                if (a[i] !== b[i]) return false;
+            }
+            return true;
+        }
+
+        // NEW: make sure each new game (or reload) tries to use a different set of questions.
+        function generateChallengeSelection() {
+            const poolSize = challengePool.en.length;
+            const allIndices = Array.from({ length: poolSize }, (_, i) => i);
+            let lastSelection = [];
+            try {
+                const stored = localStorage.getItem('lastSelection');
+                if (stored) lastSelection = JSON.parse(stored);
+            } catch (e) {
+                lastSelection = [];
+            }
+
+            let newSelection;
+            do {
+                newSelection = shuffleArray(allIndices).slice(0, totalChallengesPerGame);
+            } while (poolSize >= 2 * totalChallengesPerGame && arraysEqual(newSelection, lastSelection));
+
+            selectedChallengeIndices = newSelection;
+
+            try {
+                localStorage.setItem('lastSelection', JSON.stringify(selectedChallengeIndices));
+            } catch (e) {}
+
+            scoreTotalEl.textContent = totalChallengesPerGame;
+        }
+
+        function updateScore() {
+            let score = 0;
+            selectedChallengeIndices.forEach(idx => {
+                if (answers[idx] && answers[idx].correct) score++;
+            });
+            scoreValueEl.textContent = score;
+        }
+
+        function updateHintsDisplay() {
+            hintsRemainingEl.textContent = hintsLeft;
+            hintBtn.disabled = hintsLeft <= 0;
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            timeRemainingEl.textContent = `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if (timeRemaining > 0) {
+                    timeRemaining--;
+                    updateTimerDisplay();
+                } else {
+                    clearInterval(timerInterval);
+                    disableAllInputs();
+                    alert(t('time-up-message'));
+                    showResult();
+                }
+            }, 1000);
+        }
+
+        function disableAllInputs() {
+            optionButtons.forEach(btn => btn.disabled = true);
+            hintBtn.disabled = true;
+            prevBtn.disabled = true;
+            nextBtn.disabled = true;
+        }
+
+        function enableNavButtons() {
+            prevBtn.disabled = currentChallengePos === 0;
+            nextBtn.disabled = selectedChallengeIndices.length === 0;
+        }
+
+        function renderChallenge() {
+            if (selectedChallengeIndices.length === 0) return;
+
+            const globalIndex = selectedChallengeIndices[currentChallengePos];
+            const qLang = challengePool[currentLanguage][globalIndex];
+            const qBase = challengePool.en[globalIndex];
+
+            questionNumberEl.textContent = `Challenge ${currentChallengePos + 1} / ${selectedChallengeIndices.length}`;
+            progressCountEl.textContent = `${currentChallengePos + 1} / ${selectedChallengeIndices.length}`;
+            questionTextEl.textContent = qLang.text;
+            phenomenonImageEl.src = qLang.image;
+            phenomenonImageEl.alt = "Phenomenon image";
+
+            optionButtons.forEach((btn, idx) => {
+                const textSpan = btn.querySelector('.option-text');
+                textSpan.textContent = qLang.options[idx];
+                btn.classList.remove('selected', 'correct', 'wrong');
+                btn.disabled = false;
+            });
+
+            feedbackEl.textContent = '';
+            feedbackEl.className = 'feedback';
+            hintBoxEl.style.display = 'none';
+            factBoxEl.style.display = 'none';
+
+            const answerInfo = answers[globalIndex];
+            const correctIndex = qBase.correctIndex;
+
+            if (answerInfo) {
+                optionButtons.forEach((btn, idx) => {
+                    if (idx === answerInfo.selectedIndex) {
+                        btn.classList.add(answerInfo.correct ? 'correct' : 'wrong');
+                    }
+                    if (idx === correctIndex) {
+                        btn.classList.add('correct');
+                    }
+                    btn.disabled = true;
+                });
+
+                feedbackEl.textContent = answerInfo.correct
+                    ? t('result-perfect').split('!')[0] + '!'
+                    : t('result-try-again').split('!')[0] + '!';
+                feedbackEl.classList.add(answerInfo.correct ? 'correct' : 'wrong');
+
+                if (answerInfo.hintUsed) {
+                    hintBoxEl.style.display = 'block';
+                    hintBoxEl.textContent = qLang.hint;
+                }
+
+                factBoxEl.style.display = 'block';
+                factTextEl.textContent = qLang.fact;
+            }
+
+            if (currentChallengePos === selectedChallengeIndices.length - 1) {
+                nextBtnText.textContent = t('btn-finish');
+            } else {
+                nextBtnText.textContent = t('btn-next');
+            }
+
+            updateHintsDisplay();
+            enableNavButtons();
+        }
+
+        function showResult() {
+            let score = 0;
+            selectedChallengeIndices.forEach(idx => {
+                if (answers[idx] && answers[idx].correct) score++;
+            });
+
+            resultBox.style.display = 'block';
+            let key;
+            if (score === selectedChallengeIndices.length) key = 'result-perfect';
+            else if (score >= Math.ceil(selectedChallengeIndices.length * 0.6)) key = 'result-good';
+            else key = 'result-try-again';
+
+            resultTextEl.textContent = t(key);
+        }
+
+        function resetGameState() {
+            answers = {};
+            hintsLeft = maxHints;
+            timeRemaining = totalTimeSeconds;
+            updateTimerDisplay();
+            updateHintsDisplay();
+            scoreValueEl.textContent = '0';
+            resultBox.style.display = 'none';
+            prevBtn.disabled = false;
+            nextBtn.disabled = false;
+            hintBtn.disabled = false;
+        }
+
+        function initNewGame() {
+            clearInterval(timerInterval);
+            resetGameState();
+            generateChallengeSelection();
+            currentChallengePos = 0;
+            renderChallenge();
+            startTimer();
+        }
+
+        // --------- EVENTS ----------
+        optionButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (timeRemaining <= 0) return;
+
+                const selectedIdx = parseInt(btn.dataset.index, 10);
+                const globalIndex = selectedChallengeIndices[currentChallengePos];
+                const base = challengePool.en[globalIndex];
+                const correctIndex = base.correctIndex;
+
+                optionButtons.forEach(b => b.classList.remove('selected', 'correct', 'wrong'));
+                btn.classList.add('selected');
+
+                const correct = selectedIdx === correctIndex;
+                answers[globalIndex] = answers[globalIndex] || {};
+                answers[globalIndex].selectedIndex = selectedIdx;
+                answers[globalIndex].correct = correct;
+
+                optionButtons.forEach((b, idx) => {
+                    if (idx === selectedIdx) {
+                        b.classList.add(correct ? 'correct' : 'wrong');
+                    }
+                    if (idx === correctIndex) {
+                        b.classList.add('correct');
+                    }
+                    b.disabled = true;
+                });
+
+                feedbackEl.textContent = correct
+                    ? t('result-perfect').split('!')[0] + '!'
+                    : t('result-try-again').split('!')[0] + '!';
+                feedbackEl.className = 'feedback ' + (correct ? 'correct' : 'wrong');
+
+                const qLang = challengePool[currentLanguage][globalIndex];
+                factBoxEl.style.display = 'block';
+                factTextEl.textContent = qLang.fact;
+
+                updateScore();
+            });
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentChallengePos > 0) {
+                currentChallengePos--;
+                renderChallenge();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentChallengePos < selectedChallengeIndices.length - 1) {
+                currentChallengePos++;
+                renderChallenge();
+            } else {
+                showResult();
+            }
+        });
+
+        hintBtn.addEventListener('click', () => {
+            if (hintsLeft <= 0) return;
+
+            const globalIndex = selectedChallengeIndices[currentChallengePos];
+            const qLang = challengePool[currentLanguage][globalIndex];
+
+            hintsLeft--;
+            updateHintsDisplay();
+
+            answers[globalIndex] = answers[globalIndex] || {};
+            answers[globalIndex].hintUsed = true;
+
+            hintBoxEl.style.display = 'block';
+            hintBoxEl.textContent = qLang.hint;
+        });
+
+        playAgainBtn.addEventListener('click', () => {
+            initNewGame();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        startBtn.addEventListener('click', () => {
+            instructionsModal.style.display = 'none';
+            quizSection.style.display = 'block';
+            initNewGame();
+        });
+
+        langButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+                if (lang === currentLanguage) return;
+
+                currentLanguage = lang;
+                langButtons.forEach(b => b.classList.toggle('active', b === btn));
+
+                if (lang === 'or' || lang === 'hi') {
+                    document.body.classList.add('indic-text');
+                } else {
+                    document.body.classList.remove('indic-text');
+                }
+
+                applyTranslations();
+            });
+        });
+
+        if (mobileMenuBtn && navList) {
+            mobileMenuBtn.addEventListener('click', () => {
+                navList.classList.toggle('show');
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateTimerDisplay();
+            updateHintsDisplay();
+            applyTranslations();
+        });
+    </script>
+</body>
+</html>

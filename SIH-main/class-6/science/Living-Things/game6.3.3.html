@@ -1,0 +1,1821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Body Systems Explorer - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin:0; padding:0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: #f0f7ff; color:#1e293b; line-height:1.6; overflow-x:hidden; }
+        .container { width:100%; max-width:1200px; margin:0 auto; padding:0 20px; }
+
+        /* Language Switcher */
+        .language-switcher { position:absolute; top:20px; right:20px; background: rgba(255,255,255,0.15); border-radius:25px; padding:8px; backdrop-filter: blur(6px); z-index:1000; display:flex; gap:6px; }
+        .lang-btn { padding:8px 12px; border:none; background:transparent; border-radius:16px; cursor:pointer; font-size:0.9rem; font-weight:600; color:white; }
+        .lang-btn.active { background: rgba(255,255,255,0.25); color:white; }
+        
+        /* header */
+        header { background: linear-gradient(135deg,#0e2a47 0%,#1a365d 100%); color:white; padding:15px 0; position:sticky; top:0; z-index:100; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+        .header-content { display:flex; justify-content:space-between; align-items:center; position:relative; }
+        .logo { display:flex; gap:12px; align-items:center; }
+        .logo-icon { font-size:2.2rem; background:white; color:#2a69ac; width:55px; height:55px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+        .logo-text { font-size:1.6rem; font-weight:700; }
+        .logo-text span { color:#38b2ac; font-weight:800; }
+        nav ul { display:flex; gap:18px; list-style:none; }
+        nav a { color:white; text-decoration:none; font-weight:500; padding:8px 12px; border-radius:8px; }
+        
+        /* Instructions Modal */
+        .instructions-modal { display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 2000; align-items: center; justify-content: center; }
+        .instructions-content { background: white; border-radius: 20px; width: 90%; max-width: 700px; padding: 30px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); position: relative; text-align: center; }
+        .instructions-title { font-size: 2rem; margin-bottom: 20px; color: #1a365d; font-weight: 700; }
+        .instructions-text { color: #64748b; margin-bottom: 25px; line-height: 1.6; text-align: left; font-size: 1.1rem; }
+        .instructions-list { margin-left: 20px; margin-bottom: 25px; }
+        .instructions-list li { margin-bottom: 10px; }
+        .start-game-btn { padding: 15px 40px; background: linear-gradient(135deg, #38b2ac 0%, #2c9a94 100%); color: white; border: none; border-radius: 10px; font-size: 1.2rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 20px; }
+        .start-game-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(56, 178, 172, 0.3); }
+
+        /* game header */
+        .game-header { background: linear-gradient(rgba(14,42,71,0.85),rgba(26,54,93,0.9)), url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'); background-size:cover; background-position:center; color:white; padding:50px 0; text-align:center; }
+        .game-header h1 { font-size:2.8rem; margin-bottom:12px; font-weight:700; text-shadow:0 2px 4px rgba(0,0,0,0.2); }
+        .game-header p { font-size:1.1rem; max-width:800px; margin:0 auto; font-weight:300; opacity:0.95; }
+
+        /* game stats */
+        .game-stats { display:flex; justify-content:space-between; align-items:center; background:white; padding:15px 25px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.08); margin:20px auto; max-width:1000px; gap:12px; flex-wrap:wrap; }
+        .timer, .score, .hints { display:flex; align-items:center; gap:10px; font-size:1.1rem; font-weight:600; color:#1a365d; }
+        .timer i { color:#e53e3e; }
+        .score i { color:#38a169; }
+        .hints i { color:#d69e2e; }
+        .progress-container { width:200px; height:12px; background:#e2e8f0; border-radius:10px; overflow:hidden; }
+        .progress-bar { height:100%; background:#3182ce; border-radius:10px; transition: width 0.5s ease; }
+
+        /* game area */
+        .game-area { padding:40px 0 60px; }
+        .game-container { display:grid; grid-template-columns:1fr 1fr; gap:30px; max-width:1000px; margin:0 auto 40px auto; }
+        
+        /* Updated Drop Zones for Anatomy Game */
+        .drop-zone { background: rgba(255,255,255,0.95); border-radius:25px; padding:25px; box-shadow:0 10px 30px rgba(0,0,0,0.08); min-height:350px; display:flex; flex-direction:column; border:3px dashed #cbd5e0; transition: all 0.3s ease; position:relative; }
+        .drop-zone.highlight { border-color:#4299e1; background: rgba(235,248,255,0.95); transform:scale(1.03); }
+        .drop-zone.incorrect { border-color:#e53e3e; background: rgba(254,226,226,0.95); animation: shake 0.5s; }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .zone-header { display:flex; align-items:center; gap:15px; margin-bottom:18px; }
+        .zone-icon { width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.6rem; }
+        .structure-icon { background: linear-gradient(45deg,#4299e1,#3182ce); color:white; }
+        .function-icon { background: linear-gradient(45deg,#ed8936,#dd6b20); color:white; }
+        .zone-title { font-size:1.4rem; font-weight:700; color:#1a365d; }
+
+        .zone-items { display:flex; flex-wrap:wrap; gap:12px; min-height:160px; align-content:flex-start; }
+        
+        /* Body Parts Items INSIDE THE STRUCTURE ZONE */
+        .body-item { width:110px; height:110px; background: linear-gradient(145deg,#ffffff,#f0f4f8); border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:grab; box-shadow:0 8px 20px rgba(0,0,0,0.06); transition:all 0.25s ease; user-select:none; border:2px solid rgba(255,255,255,0.3); position: relative; }
+        .body-item:hover { transform:translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.15); }
+        .body-item.dragging { opacity:0.85; transform:scale(1.08) rotate(8deg); z-index:1200; box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+        .body-item.correct { border-color: #38a169; background: linear-gradient(145deg,#f0fff4,#dcffe4); cursor: default !important; opacity: 0.7 !important; }
+        .body-item.incorrect { border-color: #e53e3e; background: linear-gradient(145deg,#fff5f5,#fed7d7); }
+        .body-item.correct:hover { transform: none !important; box-shadow: none !important; }
+        .body-icon { font-size:2.6rem; margin-bottom:8px; }
+        .body-name { font-size:0.95rem; font-weight:700; color:#2d3748; text-align:center; }
+        
+        /* Function Cards */
+        .function-card { background: linear-gradient(145deg,#ffffff,#f7fafc); border-radius:12px; padding:15px; box-shadow:0 4px 12px rgba(0,0,0,0.05); border:2px solid #e2e8f0; transition: all 0.3s ease; cursor:grab; }
+        .function-card:hover { transform:translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .function-card.dragging { opacity:0.85; transform:scale(1.05); z-index:1200; }
+        .function-card.correct { border-color: #38a169; background: linear-gradient(145deg,#f0fff4,#dcffe4); cursor: default !important; opacity: 0.7 !important; }
+        .function-card.incorrect { border-color: #e53e3e; background: linear-gradient(145deg,#fff5f5,#fed7d7); }
+        .function-card.correct:hover { transform: none !important; box-shadow: none !important; }
+        .function-text { font-size:0.9rem; font-weight:600; color:#2d3748; line-height:1.4; }
+        
+        /* Hint Button */
+        .hint-btn { position: absolute; bottom: 15px; right: 15px; width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(45deg,#d69e2e,#b7791f); color: white; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
+        .hint-btn:hover { transform: scale(1.1); box-shadow: 0 4px 12px rgba(214, 158, 46, 0.3); }
+        
+        /* modal */
+        .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.75); z-index:2000; align-items:center; justify-content:center; }
+        .modal-content { background:linear-gradient(145deg,#ffffff,#f0f8ff); border-radius:24px; width:90%; max-width:700px; padding:36px; text-align:center; position:relative; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+        .modal-close { position:absolute; top:16px; right:16px; background:rgba(0,0,0,0.06); border:none; font-size:1.4rem; width:44px; height:44px; border-radius:50%; cursor:pointer; transition: all 0.3s ease; }
+        .modal-close:hover { background:rgba(0,0,0,0.12); transform: rotate(90deg); }
+        .modal-body-image { width:96px; height:96px; font-size:3.6rem; margin:0 auto 18px; display:flex; align-items:center; justify-content:center; border-radius:16px; background:rgba(255,255,255,0.9); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .modal-icon { font-size:3.6rem; margin-bottom:12px; }
+        .modal-title { font-size:2rem; font-weight:800; color:#1a365d; margin-bottom:8px; }
+        .modal-text { color:#4a5568; margin-bottom:18px; font-size:1rem; line-height:1.6; }
+        .modal-action { padding:12px 22px; background:linear-gradient(45deg,#4facfe,#00f2fe); color:white; border:none; border-radius:14px; font-weight:800; cursor:pointer; transition: all 0.3s ease; }
+        .modal-action:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(79, 172, 254, 0.4); }
+
+        .level-complete { display:none; text-align:center; padding:28px; background:linear-gradient(145deg,#ffffff,#f7fafc); border-radius:20px; box-shadow:0 20px 40px rgba(0,0,0,0.08); max-width:700px; margin:24px auto; }
+        .next-level-btn { padding:10px 18px; background:linear-gradient(45deg,#38b2ac,#2c9a94); color:white; border:none; border-radius:12px; font-weight:800; cursor:pointer; transition: all 0.3s ease; }
+        .next-level-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(56, 178, 172, 0.4); }
+        
+        /* Scoreboard */
+        .scoreboard { display: none; text-align: center; padding: 40px 0; }
+        .scoreboard-container { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.08); max-width: 800px; margin: 0 auto; }
+        .scoreboard-title { font-size: 2.5rem; color: #1a365d; margin-bottom: 20px; font-weight: 800; }
+        .scoreboard-subtitle { color: #64748b; font-size: 1.1rem; margin-bottom: 30px; }
+        .scoreboard-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 30px 0; }
+        .stat-box { background: #f7fafc; border-radius: 15px; padding: 20px; text-align: center; border: 2px solid #e2e8f0; }
+        .stat-value { font-size: 2.5rem; font-weight: 800; color: #4299e1; margin: 10px 0; }
+        .stat-label { color: #64748b; font-size: 1rem; }
+        .scoreboard-table { width: 100%; border-collapse: collapse; margin: 30px 0; }
+        .scoreboard-table th { background: #4299e1; color: white; padding: 15px; text-align: left; }
+        .scoreboard-table td { padding: 15px; border-bottom: 1px solid #e2e8f0; }
+        .scoreboard-table tr:hover { background: #f7fafc; }
+        
+        /* Level Selection */
+        .level-selection { display: none; text-align: center; padding: 30px; }
+        .level-buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
+        .level-btn { padding: 20px 30px; background: linear-gradient(45deg, #4299e1, #3182ce); color: white; border: none; border-radius: 15px; font-size: 1.2rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; min-width: 150px; }
+        .level-btn:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(66, 153, 225, 0.3); }
+        .level-btn i { font-size: 2rem; margin-bottom: 10px; display: block; }
+        .level-btn.completed { background: linear-gradient(45deg, #38a169, #2f855a); }
+        .level-btn.completed i { color: #c6f6d5; }
+
+        .particles { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-1; }
+        .particle { position:absolute; width:4px; height:4px; background:rgba(255,255,255,0.5); border-radius:50%; animation: float-particle 18s infinite linear; }
+
+        @keyframes float-particle { 0% { transform: translateY(100vh) translateX(0px); opacity:0; } 10%{opacity:1;} 90%{opacity:1;} 100%{transform:translateY(-100px) translateX(100px); opacity:0;} }
+
+        /* Streak Counter */
+        .streak-counter { position: fixed; top: 50%; right: 20px; transform: translateY(-50%); background: linear-gradient(45deg, #ff6b6b, #ee5a24); color: white; padding: 18px 24px; border-radius: 50px; font-weight: 800; font-size: 1.2rem; box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5); z-index: 500; animation: streak-bounce 2s infinite; display: none; }
+        @keyframes streak-bounce {
+            0%, 100% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-55%) scale(1.1); }
+        }
+        
+        /* Fun Animations */
+        @keyframes celebrate {
+            0% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(10deg); }
+            50% { transform: translateY(-10px) rotate(-10deg); }
+            75% { transform: translateY(-15px) rotate(5deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        
+        .celebrate { animation: celebrate 0.8s ease-in-out; }
+
+        /* Language-specific text styles */
+        .odia-text { font-family: 'Kalinga', 'Nirmala UI', 'Segoe UI', sans-serif; font-weight:600; }
+        .hindi-text { font-family: 'Nirmala UI', 'Segoe UI', sans-serif; font-weight:600; }
+
+        /* Confetti animation */
+        @keyframes confetti-fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        @media (max-width:968px) {
+            .game-container { grid-template-columns:1fr; gap:20px; }
+            .body-item { width:92px; height:92px; }
+            .game-stats { flex-direction:column; gap:10px; align-items:flex-start; }
+            .language-switcher { right:12px; top:12px; }
+            .streak-counter { display: none !important; }
+            .level-buttons { flex-direction: column; align-items: center; }
+            .scoreboard-stats { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    <div class="streak-counter" id="streak-counter">🔥 <span id="streak-count">0</span> Streak!</div>
+
+    <div class="language-switcher">
+        <button class="lang-btn active" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+        <button class="lang-btn" data-lang="hi">हिन्दी</button>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon"><i class="fas fa-heartbeat"></i></div>
+                    <div class="logo-text">STEM <span>Learn</span> Odisha</div>
+                </div>
+
+                <nav>
+                    <ul>
+                        <li><a href="student-dashboard.html" data-translate="nav-dashboard">Dashboard</a></li>
+                        <li><a href="about.html" data-translate="nav-about">About</a></li>
+                        <li><a href="contact.html" data-translate="nav-contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Instructions modal -->
+    <div class="instructions-modal" id="instructions-modal">
+        <div class="instructions-content">
+            <div class="language-switcher" style="position: relative; top: 0; right: 0; margin: 0 auto 20px auto; width: fit-content; background: rgba(26, 54, 93, 0.1);">
+                <button class="lang-btn active" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+                <button class="lang-btn" data-lang="hi">हिन्दी</button>
+            </div>
+            
+            <h2 class="instructions-title" id="instructions-title">Body Systems Explorer</h2>
+            <div class="instructions-text" id="instructions-text">
+                <p id="instructions-intro">Welcome to Body Systems Explorer! Learn about human anatomy by matching body parts with their functions.</p>
+                <ul class="instructions-list" id="instructions-list">
+                    <li id="instruction-1">Drag body parts to match them with their correct functions</li>
+                    <li id="instruction-2">Each correct match earns points and builds your streak</li>
+                    <li id="instruction-3">Maintain your streak to earn bonus points</li>
+                    <li id="instruction-4">Click on the hint button if you need help</li>
+                    <li id="instruction-5">Complete all matches to finish the level</li>
+                    <li id="instruction-6">Explore different body systems: Skeletal, Muscular, Circulatory, etc.</li>
+                </ul>
+                <p id="instructions-outro">Learn how amazing your body is! Good luck!</p>
+            </div>
+            <button class="start-game-btn" id="start-game-btn">Start Learning</button>
+        </div>
+    </div>
+
+    <!-- Scoreboard -->
+    <div class="scoreboard" id="scoreboard">
+        <div class="container">
+            <div class="scoreboard-container">
+                <h1 class="scoreboard-title" id="scoreboard-title">🎉 Game Complete! 🎉</h1>
+                <p class="scoreboard-subtitle" id="scoreboard-subtitle">Congratulations! You've completed all body systems!</p>
+                
+                <div class="scoreboard-stats">
+                    <div class="stat-box">
+                        <div class="stat-label">Total Score</div>
+                        <div class="stat-value" id="total-score">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Systems Completed</div>
+                        <div class="stat-value" id="systems-completed">0/6</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Perfect Matches</div>
+                        <div class="stat-value" id="total-perfect-matches">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Highest Streak</div>
+                        <div class="stat-value" id="highest-streak">0</div>
+                    </div>
+                </div>
+
+                <table class="scoreboard-table">
+                    <thead>
+                        <tr>
+                            <th>Body System</th>
+                            <th>Score</th>
+                            <th>Matches</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="scoreboard-table-body">
+                        <!-- Scores will be populated here -->
+                    </tbody>
+                </table>
+
+                <div style="margin-top: 30px;">
+                    <button class="next-level-btn" id="play-all-again-btn" style="background: linear-gradient(45deg,#38b2ac,#2c9a94); margin-right: 10px;">Play All Again</button>
+                    <button class="next-level-btn" id="back-to-menu-btn" style="background: linear-gradient(45deg,#4299e1,#3182ce);">Back to Menu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Level Selection -->
+    <div class="level-selection" id="level-selection">
+        <div class="container">
+            <h1 style="color: #1a365d; margin-bottom: 10px;" data-translate="choose-system">Choose a Body System</h1>
+            <p style="color: #64748b; margin-bottom: 30px;" data-translate="select-system-desc">Select a system to start learning about its structure and function</p>
+            
+            <div class="level-buttons">
+                <button class="level-btn" data-level="skeletal" id="skeletal-btn">
+                    <i class="fas fa-bone"></i>
+                    <span>Skeletal System</span>
+                </button>
+                <button class="level-btn" data-level="muscular" id="muscular-btn">
+                    <i class="fas fa-dumbbell"></i>
+                    <span>Muscular System</span>
+                </button>
+                <button class="level-btn" data-level="circulatory" id="circulatory-btn">
+                    <i class="fas fa-heart"></i>
+                    <span>Circulatory System</span>
+                </button>
+                <button class="level-btn" data-level="respiratory" id="respiratory-btn">
+                    <i class="fas fa-lungs"></i>
+                    <span>Respiratory System</span>
+                </button>
+                <button class="level-btn" data-level="digestive" id="digestive-btn">
+                    <i class="fas fa-stomach"></i>
+                    <span>Digestive System</span>
+                </button>
+                <button class="level-btn" data-level="nervous" id="nervous-btn">
+                    <i class="fas fa-brain"></i>
+                    <span>Nervous System</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game header -->
+    <section class="game-header" style="display:none;" id="game-header">
+        <div class="container">
+            <h1 id="system-title" data-translate="game-title">Body Systems Explorer</h1>
+            <p id="system-description" data-translate="game-desc">Match body parts with their functions to learn about human anatomy!</p>
+        </div>
+</section>
+
+    <!-- Game stats -->
+    <div class="container" style="display:none;" id="game-stats-container">
+        <div class="game-stats">
+            <div class="timer">
+                <i class="fas fa-clock"></i>
+                <span id="time">05:00</span>
+                <span id="time-label" style="display: none;">Time:</span>
+            </div>
+
+            <div class="score">
+                <i class="fas fa-star"></i>
+                <span id="score">Score: 0</span>
+            </div>
+
+            <div class="hints">
+                <i class="fas fa-fire"></i>
+                <span id="streak">Streak: 0</span>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar" id="progress" style="width:0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game area -->
+    <section class="game-area" style="display:none;" id="game-area">
+        <div class="container">
+            <!-- REMOVED ANATOMY DIAGRAM FROM HERE -->
+            
+            <div class="game-container">
+                <div class="drop-zone" id="structure-zone">
+                    <div class="zone-header">
+                        <div class="zone-icon structure-icon"><i class="fas fa-shapes"></i></div>
+                        <h2 class="zone-title" id="structure-title">Body Structures</h2>
+                    </div>
+                    <div class="zone-items" id="structure-items">
+                        <!-- Body parts will be dynamically added here INSIDE this zone -->
+                    </div>
+                    <button class="hint-btn" id="structure-hint" title="Show hint">
+                        <i class="fas fa-lightbulb"></i>
+                    </button>
+                </div>
+
+                <div class="drop-zone" id="function-zone">
+                    <div class="zone-header">
+                        <div class="zone-icon function-icon"><i class="fas fa-cogs"></i></div>
+                        <h2 class="zone-title" id="function-title">Body Functions</h2>
+                    </div>
+                    <div class="zone-items" id="function-items">
+                        <!-- Function cards will be dynamically added here -->
+                    </div>
+                    <button class="hint-btn" id="function-hint" title="Show hint">
+                        <i class="fas fa-lightbulb"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="level-complete" id="level-complete">
+                <div class="badge"><i class="fas fa-medal"></i></div>
+                <h2 class="level-title" id="level-title">Level Complete!</h2>
+                <p class="level-text" id="level-text">Congratulations! You've correctly matched all body parts with their functions!</p>
+                <div style="margin: 20px 0;">
+                    <p style="color: #3182ce; font-weight: 600;">Final Score: <span id="final-score">0</span></p>
+                    <p style="color: #38a169; font-weight: 600;">Perfect Matches: <span id="perfect-matches">0</span></p>
+                </div>
+                <div id="level-complete-buttons">
+                    <!-- Buttons will be dynamically added here based on the system -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback modal -->
+    <div class="modal" id="feedback-modal">
+        <div class="modal-content" id="modal-content">
+            <button class="modal-close" id="modal-close"><i class="fas fa-times"></i></button>
+
+            <div class="modal-body-image" id="modal-body-image">❤️</div>
+            <div class="modal-icon correct-icon" id="modal-icon"><i class="fas fa-check-circle"></i></div>
+            <h2 class="modal-title" id="modal-title">Correct!</h2>
+            <p class="modal-text" id="modal-text">Great! The heart pumps blood throughout the body.</p>
+            <div id="extra-info" style="background: #f7fafc; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #38b2ac;">
+                <p style="color: #4a5568; font-size: 0.9rem;"><strong>Did you know?</strong> <span id="fun-fact">The human heart beats about 100,000 times a day!</span></p>
+            </div>
+            <button class="modal-action" id="modal-action">Continue</button>
+        </div>
+    </div>
+
+    <script>
+        /* ---- DATA ---- */
+        const bodySystems = {
+            skeletal: {
+                title: { en: "Skeletal System", or: "କାଠିନ୍ୟ ତନ୍ତ୍ର", hi: "कंकाल प्रणाली" },
+                description: { 
+                    en: "The framework of bones that supports and protects the body", 
+                    or: "ଶରୀରକୁ ସମର୍ଥନ ଏବଂ ସୁରକ୍ଷା ଦେଉଥିବା ହାଡ଼ର ଫ୍ରେମୱାର୍କ", 
+                    hi: "हड्डियों का ढाँचा जो शरीर को सहारा और सुरक्षा प्रदान करता है" 
+                },
+                icon: "🦴",
+                color: "#4299e1",
+                items: [
+                    { 
+                        id: 1, 
+                        name: { en: "Skull", or: "ଖପୁରୀ", hi: "खोपड़ी" }, 
+                        icon: "💀", 
+                        function: { 
+                            en: "Protects the brain and supports facial structures", 
+                            or: "ମସ୍ତିଷ୍କକୁ ସୁରକ୍ଷା ଦେଇଥାଏ ଏବଂ ମୁହଁର ଗଠନକୁ ସମର୍ଥନ କରେ", 
+                            hi: "मस्तिष्क की रक्षा करता है और चेहरे की संरचनाओं को सहारा देता है" 
+                        },
+                        matchId: 1,
+                        funFact: {
+                            en: "The human skull is made up of 22 bones!",
+                            or: "ମାନବ ଖପୁରୀ 22 ଟି ହାଡ଼ରେ ଗଠିତ!",
+                            hi: "मानव खोपड़ी 22 हड्डियों से बनी होती है!"
+                        }
+                    },
+                    { 
+                        id: 2, 
+                        name: { en: "Spine", or: "ମେରୁଦଣ୍ଡ", hi: "रीढ़" }, 
+                        icon: "🦴", 
+                        function: { 
+                            en: "Supports body weight and protects the spinal cord", 
+                            or: "ଶରୀରର ଓଜନକୁ ସମର୍ଥନ କରେ ଏବଂ ସ୍ପାଇନାଲ୍ କର୍ଡକୁ ସୁରକ୍ଷା ଦେଇଥାଏ", 
+                            hi: "शरीर का वजन संभालता है और रीढ़ की हड्डी की रक्षा करता है" 
+                        },
+                        matchId: 2,
+                        funFact: {
+                            en: "The spine has 33 vertebrae when you're born, but some fuse together as you grow!",
+                            or: "ଜନ୍ମ ସମୟରେ ମେରୁଦଣ୍ଡରେ 33 କଶେରୁକା ଥାଏ, କିନ୍ତୁ ବଢ଼ିବା ସହିତ କେତେକ ଏକତ୍ର ମିଶିଯାଏ!",
+                            hi: "जन्म के समय रीढ़ में 33 कशेरुकाएँ होती हैं, लेकिन बढ़ने के साथ कुछ आपस में जुड़ जाती हैं!"
+                        }
+                    },
+                    { 
+                        id: 3, 
+                        name: { en: "Ribs", or: "ପଞ୍ଜରା", hi: "पसली" }, 
+                        icon: "🦴🦴", 
+                        function: { 
+                            en: "Protects the heart and lungs", 
+                            or: "ହୃଦୟ ଏବଂ ଫୁସ୍ଫୁସ୍କୁ ସୁରକ୍ଷା ଦେଇଥାଏ", 
+                            hi: "दिल और फेफड़ों की रक्षा करती है" 
+                        },
+                        matchId: 3,
+                        funFact: {
+                            en: "Most people have 12 pairs of ribs, but some have 11 or 13 pairs!",
+                            or: "ଅଧିକାଂଶ ଲୋକଙ୍କର 12 ଯୋଡ଼ି ପଞ୍ଜରା ଥାଏ, କିନ୍ତୁ କେତେକଙ୍କର 11 ବା 13 ଯୋଡ଼ି ଥାଏ!",
+                            hi: "ज्यादातर लोगों की 12 जोड़ी पसलियाँ होती हैं, लेकिन कुछ की 11 या 13 जोड़ी होती हैं!"
+                        }
+                    },
+                    { 
+                        id: 4, 
+                        name: { en: "Femur", or: "ଫିମର୍", hi: "जांघ की हड्डी" }, 
+                        icon: "🦵", 
+                        function: { 
+                            en: "Longest and strongest bone, supports body weight", 
+                            or: "ଦୀର୍ଘତମ ଏବଂ ଶକ୍ତିଶାଳୀ ହାଡ଼, ଶରୀରର ଓଜନକୁ ସମର୍ଥନ କରେ", 
+                            hi: "सबसे लंबी और मजबूत हड्डी, शरीर का वजन संभालती है" 
+                        },
+                        matchId: 4,
+                        funFact: {
+                            en: "The femur is so strong it can support up to 30 times your body weight!",
+                            or: "ଫିମର୍ ଏତେ ଶକ୍ତିଶାଳୀ ଯେ ଏହା ଆପଣଙ୍କ ଶରୀର ଓଜନର 30 ଗୁଣ ପର୍ଯ୍ୟନ୍ତ ସମର୍ଥନ କରିପାରେ!",
+                            hi: "जांघ की हड्डी इतनी मजबूत होती है कि यह आपके शरीर के वजन का 30 गुना तक संभाल सकती है!"
+                        }
+                    }
+                ]
+            },
+            muscular: {
+                title: { en: "Muscular System", or: "ମାଂସପେଶୀ ତନ୍ତ୍ର", hi: "मांसपेशी प्रणाली" },
+                description: { 
+                    en: "Muscles that enable movement and maintain posture", 
+                    or: "ଚଳନ ସକ୍ଷମ କରୁଥିବା ଏବଂ ଭଙ୍ଗୀ ବଜାୟ ରଖୁଥିବା ମାଂସପେଶୀ", 
+                    hi: "मांसपेशियाँ जो गति को संभव बनाती हैं और मुद्रा बनाए रखती हैं" 
+                },
+                icon: "💪",
+                color: "#ed8936",
+                items: [
+                    { 
+                        id: 1, 
+                        name: { en: "Biceps", or: "ବାଇସେପ୍ସ", hi: "बाइसेप्स" }, 
+                        icon: "💪", 
+                        function: { 
+                            en: "Bends the elbow and rotates the forearm", 
+                            or: "କୋଣିକାକୁ ବଙ୍କା କରେ ଏବଂ ଅଗ୍ରବାହୁକୁ ଘୁରାଏ", 
+                            hi: "कोहनी को मोड़ता है और अग्रभाग को घुमाता है" 
+                        },
+                        matchId: 1,
+                        funFact: {
+                            en: "Biceps means 'two-headed muscle' in Latin!",
+                            or: "ଲାଟିନ୍ରେ ବାଇସେପ୍ସର ଅର୍ଥ 'ଦୁଇଟି ମୁଣ୍ଡ ବିଶିଷ୍ଟ ମାଂସପେଶୀ'!",
+                            hi: "लैटिन में बाइसेप्स का अर्थ 'दो सिर वाली मांसपेशी' है!"
+                        }
+                    },
+                    { 
+                        id: 2, 
+                        name: { en: "Heart Muscle", or: "ହୃଦୟ ମାଂସପେଶୀ", hi: "हृदय की मांसपेशी" }, 
+                        icon: "❤️", 
+                        function: { 
+                            en: "Pumps blood throughout the body", 
+                            or: "ସାରା ଶରୀରରେ ରକ୍ତ ସଞ୍ଚାଳନ କରେ", 
+                            hi: "पूरे शरीर में रक्त पंप करता है" 
+                        },
+                        matchId: 2,
+                        funFact: {
+                            en: "The heart muscle never gets tired and beats about 100,000 times a day!",
+                            or: "ହୃଦୟ ମାଂସପେଶୀ କଦାପି ଥକେ ନାହିଁ ଏବଂ ଦିନକୁ ପ୍ରାୟ 100,000 ଥର ଧଡ଼କେ!",
+                            hi: "हृदय की मांसपेशी कभी थकती नहीं है और दिन में लगभग 100,000 बार धड़कती है!"
+                        }
+                    },
+                    { 
+                        id: 3, 
+                        name: { en: "Diaphragm", or: "ଡାଏଫ୍ରାମ୍", hi: "डायाफ्राम" }, 
+                        icon: "🎈", 
+                        function: { 
+                            en: "Helps in breathing by expanding and contracting", 
+                            or: "ପ୍ରସାରିତ ଏବଂ ସଙ୍କୁଚିତ ହୋଇଥିବା ଦ୍ୱାରା ଶ୍ୱାସକ୍ରିୟାରେ ସାହାଯ୍ୟ କରେ", 
+                            hi: "फैलकर और सिकुड़कर साँस लेने में मदद करता है" 
+                        },
+                        matchId: 3,
+                        funFact: {
+                            en: "The diaphragm is the primary muscle used in breathing and is shaped like a dome!",
+                            or: "ଡାଏଫ୍ରାମ୍ ଶ୍ୱାସକ୍ରିୟାରେ ବ୍ୟବହୃତ ପ୍ରାଥମିକ ମାଂସପେଶୀ ଏବଂ ଏହା ଏକ ଗୁମ୍ବଜ ପରି ଆକୃତିର!",
+                            hi: "डायाफ्राम साँस लेने में उपयोग की जाने वाली प्राथमिक मांसपेशी है और यह गुंबद के आकार की होती है!"
+                        }
+                    }
+                ]
+            },
+            circulatory: {
+                title: { en: "Circulatory System", or: "ରକ୍ତଚକ୍ର ତନ୍ତ୍ର", hi: "संचार प्रणाली" },
+                description: { 
+                    en: "Transports blood, oxygen, and nutrients throughout the body", 
+                    or: "ସାରା ଶରୀରରେ ରକ୍ତ, ଅମ୍ଳଜାନ, ଏବଂ ପୋଷକ ପଦାର୍ଥ ପରିବହନ କରେ", 
+                    hi: "पूरे शरीर में रक्त, ऑक्सीजन और पोषक तत्वों का परिवहन करता है" 
+                },
+                icon: "❤️",
+                color: "#e53e3e",
+                items: [
+                    { 
+                        id: 1, 
+                        name: { en: "Heart", or: "ହୃଦୟ", hi: "हृदय" }, 
+                        icon: "❤️", 
+                        function: { 
+                            en: "Pumps blood throughout the body", 
+                            or: "ସାରା ଶରୀରରେ ରକ୍ତ ସଞ୍ଚାଳନ କରେ", 
+                            hi: "पूरे शरीर में रक्त पंप करता है" 
+                        },
+                        matchId: 1,
+                        funFact: {
+                            en: "Your heart beats about 100,000 times a day, pumping about 2,000 gallons of blood!",
+                            or: "ଆପଣଙ୍କ ହୃଦୟ ଦିନକୁ ପ୍ରାୟ 100,000 ଥର ଧଡ଼କେ, ପ୍ରାୟ 2,000 ଗ୍ୟାଲନ୍ ରକ୍ତ ପମ୍ପ କରେ!",
+                            hi: "आपका हृदय दिन में लगभग 100,000 बार धड़कता है, लगभग 2,000 गैलन रक्त पंप करता है!"
+                        }
+                    },
+                    { 
+                        id: 2, 
+                        name: { en: "Arteries", or: "ଧମନୀ", hi: "धमनियाँ" }, 
+                        icon: "🩸", 
+                        function: { 
+                            en: "Carry oxygen-rich blood away from the heart", 
+                            or: "ହୃଦୟରୁ ଅମ୍ଳଜାନ-ସମୃଦ୍ଧ ରକ୍ତ ବହନ କରନ୍ତି", 
+                            hi: "हृदय से ऑक्सीजन युक्त रक्त ले जाती हैं" 
+                        },
+                        matchId: 2,
+                        funFact: {
+                            en: "The largest artery is the aorta, which is about the diameter of a garden hose!",
+                            or: "ବୃହତ୍ତମ ଧମନୀ ହେଉଛି ଏୟୋର୍ଟା, ଯାହା ଏକ ଗାର୍ଡେନ୍ ହୋଜ୍ର ବ୍ୟାସ ପରି!",
+                            hi: "सबसे बड़ी धमनी महाधमनी है, जो एक गार्डन होज़ के व्यास जितनी होती है!"
+                        }
+                    },
+                    { 
+                        id: 3, 
+                        name: { en: "Veins", or: "ଶିରା", hi: "शिराएँ" }, 
+                        icon: "💉", 
+                        function: { 
+                            en: "Return oxygen-poor blood back to the heart", 
+                            or: "ଅମ୍ଳଜାନ-ଦରିଦ୍ର ରକ୍ତକୁ ହୃଦୟକୁ ଫେରାଇ ଆଣନ୍ତି", 
+                            hi: "ऑक्सीजन रहित रक्त को हृदय में वापस लाती हैं" 
+                        },
+                        matchId: 3,
+                        funFact: {
+                            en: "Veins have valves that prevent blood from flowing backward!",
+                            or: "ଶିରାରେ କପାଟିକା ଥାଏ ଯାହା ରକ୍ତକୁ ପଛକୁ ପ୍ରବାହିତ ହେବାକୁ ପ୍ରତିରୋଧ କରେ!",
+                            hi: "शिराओं में वाल्व होते हैं जो रक्त को पीछे की ओर बहने से रोकते हैं!"
+                        }
+                    }
+                ]
+            },
+            respiratory: {
+                title: { en: "Respiratory System", or: "ଶ୍ୱାସକ୍ରିୟା ତନ୍ତ୍ର", hi: "श्वसन प्रणाली" },
+                description: { 
+                    en: "Brings oxygen into the body and removes carbon dioxide", 
+                    or: "ଶରୀରରେ ଅମ୍ଳଜାନ ଆଣେ ଏବଂ କାର୍ବନ ଡାଇଅକ୍ସାଇଡ୍ ବାହାର କରେ", 
+                    hi: "शरीर में ऑक्सीजन लाती है और कार्बन डाइऑक्साइड निकालती है" 
+                },
+                icon: "🫁",
+                color: "#38b2ac",
+                items: [
+                    { 
+                        id: 1, 
+                        name: { en: "Lungs", or: "ଫୁସ୍ଫୁସ୍", hi: "फेफड़े" }, 
+                        icon: "🫁", 
+                        function: { 
+                            en: "Exchange oxygen and carbon dioxide with blood", 
+                            or: "ରକ୍ତ ସହିତ ଅମ୍ଳଜାନ ଏବଂ କାର୍ବନ ଡାଇଅକ୍ସାଇଡ୍ ବିନିମୟ କରେ", 
+                            hi: "रक्त के साथ ऑक्सीजन और कार्बन डाइऑक्साइड का आदान-प्रदान करते हैं" 
+                        },
+                        matchId: 1,
+                        funFact: {
+                            en: "Your left lung is smaller than your right lung to make room for your heart!",
+                            or: "ଆପଣଙ୍କ ବାମ ଫୁସ୍ଫୁସ୍ ଆପଣଙ୍କ ଡାହାଣ ଫୁସ୍ଫୁସ୍ ଠାରୁ ଛୋଟ ଅଟେ, ଆପଣଙ୍କ ହୃଦୟ ପାଇଁ ଜାଗା କରିବା ପାଇଁ!",
+                            hi: "आपका बायाँ फेफड़ा दाएँ फेफड़े से छोटा होता है ताकि आपके दिल के लिए जगह बन सके!"
+                        }
+                    },
+                    { 
+                        id: 2, 
+                        name: { en: "Trachea", or: "ଶ୍ୱାସନଳୀ", hi: "श्वासनली" }, 
+                        icon: "🎺", 
+                        function: { 
+                            en: "Carries air to and from the lungs", 
+                            or: "ଫୁସ୍ଫୁସ୍ ପର୍ଯ୍ୟନ୍ତ ଏବଂ ଫୁସ୍ଫୁସ୍ରୁ ବାୟୁ ବହନ କରେ", 
+                            hi: "फेफड़ों से और फेफड़ों तक हवा ले जाती है" 
+                        },
+                        matchId: 2,
+                        funFact: {
+                            en: "The trachea is also called the windpipe and has C-shaped cartilage rings!",
+                            or: "ଶ୍ୱାସନଳୀକୁ ୱାଇଣ୍ଡପାଇପ୍ ମଧ୍ୟ କୁହାଯାଏ ଏବଂ ଏଥିରେ C-ଆକୃତିର କାର୍ଟିଲେଜ୍ ରିଙ୍ଗ୍ ଥାଏ!",
+                            hi: "श्वासनली को विंडपाइप भी कहा जाता है और इसमें C-आकार के उपास्थि के छल्ले होते हैं!"
+                        }
+                    },
+                    { 
+                        id: 3, 
+                        name: { en: "Diaphragm", or: "ଡାଏଫ୍ରାମ୍", hi: "डायाफ्राम" }, 
+                        icon: "🎈", 
+                        function: { 
+                            en: "Main muscle for breathing, expands and contracts", 
+                            or: "ଶ୍ୱାସକ୍ରିୟା ପାଇଁ ମୁଖ୍ୟ ମାଂସପେଶୀ, ପ୍ରସାରିତ ଏବଂ ସଙ୍କୁଚିତ ହୁଏ", 
+                            hi: "साँस लेने की मुख्य मांसपेशी, फैलती और सिकुड़ती है" 
+                        },
+                        matchId: 3,
+                        funFact: {
+                            en: "When you hiccup, it's actually your diaphragm having sudden spasms!",
+                            or: "ଯେତେବେଳେ ଆପଣ ହିଚକି ଆସେ, ସେ ପ୍ରକୃତରେ ଆପଣଙ୍କ ଡାଏଫ୍ରାମ୍ ହଠାତ୍ ସ୍ପାଜମ୍ ହେଉଥାଏ!",
+                            hi: "जब आपको हिचकी आती है, तो यह वास्तव में आपके डायाफ्राम में अचानक ऐंठन होती है!"
+                        }
+                    }
+                ]
+            },
+            digestive: {
+                title: { en: "Digestive System", or: "ପାଚନ ତନ୍ତ୍ର", hi: "पाचन प्रणाली" },
+                description: { 
+                    en: "Breaks down food and absorbs nutrients", 
+                    or: "ଖାଦ୍ୟକୁ ଭାଙ୍ଗେ ଏବଂ ପୋଷକ ପଦାର୍ଥ ଶୋଷଣ କରେ", 
+                    hi: "भोजन को तोड़ती है और पोषक तत्वों को अवशोषित करती है" 
+                },
+                icon: "🍎",
+                color: "#9f7aea",
+                items: [
+                    { 
+                        id: 1, 
+                        name: { en: "Stomach", or: "ପାକସ୍ଥଳୀ", hi: "पेट" }, 
+                        icon: "🤢", 
+                        function: { 
+                            en: "Breaks down food using acids and enzymes", 
+                            or: "ଅମ୍ଳ ଏବଂ ଏନଜାଇମ୍ ବ୍ୟବହାର କରି ଖାଦ୍ୟକୁ ଭାଙ୍ଗେ", 
+                            hi: "एसिड और एंजाइम का उपयोग करके भोजन को तोड़ता है" 
+                        },
+                        matchId: 1,
+                        funFact: {
+                            en: "Your stomach produces a new lining every 3 days to prevent it from digesting itself!",
+                            or: "ଆପଣଙ୍କ ପାକସ୍ଥଳୀ ପ୍ରତ୍ୟେକ 3 ଦିନରେ ଏକ ନୂତନ ଅସ୍ତର ଉତ୍ପାଦନ କରେ ଯାହା ଏହାକୁ ନିଜେ ପାଚନ କରିବାକୁ ପ୍ରତିରୋଧ କରେ!",
+                            hi: "आपका पेट हर 3 दिन में एक नई परत बनाता है ताकि वह खुद को पचा न सके!"
+                        }
+                    },
+                    { 
+                        id: 2, 
+                        name: { en: "Intestines", or: "ଆନ୍ତ୍ର", hi: "आंतें" }, 
+                        icon: "🌀", 
+                        function: { 
+                            en: "Absorbs nutrients and water from digested food", 
+                            or: "ପଚାଇଥିବା ଖାଦ୍ୟରୁ ପୋଷକ ପଦାର୍ଥ ଏବଂ ପାଣି ଶୋଷଣ କରେ", 
+                            hi: "पचे हुए भोजन से पोषक तत्व और पानी अवशोषित करती हैं" 
+                        },
+                        matchId: 2,
+                        funFact: {
+                            en: "Your small intestine is about 22 feet long - that's longer than a giraffe is tall!",
+                            or: "ଆପଣଙ୍କର ଛୋଟ ଆନ୍ତ୍ର ପ୍ରାୟ 22 ଫୁଟ୍ ଲମ୍ବା - ଏହା ଏକ ଜିରାଫ୍ ଠାରୁ ଉଚ୍ଚ!",
+                            hi: "आपकी छोटी आंत लगभग 22 फीट लंबी होती है - यह एक जिराफ़ की ऊंचाई से अधिक लंबी है!"
+                        }
+                    },
+                    { 
+                        id: 3, 
+                        name: { en: "Liver", or: "ଯକୃତ", hi: "यकृत" }, 
+                        icon: "🧬", 
+                        function: { 
+                            en: "Filters blood and produces bile for digestion", 
+                            or: "ରକ୍ତକୁ ଫିଲ୍ଟର୍ କରେ ଏବଂ ପାଚନ ପାଇଁ ପିତ୍ତ ଉତ୍ପାଦନ କରେ", 
+                            hi: "रक्त को फिल्टर करता है और पाचन के लिए पित्त का उत्पादन करता है" 
+                        },
+                        matchId: 3,
+                        funFact: {
+                            en: "The liver is the only organ that can regenerate itself - it can regrow even if 75% is removed!",
+                            or: "ଯକୃତ ହେଉଛି ଏକମାତ୍ର ଅଙ୍ଗ ଯାହା ନିଜେ ନିଜେ ପୁନରୁତ୍ପାଦନ କରିପାରେ - 75% କାଢ଼ି ଦେଲେ ମଧ୍ୟ ଏହା ପୁଣି ବଢ଼ିପାରେ!",
+                            hi: "यकृत एकमात्र अंग है जो खुद को पुनर्जीवित कर सकता है - 75% हटा दिए जाने पर भी यह फिर से बढ़ सकता है!"
+                        }
+                    }
+                ]
+            },
+            nervous: {
+                title: { en: "Nervous System", or: "ସ୍ନାୟୁ ତନ୍ତ୍ର", hi: "तंत्रिका प्रणाली" },
+                description: { 
+                    en: "Controls and coordinates body functions through electrical signals", 
+                    or: "ବିଦ୍ୟୁତ ସଙ୍କେତ ମାଧ୍ୟମରେ ଶରୀର କାର୍ଯ୍ୟକୁ ନିୟନ୍ତ୍ରଣ ଏବଂ ସମନ୍ୱୟ କରେ", 
+                    hi: "विद्युत संकेतों के माध्यम से शरीर के कार्यों को नियंत्रित और समन्वयित करती है" 
+                },
+                icon: "🧠",
+                color: "#d69e2e",
+                items: [
+                    { 
+                        id: 1, 
+                        name: { en: "Brain", or: "ମସ୍ତିଷ୍କ", hi: "मस्तिष्क" }, 
+                        icon: "🧠", 
+                        function: { 
+                            en: "Controls thoughts, memory, and body functions", 
+                            or: "ଚିନ୍ତା, ସ୍ମୃତି, ଏବଂ ଶରୀର କାର୍ଯ୍ୟକୁ ନିୟନ୍ତ୍ରଣ କରେ", 
+                            hi: "विचारों, स्मृति और शरीर के कार्यों को नियंत्रित करता है" 
+                        },
+                        matchId: 1,
+                        funFact: {
+                            en: "Your brain generates about 12-25 watts of electricity - enough to power a low-wattage LED light!",
+                            or: "ଆପଣଙ୍କ ମସ୍ତିଷ୍କ ପ୍ରାୟ 12-25 ୱାଟ୍ ବିଦ୍ୟୁତ୍ ସୃଷ୍ଟି କରେ - ଏକ ନିମ୍ନ-ୱାଟ୍ LED ଆଲୋକକୁ ଶକ୍ତି ଦେବା ପାଇଁ ଯଥେଷ୍ଟ!",
+                            hi: "आपका मस्तिष्क लगभग 12-25 वाट बिजली उत्पन्न करता है - जो कम वाट वाले एलईडी लाइट को चलाने के लिए पर्याप्त है!"
+                        }
+                    },
+                    { 
+                        id: 2, 
+                        name: { en: "Spinal Cord", or: "ସ୍ପାଇନାଲ୍ କର୍ଡ", hi: "मेरुरज्जु" }, 
+                        icon: "⚡", 
+                        function: { 
+                            en: "Transmits signals between brain and body", 
+                            or: "ମସ୍ତିଷ୍କ ଏବଂ ଶରୀର ମଧ୍ୟରେ ସଙ୍କେତ ପ୍ରେରଣ କରେ", 
+                            hi: "मस्तिष्क और शरीर के बीच संकेत संचारित करता है" 
+                        },
+                        matchId: 2,
+                        funFact: {
+                            en: "The spinal cord is about 18 inches long and contains about 13.5 million neurons!",
+                            or: "ସ୍ପାଇନାଲ୍ କର୍ଡ୍ ପ୍ରାୟ 18 ଇଞ୍ଚ ଲମ୍ବା ଏବଂ ପ୍ରାୟ 13.5 ନିୟୁଟନ୍ ନ୍ୟୁରୋନ୍ ଧାରଣ କରିଥାଏ!",
+                            hi: "मेरुरज्जु लगभग 18 इंच लंबी होती है और इसमें लगभग 13.5 मिलियन न्यूरॉन होते हैं!"
+                        }
+                    },
+                    { 
+                        id: 3, 
+                        name: { en: "Nerves", or: "ସ୍ନାୟୁ", hi: "नसें" }, 
+                        icon: "🕸️", 
+                        function: { 
+                            en: "Carry electrical signals throughout the body", 
+                            or: "ସାରା ଶରୀରରେ ବିଦ୍ୟୁତ ସଙ୍କେତ ବହନ କରନ୍ତି", 
+                            hi: "पूरे शरीर में विद्युत संकेत ले जाती हैं" 
+                        },
+                        matchId: 3,
+                        funFact: {
+                            en: "If you laid out all the nerves in your body end to end, they would stretch about 45 miles!",
+                            or: "ଯଦି ଆପଣ ଆପଣଙ୍କ ଶରୀରର ସମସ୍ତ ସ୍ନାୟୁକୁ ଶେଷରୁ ଶେଷ ପର୍ଯ୍ୟନ୍ତ ବିଛାଇବେ, ସେଗୁଡିକ ପ୍ରାୟ 45 ମାଇଲ୍ ବିସ୍ତୃତ ହେବ!",
+                            hi: "यदि आप अपने शरीर की सभी नसों को अंत से अंत तक बिछाएंगे, तो वे लगभग 45 मील तक फैल जाएंगी!"
+                        }
+                    }
+                ]
+            }
+        };
+
+        /* ---- STATE ---- */
+        let currentLanguage = 'en';
+        let score = 0;
+        let correctAnswers = 0;
+        let streak = 0;
+        let timeLeft = 300; // 5 minutes
+        let timerInterval = null;
+        let draggedItem = null;
+        let completedItems = [];
+        let isGameStarted = false;
+        let currentSystem = null;
+        let currentItems = [];
+        let usedHints = 0;
+        let gameScores = {}; // Store scores for each system
+        let completedSystems = new Set(); // Track completed systems
+        let currentSystemType = null; // Store current system type
+
+        /* ---- ELEMENTS ---- */
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const structureZone = document.getElementById('structure-zone');
+        const functionZone = document.getElementById('function-zone');
+        const structureItems = document.getElementById('structure-items');
+        const functionItems = document.getElementById('function-items');
+        const structureHintBtn = document.getElementById('structure-hint');
+        const functionHintBtn = document.getElementById('function-hint');
+        const scoreElement = document.getElementById('score');
+        const timeElement = document.getElementById('time');
+        const streakElement = document.getElementById('streak');
+        const progressElement = document.getElementById('progress');
+        const feedbackModal = document.getElementById('feedback-modal');
+        const modalContent = document.getElementById('modal-content');
+        const modalBodyImage = document.getElementById('modal-body-image');
+        const modalIcon = document.getElementById('modal-icon');
+        const modalTitle = document.getElementById('modal-title');
+        const modalText = document.getElementById('modal-text');
+        const funFactElement = document.getElementById('fun-fact');
+        const modalAction = document.getElementById('modal-action');
+        const modalClose = document.getElementById('modal-close');
+        const levelComplete = document.getElementById('level-complete');
+        const finalScoreElement = document.getElementById('final-score');
+        const perfectMatchesElement = document.getElementById('perfect-matches');
+        const instructionsModal = document.getElementById('instructions-modal');
+        const startGameBtn = document.getElementById('start-game-btn');
+        const levelSelection = document.getElementById('level-selection');
+        const gameHeader = document.getElementById('game-header');
+        const gameStatsContainer = document.getElementById('game-stats-container');
+        const gameArea = document.getElementById('game-area');
+        const streakCounter = document.getElementById('streak-counter');
+        const streakCountDisplay = document.getElementById('streak-count');
+        const systemTitle = document.getElementById('system-title');
+        const systemDescription = document.getElementById('system-description');
+        const structureTitle = document.getElementById('structure-title');
+        const functionTitle = document.getElementById('function-title');
+        const levelTitle = document.getElementById('level-title');
+        const levelText = document.getElementById('level-text');
+        const scoreboard = document.getElementById('scoreboard');
+        const totalScoreElement = document.getElementById('total-score');
+        const systemsCompletedElement = document.getElementById('systems-completed');
+        const totalPerfectMatchesElement = document.getElementById('total-perfect-matches');
+        const highestStreakElement = document.getElementById('highest-streak');
+        const scoreboardTableBody = document.getElementById('scoreboard-table-body');
+        const playAllAgainBtn = document.getElementById('play-all-again-btn');
+        const backToMenuBtn = document.getElementById('back-to-menu-btn');
+        const scoreboardTitle = document.getElementById('scoreboard-title');
+        const scoreboardSubtitle = document.getElementById('scoreboard-subtitle');
+        const levelCompleteButtons = document.getElementById('level-complete-buttons');
+
+        const translations = {
+            en: {
+                'nav-dashboard': 'Dashboard','nav-about':'About','nav-contact':'Contact',
+                'game-title':'Body Systems Explorer','game-desc':'Match body parts with their functions to learn about human anatomy!',
+                'correct-title':'Correct!','incorrect-title':'Try Again!',
+                'continue-btn':'Continue Learning','level-title':'Level Complete!','level-text':"Congratulations! You've correctly matched all body parts with their functions!",
+                'play-again':'Play Again','choose-another':'Choose Another System','view-scoreboard':'View Scoreboard',
+                'instructions-title':'Body Systems Explorer','instructions-intro':"Welcome to Body Systems Explorer! Learn about human anatomy by matching body parts with their functions.",
+                'instruction-1':'Drag body parts to match them with their correct functions',
+                'instruction-2':'Each correct match earns points and builds your streak',
+                'instruction-3':'Maintain your streak to earn bonus points',
+                'instruction-4':'Click on the hint button if you need help',
+                'instruction-5':'Complete all matches to finish the level',
+                'instruction-6':'Explore different body systems: Skeletal, Muscular, Circulatory, etc.',
+                'instructions-outro':'Learn how amazing your body is! Good luck!','start-game-btn':'Start Learning',
+                'structure-title':'Body Structures','function-title':'Body Functions',
+                'scoreboard-title':'🎉 Game Complete! 🎉','scoreboard-subtitle':'Congratulations! You\'ve completed all body systems!',
+                'play-all-again':'Play All Again','back-to-menu':'Back to Menu','total-score':'Total Score','systems-completed':'Systems Completed',
+                'perfect-matches':'Perfect Matches','highest-streak':'Highest Streak',
+                'choose-system':'Choose a Body System','select-system-desc':'Select a system to start learning about its structure and function',
+                'time-label':'Time:','score-label':'Score:','streak-label':'Streak:',
+                'completed': 'Completed',
+                'not-played': 'Not Played'
+            },
+            or: {
+                'nav-dashboard':'ଡ୍ୟାସବୋର୍ଡ','nav-about':'ବିଷୟରେ','nav-contact':'ଯୋଗାଯୋଗ',
+                'game-title':'ଶରୀର ତନ୍ତ୍ର ଅନ୍ଵେଷକ','game-desc':'ମାନବ ଶରୀରର ବିଷୟରେ ଶିଖିବା ପାଇଁ ଶରୀରର ଅଂଶଗୁଡିକୁ ସେମାନଙ୍କ କାର୍ଯ୍ୟ ସହିତ ମେଳ କରନ୍ତୁ!',
+                'correct-title':'ସଠିକ୍!','incorrect-title':'ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ!',
+                'continue-btn':'ଶିଖିବା ଜାରି ରଖନ୍ତୁ','level-title':'ସ୍ତର ସମ୍ପୂର୍ଣ୍ଣ!','level-text':'ଅଭିନନ୍ଦନ! ଆପଣ ସମସ୍ତ ଶରୀର ଅଂଶଗୁଡିକୁ ସେମାନଙ୍କ କାର୍ଯ୍ୟ ସହିତ ସଠିକ୍ ଭାବରେ ମେଳ କରିଛନ୍ତି!',
+                'play-again':'ପୁଣି ଖେଳନ୍ତୁ','choose-another':'ଅନ୍ୟ ଏକ ତନ୍ତ୍ର ବାଛନ୍ତୁ','view-scoreboard':'ସ୍କୋରବୋର୍ଡ ଦେଖନ୍ତୁ',
+                'instructions-title':'ଶରୀର ତନ୍ତ୍ର ଅନ୍ଵେଷକ','instructions-intro':'ଶରୀର ତନ୍ତ୍ର ଅନ୍ଵେଷକକୁ ସ୍ୱାଗତ! ଶରୀରର ଅଂଶଗୁଡିକୁ ସେମାନଙ୍କ କାର୍ଯ୍ୟ ସହିତ ମେଳ କରି ମାନବ ଶରୀର ବିଷୟରେ ଶିଖନ୍ତୁ।',
+                'instruction-1':'ଶରୀରର ଅଂଶଗୁଡିକୁ ସେମାନଙ୍କ ସଠିକ୍ କାର୍ଯ୍ୟ ସହିତ ମେଳ କରିବା ପାଇଁ ଟାଣନ୍ତୁ',
+                'instruction-2':'ପ୍ରତ୍ୟେକ ସଠିକ୍ ମେଳ ଆପଣଙ୍କୁ ପଏଣ୍ଟ ଦେବ ଏବଂ ଆପଣଙ୍କର ଧାରା ଗଠନ କରିବ',
+                'instruction-3':'ବନୁସ୍ ପଏଣ୍ଟ ପାଇବା ପାଇଁ ଆପଣଙ୍କର ଧାରା ବଜାୟ ରଖନ୍ତୁ',
+                'instruction-4':'ଆପଣଙ୍କୁ ସାହାଯ୍ୟ ଦରକାର ହେଲେ ସୂଚନା ବଟନ୍ ଉପରେ କ୍ଲିକ୍ କରନ୍ତୁ',
+                'instruction-5':'ସ୍ତର ସମାପ୍ତ କରିବା ପାଇଁ ସମସ୍ତ ମେଳ ସମାପ୍ତ କରନ୍ତୁ',
+                'instruction-6':'ବିଭିନ୍ନ ଶରୀର ତନ୍ତ୍ର ଅନ୍ଵେଷଣ କରନ୍ତୁ: କାଠିନ୍ୟ, ମାଂସପେଶୀ, ରକ୍ତଚକ୍ର, ଇତ୍ୟାଦି।',
+                'instructions-outro':'ଶିଖନ୍ତୁ ଆପଣଙ୍କ ଶରୀର କେତେ ଆଶ୍ଚର୍ଯ୍ୟଜନକ! ଶୁଭକାମନା!','start-game-btn':'ଶିଖିବା ଆରମ୍ଭ କରନ୍ତୁ',
+                'structure-title':'ଶରୀର ଗଠନ','function-title':'ଶରୀର କାର୍ଯ୍ୟ',
+                'scoreboard-title':'🎉 ଖେଳ ସମ୍ପୂର୍ଣ୍ଣ! 🎉','scoreboard-subtitle':'ଅଭିନନ୍ଦନ! ଆପଣ ସମସ୍ତ ଶରୀର ତନ୍ତ୍ର ସମାପ୍ତ କରିଛନ୍ତି!',
+                'play-all-again':'ସମସ୍ତ ପୁଣି ଖେଳନ୍ତୁ','back-to-menu':'ମେନୁକୁ ଫେରନ୍ତୁ','total-score':'ମୋଟ ସ୍କୋର','systems-completed':'ତନ୍ତ୍ର ସମ୍ପୂର୍ଣ୍ଣ',
+                'perfect-matches':'ସଠିକ୍ ମେଳ','highest-streak':'ଉଚ୍ଚତମ ଧାରା',
+                'choose-system':'ଏକ ଶରୀର ତନ୍ତ୍ର ବାଛନ୍ତୁ','select-system-desc':'ଏହାର ସ୍ଥାପତ୍ୟ ଏବଂ କାର୍ଯ୍ୟ ବିଷୟରେ ଶିଖିବା ଆରମ୍ଭ କରିବା ପାଇଁ ଏକ ତନ୍ତ୍ର ବାଛନ୍ତୁ',
+                'time-label':'ସମୟ:','score-label':'ସ୍କୋର:','streak-label':'ଧାରା:',
+                'completed': 'ସମ୍ପୂର୍ଣ୍ଣ',
+                'not-played': 'ଖେଳାଯାଇନାହିଁ'
+            },
+            hi: {
+                'nav-dashboard':'डैशबोर्ड','nav-about':'हमारे बारे में','nav-contact':'संपर्क करें',
+                'game-title':'शरीर प्रणाली अन्वेषक','game-desc':'मानव शरीर रचना के बारे में जानने के लिए शरीर के अंगों को उनके कार्यों से मिलाएँ!',
+                'correct-title':'सही!','incorrect-title':'फिर से कोशिश करें!',
+                'continue-btn':'सीखना जारी रखें','level-title':'स्तर पूरा!','level-text':'बधाई हो! आपने सभी शरीर अंगों को उनके कार्यों से सही ढंग से मिला लिया है!',
+                'play-again':'फिर से खेलें','choose-another':'दूसरी प्रणाली चुनें','view-scoreboard':'स्कोरबोर्ड देखें',
+                'instructions-title':'शरीर प्रणाली अन्वेषक','instructions-intro':'शरीर प्रणाली अन्वेषक में आपका स्वागत है! शरीर के अंगों को उनके कार्यों से मिलाकर मानव शरीर रचना के बारे में जानें।',
+                'instruction-1':'शरीर के अंगों को उनके सही कार्यों से मिलाने के लिए खींचें',
+                'instruction-2':'प्रत्येक सही मिलान अंक अर्जित करता है और आपकी लगातार सफलता बनाता है',
+                'instruction-3':'बोनस अंक पाने के लिए अपनी लगातार सफलता बनाए रखें',
+                'instruction-4':'यदि आपको सहायता चाहिए तो संकेत बटन पर क्लिक करें',
+                'instruction-5':'स्तर को पूरा करने के लिए सभी मिलान पूरे करें',
+                'instruction-6':'विभिन्न शरीर प्रणालियों का अन्वेषण करें: कंकाल, मांसपेशी, संचार, आदि।',
+                'instructions-outro':'जानें कि आपका शरीर कितना अद्भुत है! शुभकामनाएँ!','start-game-btn':'सीखना शुरू करें',
+                'structure-title':'शरीर संरचनाएँ','function-title':'शरीर कार्य',
+                'scoreboard-title':'🎉 खेल पूरा! 🎉','scoreboard-subtitle':'बधाई हो! आपने सभी शरीर प्रणालियों को पूरा कर लिया है!',
+                'play-all-again':'सभी फिर से खेलें','back-to-menu':'मेनू पर वापस जाएं','total-score':'कुल स्कोर','systems-completed':'प्रणालियाँ पूरी हुईं',
+                'perfect-matches':'सही मिलान','highest-streak':'उच्चतम लगातार सफलता',
+                'choose-system':'एक शरीर प्रणाली चुनें','select-system-desc':'इसकी संरचना और कार्य के बारे में सीखना शुरू करने के लिए एक प्रणाली चुनें',
+                'time-label':'समय:','score-label':'स्कोर:','streak-label':'लगातार सफलता:',
+                'completed': 'पूर्ण',
+                'not-played': 'नहीं खेला गया'
+            }
+        };
+
+        /* ---- INIT ---- */
+        function init() {
+            createParticles();
+
+            // Initialize game scores
+            for (const system in bodySystems) {
+                gameScores[system] = {
+                    score: 0,
+                    completed: false,
+                    time: 0,
+                    matches: 0,
+                    totalMatches: bodySystems[system].items.length
+                };
+            }
+
+            // Add event listeners to all language buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', function() { 
+                    const lang = this.getAttribute('data-lang'); 
+                    switchLanguage(lang); 
+                });
+            });
+
+            startGameBtn.addEventListener('click', showLevelSelection);
+            modalAction.addEventListener('click', closeModal);
+            modalClose.addEventListener('click', closeModal);
+            playAllAgainBtn.addEventListener('click', resetAllGames);
+            backToMenuBtn.addEventListener('click', showLevelSelection);
+            
+            // Level selection buttons
+            document.querySelectorAll('.level-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    startGame(this.dataset.level);
+                });
+            });
+            
+            // Hint buttons
+            structureHintBtn.addEventListener('click', () => showHint('structure'));
+            functionHintBtn.addEventListener('click', () => showHint('function'));
+
+            switchLanguage('en');
+        }
+
+        function createParticles() {
+            const container = document.getElementById('particles');
+            container.innerHTML = '';
+            for (let i=0;i<18;i++){
+                const p = document.createElement('div'); p.className='particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.top = Math.random() * 100 + '%';
+                p.style.animationDelay = `${Math.random()*10}s`;
+                container.appendChild(p);
+            }
+        }
+
+        function showLevelSelection() {
+            instructionsModal.style.display = 'none';
+            gameHeader.style.display = 'none';
+            gameStatsContainer.style.display = 'none';
+            gameArea.style.display = 'none';
+            levelComplete.style.display = 'none';
+            scoreboard.style.display = 'none';
+            levelSelection.style.display = 'block';
+            
+            // Update level buttons to show completion status
+            for (const system in bodySystems) {
+                const btn = document.getElementById(`${system}-btn`);
+                if (btn) {
+                    if (gameScores[system].completed) {
+                        btn.classList.add('completed');
+                        btn.innerHTML = `<i class="fas fa-check-circle"></i><span>${bodySystems[system].title[currentLanguage]}</span>`;
+                    } else {
+                        btn.classList.remove('completed');
+                        btn.innerHTML = `<i class="${btn.dataset.icon || getIconForSystem(system)}"></i><span>${bodySystems[system].title[currentLanguage]}</span>`;
+                    }
+                }
+            }
+        }
+
+        function getIconForSystem(system) {
+            switch(system) {
+                case 'skeletal': return 'fas fa-bone';
+                case 'muscular': return 'fas fa-dumbbell';
+                case 'circulatory': return 'fas fa-heart';
+                case 'respiratory': return 'fas fa-lungs';
+                case 'digestive': return 'fas fa-stomach';
+                case 'nervous': return 'fas fa-brain';
+                default: return 'fas fa-question';
+            }
+        }
+
+        /* ---- GAME SETUP ---- */
+        function startGame(systemType) {
+            levelSelection.style.display = 'none';
+            gameHeader.style.display = 'block';
+            gameStatsContainer.style.display = 'block';
+            gameArea.style.display = 'block';
+            levelComplete.style.display = 'none';
+            scoreboard.style.display = 'none';
+            
+            // Set current system
+            currentSystem = bodySystems[systemType];
+            currentSystemType = systemType; // Store the system type
+            currentItems = [...currentSystem.items];
+            
+            // Reset stats for this game
+            score = 0; 
+            correctAnswers = 0; 
+            streak = 0; 
+            timeLeft = 300; 
+            completedItems = [];
+            usedHints = 0;
+            
+            // Clear zones
+            structureItems.innerHTML = '';
+            functionItems.innerHTML = '';
+            
+            // Update UI with system info
+            systemTitle.textContent = currentSystem.title[currentLanguage];
+            systemDescription.textContent = currentSystem.description[currentLanguage];
+            
+            // Update zone titles
+            structureTitle.textContent = translations[currentLanguage]['structure-title'];
+            functionTitle.textContent = translations[currentLanguage]['function-title'];
+            
+            // Create items - body parts go directly into structure zone
+            createBodyItems();
+            
+            // Create function cards (shuffled)
+            createFunctionCards();
+            
+            // Setup drag and drop
+            setupDragAndDrop();
+            
+            // Start timer
+            startTimer();
+            
+            // Update UI
+            updateScore(); 
+            updateStreak();
+        }
+
+        function createBodyItems() {
+            // Shuffle items
+            const shuffledItems = [...currentItems].sort(() => Math.random() - 0.5);
+            
+            shuffledItems.forEach((item, idx) => {
+                const el = document.createElement('div');
+                el.className = 'body-item';
+                el.draggable = true;
+                el.dataset.id = item.id;
+                el.dataset.matchId = item.matchId;
+                el.style.transitionDelay = `${idx * 100}ms`;
+                el.style.borderColor = currentSystem.color + '80';
+                el.innerHTML = `
+                    <div class="body-icon">${item.icon}</div>
+                    <div class="body-name">${item.name[currentLanguage]}</div>
+                `;
+                structureItems.appendChild(el); // Add to structure zone
+            });
+        }
+
+        function createFunctionCards() {
+            // Shuffle functions
+            const shuffledFunctions = [...currentItems]
+                .map(item => ({ id: item.matchId, text: item.function[currentLanguage] }))
+                .sort(() => Math.random() - 0.5);
+            
+            shuffledFunctions.forEach((func, idx) => {
+                const card = document.createElement('div');
+                card.className = 'function-card';
+                card.draggable = true;
+                card.dataset.id = func.id;
+                card.style.transitionDelay = `${idx * 100}ms`;
+                card.innerHTML = `
+                    <div class="function-text">${func.text}</div>
+                `;
+                functionItems.appendChild(card); // Add to function zone
+            });
+        }
+
+        function setupDragAndDrop() {
+            const bodyItems = document.querySelectorAll('.body-item');
+            const functionCards = document.querySelectorAll('.function-card');
+            const dropZones = document.querySelectorAll('.drop-zone');
+
+            // Make body items draggable to function zone
+            bodyItems.forEach(item => {
+                item.addEventListener('dragstart', dragStart);
+                item.addEventListener('dragend', dragEnd);
+            });
+
+            // Make function cards draggable to structure zone  
+            functionCards.forEach(card => {
+                card.addEventListener('dragstart', dragStart);
+                card.addEventListener('dragend', dragEnd);
+            });
+
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', dragOver);
+                zone.addEventListener('dragenter', dragEnter);
+                zone.addEventListener('dragleave', dragLeave);
+                zone.addEventListener('drop', drop);
+            });
+        }
+
+        function dragStart(e) {
+            if (this.classList.contains('correct')) {
+                e.preventDefault();
+                return;
+            }
+            
+            draggedItem = this;
+            e.dataTransfer.setData('text/plain', this.dataset.id);
+            this.classList.add('dragging');
+            setTimeout(()=> this.style.opacity = '0.5', 10);
+        }
+        
+        function dragEnd() { 
+            this.classList.remove('dragging'); 
+            this.style.opacity='1'; 
+        }
+
+        function dragOver(e) { 
+            e.preventDefault(); 
+        }
+        
+        function dragEnter(e) { 
+            e.preventDefault(); 
+            this.classList.add('highlight'); 
+        }
+        
+        function dragLeave() { 
+            this.classList.remove('highlight'); 
+        }
+
+        function drop(e) {
+            e.preventDefault();
+            this.classList.remove('highlight');
+            
+            // Don't allow dropping if the item is already matched/correct
+            if (draggedItem.classList.contains('correct')) {
+                draggedItem = null;
+                return;
+            }
+            
+            // Determine what was dropped and where
+            if (draggedItem.classList.contains('body-item')) {
+                // Body item dropped - only allow in function zone
+                if (this.id === 'function-zone') {
+                    // Check if there's already a function card here that matches this body item
+                    const matchingFunctionCard = Array.from(this.querySelectorAll('.function-card')).find(card => 
+                        card.dataset.id === draggedItem.dataset.matchId && !card.classList.contains('correct')
+                    );
+                    
+                    if (matchingFunctionCard) {
+                        handleBodyToFunctionDrop(draggedItem, matchingFunctionCard, this);
+                    } else {
+                        // Find any unmatched function card
+                        const anyFunctionCard = Array.from(this.querySelectorAll('.function-card:not(.correct)'))[0];
+                        if (anyFunctionCard) {
+                            handleBodyToFunctionDrop(draggedItem, anyFunctionCard, this);
+                        } else {
+                            handleIncorrectDrop(draggedItem, this);
+                        }
+                    }
+                } else {
+                    // Wrong zone - return item to original position
+                    handleIncorrectDrop(draggedItem, this);
+                }
+            } else if (draggedItem.classList.contains('function-card')) {
+                // Function card dropped - only allow in structure zone
+                if (this.id === 'structure-zone') {
+                    // Check if there's already a body item here that matches this function
+                    const matchingBodyItem = Array.from(this.querySelectorAll('.body-item')).find(item => 
+                        item.dataset.matchId === draggedItem.dataset.id && !item.classList.contains('correct')
+                    );
+                    
+                    if (matchingBodyItem) {
+                        handleFunctionToStructureDrop(draggedItem, matchingBodyItem, this);
+                    } else {
+                        // Find any unmatched body item
+                        const anyBodyItem = Array.from(this.querySelectorAll('.body-item:not(.correct)'))[0];
+                        if (anyBodyItem) {
+                            handleFunctionToStructureDrop(draggedItem, anyBodyItem, this);
+                        } else {
+                            handleIncorrectDrop(draggedItem, this);
+                        }
+                    }
+                } else {
+                    // Wrong zone - return item to original position
+                    handleIncorrectDrop(draggedItem, this);
+                }
+            }
+            
+            draggedItem = null;
+        }
+
+        /* ---- GAME LOGIC ---- */
+        function handleBodyToFunctionDrop(bodyItem, functionCard, zone) {
+            const bodyData = currentItems.find(item => item.id == bodyItem.dataset.id);
+            
+            if (!bodyData) {
+                handleIncorrectDrop(bodyItem, zone);
+                return;
+            }
+            
+            // Check if it's a match (body's matchId should match function's id)
+            if (functionCard.dataset.id == bodyData.matchId) {
+                handleCorrectMatch(bodyData, bodyItem, functionCard, zone);
+            } else {
+                handleIncorrectDrop(bodyItem, zone);
+            }
+        }
+
+        function handleFunctionToStructureDrop(functionCard, bodyItem, zone) {
+            const functionData = currentItems.find(item => item.matchId == functionCard.dataset.id);
+            
+            if (!functionData) {
+                handleIncorrectDrop(functionCard, zone);
+                return;
+            }
+            
+            // Check if it's a match (function's id should match body's matchId)
+            if (bodyItem.dataset.matchId == functionData.matchId) {
+                handleCorrectMatch(functionData, bodyItem, functionCard, zone);
+            } else {
+                handleIncorrectDrop(functionCard, zone);
+            }
+        }
+
+        function handleCorrectMatch(item, bodyElement, functionElement, zone) {
+            if (completedItems.includes(item.id)) return;
+            
+            completedItems.push(item.id);
+            
+            // Calculate points
+            const basePoints = 20;
+            const streakBonus = Math.min(streak * 5, 30);
+            const timeBonus = Math.max(0, Math.floor(timeLeft / 60) * 5);
+            const pointsEarned = basePoints + streakBonus + timeBonus;
+            
+            score += pointsEarned;
+            correctAnswers++;
+            streak++;
+            
+            updateScore();
+            updateStreak();
+            
+            // Visual feedback
+            bodyElement.classList.add('correct');
+            functionElement.classList.add('correct');
+            
+            // Show feedback modal
+            showFeedback(true, item);
+            
+            // Check if level is complete
+            if (correctAnswers >= currentItems.length) {
+                setTimeout(() => completeLevel(), 1000);
+            }
+        }
+
+        function handleIncorrectDrop(item, zone) {
+            streak = 0;
+            updateStreak();
+            
+            zone.classList.add('incorrect');
+            item.classList.add('incorrect');
+            
+            // Visual feedback
+            item.style.animation = 'shake 0.5s';
+            
+            setTimeout(() => {
+                zone.classList.remove('incorrect');
+                item.classList.remove('incorrect');
+                item.style.animation = '';
+            }, 1000);
+            
+            showFeedback(false, null);
+        }
+
+        function createConnection(element1, element2) {
+            // Empty function - no more connecting lines
+            // This function intentionally does nothing to remove the lines
+        }
+
+        /* ---- HINTS ---- */
+        function showHint(type) {
+            if (usedHints >= 3) {
+                alert(translations[currentLanguage]['instruction-4']);
+                return;
+            }
+            
+            usedHints++;
+            
+            if (type === 'structure') {
+                // Highlight all unmatched body items
+                document.querySelectorAll('.body-item:not(.correct)').forEach(item => {
+                    item.classList.add('celebrate');
+                    item.style.boxShadow = `0 0 20px ${currentSystem.color}`;
+                    
+                    setTimeout(() => {
+                        item.classList.remove('celebrate');
+                        item.style.boxShadow = '';
+                    }, 1000);
+                });
+            } else {
+                // Highlight all unmatched function cards
+                document.querySelectorAll('.function-card:not(.correct)').forEach(card => {
+                    card.classList.add('celebrate');
+                    card.style.boxShadow = `0 0 20px ${currentSystem.color}`;
+                    
+                    setTimeout(() => {
+                        card.classList.remove('celebrate');
+                        card.style.boxShadow = '';
+                    }, 1000);
+                });
+            }
+        }
+
+        /* ---- MODAL & FEEDBACK ---- */
+        function showFeedback(isCorrect, item) {
+            if (isCorrect && item) {
+                modalBodyImage.textContent = item.icon;
+                modalIcon.innerHTML = '<i class="fas fa-check-circle" style="color:#38a169;"></i>';
+                modalTitle.textContent = translations[currentLanguage]['correct-title'];
+                modalText.textContent = `${item.name[currentLanguage]}: ${item.function[currentLanguage]}`;
+                funFactElement.textContent = item.funFact[currentLanguage];
+                document.getElementById('extra-info').style.display = 'block';
+                modalAction.textContent = translations[currentLanguage]['continue-btn'];
+            } else {
+                modalBodyImage.textContent = '❌';
+                modalIcon.innerHTML = '<i class="fas fa-times-circle" style="color:#e53e3e;"></i>';
+                modalTitle.textContent = translations[currentLanguage]['incorrect-title'];
+                modalText.textContent = currentLanguage === 'en' 
+                    ? "That's not quite right. Try again!" 
+                    : currentLanguage === 'or' 
+                        ? "ସେତେ ଠିକ୍ ନୁହେଁ। ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ!" 
+                        : "यह बिल्कुल सही नहीं है। फिर से कोशिश करें!";
+                document.getElementById('extra-info').style.display = 'none';
+                modalAction.textContent = translations[currentLanguage]['continue-btn'];
+            }
+
+            feedbackModal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            feedbackModal.style.display = 'none';
+        }
+
+        /* ---- UI Updates ---- */
+        function updateScore() {
+            const scoreLabel = translations[currentLanguage]['score-label'] || 'Score:';
+            scoreElement.textContent = `${scoreLabel} ${score}`;
+            const maxPossible = currentItems.length * 50; // Approximate max score
+            const pct = Math.min(100, Math.round((score / (maxPossible || 1)) * 100));
+            progressElement.style.width = `${pct}%`;
+        }
+
+        function updateStreak() {
+            const streakLabel = translations[currentLanguage]['streak-label'] || 'Streak:';
+            streakElement.textContent = `${streakLabel} ${streak}`;
+            streakCountDisplay.textContent = streak;
+            
+            // Show streak counter when streak is 3 or more
+            if (streak >= 3) {
+                streakCounter.style.display = 'block';
+            } else {
+                streakCounter.style.display = 'none';
+            }
+        }
+
+        /* ---- TIMER ---- */
+        function startTimer() {
+            clearInterval(timerInterval);
+            updateTimerDisplay();
+            timerInterval = setInterval(()=> {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    showTimeUpModal();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timeLeft/60);
+            const s = timeLeft % 60;
+            timeElement.textContent = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+        }
+
+        function showTimeUpModal() {
+            modalIcon.innerHTML = '<i class="fas fa-clock" style="color:#e53e3e;"></i>';
+            modalTitle.textContent = currentLanguage === 'en' ? "Time's Up!" : 
+                                   (currentLanguage === 'or' ? 'ସମୟ ସରିଗଲା!' : 'समय समाप्त!');
+            modalText.textContent = currentLanguage === 'en' 
+                ? `Time finished. You scored ${score} points and matched ${correctAnswers} out of ${currentItems.length} items.` 
+                : currentLanguage === 'or' 
+                    ? `ସମୟ ସମାପ୍ତ! ଆପଣ ${score} ପଏଣ୍ଟ ପାଇଛନ୍ତି ଏବଂ ${currentItems.length} ଟି ମଧ୍ୟରୁ ${correctAnswers} ଟି ଆଇଟମ୍ ମେଳ କରିଛନ୍ତି।` 
+                    : `समय समाप्त! आपने ${score} अंक प्राप्त किए और ${currentItems.length} में से ${correctAnswers} आइटम मिलाए।`;
+            modalAction.textContent = currentLanguage === 'en' ? 'Try Again' : 
+                                    (currentLanguage === 'or' ? 'ପୁଣି ଚେଷ୍ଟା' : 'फिर से कोशिश करें');
+            modalAction.onclick = function() {
+                if (currentSystem) {
+                    startGame(currentSystemType);
+                    closeModal();
+                }
+            };
+            feedbackModal.style.display = 'flex';
+        }
+
+        /* ---- LEVEL COMPLETION ---- */
+        function completeLevel() {
+            clearInterval(timerInterval);
+            
+            // Calculate final score with time bonus
+            const timeBonus = Math.max(0, Math.floor(timeLeft/10) * 10);
+            score += timeBonus;
+            
+            // Update final score display
+            finalScoreElement.textContent = score;
+            perfectMatchesElement.textContent = `${correctAnswers}/${currentItems.length}`;
+            
+            // Update level completion text
+            levelTitle.textContent = translations[currentLanguage]['level-title'];
+            levelText.textContent = translations[currentLanguage]['level-text'];
+            
+            // Save score for this system
+            if (currentSystemType) {
+                gameScores[currentSystemType] = {
+                    score: score,
+                    completed: true,
+                    time: 300 - timeLeft, // Time taken in seconds
+                    matches: correctAnswers,
+                    totalMatches: currentItems.length
+                };
+                completedSystems.add(currentSystemType);
+            }
+            
+            // Add language switcher to level complete dialog
+            if (!document.querySelector('#level-complete .language-switcher')) {
+                const langSwitcherHTML = `
+                    <div class="language-switcher" style="position: relative; top: 0; right: 0; margin: 0 auto 20px auto; width: fit-content; background: rgba(26, 54, 93, 0.1);">
+                        <button class="lang-btn ${currentLanguage === 'en' ? 'active' : ''}" data-lang="en">English</button>
+                        <button class="lang-btn ${currentLanguage === 'or' ? 'active' : ''}" data-lang="or">ଓଡ଼ିଆ</button>
+                        <button class="lang-btn ${currentLanguage === 'hi' ? 'active' : ''}" data-lang="hi">हिन्दी</button>
+                    </div>
+                `;
+                levelComplete.insertAdjacentHTML('afterbegin', langSwitcherHTML);
+                
+                // Add event listeners to the new language buttons
+                levelComplete.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.addEventListener('click', function() { 
+                        const lang = this.getAttribute('data-lang'); 
+                        switchLanguage(lang); 
+                    });
+                });
+            }
+            
+            // Create buttons based on whether this is the last system
+            createLevelCompleteButtons();
+            
+            // Show level complete screen
+            levelComplete.style.display = 'block';
+            
+            // Create confetti celebration
+            createConfetti();
+            
+            // Check if all systems are completed
+            if (completedSystems.size === Object.keys(bodySystems).length) {
+                setTimeout(() => {
+                    showScoreboard();
+                }, 2000);
+            }
+        }
+
+        function createLevelCompleteButtons() {
+            levelCompleteButtons.innerHTML = '';
+            
+            if (currentSystemType === 'nervous') {
+                // For Nervous System (last system), only show "View Scoreboard" button
+                const viewScoreboardBtn = document.createElement('button');
+                viewScoreboardBtn.className = 'next-level-btn';
+                viewScoreboardBtn.style.background = 'linear-gradient(45deg,#9f7aea,#805ad5)';
+                viewScoreboardBtn.textContent = translations[currentLanguage]['view-scoreboard'] || 'View Scoreboard';
+                viewScoreboardBtn.onclick = showScoreboard;
+                levelCompleteButtons.appendChild(viewScoreboardBtn);
+            } else {
+                // For other systems, show all three buttons
+                const playAgainBtn = document.createElement('button');
+                playAgainBtn.className = 'next-level-btn';
+                playAgainBtn.style.background = 'linear-gradient(45deg,#38b2ac,#2c9a94)';
+                playAgainBtn.textContent = translations[currentLanguage]['play-again'] || 'Play Again';
+                playAgainBtn.onclick = () => startGame(currentSystemType);
+                
+                const chooseAnotherBtn = document.createElement('button');
+                chooseAnotherBtn.className = 'next-level-btn';
+                chooseAnotherBtn.style.background = 'linear-gradient(45deg,#4299e1,#3182ce)';
+                chooseAnotherBtn.style.marginLeft = '10px';
+                chooseAnotherBtn.textContent = translations[currentLanguage]['choose-another'] || 'Choose Another System';
+                chooseAnotherBtn.onclick = showLevelSelection;
+                
+                const viewScoreboardBtn = document.createElement('button');
+                viewScoreboardBtn.className = 'next-level-btn';
+                viewScoreboardBtn.style.background = 'linear-gradient(45deg,#9f7aea,#805ad5)';
+                viewScoreboardBtn.style.marginLeft = '10px';
+                viewScoreboardBtn.textContent = translations[currentLanguage]['view-scoreboard'] || 'View Scoreboard';
+                viewScoreboardBtn.onclick = showScoreboard;
+                
+                levelCompleteButtons.appendChild(playAgainBtn);
+                levelCompleteButtons.appendChild(chooseAnotherBtn);
+                levelCompleteButtons.appendChild(viewScoreboardBtn);
+            }
+        }
+
+        /* ---- SCOREBOARD ---- */
+        function showScoreboard() {
+            levelSelection.style.display = 'none';
+            gameHeader.style.display = 'none';
+            gameStatsContainer.style.display = 'none';
+            gameArea.style.display = 'none';
+            levelComplete.style.display = 'none';
+            scoreboard.style.display = 'block';
+            
+            // Update scoreboard text
+            scoreboardTitle.textContent = translations[currentLanguage]['scoreboard-title'];
+            scoreboardSubtitle.textContent = translations[currentLanguage]['scoreboard-subtitle'];
+            playAllAgainBtn.textContent = translations[currentLanguage]['play-all-again'];
+            backToMenuBtn.textContent = translations[currentLanguage]['back-to-menu'];
+            
+            // Add language switcher to scoreboard if not already present
+            if (!document.querySelector('#scoreboard .language-switcher')) {
+                const scoreboardContainer = document.querySelector('.scoreboard-container');
+                const langSwitcherHTML = `
+                    <div class="language-switcher" style="position: absolute; top: 20px; right: 20px; margin: 0 auto 20px auto; width: fit-content; background: rgba(26, 54, 93, 0.1);">
+                        <button class="lang-btn ${currentLanguage === 'en' ? 'active' : ''}" data-lang="en">English</button>
+                        <button class="lang-btn ${currentLanguage === 'or' ? 'active' : ''}" data-lang="or">ଓଡ଼ିଆ</button>
+                        <button class="lang-btn ${currentLanguage === 'hi' ? 'active' : ''}" data-lang="hi">हिन्दी</button>
+                    </div>
+                `;
+                scoreboardContainer.insertAdjacentHTML('afterbegin', langSwitcherHTML);
+                
+                // Add event listeners to the new language buttons
+                scoreboardContainer.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.addEventListener('click', function() { 
+                        const lang = this.getAttribute('data-lang'); 
+                        switchLanguage(lang); 
+                    });
+                });
+            }
+            
+            // Calculate total stats
+            let totalScore = 0;
+            let completedCount = 0;
+            let totalPerfectMatches = 0;
+            let highestStreak = 0;
+            
+            scoreboardTableBody.innerHTML = '';
+            
+            for (const system in bodySystems) {
+                const scoreData = gameScores[system];
+                totalScore += scoreData.score;
+                if (scoreData.completed) {
+                    completedCount++;
+                    totalPerfectMatches += scoreData.matches;
+                    // For highest streak, we'll use score as proxy since we don't track per-system streaks
+                    if (scoreData.score > highestStreak) {
+                        highestStreak = scoreData.score;
+                    }
+                }
+                
+                // Add row to table
+                const row = document.createElement('tr');
+                const status = scoreData.completed ? 
+                    `<span style="color: #38a169;">✓ ${translations[currentLanguage]['completed'] || 'Completed'}</span>` : 
+                    `<span style="color: #e53e3e;">✗ ${translations[currentLanguage]['not-played'] || 'Not Played'}</span>`;
+                
+                row.innerHTML = `
+                    <td>${bodySystems[system].title[currentLanguage]}</td>
+                    <td>${scoreData.score}</td>
+                    <td>${scoreData.matches}/${scoreData.totalMatches}</td>
+                    <td>${formatTime(scoreData.time)}</td>
+                    <td>${status}</td>
+                `;
+                scoreboardTableBody.appendChild(row);
+            }
+            
+            // Update summary stats
+            totalScoreElement.textContent = totalScore;
+            systemsCompletedElement.textContent = `${completedCount}/${Object.keys(bodySystems).length}`;
+            totalPerfectMatchesElement.textContent = totalPerfectMatches;
+            highestStreakElement.textContent = Math.floor(highestStreak / 100); // Convert to approximate streak
+            
+            // Update stat labels
+            document.querySelectorAll('.stat-box .stat-label').forEach((el, index) => {
+                if (index === 0) el.textContent = translations[currentLanguage]['total-score'] || 'Total Score';
+                if (index === 1) el.textContent = translations[currentLanguage]['systems-completed'] || 'Systems Completed';
+                if (index === 2) el.textContent = translations[currentLanguage]['perfect-matches'] || 'Perfect Matches';
+                if (index === 3) el.textContent = translations[currentLanguage]['highest-streak'] || 'Highest Streak';
+            });
+        }
+
+        function formatTime(seconds) {
+            if (!seconds) return "00:00";
+            const m = Math.floor(seconds / 60);
+            const s = seconds % 60;
+            return `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+        }
+
+        function resetAllGames() {
+            // Reset all scores
+            for (const system in bodySystems) {
+                gameScores[system] = {
+                    score: 0,
+                    completed: false,
+                    time: 0,
+                    matches: 0,
+                    totalMatches: bodySystems[system].items.length
+                };
+            }
+            completedSystems.clear();
+            showLevelSelection();
+        }
+
+        /* ---- LANGUAGE SWITCHING ---- */
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update all language buttons on the page
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-lang')===lang);
+            });
+            
+            // Translate elements
+            const map = translations[lang] || translations.en;
+            Object.keys(map).forEach(key => {
+                document.querySelectorAll(`[data-translate="${key}"]`).forEach(el => {
+                    el.textContent = map[key];
+                });
+            });
+            
+            // Update instructions text
+            document.getElementById('instructions-title').textContent = map['instructions-title'];
+            document.getElementById('instructions-intro').textContent = map['instructions-intro'];
+            for (let i = 1; i <= 6; i++) {
+                const el = document.getElementById(`instruction-${i}`);
+                if (el) el.textContent = map[`instruction-${i}`];
+            }
+            document.getElementById('instructions-outro').textContent = map['instructions-outro'];
+            document.getElementById('start-game-btn').textContent = map['start-game-btn'];
+            
+            // Update game stats labels
+            updateScore();
+            updateStreak();
+            
+            // Update time label (if it exists)
+            const timeLabelElement = document.getElementById('time-label');
+            if (timeLabelElement) {
+                timeLabelElement.textContent = map['time-label'] || 'Time:';
+            }
+            
+            // Update game UI if game is active
+            if (currentSystem) {
+                // Update system title and description
+                systemTitle.textContent = currentSystem.title[lang];
+                systemDescription.textContent = currentSystem.description[lang];
+                structureTitle.textContent = map['structure-title'];
+                functionTitle.textContent = map['function-title'];
+                
+                // Update body item names
+                document.querySelectorAll('.body-item').forEach((el) => {
+                    const itemId = parseInt(el.dataset.id);
+                    const itemData = currentItems.find(item => item.id === itemId);
+                    if (itemData) {
+                        const nameElement = el.querySelector('.body-name');
+                        if (nameElement) {
+                            nameElement.textContent = itemData.name[lang];
+                        }
+                    }
+                });
+                
+                // Update function card text
+                document.querySelectorAll('.function-card').forEach((el) => {
+                    const matchId = parseInt(el.dataset.id);
+                    const itemData = currentItems.find(item => item.matchId === matchId);
+                    if (itemData) {
+                        const textElement = el.querySelector('.function-text');
+                        if (textElement) {
+                            textElement.textContent = itemData.function[lang];
+                        }
+                    }
+                });
+                
+                // Update level complete dialog if visible
+                if (levelComplete.style.display === 'block') {
+                    levelTitle.textContent = map['level-title'];
+                    levelText.textContent = map['level-text'];
+                    
+                    // Recreate buttons with new translations
+                    createLevelCompleteButtons();
+                }
+            }
+            
+            // Update scoreboard if visible
+            if (scoreboard.style.display === 'block') {
+                showScoreboard(); // This will reload the scoreboard with new language
+            }
+            
+            // Update level selection buttons
+            for (const system in bodySystems) {
+                const btn = document.getElementById(`${system}-btn`);
+                if (btn) {
+                    if (gameScores[system].completed) {
+                        btn.innerHTML = `<i class="fas fa-check-circle"></i><span>${bodySystems[system].title[lang]}</span>`;
+                    } else {
+                        btn.innerHTML = `<i class="${getIconForSystem(system)}"></i><span>${bodySystems[system].title[lang]}</span>`;
+                    }
+                }
+            }
+            
+            // Apply language-specific font classes
+            if (lang === 'or') {
+                document.body.classList.add('odia-text');
+                document.body.classList.remove('hindi-text');
+            } else if (lang === 'hi') {
+                document.body.classList.add('hindi-text');
+                document.body.classList.remove('odia-text');
+            } else {
+                document.body.classList.remove('odia-text');
+                document.body.classList.remove('hindi-text');
+            }
+        }
+
+        /* ---- FUN STUFF ---- */
+        function createConfetti() {
+            for (let i=0;i<15;i++){
+                const c = document.createElement('div');
+                c.style.position='fixed';
+                c.style.left = Math.random()*100 + 'vw';
+                c.style.top = '-10px';
+                c.style.width='12px'; c.style.height='12px';
+                const colors = ['#4299e1', '#ed8936', '#e53e3e', '#38b2ac', '#d69e2e', '#9f7aea'];
+                c.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+                c.style.zIndex = 1500;
+                c.style.borderRadius = '2px';
+                c.style.animation = `confetti-fall 2.8s ease-out forwards`;
+                document.body.appendChild(c);
+                setTimeout(()=> { if (document.body.contains(c)) document.body.removeChild(c); }, 3000);
+            }
+        }
+
+        /* ---- EVENTS & BOOT ---- */
+        document.addEventListener('DOMContentLoaded', ()=> {
+            init();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+            if ((e.key === 'r' || e.key === 'R') && e.ctrlKey) { 
+                e.preventDefault(); 
+                if (currentSystem) {
+                    startGame(currentSystemType);
+                }
+            }
+            if (e.key === '1') switchLanguage('en'); 
+            if (e.key === '2') switchLanguage('or'); 
+            if (e.key === '3') switchLanguage('hi');
+            if (e.key === 'h') showHint('structure');
+        });
+
+        // Hide modal when clicking outside content
+        feedbackModal.addEventListener('click', (ev)=> { 
+            if (ev.target === feedbackModal) closeModal(); 
+        });
+
+        // Initialize the game on load
+        window.onload = function() {
+            // Show instructions modal on first load
+            instructionsModal.style.display = 'flex';
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,3547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Living Things - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #2a69ac;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text h1 span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-pic {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 180px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f7fa;
+        }
+
+        .dropdown-item i {
+            color: #3182ce;
+            width: 20px;
+        }
+
+        /* Language Options */
+        .language-options {
+            position: absolute;
+            top: 60px;
+            right: 120px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 120px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .language-options.show {
+            display: block;
+        }
+
+        .language-option {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .language-option:last-child {
+            border-bottom: none;
+        }
+
+        .language-option:hover {
+            background: #f5f7fa;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9)), url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .breadcrumb-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .breadcrumb a {
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #3182ce;
+        }
+
+        .breadcrumb span {
+            color: #64748b;
+        }
+
+        /* Interactive Content */
+        .interactive-content {
+            padding: 50px 0;
+        }
+
+        .learning-path {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .learning-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .path-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .path-card {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .path-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-color: #3182ce;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .card-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+            flex-grow: 1;
+        }
+
+        /* Popup Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-section {
+            margin-bottom: 30px;
+        }
+
+        .modal-section h3 {
+            color: #1a365d;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .modal-section p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .modal-section ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .modal-section li {
+            margin-bottom: 8px;
+        }
+
+        /* Progress Tracking */
+        .progress-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .progress-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .progress-bars {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .progress-item {
+            margin-bottom: 15px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        .progress-bar-container {
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #3182ce;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        /* Games Section */
+        .games-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .game-level {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .game-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .game-desc {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .game-body {
+            padding: 20px;
+        }
+
+        .game-features {
+            margin-bottom: 20px;
+        }
+
+        .game-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .game-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .game-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Resources Section */
+        .resources-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .resource-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .resource-icon {
+            font-size: 2.5rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .resource-title {
+            font-size: 1.1rem;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+
+        .resource-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .download-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Resource Preview Styles */
+        .resource-preview {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 1px solid #e2e8f0;
+            max-height: 200px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .preview-title {
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+
+        .preview-content {
+            line-height: 1.5;
+            color: #4a5568;
+            font-size: 0.85rem;
+        }
+
+        .preview-content ul {
+            padding-left: 15px;
+            margin: 5px 0;
+        }
+
+        .preview-content li {
+            margin-bottom: 3px;
+        }
+
+        /* ENHANCED FLASHCARD STYLES */
+        .flashcard-preview {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .flashcards-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            min-height: 280px;
+        }
+
+        .flashcard-wrapper {
+            width: 100%;
+            max-width: 500px;
+            height: 280px;
+            perspective: 1500px;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .flashcard-front {
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+        }
+
+        .flashcard-back {
+            background: linear-gradient(135deg, #38b2ac 0%, #2c9a94 100%);
+            color: white;
+            transform: rotateY(180deg);
+            overflow-y: auto;
+        }
+
+        .flashcard-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .flashcard-question {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .flashcard-answer {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .flashcard-hint {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .flashcard-instruction {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            margin-top: 15px;
+        }
+
+        .flashcard-category {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .flashcard-counter {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Flashcard Navigation */
+        .flashcard-navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .flashcard-nav-btn {
+            background: #3182ce;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .flashcard-nav-btn:hover {
+            background: #2b6cb0;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .flashcard-nav-btn:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .flashcard-indicators {
+            display: flex;
+            gap: 8px;
+        }
+
+        .flashcard-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .flashcard-indicator.active {
+            background: #3182ce;
+            transform: scale(1.2);
+        }
+
+        .flashcard-progress {
+            font-size: 1rem;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about {
+            padding-right: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.8rem;
+            background: #38b2ac;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 20px;
+            color: #38b2ac;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2d3748;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .social-links a:hover {
+            background: #38b2ac;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .games-grid, .resources-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .path-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .flashcard-wrapper {
+                max-width: 400px;
+                height: 250px;
+            }
+            
+            .flashcard-question {
+                font-size: 1.2rem;
+            }
+            
+            .flashcard-answer {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            nav ul {
+                gap: 15px;
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .flashcard-wrapper {
+                max-width: 350px;
+                height: 220px;
+            }
+            
+            .flashcard-front, .flashcard-back {
+                padding: 20px;
+            }
+            
+            .flashcard-question {
+                font-size: 1.1rem;
+            }
+            
+            .flashcard-answer {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .flashcard-wrapper {
+                max-width: 300px;
+                height: 200px;
+            }
+            
+            .flashcard-front, .flashcard-back {
+                padding: 15px;
+            }
+            
+            .flashcard-question {
+                font-size: 1rem;
+            }
+            
+            .flashcard-answer {
+                font-size: 0.9rem;
+            }
+            
+            .flashcard-nav-btn {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #38b2ac;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        /* Odia font support */
+        .odia-text {
+            font-family: 'Kalinga', 'Nirmala UI', 'Segoe UI', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-atom"></i>
+            </div>
+            <div class="logo-text">
+                <h1>STEM Learn Odisha</h1>
+                <p>Gamified Learning Platform</p>
+            </div>
+        </div>
+       
+        <nav>
+            <ul>
+                <li><a href="student-dashboard.html" id="navDashboard">Dashboard</a></li>
+                <li><a href="science.html" id="navScience">Science</a></li>
+                <li><a href="scienceidx.html" id="navCurriculum">Curriculum</a></li>
+                <li><a href="livingthings.html" class="active" id="navLiving">Living Things</a></li>
+            </ul>
+        </nav>
+       
+        <div class="header-controls">
+            <button class="control-btn" id="languageToggle">
+                <i class="fas fa-globe"></i>
+            </button>
+           
+            <div class="profile-container">
+                <button class="profile-btn" id="profileToggle">
+                    <img src="" alt="Profile" class="profile-pic" id="headerProfilePic">
+                    <span id="headerUserName">Student</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+               
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" class="dropdown-item" id="dropdownProfile">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownSettings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownLogout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Language Options -->
+    <div class="language-options" id="languageOptions">
+        <div class="language-option" data-lang="en">English</div>
+        <div class="language-option" data-lang="or">ଓଡ଼ିଆ</div>
+    </div>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 id="living-title">Living Things</h1>
+            <p id="living-desc">Explore the fascinating world of living organisms, their characteristics, habitats, and body structures</p>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <a href="student-dashboard.html" id="breadcrumb-home">Dashboard</a>
+                <span>/</span>
+                <a href="science.html" id="breadcrumb-science">Science</a>
+                <span>/</span>
+                <a href="scienceidx.html" id="breadcrumb-curriculum">Curriculum</a>
+                <span>/</span>
+                <span id="breadcrumb-topic">Living Things</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Content -->
+    <section class="interactive-content">
+        <div class="container">
+            <!-- Learning Path -->
+            <div class="learning-path">
+                <h2 class="learning-title">
+                    <i class="fas fa-road"></i>
+                    <span id="learning-path-title">Your Learning Path</span>
+                </h2>
+                <div class="path-cards">
+                    <div class="path-card" data-card="living">
+                        <div class="card-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div class="card-title" id="card1-title">Living vs Non-Living</div>
+                        <div class="card-desc" id="card1-desc">Learn to differentiate between living organisms and non-living things</div>
+                    </div>
+                    <div class="path-card" data-card="location">
+                        <div class="card-icon">
+                            <i class="fas fa-globe-asia"></i>
+                        </div>
+                        <div class="card-title" id="card2-title">Habitat & Location</div>
+                        <div class="card-desc" id="card2-desc">Explore where different organisms live and their adaptations</div>
+                    </div>
+                    <div class="path-card" data-card="structure">
+                        <div class="card-icon">
+                            <i class="fas fa-bone"></i>
+                        </div>
+                        <div class="card-title" id="card3-title">Body Structure</div>
+                        <div class="card-desc" id="card3-desc">Understand the structure and function of various body parts</div>
+                    </div>
+                    <div class="path-card" data-card="review">
+                        <div class="card-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="card-title" id="card4-title">Review and Quizzes</div>
+                        <div class="card-desc" id="card4-desc">Test your knowledge with interactive quizzes and reviews</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Games Section -->
+            <div class="games-section">
+                <h2 class="section-title">
+                    <i class="fas fa-gamepad"></i>
+                    <span id="games-title">Interactive Learning Games</span>
+                </h2>
+
+                <div class="games-grid">
+                    <div class="game-card">
+                        <div class="game-header">
+                            <div class="game-level" id="level-basic">Basic</div>
+                            <h3 class="game-title" id="game1-title">Living vs Non-Living</h3>
+                            <p class="game-desc" id="game1-desc">Identify living organisms and non-living things</p>
+                        </div>
+                        <div class="game-body">
+                            <div class="game-features">
+                                <div class="game-feature">
+                                    <i class="fas fa-star"></i>
+                                    <span id="game1-feature1">Sort items into living and non-living categories</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-clock"></i>
+                                    <span id="game1-feature2">10-15 minutes gameplay</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-trophy"></i>
+                                    <span id="game1-feature3">Earn up to 50 points</span>
+                                </div>
+                            </div>
+                            <a href="game6.3.1.html" class="game-btn" id="play-game">Play Game</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card">
+                        <div class="game-header">
+                            <div class="game-level" id="level-intermediate">Intermediate</div>
+                            <h3 class="game-title" id="game2-title">Animal Habitats</h3>
+                            <p class="game-desc" id="game2-desc">Match animals to their natural habitats</p>
+                        </div>
+                        <div class="game-body">
+                            <div class="game-features">
+                                <div class="game-feature">
+                                    <i class="fas fa-star"></i>
+                                    <span id="game2-feature1">Place animals in correct habitats</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-clock"></i>
+                                    <span id="game2-feature2">15-20 minutes gameplay</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-trophy"></i>
+                                    <span id="game2-feature3">Earn up to 100 points</span>
+                                </div>
+                            </div>
+                            <a href="game6.3.2.html" class="game-btn" id="play-game2">Play Game</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card">
+                        <div class="game-header">
+                            <div class="game-level" id="level-hard">Hard</div>
+                            <h3 class="game-title" id="game3-title">Body Parts Puzzle</h3>
+                            <p class="game-desc" id="game3-desc">Learn about structure and function of body parts</p>
+                        </div>
+                        <div class="game-body">
+                            <div class="game-features">
+                                <div class="game-feature">
+                                    <i class="fas fa-star"></i>
+                                    <span id="game3-feature1">Match body parts with their functions</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-clock"></i>
+                                    <span id="game3-feature2">20-25 minutes gameplay</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-trophy"></i>
+                                    <span id="game3-feature3">Earn up to 150 points</span>
+                                </div>
+                            </div>
+                            <a href="game6.3.3.html" class="game-btn" id="play-game3">Play Game</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Section -->
+            <div class="resources-section">
+                <h2 class="section-title">
+                    <i class="fas fa-download"></i>
+                    <span id="resources-title">Learning Resources</span>
+                </h2>
+
+                <div class="resources-grid">
+                    <!-- Study Notes (English) -->
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <h3 class="resource-title" id="resource1-title">Study Notes</h3>
+                        <p class="resource-desc" id="resource1-desc">Complete chapter notes for revision</p>
+                        
+                        <!-- Resource Preview -->
+                        <div class="resource-preview">
+                            <div class="preview-title">Preview - Chapter Summary</div>
+                            <div class="preview-content">
+                                <strong>Characteristics of Living Things:</strong>
+                                <ul>
+                                    <li>Need food, water, and air</li>
+                                    <li>Grow and develop</li>
+                                    <li>Reproduce</li>
+                                    <li>Respond to stimuli</li>
+                                    <li>Move</li>
+                                    <li>Excrete waste</li>
+                                </ul>
+                                
+                                <strong>Key Concepts:</strong>
+                                <ul>
+                                    <li>All living things have basic life processes</li>
+                                    <li>Different organisms have different habitats</li>
+                                    <li>Body structure is related to function</li>
+                                    <li>Plants and animals are both living things</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <button class="download-btn" onclick="downloadResource('study_notes_english')">
+                            <i class="fas fa-download"></i>
+                            <span id="download-english">Download (English)</span>
+                        </button>
+                    </div>
+
+                    <!-- Study Notes (Odia) -->
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3 class="resource-title" id="resource2-title">Study Notes (Odia)</h3>
+                        <p class="resource-desc" id="resource2-desc">Complete chapter notes for revision</p>
+                        
+                        <!-- Resource Preview -->
+                        <div class="resource-preview odia-text">
+                            <div class="preview-title">ପ୍ରିଭ୍ୟୁ - ଅଧ୍ୟାୟ ସାରାଂଶ</div>
+                            <div class="preview-content">
+                                <strong>ଜୀବନ୍ତ ଜୀବଙ୍କ ବୈଶିଷ୍ଟ୍ୟ:</strong>
+                                <ul>
+                                    <li>ଖାଦ୍ୟ, ଜଳ, ଏବଂ ବାୟୁ ଆବଶ୍ୟକ</li>
+                                    <li>ବୃଦ୍ଧି ଏବଂ ବିକାଶ କରନ୍ତି</li>
+                                    <li>ପ୍ରଜନନ କରନ୍ତି</li>
+                                    <li>ଉଦ୍ଦୀପନାକୁ ପ୍ରତିକ୍ରିୟା କରନ୍ତି</li>
+                                    <li>ଗତି କରନ୍ତି</li>
+                                    <li>ମଳ ବର୍ଜନ କରନ୍ତି</li>
+                                </ul>
+                                
+                                <strong>ମୁଖ୍ୟ ଧାରଣା:</strong>
+                                <ul>
+                                    <li>ସମସ୍ତ ଜୀବନ୍ତ ଜୀବଙ୍କର ମୌଳିକ ଜୀବନ ପ୍ରକ୍ରିୟା ଥାଏ</li>
+                                    <li>ବିଭିନ୍ନ ଜୀବଙ୍କର ବିଭିନ୍ନ ଆବାସ ସ୍ଥାନ ଥାଏ</li>
+                                    <li>ଶରୀର ଗଠନ କାର୍ଯ୍ୟ ସହିତ ସମ୍ବନ୍ଧିତ</li>
+                                    <li>ଉଦ୍ଭିଦ ଏବଂ ପ୍ରାଣୀ ଉଭୟ ଜୀବନ୍ତ ଜୀବ</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <button class="download-btn" onclick="downloadResource('study_notes_odia')">
+                            <i class="fas fa-download"></i>
+                            <span id="download-odia">Download (Odia)</span>
+                        </button>
+                    </div>
+
+                    <!-- Flashcards -->
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <h3 class="resource-title" id="resource3-title">Flashcards</h3>
+                        <p class="resource-desc" id="resource3-desc">Visual learning cards for key concepts</p>
+                        
+                        <!-- Flashcard Preview -->
+                        <div class="resource-preview">
+                            <div class="flashcard-preview">
+                                <div class="flashcards-container">
+                                    <div class="flashcard-wrapper">
+                                        <div class="flashcard" id="main-flashcard" onclick="flipCard()">
+                                            <!-- Content will be dynamically inserted here -->
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flashcard-navigation">
+                                    <button class="flashcard-nav-btn" id="prev-btn" onclick="prevFlashcard()">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    
+                                    <div class="flashcard-progress">
+                                        <span id="current-card">1</span> / <span id="total-cards">10</span>
+                                    </div>
+                                    
+                                    <button class="flashcard-nav-btn" id="next-btn" onclick="nextFlashcard()">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                                
+                                <div class="flashcard-indicators" id="flashcard-indicators">
+                                    <!-- Indicators will be dynamically inserted here -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="download-btn" onclick="downloadResource('flashcards')">
+                            <i class="fas fa-download"></i>
+                            <span id="download-flashcards">Download Flashcards</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <div class="footer-logo-text">STEM Learn Odisha</div>
+                    </div>
+                    <p id="footer-desc">Making Science and Mathematics education engaging and relevant for Class 6 students in Odisha through localized content and interactive learning.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h3 id="quick-links">Quick Links</h3>
+                    <ul>
+                        <li><a href="student-dashboard.html"><i class="fas fa-tachometer-alt"></i> <span id="footer-dashboard">Dashboard</span></a></li>
+                        <li><a href="science.html"><i class="fas fa-flask"></i> <span id="footer-science">Science</span></a></li>
+                        <li><a href="livingthings.html"><i class="fas fa-leaf"></i> <span id="footer-living">Living Things</span></a></li>
+                        <li><a href="scienceidx.html"><i class="fas fa-book"></i> <span id="footer-curriculum">Curriculum</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h3 id="contact-us">Contact Us</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> <span id="footer-address">Department of Education, Bhubaneswar</span></a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +91 674 123 4567</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@stemlearnodisha.com</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p id="copyright">© 2023 STEM Learn Odisha. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Popup -->
+    <div class="modal" id="content-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">Living vs Non-Living Things</h2>
+                <button class="close-modal" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced Flashcard data for Living Things
+        const flashcardsData = [
+            {
+                question: "What are the main characteristics that differentiate living things from non-living things?",
+                answer: "Living things: 1) Need food, water, and air 2) Grow and develop 3) Reproduce 4) Respond to stimuli 5) Move 6) Excrete waste 7) Respire 8) Have cells. Non-living things do not show these characteristics. Examples: Plants and animals are living; rocks and water are non-living.",
+                hint: "Think about what living organisms do",
+                category: "Characteristics",
+                icon: "fas fa-heartbeat"
+            },
+            {
+                question: "Explain how plants and animals obtain their food differently",
+                answer: "Plants make their own food through photosynthesis using sunlight, water, and carbon dioxide. They are called autotrophs. Animals cannot make their own food; they must consume plants or other animals. They are called heterotrophs. This fundamental difference affects their entire life processes and body structures.",
+                hint: "Self-feeding vs consuming others",
+                category: "Nutrition",
+                icon: "fas fa-seedling"
+            },
+            {
+                question: "What is a habitat and why is it important for living organisms?",
+                answer: "A habitat is the natural environment where an organism lives. It provides: 1) Food and water 2) Shelter 3) Space 4) Suitable temperature 5) Air. Different organisms are adapted to different habitats (desert, forest, aquatic, etc.). Habitat destruction is the main threat to biodiversity.",
+                hint: "Natural home environment",
+                category: "Habitat",
+                icon: "fas fa-home"
+            },
+            {
+                question: "Describe the main parts of a plant and their functions",
+                answer: "1) Roots: Anchor plant, absorb water/minerals 2) Stem: Support, transport water/nutrients 3) Leaves: Photosynthesis (make food) 4) Flowers: Reproduction 5) Fruits: Seed protection and dispersal. Each part is specialized for specific functions essential for plant survival and reproduction.",
+                hint: "Think from bottom to top",
+                category: "Plant Structure",
+                icon: "fas fa-tree"
+            },
+            {
+                question: "Explain the main organ systems in the human body and their functions",
+                answer: "1) Digestive: Breaks down food 2) Respiratory: Breathing 3) Circulatory: Blood circulation 4) Skeletal: Support and protection 5) Muscular: Movement 6) Nervous: Control and coordination 7) Excretory: Waste removal 8) Reproductive: Reproduction. All systems work together to maintain life.",
+                hint: "Different systems for different jobs",
+                category: "Human Body",
+                icon: "fas fa-user-md"
+            },
+            {
+                question: "What are adaptations and give examples of animal adaptations to their habitats",
+                answer: "Adaptations are special features that help organisms survive in their habitats. Examples: 1) Camel: Humps store fat, nostrils close during sandstorms 2) Fish: Gills for breathing underwater, streamlined body 3) Polar bear: Thick fur, white color for camouflage 4) Bird: Hollow bones for flight, beaks for different foods.",
+                hint: "Special survival features",
+                category: "Adaptations",
+                icon: "fas fa-paw"
+            },
+            {
+                question: "How do living things respond to stimuli? Give examples",
+                answer: "Living things respond to changes in their environment (stimuli). Examples: 1) Plants grow toward light (phototropism) 2) Animals move away from danger 3) Humans sweat when hot 4) Flowers open in sunlight 5) Pupils dilate in dark. This responsiveness is essential for survival.",
+                hint: "Reactions to environmental changes",
+                category: "Response",
+                icon: "fas fa-lightbulb"
+            },
+            {
+                question: "Explain the life cycle of a plant from seed to adult",
+                answer: "1) Seed germination: Seed absorbs water and sprouts 2) Seedling: Young plant with first leaves 3) Young plant: Grows roots, stem, and leaves 4) Adult plant: Produces flowers 5) Pollination: Transfer of pollen 6) Fertilization: Formation of seeds 7) Seed dispersal: Spread to new locations 8) Repeat cycle.",
+                hint: "Stages of plant growth",
+                category: "Life Cycle",
+                icon: "fas fa-recycle"
+            },
+            {
+                question: "What are the differences between vertebrates and invertebrates?",
+                answer: "Vertebrates have a backbone/spinal column. Examples: Fish, amphibians, reptiles, birds, mammals. Invertebrates do not have a backbone. Examples: Insects, spiders, worms, snails, jellyfish. Vertebrates make up only 5% of animal species; invertebrates are 95%. Both are important for ecosystem balance.",
+                hint: "With backbone vs without backbone",
+                category: "Classification",
+                icon: "fas fa-fish"
+            },
+            {
+                question: "Why is biodiversity important for ecosystems?",
+                answer: "Biodiversity (variety of life) is crucial because: 1) Different species have different roles 2) Provides stability to ecosystems 3) Sources of food, medicine, and resources 4) Maintains natural cycles (water, carbon) 5) Pollination of crops 6) Soil formation 7) Climate regulation. Loss of biodiversity threatens all life.",
+                hint: "Variety of life benefits",
+                category: "Ecology",
+                icon: "fas fa-globe-asia"
+            }
+        ];
+
+        let currentFlashcardIndex = 0;
+        let currentLanguage = 'en';
+
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+           
+            if (!user) {
+                // Redirect to login if not authenticated
+                window.location.href = 'student-login.html';
+                return;
+            }
+           
+            // Load user data
+            loadUserData(user);
+            
+            // Initialize the page
+            init();
+        });
+
+        // Load user data into the page
+        function loadUserData(user) {
+            document.getElementById('headerUserName').textContent = user.fullName;
+            document.getElementById('headerProfilePic').src = user.profilePicture ? `uploads/${user.profilePicture}` : 'default-profile.png';
+        }
+
+        // Content for modal popups
+        const contentData = {
+            'living': {
+                'title': 'Living vs Non-Living Things',
+                'content': `
+                    <div class="modal-section">
+                        <h3>Understanding the Difference</h3>
+                        <p>Everything around us can be classified as either living or non-living. Understanding this distinction helps us appreciate the diversity of life.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Characteristics of Living Things</h3>
+                        <p>Living organisms share certain characteristics:</p>
+                        <ul>
+                            <li><strong>Need for Nutrition:</strong> All living things require food for energy</li>
+                            <li><strong>Growth:</strong> They increase in size and develop</li>
+                            <li><strong>Reproduction:</strong> They produce offspring of their own kind</li>
+                            <li><strong>Response to Stimuli:</strong> They react to changes in their environment</li>
+                            <li><strong>Movement:</strong> They can move in some way (plants move slowly)</li>
+                            <li><strong>Respiration:</strong> They exchange gases with their environment</li>
+                            <li><strong>Excretion:</strong> They remove waste products</li>
+                            <li><strong>Made of Cells:</strong> They are composed of basic units called cells</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Examples of Living Things</h3>
+                        <ul>
+                            <li><strong>Plants:</strong> Trees, grass, flowers, vegetables</li>
+                            <li><strong>Animals:</strong> Humans, dogs, birds, fish, insects</li>
+                            <li><strong>Microorganisms:</strong> Bacteria, fungi, protozoa (need microscope to see)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Characteristics of Non-Living Things</h3>
+                        <p>Non-living things do not show life processes:</p>
+                        <ul>
+                            <li>Do not need food, water, or air</li>
+                            <li>Do not grow or develop</li>
+                            <li>Cannot reproduce</li>
+                            <li>Do not respond to stimuli</li>
+                            <li>Cannot move on their own</li>
+                            <li>Not made of cells</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Examples of Non-Living Things</h3>
+                        <ul>
+                            <li><strong>Natural:</strong> Rocks, water, air, sunlight</li>
+                            <li><strong>Man-made:</strong> Books, chairs, buildings, vehicles</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Things That Show Some Characteristics</h3>
+                        <p>Some things can be confusing:</p>
+                        <ul>
+                            <li><strong>Seeds:</strong> Don't show life processes until they germinate</li>
+                            <li><strong>Eggs:</strong> Have potential for life but aren't actively living</li>
+                            <li><strong>Fire:</strong> Grows, moves, needs air - but isn't living</li>
+                            <li><strong>Cars:</strong> Move, need fuel - but are man-made machines</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Importance of Understanding</h3>
+                        <p>Knowing what's living helps us:</p>
+                        <ul>
+                            <li>Respect and protect life</li>
+                            <li>Understand our place in nature</li>
+                            <li>Care for plants and animals properly</li>
+                            <li>Appreciate the miracle of life</li>
+                        </ul>
+                    </div>
+                `
+            },
+            'location': {
+                'title': 'Habitat & Location',
+                'content': `
+                    <div class="modal-section">
+                        <h3>What is a Habitat?</h3>
+                        <p>A habitat is the natural environment where an organism lives. It provides everything the organism needs to survive and reproduce.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Components of a Good Habitat</h3>
+                        <ul>
+                            <li><strong>Food:</strong> Appropriate nutrition sources</li>
+                            <li><strong>Water:</strong> Fresh water for drinking and other needs</li>
+                            <li><strong>Shelter:</strong> Protection from weather and predators</li>
+                            <li><strong>Space:</strong> Enough room to live and find resources</li>
+                            <li><strong>Air:</strong> Clean air with appropriate gases</li>
+                            <li><strong>Temperature:</strong> Suitable climate conditions</li>
+                            <li><strong>Light:</strong> Sunlight for plants and visibility</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Types of Habitats</h3>
+                        <p>Different organisms live in different habitats:</p>
+                        
+                        <h4>Terrestrial Habitats (Land)</h4>
+                        <ul>
+                            <li><strong>Forests:</strong> Dense trees, rich biodiversity</li>
+                            <li><strong>Deserts:</strong> Very dry, extreme temperatures</li>
+                            <li><strong>Grasslands:</strong> Dominated by grasses, few trees</li>
+                            <li><strong>Mountains:</strong> High altitude, cold temperatures</li>
+                            <li><strong>Polar Regions:</strong> Very cold, ice-covered</li>
+                        </ul>
+                        
+                        <h4>Aquatic Habitats (Water)</h4>
+                        <ul>
+                            <li><strong>Freshwater:</strong> Rivers, lakes, ponds</li>
+                            <li><strong>Marine:</strong> Oceans, seas, coral reefs</li>
+                            <li><strong>Estuaries:</strong> Where rivers meet oceans</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Adaptations to Habitats</h3>
+                        <p>Organisms develop special features (adaptations) to survive in their habitats:</p>
+                        
+                        <h4>Desert Adaptations</h4>
+                        <ul>
+                            <li><strong>Camel:</strong> Humps store fat, nostrils close in sandstorms</li>
+                            <li><strong>Cactus:</strong> Thick stem stores water, spines protect</li>
+                            <li><strong>Kangaroo Rat:</strong> Gets water from food, nocturnal</li>
+                        </ul>
+                        
+                        <h4>Aquatic Adaptations</h4>
+                        <ul>
+                            <li><strong>Fish:</strong> Gills for breathing, streamlined body</li>
+                            <li><strong>Whale:</strong> Blowhole for breathing, blubber for warmth</li>
+                            <li><strong>Water Lily:</strong> Air spaces in stems, floating leaves</li>
+                        </ul>
+                        
+                        <h4>Polar Adaptations</h4>
+                        <ul>
+                            <li><strong>Polar Bear:</strong> Thick fur, white camouflage</li>
+                            <li><strong>Penguin:</strong> Layer of fat, tightly packed feathers</li>
+                            <li><strong>Arctic Fox:</strong> White winter coat, small ears</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Local Habitats in Odisha</h3>
+                        <ul>
+                            <li><strong>Chilika Lake:</strong> Largest coastal lagoon in India</li>
+                            <li><strong>Simlipal Forest:</strong> Tiger reserve and biosphere</li>
+                            <li><strong>Mangrove Forests:</strong> Bhitarkanika mangroves</li>
+                            <li><strong>Rivers:</strong> Mahanadi, Brahmani, Baitarani</li>
+                            <li><strong>Agricultural Fields:</strong> Rice paddies, vegetable farms</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Habitat Conservation</h3>
+                        <p>Protecting habitats is crucial because:</p>
+                        <ul>
+                            <li>Habitat loss is the main threat to wildlife</li>
+                            <li>All species are interconnected</li>
+                            <li>Habitats provide ecosystem services</li>
+                            <li>Future generations need nature too</li>
+                        </ul>
+                    </div>
+                `
+            },
+            'structure': {
+                'title': 'Body Structure & Function',
+                'content': `
+                    <div class="modal-section">
+                        <h3>Structure-Function Relationship</h3>
+                        <p>In living organisms, the structure (how something is built) is closely related to its function (what it does). This principle applies to all levels from cells to whole organisms.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Plant Body Structure</h3>
+                        
+                        <h4>Roots</h4>
+                        <ul>
+                            <li><strong>Structure:</strong> Branched, underground, root hairs</li>
+                            <li><strong>Functions:</strong> Anchor plant, absorb water/minerals, store food</li>
+                            <li><strong>Types:</strong> Tap roots (single main root), fibrous roots (many thin roots)</li>
+                        </ul>
+                        
+                        <h4>Stem</h4>
+                        <ul>
+                            <li><strong>Structure:</strong> Above ground, branches, nodes, internodes</li>
+                            <li><strong>Functions:</strong> Support leaves/flowers, transport water/nutrients, store food</li>
+                            <li><strong>Types:</strong> Herbaceous (soft), woody (hard), climbers, creepers</li>
+                        </ul>
+                        
+                        <h4>Leaves</h4>
+                        <ul>
+                            <li><strong>Structure:</strong> Flat, broad surface, veins, stomata</li>
+                            <li><strong>Functions:</strong> Photosynthesis (make food), transpiration, gas exchange</li>
+                            <li><strong>Adaptations:</strong> Spines in cacti, tendrils in peas, insect-trapping</li>
+                        </ul>
+                        
+                        <h4>Flowers</h4>
+                        <ul>
+                            <li><strong>Structure:</strong> Sepals, petals, stamens, pistil</li>
+                            <li><strong>Functions:</strong> Reproduction, attract pollinators</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Animal Body Structure</h3>
+                        
+                        <h4>Skeletal System</h4>
+                        <ul>
+                            <li><strong>Structure:</strong> Bones, joints, cartilage</li>
+                            <li><strong>Functions:</strong> Support, protection, movement, blood cell production</li>
+                            <li><strong>Types:</strong> Endoskeleton (inside), exoskeleton (outside)</li>
+                        </ul>
+                        
+                        <h4>Muscular System</h4>
+                        <ul>
+                            <li><strong>Structure:</strong> Muscles (skeletal, smooth, cardiac)</li>
+                            <li><strong>Functions:</strong> Movement, posture, heat production</li>
+                            <li><strong>Types:</strong> Voluntary (we control), involuntary (automatic)</li>
+                        </ul>
+                        
+                        <h4>Digestive System</h4>
+                        <ul>
+                            <li><strong>Structure:</strong> Mouth, esophagus, stomach, intestines</li>
+                            <li><strong>Functions:</strong> Break down food, absorb nutrients</li>
+                        </ul>
+                        
+                        <h4>Respiratory System</h4>
+                        <ul>
+                            <li><strong>Structure:</strong> Lungs, trachea, diaphragm</li>
+                            <li><strong>Functions:</strong> Gas exchange (oxygen in, carbon dioxide out)</li>
+                            <li><strong>Variations:</strong> Gills in fish, spiracles in insects</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Human Sense Organs</h3>
+                        <ul>
+                            <li><strong>Eyes:</strong> Structure: Cornea, iris, lens, retina. Function: Vision</li>
+                            <li><strong>Ears:</strong> Structure: Outer, middle, inner ear. Function: Hearing, balance</li>
+                            <li><strong>Nose:</strong> Structure: Nostrils, nasal cavity. Function: Smell, breathing</li>
+                            <li><strong>Tongue:</strong> Structure: Taste buds. Function: Taste</li>
+                            <li><strong>Skin:</strong> Structure: Epidermis, dermis. Function: Touch, temperature, protection</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Comparison of Different Organisms</h3>
+                        <table style="width:100%; border-collapse: collapse; margin-top:10px;">
+                            <tr style="background:#f0f0f0">
+                                <th style="padding:10px; border:1px solid #ddd;">Organism</th>
+                                <th style="padding:10px; border:1px solid #ddd;">Special Features</th>
+                                <th style="padding:10px; border:1px solid #ddd;">Functions</th>
+                            </tr>
+                            <tr>
+                                <td style="padding:8px; border:1px solid #ddd;">Birds</td>
+                                <td style="padding:8px; border:1px solid #ddd;">Wings, hollow bones, feathers</td>
+                                <td style="padding:8px; border:1px solid #ddd;">Flight, insulation</td>
+                            </tr>
+                            <tr style="background:#f9f9f9">
+                                <td style="padding:8px; border:1px solid #ddd;">Fish</td>
+                                <td style="padding:8px; border:1px solid #ddd;">Gills, fins, scales</td>
+                                <td style="padding:8px; border:1px solid #ddd;">Underwater breathing, swimming</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:8px; border:1px solid #ddd;">Insects</td>
+                                <td style="padding:8px; border:1px solid #ddd;">Six legs, antennae, compound eyes</td>
+                                <td style="padding:8px; border:1px solid #ddd;">Sensing environment, movement</td>
+                            </tr>
+                        </table>
+                    </div>
+                `
+            },
+            'review': {
+                'title': 'Review and Quizzes',
+                'content': `
+                    <div class="modal-section">
+                        <h3>Review: Living Things</h3>
+                        <p>Let's review what you've learned about living organisms, habitats, and body structures.</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Quick Quiz</h3>
+                        <p><strong>Question 1:</strong> Which of these is NOT a characteristic of living things?</p>
+                        <ul>
+                            <li>A) Growth</li>
+                            <li>B) Reproduction</li>
+                            <li>C) Movement</li>
+                            <li>D) Being made of metal</li>
+                        </ul>
+                        <p><strong>Answer:</strong> D) Being made of metal</p>
+                        
+                        <p><strong>Question 2:</strong> What is the natural home of an organism called?</p>
+                        <ul>
+                            <li>A) House</li>
+                            <li>B) Habitat</li>
+                            <li>C) Shelter</li>
+                            <li>D) Nest</li>
+                        </ul>
+                        <p><strong>Answer:</strong> B) Habitat</p>
+                        
+                        <p><strong>Question 3:</strong> Which part of a plant makes food?</p>
+                        <ul>
+                            <li>A) Roots</li>
+                            <li>B) Stem</li>
+                            <li>C) Leaves</li>
+                            <li>D) Flowers</li>
+                        </ul>
+                        <p><strong>Answer:</strong> C) Leaves</p>
+                        
+                        <p><strong>Question 4:</strong> What are special features that help organisms survive called?</p>
+                        <ul>
+                            <li>A) Decorations</li>
+                            <li>B) Adaptations</li>
+                            <li>C) Accessories</li>
+                            <li>D) Equipment</li>
+                        </ul>
+                        <p><strong>Answer:</strong> B) Adaptations</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Key Points to Remember</h3>
+                        <ul>
+                            <li>Living things need food, grow, reproduce, and respond to stimuli</li>
+                            <li>Non-living things do not show life processes</li>
+                            <li>Habitat provides everything an organism needs</li>
+                            <li>Structure is related to function in living organisms</li>
+                            <li>Plants and animals have different body structures</li>
+                            <li>Adaptations help organisms survive in their habitats</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Important Terms</h3>
+                        <ul>
+                            <li><strong>Organism:</strong> Any living thing</li>
+                            <li><strong>Habitat:</strong> Natural home of an organism</li>
+                            <li><strong>Adaptation:</strong> Special feature for survival</li>
+                            <li><strong>Photosynthesis:</strong> Process plants use to make food</li>
+                            <li><strong>Vertebrate:</strong> Animal with backbone</li>
+                            <li><strong>Invertebrate:</strong> Animal without backbone</li>
+                            <li><strong>Cell:</strong> Basic unit of life</li>
+                            <li><strong>Biodiversity:</strong> Variety of living things</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Interactive Activities</h3>
+                        <p>Try these activities to reinforce your learning:</p>
+                        <ul>
+                            <li>Make a list of 10 living and 10 non-living things in your home</li>
+                            <li>Draw and label the parts of a plant</li>
+                            <li>Observe an animal (pet, bird, insect) and note its adaptations</li>
+                            <li>Create a habitat diorama using a shoebox</li>
+                            <li>Visit a park or garden and identify different habitats</li>
+                        </ul>
+                    </div>
+                `
+            }
+        };
+
+        // Translations
+        const translations = {
+            en: {
+                'navDashboard': 'Dashboard',
+                'navScience': 'Science',
+                'navCurriculum': 'Curriculum',
+                'navLiving': 'Living Things',
+                'living-title': 'Living Things',
+                'living-desc': 'Explore the fascinating world of living organisms, their characteristics, habitats, and body structures',
+                'breadcrumb-home': 'Dashboard',
+                'breadcrumb-science': 'Science',
+                'breadcrumb-curriculum': 'Curriculum',
+                'breadcrumb-topic': 'Living Things',
+                'learning-path-title': 'Your Learning Path',
+                'card1-title': 'Living vs Non-Living',
+                'card1-desc': 'Learn to differentiate between living organisms and non-living things',
+                'card2-title': 'Habitat & Location',
+                'card2-desc': 'Explore where different organisms live and their adaptations',
+                'card3-title': 'Body Structure',
+                'card3-desc': 'Understand the structure and function of various body parts',
+                'card4-title': 'Review and Quizzes',
+                'card4-desc': 'Test your knowledge with interactive quizzes and reviews',
+                'games-title': 'Interactive Learning Games',
+                'level-basic': 'Basic',
+                'game1-title': 'Living vs Non-Living',
+                'game1-desc': 'Identify living organisms and non-living things',
+                'game1-feature1': 'Sort items into living and non-living categories',
+                'game1-feature2': '10-15 minutes gameplay',
+                'game1-feature3': 'Earn up to 50 points',
+                'level-intermediate': 'Intermediate',
+                'game2-title': 'Animal Habitats',
+                'game2-desc': 'Match animals to their natural habitats',
+                'game2-feature1': 'Place animals in correct habitats',
+                'game2-feature2': '15-20 minutes gameplay',
+                'game2-feature3': 'Earn up to 100 points',
+                'level-hard': 'Hard',
+                'game3-title': 'Body Parts Puzzle',
+                'game3-desc': 'Learn about structure and function of body parts',
+                'game3-feature1': 'Match body parts with their functions',
+                'game3-feature2': '20-25 minutes gameplay',
+                'game3-feature3': 'Earn up to 150 points',
+                'play-game': 'Play Game',
+                'resources-title': 'Learning Resources',
+                'resource1-title': 'Study Notes',
+                'resource1-desc': 'Complete chapter notes for revision',
+                'download-english': 'Download (English)',
+                'resource2-title': 'Study Notes (Odia)',
+                'resource2-desc': 'Complete chapter notes for revision',
+                'download-odia': 'Download (Odia)',
+                'resource3-title': 'Flashcards',
+                'resource3-desc': 'Visual learning cards for key concepts',
+                'download-flashcards': 'Download Flashcards',
+                'footer-desc': 'Making Science and Mathematics education engaging and relevant for Class 6 students in Odisha through localized content and interactive learning.',
+                'quick-links': 'Quick Links',
+                'contact-us': 'Contact Us',
+                'footer-dashboard': 'Dashboard',
+                'footer-science': 'Science',
+                'footer-living': 'Living Things',
+                'footer-curriculum': 'Curriculum',
+                'footer-address': 'Department of Education, Bhubaneswar',
+                'copyright': '© 2023 STEM Learn Odisha. All rights reserved.'
+            },
+            or: {
+                'navDashboard': 'ଡ୍ୟାସବୋର୍ଡ',
+                'navScience': 'ବିଜ୍ଞାନ',
+                'navCurriculum': 'ପାଠ୍ୟକ୍ରମ',
+                'navLiving': 'ଜୀବନ୍ତ ଜୀବ',
+                'living-title': 'ଜୀବନ୍ତ ଜୀବ',
+                'living-desc': 'ଜୀବନ୍ତ ଜୀବମାନଙ୍କର ବୈଶିଷ୍ଟ୍ୟ, ଆବାସ ସ୍ଥାନ, ଏବଂ ଶରୀର ଗଠନର ଚମତ୍କାର ଦୁନିଆକୁ ଏକ୍ସପ୍ଲୋର୍ କରନ୍ତୁ',
+                'breadcrumb-home': 'ଡ୍ୟାସବୋର୍ଡ',
+                'breadcrumb-science': 'ବିଜ୍ଞାନ',
+                'breadcrumb-curriculum': 'ପାଠ୍ୟକ୍ରମ',
+                'breadcrumb-topic': 'ଜୀବନ୍ତ ଜୀବ',
+                'learning-path-title': 'ଆପଣଙ୍କର ଶିକ୍ଷଣ ପଥ',
+                'card1-title': 'ଜୀବନ୍ତ ବନାମ ନିର୍ଜୀବ',
+                'card1-desc': 'ଜୀବନ୍ତ ଜୀବମାନଙ୍କୁ ନିର୍ଜୀବ ବସ୍ତୁଠାରୁ ପୃଥକ୍ କରିବା ଶିଖନ୍ତୁ',
+                'card2-title': 'ଆବାସ ସ୍ଥାନ ଏବଂ ଅବସ୍ଥାନ',
+                'card2-desc': 'ବିଭିନ୍ନ ଜୀବମାନେ କେଉଁଠାରେ ରହନ୍ତି ଏବଂ ସେମାନଙ୍କର ଅନୁକୂଳନ ଏକ୍ସପ୍ଲୋର୍ କରନ୍ତୁ',
+                'card3-title': 'ଶରୀର ଗଠନ',
+                'card3-desc': 'ବିଭିନ୍ନ ଶରୀର ଅଂଶଗୁଡିକର ଗଠନ ଏବଂ କାର୍ଯ୍ୟ ବୁଝନ୍ତୁ',
+                'card4-title': 'ସମୀକ୍ଷା ଏବଂ କ୍ୱିଜ୍',
+                'card4-desc': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ କ୍ୱିଜ୍ ଏବଂ ସମୀକ୍ଷା ସହିତ ଆପଣଙ୍କର ଜ୍ଞାନ ପରୀକ୍ଷା କରନ୍ତୁ',
+                'games-title': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ଖେଳଗୁଡିକ',
+                'level-basic': 'ମୌଳିକ',
+                'game1-title': 'ଜୀବନ୍ତ ବନାମ ନିର୍ଜୀବ',
+                'game1-desc': 'ଜୀବନ୍ତ ଜୀବମାନଙ୍କୁ ଏବଂ ନିର୍ଜୀବ ବସ୍ତୁଗୁଡିକୁ ଚିହ୍ନିବା',
+                'game1-feature1': 'ଜିନିଷଗୁଡିକୁ ଜୀବନ୍ତ ଏବଂ ନିର୍ଜୀବ ବର୍ଗଗୁଡିକରେ ସଜାନ୍ତୁ',
+                'game1-feature2': '10-15 ମିନିଟ୍ ଖେଳପଣ',
+                'game1-feature3': '50 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ ଅର୍ଜନ କରନ୍ତୁ',
+                'level-intermediate': 'ମଧ୍ୟମ ସ୍ତର',
+                'game2-title': 'ପ୍ରାଣୀଙ୍କ ଆବାସ ସ୍ଥାନ',
+                'game2-desc': 'ପ୍ରାଣୀମାନଙ୍କୁ ସେମାନଙ୍କର ପ୍ରାକୃତିକ ଆବାସ ସ୍ଥାନ ସହିତ ମିଳାନ୍ତୁ',
+                'game2-feature1': 'ପ୍ରାଣୀମାନଙ୍କୁ ସଠିକ୍ ଆବାସ ସ୍ଥାନରେ ରଖନ୍ତୁ',
+                'game2-feature2': '15-20 ମିନିଟ୍ ଖେଳପଣ',
+                'game2-feature3': '100 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ ଅର୍ଜନ କରନ୍ତୁ',
+                'level-hard': 'କଠିନ',
+                'game3-title': 'ଶରୀର ଅଂଶ ପଜିଲ୍',
+                'game3-desc': 'ଶରୀର ଅଂଶଗୁଡିକର ଗଠନ ଏବଂ କାର୍ଯ୍ୟ ବିଷୟରେ ଶିଖନ୍ତୁ',
+                'game3-feature1': 'ଶରୀର ଅଂଶଗୁଡିକୁ ସେମାନଙ୍କର କାର୍ଯ୍ୟ ସହିତ ମିଳାନ୍ତୁ',
+                'game3-feature2': '20-25 ମିନିଟ୍ ଖେଳପଣ',
+                'game3-feature3': '150 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ ଅର୍ଜନ କରନ୍ତୁ',
+                'play-game': 'ଖେଳନ୍ତୁ',
+                'resources-title': 'ଶିକ୍ଷଣ ସମ୍ବଳ',
+                'resource1-title': 'ଅଧ୍ୟୟନ ଟିପ୍ପଣୀ',
+                'resource1-desc': 'ସଂଶୋଧନ ପାଇଁ ସମ୍ପୂର୍ଣ୍ଣ ଅଧ୍ୟାୟ ଟିପ୍ପଣୀ',
+                'download-english': 'ଡାଉନଲୋଡ୍ (ଇଂରାଜୀ)',
+                'resource2-title': 'ଅଧ୍ୟୟନ ଟିପ୍ପଣୀ (ଓଡ଼ିଆ)',
+                'resource2-desc': 'ସମ୍ପୂର୍ଣ୍ଣ ଅଧ୍ୟାୟ ଟିପ୍ପଣୀ ସଂଶୋଧନ ପାଇଁ',
+                'download-odia': 'ଡାଉନଲୋଡ୍ (ଓଡ଼ିଆ)',
+                'resource3-title': 'ଫ୍ଲାସ୍‌କାର୍ଡଗୁଡିକ',
+                'resource3-desc': 'ମୁଖ୍ୟ ଧାରଣାଗୁଡିକ ପାଇଁ ଭିଜୁଆଲ୍ ଶିକ୍ଷଣ କାର୍ଡଗୁଡିକ',
+                'download-flashcards': 'ଫ୍ଲାସ୍‌କାର୍ଡଗୁଡିକ ଡାଉନଲୋଡ୍ କରନ୍ତୁ',
+                'footer-desc': 'ଓଡ଼ିଶାର ଷଷ୍ଠ ଶ୍ରେଣୀର ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କ ପାଇଁ ସ୍ଥାନୀୟ ବିଷୟବସ୍ତୁ ଏବଂ ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ମାଧ୍ୟମରେ ବିଜ୍ଞାନ ଏବଂ ଗଣିତ ଶିକ୍ଷାକୁ ଆକର୍ଷଣୀୟ ଏବଂ ପ୍ରାସଙ୍ଗିକ କରିବା',
+                'quick-links': 'ଶୀଘ୍ର ଲିଙ୍କ୍',
+                'contact-us': 'ଆମ ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ',
+                'footer-dashboard': 'ଡ୍ୟାସବୋର୍ଡ',
+                'footer-science': 'ବିଜ୍ଞାନ',
+                'footer-living': 'ଜୀବନ୍ତ ଜୀବ',
+                'footer-curriculum': 'ପାଠ୍ୟକ୍ରମ',
+                'footer-address': 'ଶିକ୍ଷା ବିଭାଗ, ଭୁବନେଶ୍ୱର',
+                'copyright': '© 2023 STEM ଲର୍ନ ଓଡ଼ିଶା। ସମସ୍ତ ଅଧିକାର ସଂରକ୍ଷିତ।'
+            }
+        };
+
+        // Initialize the page
+        function init() {
+            // Set up language options
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    switchLanguage(lang);
+                    document.getElementById('languageOptions').classList.remove('show');
+                });
+            });
+
+            // Set up path cards
+            const pathCards = document.querySelectorAll('.path-card');
+            pathCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const cardType = this.getAttribute('data-card');
+                    openModal(cardType);
+                });
+            });
+
+            // Set up modal close button
+            document.getElementById('close-modal').addEventListener('click', closeModalFunc);
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === document.getElementById('content-modal')) {
+                    closeModalFunc();
+                }
+            });
+
+            // Dashboard integration event listeners
+            const profileToggle = document.getElementById('profileToggle');
+            const profileDropdown = document.getElementById('profileDropdown');
+            const languageToggle = document.getElementById('languageToggle');
+            const languageOptions = document.getElementById('languageOptions');
+            const dropdownProfile = document.getElementById('dropdownProfile');
+            const dropdownSettings = document.getElementById('dropdownSettings');
+            const dropdownLogout = document.getElementById('dropdownLogout');
+            const navDashboard = document.getElementById('navDashboard');
+            const navScience = document.getElementById('navScience');
+            const navCurriculum = document.getElementById('navCurriculum');
+            const navLiving = document.getElementById('navLiving');
+
+            // Profile dropdown toggle
+            profileToggle.addEventListener('click', function() {
+                profileDropdown.classList.toggle('show');
+            });
+
+            // Language toggle
+            languageToggle.addEventListener('click', function() {
+                languageOptions.classList.toggle('show');
+            });
+
+            // Navigation between pages
+            dropdownProfile.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#profile';
+            });
+
+            dropdownSettings.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#settings';
+            });
+
+            dropdownLogout.addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('user');
+                window.location.href = 'student-login.html';
+            });
+
+            // Navigation menu items
+            navDashboard.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html';
+            });
+
+            navScience.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'science.html';
+            });
+
+            navCurriculum.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'scienceidx.html';
+            });
+
+            navLiving.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'livingthings.html';
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#languageToggle') && !e.target.closest('#languageOptions')) {
+                    languageOptions.classList.remove('show');
+                }
+               
+                if (!e.target.closest('#profileToggle') && !e.target.closest('#profileDropdown')) {
+                    profileDropdown.classList.remove('show');
+                }
+            });
+
+            // Initialize download buttons
+            initDownloadButtons();
+
+            // Initialize flashcards
+            initFlashcards();
+
+            // Initialize with default language
+            switchLanguage('en');
+        }
+
+        // Initialize download buttons
+        function initDownloadButtons() {
+            const downloadButtons = document.querySelectorAll('.download-btn');
+            downloadButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const resourceType = this.getAttribute('onclick').match(/downloadResource\('(.*?)'\)/)[1];
+                    downloadResource(resourceType);
+                });
+            });
+        }
+
+        // Initialize flashcards
+        function initFlashcards() {
+            renderFlashcard();
+            createIndicators();
+            document.getElementById('total-cards').textContent = flashcardsData.length;
+            updateNavigationButtons();
+        }
+
+        // Render current flashcard
+        function renderFlashcard() {
+            const flashcard = document.getElementById('main-flashcard');
+            const cardData = flashcardsData[currentFlashcardIndex];
+            
+            flashcard.className = 'flashcard';
+            
+            flashcard.innerHTML = `
+                <div class="flashcard-category">${cardData.category}</div>
+                <div class="flashcard-counter">${currentFlashcardIndex + 1}/${flashcardsData.length}</div>
+                <div class="flashcard-front">
+                    <div class="flashcard-icon">
+                        <i class="${cardData.icon}"></i>
+                    </div>
+                    <div class="flashcard-question">${cardData.question}</div>
+                    <div class="flashcard-hint">${cardData.hint}</div>
+                    <div class="flashcard-instruction">Click to flip the card</div>
+                </div>
+                <div class="flashcard-back">
+                    <div class="flashcard-icon">
+                        <i class="${cardData.icon}"></i>
+                    </div>
+                    <div class="flashcard-answer">${cardData.answer}</div>
+                    <div class="flashcard-instruction">Click to flip back</div>
+                </div>
+            `;
+            
+            // Update current card number
+            document.getElementById('current-card').textContent = currentFlashcardIndex + 1;
+            
+            // Update indicators
+            updateIndicators();
+        }
+
+        // Create indicators for all flashcards
+        function createIndicators() {
+            const indicatorsContainer = document.getElementById('flashcard-indicators');
+            indicatorsContainer.innerHTML = '';
+            
+            for (let i = 0; i < flashcardsData.length; i++) {
+                const indicator = document.createElement('div');
+                indicator.className = 'flashcard-indicator';
+                if (i === currentFlashcardIndex) indicator.classList.add('active');
+                indicator.onclick = () => goToFlashcard(i);
+                indicatorsContainer.appendChild(indicator);
+            }
+        }
+
+        // Update active indicator
+        function updateIndicators() {
+            const indicators = document.querySelectorAll('.flashcard-indicator');
+            indicators.forEach((indicator, index) => {
+                if (index === currentFlashcardIndex) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            });
+        }
+
+        // Update navigation buttons state
+        function updateNavigationButtons() {
+            document.getElementById('prev-btn').disabled = currentFlashcardIndex === 0;
+            document.getElementById('next-btn').disabled = currentFlashcardIndex === flashcardsData.length - 1;
+        }
+
+        // Flip card function
+        function flipCard() {
+            const flashcard = document.getElementById('main-flashcard');
+            flashcard.classList.toggle('flipped');
+        }
+
+        // Go to specific flashcard
+        function goToFlashcard(index) {
+            currentFlashcardIndex = index;
+            renderFlashcard();
+            updateNavigationButtons();
+        }
+
+        // Next flashcard function
+        function nextFlashcard() {
+            if (currentFlashcardIndex < flashcardsData.length - 1) {
+                currentFlashcardIndex++;
+                renderFlashcard();
+                updateNavigationButtons();
+            }
+        }
+
+        // Previous flashcard function
+        function prevFlashcard() {
+            if (currentFlashcardIndex > 0) {
+                currentFlashcardIndex--;
+                renderFlashcard();
+                updateNavigationButtons();
+            }
+        }
+
+        // Switch language function
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            const map = translations[lang] || translations.en;
+            
+            // Update all text content
+            Object.keys(map).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.textContent = map[key];
+                }
+            });
+            
+            // Add Odia font class for Odia text
+            if (lang === 'or') {
+                document.body.classList.add('odia-text');
+            } else {
+                document.body.classList.remove('odia-text');
+            }
+        }
+
+        // Open modal with content
+        function openModal(cardType) {
+            const content = contentData[cardType];
+            if (content) {
+                document.getElementById('modal-title').textContent = content.title;
+                document.getElementById('modal-body').innerHTML = content.content;
+                document.getElementById('content-modal').style.display = 'flex';
+            }
+        }
+
+        // Close modal function
+        function closeModalFunc() {
+            document.getElementById('content-modal').style.display = 'none';
+        }
+
+        // Download resource function
+        function downloadResource(resourceType) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                showNotification('Please login to download resources', 'error');
+                return;
+            }
+
+            let fileName = '';
+            let content = '';
+            let mimeType = 'text/plain';
+            
+            switch(resourceType) {
+                case 'study_notes_english':
+                    fileName = 'Living_Things_Study_Notes_English.txt';
+                    content = generateEnglishNotes();
+                    break;
+                case 'study_notes_odia':
+                    fileName = 'Living_Things_Study_Notes_Odia.txt';
+                    content = generateOdiaNotes();
+                    break;
+                case 'flashcards':
+                    fileName = 'Living_Things_Flashcards.txt';
+                    content = generateFlashcards();
+                    break;
+            }
+
+            // Create a downloadable file
+            const element = document.createElement('a');
+            const file = new Blob([content], {type: mimeType});
+            element.href = URL.createObjectURL(file);
+            element.download = fileName;
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+            
+            // Show success notification
+            showNotification('Resource downloaded successfully!', 'success');
+            
+            // Log download activity
+            logDownloadActivity(resourceType);
+        }
+
+        function generateEnglishNotes() {
+            return `LIVING THINGS
+===============
+
+CLASS 6 SCIENCE - CHAPTER 3
+STEM Learn Odisha
+====================================
+
+TABLE OF CONTENTS
+=================
+1. Introduction to Living Things
+2. Characteristics of Living Things
+3. Differences: Living vs Non-Living
+4. Habitat and Location
+5. Structure and Function of Body Parts
+6. Classification of Organisms
+7. Life Processes
+8. Adaptations
+9. Key Terms
+10. Revision Questions
+
+====================================
+
+1. INTRODUCTION TO LIVING THINGS
+================================
+• Living things are organisms that show life processes
+• They range from microscopic bacteria to giant trees and whales
+• All living things share certain basic characteristics
+• Non-living things do not show these characteristics
+
+2. CHARACTERISTICS OF LIVING THINGS
+===================================
+
+A. ESSENTIAL CHARACTERISTICS:
+------------------------------
+1. Nutrition:
+   • Need food for energy and growth
+   • Plants make their own food (photosynthesis)
+   • Animals eat plants or other animals
+
+2. Respiration:
+   • Process of obtaining energy from food
+   • Oxygen is used to break down food
+   • Carbon dioxide is released as waste
+
+3. Growth:
+   • Increase in size and complexity
+   • Permanent and irreversible change
+   • Occurs throughout life (lifelong in plants)
+
+4. Response to Stimuli:
+   • React to changes in environment
+   • Examples: Plants grow toward light, animals run from danger
+   • Essential for survival
+
+5. Movement:
+   • Change in position or place
+   • Animals: Walk, run, fly, swim
+   • Plants: Slow movement (growing toward light)
+
+6. Reproduction:
+   • Produce offspring of their own kind
+   • Ensures continuation of species
+   • Methods: Sexual, asexual
+
+7. Excretion:
+   • Removal of waste products
+   • Prevents accumulation of harmful substances
+   • Examples: Sweating, urination, leaf fall
+
+8. Cellular Organization:
+   • Made of basic units called cells
+   • Some organisms are single-celled
+   • Others are multicellular
+
+B. ADDITIONAL CHARACTERISTICS:
+-----------------------------
+• Metabolism: Sum of all chemical reactions
+• Homeostasis: Maintaining internal balance
+• Adaptation: Adjusting to environment
+• Life Span: Period from birth to death
+
+3. DIFFERENCES: LIVING VS NON-LIVING
+====================================
+
+LIVING THINGS:
+--------------
+1. Need food, water, air
+2. Grow and develop
+3. Reproduce
+4. Respond to stimuli
+5. Move (some forms)
+6. Excrete waste
+7. Made of cells
+8. Have definite life span
+
+NON-LIVING THINGS:
+------------------
+1. Do not need food
+2. Do not grow (may increase in size by accumulation)
+3. Cannot reproduce
+4. Do not respond to stimuli
+5. Cannot move on their own
+6. Do not excrete
+7. Not made of cells
+8. No life span
+
+EXAMPLES:
+---------
+• Living: Humans, plants, animals, bacteria
+• Non-living: Rock, water, air, chair, book
+
+4. HABITAT AND LOCATION
+========================
+
+WHAT IS A HABITAT?
+------------------
+• Natural environment where an organism lives
+• Provides all necessities for survival
+• Different organisms have different habitats
+
+COMPONENTS OF HABITAT:
+----------------------
+1. Biotic Factors: Living components
+   • Plants, animals, microorganisms
+   • Food sources, competitors, predators
+
+2. Abiotic Factors: Non-living components
+   • Temperature, light, water, soil
+   • Air, minerals, pH, humidity
+
+TYPES OF HABITATS:
+------------------
+
+A. TERRESTRIAL HABITATS (Land):
+------------------------------
+1. Forests:
+   • High rainfall, dense vegetation
+   • Examples: Tropical, temperate, coniferous
+   • Animals: Tigers, elephants, monkeys, birds
+
+2. Deserts:
+   • Very little rainfall, extreme temperatures
+   • Examples: Sahara, Thar
+   • Adaptations: Water conservation, nocturnal life
+   • Animals: Camel, kangaroo rat, cactus
+
+3. Grasslands:
+   • Dominated by grasses, few trees
+   • Examples: Savannah, prairies
+   • Animals: Lions, zebras, giraffes, bison
+
+4. Mountains:
+   • High altitude, cold climate
+   • Examples: Himalayas, Alps
+   • Animals: Snow leopard, mountain goat, yak
+
+5. Polar Regions:
+   • Extremely cold, ice-covered
+   • Examples: Arctic, Antarctic
+   • Animals: Polar bear, penguin, walrus
+
+B. AQUATIC HABITATS (Water):
+---------------------------
+1. Freshwater:
+   • Rivers, lakes, ponds, streams
+   • Low salt concentration
+   • Animals: Fish, frogs, water birds
+
+2. Marine:
+   • Oceans, seas
+   • High salt concentration
+   • Animals: Whales, sharks, corals, fish
+
+3. Estuaries:
+   • Where rivers meet oceans
+   • Mix of fresh and salt water
+   • High biodiversity
+
+LOCAL HABITATS IN ODISHA:
+-------------------------
+• Chilika Lake: Largest coastal lagoon
+• Simlipal Forest: Tiger reserve
+• Bhitarkanika: Mangrove forests
+• Rivers: Mahanadi, Brahmani, Baitarani
+• Agricultural fields
+
+5. STRUCTURE AND FUNCTION OF BODY PARTS
+========================================
+
+PLANT BODY STRUCTURE:
+---------------------
+
+A. ROOTS:
+---------
+• Structure: Underground, branched, root hairs
+• Functions:
+  1. Anchor plant in soil
+  2. Absorb water and minerals
+  3. Store food (carrot, radish)
+  4. Sometimes perform photosynthesis
+
+• Types:
+  1. Tap Root: Single main root (carrot, mustard)
+  2. Fibrous Roots: Many thin roots (grass, maize)
+  3. Adventitious Roots: From stem/leaves (banyan, maize)
+
+B. STEM:
+--------
+• Structure: Above ground, nodes, internodes
+• Functions:
+  1. Support leaves, flowers, fruits
+  2. Transport water, minerals, food
+  3. Store food (potato, ginger)
+  4. Sometimes perform photosynthesis
+
+• Types:
+  1. Herbaceous: Soft, green (tomato, sunflower)
+  2. Woody: Hard, brown (trees, shrubs)
+  3. Modified: Climbing, creeping, underground
+
+C. LEAVES:
+----------
+• Structure: Flat, broad, veins, stomata
+• Functions:
+  1. Photosynthesis (make food)
+  2. Transpiration (water loss)
+  3. Gas exchange (oxygen, carbon dioxide)
+  4. Sometimes store food
+
+• Parts:
+  1. Leaf Blade: Flat part
+  2. Petiole: Stalk connecting to stem
+  3. Veins: Transport channels
+  4. Stomata: Tiny pores for gas exchange
+
+D. FLOWERS:
+-----------
+• Structure: Sepals, petals, stamens, pistil
+• Functions:
+  1. Reproduction
+  2. Attract pollinators
+  3. Develop into fruits
+
+ANIMAL BODY STRUCTURE:
+----------------------
+
+A. SKELETAL SYSTEM:
+-------------------
+• Functions:
+  1. Support and shape
+  2. Protection of organs
+  3. Movement (with muscles)
+  4. Blood cell production
+  5. Mineral storage
+
+• Types:
+  1. Endoskeleton: Inside body (humans, fish)
+  2. Exoskeleton: Outside body (insects, crabs)
+  3. Hydrostatic: Fluid pressure (worms, jellyfish)
+
+B. MUSCULAR SYSTEM:
+-------------------
+• Functions:
+  1. Movement
+  2. Maintain posture
+  3. Generate heat
+  4. Pump blood (heart)
+
+• Types:
+  1. Skeletal Muscles: Attached to bones, voluntary
+  2. Smooth Muscles: Internal organs, involuntary
+  3. Cardiac Muscle: Heart only, involuntary
+
+C. DIGESTIVE SYSTEM:
+--------------------
+• Functions:
+  1. Break down food
+  2. Absorb nutrients
+  3. Eliminate waste
+
+• Human Digestive System:
+  1. Mouth: Chewing, saliva
+  2. Esophagus: Food tube
+  3. Stomach: Acid digestion
+  4. Small Intestine: Nutrient absorption
+  5. Large Intestine: Water absorption
+  6. Rectum: Waste storage
+  7. Anus: Waste elimination
+
+D. RESPIRATORY SYSTEM:
+----------------------
+• Functions:
+  1. Gas exchange
+  2. Oxygen in, carbon dioxide out
+
+• Human Respiratory System:
+  1. Nose/Mouth: Air entry
+  2. Trachea: Windpipe
+  3. Bronchi: Air tubes to lungs
+  4. Lungs: Gas exchange
+  5. Diaphragm: Breathing muscle
+
+E. SENSE ORGANS:
+----------------
+1. Eyes: Vision (retina, lens, cornea)
+2. Ears: Hearing, balance (eardrum, cochlea)
+3. Nose: Smell (olfactory receptors)
+4. Tongue: Taste (taste buds)
+5. Skin: Touch, temperature, pain (nerve endings)
+
+6. CLASSIFICATION OF ORGANISMS
+==============================
+
+BASIC CLASSIFICATION:
+---------------------
+A. PLANTS:
+----------
+1. Trees: Tall, woody stem (mango, neem)
+2. Shrubs: Medium height, many stems (rose, hibiscus)
+3. Herbs: Small, soft stem (grass, mint)
+4. Climbers: Need support (money plant, grapevine)
+5. Creepers: Grow along ground (pumpkin, watermelon)
+
+B. ANIMALS:
+-----------
+1. Based on Food:
+   • Herbivores: Plant eaters (cow, goat)
+   • Carnivores: Meat eaters (lion, tiger)
+   • Omnivores: Both plants and animals (human, bear)
+   • Scavengers: Eat dead animals (vulture, hyena)
+   • Decomposers: Break down dead matter (bacteria, fungi)
+
+2. Based on Habitat:
+   • Terrestrial: Land (lion, elephant)
+   • Aquatic: Water (fish, whale)
+   • Aerial: Air (birds, bats)
+   • Amphibious: Both land and water (frog, crocodile)
+
+3. Based on Body Structure:
+   • Vertebrates: Have backbone (mammals, birds, fish)
+   • Invertebrates: No backbone (insects, worms, snails)
+
+7. LIFE PROCESSES
+=================
+
+ESSENTIAL LIFE PROCESSES:
+-------------------------
+1. Nutrition: Obtaining and using food
+2. Respiration: Releasing energy from food
+3. Transportation: Moving materials within body
+4. Excretion: Removing waste
+5. Reproduction: Producing offspring
+6. Growth and Development: Increasing size and complexity
+7. Response: Reacting to environment
+
+PHOTOSYNTHESIS (Plants):
+------------------------
+• Process: Sunlight + Water + Carbon Dioxide → Glucose + Oxygen
+• Occurs in: Chloroplasts (in leaves)
+• Importance:
+  1. Makes food for plants
+  2. Produces oxygen for animals
+  3. Removes carbon dioxide from air
+  4. Basis of food chains
+
+RESPIRATION (All Organisms):
+----------------------------
+• Process: Glucose + Oxygen → Energy + Carbon Dioxide + Water
+• Importance:
+  1. Releases energy for life processes
+  2. Occurs in all living cells
+  3. Essential for survival
+
+8. ADAPTATIONS
+==============
+
+WHAT ARE ADAPTATIONS?
+---------------------
+• Special features that help organisms survive
+• Develop over long periods (evolution)
+• Specific to particular habitats
+
+EXAMPLES OF ADAPTATIONS:
+------------------------
+
+A. DESERT ADAPTATIONS:
+----------------------
+1. Camel:
+   • Hump stores fat (not water)
+   • Long eyelashes protect from sand
+   • Nostrils can close
+   • Thick lips for eating thorny plants
+   • Wide feet for walking on sand
+
+2. Cactus:
+   • Thick stem stores water
+   • Spines instead of leaves (reduce water loss)
+   • Deep roots for water absorption
+   • Waxy coating prevents evaporation
+
+B. AQUATIC ADAPTATIONS:
+-----------------------
+1. Fish:
+   • Streamlined body for swimming
+   • Gills for breathing underwater
+   • Fins for movement and balance
+   • Scales for protection
+   • Air bladder for buoyancy
+
+2. Aquatic Plants:
+   • Air spaces in stems (floatation)
+   • Flexible stems (water currents)
+   • Waxy coating (prevents rotting)
+   • Special roots (anchor in mud)
+
+C. POLAR ADAPTATIONS:
+---------------------
+1. Polar Bear:
+   • Thick fur and fat layer (insulation)
+   • White color (camouflage)
+   • Small ears (reduce heat loss)
+   • Large paws (swimming, walking on ice)
+   • Sharp claws and teeth (hunting)
+
+2. Penguin:
+   • Layer of fat under skin
+   • Tightly packed feathers
+   • Flippers for swimming
+   • Huddle together for warmth
+   • Counter-current heat exchange in legs
+
+D. FOREST ADAPTATIONS:
+----------------------
+1. Monkey:
+   • Long tail for balance
+   • Strong limbs for climbing
+   • Binocular vision
+   • Social living
+   • Omnivorous diet
+
+2. Elephant:
+   • Trunk for multiple uses
+   • Large ears for cooling
+   • Thick skin for protection
+   • Tusks for digging and defense
+   • Herd living for protection
+
+9. KEY TERMS
+============
+• Organism: Any living thing
+• Habitat: Natural home of an organism
+• Adaptation: Special feature for survival
+• Photosynthesis: Process plants use to make food
+• Respiration: Process of releasing energy from food
+• Vertebrate: Animal with backbone
+• Invertebrate: Animal without backbone
+• Cell: Basic unit of life
+• Biodiversity: Variety of living things
+• Ecosystem: Community of organisms and their environment
+• Producer: Organism that makes its own food (plants)
+• Consumer: Organism that eats other organisms
+• Decomposer: Organism that breaks down dead matter
+• Stimulus: Change in environment that causes response
+• Excretion: Removal of waste products
+• Reproduction: Production of offspring
+
+10. REVISION QUESTIONS
+======================
+
+SHORT ANSWER QUESTIONS:
+1. List three characteristics of living things.
+2. What is a habitat? Give two examples.
+3. Name the parts of a plant and one function of each.
+4. What are adaptations? Give one example.
+5. Differentiate between vertebrates and invertebrates.
+
+LONG ANSWER QUESTIONS:
+1. Explain the characteristics of living things with examples.
+2. Describe different types of habitats with examples of organisms living there.
+3. Explain how desert animals and plants are adapted to their habitat.
+4. Draw and label the parts of a plant. Explain the function of each part.
+5. What is photosynthesis? Why is it important for life on Earth?
+
+PRACTICAL ACTIVITIES:
+1. Make a chart showing differences between living and non-living things.
+2. Collect pictures of animals and classify them based on their food habits.
+3. Visit a park and observe different plants. Note their adaptations.
+4. Make a model of a plant showing its parts.
+5. Create a habitat diorama using a shoebox.
+
+FIELD VISIT SUGGESTIONS:
+1. Visit a zoo to observe animal adaptations.
+2. Go to a botanical garden to study plant diversity.
+3. Visit a local pond or lake to observe aquatic life.
+4. Take a nature walk to observe different habitats.
+5. Visit a farm to observe cultivated plants and domestic animals.
+
+====================================
+CREDITS AND ACKNOWLEDGEMENTS
+====================================
+Prepared by: STEM Learn Odisha Team
+For: Class 6 Students
+Date: ${new Date().toLocaleDateString()}
+
+====================================
+REMEMBER:
+• All living things are precious
+• Protect habitats and biodiversity
+• Observe nature carefully
+• Appreciate the miracle of life
+
+====================================
+END OF NOTES
+====================================`;
+        }
+
+        function generateOdiaNotes() {
+            return `ଜୀବନ୍ତ ଜୀବ
+===============
+
+ଷଷ୍ଠ ଶ୍ରେଣୀ ବିଜ୍ଞାନ - ଅଧ୍ୟାୟ 3
+STEM ଲର୍ନ ଓଡ଼ିଶା
+====================================
+
+ବିଷୟ ସୂଚୀ
+===========
+1. ଜୀବନ୍ତ ଜୀବଙ୍କ ପରିଚୟ
+2. ଜୀବନ୍ତ ଜୀବଙ୍କ ବୈଶିଷ୍ଟ୍ୟ
+3. ପାର୍ଥକ୍ୟ: ଜୀବନ୍ତ ବନାମ ନିର୍ଜୀବ
+4. ଆବାସ ସ୍ଥାନ ଏବଂ ଅବସ୍ଥାନ
+5. ଶରୀର ଅଂଶଗୁଡିକର ଗଠନ ଏବଂ କାର୍ଯ୍ୟ
+6. ଜୀବଙ୍କ ବର୍ଗୀକରଣ
+7. ଜୀବନ ପ୍ରକ୍ରିୟା
+8. ଅନୁକୂଳନ
+9. ମୁଖ୍ୟ ପରିଭାଷା
+10. ସମୀକ୍ଷା ପ୍ରଶ୍ନ
+
+====================================
+
+1. ଜୀବନ୍ତ ଜୀବଙ୍କ ପରିଚୟ
+==========================
+• ଜୀବନ୍ତ ଜୀବ ହେଉଛନ୍ତି ଯେଉଁ ଜୀବମାନେ ଜୀବନ ପ୍ରକ୍ରିୟା ଦେଖାନ୍ତି
+• ସେମାନେ ସୂକ୍ଷ୍ମଦର୍ଶୀ ବ୍ୟାକ୍ଟେରିଆରୁ ଆରମ୍ଭ କରି ବିରାଟ ଗଛ ଏବଂ ତିମି ପର୍ଯ୍ୟନ୍ତ ହୋଇଥାନ୍ତି
+• ସମସ୍ତ ଜୀବନ୍ତ ଜୀବଙ୍କର କିଛି ମୌଳିକ ବୈଶିଷ୍ଟ୍ୟ ଥାଏ
+• ନିର୍ଜୀବ ବସ୍ତୁଗୁଡିକ ଏହି ବୈଶିଷ୍ଟ୍ୟ ଦେଖାନ୍ତି ନାହିଁ
+
+2. ଜୀବନ୍ତ ଜୀବଙ୍କ ବୈଶିଷ୍ଟ୍ୟ
+===========================
+
+କ. ମୌଳିକ ବୈଶିଷ୍ଟ୍ୟ:
+-----------------------
+1. ପୋଷଣ:
+   • ଶକ୍ତି ଏବଂ ବୃଦ୍ଧି ପାଇଁ ଖାଦ୍ୟ ଆବଶ୍ୟକ
+   • ଉଦ୍ଭିଦ ନିଜର ଖାଦ୍ୟ ପ୍ରସ୍ତୁତ କରନ୍ତି (ଫଟୋସିନ୍ଥେସିସ୍)
+   • ପ୍ରାଣୀ ଉଦ୍ଭିଦ କିମ୍ବା ଅନ୍ୟ ପ୍ରାଣୀ ଖାଆନ୍ତି
+
+2. ଶ୍ୱସନ:
+   • ଖାଦ୍ୟରୁ ଶକ୍ତି ମୁକ୍ତ କରିବାର ପ୍ରକ୍ରିୟା
+   • ଖାଦ୍ୟ ଭାଙ୍ଗିବା ପାଇଁ ଅକ୍ସିଜେନ୍ ବ୍ୟବହୃତ ହୁଏ
+   • ଅପଚୟ ଭାବରେ କାର୍ବନ୍ ଡାଇଅକ୍ସାଇଡ୍ ମୁକ୍ତ ହୁଏ
+
+3. ବୃଦ୍ଧି:
+   • ଆକାର ଏବଂ ଜଟିଳତାରେ ବୃଦ୍ଧି
+   • ସ୍ଥାୟୀ ଏବଂ ଅପ୍ରତ୍ୟାବର୍ତ୍ତନୀୟ ପରିବର୍ତ୍ତନ
+   • ସମସ୍ତ ଜୀବନରେ ଘଟେ (ଉଦ୍ଭିଦରେ ସମସ୍ତ ଜୀବନ)
+
+4. ଉଦ୍ଦୀପନାକୁ ପ୍ରତିକ୍ରିୟା:
+   • ପରିବେଶରେ ପରିବର୍ତ୍ତନକୁ ପ୍ରତିକ୍ରିୟା କରନ୍ତି
+   • ଉଦାହରଣ: ଉଦ୍ଭିଦ ଆଲୋକ ଆଡ଼କୁ ବଢନ୍ତି, ପ୍ରାଣୀ ବିପଦରୁ ଦୌଡନ୍ତି
+   • ବଞ୍ଚିବା ପାଇଁ ଆବଶ୍ୟକ
+
+5. ଗତି:
+   • ସ୍ଥାନ କିମ୍ବା ସ୍ଥାନରେ ପରିବର୍ତ୍ତନ
+   • ପ୍ରାଣୀ: ଚାଲନ୍ତି, ଦୌଡନ୍ତି, ଉଡନ୍ତି, ସନ୍ତରଣ କରନ୍ତି
+   • ଉଦ୍ଭିଦ: ଧୀର ଗତି (ଆଲୋକ ଆଡ଼କୁ ବଢିବା)
+
+6. ପ୍ରଜନନ:
+   • ନିଜ ପ୍ରକାରର ସନ୍ତାନ ଉତ୍ପାଦନ କରନ୍ତି
+   • ପ୍ରଜାତିର ନିରନ୍ତରତା ନିଶ୍ଚିତ କରେ
+   • ପଦ୍ଧତି: ଲିଙ୍ଗିକ, ଅଲିଙ୍ଗିକ
+
+7. ବର୍ଜନ:
+   • ଅପଚୟ ଉତ୍ପାଦ ହଟାଇବା
+   • କ୍ଷତିକାରକ ପଦାର୍ଥର ସଞ୍ଚୟ ରୋକେ
+   • ଉଦାହରଣ: ଝାଳ ବୋହିବା, ମୂତ୍ରତ୍ୟାଗ, ପତ୍ର ଝରିବା
+
+8. କୋଷୀୟ ସଂଗଠନ:
+   • କୋଷ ନାମକ ମୌଳିକ ଏକକରେ ଗଠିତ
+   • କେତେକ ଜୀବ ଏକକୋଷୀ
+   • ଅନ୍ୟମାନେ ବହୁକୋଷୀ
+
+ଖ. ଅତିରିକ୍ତ ବୈଶିଷ୍ଟ୍ୟ:
+-------------------------
+• ଚୟାପଚୟ: ସମସ୍ତ ରାସାୟନିକ ପ୍ରତିକ୍ରିୟାର ସମଷ୍ଟି
+• ହୋମିଓଷ୍ଟାସିସ୍: ଆଭ୍ୟନ୍ତରୀଣ ସନ୍ତୁଳନ ବଜାୟ ରଖିବା
+• ଅନୁକୂଳନ: ପରିବେଶ ସହିତ ଖାପ ଖୁଆଇବା
+• ଆୟୁଷ: ଜନ୍ମରୁ ମୃତ୍ୟୁ ପର୍ଯ୍ୟନ୍ତ ସମୟ
+
+3. ପାର୍ଥକ୍ୟ: ଜୀବନ୍ତ ବନାମ ନିର୍ଜୀବ
+===================================
+
+ଜୀବନ୍ତ ଜୀବ:
+--------------
+1. ଖାଦ୍ୟ, ଜଳ, ବାୟୁ ଆବଶ୍ୟକ
+2. ବୃଦ୍ଧି ଏବଂ ବିକାଶ କରନ୍ତି
+3. ପ୍ରଜନନ କରନ୍ତି
+4. ଉଦ୍ଦୀପନାକୁ ପ୍ରତିକ୍ରିୟା କରନ୍ତି
+5. ଗତି କରନ୍ତି (କେତେକ ରୂପ)
+6. ଅପଚୟ ବର୍ଜନ କରନ୍ତି
+7. କୋଷରେ ଗଠିତ
+8. ନିର୍ଦ୍ଦିଷ୍ଟ ଆୟୁଷ ଥାଏ
+
+ନିର୍ଜୀବ ବସ୍ତୁ:
+------------------
+1. ଖାଦ୍ୟ ଆବଶ୍ୟକ ନାହିଁ
+2. ବୃଦ୍ଧି ହୁଏ ନାହିଁ (ସଞ୍ଚୟ ଦ୍ୱାରା ଆକାର ବୃଦ୍ଧି ହୋଇପାରେ)
+3. ପ୍ରଜନନ କରିପାରେ ନାହିଁ
+4. ଉଦ୍ଦୀପନାକୁ ପ୍ରତିକ୍ରିୟା କରନ୍ତି ନାହିଁ
+5. ନିଜେ ଗତି କରିପାରନ୍ତି ନାହିଁ
+6. ବର୍ଜନ କରନ୍ତି ନାହିଁ
+7. କୋଷରେ ଗଠିତ ନୁହେଁ
+8. ଆୟୁଷ ନାହିଁ
+
+ଉଦାହରଣ:
+---------
+• ଜୀବନ୍ତ: ମନୁଷ୍ୟ, ଉଦ୍ଭିଦ, ପ୍ରାଣୀ, ବ୍ୟାକ୍ଟେରିଆ
+• ନିର୍ଜୀବ: ପଥର, ଜଳ, ବାୟୁ, ଚେୟାର, ବହି
+
+4. ଆବାସ ସ୍ଥାନ ଏବଂ ଅବସ୍ଥାନ
+==================================
+
+ଆବାସ ସ୍ଥାନ କ'ଣ?
+-------------------
+• ପ୍ରାକୃତିକ ପରିବେଶ ଯେଉଁଠାରେ ଏକ ଜୀବ ବାସ କରେ
+• ବଞ୍ଚିବା ପାଇଁ ସମସ୍ତ ଆବଶ୍ୟକୀୟ ପଦାର୍ଥ ଯୋଗାଏ
+• ବିଭିନ୍ନ ଜୀବଙ୍କର ବିଭିନ୍ନ ଆବାସ ସ୍ଥାନ ଥାଏ
+
+ଆବାସ ସ୍ଥାନର ଉପାଦାନ:
+-------------------------
+1. ଜୈବିକ କାରକ: ଜୀବନ୍ତ ଉପାଦାନ
+   • ଉଦ୍ଭିଦ, ପ୍ରାଣୀ, ସୂକ୍ଷ୍ମଜୀବ
+   • ଖାଦ୍ୟ ଉତ୍ସ, ପ୍ରତିଯୋଗୀ, ଶିକାରୀ
+
+2. ଅଜୈବିକ କାରକ: ନିର୍ଜୀବ ଉପାଦାନ
+   • ତାପମାତ୍ରା, ଆଲୋକ, ଜଳ, ମାଟି
+   • ବାୟୁ, ଖଣିଜ, pH, ଆର୍ଦ୍ରତା
+
+ଆବାସ ସ୍ଥାନର ପ୍ରକାର:
+------------------------
+
+କ. ସ୍ଥଳଚର ଆବାସ ସ୍ଥାନ (ଭୂମି):
+-----------------------------------
+1. ଜଙ୍ଗଲ:
+   • ଉଚ୍ଚ ବର୍ଷା, ଘନ ଉଦ୍ଭିଦ
+   • ଉଦାହରଣ: ଉଷ୍ଣମଣ୍ଡଳୀୟ, ସମଶୀତୋଷ୍ଣ, ଶୂକ ଜଙ୍ଗଲ
+   • ପ୍ରାଣୀ: ବାଘ, ହାତୀ, ବାନର, ପକ୍ଷୀ
+
+2. ମରୁଭୂମି:
+   • ଅତି କମ୍ ବର୍ଷା, ଚରମ ତାପମାତ୍ରା
+   • ଉଦାହରଣ: ସାହାରା, ଥର
+   • ଅନୁକୂଳନ: ଜଳ ସଂରକ୍ଷଣ, ରାତ୍ରିଚର ଜୀବନ
+   • ପ୍ରାଣୀ: ଓଟ, କାଙ୍ଗାରୁ ମୂଷା, କ୍ୟାକ୍ଟସ୍
+
+3. ଘାସଭୂମି:
+   • ଘାସ ଦ୍ୱାରା ପ୍ରାଧାନ୍ୟ, କମ୍ ଗଛ
+   • ଉଦାହରଣ: ସାଭାନା, ପ୍ରେରୀ
+   • ପ୍ରାଣୀ: ସିଂହ, ଜେବ୍ରା, ଜିରାଫ୍, ବିସନ୍
+
+4. ପର୍ବତ:
+   • ଉଚ୍ଚ ଉଚ୍ଚତା, ଥଣ୍ଡା ଜଳବାୟୁ
+   • ଉଦାହରଣ: ହିମାଳୟ, ଆଲ୍ପ୍ସ
+   • ପ୍ରାଣୀ: ହିମଚିତା, ପର୍ବତୀୟ ଛେଳି, ଯାକ୍
+
+5. ଧ୍ରୁବୀୟ ଅଞ୍ଚଳ:
+   • ଅତ୍ୟନ୍ତ ଥଣ୍ଡା, ବରଫଆବୃତ
+   • ଉଦାହରଣ: ଆର୍କଟିକ୍, ଆଣ୍ଟାର୍କଟିକ୍
+   • ପ୍ରାଣୀ: ଧ୍ରୁବୀୟ ଭାଲୁ, ପେନ୍ଗୁଇନ୍, ବାଲ୍ରସ୍
+
+ଖ. ଜଳଚର ଆବାସ ସ୍ଥାନ (ଜଳ):
+---------------------------------
+1. ମିଠା ଜଳ:
+   • ନଦୀ, ହ୍ରଦ, ପୋଖରୀ, ଝରଣା
+   • କମ୍ ଲବଣ ସାନ୍ଦ୍ରତା
+   • ପ୍ରାଣୀ: ମାଛ, ବେଙ୍ଗ, ଜଳପକ୍ଷୀ
+
+2. ସାମୁଦ୍ରିକ:
+   • ସମୁଦ୍ର, ସାଗର
+   • ଉଚ୍ଚ ଲବଣ ସାନ୍ଦ୍ରତା
+   • ପ୍ରାଣୀ: ତିମି, ହଂସରାଉ, ପ୍ରବାଳ, ମାଛ
+
+3. ମୁହାଣ:
+   • ଯେଉଁଠାରେ ନଦୀ ସମୁଦ୍ର ସହିତ ମିଳିତ ହୁଏ
+   • ମିଠା ଏବଂ ଲୁଣି ଜଳର ମିଶ୍ରଣ
+   • ଉଚ୍ଚ ଜୈବବିବିଧତା
+
+ଓଡ଼ିଶାର ସ୍ଥାନୀୟ ଆବାସ ସ୍ଥାନ:
+-----------------------------------
+• ଚିଲିକା ହ୍ରଦ: ସବୁଠାରୁ ବଡ଼ ଉପକୂଳୀୟ ଲାଗୁନ୍
+• ସିମିଲିପାଳ ଜଙ୍ଗଲ: ବାଘ ସଂରକ୍ଷଣାଳୟ
+• ଭିତରକନିକା: ମାଙ୍ଗ୍ରୋଭ୍ ଜଙ୍ଗଲ
+• ନଦୀ: ମହାନଦୀ, ବ୍ରାହ୍ମଣୀ, ବୈତରଣୀ
+• କୃଷିଜମି
+
+5. ଶରୀର ଅଂଶଗୁଡିକର ଗଠନ ଏବଂ କାର୍ଯ୍ୟ
+============================================
+
+ଉଦ୍ଭିଦ ଶରୀର ଗଠନ:
+---------------------
+
+କ. ମୂଳ:
+---------
+• ଗଠନ: ଭୂଗର୍ଭ, ଶାଖାବିତ, ମୂଳ ଲୋମ
+• କାର୍ଯ୍ୟ:
+  1. ମାଟିରେ ଉଦ୍ଭିଦକୁ ଆଂଶୁରିତ କରେ
+  2. ଜଳ ଏବଂ ଖଣିଜ ଅବଶୋଷଣ କରେ
+  3. ଖାଦ୍ୟ ସଂରକ୍ଷଣ କରେ (ଗାଜର, ମୂଳା)
+  4. ବେଳେବେଳେ ଫଟୋସିନ୍ଥେସିସ୍ କରେ
+
+• ପ୍ରକାର:
+  1. ଟ୍ୟାପ୍ ମୂଳ: ଗୋଟିଏ ମୁଖ୍ୟ ମୂଳ (ଗାଜର, ସୋରିଷ)
+  2. ତନ୍ତୁମୟ ମୂଳ: ଅନେକ ପତଳା ମୂଳ (ଘାସ, ମକା)
+  3. ଆନୁଷଙ୍ଗିକ ମୂଳ: କାଣ୍ଡ/ପତ୍ରରୁ (ବରଗଛ, ମକା)
+
+ଖ. କାଣ୍ଡ:
+----------
+• ଗଠନ: ଭୂମି ଉପରେ, ଗ୍ରନ୍ଥି, ଅନ୍ତର୍ଗ୍ରନ୍ଥି
+• କାର୍ଯ୍ୟ:
+  1. ପତ୍ର, ଫୁଲ, ଫଳକୁ ସମର୍ଥନ କରେ
+  2. ଜଳ, ଖଣିଜ, ଖାଦ୍ୟ ପରିବହନ କରେ
+  3. ଖାଦ୍ୟ ସଂରକ୍ଷଣ କରେ (ଆଳୁ, ଅଦା)
+  4. ବେଳେବେଳେ ଫଟୋସିନ୍ଥେସିସ୍ କରେ
+
+• ପ୍ରକାର:
+  1. ତୃଣୀୟ: ନରମ, ସବୁଜ (ଟମାଟୋ, ସୂର୍ଯ୍ୟମୁଖୀ)
+  2. କାଠୀୟ: କଠିନ, ବାଦାମୀ (ଗଛ, ଗୁଳ୍ମ)
+  3. ପରିବର୍ତ୍ତିତ: ଆରୋହୀ, ଲତାବତୀ, ଭୂଗର୍ଭ
+
+ଗ. ପତ୍ର:
+----------
+• ଗଠନ: ସମତଳ, ଚଉଡା, ଶିରା, ରନ୍ଧ୍ର
+• କାର୍ଯ୍ୟ:
+  1. ଫଟୋସିନ୍ଥେସିସ୍ (ଖାଦ୍ୟ ପ୍ରସ୍ତୁତ କରେ)
+  2. ବାଷ୍ପୋତ୍ସର୍ଜନ (ଜଳ ହ୍ରାସ)
+  3. ବାୟୁ ବିନିମୟ (ଅକ୍ସିଜେନ୍, କାର୍ବନ୍ ଡାଇଅକ୍ସାଇଡ୍)
+  4. ବେଳେବେଳେ ଖାଦ୍ୟ ସଂରକ୍ଷଣ କରେ
+
+• ଅଂଶ:
+  1. ପତ୍ର ଫଳକ: ସମତଳ ଅଂଶ
+  2. ବୃନ୍ତ: କାଣ୍ଡ ସହିତ ସଂଯୋଗ କରୁଥିବା ବେକ
+  3. ଶିରା: ପରିବହନ ଚ୍ୟାନେଲ୍
+  4. ରନ୍ଧ୍ର: ବାୟୁ ବିନିମୟ ପାଇଁ ସୂକ୍ଷ୍ମ ଛିଦ୍ର
+
+ଘ. ଫୁଲ:
+-----------
+• ଗଠନ: ବାହ୍ୟଦଳ, ପୁଷ୍ପଦଳ, ପୁଂକେସର, ଜାୟା
+• କାର୍ଯ୍ୟ:
+  1. ପ୍ରଜନନ
+  2. ପରାଗୀକରଣକାରୀଙ୍କୁ ଆକର୍ଷଣ କରେ
+  3. ଫଳରେ ବିକଶିତ ହୁଏ
+
+ପ୍ରାଣୀ ଶରୀର ଗଠନ:
+---------------------
+
+କ. କଙ୍କାଳ ପ୍ରଣାଳୀ:
+----------------------
+• କାର୍ଯ୍ୟ:
+  1. ସମର୍ଥନ ଏବଂ ଆକୃତି
+  2. ଅଙ୍ଗଗୁଡିକର ସୁରକ୍ଷା
+  3. ଗତି (ପେଶୀ ସହିତ)
+  4. ରକ୍ତ କୋଷ ଉତ୍ପାଦନ
+  5. ଖଣିଜ ସଂରକ୍ଷଣ
+
+• ପ୍ରକାର:
+  1. ଅନ୍ତଃକଙ୍କାଳ: ଶରୀର ଭିତରେ (ମନୁଷ୍ୟ, ମାଛ)
+  2. ବହିଃକଙ୍କାଳ: ଶରୀର ବାହାରେ (କୀଟ, କଙ୍କଡା)
+  3. ଜଳସ୍ଥିତିକ: ତରଳ ଚାପ (କୃମି, ଜେଲି ମାଛ)
+
+ଖ. ପେଶୀ ପ୍ରଣାଳୀ:
+-------------------
+• କାର୍ଯ୍ୟ:
+  1. ଗତି
+  2. ଭଙ୍ଗିମା ବଜାୟ ରଖିବା
+  3. ଉତ୍ତାପ ଉତ୍ପାଦନ
+  4. ରକ୍ତ ପମ୍ପ କରିବା (ହୃଦୟ)
+
+• ପ୍ରକାର:
+  1. କଙ୍କାଳୀୟ ପେଶୀ: ହାଡ଼ ସହିତ ସଂଲଗ୍ନ, ଇଚ୍ଛାନୁସାରୀ
+  2. ମସୃଣ ପେଶୀ: ଆଭ୍ୟନ୍ତରୀଣ ଅଙ୍ଗ, ଅନିଚ୍ଛାନୁସାରୀ
+  3. ହୃଦୟୀୟ ପେଶୀ: କେବଳ ହୃଦୟ, ଅନିଚ୍ଛାନୁସାରୀ
+
+ଗ. ପାଚନ ପ୍ରଣାଳୀ:
+--------------------
+• କାର୍ଯ୍ୟ:
+  1. ଖାଦ୍ୟ ଭାଙ୍ଗିବା
+  2. ପୋଷକ ପଦାର୍ଥ ଅବଶୋଷଣ କରିବା
+  3. ଅପଚୟ ଦୂର କରିବା
+
+• ମାନବ ପାଚନ ପ୍ରଣାଳୀ:
+  1. ମୁଖ: ଚୋବାଇବା, ଲାଳ
+  2. ଗ୍ରାସନଳୀ: ଖାଦ୍ୟ ନଳୀ
+  3. ପାକସ୍ଥଳୀ: ଅମ୍ଳ ପାଚନ
+  4. କ୍ଷୁଦ୍ର ଆନ୍ତ୍ର: ପୋଷକ ପଦାର୍ଥ ଅବଶୋଷଣ
+  5. ବୃହତ୍ ଆନ୍ତ୍ର: ଜଳ ଅବଶୋଷଣ
+  6. ମଳାଶୟ: ଅପଚୟ ସଂରକ୍ଷଣ
+  7. ମଳଦ୍ୱାର: ଅପଚୟ ନିଷ୍କାସନ
+
+ଘ. ଶ୍ୱସନ ପ୍ରଣାଳୀ:
+----------------------
+• କାର୍ଯ୍ୟ:
+  1. ବାୟୁ ବିନିମୟ
+  2. ଅକ୍ସିଜେନ୍ ଭିତରକୁ, କାର୍ବନ୍ ଡାଇଅକ୍ସାଇଡ୍ ବାହାରକୁ
+
+• ମାନବ ଶ୍ୱସନ ପ୍ରଣାଳୀ:
+  1. ନାକ/ମୁଖ: ବାୟୁ ପ୍ରବେଶ
+  2. ଶ୍ୱାସନଳୀ: ଶ୍ୱାସ ନଳୀ
+  3. ଶ୍ୱାସନଳୀ ଶାଖା: ଫୁସ୍ଫୁସ୍ ପର୍ଯ୍ୟନ୍ତ ବାୟୁ ନଳୀ
+  4. ଫୁସ୍ଫୁସ୍: ବାୟୁ ବିନିମୟ
+  5. ମଧ୍ୟଚ୍ଛଦା: ଶ୍ୱାସ ପେଶୀ
+
+ଙ. ଇନ୍ଦ୍ରିୟ ଅଙ୍ଗ:
+--------------------
+1. ଆଖି: ଦୃଷ୍ଟି (ରେଟିନା, ଲେନ୍ସ, କର୍ନିଆ)
+2. କାନ: ଶ୍ରବଣ, ସନ୍ତୁଳନ (କର୍ଣ୍ଣପଟହ, କୋକ୍ଲିଆ)
+3. ନାକ: ଗନ୍ଧ (ଘ୍ରାଣ ଗ୍ରାହକ)
+4. ଜିଭ: ସ୍ୱାଦ (ସ୍ୱାଦ କଳିକା)
+5. ଚର୍ମ: ସ୍ପର୍ଶ, ତାପମାତ୍ରା, ଯନ୍ତ୍ରଣା (ସ୍ନାୟୁ ଅନ୍ତ)
+
+6. ଜୀବଙ୍କ ବର୍ଗୀକରଣ
+========================
+
+ମୌଳିକ ବର୍ଗୀକରଣ:
+---------------------
+କ. ଉଦ୍ଭିଦ:
+------------
+1. ଗଛ: ଉଚ୍ଚ, କାଠୀୟ କାଣ୍ଡ (ଆମ୍ବ, ନୀମ)
+2. ଗୁଳ୍ମ: ମଧ୍ୟମ ଉଚ୍ଚତା, ଅନେକ କାଣ୍ଡ (ଗୋଲାପ, ଜବା)
+3. ତୃଣ: ଛୋଟ, ନରମ କାଣ୍ଡ (ଘାସ, ପୋଦିନା)
+4. ଲତା: ସମର୍ଥନ ଆବଶ୍ୟକ (ମନି ପ୍ଲାଣ୍ଟ, ଅଙ୍ଗୁରଲତା)
+5. ବୃତ୍ତିଲତା: ଭୂମି ଉପରେ ବଢନ୍ତି (କଖାରୁ, ତରବୋଇ)
+
+ଖ. ପ୍ରାଣୀ:
+------------
+1. ଖାଦ୍ୟ ଉପରେ ଆଧାରିତ:
+   • ତୃଣଭୋଜୀ: ଉଦ୍ଭିଦ ଖାଉଥିବା (ଗାଈ, ଛେଳି)
+   • ମାଂସଭୋଜୀ: ମାଂସ ଖାଉଥିବା (ସିଂହ, ବାଘ)
+   • ସର୍ବଭୋଜୀ: ଉଦ୍ଭିଦ ଏବଂ ପ୍ରାଣୀ ଉଭୟ (ମନୁଷ୍ୟ, ଭାଲୁ)
+   • ମୃତଭୋଜୀ: ମୃତ ପ୍ରାଣୀ ଖାଆନ୍ତି (ଶାଗୁଣା, ହେନା)
+   • ବିଘଟକ: ମୃତ ପଦାର୍ଥ ଭାଙ୍ଗନ୍ତି (ବ୍ୟାକ୍ଟେରିଆ, ଫଙ୍ଗସ୍)
+
+2. ଆବାସ ସ୍ଥାନ ଉପରେ ଆଧାରିତ:
+   • ସ୍ଥଳଚର: ଭୂମି (ସିଂହ, ହାତୀ)
+   • ଜଳଚର: ଜଳ (ମାଛ, ତିମି)
+   • ନଭଚର: ଆକାଶ (ପକ୍ଷୀ, ବାଦୁଡି)
+   • ଉଭୟଚର: ଭୂମି ଏବଂ ଜଳ ଉଭୟ (ବେଙ୍ଗ, କୁମ୍ଭୀର)
+
+3. ଶରୀର ଗଠନ ଉପରେ ଆଧାରିତ:
+   • କଶେରୁକୀ: ମେରୁଦଣ୍ଡ ଥାଏ (ସ୍ତନ୍ୟପାୟୀ, ପକ୍ଷୀ, ମାଛ)
+   • ଅକଶେରୁକୀ: ମେରୁଦଣ୍ଡ ନାହିଁ (କୀଟ, କୃମି, ଘୋଡ଼ା)
+
+7. ଜୀବନ ପ୍ରକ୍ରିୟା
+====================
+
+ମୌଳିକ ଜୀବନ ପ୍ରକ୍ରିୟା:
+---------------------------
+1. ପୋଷଣ: ଖାଦ୍ୟ ପ୍ରାପ୍ତି ଏବଂ ବ୍ୟବହାର
+2. ଶ୍ୱସନ: ଖାଦ୍ୟରୁ ଶକ୍ତି ମୁକ୍ତ କରିବା
+3. ପରିବହନ: ଶରୀର ଭିତରେ ପଦାର୍ଥ ଚଳାଇବା
+4. ବର୍ଜନ: ଅପଚୟ ଦୂର କରିବା
+5. ପ୍ରଜନନ: ସନ୍ତାନ ଉତ୍ପାଦନ
+6. ବୃଦ୍ଧି ଏବଂ ବିକାଶ: ଆକାର ଏବଂ ଜଟିଳତା ବୃଦ୍ଧି
+7. ପ୍ରତିକ୍ରିୟା: ପରିବେଶକୁ ପ୍ରତିକ୍ରିୟା କରିବା
+
+ଫଟୋସିନ୍ଥେସିସ୍ (ଉଦ୍ଭିଦ):
+---------------------------
+• ପ୍ରକ୍ରିୟା: ସୂର୍ଯ୍ୟାଲୋକ + ଜଳ + କାର୍ବନ୍ ଡାଇଅକ୍ସାଇଡ୍ → ଗ୍ଲୁକୋଜ୍ + ଅକ୍ସିଜେନ୍
+• ଘଟେ: କ୍ଲୋରୋପ୍ଲାଷ୍ଟରେ (ପତ୍ରରେ)
+• ଗୁରୁତ୍ୱ:
+  1. ଉଦ୍ଭିଦ ପାଇଁ ଖାଦ୍ୟ ପ୍ରସ୍ତୁତ କରେ
+  2. ପ୍ରାଣୀଙ୍କ ପାଇଁ ଅକ୍ସିଜେନ୍ ଉତ୍ପାଦନ କରେ
+  3. ବାୟୁରୁ କାର୍ବନ୍ ଡାଇଅକ୍ସାଇଡ୍ ଦୂର କରେ
+  4. ଖାଦ୍ୟ ଶୃଙ୍ଖଳାର ଆଧାର
+
+ଶ୍ୱସନ (ସମସ୍ତ ଜୀବ):
+------------------------
+• ପ୍ରକ୍ରିୟା: ଗ୍ଲୁକୋଜ୍ + ଅକ୍ସିଜେନ୍ → ଶକ୍ତି + କାର୍ବନ୍ ଡାଇଅକ୍ସାଇଡ୍ + ଜଳ
+• ଗୁରୁତ୍ୱ:
+  1. ଜୀବନ ପ୍ରକ୍ରିୟା ପାଇଁ ଶକ୍ତି ମୁକ୍ତ କରେ
+  2. ସମସ୍ତ ଜୀବନ୍ତ କୋଷରେ ଘଟେ
+  3. ବଞ୍ଚିବା ପାଇଁ ଆବଶ୍ୟକ
+
+8. ଅନୁକୂଳନ
+==============
+
+ଅନୁକୂଳନ କ'ଣ?
+-----------------
+• ବିଶେଷ ବୈଶିଷ୍ଟ୍ୟ ଯାହା ଜୀବମାନଙ୍କୁ ବଞ୍ଚିବାରେ ସହାୟକ ହୁଏ
+• ଦୀର୍ଘ ସମୟ ଧରି ବିକଶିତ ହୁଏ (ବିକାଶ)
+• ନିର୍ଦ୍ଦିଷ୍ଟ ଆବାସ ସ୍ଥାନ ପାଇଁ ନିର୍ଦ୍ଦିଷ୍ଟ
+
+ଅନୁକୂଳନର ଉଦାହରଣ:
+-----------------------
+
+କ. ମରୁଭୂମି ଅନୁକୂଳନ:
+-------------------------
+1. ଓଟ:
+   • କୁବଜ ଚର୍ବି ସଂରକ୍ଷଣ କରେ (ଜଳ ନୁହେଁ)
+   • ଲମ୍ବା ରେଶମ ବାଳ ବାଲିରୁ ରକ୍ଷା କରେ
+   • ନାକପୁଡା ବନ୍ଦ ହୋଇପାରେ
+   • କଣ୍ଟକୀୟ ଉଦ୍ଭିଦ ଖାଇବା ପାଇଁ ମୋଟା ଓଠ
+   • ବାଲିରେ ଚାଲିବା ପାଇଁ ଚଉଡା ପାଦ
+
+2. କ୍ୟାକ୍ଟସ୍:
+   • ମୋଟା କାଣ୍ଡ ଜଳ ସଂରକ୍ଷଣ କରେ
+   • ପତ୍ର ପରିବର୍ତ୍ତେ କଣ୍ଟା (ଜଳ ହ୍ରାସ କମାଏ)
+   • ଜଳ ଅବଶୋଷଣ ପାଇଁ ଗଭୀର ମୂଳ
+   • ମହମୀୟ ଆବରଣ ବାଷ୍ପୀଭବନ ରୋକେ
+
+ଖ. ଜଳଚର ଅନୁକୂଳନ:
+------------------------
+1. ମାଛ:
+   • ସନ୍ତରଣ ପାଇଁ ଧାରାରେଖୀୟ ଶରୀର
+   • ଜଳ ତଳେ ଶ୍ୱାସ ପ୍ରଶ୍ୱାସ ପାଇଁ ଗିଲ୍
+   • ଗତି ଏବଂ ସନ୍ତୁଳନ ପାଇଁ ପକ୍ଷ
+   • ସୁରକ୍ଷା ପାଇଁ ଆବରଣ
+   • ଉପସ୍ଥିତି ପାଇଁ ବାୟୁ ଥଳୀ
+
+2. ଜଳଚର ଉଦ୍ଭିଦ:
+   • କାଣ୍ଡରେ ବାୟୁ ଖାଲି ସ୍ଥାନ (ଭାସିବା)
+   • ନମନୀୟ କାଣ୍ଡ (ଜଳ ସ୍ରୋତ)
+   • ମହମୀୟ ଆବରଣ (ପଚିବା ରୋକେ)
+   • ବିଶେଷ ମୂଳ (କାଦୁଅରେ ଆଂଶୁରିତ କରେ)
+
+ଗ. ଧ୍ରୁବୀୟ ଅନୁକୂଳନ:
+-------------------------
+1. ଧ୍ରୁବୀୟ ଭାଲୁ:
+   • ମୋଟା ଲୋମ ଏବଂ ଚର୍ବି ସ୍ତର (ଉଷ୍ମା ରୋଧନ)
+   • ଧଳା ରଙ୍ଗ (ଛଦ୍ମବେଶ)
+   • ଛୋଟ କାନ (ଉଷ୍ମା ହ୍ରାସ କମାଏ)
+   • ବଡ଼ ପାଦ (ସନ୍ତରଣ, ବରଫ ଉପରେ ଚାଲିବା)
+   • ତୀକ୍ଷ୍ଣ ନଖ ଏବଂ ଦାନ୍ତ (ଶିକାର)
+
+2. ପେନ୍ଗୁଇନ୍:
+   • ଚର୍ମ ତଳେ ଚର୍ବି ସ୍ତର
+   • ଘନଭାବରେ ସଜ୍ଜିତ ପର
+   • ସନ୍ତରଣ ପାଇଁ ଫ୍ଲିପର୍
+   • ଉଷ୍ମତା ପାଇଁ ଏକତ୍ର ହୁଏ
+   • ଗୋଡ଼ରେ ପ୍ରତିପ୍ରବାହ ଉଷ୍ମା ବିନିମୟ
+
+ଘ. ଜଙ୍ଗଲ ଅନୁକୂଳନ:
+------------------------
+1. ବାନର:
+   • ସନ୍ତୁଳନ ପାଇଁ ଲମ୍ବା ଲାଞ୍ଜ
+   • ଆରୋହଣ ପାଇଁ ଶକ୍ତିଶାଳୀ ଅଙ୍ଗ
+   • ଦ୍ୱିନେତ୍ର ଦୃଷ୍ଟି
+   • ସାମାଜିକ ଜୀବନ
+   • ସର୍ବଭୋଜୀ ଖାଦ୍ୟ
+
+2. ହାତୀ:
+   • ଅନେକ କାର୍ଯ୍ୟ ପାଇଁ ଶୁଣ୍ଢ
+   • ଥଣ୍ଡା ହେବା ପାଇଁ ବଡ଼ କାନ
+   • ସୁରକ୍ଷା ପାଇଁ ମୋଟା ଚର୍ମ
+   • ଖୋଳିବା ଏବଂ ପ୍ରତିରକ୍ଷା ପାଇଁ ଦାନ୍ତ
+   • ସୁରକ୍ଷା ପାଇଁ ଗୋଷ୍ଠୀ ଜୀବନ
+
+9. ମୁଖ୍ୟ ପରିଭାଷା
+===================
+• ଜୀବ: ଯେକୌଣସି ଜୀବନ୍ତ ଜିନିଷ
+• ଆବାସ ସ୍ଥାନ: ଏକ ଜୀବର ପ୍ରାକୃତିକ ଘର
+• ଅନୁକୂଳନ: ବଞ୍ଚିବା ପାଇଁ ବିଶେଷ ବୈଶିଷ୍ଟ୍ୟ
+• ଫଟୋସିନ୍ଥେସିସ୍: ଉଦ୍ଭିଦ ଖାଦ୍ୟ ପ୍ରସ୍ତୁତ କରିବାର ପ୍ରକ୍ରିୟା
+• ଶ୍ୱସନ: ଖାଦ୍ୟରୁ ଶକ୍ତି ମୁକ୍ତ କରିବାର ପ୍ରକ୍ରିୟା
+• କଶେରୁକୀ: ମେରୁଦଣ୍ଡ ଥିବା ପ୍ରାଣୀ
+• ଅକଶେରୁକୀ: ମେରୁଦଣ୍ଡ ନଥିବା ପ୍ରାଣୀ
+• କୋଷ: ଜୀବନର ମୌଳିକ ଏକକ
+• ଜୈବବିବିଧତା: ଜୀବନ୍ତ ଜିନିଷର ବିବିଧତା
+• ପରିବେଶ ତନ୍ତ୍ର: ଜୀବମାନଙ୍କର ସମଷ୍ଟି ଏବଂ ସେମାନଙ୍କର ପରିବେଶ
+• ଉତ୍ପାଦକ: ନିଜର ଖାଦ୍ୟ ପ୍ରସ୍ତୁତ କରୁଥିବା ଜୀବ (ଉଦ୍ଭିଦ)
+• ଉପଭୋକ୍ତା: ଅନ୍ୟ ଜୀବ ଖାଉଥିବା ଜୀବ
+• ବିଘଟକ: ମୃତ ପଦାର୍ଥ ଭାଙ୍ଗୁଥିବା ଜୀବ
+• ଉଦ୍ଦୀପକ: ପରିବେଶରେ ପରିବର୍ତ୍ତନ ଯାହା ପ୍ରତିକ୍ରିୟା ସୃଷ୍ଟି କରେ
+• ବର୍ଜନ: ଅପଚୟ ଉତ୍ପାଦ ହଟାଇବା
+• ପ୍ରଜନନ: ସନ୍ତାନ ଉତ୍ପାଦନ
+
+10. ସମୀକ୍ଷା ପ୍ରଶ୍ନ
+=====================
+
+ସଂକ୍ଷିପ୍ତ ଉତ୍ତର ପ୍ରଶ୍ନ:
+1. ଜୀବନ୍ତ ଜୀବଙ୍କ ତିନୋଟି ବୈଶିଷ୍ଟ୍ୟ ତାଲିକା କରନ୍ତୁ।
+2. ଆବାସ ସ୍ଥାନ କ'ଣ? ଦୁଇଟି ଉଦାହରଣ ଦିଅନ୍ତୁ।
+3. ଉଦ୍ଭିଦର ଅଂଶଗୁଡିକର ନାମ ଏବଂ ପ୍ରତ୍ୟେକର ଗୋଟିଏ କାର୍ଯ୍ୟ କୁହନ୍ତୁ।
+4. ଅନୁକୂଳନ କ'ଣ? ଗୋଟିଏ ଉଦାହରଣ ଦିଅନ୍ତୁ।
+5. କଶେରୁକୀ ଏବଂ ଅକଶେରୁକୀ ମଧ୍ୟରେ ପାର୍ଥକ୍ୟ କରନ୍ତୁ।
+
+ଦୀର୍ଘ ଉତ୍ତର ପ୍ରଶ୍ନ:
+1. ଉଦାହରଣ ସହ ଜୀବନ୍ତ ଜୀବଙ୍କ ବୈଶିଷ୍ଟ୍ୟ ବ୍ୟାଖ୍ୟା କରନ୍ତୁ।
+2. ସେଠାରେ ରହୁଥିବା ଜୀବମାନଙ୍କ ଉଦାହରଣ ସହ ବିଭିନ୍ନ ପ୍ରକାରର ଆବାସ ସ୍ଥାନ ବର୍ଣ୍ଣନା କରନ୍ତୁ।
+3. ମରୁଭୂମି ପ୍ରାଣୀ ଏବଂ ଉଦ୍ଭିଦଗୁଡିକ ସେମାନଙ୍କ ଆବାସ ସ୍ଥାନ ସହିତ କିପରି ଖାପ ଖୁଆଇଛନ୍ତି ବ୍ୟାଖ୍ୟା କରନ୍ତୁ।
+4. ଗୋଟିଏ ଉଦ୍ଭିଦର ଅଂଶଗୁଡିକ ଅଙ୍କନ କରି ନାମାଙ୍କନ କରନ୍ତୁ। ପ୍ରତ୍ୟେକ ଅଂଶର କାର୍ଯ୍ୟ ବ୍ୟାଖ୍ୟା କରନ୍ତୁ।
+5. ଫଟୋସିନ୍ଥେସିସ୍ କ'ଣ? ପୃଥିବୀରେ ଜୀବନ ପାଇଁ ଏହା କାହିଁକି ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ?
+
+ବ୍ୟାବହାରିକ କାର୍ଯ୍ୟକଳାପ:
+1. ଜୀବନ୍ତ ଏବଂ ନିର୍ଜୀବ ବସ୍ତୁମାନଙ୍କ ମଧ୍ୟରେ ପାର୍ଥକ୍ୟ ଦର୍ଶାଉଥିବା ଏକ ଚାର୍ଟ ପ୍ରସ୍ତୁତ କରନ୍ତୁ।
+2. ପ୍ରାଣୀମାନଙ୍କର ଛବି ସଂଗ୍ରହ କରି ସେମାନଙ୍କର ଖାଦ୍ୟ ଆଦତ ଉପରେ ଆଧାର କରି ବର୍ଗୀକରଣ କରନ୍ତୁ।
+3. ଏକ ପାର୍କ୍ ବୁଲି ବିଭିନ୍ନ ଉଦ୍ଭିଦ ଦେଖନ୍ତୁ। ସେମାନଙ୍କର ଅନୁକୂଳନ ଟିପ୍ କରନ୍ତୁ।
+4. ଏକ ଉଦ୍ଭିଦର ଅଂଶ ଦର୍ଶାଉଥିବା ଏକ ମଡେଲ୍ ପ୍ରସ୍ତୁତ କରନ୍ତୁ।
+5. ଏକ ଶୁଅ ବାକ୍ସ ବ୍ୟବହାର କରି ଏକ ଆବାସ ସ୍ଥାନ ଡାଇଓରାମା ସୃଷ୍ଟି କରନ୍ତୁ।
+
+କ୍ଷେତ୍ର ପରିଦର୍ଶନ ସୁଚନା:
+1. ପ୍ରାଣୀ ଅନୁକୂଳନ ଦେଖିବା ପାଇଁ ଏକ ଚିଡିଆଖାନା ପରିଦର୍ଶନ କରନ୍ତୁ।
+2. ଉଦ୍ଭିଦ ବିବିଧତା ଅଧ୍ୟୟନ ପାଇଁ ଏକ ବୋଟାନିକାଲ୍ ଗାର୍ଡେନ୍ ଯାଆନ୍ତୁ।
+3. ସ୍ଥାନୀୟ ପୋଖରୀ କିମ୍ବା ହ୍ରଦ ପରିଦର୍ଶନ କରି ଜଳଚର ଜୀବନ ଦେଖନ୍ତୁ।
+4. ବିଭିନ୍ନ ଆବାସ ସ୍ଥାନ ଦେଖିବା ପାଇଁ ପ୍ରକୃତି ଭ୍ରମଣ କରନ୍ତୁ।
+5. କୃଷିଜାତ ଉଦ୍ଭିଦ ଏବଂ ଗୃହପାଳିତ ପ୍ରାଣୀ ଦେଖିବା ପାଇଁ ଏକ କ୍ଷେତ ପରିଦର୍ଶନ କରନ୍ତୁ।
+
+====================================
+କ୍ରେଡିଟ୍ ଏବଂ କୃତଜ୍ଞତା
+====================================
+ପ୍ରସ୍ତୁତକାରୀ: STEM ଲର୍ନ ଓଡ଼ିଶା ଦଳ
+ପାଇଁ: ଷଷ୍ଠ ଶ୍ରେଣୀର ଛାତ୍ରଛାତ୍ରୀ
+ତାରିଖ: ${new Date().toLocaleDateString()}
+
+====================================
+ମନେରଖିବେ:
+• ସମସ୍ତ ଜୀବନ୍ତ ଜୀବ ମୂଲ୍ୟବାନ
+• ଆବାସ ସ୍ଥାନ ଏବଂ ଜୈବବିବିଧତା ସୁରକ୍ଷା କରନ୍ତୁ
+• ପ୍ରକୃତି ସତର୍କତାର ସହ ଅନୁଧ୍ୟାନ କରନ୍ତୁ
+• ଜୀବନର ଚମତ୍କାରକୁ ମୂଲ୍ୟବାନ କରନ୍ତୁ
+
+====================================
+ଟିପ୍ପଣୀର ଶେଷ
+====================================`;
+        }
+
+        function generateFlashcards() {
+            return `LIVING THINGS FLASHCARDS
+====================================
+
+STEM Learn Odisha - Class 6 Science
+====================================
+
+FLASHCARD SET - LIVING THINGS
+Total Cards: 10
+
+====================================
+
+CARD 1:
+Category: Characteristics
+Question: What are the main characteristics that differentiate living things from non-living things?
+Answer: Living things: 1) Need food, water, and air 2) Grow and develop 3) Reproduce 4) Respond to stimuli 5) Move 6) Excrete waste 7) Respire 8) Have cells. Non-living things do not show these characteristics. Examples: Plants and animals are living; rocks and water are non-living.
+
+CARD 2:
+Category: Nutrition
+Question: Explain how plants and animals obtain their food differently
+Answer: Plants make their own food through photosynthesis using sunlight, water, and carbon dioxide. They are called autotrophs. Animals cannot make their own food; they must consume plants or other animals. They are called heterotrophs. This fundamental difference affects their entire life processes and body structures.
+
+CARD 3:
+Category: Habitat
+Question: What is a habitat and why is it important for living organisms?
+Answer: A habitat is the natural environment where an organism lives. It provides: 1) Food and water 2) Shelter 3) Space 4) Suitable temperature 5) Air. Different organisms are adapted to different habitats (desert, forest, aquatic, etc.). Habitat destruction is the main threat to biodiversity.
+
+CARD 4:
+Category: Plant Structure
+Question: Describe the main parts of a plant and their functions
+Answer: 1) Roots: Anchor plant, absorb water/minerals 2) Stem: Support, transport water/nutrients 3) Leaves: Photosynthesis (make food) 4) Flowers: Reproduction 5) Fruits: Seed protection and dispersal. Each part is specialized for specific functions essential for plant survival and reproduction.
+
+CARD 5:
+Category: Human Body
+Question: Explain the main organ systems in the human body and their functions
+Answer: 1) Digestive: Breaks down food 2) Respiratory: Breathing 3) Circulatory: Blood circulation 4) Skeletal: Support and protection 5) Muscular: Movement 6) Nervous: Control and coordination 7) Excretory: Waste removal 8) Reproductive: Reproduction. All systems work together to maintain life.
+
+CARD 6:
+Category: Adaptations
+Question: What are adaptations and give examples of animal adaptations to their habitats
+Answer: Adaptations are special features that help organisms survive in their habitats. Examples: 1) Camel: Humps store fat, nostrils close during sandstorms 2) Fish: Gills for breathing underwater, streamlined body 3) Polar bear: Thick fur, white color for camouflage 4) Bird: Hollow bones for flight, beaks for different foods.
+
+CARD 7:
+Category: Response
+Question: How do living things respond to stimuli? Give examples
+Answer: Living things respond to changes in their environment (stimuli). Examples: 1) Plants grow toward light (phototropism) 2) Animals move away from danger 3) Humans sweat when hot 4) Flowers open in sunlight 5) Pupils dilate in dark. This responsiveness is essential for survival.
+
+CARD 8:
+Category: Life Cycle
+Question: Explain the life cycle of a plant from seed to adult
+Answer: 1) Seed germination: Seed absorbs water and sprouts 2) Seedling: Young plant with first leaves 3) Young plant: Grows roots, stem, and leaves 4) Adult plant: Produces flowers 5) Pollination: Transfer of pollen 6) Fertilization: Formation of seeds 7) Seed dispersal: Spread to new locations 8) Repeat cycle.
+
+CARD 9:
+Category: Classification
+Question: What are the differences between vertebrates and invertebrates?
+Answer: Vertebrates have a backbone/spinal column. Examples: Fish, amphibians, reptiles, birds, mammals. Invertebrates do not have a backbone. Examples: Insects, spiders, worms, snails, jellyfish. Vertebrates make up only 5% of animal species; invertebrates are 95%. Both are important for ecosystem balance.
+
+CARD 10:
+Category: Ecology
+Question: Why is biodiversity important for ecosystems?
+Answer: Biodiversity (variety of life) is crucial because: 1) Different species have different roles 2) Provides stability to ecosystems 3) Sources of food, medicine, and resources 4) Maintains natural cycles (water, carbon) 5) Pollination of crops 6) Soil formation 7) Climate regulation. Loss of biodiversity threatens all life.
+
+====================================
+HOW TO USE THESE FLASHCARDS:
+1. Print on thick paper or cardstock
+2. Cut along the dotted lines
+3. Fold each card in half
+4. Glue the front and back together
+5. Use for regular revision
+6. Test yourself by looking at the question and trying to recall the answer
+7. Shuffle cards for random practice
+
+====================================
+TIPS FOR EFFECTIVE LEARNING:
+• Review flashcards daily
+• Start with 5-10 minutes per day
+• Say answers out loud
+• Create your own flashcards for difficult topics
+• Study with friends for group practice
+
+====================================
+Prepared by: STEM Learn Odisha
+Date: ${new Date().toLocaleDateString()}
+====================================`;
+        }
+
+        // Show notification function
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            
+            if (type === 'error') {
+                notification.style.background = '#e53e3e';
+            } else if (type === 'success') {
+                notification.style.background = '#38a169';
+            }
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Log download activity
+        function logDownloadActivity(resourceType) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            const activity = {
+                userId: user.id,
+                resourceType: resourceType,
+                timestamp: new Date().toISOString(),
+                page: 'livingthings.html'
+            };
+            
+            // Save to localStorage
+            let activities = JSON.parse(localStorage.getItem('downloadActivities')) || [];
+            activities.push(activity);
+            localStorage.setItem('downloadActivities', JSON.stringify(activities));
+        }
+    </script>
+</body>
+</html>

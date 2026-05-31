@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 Tech Treasure Hunt - Interactive Simulator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .game-container {
+            display: grid;
+            grid-template-columns: 250px 1fr 300px;
+            gap: 15px;
+            height: 100vh;
+            padding: 15px;
+        }
+
+        /* Left Panel - Missions */
+        .missions-panel {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            overflow-y: auto;
+        }
+
+        .missions-panel h2 {
+            color: #64ffda;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mission-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mission-item:hover {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .mission-item.active {
+            background: rgba(100, 255, 218, 0.1);
+            border-color: #64ffda;
+        }
+
+        .mission-item.completed {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: #10b981;
+        }
+
+        .mission-icon {
+            font-size: 1.5rem;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .mission-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        /* Center Panel - Desktop */
+        .desktop-panel {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .desktop-bg {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+        }
+
+        /* Desktop Icons */
+        .desktop-icon {
+            position: absolute;
+            width: 80px;
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            border: 2px solid transparent;
+        }
+
+        .desktop-icon:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .desktop-icon i {
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .desktop-icon span {
+            color: white;
+            font-size: 0.9rem;
+            display: block;
+        }
+
+        /* Application Windows */
+        .app-window {
+            position: absolute;
+            background: rgba(30, 41, 59, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            z-index: 100;
+            display: none;
+            min-width: 400px;
+            min-height: 300px;
+        }
+
+        .window-header {
+            background: rgba(15, 23, 42, 0.9);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: move;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .window-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .window-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .window-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .window-btn.close:hover {
+            background: #ef4444;
+        }
+
+        .window-body {
+            padding: 20px;
+            height: calc(100% - 60px);
+            overflow: auto;
+        }
+
+        /* Right Panel - Task */
+        .tools-panel {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            overflow-y: auto;
+        }
+
+        .task-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .task-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .task-icon {
+            font-size: 1.5rem;
+            color: #f59e0b;
+        }
+
+        .task-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #f59e0b;
+        }
+
+        .task-description {
+            color: #cbd5e1;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .task-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .step:hover {
+            background: rgba(102, 126, 234, 0.2);
+        }
+
+        .step.completed {
+            background: rgba(16, 185, 129, 0.2);
+        }
+
+        .step-number {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .step-content {
+            flex: 1;
+            color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Game Stats */
+        .game-stats {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 10px 30px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .timer { color: #f59e0b; }
+        .score { color: #64ffda; }
+        .level { color: #8b5cf6; }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(15, 23, 42, 0.95);
+            border: 2px solid;
+            border-radius: 10px;
+            padding: 15px;
+            min-width: 250px;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-color: #10b981;
+        }
+
+        .toast-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast-icon {
+            font-size: 1.5rem;
+        }
+
+        .toast.success .toast-icon { color: #10b981; }
+    </style>
+</head>
+<body>
+    <!-- Game Stats -->
+    <div class="game-stats">
+        <div class="stat timer">
+            <i class="fas fa-clock"></i>
+            <span id="timer">30:00</span>
+        </div>
+        <div class="stat score">
+            <i class="fas fa-star"></i>
+            <span id="score">Score: 0</span>
+        </div>
+        <div class="stat level">
+            <i class="fas fa-level-up-alt"></i>
+            <span id="level">Level 1</span>
+        </div>
+    </div>
+
+    <!-- Game Container -->
+    <div class="game-container">
+        <!-- Left Panel - Missions -->
+        <div class="missions-panel">
+            <h2><i class="fas fa-map-marked-alt"></i> Tech Missions</h2>
+            <div class="mission-list" id="missionList">
+                <!-- Missions loaded by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Center Panel - Interactive Desktop -->
+        <div class="desktop-panel">
+            <div class="desktop-bg" id="desktop">
+                <!-- Desktop Icons - Fixed Positions -->
+                <div class="desktop-icon" id="notepadIcon" style="top: 50px; left: 50px;">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Notepad</span>
+                </div>
+                <div class="desktop-icon" id="paintIcon" style="top: 50px; left: 150px;">
+                    <i class="fas fa-paint-brush"></i>
+                    <span>Paint</span>
+                </div>
+                <div class="desktop-icon" id="calculatorIcon" style="top: 50px; left: 250px;">
+                    <i class="fas fa-calculator"></i>
+                    <span>Calculator</span>
+                </div>
+                <div class="desktop-icon" id="browserIcon" style="top: 150px; left: 50px;">
+                    <i class="fas fa-globe"></i>
+                    <span>Browser</span>
+                </div>
+                <div class="desktop-icon" id="explorerIcon" style="top: 150px; left: 150px;">
+                    <i class="fas fa-folder"></i>
+                    <span>Explorer</span>
+                </div>
+
+                <!-- Application Windows -->
+                <!-- Notepad Window -->
+                <div class="app-window" id="notepadWindow" style="left: 100px; top: 100px;">
+                    <div class="window-header">
+                        <div class="window-title">
+                            <i class="fas fa-file-alt"></i>
+                            <span>Notepad - Untitled.txt</span>
+                        </div>
+                        <div class="window-controls">
+                            <button class="window-btn close"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="window-body">
+                        <textarea id="notepadText" rows="10" style="width:100%; padding:10px; background:#1e293b; color:white; border:1px solid #475569; border-radius:5px;" placeholder="Type your secret message here...">The treasure is hidden in the Paint program</textarea>
+                        <div style="margin-top:15px; display:flex; gap:10px;">
+                            <button class="btn-primary" id="saveFileBtn" style="padding:10px 20px; background:#667eea; color:white; border:none; border-radius:5px; cursor:pointer;">
+                                <i class="fas fa-save"></i> Save as clue1.txt
+                            </button>
+                            <button class="btn" id="clearNotepadBtn" style="padding:10px 20px; background:#64748b; color:white; border:none; border-radius:5px; cursor:pointer;">
+                                <i class="fas fa-trash"></i> Clear
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paint Window -->
+                <div class="app-window" id="paintWindow" style="left: 150px; top: 150px;">
+                    <div class="window-header">
+                        <div class="window-title">
+                            <i class="fas fa-paint-brush"></i>
+                            <span>Paint - Untitled.bmp</span>
+                        </div>
+                        <div class="window-controls">
+                            <button class="window-btn close"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="window-body">
+                        <div style="margin-bottom:15px; display:flex; gap:10px;">
+                            <button class="paint-tool active" data-tool="brush" style="padding:10px; background:#3b82f6; color:white; border:none; border-radius:5px; cursor:pointer;">
+                                <i class="fas fa-paint-brush"></i> Brush
+                            </button>
+                            <input type="color" id="paintColor" value="#ff0000" style="width:40px; height:40px; cursor:pointer;">
+                        </div>
+                        <div style="border:2px solid #475569; border-radius:5px; background:white; margin-bottom:15px;">
+                            <canvas id="paintCanvas" width="350" height="200" style="display:block; cursor:crosshair;"></canvas>
+                        </div>
+                        <div style="display:flex; gap:10px;">
+                            <button class="btn-primary" id="savePaintBtn" style="padding:10px 20px; background:#667eea; color:white; border:none; border-radius:5px; cursor:pointer;">
+                                <i class="fas fa-save"></i> Save as smiley.bmp
+                            </button>
+                            <button class="btn" id="clearPaintBtn" style="padding:10px 20px; background:#64748b; color:white; border:none; border-radius:5px; cursor:pointer;">
+                                <i class="fas fa-trash"></i> Clear
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calculator Window -->
+                <div class="app-window" id="calculatorWindow" style="left: 200px; top: 100px;">
+                    <div class="window-header">
+                        <div class="window-title">
+                            <i class="fas fa-calculator"></i>
+                            <span>Calculator</span>
+                        </div>
+                        <div class="window-controls">
+                            <button class="window-btn close"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="window-body">
+                        <div style="background:#1e293b; color:white; padding:15px; border-radius:5px; margin-bottom:15px; text-align:right; font-size:1.5rem; font-family:monospace;" id="calcDisplay">
+                            0
+                        </div>
+                        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:8px; margin-bottom:15px;">
+                            <button class="calc-btn" data-value="7" style="padding:15px; background:#475569; color:white; border:none; border-radius:5px; cursor:pointer;">7</button>
+                            <button class="calc-btn" data-value="8" style="padding:15px; background:#475569; color:white; border:none; border-radius:5px; cursor:pointer;">8</button>
+                            <button class="calc-btn" data-value="9" style="padding:15px; background:#475569; color:white; border:none; border-radius:5px; cursor:pointer;">9</button>
+                            <button class="calc-btn operator" data-value="/" style="padding:15px; background:#3b82f6; color:white; border:none; border-radius:5px; cursor:pointer;">÷</button>
+                            <button class="calc-btn" data-value="4" style="padding:15px; background:#475569; color:white; border:none; border-radius:5px; cursor:pointer;">4</button>
+                            <button class="calc-btn" data-value="5" style="padding:15px; background:#475569; color:white; border:none; border-radius:5px; cursor:pointer;">5</button>
+                            <button class="calc-btn" data-value="6" style="padding:15px; background:#475569; color:white; border:none; border-radius:5px; cursor:pointer;">6</button>
+                            <button class="calc-btn operator" data-value="*" style="padding:15px; background:#3b82f6; color:white; border:none; border-radius:5px; cursor:pointer;">×</button>
+                            <button class="calc-btn" data-value="1" style="padding:15px; background:#475569; color:white; border:none; border-radius:5px; cursor:pointer;">1</button>
+                            <button class="calc-btn" data-value="2" style="padding:15px; background:#475569; color:white; border:none; border-radius:5px; cursor:pointer;">2</button>
+                            <button class="calc-btn" data-value="3" style="padding:15px; background:#475569; color:white; border:none; border-radius:5px; cursor:pointer;">3</button>
+                            <button class="calc-btn operator" data-value="-" style="padding:15px; background:#3b82f6; color:white; border:none; border-radius:5px; cursor:pointer;">-</button>
+                            <button class="calc-btn" data-value="0" style="padding:15px; background:#475569; color:white; border:none; border-radius:5px; cursor:pointer;">0</button>
+                            <button class="calc-btn" data-value="C" style="padding:15px; background:#ef4444; color:white; border:none; border-radius:5px; cursor:pointer;">C</button>
+                            <button class="calc-btn equals" data-value="=" style="padding:15px; background:#10b981; color:white; border:none; border-radius:5px; cursor:pointer;">=</button>
+                            <button class="calc-btn operator" data-value="+" style="padding:15px; background:#3b82f6; color:white; border:none; border-radius:5px; cursor:pointer;">+</button>
+                        </div>
+                        <button class="btn-success" id="solveMathBtn" style="padding:12px 20px; background:#10b981; color:white; border:none; border-radius:5px; cursor:pointer; width:100%;">
+                            <i class="fas fa-calculator"></i> Solve: (25 × 4) + 16
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Browser Window -->
+                <div class="app-window" id="browserWindow" style="left: 100px; top: 150px;">
+                    <div class="window-header">
+                        <div class="window-title">
+                            <i class="fas fa-globe"></i>
+                            <span>Web Browser</span>
+                        </div>
+                        <div class="window-controls">
+                            <button class="window-btn close"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="window-body">
+                        <div style="margin-bottom:15px; display:flex; gap:10px;">
+                            <input type="text" id="searchInput" placeholder="Search the web..." value="capital of france" style="flex:1; padding:10px; background:#1e293b; color:white; border:1px solid #475569; border-radius:5px;">
+                            <button class="btn-primary" id="searchBtn" style="padding:10px 20px; background:#667eea; color:white; border:none; border-radius:5px; cursor:pointer;">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                        </div>
+                        <div id="searchResults">
+                            <div class="search-result" id="parisResult" style="background:rgba(255,255,255,0.05); padding:15px; border-radius:5px; margin-bottom:10px; cursor:pointer; border:2px solid transparent; transition:all 0.3s ease;">
+                                <div style="color:#3b82f6; font-weight:600; margin-bottom:5px;">Paris - Capital of France</div>
+                                <div style="color:#94a3b8; font-size:0.9rem;">Paris is the capital and most populous city of France. Known as the "City of Light".</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Explorer Window -->
+                <div class="app-window" id="explorerWindow" style="left: 150px; top: 100px;">
+                    <div class="window-header">
+                        <div class="window-title">
+                            <i class="fas fa-folder"></i>
+                            <span>File Explorer</span>
+                        </div>
+                        <div class="window-controls">
+                            <button class="window-btn close"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="window-body">
+                        <div style="margin-bottom:15px; display:grid; grid-template-columns: repeat(3, 1fr); gap:10px;" id="fileGrid">
+                            <div style="text-align:center; padding:15px; background:rgba(255,255,255,0.05); border-radius:5px;">
+                                <i class="fas fa-file-alt" style="font-size:2rem; color:#3b82f6; margin-bottom:8px;"></i>
+                                <div style="font-size:0.9rem;">clue1.txt</div>
+                            </div>
+                        </div>
+                        <button class="btn-primary" id="createFolderBtn" style="padding:12px 20px; background:#667eea; color:white; border:none; border-radius:5px; cursor:pointer; width:100%;">
+                            <i class="fas fa-folder-plus"></i> Create Folder
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel - Task & Tools -->
+        <div class="tools-panel">
+            <div class="task-container">
+                <div class="task-header">
+                    <div class="task-icon">
+                        <i class="fas fa-crosshairs"></i>
+                    </div>
+                    <h2 class="task-title">Current Mission</h2>
+                </div>
+                <div class="task-description" id="taskDescription">
+                    Select a mission from the left panel to begin!
+                </div>
+                <div class="task-steps" id="taskSteps">
+                    <!-- Steps will be added by JavaScript -->
+                </div>
+            </div>
+
+            <button class="btn btn-primary" id="checkMissionBtn">
+                <i class="fas fa-check-circle"></i> Check Mission
+            </button>
+            <button class="btn btn-success" id="nextMissionBtn">
+                <i class="fas fa-forward"></i> Next Mission
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <div class="toast-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="toast-message" id="toastMessage">Welcome to Tech Treasure Hunt!</div>
+        </div>
+    </div>
+
+    <script>
+        // Game State
+        const gameState = {
+            score: 0,
+            timeLeft: 1800, // 30 minutes
+            currentMission: 0,
+            missionsCompleted: 0,
+            completedSteps: new Set(),
+            level: 1,
+            timerInterval: null,
+            calculatorValue: "0",
+            calculatorOperator: null,
+            calculatorPreviousValue: null
+        };
+
+        // Missions Data
+        const missions = [
+            {
+                id: 1,
+                title: "📝 Notepad Secret",
+                icon: "fa-file-alt",
+                description: "Create and save a text file",
+                points: 20,
+                objective: "Type a secret message and save as 'clue1.txt'",
+                steps: [
+                    { id: 1, text: "Open Notepad", action: "click", target: "notepadIcon" },
+                    { id: 2, text: "Type secret message", action: "type", target: "notepadText" },
+                    { id: 3, text: "Save as clue1.txt", action: "click", target: "saveFileBtn" }
+                ]
+            },
+            {
+                id: 2,
+                title: "🎨 Paint Smiley",
+                icon: "fa-paint-brush",
+                description: "Draw a smiley face",
+                points: 20,
+                objective: "Draw a smiley face and save as 'smiley.bmp'",
+                steps: [
+                    { id: 1, text: "Open Paint", action: "click", target: "paintIcon" },
+                    { id: 2, text: "Draw a smiley face", action: "draw", target: "paintCanvas" },
+                    { id: 3, text: "Save as smiley.bmp", action: "click", target: "savePaintBtn" }
+                ]
+            },
+            {
+                id: 3,
+                title: "🧮 Calculator Challenge",
+                icon: "fa-calculator",
+                description: "Solve math problem",
+                points: 25,
+                objective: "Calculate: (25 × 4) + 16 = ?",
+                steps: [
+                    { id: 1, text: "Open Calculator", action: "click", target: "calculatorIcon" },
+                    { id: 2, text: "Solve the math problem", action: "calculate", target: "solveMathBtn" }
+                ]
+            },
+            {
+                id: 4,
+                title: "🌐 Internet Search",
+                icon: "fa-globe",
+                description: "Search for information",
+                points: 25,
+                objective: "Find the capital of France",
+                steps: [
+                    { id: 1, text: "Open Browser", action: "click", target: "browserIcon" },
+                    { id: 2, text: "Search 'capital of France'", action: "search", target: "searchBtn" },
+                    { id: 3, text: "Click Paris result", action: "click", target: "parisResult" }
+                ]
+            },
+            {
+                id: 5,
+                title: "📁 File Management",
+                icon: "fa-folder",
+                description: "Organize files",
+                points: 30,
+                objective: "Create folder and organize files",
+                steps: [
+                    { id: 1, text: "Open File Explorer", action: "click", target: "explorerIcon" },
+                    { id: 2, text: "Create 'TechHunt' folder", action: "click", target: "createFolderBtn" }
+                ]
+            }
+        ];
+
+        // Initialize Game
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("Game Initializing...");
+            setupEventListeners();
+            loadMissions();
+            startTimer();
+            selectMission(0);
+            showToast("🎮 Tech Treasure Hunt Loaded! Click desktop icons to start.", "success");
+        });
+
+        // Setup all event listeners
+        function setupEventListeners() {
+            console.log("Setting up event listeners...");
+            
+            // Desktop icons - Click to open apps (FIXED)
+            document.getElementById('notepadIcon').addEventListener('click', () => openApp('notepad'));
+            document.getElementById('paintIcon').addEventListener('click', () => openApp('paint'));
+            document.getElementById('calculatorIcon').addEventListener('click', () => openApp('calculator'));
+            document.getElementById('browserIcon').addEventListener('click', () => openApp('browser'));
+            document.getElementById('explorerIcon').addEventListener('click', () => openApp('explorer'));
+
+            // Window close buttons
+            document.querySelectorAll('.window-btn.close').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const window = this.closest('.app-window');
+                    window.style.display = 'none';
+                });
+            });
+
+            // Notepad
+            document.getElementById('saveFileBtn').addEventListener('click', saveNotepadFile);
+            document.getElementById('clearNotepadBtn').addEventListener('click', () => {
+                document.getElementById('notepadText').value = '';
+            });
+
+            // Paint
+            setupPaint();
+
+            // Calculator
+            setupCalculator();
+
+            // Browser
+            document.getElementById('searchBtn').addEventListener('click', performSearch);
+            document.getElementById('parisResult').addEventListener('click', () => {
+                document.getElementById('parisResult').style.borderColor = '#3b82f6';
+                showToast("Paris is the capital of France!", "success");
+                if (gameState.currentMission === 3) completeStep(3);
+            });
+
+            // Explorer
+            document.getElementById('createFolderBtn').addEventListener('click', () => {
+                const folderName = prompt("Enter folder name:", "TechHunt");
+                if (folderName) {
+                    showToast(`Folder "${folderName}" created!`, "success");
+                    if (gameState.currentMission === 4) completeStep(2);
+                }
+            });
+
+            // Game buttons
+            document.getElementById('checkMissionBtn').addEventListener('click', checkMission);
+            document.getElementById('nextMissionBtn').addEventListener('click', nextMission);
+            
+            console.log("Event listeners setup complete!");
+        }
+
+        // Setup Paint Application
+        function setupPaint() {
+            const canvas = document.getElementById('paintCanvas');
+            const ctx = canvas.getContext('2d');
+            const colorPicker = document.getElementById('paintColor');
+            
+            // Set white background
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            let isDrawing = false;
+            let lastX = 0;
+            let lastY = 0;
+            
+            // Drawing events
+            canvas.addEventListener('mousedown', (e) => {
+                isDrawing = true;
+                [lastX, lastY] = [e.offsetX, e.offsetY];
+            });
+            
+            canvas.addEventListener('mousemove', (e) => {
+                if (!isDrawing) return;
+                
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.strokeStyle = colorPicker.value;
+                ctx.lineWidth = 3;
+                ctx.lineCap = 'round';
+                ctx.stroke();
+                [lastX, lastY] = [e.offsetX, e.offsetY];
+            });
+            
+            canvas.addEventListener('mouseup', () => {
+                isDrawing = false;
+                if (gameState.currentMission === 1) completeStep(2);
+            });
+            
+            canvas.addEventListener('mouseout', () => isDrawing = false);
+            
+            // Save button
+            document.getElementById('savePaintBtn').addEventListener('click', () => {
+                showToast('Image saved as smiley.bmp!', 'success');
+                if (gameState.currentMission === 1) completeStep(3);
+            });
+            
+            // Clear button
+            document.getElementById('clearPaintBtn').addEventListener('click', () => {
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                showToast('Canvas cleared!', 'info');
+            });
+        }
+
+        // Setup Calculator
+        function setupCalculator() {
+            const display = document.getElementById('calcDisplay');
+            
+            // Calculator button clicks
+            document.querySelectorAll('.calc-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const value = button.dataset.value;
+                    
+                    if (value === 'C') {
+                        gameState.calculatorValue = '0';
+                        gameState.calculatorOperator = null;
+                        gameState.calculatorPreviousValue = null;
+                    } else if (value === '=') {
+                        if (gameState.calculatorOperator && gameState.calculatorPreviousValue !== null) {
+                            const result = calculate(
+                                parseFloat(gameState.calculatorPreviousValue),
+                                parseFloat(gameState.calculatorValue),
+                                gameState.calculatorOperator
+                            );
+                            gameState.calculatorValue = result.toString();
+                            gameState.calculatorOperator = null;
+                            gameState.calculatorPreviousValue = null;
+                        }
+                    } else if (['+', '-', '*', '/'].includes(value)) {
+                        if (gameState.calculatorValue !== '0') {
+                            gameState.calculatorPreviousValue = gameState.calculatorValue;
+                            gameState.calculatorValue = '0';
+                            gameState.calculatorOperator = value;
+                        }
+                    } else {
+                        if (gameState.calculatorValue === '0') {
+                            gameState.calculatorValue = value;
+                        } else {
+                            gameState.calculatorValue += value;
+                        }
+                    }
+                    
+                    display.textContent = gameState.calculatorValue;
+                });
+            });
+            
+            // Solve math button
+            document.getElementById('solveMathBtn').addEventListener('click', () => {
+                gameState.calculatorValue = '116';
+                display.textContent = '116';
+                showToast('Solved: (25 × 4) + 16 = 116', 'success');
+                if (gameState.currentMission === 2) completeStep(2);
+            });
+            
+            function calculate(a, b, operator) {
+                switch(operator) {
+                    case '+': return a + b;
+                    case '-': return a - b;
+                    case '*': return a * b;
+                    case '/': return a / b;
+                    default: return b;
+                }
+            }
+        }
+
+        // Open application - FIXED FUNCTION
+        function openApp(appName) {
+            console.log(`Opening ${appName}...`);
+            
+            // Close all windows first
+            document.querySelectorAll('.app-window').forEach(window => {
+                window.style.display = 'none';
+            });
+            
+            // Open requested app
+            const window = document.getElementById(`${appName}Window`);
+            if (window) {
+                window.style.display = 'block';
+                window.style.zIndex = '100';
+                
+                // Check if this completes a step
+                const mission = missions[gameState.currentMission];
+                if (mission) {
+                    const step = mission.steps.find(s => s.target === `${appName}Icon`);
+                    if (step && !gameState.completedSteps.has(step.id)) {
+                        completeStep(step.id);
+                    }
+                }
+                
+                showToast(`${appName.charAt(0).toUpperCase() + appName.slice(1)} opened!`, "info");
+            } else {
+                console.error(`Window not found: ${appName}Window`);
+            }
+        }
+
+        // Load missions into left panel
+        function loadMissions() {
+            const missionList = document.getElementById('missionList');
+            missionList.innerHTML = '';
+            
+            missions.forEach((mission, index) => {
+                const missionItem = document.createElement('div');
+                missionItem.className = `mission-item ${index === gameState.currentMission ? 'active' : ''} ${gameState.missionsCompleted > index ? 'completed' : ''}`;
+                
+                missionItem.innerHTML = `
+                    <div class="mission-icon">
+                        <i class="fas ${mission.icon}"></i>
+                    </div>
+                    <h3 class="mission-title">${mission.title}</h3>
+                    <p style="color:#94a3b8; font-size:0.8rem; margin:5px 0;">${mission.description}</p>
+                    <div style="color:#f59e0b; font-size:0.8rem;">
+                        <i class="fas fa-star"></i> ${mission.points} pts
+                    </div>
+                `;
+                
+                missionItem.addEventListener('click', () => selectMission(index));
+                missionList.appendChild(missionItem);
+            });
+        }
+
+        // Select a mission
+        function selectMission(index) {
+            gameState.currentMission = index;
+            gameState.completedSteps.clear();
+            loadMissions();
+            updateCurrentMissionUI();
+            showToast(`Mission ${index + 1} selected!`, "info");
+        }
+
+        // Update UI with current mission
+        function updateCurrentMissionUI() {
+            if (missions[gameState.currentMission]) {
+                const mission = missions[gameState.currentMission];
+                
+                // Update task description
+                document.getElementById('taskDescription').textContent = mission.objective;
+                
+                // Update steps
+                const taskSteps = document.getElementById('taskSteps');
+                taskSteps.innerHTML = '';
+                
+                mission.steps.forEach((step, index) => {
+                    const stepDiv = document.createElement('div');
+                    stepDiv.className = `step ${gameState.completedSteps.has(step.id) ? 'completed' : ''}`;
+                    
+                    stepDiv.innerHTML = `
+                        <div class="step-number">${index + 1}</div>
+                        <div class="step-content">
+                            ${step.text}
+                        </div>
+                    `;
+                    
+                    // Add click event for step completion
+                    if (!gameState.completedSteps.has(step.id)) {
+                        stepDiv.addEventListener('click', () => completeStep(step.id));
+                    }
+                    
+                    taskSteps.appendChild(stepDiv);
+                });
+            }
+        }
+
+        // Complete a step
+        function completeStep(stepId) {
+            gameState.completedSteps.add(stepId);
+            gameState.score += 5;
+            
+            updateCurrentMissionUI();
+            updateUI();
+            
+            showToast('Step completed! +5 points', 'success');
+            
+            // Check if mission is complete
+            const mission = missions[gameState.currentMission];
+            const allStepsComplete = mission.steps.every(step => gameState.completedSteps.has(step.id));
+            
+            if (allStepsComplete) {
+                completeMission();
+            }
+        }
+
+        // Check current mission
+        function checkMission() {
+            const mission = missions[gameState.currentMission];
+            const allStepsComplete = mission.steps.every(step => gameState.completedSteps.has(step.id));
+            
+            if (allStepsComplete) {
+                completeMission();
+            } else {
+                showToast('Complete all steps first!', 'error');
+            }
+        }
+
+        // Complete current mission
+        function completeMission() {
+            const mission = missions[gameState.currentMission];
+            gameState.score += mission.points;
+            gameState.missionsCompleted++;
+            gameState.level = Math.floor(gameState.missionsCompleted / 2) + 1;
+            
+            showToast(`🎉 Mission Complete! +${mission.points} points`, 'success');
+            
+            updateUI();
+            loadMissions();
+            
+            // Check if all missions complete
+            if (gameState.missionsCompleted === missions.length) {
+                setTimeout(() => {
+                    alert('🎊 CONGRATULATIONS!\n\nYou have completed all missions!\nFinal Score: ' + gameState.score + '\n\nYou are now a Tech Treasure Hunter!');
+                }, 1000);
+            }
+        }
+
+        // Next mission
+        function nextMission() {
+            if (gameState.currentMission < missions.length - 1) {
+                gameState.currentMission++;
+                gameState.completedSteps.clear();
+                loadMissions();
+                updateCurrentMissionUI();
+                showToast('Next mission loaded!', 'info');
+            } else {
+                showToast('No more missions! Complete current one.', 'error');
+            }
+        }
+
+        // Notepad functions
+        function saveNotepadFile() {
+            const notepadText = document.getElementById('notepadText').value;
+            if (notepadText.trim()) {
+                showToast('File saved as clue1.txt!', 'success');
+                if (gameState.currentMission === 0) completeStep(3);
+            } else {
+                showToast('Please type something first!', 'error');
+            }
+        }
+
+        // Browser functions
+        function performSearch() {
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput.value.toLowerCase().includes('capital of france')) {
+                showToast('Searching for "capital of France"...', 'info');
+                if (gameState.currentMission === 3) completeStep(2);
+            } else {
+                showToast('Try searching for "capital of France"', 'error');
+            }
+        }
+
+        // Timer functions
+        function startTimer() {
+            clearInterval(gameState.timerInterval);
+            gameState.timerInterval = setInterval(() => {
+                gameState.timeLeft--;
+                updateTimer();
+                
+                if (gameState.timeLeft <= 0) {
+                    clearInterval(gameState.timerInterval);
+                    showToast('Time\'s up! Game Over.', 'error');
+                }
+            }, 1000);
+        }
+
+        function updateTimer() {
+            const minutes = Math.floor(gameState.timeLeft / 60);
+            const seconds = gameState.timeLeft % 60;
+            document.getElementById('timer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Update UI
+        function updateUI() {
+            document.getElementById('score').textContent = `Score: ${gameState.score}`;
+            document.getElementById('level').textContent = `Level ${gameState.level}`;
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toast.className = `toast ${type}`;
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,2435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural Resources - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+            background: white;
+            color: #2a69ac;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo-text span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 28px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 1.05rem;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.6rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Language Switcher (now inside header) */
+        .language-switcher {
+            display: flex;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 25px;
+            padding: 6px;
+            backdrop-filter: blur(10px);
+            align-items: center;
+            margin-left: 16px;
+        }
+
+        .lang-btn {
+            padding: 6px 12px;
+            border: none;
+            background: transparent;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: white;
+            white-space: nowrap;
+        }
+
+        .lang-btn.active {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+
+        .lang-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9)),
+                        url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .breadcrumb-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .breadcrumb a {
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #3182ce;
+        }
+
+        .breadcrumb span {
+            color: #64748b;
+        }
+
+        /* Main Content */
+        .science-content {
+            padding: 50px 0;
+        }
+
+        .topic-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .topic-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+        }
+
+        .topic-card.active {
+            background: #ebf8ff;
+            border-color: #90cdf4;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .topic-icon {
+            font-size: 2rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .topic-title {
+            font-size: 1.2rem;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+
+        .topic-desc {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .topic-progress {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #3182ce;
+            border-radius: 4px;
+        }
+
+        .progress-text {
+            font-size: 0.85rem;
+            color: #64748b;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Topic Content */
+        .topic-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .topic-header {
+            margin-bottom: 25px;
+        }
+
+        .topic-heading {
+            font-size: 1.8rem;
+            color: #1a365d;
+            margin-bottom: 15px;
+        }
+
+        .topic-intro {
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .info-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .info-card h3 {
+            color: #1a365d;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-card ul {
+            padding-left: 20px;
+            color: #64748b;
+        }
+
+        .info-card li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        /* topic panels show/hide */
+        .topic-panel {
+            display: none;
+        }
+        .topic-panel.active {
+            display: block;
+        }
+
+        /* Games Section */
+        .games-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .game-level {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .game-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .game-desc {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .game-body {
+            padding: 20px;
+        }
+
+        .game-features {
+            margin-bottom: 20px;
+        }
+
+        .game-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .game-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .game-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Resources Section - Enhanced */
+        .resources-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .resource-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .resource-icon {
+            font-size: 2.5rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .resource-title {
+            font-size: 1.1rem;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+
+        .resource-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        /* Resource Preview Styles */
+        .resource-preview {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 1px solid #e2e8f0;
+            max-height: 200px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .preview-title {
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+
+        .preview-content {
+            line-height: 1.5;
+            color: #4a5568;
+            font-size: 0.85rem;
+        }
+
+        .preview-content ul {
+            padding-left: 15px;
+            margin: 5px 0;
+        }
+
+        .preview-content li {
+            margin-bottom: 3px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .download-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* ENHANCED FLASHCARD STYLES */
+        .flashcard-preview {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .flashcards-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            min-height: 280px;
+        }
+
+        .flashcard-wrapper {
+            width: 100%;
+            max-width: 500px;
+            height: 280px;
+            perspective: 1500px;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .flashcard-front {
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+        }
+
+        .flashcard-back {
+            background: linear-gradient(135deg, #38b2ac 0%, #2c9a94 100%);
+            color: white;
+            transform: rotateY(180deg);
+            overflow-y: auto;
+        }
+
+        .flashcard-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .flashcard-question {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .flashcard-answer {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .flashcard-hint {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .flashcard-instruction {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            margin-top: 15px;
+        }
+
+        .flashcard-category {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .flashcard-counter {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Flashcard Navigation */
+        .flashcard-navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .flashcard-nav-btn {
+            background: #3182ce;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .flashcard-nav-btn:hover {
+            background: #2b6cb0;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .flashcard-nav-btn:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .flashcard-indicators {
+            display: flex;
+            gap: 8px;
+        }
+
+        .flashcard-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .flashcard-indicator.active {
+            background: #3182ce;
+            transform: scale(1.2);
+        }
+
+        .flashcard-progress {
+            font-size: 1rem;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #38b2ac;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about {
+            padding-right: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.8rem;
+            background: #38b2ac;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 20px;
+            color: #38b2ac;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2d3748;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .social-links a:hover {
+            background: #38b2ac;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .topic-cards,
+            .info-grid,
+            .games-grid,
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-wrap: wrap;
+            }
+
+            nav {
+                flex: 1 1 auto;
+            }
+
+            .language-switcher {
+                margin-left: 16px;
+            }
+
+            .flashcard-wrapper {
+                max-width: 400px;
+                height: 250px;
+            }
+            
+            .flashcard-question {
+                font-size: 1.2rem;
+            }
+            
+            .flashcard-answer {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                gap: 12px;
+                background: #0e2a47;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                padding: 15px 20px;
+                border-radius: 12px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+                min-width: 180px;
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .header-content {
+                align-items: center;
+            }
+
+            .language-switcher {
+                order: 3;
+                margin-left: 0;
+            }
+            
+            .flashcard-wrapper {
+                max-width: 350px;
+                height: 220px;
+            }
+            
+            .flashcard-front, .flashcard-back {
+                padding: 20px;
+            }
+            
+            .flashcard-question {
+                font-size: 1.1rem;
+            }
+            
+            .flashcard-answer {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .flashcard-wrapper {
+                max-width: 300px;
+                height: 200px;
+            }
+            
+            .flashcard-front, .flashcard-back {
+                padding: 15px;
+            }
+            
+            .flashcard-question {
+                font-size: 1rem;
+            }
+            
+            .flashcard-answer {
+                font-size: 0.9rem;
+            }
+            
+            .flashcard-nav-btn {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        /* Indic font support */
+        .indic-text {
+            font-family: 'Nirmala UI', 'Kalinga', 'Segoe UI', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with language switcher inside -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <div class="logo-text">STEM <span>Learn</span> Odisha</div>
+                </div>
+
+                <nav>
+                    <ul>
+                        <li><a href="home.html" data-i18n="nav-home">Home</a></li>
+                        <li><a href="science.html" class="active" data-i18n="nav-science">Science</a></li>
+                        <li><a href="math.html" data-i18n="nav-math">Math</a></li>
+                        <li><a href="teachers.html" data-i18n="nav-teachers">Teachers</a></li>
+                        <li><a href="about.html" data-i18n="nav-about">About</a></li>
+                        <li><a href="contact.html" data-i18n="nav-contact">Contact</a></li>
+                    </ul>
+                </nav>
+
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="en">English</button>
+                    <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+                    <button class="lang-btn" data-lang="hi">हिन्दी</button>
+                </div>
+
+                <button class="mobile-menu-btn" aria-label="Toggle navigation menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 data-i18n="page-title">Natural Resources</h1>
+            <p data-i18n="page-desc">
+                Learn about important natural resources like water, air and proper garbage management through simple notes and activities.
+            </p>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <a href="home.html" data-i18n="breadcrumb-home">Home</a>
+                <span>/</span>
+                <a href="science.html" data-i18n="breadcrumb-science">Science</a>
+                <span>/</span>
+                <span data-i18n="breadcrumb-natural">Natural Resources</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="science-content">
+        <div class="container">
+
+            <!-- Topic Content -->
+            <div class="topic-content">
+                <!-- Panel 1: Water -->
+                <div class="topic-panel active" data-topic="water">
+                    <div class="topic-header">
+                        <h2 class="topic-heading" data-i18n="content-title">
+                            Water – A Precious Natural Resource
+                        </h2>
+                        <p class="topic-intro" data-i18n="content-intro">
+                            Water is one of the most important natural resources on Earth. All living things need water to survive. We use water for drinking, cooking, cleaning, farming and many other activities. In this part, we will learn about the uses, sources and conservation of water.
+                        </p>
+                    </div>
+
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <h3>
+                                <i class="fas fa-glass-water"></i>
+                                <span data-i18n="natural-basic-title">Uses of Water</span>
+                            </h3>
+                            <ul>
+                                <li data-i18n="natural-basic-1">
+                                    We use water for drinking, cooking and washing.
+                                </li>
+                                <li data-i18n="natural-basic-2">
+                                    Farmers need water to grow crops and plants.
+                                </li>
+                                <li data-i18n="natural-basic-3">
+                                    Water is used in factories to make many products.
+                                </li>
+                                <li data-i18n="natural-basic-4">
+                                    Water is needed for animals, birds and all living things.
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="info-card">
+                            <h3>
+                                <i class="fas fa-water"></i>
+                                <span data-i18n="natural-examples-title">Sources & Saving of Water</span>
+                            </h3>
+                            <ul>
+                                <li data-i18n="natural-examples-1">
+                                    Water comes from rain, rivers, lakes, ponds and wells.
+                                </li>
+                                <li data-i18n="natural-examples-2">
+                                    Groundwater is stored under the soil and taken out using pumps and wells.
+                                </li>
+                                <li data-i18n="natural-examples-3">
+                                    We should not waste water while brushing, bathing or washing.
+                                </li>
+                                <li data-i18n="natural-examples-4">
+                                    Rainwater harvesting and fixing leaking taps help in saving water.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel 2: Air -->
+                <div class="topic-panel" data-topic="air">
+                    <div class="topic-header">
+                        <h2 class="topic-heading" data-i18n="light-topic-title">
+                            Importance of Air for Living Things
+                        </h2>
+                        <p class="topic-intro" data-i18n="light-topic-intro">
+                            Air is all around us, even though we cannot see it. It is a mixture of gases and is very important for life. Humans, animals and plants all depend on air in different ways. In this part, we will see how air helps living things and what it is made of.
+                        </p>
+                    </div>
+
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <h3>
+                                <i class="fas fa-smog"></i>
+                                <span data-i18n="light-title">How Air Helps Living Things</span>
+                            </h3>
+                            <ul>
+                                <li data-i18n="light-1">
+                                    Oxygen present in air helps humans and animals to breathe.
+                                </li>
+                                <li data-i18n="light-2">
+                                    Plants take carbon dioxide from air to make their food (photosynthesis).
+                                </li>
+                                <li data-i18n="light-3">
+                                    Air helps in burning; without air, a candle will not burn.
+                                </li>
+                                <li data-i18n="light-4">
+                                    Moving air (wind) helps in pollination and seed dispersal in plants.
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="info-card">
+                            <h3>
+                                <i class="fas fa-cloud"></i>
+                                <span data-i18n="light-extra-title">What is Air Made Of?</span>
+                            </h3>
+                            <ul>
+                                <li data-i18n="light-extra-1">
+                                    Air is a mixture of many gases.
+                                </li>
+                                <li data-i18n="light-extra-2">
+                                    It has mostly nitrogen and oxygen, and small amounts of other gases.
+                                </li>
+                                <li data-i18n="light-extra-3">
+                                    Clean air is important for a healthy life.
+                                </li>
+                                <li data-i18n="light-extra-4">
+                                    We should reduce air pollution by planting trees and avoiding burning waste.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel 3: Garbage & Waste -->
+                <div class="topic-panel" data-topic="garbage">
+                    <div class="topic-header">
+                        <h2 class="topic-heading" data-i18n="revision-title">
+                            Garbage & Waste Management
+                        </h2>
+                        <p class="topic-intro" data-i18n="revision-intro">
+                            Every day, we throw away many things like paper, plastic covers, food peels and bottles. This waste is called garbage. If garbage is not managed properly, it can make our surroundings dirty and harm the environment. In this part, we will learn about types of waste and the 3R rule – Reduce, Reuse and Recycle.
+                        </p>
+                    </div>
+
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <h3>
+                                <i class="fas fa-recycle"></i>
+                                <span data-i18n="revision-keypoints-title">Types of Waste & 3R Rule</span>
+                            </h3>
+                            <ul>
+                                <li data-i18n="revision-keypoints-1">
+                                    Biodegradable waste: fruit peels, vegetable waste and paper that can rot and mix with soil.
+                                </li>
+                                <li data-i18n="revision-keypoints-2">
+                                    Non-biodegradable waste: plastic, glass and metal that do not rot easily.
+                                </li>
+                                <li data-i18n="revision-keypoints-3">
+                                    Reduce: use less plastic and avoid unnecessary packaging.
+                                </li>
+                                <li data-i18n="revision-keypoints-4">
+                                    Reuse and Recycle: use things again and convert waste into useful products.
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="info-card">
+                            <h3>
+                                <i class="fas fa-trash"></i>
+                                <span data-i18n="revision-questions-title">Good Habits for Waste Management</span>
+                            </h3>
+                            <ul>
+                                <li data-i18n="revision-q1">
+                                    Use separate dustbins for wet waste (food) and dry waste (plastic, paper).
+                                </li>
+                                <li data-i18n="revision-q2">
+                                    Do not throw garbage on roads, in rivers or open places.
+                                </li>
+                                <li data-i18n="revision-q3">
+                                    Use cloth or jute bags instead of plastic bags while shopping.
+                                </li>
+                                <li data-i18n="revision-q4">
+                                    Join clean-up activities in school and neighbourhood to keep the environment clean.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Games Section (common for all topics) -->
+                <div class="games-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-gamepad"></i>
+                        <span data-i18n="games-title">Interactive Learning Games</span>
+                    </h2>
+
+                    <div class="games-grid">
+                        <div class="game-card">
+                            <div class="game-header">
+                                <div class="game-level" data-i18n="level-basic">Basic</div>
+                                <h3 class="game-title" data-i18n="game1-title">Water Explorer</h3>
+                                <p class="game-desc" data-i18n="game1-desc">
+                                    Identify uses and sources of water in daily life.
+                                </p>
+                            </div>
+                            <div class="game-body">
+                                <div class="game-features">
+                                    <div class="game-feature">
+                                        <i class="fas fa-star"></i>
+                                        <span data-i18n="game1-feature1">Match pictures with correct water uses.</span>
+                                    </div>
+                                    <div class="game-feature">
+                                        <i class="fas fa-clock"></i>
+                                        <span data-i18n="game1-feature2">10–15 minutes gameplay.</span>
+                                    </div>
+                                    <div class="game-feature">
+                                        <i class="fas fa-trophy"></i>
+                                        <span data-i18n="game1-feature3">Earn up to 50 points.</span>
+                                    </div>
+                                </div>
+                                <a href="game6.7.1.html" class="game-btn" data-i18n="play-game">Play Game</a>
+                            </div>
+                        </div>
+
+                        <div class="game-card">
+                            <div class="game-header">
+                                <div class="game-level" data-i18n="level-intermediate">Intermediate</div>
+                                <h3 class="game-title" data-i18n="game2-title">Air & Living Things</h3>
+                                <p class="game-desc" data-i18n="game2-desc">
+                                    Decide how air helps humans, animals and plants.
+                                </p>
+                            </div>
+                            <div class="game-body">
+                                <div class="game-features">
+                                    <div class="game-feature">
+                                        <i class="fas fa-star"></i>
+                                        <span data-i18n="game2-feature1">Drag and drop to match air uses.</span>
+                                    </div>
+                                    <div class="game-feature">
+                                        <i class="fas fa-clock"></i>
+                                        <span data-i18n="game2-feature2">15–20 minutes gameplay.</span>
+                                    </div>
+                                    <div class="game-feature">
+                                        <i class="fas fa-trophy"></i>
+                                        <span data-i18n="game2-feature3">Earn up to 100 points.</span>
+                                    </div>
+                                </div>
+                                <a href="game6.7.2.html" class="game-btn" data-i18n="play-game">Play Game</a>
+                            </div>
+                        </div>
+
+                        <div class="game-card">
+                            <div class="game-header">
+                                <div class="game-level" data-i18n="level-hard">Hard</div>
+                                <h3 class="game-title" data-i18n="game3-title">Garbage Sorting Challenge</h3>
+                                <p class="game-desc" data-i18n="game3-desc">
+                                    Sort waste into correct bins and apply the 3R rule.
+                                </p>
+                            </div>
+                            <div class="game-body">
+                                <div class="game-features">
+                                    <div class="game-feature">
+                                        <i class="fas fa-star"></i>
+                                        <span data-i18n="game3-feature1">Decide which waste goes into which bin.</span>
+                                    </div>
+                                    <div class="game-feature">
+                                        <i class="fas fa-clock"></i>
+                                        <span data-i18n="game3-feature2">20–25 minutes gameplay.</span>
+                                    </div>
+                                    <div class="game-feature">
+                                        <i class="fas fa-trophy"></i>
+                                        <span data-i18n="game3-feature3">Earn up to 150 points.</span>
+                                    </div>
+                                </div>
+                                <a href="game6.7.3.html" class="game-btn" data-i18n="play-game">Play Game</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enhanced Resources Section -->
+                <div class="resources-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-download"></i>
+                        <span data-i18n="resources-title">Learning Resources</span>
+                    </h2>
+
+                    <div class="resources-grid">
+                        <!-- Study Notes (English) -->
+                        <div class="resource-card">
+                            <div class="resource-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h3 class="resource-title" data-i18n="resource1-title">Study Notes (English)</h3>
+                            <p class="resource-desc" data-i18n="resource1-desc">
+                                Complete English notes on Natural Resources – water, air and garbage management.
+                            </p>
+                            
+                            <!-- Resource Preview -->
+                            <div class="resource-preview">
+                                <div class="preview-title">Preview - Chapter Summary</div>
+                                <div class="preview-content">
+                                    <strong>Water Resources:</strong>
+                                    <ul>
+                                        <li>Only 3% of Earth's water is freshwater</li>
+                                        <li>Sources: Rainwater, rivers, lakes, groundwater</li>
+                                        <li>Conservation: Fix leaks, rainwater harvesting</li>
+                                    </ul>
+                                    
+                                    <strong>Air Quality:</strong>
+                                    <ul>
+                                        <li>Composition: 78% Nitrogen, 21% Oxygen</li>
+                                        <li>Essential for respiration and photosynthesis</li>
+                                        <li>Prevent pollution by planting trees</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <button class="download-btn" onclick="downloadResource('study_notes_english')">
+                                <i class="fas fa-download"></i>
+                                <span data-i18n="download-english">Download (English)</span>
+                            </button>
+                        </div>
+
+                        <!-- Study Notes (Odia) -->
+                        <div class="resource-card">
+                            <div class="resource-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <h3 class="resource-title" data-i18n="resource2-title">Study Notes (Odia)</h3>
+                            <p class="resource-desc" data-i18n="resource2-desc">
+                                Odia notes for the chapter on Natural Resources – water, air and garbage.
+                            </p>
+                            
+                            <!-- Resource Preview -->
+                            <div class="resource-preview indic-text">
+                                <div class="preview-title">ପ୍ରିଭ୍ୟୁ - ଅଧ୍ୟାୟ ସାରାଂଶ</div>
+                                <div class="preview-content">
+                                    <strong>ଜଳ ସମ୍ପଦ:</strong>
+                                    <ul>
+                                        <li>ପୃଥିବୀର ମାତ୍ର ୩% ଜଳ ପାନୀୟ</li>
+                                        <li>ଉତ୍ସ: ବର୍ଷା, ନଦୀ, ପୋଖରୀ, ଭୂଗର୍ଭ ଜଳ</li>
+                                        <li>ସଞ୍ଚୟ: ଲିକ୍ ଠିକ୍ କରନ୍ତୁ, ବର୍ଷାଜଳ ସଞ୍ଚୟ</li>
+                                    </ul>
+                                    
+                                    <strong>ବାତାସ ଗୁଣବତ୍ତା:</strong>
+                                    <ul>
+                                        <li>ଗଠନ: ୭୮% ନାଇଟ୍ରୋଜେନ୍, ୨୧% ଅକ୍ସିଜେନ୍</li>
+                                        <li>ଶ୍ୱାସ ଓ ଫଟୋସିନ୍ଥେସିସ୍ ପାଇଁ ଜରୁରୀ</li>
+                                        <li>ଗଛ ଲଗାଇ ପ୍ରଦୂଷଣ ରୋକନ୍ତୁ</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <button class="download-btn" onclick="downloadResource('study_notes_odia')">
+                                <i class="fas fa-download"></i>
+                                <span data-i18n="download-odia">Download (Odia)</span>
+                            </button>
+                        </div>
+
+                        <!-- Flashcards -->
+                        <div class="resource-card">
+                            <div class="resource-icon">
+                                <i class="fas fa-images"></i>
+                            </div>
+                            <h3 class="resource-title" data-i18n="resource3-title">Flashcards</h3>
+                            <p class="resource-desc" data-i18n="resource3-desc">
+                                Visual learning cards for key concepts
+                            </p>
+                            
+                            <!-- Flashcard Preview -->
+                            <div class="resource-preview">
+                                <div class="flashcard-preview">
+                                    <div class="flashcards-container">
+                                        <div class="flashcard-wrapper">
+                                            <div class="flashcard" id="main-flashcard" onclick="flipCard()">
+                                                <!-- Content will be dynamically inserted here -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flashcard-navigation">
+                                        <button class="flashcard-nav-btn" id="prev-btn" onclick="prevFlashcard()">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </button>
+                                        
+                                        <div class="flashcard-progress">
+                                            <span id="current-card">1</span> / <span id="total-cards">10</span>
+                                        </div>
+                                        
+                                        <button class="flashcard-nav-btn" id="next-btn" onclick="nextFlashcard()">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="flashcard-indicators" id="flashcard-indicators">
+                                        <!-- Indicators will be dynamically inserted here -->
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button class="download-btn" onclick="downloadResource('flashcards')">
+                                <i class="fas fa-download"></i>
+                                <span data-i18n="download-flashcards">Download Flashcards</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <div class="footer-logo-text">STEM Learn Odisha</div>
+                    </div>
+                    <p data-i18n="footer-desc">
+                        Making Science and Mathematics education engaging and relevant for students in Odisha through localized content and interactive learning.
+                    </p>
+                </div>
+
+                <div class="footer-links">
+                    <h3 data-i18n="quick-links">Quick Links</h3>
+                    <ul>
+                        <li><a href="home.html"><i class="fas fa-home"></i> <span data-i18n="nav-home">Home</span></a></li>
+                        <li><a href="science.html"><i class="fas fa-flask"></i> <span data-i18n="nav-science">Science</span></a></li>
+                        <li><a href="math.html"><i class="fas fa-calculator"></i> <span data-i18n="nav-math">Math</span></a></li>
+                        <li><a href="teachers.html"><i class="fas fa-chalkboard-teacher"></i> <span data-i18n="nav-teachers">Teachers</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h3 data-i18n="contact-us">Contact Us</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> <span data-i18n="footer-address">Department of Education, Bhubaneswar</span></a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +91 674 123 4567</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@stemlearnodisha.com</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p data-i18n="copyright">© 2023 STEM Learn Odisha. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced Flashcard data for Natural Resources
+        const flashcardsData = [
+            {
+                question: "Why is water conservation important?",
+                answer: "Water conservation is important because: 1) Only 3% of Earth's water is freshwater, 2) Freshwater is essential for drinking, agriculture and industry, 3) Many regions face water scarcity, 4) Conserving water saves energy used in water treatment, 5) It ensures water availability for future generations. Simple conservation methods include fixing leaks, using water-efficient fixtures, rainwater harvesting, and reducing wastage during daily activities.",
+                hint: "Think about limited freshwater resources",
+                category: "Water Conservation",
+                icon: "fas fa-tint"
+            },
+            {
+                question: "What are the main components of air and their percentages?",
+                answer: "The main components of air are: 1) Nitrogen (N₂) - 78%, 2) Oxygen (O₂) - 21%, 3) Argon (Ar) - 0.93%, 4) Carbon dioxide (CO₂) - 0.04%, 5) Other gases (Neon, Helium, Methane, etc.) - 0.03%. This composition remains relatively constant in the lower atmosphere. Oxygen is essential for respiration in animals, while carbon dioxide is used by plants during photosynthesis. Nitrogen helps dilute oxygen and prevents rapid combustion.",
+                hint: "Two main gases make up 99% of air",
+                category: "Air Composition",
+                icon: "fas fa-wind"
+            },
+            {
+                question: "Explain the 3R rule with examples for each",
+                answer: "The 3R rule stands for Reduce, Reuse, Recycle: 1) REDUCE - Use less resources (e.g., carry cloth bags instead of plastic, turn off lights when not needed). 2) REUSE - Use items multiple times (e.g., glass jars for storage, old clothes as cleaning rags). 3) RECYCLE - Convert waste into new products (e.g., paper recycling, plastic bottle conversion to polyester fabric). Following 3R reduces landfill waste, conserves resources, and minimizes pollution.",
+                hint: "Think about waste hierarchy",
+                category: "Waste Management",
+                icon: "fas fa-recycle"
+            },
+            {
+                question: "What is groundwater and why is it important?",
+                answer: "Groundwater is water stored underground in soil pore spaces and rock fractures. It's important because: 1) Provides drinking water for 50% of global population, 2) Used for irrigation (40% of global agriculture), 3) Replenishes rivers and lakes during dry periods, 4) More reliable than surface water during droughts. However, over-extraction causes problems like: falling water tables, land subsidence, and saltwater intrusion in coastal areas. Sustainable management includes rainwater harvesting and regulated usage.",
+                hint: "Water beneath the Earth's surface",
+                category: "Water Resources",
+                icon: "fas fa-water"
+            },
+            {
+                question: "How do plants help in air purification?",
+                answer: "Plants purify air through: 1) Photosynthesis - Absorb CO₂ and release O₂, 2) Transpiration - Release water vapor increasing humidity, 3) Particulate capture - Leaves trap dust and pollutants, 4) Phytoremediation - Some plants absorb and break down toxins like formaldehyde and benzene. Indoor plants like spider plant, snake plant, and peace lily are particularly effective. Urban forests can significantly improve air quality in cities by filtering pollutants and reducing temperatures.",
+                hint: "Natural air filters",
+                category: "Air Quality",
+                icon: "fas fa-leaf"
+            },
+            {
+                question: "What is biodegradable vs non-biodegradable waste? Give examples.",
+                answer: "Biodegradable waste decomposes naturally by microorganisms (bacteria, fungi) into harmless substances. Examples: food scraps, paper, wood, cotton, vegetable peels, garden waste. Non-biodegradable waste does not decompose naturally or takes centuries. Examples: plastic bags, glass bottles, metal cans, styrofoam, rubber tires, electronic waste. Biodegradable waste can be composted, while non-biodegradable waste should be recycled or properly disposed to prevent environmental harm.",
+                hint: "Decomposition ability",
+                category: "Waste Types",
+                icon: "fas fa-trash-alt"
+            },
+            {
+                question: "What are renewable and non-renewable natural resources?",
+                answer: "Renewable resources can be replenished naturally in human timescales. Examples: sunlight, wind, water (via water cycle), forests (if sustainably managed), air. Non-renewable resources exist in fixed amounts or regenerate very slowly. Examples: fossil fuels (coal, oil, natural gas), minerals (iron, copper), groundwater (in some areas). Sustainability requires using renewable resources wisely and conserving non-renewable ones through efficiency and recycling.",
+                hint: "Replenishment rate",
+                category: "Resource Types",
+                icon: "fas fa-seedling"
+            },
+            {
+                question: "What are the effects of air pollution on health and environment?",
+                answer: "Health effects: respiratory diseases (asthma, bronchitis), heart problems, lung cancer, eye irritation, headaches. Environmental effects: acid rain (damages plants, buildings), global warming (greenhouse gases), ozone depletion, reduced visibility (smog), damage to wildlife. Major pollutants: particulate matter (PM2.5, PM10), nitrogen oxides, sulfur dioxide, carbon monoxide, ozone. Prevention: reduce vehicle emissions, use clean energy, plant trees, proper waste disposal, industrial pollution control.",
+                hint: "Think about breathing and climate",
+                category: "Pollution",
+                icon: "fas fa-smog"
+            },
+            {
+                question: "What is rainwater harvesting and its benefits?",
+                answer: "Rainwater harvesting is collecting and storing rainwater for later use. Methods: rooftop collection, surface runoff collection, recharge pits. Benefits: 1) Reduces demand on groundwater, 2) Provides water during dry periods, 3) Reduces flooding in urban areas, 4) Improves groundwater quality through recharge, 5) Lowers water bills. Simple systems include: rooftop gutters directing to storage tanks, recharge wells allowing water to percolate underground. Ideal for areas with seasonal rainfall patterns.",
+                hint: "Capturing rain for future use",
+                category: "Water Management",
+                icon: "fas fa-cloud-rain"
+            },
+            {
+                question: "What is composting and how does it help waste management?",
+                answer: "Composting is natural decomposition of organic waste (food scraps, leaves, grass) into nutrient-rich soil conditioner (compost). Process: microorganisms break down materials with oxygen, producing heat. Benefits: 1) Reduces landfill waste by 30-50%, 2) Creates natural fertilizer for gardens, 3) Improves soil structure and water retention, 4) Reduces need for chemical fertilizers, 5) Lowers methane emissions from landfills. Home composting can be done in bins or pits with proper balance of greens (nitrogen) and browns (carbon).",
+                hint: "Turning waste into garden gold",
+                category: "Organic Waste",
+                icon: "fas fa-recycle"
+            }
+        ];
+
+        let currentFlashcardIndex = 0;
+        let currentLanguage = 'en';
+
+        const translations = {
+            or: {
+                'nav-home': 'ମୁଖ୍ୟ ପୃଷ୍ଠା',
+                'nav-science': 'ବିଜ୍ଞାନ',
+                'nav-math': 'ଗଣିତ',
+                'nav-teachers': 'ଶିକ୍ଷକମାନେ',
+                'nav-about': 'ଆମ ବିଷୟରେ',
+                'nav-contact': 'ଯୋଗାଯୋଗ',
+
+                'page-title': 'ପ୍ରାକୃତିକ ସମ୍ପଦ',
+                'page-desc': 'ଜଳ, ବାତାସ ଏବଂ ଆବର୍ଜନା ପରିଚାଳନା ଭଳି ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ ପ୍ରାକୃତିକ ସମ୍ପଦ ବିଷୟରେ ସହଜ ଭାବରେ ଶିଖନ୍ତୁ।',
+                'breadcrumb-home': 'ମୁଖ୍ୟ ପୃଷ୍ଠା',
+                'breadcrumb-science': 'ବିଜ୍ଞାନ',
+                'breadcrumb-natural': 'ପ୍ରାକୃତିକ ସମ୍ପଦ',
+
+                'topic1-title': 'ଜଳ (Water)',
+                'topic1-desc': 'ଜଳର ବ୍ୟବହାର, ଉତ୍ସ ଏବଂ ସଞ୍ଚୟ ବିଷୟରେ ଜାଣନ୍ତୁ।',
+                'topic2-title': 'ଜୀବମାନଙ୍କ ପାଇଁ ବାତାସର ଗୁରୁତ୍ୱ',
+                'topic2-desc': 'ମାନବ, ପଶୁ ଓ ଗଛପାଲା ପାଇଁ ବାତାସ କାହିଁକି ଦରକାରୀ।',
+                'topic3-title': 'ଆବର୍ଜନା ଏବଂ ପରିଚାଳନା',
+                'topic3-desc': 'ଆବର୍ଜନାର ପ୍ରକାର ଏବଂ Reduce, Reuse, Recycle (3R) ନିୟମ।',
+                'progress-label': 'ପ୍ରଗତି',
+
+                'content-title': 'ଜଳ – ଏକ ମୂଲ୍ୟବାନ ପ୍ରାକୃତିକ ସମ୍ପଦ',
+                'content-intro': 'ଜଳ ପୃଥିବୀର ସବୁଠାରୁ ମହତ୍ତ୍ୱପୂର୍ଣ୍ଣ ପ୍ରାକୃତିକ ସମ୍ପଦମାନଙ୍କ ମଧ୍ୟରୁ ଗୋଟିଏ। ସମସ୍ତ ଜୀବ ପାଇଁ ଜଳ ଆବଶ୍ୟକ। ଆମେ ଦିନସର ଖାଇବା, ରନ୍ଧଣ, ପରିଷ୍କାର, କୃଷି ଇତ୍ୟାଦି ପାଇଁ ଜଳ ବ୍ୟବହାର କରିଥାଉ। ଏଠାରେ ଆମେ ଜଳର ବ୍ୟବହାର, ଉତ୍ସ ଏବଂ ସଞ୍ଚୟ ବିଷୟରେ ଶିଖିବୁ।',
+
+                'natural-basic-title': 'ଜଳର ବ୍ୟବହାର',
+                'natural-basic-1': 'ଆମେ ପିଇବା, ରନ୍ଧଣ ଏବଂ ଧୋଇବା ପାଇଁ ଜଳ ବ୍ୟବହାର କରିଥାଉ।',
+                'natural-basic-2': 'କୃଷକମାନେ ଧାନ, ସବୁଜ ଶାଗ ଇତ୍ୟାଦି ଚାଷ ପାଇଁ ଜଳ ଦରକାର।',
+                'natural-basic-3': 'କାରଖାନାମାନରେ ବିଭିନ୍ନ ସାମାନ ତିଆରି ପାଇଁ ଜଳ ବ୍ୟବହାର କରାଯାଏ।',
+                'natural-basic-4': 'ପଶୁପକ୍ଷୀ ଓ ସମସ୍ତ ଜୀବମାନଙ୍କ ପାଇଁ ଜଳ ଆବଶ୍ୟକ।',
+
+                'natural-examples-title': 'ଜଳର ଉତ୍ସ ଏବଂ ସଞ୍ଚୟ',
+                'natural-examples-1': 'ଜଳ ବର୍ଷା, ନଦୀ, ଝିଲ୍ଲା, ପୋଖରୀ ଏବଂ କୁଆଁରୁ ମିଳେ।',
+                'natural-examples-2': 'ଭୂଗର୍ଭ ଜଳ ମାଟି ତଳେ ସଞ୍ଚିତ ଥାଏ ଏବଂ କୁଆଁ, ବୋରଓଏଲ୍ ଦ୍ୱାରା ତୁଳାଯାଏ।',
+                'natural-examples-3': 'ଦାନ୍ତ ମଜିବା, ସ୍ନାନ କରିବା ସମୟରେ ଅନାବଶ୍ୟକ ଭାବରେ ନଳ ଖୋଲା ରଖିବା ଉଚିତ ନୁହେଁ।',
+                'natural-examples-4': 'ବର୍ଷାଜଳ ସଞ୍ଚୟ (Rainwater harvesting) ଓ ଲିକ୍ ହେଉଥିବା ନଳ ସଠିକ୍ କରିବା ଜଳ ସଞ୍ଚୟର ଭଲ ପଦ୍ଧତି।',
+
+                'light-topic-title': 'ଜୀବମାନଙ୍କ ପାଇଁ ବାତାସର ଗୁରୁତ୍ୱ',
+                'light-topic-intro': 'ଆମ ପାଖପାଖି ସବୁଠାରେ ବାତାସ ରହିଛି, କିନ୍ତୁ ଆମେ ତାହାକୁ ଦେଖିପାରୁ ନାହିଁ। ବାତାସ ଅନେକ ଗ୍ୟାସର ମିଶ୍ରଣ ଏବଂ ଜୀବନ ପାଇଁ ଅତ୍ୟନ୍ତ ଦରକାରୀ। ମାନବ, ପଶୁ ଓ ଗଛପାଲା ଭିନ୍ନ ଭିନ୍ନ ଭାବରେ ବାତାସରୁ ଲାଭ ନେଇଥାଆନ୍ତି।',
+
+                'light-title': 'ବାତାସ କିପରି ସାହାଯ୍ୟ କରେ?',
+                'light-1': 'ବାତାସରେ ଥିବା ଅକ୍ସିଜେନ୍ ମାନବ ଓ ପଶୁମାନଙ୍କ ଶ୍ୱାସ ନେବାରେ ସାହାଯ୍ୟ କରେ।',
+                'light-2': 'ଗଛପାଲା ବାତାସରୁ କାର୍ବନ ଡାଇଅକ୍ସାଇଡ୍ ନେଇ ଖାଦ୍ୟ ତିଆରି କରେ।',
+                'light-3': 'ବାତାସ ନ ଥିଲେ ଭାତି କିମ୍ବା ଦୀପ ଜଳି ପାରିବ ନାହିଁ, କାରଣ ଜ୍ୱାଳନ ପାଇଁ ଅକ୍ସିଜେନ୍ ଦରକାର।',
+                'light-4': 'ବାତାସ (ପବନ) ମଣ୍ଡିଆ, ବିଆ ଛଡ଼ାଇବା ଏବଂ ପରାଗ ସଞ୍ଚାରରେ ସାହାଯ୍ୟ କରେ।',
+
+                'light-extra-title': 'ବାତାସର ଗଠନ',
+                'light-extra-1': 'ବାତାସ ଅନେକ ଗ୍ୟାସର ମିଶ୍ରଣ।',
+                'light-extra-2': 'ଏଥିରେ ଅଧିକ ଭାଗ ନାଇଟ୍ରୋଜେନ୍ ଏବଂ ଅକ୍ସିଜେନ୍ ଥାଏ, ଅନ୍ୟ ଗ୍ୟାସ ଅଳ୍ପ ପରିମାଣରେ ଥାଏ।',
+                'light-extra-3': 'ଶୁଧ୍ଧ ବାତାସ ସ୍ୱାସ୍ଥ୍ୟ ପାଇଁ ଖୁବ ଦରକାର।',
+                'light-extra-4': 'ଗଛ ଲଗାଇବା ଏବଂ ଆବର୍ଜନା ଜଳାଇ ନ ଦେଇବା ଆମକୁ ବାତାସ ଦୂଷଣ କମେଇବାରେ ସାହାଯ୍ୟ କରେ।',
+
+                'revision-title': 'ଆବର୍ଜନା ଏବଂ ବ୍ୟବସ୍ଥାପନ',
+                'revision-intro': 'ଆମେ ପ୍ରତିଦିନ କାଗଜ, ପ୍ଲାଷ୍ଟିକ୍, ଖାଦ୍ୟ ତୁଷ ଇତ୍ୟାଦି ବହୁତ କିଛି ଫିଙ୍ଗିଯାଉ। ଏହାକୁ ଏକାସାଥିରେ ଆବର୍ଜନା କୁହାଯାଏ। ଯଦି ଠିକ୍ ଭାବେ ବ୍ୟବସ୍ଥାପନ ନ ହେଉ, ତେବେ ଚାରିପାଖ ମଲିନ ହୁଏ ଏବଂ ପରିବେଶ କୁ ଖରାପ କରେ।',
+
+                'revision-keypoints-title': 'ଆବର୍ଜନାର ପ୍ରକାର ଏବଂ 3R ନୀତି',
+                'revision-keypoints-1': 'ଜୈବିକ ଆବର୍ଜନା (Biodegradable): ଫଳ ଛାଲ, ସବୁଜ ତୁଷ, କାଗଜ ଇତ୍ୟାଦି ଯାହା ଖସି ମାଟି ସହ ମିଶିଯାଏ।',
+                'revision-keypoints-2': 'ଅଜୈବିକ ଆବର୍ଜନା (Non-biodegradable): ପ୍ଲାଷ୍ଟିକ୍, କାଚ, ଧାତୁ ଇତ୍ୟାଦି ଯାହା ସହଜରେ ପଚେ ନାହିଁ।',
+                'revision-keypoints-3': 'Reduce (କମ କର): ପ୍ଲାଷ୍ଟିକ୍ ଓ ଅନାବଶ୍ୟକ ପ୍ୟାକେଟ୍ ବ୍ୟବହାର କମ କର।',
+                'revision-keypoints-4': 'Reuse ଓ Recycle: ପୁଣିଥରେ ବ୍ୟବହାର କରିବା ଏବଂ ଆବର୍ଜନାକୁ ଉପଯୋଗୀ ଜିନିଷରେ ପରିବର୍ତ୍ତନ କରିବା।',
+
+                'revision-questions-title': 'ଭଲ ଆବର୍ଜନା ପରିଚାଳନା ଅଭ୍ୟାସ',
+                'revision-q1': 'ଭିଜା ଏବଂ ଶୁଖିଲା ଆବର୍ଜନା ପାଇଁ ଭିନ୍ନ ଭିନ୍ନ ଡଷ୍ଟବିନ୍ ବ୍ୟବହାର କର।',
+                'revision-q2': 'ରାସ୍ତା, ନଦୀ କିମ୍ବା ଖୋଲା ସ୍ଥାନରେ ଆବର୍ଜନା ଫିଙ୍ଗିବା ଉଚିତ ନୁହେଁ।',
+                'revision-q3': 'ପଲିଥିନ୍ ବ୍ୟାଗ ବଦଳରେ କପଡ଼ କିମ୍ବା ଜୁଟ୍ ବ୍ୟାଗ ବ୍ୟବହାର କର।',
+                'revision-q4': 'ସ୍କୁଲ୍ ଓ ପଡ଼ୋଶ ଅଞ୍ଚଳର ସ୍ୱଚ୍ଛତା ଅଭିଯାନରେ ଭାଗ ନେଇ ପରିବେଶ ସଫା ରଖିବାରେ ସାହାଯ୍ୟ କର।',
+
+                'games-title': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ଖେଳଗୁଡ଼ିକ',
+                'level-basic': 'ମୌଳିକ',
+                'level-intermediate': 'ମଧ୍ୟମ ସ୍ତର',
+                'level-hard': 'କଠିନ',
+
+                'game1-title': 'ଜଳ ଅନ୍ୱେଷଣ (Water Explorer)',
+                'game1-desc': 'ଦିନସର ଜୀବନରେ ଜଳର ବ୍ୟବହାର ଏବଂ ଉତ୍ସ ପହିଚାରନ୍ତୁ।',
+                'game1-feature1': 'ଜଳ ବ୍ୟବହାର ସହ ଠିକ୍ ଛବିକୁ ମିଳାନ୍ତୁ।',
+                'game1-feature2': '10–15 ମିନିଟ୍ ଖେଳପଣ।',
+                'game1-feature3': '50 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ ଅର୍ଜନ କରନ୍ତୁ।',
+
+                'game2-title': 'ବାତାସ ଏବଂ ଜୀବ (Air & Living Things)',
+                'game2-desc': 'ବାତାସ କିପରି ମାନବ, ପଶୁ ଓ ଗଛପାଲାକୁ ସାହାଯ୍ୟ କରେ ତାହା ଜାଣନ୍ତୁ।',
+                'game2-feature1': 'ବାତାସର ବ୍ୟବହାର ସହ ନିଷ୍ପତ୍ତିକୁ ଠିକ୍ ଭାବରେ ମିଳାନ୍ତୁ।',
+                'game2-feature2': '15–20 ମିନିଟ୍ ଖେଳପଣ।',
+                'game2-feature3': '100 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ ଅର୍ଜନ କରନ୍ତୁ।',
+
+                'game3-title': 'ଆବର୍ଜନା ବିଭାଗୀକରଣ ଚ୍ୟାଲେଞ୍ଜ',
+                'game3-desc': 'ଭିନ୍ନ ପ୍ରକାରର ଆବର୍ଜନାକୁ ଠିକ୍ ଡଷ୍ଟବିନ୍‌ରେ ରଖନ୍ତୁ ଏବଂ 3R ନୀତି ଅନୁସରଣ କରନ୍ତୁ।',
+                'game3-feature1': 'କେଉଁ ଆବର୍ଜନା କେଉଁ ଡଷ୍ଟବିନ୍‌କୁ ଯିବ ତାହା ନିଷ୍ପତ୍ତି କରନ୍ତୁ।',
+                'game3-feature2': '20–25 ମିନିଟ୍ ଖେଳପଣ।',
+                'game3-feature3': '150 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ ଅର୍ଜନ କରନ୍ତୁ।',
+
+                'play-game': 'ଖେଳନ୍ତୁ',
+
+                'resources-title': 'ଶିକ୍ଷଣ ସମ୍ବଳ',
+                'resource1-title': 'ଅଧ୍ୟୟନ ଟିପ୍ପଣୀ (ଇଂରାଜୀ)',
+                'resource1-desc': 'ପ୍ରାକୃତିକ ସମ୍ପଦ – ଜଳ, ବାତାସ ଏବଂ ଆବର୍ଜନା ପରିଚାଳନା ବିଷୟର ସମ୍ପୂର୍ଣ୍ଣ ଇଂରାଜୀ ଟିପ୍ପଣୀ।',
+                'download-english': 'ଡାଉନଲୋଡ୍ (ଇଂରାଜୀ)',
+                'resource2-title': 'ଅଧ୍ୟୟନ ଟିପ୍ପଣୀ (ଓଡ଼ିଆ)',
+                'resource2-desc': 'ପ୍ରାକୃତିକ ସମ୍ପଦ – ଜଳ, ବାତାସ ଏବଂ ଆବର୍ଜନା ପରିଚାଳନା ଅଧ୍ୟାୟର ଓଡ଼ିଆ ଟିପ୍ପଣୀ।',
+                'download-odia': 'ଡାଉନଲୋଡ୍ (ଓଡ଼ିଆ)',
+                'resource3-title': 'ଫ୍ଲାସ୍‌କାର୍ଡଗୁଡିକ',
+                'resource3-desc': 'ମୁଖ୍ୟ ଧାରଣାଗୁଡିକ ପାଇଁ ଭିଜୁଆଲ୍ ଶିକ୍ଷଣ କାର୍ଡଗୁଡିକ',
+                'download-flashcards': 'ଫ୍ଲାସ୍‌କାର୍ଡଗୁଡିକ ଡାଉନଲୋଡ୍ କରନ୍ତୁ',
+
+                'footer-desc': 'ଓଡ଼ିଶାର ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କ ପାଇଁ ସ୍ଥାନୀୟ ବିଷୟବସ୍ତୁ ଏବଂ ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ମାଧ୍ୟମରେ ବିଜ୍ଞାନ ଏବଂ ଗଣିତ ଶିକ୍ଷାକୁ ଆକର୍ଷଣୀୟ ଏବଂ ପ୍ରାସଙ୍ଗିକ କରିବା।',
+                'quick-links': 'ଶୀଘ୍ର ଲିଙ୍କ୍',
+                'contact-us': 'ଆମ ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ',
+                'footer-address': 'ଶିକ୍ଷା ବିଭାଗ, ଭୁବନେଶ୍ଵର',
+                'copyright': '© 2023 STEM ଲର୍ନ ଓଡ଼ିଶା। ସମସ୍ତ ଅଧିକାର ସଂରକ୍ଷିତ।'
+            },
+
+            hi: {
+                'nav-home': 'मुख्य पृष्ठ',
+                'nav-science': 'विज्ञान',
+                'nav-math': 'गणित',
+                'nav-teachers': 'शिक्षक',
+                'nav-about': 'हमारे बारे में',
+                'nav-contact': 'संपर्क',
+
+                'page-title': 'प्राकृतिक संसाधन',
+                'page-desc': 'जल, वायु और कूड़ा-पदार्थ प्रबंधन जैसे महत्वपूर्ण प्राकृतिक संसाधनों के बारे में सरल भाषा में जानें।',
+                'breadcrumb-home': 'मुख्य पृष्ठ',
+                'breadcrumb-science': 'विज्ञान',
+                'breadcrumb-natural': 'प्राकृतिक संसाधन',
+
+                'topic1-title': 'जल (Water)',
+                'topic1-desc': 'जल के उपयोग, स्रोत और संरक्षण के बारे में जानें।',
+                'topic2-title': 'जीवों के लिए वायु का महत्व',
+                'topic2-desc': 'वायु मनुष्यों, जानवरों और पौधों के लिए क्यों ज़रूरी है।',
+                'topic3-title': 'कूड़ा और अपशिष्ट प्रबंधन',
+                'topic3-desc': 'कूड़े के प्रकार और 3R नियम – Reduce, Reuse, Recycle।',
+                'progress-label': 'प्रगति',
+
+                'content-title': 'जल – एक मूल्यवान प्राकृतिक संसाधन',
+                'content-intro': 'जल पृथ्वी के सबसे महत्वपूर्ण प्राकृतिक संसाधनों में से एक है। सभी जीवित प्राणियों के लिए पानी आवश्यक है। हम पीने, पकाने, सफाई, खेती और कई अन्य कार्यों के लिए पानी का उपयोग करते हैं। यहाँ हम जल के उपयोग, उसके स्रोत और संरक्षण के बारे में सीखेंगे।',
+
+                'natural-basic-title': 'जल के उपयोग',
+                'natural-basic-1': 'हम पीने, पकाने और धोने के लिए पानी का उपयोग करते हैं।',
+                'natural-basic-2': 'किसान फसल और पौधों की सिंचाई के लिए पानी का उपयोग करते हैं।',
+                'natural-basic-3': 'कारखानों में भी अनेक वस्तुएँ बनाने के लिए पानी की ज़रूरत होती है।',
+                'natural-basic-4': 'जानवरों, पक्षियों और सभी जीवों के लिए भी पानी बहुत ज़रूरी है।',
+
+                'natural-examples-title': 'जल के स्रोत और संरक्षण',
+                'natural-examples-1': 'पानी हमें वर्षा, नदियों, झीलों, तालाबों और कुओं से मिलता है।',
+                'natural-examples-2': 'भूमिगत जल मिट्टी के अंदर जमा रहता है और कुओं/बोरवेल से निकाला जाता है।',
+                'natural-examples-3': 'दाँत साफ करते समय या नहाते समय नल खुला छोड़कर पानी बर्बाद नहीं करना चाहिए।',
+                'natural-examples-4': 'वर्षा जल संरक्षण और लीकेज ठीक करना पानी बचाने के अच्छे तरीके हैं।',
+
+                'light-topic-title': 'जीवों के लिए वायु का महत्व',
+                'light-topic-intro': 'हमारे चारों ओर वायु भरी हुई है, भले ही हम उसे देख नहीं पाते। वायु कई गैसों का मिश्रण है और जीवन के लिए बहुत ज़रूरी है। मनुष्य, जानवर और पौधे अलग-अलग तरीकों से वायु पर निर्भर हैं।',
+
+                'light-title': 'वायु कैसे मदद करती है?',
+                'light-1': 'वायु में मौजूद ऑक्सीजन मनुष्यों और जानवरों को साँस लेने में मदद करती है।',
+                'light-2': 'पौधे वायु से कार्बन डाइऑक्साइड लेकर भोजन बनाते हैं (प्रकाश संश्लेषण)।',
+                'light-3': 'बिना वायु के मोमबत्ती या दीपक नहीं जल सकते, क्योंकि ज्वलन के लिए ऑक्सीजन ज़रूरी है।',
+                'light-4': 'चलती हुई हवा (पवन) बीज फैलाव और परागण में मदद करती है।',
+
+                'light-extra-title': 'वायु की संरचना',
+                'light-extra-1': 'वायु कई गैसों का मिश्रण है।',
+                'light-extra-2': 'इसमें मुख्य रूप से नाइट्रोजन और ऑक्सीजन होती हैं, और थोड़ी मात्रा में अन्य गैसें।',
+                'light-extra-3': 'स्वच्छ वायु स्वस्थ जीवन के लिए बहुत आवश्यक है।',
+                'light-extra-4': 'पेड़ लगाकर और कचरा न जलाकर हम वायु प्रदूषण कम कर सकते हैं।',
+
+                'revision-title': 'कूड़ा और अपशिष्ट प्रबंधन',
+                'revision-intro': 'हम रोज़ कागज़, प्लास्टिक, खाने के छिलके आदि बहुत सा कूड़ा फेंकते हैं। यदि कचरे का सही ढंग से प्रबंधन न हो, तो आसपास गंदगी फैलती है और पर्यावरण को नुकसान पहुँचता है।',
+
+                'revision-keypoints-title': 'कूड़े के प्रकार और 3R नियम',
+                'revision-keypoints-1': 'जैव अपघट्य कचरा (Biodegradable): फल के छिलके, सब्ज़ी का कचरा, कागज़ आदि जो सड़कर मिट्टी में मिल जाते हैं।',
+                'revision-keypoints-2': 'अजैव अपघट्य कचरा (Non-biodegradable): प्लास्टिक, काँच, धातु आदि जो आसानी से नहीं सड़ते।',
+                'revision-keypoints-3': 'Reduce (कम उपयोग): प्लास्टिक और अनावश्यक पैकेजिंग का उपयोग कम करें।',
+                'revision-keypoints-4': 'Reuse और Recycle: चीज़ों को दोबारा उपयोग करें और कचरे को उपयोगी वस्तुओं में बदलें।',
+
+                'revision-questions-title': 'अच्छी कचरा प्रबंधन आदतें',
+                'revision-q1': 'गीले कचरे (भोजन) और सूखे कचरे (प्लास्टिक, कागज़) के लिए अलग-अलग डस्टबिन रखें।',
+                'revision-q2': 'सड़कों, नदियों या खुले स्थानों पर कचरा नहीं फेंकना चाहिए।',
+                'revision-q3': 'प्लास्टिक बैग की जगह कपड़े या जूट के बैग का उपयोग करें।',
+                'revision-q4': 'स्कूल और आसपास सफाई अभियान में भाग लेकर पर्यावरण को स्वच्छ रखें।',
+
+                'games-title': 'इंटरैक्टिव लर्निंग गेम्स',
+                'level-basic': 'आसान',
+                'level-intermediate': 'मध्यम',
+                'level-hard': 'कठिन',
+
+                'game1-title': 'Water Explorer',
+                'game1-desc': 'दैनिक जीवन में पानी के उपयोग और स्रोतों को पहचानें।',
+                'game1-feature1': 'पानी के उपयोग से जुड़ी सही तस्वीरों को मिलाएँ।',
+                'game1-feature2': '10–15 मिनट का गेमप्ले।',
+                'game1-feature3': 'अधिकतम 50 अंक कमाएँ।',
+
+                'game2-title': 'Air & Living Things',
+                'game2-desc': 'वायु कैसे मनुष्य, जानवर और पौधों की मदद करती है, यह जानें।',
+                'game2-feature1': 'वायु के उपयोग के साथ सही कथन को मिलाएँ।',
+                'game2-feature2': '15–20 मिनट का गेमप्ले।',
+                'game2-feature3': 'अधिकतम 100 अंक कमाएँ।',
+
+                'game3-title': 'Garbage Sorting Challenge',
+                'game3-desc': 'कूड़े को सही डस्टबिन में डालें और 3R नियम लागू करें।',
+                'game3-feature1': 'कौन सा कचरा किस डस्टबिन में जाएगा, यह तय करें।',
+                'game3-feature2': '20–25 मिनट का गेमप्ले।',
+                'game3-feature3': 'अधिकतम 150 अंक कमाएँ।',
+
+                'play-game': 'गेम खेलें',
+
+                'resources-title': 'लर्निंग संसाधन',
+                'resource1-title': 'अध्ययन नोट्स (English)',
+                'resource1-desc': 'प्राकृतिक संसाधन – जल, वायु और कूड़ा प्रबंधन पर पूर्ण अंग्रेज़ी नोट्स।',
+                'download-english': 'Download (English)',
+                'resource2-title': 'अध्ययन नोट्स (Odia)',
+                'resource2-desc': 'प्राकृतिक संसाधन – जल, वायु और कूड़ा प्रबंधन अध्याय के ओड़िया नोट्स।',
+                'download-odia': 'Download (ଓଡ଼ିଆ)',
+                'resource3-title': 'फ्लैशकार्ड',
+                'resource3-desc': 'मुख्य अवधारणाओं के लिए दृश्य शिक्षण कार्ड',
+                'download-flashcards': 'फ्लैशकार्ड डाउनलोड करें',
+
+                'footer-desc': 'स्थानीय सामग्री और इंटरैक्टिव गतिविधियों के माध्यम से ओडिशा के छात्रों के लिए विज्ञान और गणित की पढ़ाई को रोचक और उपयोगी बनाना।',
+                'quick-links': 'त्वरित लिंक',
+                'contact-us': 'हमसे संपर्क करें',
+                'footer-address': 'शिक्षा विभाग, भुवनेश्वर',
+                'copyright': '© 2023 STEM Learn Odisha. सर्वाधिकार सुरक्षित।'
+            }
+        };
+
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const i18nElements = document.querySelectorAll('[data-i18n]');
+        const navList = document.querySelector('header nav ul');
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+
+        // store original English text from HTML
+        i18nElements.forEach(el => {
+            el.setAttribute('data-i18n-en', el.textContent.trim());
+        });
+
+        // Initialize flashcards
+        function initFlashcards() {
+            renderFlashcard();
+            createIndicators();
+            document.getElementById('total-cards').textContent = flashcardsData.length;
+            updateNavigationButtons();
+        }
+
+        // Render current flashcard
+        function renderFlashcard() {
+            const flashcard = document.getElementById('main-flashcard');
+            const cardData = flashcardsData[currentFlashcardIndex];
+            
+            flashcard.className = 'flashcard';
+            
+            flashcard.innerHTML = `
+                <div class="flashcard-category">${cardData.category}</div>
+                <div class="flashcard-counter">${currentFlashcardIndex + 1}/${flashcardsData.length}</div>
+                <div class="flashcard-front">
+                    <div class="flashcard-icon">
+                        <i class="${cardData.icon}"></i>
+                    </div>
+                    <div class="flashcard-question">${cardData.question}</div>
+                    <div class="flashcard-hint">${cardData.hint}</div>
+                    <div class="flashcard-instruction">Click to flip the card</div>
+                </div>
+                <div class="flashcard-back">
+                    <div class="flashcard-icon">
+                        <i class="${cardData.icon}"></i>
+                    </div>
+                    <div class="flashcard-answer">${cardData.answer}</div>
+                    <div class="flashcard-instruction">Click to flip back</div>
+                </div>
+            `;
+            
+            // Update current card number
+            document.getElementById('current-card').textContent = currentFlashcardIndex + 1;
+            
+            // Update indicators
+            updateIndicators();
+        }
+
+        // Create indicators for all flashcards
+        function createIndicators() {
+            const indicatorsContainer = document.getElementById('flashcard-indicators');
+            indicatorsContainer.innerHTML = '';
+            
+            for (let i = 0; i < flashcardsData.length; i++) {
+                const indicator = document.createElement('div');
+                indicator.className = 'flashcard-indicator';
+                if (i === currentFlashcardIndex) indicator.classList.add('active');
+                indicator.onclick = () => goToFlashcard(i);
+                indicatorsContainer.appendChild(indicator);
+            }
+        }
+
+        // Update active indicator
+        function updateIndicators() {
+            const indicators = document.querySelectorAll('.flashcard-indicator');
+            indicators.forEach((indicator, index) => {
+                if (index === currentFlashcardIndex) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            });
+        }
+
+        // Update navigation buttons state
+        function updateNavigationButtons() {
+            document.getElementById('prev-btn').disabled = currentFlashcardIndex === 0;
+            document.getElementById('next-btn').disabled = currentFlashcardIndex === flashcardsData.length - 1;
+        }
+
+        // Flip card function
+        function flipCard() {
+            const flashcard = document.getElementById('main-flashcard');
+            flashcard.classList.toggle('flipped');
+        }
+
+        // Go to specific flashcard
+        function goToFlashcard(index) {
+            currentFlashcardIndex = index;
+            renderFlashcard();
+            updateNavigationButtons();
+        }
+
+        // Next flashcard function
+        function nextFlashcard() {
+            if (currentFlashcardIndex < flashcardsData.length - 1) {
+                currentFlashcardIndex++;
+                renderFlashcard();
+                updateNavigationButtons();
+            }
+        }
+
+        // Previous flashcard function
+        function prevFlashcard() {
+            if (currentFlashcardIndex > 0) {
+                currentFlashcardIndex--;
+                renderFlashcard();
+                updateNavigationButtons();
+            }
+        }
+
+        // Download resource function
+        function downloadResource(resourceType) {
+            let fileName = '';
+            let content = '';
+            let mimeType = 'text/plain';
+            
+            switch(resourceType) {
+                case 'study_notes_english':
+                    fileName = 'Natural_Resources_Study_Notes_English.txt';
+                    content = generateEnglishNotes();
+                    break;
+                case 'study_notes_odia':
+                    fileName = 'Natural_Resources_Study_Notes_Odia.txt';
+                    content = generateOdiaNotes();
+                    break;
+                case 'flashcards':
+                    fileName = 'Natural_Resources_Flashcards.txt';
+                    content = generateFlashcards();
+                    break;
+            }
+
+            // Create a downloadable file
+            const element = document.createElement('a');
+            const file = new Blob([content], {type: mimeType});
+            element.href = URL.createObjectURL(file);
+            element.download = fileName;
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+            
+            // Show success notification
+            showNotification('Resource downloaded successfully!', 'success');
+        }
+
+        function generateEnglishNotes() {
+            return `NATURAL RESOURCES - STUDY NOTES
+====================================
+
+CLASS 6 SCIENCE
+STEM Learn Odisha
+====================================
+
+TABLE OF CONTENTS
+=================
+1. Introduction to Natural Resources
+2. Water Resources
+3. Air and Atmosphere
+4. Waste Management
+5. Conservation Methods
+6. Key Terms
+7. Revision Questions
+
+====================================
+
+1. INTRODUCTION TO NATURAL RESOURCES
+====================================
+• Natural resources are materials from nature that support life
+• Include: water, air, soil, minerals, forests, wildlife
+• Two types: Renewable (can be replenished) and Non-renewable (limited)
+• Sustainable use ensures availability for future generations
+
+2. WATER RESOURCES
+==================
+IMPORTANCE:
+• Essential for all living organisms
+• Needed for drinking, agriculture, industry, hygiene
+• Regulates Earth's temperature through water cycle
+
+SOURCES:
+• Surface water: Rivers, lakes, ponds (3% of Earth's water)
+• Groundwater: Wells, borewells (stored underground)
+• Rainwater: Primary source that replenishes other sources
+• Oceans: 97% of Earth's water, but salty and not directly usable
+
+CONSERVATION METHODS:
+• Fix leaking taps and pipes immediately
+• Use water-efficient fixtures (low-flow showerheads, dual-flush toilets)
+• Rainwater harvesting: Collect and store rainwater
+• Reuse water where possible (e.g., kitchen water for plants)
+• Turn off taps while brushing, shaving, or washing dishes
+
+3. AIR AND ATMOSPHERE
+=====================
+COMPOSITION OF AIR:
+• Nitrogen: 78% - Dilutes oxygen, prevents rapid combustion
+• Oxygen: 21% - Essential for respiration in animals
+• Other gases: 1% (Argon 0.93%, Carbon dioxide 0.04%, others 0.03%)
+
+IMPORTANCE OF AIR:
+• Breathing: Provides oxygen for humans and animals
+• Photosynthesis: Provides CO₂ for plants to make food
+• Combustion: Supports burning (fires need oxygen)
+• Climate regulation: Helps maintain Earth's temperature
+• Pollination: Wind carries pollen between plants
+
+AIR POLLUTION:
+• Sources: Vehicle emissions, industrial smoke, burning waste
+• Effects: Respiratory diseases, acid rain, global warming
+• Prevention: Plant trees, use clean energy, reduce vehicle use
+
+4. WASTE MANAGEMENT
+===================
+TYPES OF WASTE:
+• Biodegradable: Decomposes naturally (food scraps, paper, wood)
+• Non-biodegradable: Does not decompose naturally (plastic, glass, metal)
+• Recyclable: Can be processed into new products (paper, glass, some plastics)
+• Hazardous: Requires special handling (batteries, chemicals, e-waste)
+
+3R RULE:
+• REDUCE: Use less - Avoid unnecessary packaging, buy only what you need
+• REUSE: Use again - Glass jars for storage, old clothes as rags
+• RECYCLE: Process into new - Sort waste properly for recycling
+
+COMPOSTING:
+• Natural decomposition of organic waste
+• Creates nutrient-rich fertilizer for plants
+• Reduces landfill waste by 30-50%
+• Can be done at home with kitchen scraps and yard waste
+
+5. CONSERVATION METHODS
+========================
+FOR WATER:
+• Rainwater harvesting systems
+• Drip irrigation in agriculture
+• Water-saving appliances
+• Public awareness campaigns
+
+FOR AIR:
+• Plant trees (urban forests)
+• Use public transportation
+• Switch to clean energy (solar, wind)
+• Proper industrial emission controls
+
+FOR WASTE:
+• Separate waste at source
+• Community composting
+• Recycling programs
+• Ban on single-use plastics
+
+6. KEY TERMS
+============
+• Natural Resource: Material from nature that supports life
+• Renewable: Can be replenished (sunlight, wind, water cycle)
+• Non-renewable: Limited supply (fossil fuels, minerals)
+• Conservation: Careful use and protection of resources
+• Pollution: Contamination of environment with harmful substances
+• Sustainability: Meeting needs without compromising future generations
+• Ecosystem: Community of living organisms and their environment
+
+7. REVISION QUESTIONS
+=====================
+
+SHORT ANSWER:
+1. Name three uses of water in daily life.
+2. What percentage of Earth's water is freshwater?
+3. Name the two main gases in air and their percentages.
+4. What does 3R stand for in waste management?
+5. Give two examples each of biodegradable and non-biodegradable waste.
+
+LONG ANSWER:
+1. Explain why water conservation is important with three reasons.
+2. Describe how plants help in air purification.
+3. What is composting? How does it help in waste management?
+4. Compare renewable and non-renewable resources with examples.
+5. Suggest five ways students can help conserve natural resources.
+
+PRACTICAL ACTIVITIES:
+1. Conduct a home water audit to identify wastage.
+2. Set up a small composting bin for kitchen waste.
+3. Create a poster on 3R rule for your school.
+4. Plant and care for a tree in your neighborhood.
+5. Organize a cleanliness drive in your locality.
+
+====================================
+CREDITS AND ACKNOWLEDGEMENTS
+====================================
+Prepared by: STEM Learn Odisha Team
+For: Class 6 Students
+Date: ${new Date().toLocaleDateString()}
+
+====================================
+REMEMBER:
+• Every drop of water counts
+• Clean air is everyone's right
+• Reduce waste before it's too late
+• Small actions lead to big changes
+
+====================================
+END OF NOTES
+====================================`;
+        }
+
+        function generateOdiaNotes() {
+            return `ପ୍ରାକୃତିକ ସମ୍ପଦ - ଅଧ୍ୟୟନ ଟିପ୍ପଣୀ
+====================================
+
+ଷଷ୍ଠ ଶ୍ରେଣୀ ବିଜ୍ଞାନ
+STEM ଲର୍ନ ଓଡ଼ିଶା
+====================================
+
+ବିଷୟ ସୂଚୀ
+===========
+1. ପ୍ରାକୃତିକ ସମ୍ପଦ ପରିଚୟ
+2. ଜଳ ସମ୍ପଦ
+3. ବାତାସ ଏବଂ ବାୟୁମଣ୍ଡଳ
+4. ଆବର୍ଜନା ପରିଚାଳନା
+5. ସଂରକ୍ଷଣ ପଦ୍ଧତି
+6. ମୁଖ୍ୟ ପରିଭାଷା
+7. ସମୀକ୍ଷା ପ୍ରଶ୍ନ
+
+====================================
+
+1. ପ୍ରାକୃତିକ ସମ୍ପଦ ପରିଚୟ
+=============================
+• ପ୍ରାକୃତିକ ସମ୍ପଦ ହେଉଛି ପ୍ରକୃତିରୁ ମିଳୁଥିବା ସାମଗ୍ରୀ ଯାହା ଜୀବନକୁ ସମର୍ଥନ କରେ
+• ଯେପରି: ଜଳ, ବାତାସ, ମାଟି, ଖଣିଜ, ଜଙ୍ଗଲ, ବନ୍ୟଜନ୍ତୁ
+• ଦୁଇ ପ୍ରକାର: ନବୀକରଣୀୟ (ପୁନଃପୂରଣ ହୋଇପାରେ) ଏବଂ ଅନବୀକରଣୀୟ (ସୀମିତ)
+• ଟିକାଉ ବ୍ୟବହାର ଭବିଷ୍ୟତ ପିଢ଼ି ପାଇଁ ଉପଲବ୍ଧତା ସୁନିଶ୍ଚିତ କରେ
+
+2. ଜଳ ସମ୍ପଦ
+==============
+ମହତ୍ତ୍ୱ:
+• ସମସ୍ତ ଜୀବ ପାଇଁ ଆବଶ୍ୟକ
+• ପିଇବା, କୃଷି, ଶିଳ୍ପ, ସ୍ୱଚ୍ଛତା ପାଇଁ ଦରକାର
+• ଜଳ ଚକ୍ର ମାଧ୍ୟମରେ ପୃଥିବୀର ତାପମାତ୍ରା ନିୟନ୍ତ୍ରଣ କରେ
+
+ଉତ୍ସ:
+• ପୃଷ୍ଠ ଜଳ: ନଦୀ, ଝିଲ୍ଲା, ପୋଖରୀ (ପୃଥିବୀର ଜଳର 3%)
+• ଭୂଗର୍ଭ ଜଳ: କୁଆଁ, ବୋରଓଏଲ୍ (ମାଟି ତଳେ ସଞ୍ଚିତ)
+• ବର୍ଷା ଜଳ: ଅନ୍ୟ ଉତ୍ସଗୁଡ଼ିକୁ ପୁନର୍ଭରିତ କରେ
+• ସମୁଦ୍ର: ପୃଥିବୀର ଜଳର 97%, କିନ୍ତୁ ଲୁଣିଆ ଓ ସିଧାସଳଖ ବ୍ୟବହାର ଯୋଗ୍ୟ ନୁହେଁ
+
+ସଂରକ୍ଷଣ ପଦ୍ଧତି:
+• ଲିକ୍ ହେଉଥିବା ନଳ ଏବଂ ପାଇପ୍ ତୁରନ୍ତ ଠିକ୍ କରନ୍ତୁ
+• ଜଳ-ସଞ୍ଚୟୀ ଉପକରଣ ବ୍ୟବହାର କରନ୍ତୁ
+• ବର୍ଷାଜଳ ସଞ୍ଚୟ: ବର୍ଷାଜଳ ସଂଗ୍ରହ କରି ସଞ୍ଚୟ କରନ୍ତୁ
+• ସମ୍ଭବ ସ୍ଥଳେ ଜଳ ପୁନର୍ବ୍ୟବହାର କରନ୍ତୁ
+• ଦାନ୍ତ ମଜିବା, ଦାଢ଼ି କାଟିବା କିମ୍ବା ବାସନ ଧୋଇବା ସମୟରେ ନଳ ବନ୍ଦ କରନ୍ତୁ
+
+3. ବାତାସ ଏବଂ ବାୟୁମଣ୍ଡଳ
+========================
+ବାତାସର ଗଠନ:
+• ନାଇଟ୍ରୋଜେନ୍: 78% - ଅକ୍ସିଜେନ୍ ହ୍ରାସ କରେ, ଦ୍ରୁତ ଜ୍ୱାଳନ ରୋକେ
+• ଅକ୍ସିଜେନ୍: 21% - ପଶୁମାନଙ୍କ ପାଇଁ ଶ୍ୱାସ ନେବାରେ ଆବଶ୍ୟକ
+• ଅନ୍ୟ ଗ୍ୟାସ: 1% (ଆର୍ଗନ୍ 0.93%, କାର୍ବନ ଡାଇଅକ୍ସାଇଡ୍ 0.04%, ଅନ୍ୟ 0.03%)
+
+ବାତାସର ମହତ୍ତ୍ୱ:
+• ଶ୍ୱାସ: ମାନବ ଏବଂ ପଶୁମାନଙ୍କ ପାଇଁ ଅକ୍ସିଜେନ୍ ଯୋଗାଏ
+• ଫଟୋସିନ୍ଥେସିସ୍: ଗଛପାଲାକୁ ଖାଦ୍ୟ ତିଆରି ପାଇଁ CO₂ ଯୋଗାଏ
+• ଜ୍ୱାଳନ: ପୋଡ଼ିବା ସମର୍ଥନ କରେ (ଅଗ୍ନିରେ ଅକ୍ସିଜେନ୍ ଦରକାର)
+• ଜଳବାୟୁ ନିୟନ୍ତ୍ରଣ: ପୃଥିବୀର ତାପମାତ୍ରା ବଜାୟ ରଖିବାରେ ସାହାଯ୍ୟ କରେ
+• ପରାଗ ସଞ୍ଚାର: ପବନ ଗଛମାନଙ୍କ ମଧ୍ୟରେ ପରାଗ ବହନ କରେ
+
+ବାତାସ ପ୍ରଦୂଷଣ:
+• ଉତ୍ସ: ଯାନବାହନ ନିଷ୍କାସନ, ଶିଳ୍ପ ଧୂଆଁ, ଆବର୍ଜନା ପୋଡ଼ିବା
+• ପ୍ରଭାବ: ଶ୍ୱାସକ୍ରିୟା ରୋଗ, ଅମ୍ଳ ବର୍ଷା, ଗ୍ଲୋବାଲ୍ ୱାର୍ମିଂ
+• ପ୍ରତିରୋଧ: ଗଛ ଲଗାନ୍ତୁ, ସ୍ୱଚ୍ଛ ଶକ୍ତି ବ୍ୟବହାର କରନ୍ତୁ, ଯାନବାହନ ବ୍ୟବହାର କମ କରନ୍ତୁ
+
+4. ଆବର୍ଜନା ପରିଚାଳନା
+========================
+ଆବର୍ଜନାର ପ୍ରକାର:
+• ଜୈବିକ ବିଘଟନଶୀଳ: ପ୍ରାକୃତିକ ଭାବରେ ବିଘଟିତ ହୁଏ (ଖାଦ୍ୟ ତୁଷ, କାଗଜ, କାଠ)
+• ଅଜୈବିକ ବିଘଟନଶୀଳ: ପ୍ରାକୃତିକ ଭାବରେ ବିଘଟିତ ହୁଏ ନାହିଁ (ପ୍ଲାଷ୍ଟିକ୍, କାଚ, ଧାତୁ)
+• ପୁନର୍ବ୍ୟବହାର ଯୋଗ୍ୟ: ନୂଆ ଉତ୍ପାଦରେ ପ୍ରକ୍ରିୟାକରଣ କରାଯାଇପାରେ (କାଗଜ, କାଚ, କେତେକ ପ୍ଲାଷ୍ଟିକ୍)
+• ବିପଦଜନକ: ବିଶେଷ ହ୍ୟାଣ୍ଡଲିଂ ଆବଶ୍ୟକ (ବ୍ୟାଟେରୀ, ରାସାୟନିକ, ଇ-ଆବର୍ଜନା)
+
+3R ନିୟମ:
+• REDUCE (କମ କର): କମ ବ୍ୟବହାର - ଅନାବଶ୍ୟକ ପ୍ୟାକେଜିଂ ଏଡ଼ାନ୍ତୁ, କେବଳ ଆବଶ୍ୟକ ଜିନିଷ କିଣନ୍ତୁ
+• REUSE (ପୁନର୍ବ୍ୟବହାର): ପୁଣିଥରେ ବ୍ୟବହାର - ସଂରକ୍ଷଣ ପାଇଁ କାଚ ଜାର୍, ପୁରୁଣା ଲୁଗା ପୋଛା କାନି ଭାବରେ
+• RECYCLE (ପୁନର୍ବ୍ୟବହାର): ନୂଆ ଉତ୍ପାଦରେ ପ୍ରକ୍ରିୟାକରଣ - ପୁନର୍ବ୍ୟବହାର ପାଇଁ ଆବର୍ଜନା ସଠିକ୍ ଭାବରେ ଅଲଗା କରନ୍ତୁ
+
+କମ୍ପୋଷ୍ଟିଂ:
+• ଜୈବିକ ଆବର୍ଜନାର ପ୍ରାକୃତିକ ବିଘଟନ
+• ପୌଷ୍ଟିକ ପଦାର୍ଥରେ ଭରପୁର ଜୈବିକ ସାର ସୃଷ୍ଟି କରେ
+• ଲ୍ୟାଣ୍ଡଫିଲ୍ ଆବର୍ଜନା 30-50% ହ୍ରାସ କରେ
+• ରାନ୍ଧଣିଆ ତୁଷ ଏବଂ ବଗିଚା ଆବର୍ଜନା ସହିତ ଘରେ କରାଯାଇପାରେ
+
+5. ସଂରକ୍ଷଣ ପଦ୍ଧତି
+=====================
+ଜଳ ପାଇଁ:
+• ବର୍ଷାଜଳ ସଞ୍ଚୟ ବ୍ୟବସ୍ଥା
+• କୃଷିରେ ଟୋପା ଜଳସେଚନ
+• ଜଳ ସଞ୍ଚୟୀ ଉପକରଣ
+• ସାର୍ବଜନୀନ ସଚେତନତା ଅଭିଯାନ
+
+ବାତାସ ପାଇଁ:
+• ଗଛ ଲଗାନ୍ତୁ (ସହରୀ ଜଙ୍ଗଲ)
+• ସାର୍ବଜନୀନ ପରିବହନ ବ୍ୟବହାର କରନ୍ତୁ
+• ସ୍ୱଚ୍ଛ ଶକ୍ତି ଆଡକୁ ସ୍ଵିଚ୍ କରନ୍ତୁ (ସୌର, ପବନ)
+• ଉଚିତ ଶିଳ୍ପ ନିଷ୍କାସନ ନିୟନ୍ତ୍ରଣ
+
+ଆବର୍ଜନା ପାଇଁ:
+• ଉତ୍ସରେ ଆବର୍ଜନା ଅଲଗା କରନ୍ତୁ
+• ସମ୍ପ୍ରଦାୟ କମ୍ପୋଷ୍ଟିଂ
+• ପୁନର୍ବ୍ୟବହାର କାର୍ଯ୍ୟକ୍ରମ
+• ସିଙ୍ଗଲ୍-ୟୁଜ୍ ପ୍ଲାଷ୍ଟିକ୍ ଉପରେ ନିଷେଧ
+
+6. ମୁଖ୍ୟ ପରିଭାଷା
+===================
+• ପ୍ରାକୃତିକ ସମ୍ପଦ: ପ୍ରକୃତିରୁ ମିଳୁଥିବା ସାମଗ୍ରୀ ଯାହା ଜୀବନକୁ ସମର୍ଥନ କରେ
+• ନବୀକରଣୀୟ: ପୁନଃପୂରଣ ହୋଇପାରେ (ସୂର୍ଯ୍ୟାଲୋକ, ପବନ, ଜଳ ଚକ୍ର)
+• ଅନବୀକରଣୀୟ: ସୀମିତ ସରବରାହ (ଜୈବିକ ଇନ୍ଧନ, ଖଣିଜ)
+• ସଂରକ୍ଷଣ: ସମ୍ପଦର ସତର୍କ ବ୍ୟବହାର ଏବଂ ସୁରକ୍ଷା
+• ପ୍ରଦୂଷଣ: କ୍ଷତିକାରକ ପଦାର୍ଥ ଦ୍ୱାରା ପରିବେଶ ଦୂଷିତ ହେବା
+• ଟିକାଉତା: ଭବିଷ୍ୟତ ପିଢ଼ିର ସମ୍ଭାବନାକୁ ବିନା ଭୟରେ ଆବଶ୍ୟକତା ପୂରଣ କରିବା
+• ପରିବେଶ ବ୍ୟବସ୍ଥା: ଜୀବନ୍ତ ଜୀବମାନଙ୍କର ସମ୍ପ୍ରଦାୟ ଏବଂ ସେମାନଙ୍କର ପରିବେଶ
+
+7. ସମୀକ୍ଷା ପ୍ରଶ୍ନ
+===================
+
+ସଂକ୍ଷିପ୍ତ ଉତ୍ତର:
+1. ଦୈନିକ ଜୀବନରେ ଜଳର ତିନୋଟି ବ୍ୟବହାରର ନାମ କୁହନ୍ତୁ।
+2. ପୃଥିବୀର ଜଳର କେତେ ପ୍ରତିଶତ ମିଠା ଜଳ?
+3. ବାତାସରେ ଥିବା ଦୁଇଟି ମୁଖ୍ୟ ଗ୍ୟାସର ନାମ ଏବଂ ସେମାନଙ୍କର ପ୍ରତିଶତ କୁହନ୍ତୁ।
+4. ଆବର୍ଜନା ପରିଚାଳନାରେ 3R କ'ଣ ବୁଝାଏ?
+5. ଜୈବିକ ବିଘଟନଶୀଳ ଏବଂ ଅଜୈବିକ ବିଘଟନଶୀଳ ଆବର୍ଜନାର ପ୍ରତ୍ୟେକରୁ ଦୁଇଟି ଉଦାହରଣ ଦିଅନ୍ତୁ।
+
+ଦୀର୍ଘ ଉତ୍ତର:
+1. ତିନୋଟି କାରଣ ସହ ଜଳ ସଂରକ୍ଷଣ କାହିଁକି ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ ବ୍ୟାଖ୍ୟା କରନ୍ତୁ।
+2. ଗଛପାଲା କିପରି ବାତାସ ପରିଷ୍କରଣରେ ସାହାଯ୍ୟ କରେ ବର୍ଣ୍ଣନା କରନ୍ତୁ।
+3. କମ୍ପୋଷ୍ଟିଂ କ'ଣ? ଏହା ଆବର୍ଜନା ପରିଚାଳନାରେ କିପରି ସାହାଯ୍ୟ କରେ?
+4. ନବୀକରଣୀୟ ଏବଂ ଅନବୀକରଣୀୟ ସମ୍ପଦକୁ ଉଦାହରଣ ସହ ତୁଳନା କରନ୍ତୁ।
+5. ଛାତ୍ରଛାତ୍ରୀମାନେ ପ୍ରାକୃତିକ ସମ୍ପଦ ସଂରକ୍ଷଣରେ ସାହାଯ୍ୟ କରିବାର ପାଞ୍ଚଟି ଉପାୟ ସୂଚନା କରନ୍ତୁ।
+
+ବ୍ୟାବହାରିକ କାର୍ଯ୍ୟକଳାପ:
+1. ବୃଥା ଚିହ୍ନଟ କରିବା ପାଇଁ ଏକ ଘରୋଇ ଜଳ ଅନୁଧ୍ୟାନ କରନ୍ତୁ।
+2. ରାନ୍ଧଣିଆ ଆବର୍ଜନା ପାଇଁ ଏକ ଛୋଟ କମ୍ପୋଷ୍ଟିଂ ବିନ୍ ସେଟ୍ ଅପ୍ କରନ୍ତୁ।
+3. ଆପଣଙ୍କ ସ୍କୁଲ୍ ପାଇଁ 3R ନିୟମ ଉପରେ ଏକ ପୋଷ୍ଟର୍ ତିଆରି କରନ୍ତୁ।
+4. ଆପଣଙ୍କ ପଡ଼ୋଶରେ ଏକ ଗଛ ଲଗାନ୍ତୁ ଏବଂ ତାହାର ଯତ୍ନ ନିଅନ୍ତୁ।
+5. ଆପଣଙ୍କ ଅଞ୍ଚଳରେ ଏକ ସ୍ୱଚ୍ଛତା ଅଭିଯାନ ସଂଗଠିତ କରନ୍ତୁ।
+
+====================================
+କ୍ରେଡିଟ୍ ଏବଂ କୃତଜ୍ଞତା
+====================================
+ପ୍ରସ୍ତୁତକାରୀ: STEM ଲର୍ନ ଓଡ଼ିଶା ଦଳ
+ପାଇଁ: ଷଷ୍ଠ ଶ୍ରେଣୀର ଛାତ୍ରଛାତ୍ରୀ
+ତାରିଖ: ${new Date().toLocaleDateString()}
+
+====================================
+ମନେରଖିବେ:
+• ଜଳର ପ୍ରତ୍ୟେକ ବିନ୍ଦୁ ଗଣନା କରେ
+• ପରିଷ୍କାର ବାତାସ ସମସ୍ତଙ୍କର ଅଧିକାର
+• ବହୁତ ବିଳମ୍ବ ହେବା ପୂର୍ବରୁ ଆବର୍ଜନା କମ କରନ୍ତୁ
+• ଛୋଟ କାର୍ଯ୍ୟ ବଡ଼ ପରିବର୍ତ୍ତନ ଆଣେ
+
+====================================
+ଟିପ୍ପଣୀର ଶେଷ
+====================================`;
+        }
+
+        function generateFlashcards() {
+            return `NATURAL RESOURCES FLASHCARDS
+====================================
+
+STEM Learn Odisha - Class 6 Science
+====================================
+
+FLASHCARD SET - NATURAL RESOURCES
+Total Cards: 10
+
+====================================
+
+CARD 1:
+Category: Water Conservation
+Question: Why is water conservation important?
+Answer: Water conservation is important because: 1) Only 3% of Earth's water is freshwater, 2) Freshwater is essential for drinking, agriculture and industry, 3) Many regions face water scarcity, 4) Conserving water saves energy used in water treatment, 5) It ensures water availability for future generations. Simple conservation methods include fixing leaks, using water-efficient fixtures, rainwater harvesting, and reducing wastage during daily activities.
+
+CARD 2:
+Category: Air Composition
+Question: What are the main components of air and their percentages?
+Answer: The main components of air are: 1) Nitrogen (N₂) - 78%, 2) Oxygen (O₂) - 21%, 3) Argon (Ar) - 0.93%, 4) Carbon dioxide (CO₂) - 0.04%, 5) Other gases (Neon, Helium, Methane, etc.) - 0.03%. This composition remains relatively constant in the lower atmosphere. Oxygen is essential for respiration in animals, while carbon dioxide is used by plants during photosynthesis. Nitrogen helps dilute oxygen and prevents rapid combustion.
+
+CARD 3:
+Category: Waste Management
+Question: Explain the 3R rule with examples for each
+Answer: The 3R rule stands for Reduce, Reuse, Recycle: 1) REDUCE - Use less resources (e.g., carry cloth bags instead of plastic, turn off lights when not needed). 2) REUSE - Use items multiple times (e.g., glass jars for storage, old clothes as cleaning rags). 3) RECYCLE - Convert waste into new products (e.g., paper recycling, plastic bottle conversion to polyester fabric). Following 3R reduces landfill waste, conserves resources, and minimizes pollution.
+
+CARD 4:
+Category: Water Resources
+Question: What is groundwater and why is it important?
+Answer: Groundwater is water stored underground in soil pore spaces and rock fractures. It's important because: 1) Provides drinking water for 50% of global population, 2) Used for irrigation (40% of global agriculture), 3) Replenishes rivers and lakes during dry periods, 4) More reliable than surface water during droughts. However, over-extraction causes problems like: falling water tables, land subsidence, and saltwater intrusion in coastal areas. Sustainable management includes rainwater harvesting and regulated usage.
+
+CARD 5:
+Category: Air Quality
+Question: How do plants help in air purification?
+Answer: Plants purify air through: 1) Photosynthesis - Absorb CO₂ and release O₂, 2) Transpiration - Release water vapor increasing humidity, 3) Particulate capture - Leaves trap dust and pollutants, 4) Phytoremediation - Some plants absorb and break down toxins like formaldehyde and benzene. Indoor plants like spider plant, snake plant, and peace lily are particularly effective. Urban forests can significantly improve air quality in cities by filtering pollutants and reducing temperatures.
+
+CARD 6:
+Category: Waste Types
+Question: What is biodegradable vs non-biodegradable waste? Give examples.
+Answer: Biodegradable waste decomposes naturally by microorganisms (bacteria, fungi) into harmless substances. Examples: food scraps, paper, wood, cotton, vegetable peels, garden waste. Non-biodegradable waste does not decompose naturally or takes centuries. Examples: plastic bags, glass bottles, metal cans, styrofoam, rubber tires, electronic waste. Biodegradable waste can be composted, while non-biodegradable waste should be recycled or properly disposed to prevent environmental harm.
+
+CARD 7:
+Category: Resource Types
+Question: What are renewable and non-renewable natural resources?
+Answer: Renewable resources can be replenished naturally in human timescales. Examples: sunlight, wind, water (via water cycle), forests (if sustainably managed), air. Non-renewable resources exist in fixed amounts or regenerate very slowly. Examples: fossil fuels (coal, oil, natural gas), minerals (iron, copper), groundwater (in some areas). Sustainability requires using renewable resources wisely and conserving non-renewable ones through efficiency and recycling.
+
+CARD 8:
+Category: Pollution
+Question: What are the effects of air pollution on health and environment?
+Answer: Health effects: respiratory diseases (asthma, bronchitis), heart problems, lung cancer, eye irritation, headaches. Environmental effects: acid rain (damages plants, buildings), global warming (greenhouse gases), ozone depletion, reduced visibility (smog), damage to wildlife. Major pollutants: particulate matter (PM2.5, PM10), nitrogen oxides, sulfur dioxide, carbon monoxide, ozone. Prevention: reduce vehicle emissions, use clean energy, plant trees, proper waste disposal, industrial pollution control.
+
+CARD 9:
+Category: Water Management
+Question: What is rainwater harvesting and its benefits?
+Answer: Rainwater harvesting is collecting and storing rainwater for later use. Methods: rooftop collection, surface runoff collection, recharge pits. Benefits: 1) Reduces demand on groundwater, 2) Provides water during dry periods, 3) Reduces flooding in urban areas, 4) Improves groundwater quality through recharge, 5) Lowers water bills. Simple systems include: rooftop gutters directing to storage tanks, recharge wells allowing water to percolate underground. Ideal for areas with seasonal rainfall patterns.
+
+CARD 10:
+Category: Organic Waste
+Question: What is composting and how does it help waste management?
+Answer: Composting is natural decomposition of organic waste (food scraps, leaves, grass) into nutrient-rich soil conditioner (compost). Process: microorganisms break down materials with oxygen, producing heat. Benefits: 1) Reduces landfill waste by 30-50%, 2) Creates natural fertilizer for gardens, 3) Improves soil structure and water retention, 4) Reduces need for chemical fertilizers, 5) Lowers methane emissions from landfills. Home composting can be done in bins or pits with proper balance of greens (nitrogen) and browns (carbon).
+
+====================================
+HOW TO USE THESE FLASHCARDS:
+1. Print on thick paper or cardstock
+2. Cut along the dotted lines
+3. Fold each card in half
+4. Glue the front and back together
+5. Use for regular revision
+6. Test yourself by looking at the question and trying to recall the answer
+7. Shuffle cards for random practice
+
+====================================
+TIPS FOR EFFECTIVE LEARNING:
+• Review flashcards daily
+• Start with 5-10 minutes per day
+• Say answers out loud
+• Create your own flashcards for difficult topics
+• Study with friends for group practice
+
+====================================
+Prepared by: STEM Learn Odisha
+Date: ${new Date().toLocaleDateString()}
+====================================`;
+        }
+
+        // Show notification function
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            
+            if (type === 'error') {
+                notification.style.background = '#e53e3e';
+            } else if (type === 'success') {
+                notification.style.background = '#38a169';
+            }
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+
+            // active button
+            langButtons.forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+            });
+
+            i18nElements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                const original = el.getAttribute('data-i18n-en') || '';
+                if (lang === 'en') {
+                    el.textContent = original;
+                } else {
+                    const t = translations[lang] && translations[lang][key];
+                    el.textContent = t || original;
+                }
+            });
+
+            if (lang === 'or' || lang === 'hi') {
+                document.body.classList.add('indic-text');
+            } else {
+                document.body.classList.remove('indic-text');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // language buttons
+            langButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.getAttribute('data-lang');
+                    switchLanguage(lang);
+                });
+            });
+
+            // mobile menu toggle
+            if (mobileMenuBtn && navList) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    navList.classList.toggle('show');
+                });
+            }
+
+            // topic switching
+            const topicCards = document.querySelectorAll('.topic-card');
+            const topicPanels = document.querySelectorAll('.topic-panel');
+
+            topicCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const topic = card.getAttribute('data-topic');
+
+                    // update active card
+                    topicCards.forEach(c => {
+                        c.classList.toggle('active', c === card);
+                    });
+
+                    // update active panel
+                    topicPanels.forEach(panel => {
+                        panel.classList.toggle('active', panel.getAttribute('data-topic') === topic);
+                    });
+                });
+            });
+
+            // Initialize flashcards
+            initFlashcards();
+
+            // Initialize download buttons
+            document.querySelectorAll('.download-btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    if (this.getAttribute('onclick')) {
+                        // Already has onclick handler
+                        return;
+                    }
+                    const resourceText = this.querySelector('span').textContent.toLowerCase();
+                    let resourceType = '';
+                    
+                    if (resourceText.includes('english')) resourceType = 'study_notes_english';
+                    else if (resourceText.includes('odia') || resourceText.includes('ଓଡ଼ିଆ')) resourceType = 'study_notes_odia';
+                    else if (resourceText.includes('hindi') || resourceText.includes('हिन्दी')) resourceType = 'study_notes_hindi';
+                    else if (resourceText.includes('flashcards')) resourceType = 'flashcards';
+                    
+                    if (resourceType) {
+                        downloadResource(resourceType);
+                    }
+                });
+            });
+
+            // default language
+            switchLanguage('en');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural Number Trail - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles with Profile Controls */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #2a69ac;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text h1 span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-pic {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 180px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f7fa;
+        }
+
+        .dropdown-item i {
+            color: #3182ce;
+            width: 20px;
+        }
+
+        /* Language Options */
+        .language-options {
+            position: absolute;
+            top: 60px;
+            right: 120px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 120px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .language-options.show {
+            display: block;
+        }
+
+        .language-option {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .language-option:last-child {
+            border-bottom: none;
+        }
+
+        .language-option:hover {
+            background: #f5f7fa;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9)), url('https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .breadcrumb-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .breadcrumb a {
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #3182ce;
+        }
+
+        .breadcrumb span {
+            color: #64748b;
+        }
+
+        /* Game Container */
+        .game-container {
+            padding: 50px 0;
+            min-height: 70vh;
+        }
+
+        .game-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .game-area {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Game Info Panel */
+        .game-info {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .game-title {
+            font-size: 1.8rem;
+            color: #1a365d;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .game-description {
+            color: #64748b;
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        .game-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-box {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #3182ce;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .game-instructions {
+            background: #f0f9ff;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #3182ce;
+        }
+
+        .instructions-title {
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .instructions-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .instructions-list li {
+            margin-bottom: 8px;
+            color: #4a5568;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .instructions-list li i {
+            color: #3182ce;
+            margin-top: 2px;
+        }
+
+        /* Game Play Area */
+        .game-play-area {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Trail Display */
+        .trail-display {
+            position: relative;
+            height: 400px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .ground {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: linear-gradient(to top, #8b7355, #a89178);
+            z-index: 1;
+        }
+
+        .water {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: linear-gradient(to top, #3182ce, #2b6cb0);
+            z-index: 0;
+        }
+
+        .stone {
+            position: absolute;
+            width: 80px;
+            height: 50px;
+            background: linear-gradient(135deg, #a8a8a8, #8c8c8c);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+            border: 2px solid transparent;
+        }
+
+        .stone:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .stone.natural {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            border-color: #2f855a;
+        }
+
+        .stone.non-natural {
+            background: linear-gradient(135deg, #f56565, #e53e3e);
+            border-color: #c53030;
+        }
+
+        .stone.selected {
+            animation: pulse 1s infinite;
+            box-shadow: 0 0 20px rgba(56, 178, 172, 0.7);
+        }
+
+        .stone.available {
+            cursor: pointer;
+            opacity: 1;
+        }
+
+        .stone.unavailable {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .stone-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Character */
+        .character {
+            position: absolute;
+            width: 60px;
+            height: 80px;
+            bottom: 80px;
+            left: 50px;
+            transition: all 0.5s ease;
+            z-index: 3;
+        }
+
+        .character-body {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #3182ce, #2b6cb0);
+            border-radius: 50% 50% 40% 40%;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .character-face {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .character-eyes {
+            display: flex;
+            gap: 8px;
+        }
+
+        .character-eye {
+            width: 8px;
+            height: 8px;
+            background: #3182ce;
+            border-radius: 50%;
+        }
+
+        .character-legs {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 20px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .character-leg {
+            width: 8px;
+            height: 20px;
+            background: #2b6cb0;
+            border-radius: 4px;
+        }
+
+        .character.falling {
+            animation: fall 1s ease-in forwards;
+        }
+
+        .character.walking {
+            animation: walk 0.5s infinite alternate;
+        }
+
+        @keyframes walk {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0); }
+            100% { transform: translateY(300px) rotate(90deg); opacity: 0; }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(56, 178, 172, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(56, 178, 172, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(56, 178, 172, 0); }
+        }
+
+        /* Level Indicator */
+        .level-display {
+            text-align: center;
+            padding: 15px;
+            background: linear-gradient(135deg, #38b2ac 0%, #2c9a94 100%);
+            border-radius: 10px;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .level-label {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .level-value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        /* Game Controls */
+        .game-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #3182ce;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #2b6cb0;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #cbd5e0;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: #38b2ac;
+            color: white;
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
+            background: #ed8936;
+            color: white;
+        }
+
+        .btn-warning:hover:not(:disabled) {
+            background: #dd6b20;
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Timer Display */
+        .timer-display {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3182ce;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Feedback Messages */
+        .feedback-message {
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .feedback-success {
+            background: #c6f6d5;
+            color: #22543d;
+            border: 1px solid #9ae6b4;
+            display: block;
+        }
+
+        .feedback-error {
+            background: #fed7d7;
+            color: #742a2a;
+            border: 1px solid #fc8181;
+            display: block;
+        }
+
+        /* Score System */
+        .score-system {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #4a5568;
+        }
+
+        .score-value {
+            font-weight: 700;
+            color: #3182ce;
+            font-size: 1.2rem;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 20px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        .progress-bar-container {
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #48bb78, #38b2ac);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about {
+            padding-right: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.8rem;
+            background: #38b2ac;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            nav ul {
+                gap: 15px;
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .game-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .control-buttons {
+                flex-wrap: wrap;
+            }
+            
+            .trail-display {
+                height: 300px;
+            }
+            
+            .stone {
+                width: 60px;
+                height: 40px;
+            }
+            
+            .stone-number {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Odia font support */
+        .odia-text {
+            font-family: 'Kalinga', 'Nirmala UI', 'Segoe UI', sans-serif;
+        }
+
+        /* Splash Animation */
+        .splash {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: rgba(56, 178, 172, 0.7);
+            border-radius: 50%;
+            animation: splash 0.5s ease-out forwards;
+            pointer-events: none;
+            z-index: 4;
+        }
+
+        @keyframes splash {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-atom"></i>
+            </div>
+            <div class="logo-text">
+                <h1>STEM Learn Odisha</h1>
+                <p>Gamified Learning Platform</p>
+            </div>
+        </div>
+       
+        <nav>
+            <ul>
+                <li><a href="student-dashboard.html" id="navDashboard">Dashboard</a></li>
+                <li><a href="mathematics.html" id="navMathematics">Mathematics</a></li>
+                <li><a href="scienceidx.html" id="navCurriculum">Curriculum</a></li>
+                <li><a href="fractions.html" id="navFractions">Fractions</a></li>
+            </ul>
+        </nav>
+       
+        <div class="header-controls">
+            <button class="control-btn" id="languageToggle">
+                <i class="fas fa-globe"></i>
+            </button>
+           
+            <div class="profile-container">
+                <button class="profile-btn" id="profileToggle">
+                    <img src="https://ui-avatars.com/api/?name=Student&background=3182ce&color=fff" alt="Profile" class="profile-pic" id="headerProfilePic">
+                    <span id="headerUserName">Student</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+               
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" class="dropdown-item" id="dropdownProfile">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownSettings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownLogout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Language Options -->
+    <div class="language-options" id="languageOptions">
+        <div class="language-option" data-lang="en">English</div>
+        <div class="language-option" data-lang="or">ଓଡ଼ିଆ</div>
+    </div>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 data-translate="page-title">Natural Number Trail</h1>
+            <p data-translate="page-desc">Help the character cross the river by stepping only on natural number stones! Avoid zeros and negative numbers.</p>
+        </div>
+    </section>
+
+    <!-- Game Container -->
+    <section class="game-container">
+        <div class="container">
+            <div class="game-area">
+                <!-- Game Information Panel -->
+                <div class="game-info">
+                    <h2 class="game-title">
+                        <i class="fas fa-hiking"></i>
+                        <span data-translate="game-title">Natural Number Trail</span>
+                    </h2>
+                    
+                    <div class="game-description" data-translate="game-description">
+                        Help your character cross the river safely! Step only on stones with natural numbers (1, 2, 3, ...).
+                        Avoid stones with zeros or negative numbers, or your character will fall into the water!
+                    </div>
+                    
+                    <div class="game-stats">
+                        <div class="stat-box">
+                            <div class="stat-value" id="scoreValue">0</div>
+                            <div class="stat-label" data-translate="stat-score">Score</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value" id="levelValue">1</div>
+                            <div class="stat-label" data-translate="stat-level">Level</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value" id="correctValue">0</div>
+                            <div class="stat-label" data-translate="stat-correct">Safe Steps</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value" id="timeValue">60</div>
+                            <div class="stat-label" data-translate="stat-time">Time (s)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span data-translate="progress-label">Trail Progress</span>
+                            <span id="progressValue">0%</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="trailProgress"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="game-instructions">
+                        <h3 class="instructions-title">
+                            <i class="fas fa-info-circle"></i>
+                            <span data-translate="instructions-title">How to Play:</span>
+                        </h3>
+                        <ul class="instructions-list">
+                            <li>
+                                <i class="fas fa-shoe-prints"></i>
+                                <span data-translate="instruction1">Click on green stones to make your character step on them</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span data-translate="instruction2">Only step on natural numbers (1, 2, 3, 4, ...)</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-times-circle"></i>
+                                <span data-translate="instruction3">Avoid zeros (0) and negative numbers (-1, -2, ...)</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-forward"></i>
+                                <span data-translate="instruction4">Use "Skip" button to skip a stone you can't step on</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-trophy"></i>
+                                <span data-translate="instruction5">Reach the end of the trail to complete the level</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Game Play Area -->
+                <div class="game-play-area">
+                    <!-- Level Display -->
+                    <div class="level-display">
+                        <div class="level-label" data-translate="level-label">Current Level</div>
+                        <div class="level-value" id="currentLevel">1</div>
+                    </div>
+                    
+                    <!-- Trail Display -->
+                    <div class="trail-display" id="trailDisplay">
+                        <div class="water"></div>
+                        <div class="ground"></div>
+                        <div class="character" id="character">
+                            <div class="character-body">
+                                <div class="character-face">
+                                    <div class="character-eyes">
+                                        <div class="character-eye"></div>
+                                        <div class="character-eye"></div>
+                                    </div>
+                                </div>
+                                <div class="character-legs">
+                                    <div class="character-leg"></div>
+                                    <div class="character-leg"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Stones will be generated by JavaScript -->
+                    </div>
+                    
+                    <!-- Feedback Message -->
+                    <div class="feedback-message" id="feedbackMessage"></div>
+                    
+                    <!-- Game Controls -->
+                    <div class="game-controls">
+                        <div class="control-buttons">
+                            <button class="btn btn-primary" id="startBtn">
+                                <i class="fas fa-play"></i>
+                                <span data-translate="start-btn">Start Game</span>
+                            </button>
+                            <button class="btn btn-secondary" id="resetBtn" disabled>
+                                <i class="fas fa-redo"></i>
+                                <span data-translate="reset-btn">Reset Level</span>
+                            </button>
+                            <button class="btn btn-warning" id="skipBtn" disabled>
+                                <i class="fas fa-forward"></i>
+                                <span data-translate="skip-btn">Skip Stone</span>
+                            </button>
+                            <button class="btn btn-success" id="nextBtn" disabled>
+                                <i class="fas fa-forward"></i>
+                                <span data-translate="next-btn">Next Level</span>
+                            </button>
+                        </div>
+                        
+                        <div class="timer-display">
+                            <i class="fas fa-clock"></i>
+                            <span id="timerDisplay">60</span>
+                        </div>
+                    </div>
+                    
+                    <div class="score-system">
+                        <i class="fas fa-star"></i>
+                        <span data-translate="score-label">Current Score:</span>
+                        <span class="score-value" id="currentScore">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <div class="footer-logo-text">STEM Learn Odisha</div>
+                    </div>
+                    <p data-translate="footer-desc">Making Science and Mathematics education engaging and relevant for Class 6 students in Odisha through localized content and interactive learning.</p>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p data-translate="copyright">© 2023 STEM Learn Odisha. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Game Variables
+        let gameState = {
+            score: 0,
+            level: 1,
+            correctSteps: 0,
+            timeLeft: 60,
+            currentStoneIndex: 0,
+            isActive: false,
+            timer: null,
+            stones: [],
+            totalStones: 6,
+            skippedStones: [] // Track skipped stones
+        };
+
+        // Game Configuration - NOW 6 LEVELS
+        const config = {
+            maxLevel: 6, // CHANGED FROM 5 TO 6
+            timePerLevel: 60,
+            scorePerStep: 50,
+            scorePerLevel: 500,
+            timeBonus: 100,
+            skipPenalty: 10, // Points deducted for skipping
+            levelConfig: {
+                1: { naturalRatio: 0.8, maxNumber: 10, stones: 6 },
+                2: { naturalRatio: 0.7, maxNumber: 15, stones: 7 },
+                3: { naturalRatio: 0.6, maxNumber: 20, stones: 8 },
+                4: { naturalRatio: 0.5, maxNumber: 25, stones: 9 },
+                5: { naturalRatio: 0.4, maxNumber: 30, stones: 10 },
+                6: { naturalRatio: 0.3, maxNumber: 40, stones: 12 } // ADDED LEVEL 6
+            }
+        };
+
+        // Translations
+        const translations = {
+            en: {
+                'page-title': 'Natural Number Trail',
+                'page-desc': 'Help the character cross the river by stepping only on natural number stones! Avoid zeros and negative numbers.',
+                'game-title': 'Natural Number Trail',
+                'game-description': 'Help your character cross the river safely! Step only on stones with natural numbers (1, 2, 3, ...). Avoid stones with zeros or negative numbers, or your character will fall into the water!',
+                'stat-score': 'Score',
+                'stat-level': 'Level',
+                'stat-correct': 'Safe Steps',
+                'stat-time': 'Time (s)',
+                'progress-label': 'Trail Progress',
+                'instructions-title': 'How to Play:',
+                'instruction1': 'Click on green stones to make your character step on them',
+                'instruction2': 'Only step on natural numbers (1, 2, 3, 4, ...)',
+                'instruction3': 'Avoid zeros (0) and negative numbers (-1, -2, ...)',
+                'instruction4': 'Use "Skip" button to skip a stone you can\'t step on',
+                'instruction5': 'Reach the end of the trail to complete the level',
+                'level-label': 'Current Level',
+                'start-btn': 'Start Game',
+                'reset-btn': 'Reset Level',
+                'skip-btn': 'Skip Stone',
+                'next-btn': 'Next Level',
+                'score-label': 'Current Score:',
+                'footer-desc': 'Making Science and Mathematics education engaging and relevant for Class 6 students in Odisha through localized content and interactive learning.',
+                'copyright': '© 2023 STEM Learn Odisha. All rights reserved.'
+            },
+            or: {
+                'page-title': 'ପ୍ରାକୃତିକ ସଂଖ୍ୟା ଟ୍ରେଲ୍',
+                'page-desc': 'କେବଳ ପ୍ରାକୃତିକ ସଂଖ୍ୟା ପଥର ଉପରେ ପଦକ୍ଷେପ କରି ଚରିତ୍ରକୁ ନଦୀ ପାର କରାଇବାରେ ସାହାଯ୍ୟ କରନ୍ତୁ! ଶୂନ୍ୟ ଏବଂ ନକାରାତ୍ମକ ସଂଖ୍ୟାଗୁଡିକୁ ଏଡାନ୍ତୁ।',
+                'game-title': 'ପ୍ରାକୃତିକ ସଂଖ୍ୟା ଟ୍ରେଲ୍',
+                'game-description': 'ଆପଣଙ୍କର ଚରିତ୍ରକୁ ସୁରକ୍ଷିତ ଭାବରେ ନଦୀ ପାର କରାଇବାରେ ସାହାଯ୍ୟ କରନ୍ତୁ! କେବଳ ପ୍ରାକୃତିକ ସଂଖ୍ୟା (1, 2, 3, ...) ଥିବା ପଥର ଉପରେ ପଦକ୍ଷେପ କରନ୍ତୁ। ଶୂନ୍ୟ (0) କିମ୍ବା ନକାରାତ୍ମକ ସଂଖ୍ୟା (-1, -2, ...) ଥିବା ପଥରକୁ ଏଡାନ୍ତୁ, ନଚେତ୍ ଆପଣଙ୍କର ଚରିତ୍ର ପାଣିରେ ପଡିବ!',
+                'stat-score': 'ସ୍କୋର',
+                'stat-level': 'ସ୍ତର',
+                'stat-correct': 'ସୁରକ୍ଷିତ ପଦକ୍ଷେପ',
+                'stat-time': 'ସମୟ (ସେ.)',
+                'progress-label': 'ଟ୍ରେଲ୍ ପ୍ରଗତି',
+                'instructions-title': 'କିପରି ଖେଳିବେ:',
+                'instruction1': 'ଆପଣଙ୍କର ଚରିତ୍ରକୁ ସେଗୁଡିକ ଉପରେ ପଦକ୍ଷେପ କରିବା ପାଇଁ ସବୁଜ ପଥର ଉପରେ କ୍ଲିକ୍ କରନ୍ତୁ',
+                'instruction2': 'କେବଳ ପ୍ରାକୃତିକ ସଂଖ୍ୟା (1, 2, 3, 4, ...) ଉପରେ ପଦକ୍ଷେପ କରନ୍ତୁ',
+                'instruction3': 'ଶୂନ୍ୟ (0) ଏବଂ ନକାରାତ୍ମକ ସଂଖ୍ୟା (-1, -2, ...) ଏଡାନ୍ତୁ',
+                'instruction4': 'ଆପଣ ପଦକ୍ଷେପ କରିପାରିବେ ନାହିଁ କେଉଁଠି ପଥରକୁ ଛାଡିବା ପାଇଁ "ଛାଡିଦିଅନ୍ତୁ" ବଟନ୍ ବ୍ୟବହାର କରନ୍ତୁ',
+                'instruction5': 'ସ୍ତର ସମାପ୍ତ କରିବା ପାଇଁ ଟ୍ରେଲ୍ ଶେଷରେ ପହଞ୍ଚନ୍ତୁ',
+                'level-label': 'ବର୍ତ୍ତମାନର ସ୍ତର',
+                'start-btn': 'ଖେଳ ଆରମ୍ଭ କରନ୍ତୁ',
+                'reset-btn': 'ସ୍ତର ପୁନଃସ୍ଥାପନ କରନ୍ତୁ',
+                'skip-btn': 'ପଥର ଛାଡିଦିଅନ୍ତୁ',
+                'next-btn': 'ପରବର୍ତ୍ତୀ ସ୍ତର',
+                'score-label': 'ବର୍ତ୍ତମାନର ସ୍କୋର:',
+                'footer-desc': 'ଓଡ଼ିଶାର ଷଷ୍ଠ ଶ୍ରେଣୀର ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କ ପାଇଁ ସ୍ଥାନୀୟ ବିଷୟବସ୍ତୁ ଏବଂ ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ମାଧ୍ୟମରେ ବିଜ୍ଞାନ ଏବଂ ଗଣିତ ଶିକ୍ଷାକୁ ଆକର୍ଷଣୀୟ ଏବଂ ପ୍ରାସଙ୍ଗିକ କରିବା',
+                'copyright': '© 2023 STEM ଲର୍ନ ଓଡ଼ିଶା। ସମସ୍ତ ଅଧିକାର ସଂରକ୍ଷିତ।'
+            }
+        };
+
+        let currentLanguage = 'en';
+
+        // Initialize when page loads
+        window.addEventListener('DOMContentLoaded', function() {
+            initGame();
+            switchLanguage('en');
+            setupEventListeners();
+        });
+
+        // Initialize Game
+        function initGame() {
+            gameState = {
+                score: 0,
+                level: 1,
+                correctSteps: 0,
+                timeLeft: config.timePerLevel,
+                currentStoneIndex: 0,
+                isActive: false,
+                timer: null,
+                stones: [],
+                totalStones: config.levelConfig[1].stones,
+                skippedStones: []
+            };
+            
+            updateUI();
+            generateStones();
+        }
+
+        // Generate Stones
+        function generateStones() {
+            const container = document.getElementById('trailDisplay');
+            // Remove existing stones
+            const existingStones = container.querySelectorAll('.stone');
+            existingStones.forEach(stone => stone.remove());
+            
+            gameState.stones = [];
+            gameState.skippedStones = [];
+            
+            const levelConfig = config.levelConfig[gameState.level];
+            gameState.totalStones = levelConfig.stones;
+            
+            const containerWidth = container.offsetWidth;
+            const stoneSpacing = (containerWidth - 100) / (gameState.totalStones - 1);
+            
+            for (let i = 0; i < gameState.totalStones; i++) {
+                const isNatural = Math.random() < levelConfig.naturalRatio;
+                let number;
+                
+                if (isNatural) {
+                    number = Math.floor(Math.random() * levelConfig.maxNumber) + 1;
+                } else {
+                    if (Math.random() < 0.5) {
+                        number = 0;
+                    } else {
+                        number = -Math.floor(Math.random() * levelConfig.maxNumber) - 1;
+                    }
+                }
+                
+                const x = 50 + (i * stoneSpacing);
+                const y = 100 + (Math.random() * 60 - 30);
+                
+                const stone = document.createElement('div');
+                stone.className = `stone ${isNatural ? 'natural' : 'non-natural'} unavailable`;
+                stone.style.left = `${x}px`;
+                stone.style.bottom = `${y}px`;
+                stone.dataset.index = i;
+                stone.dataset.number = number;
+                stone.dataset.natural = isNatural;
+                
+                const numberSpan = document.createElement('div');
+                numberSpan.className = 'stone-number';
+                numberSpan.textContent = number;
+                
+                stone.appendChild(numberSpan);
+                container.appendChild(stone);
+                
+                gameState.stones.push({
+                    element: stone,
+                    number: number,
+                    isNatural: isNatural,
+                    index: i,
+                    x: x,
+                    y: y,
+                    isSelected: false
+                });
+                
+                // Add click event
+                stone.addEventListener('click', function() {
+                    handleStoneClick(i);
+                });
+            }
+            
+            updateStoneAvailability();
+        }
+
+        // Handle Stone Click
+        function handleStoneClick(index) {
+            if (!gameState.isActive) {
+                showFeedback(currentLanguage === 'or' ? 'ପ୍ରଥମେ ଖେଳ ଆରମ୍ଭ କରନ୍ତୁ!' : 'Please start the game first!', 'error');
+                return;
+            }
+            
+            // Check if stone is already skipped
+            if (gameState.skippedStones.includes(index)) {
+                showFeedback(currentLanguage === 'or' ? 'ଏହି ପଥର ଛାଡିଦିଆଯାଇଛି!' : 'This stone was skipped!', 'error');
+                return;
+            }
+            
+            // Check if this is the next available stone
+            if (index !== gameState.currentStoneIndex) {
+                const message = currentLanguage === 'or' 
+                    ? `ପ୍ରଥମେ ପଥର ${gameState.currentStoneIndex + 1} ଉପରେ ପଦକ୍ଷେପ କରନ୍ତୁ!` 
+                    : `Step on stone ${gameState.currentStoneIndex + 1} first!`;
+                showFeedback(message, 'error');
+                return;
+            }
+            
+            const stone = gameState.stones[index];
+            
+            if (stone.isNatural) {
+                // CORRECT: Natural number stone (green)
+                handleCorrectStep(stone);
+            } else {
+                // WRONG: Non-natural stone (red - zero or negative)
+                handleWrongStep(stone);
+            }
+        }
+
+        // Handle correct step (natural number)
+        function handleCorrectStep(stone) {
+            gameState.correctSteps++;
+            gameState.score += config.scorePerStep;
+            
+            // Move character to stone
+            const character = document.getElementById('character');
+            character.style.left = `${stone.x - 10}px`;
+            
+            // Visual feedback for stone
+            stone.element.classList.add('selected');
+            stone.isSelected = true;
+            
+            // Success feedback
+            const message = currentLanguage === 'or' 
+                ? `ବହୁତ ଭଲ! ${stone.number} ହେଉଛି ଏକ ପ୍ରାକୃତିକ ସଂଖ୍ୟା` 
+                : `Correct! ${stone.number} is a natural number`;
+            showFeedback(message, 'success');
+            
+            // Move to next stone
+            gameState.currentStoneIndex++;
+            
+            // Skip any already skipped stones
+            while (gameState.currentStoneIndex < gameState.totalStones && 
+                   gameState.skippedStones.includes(gameState.currentStoneIndex)) {
+                gameState.currentStoneIndex++;
+            }
+            
+            updateStoneAvailability();
+            updateProgress();
+            updateUI();
+            
+            // Check if level completed
+            if (gameState.currentStoneIndex >= gameState.totalStones) {
+                completeLevel();
+            }
+        }
+
+        // Handle wrong step (non-natural number: 0 or negative)
+        function handleWrongStep(stone) {
+            // Move character to stone
+            const character = document.getElementById('character');
+            character.style.left = `${stone.x - 10}px`;
+            
+            // Visual feedback for stone
+            stone.element.classList.add('selected');
+            
+            // Create splash effect
+            const splash = document.createElement('div');
+            splash.className = 'splash';
+            splash.style.left = `${stone.x + 20}px`;
+            splash.style.bottom = `${stone.y + 10}px`;
+            document.getElementById('trailDisplay').appendChild(splash);
+            setTimeout(() => splash.remove(), 500);
+            
+            // Make character fall
+            character.classList.add('falling');
+            
+            const message = currentLanguage === 'or' 
+                ? `ଓହୋ! ${stone.number} ଏକ ପ୍ରାକୃତିକ ସଂଖ୍ୟା ନୁହେଁ!` 
+                : `Oops! ${stone.number} is not a natural number!`;
+            showFeedback(message, 'error');
+            
+            // End game
+            setTimeout(() => endGame(), 1000);
+        }
+
+        // Skip current stone
+        function skipCurrentStone() {
+            if (!gameState.isActive || gameState.currentStoneIndex >= gameState.totalStones) {
+                return;
+            }
+            
+            const stone = gameState.stones[gameState.currentStoneIndex];
+            
+            // Mark stone as skipped
+            gameState.skippedStones.push(gameState.currentStoneIndex);
+            
+            // Apply penalty for skipping
+            gameState.score = Math.max(0, gameState.score - config.skipPenalty);
+            
+            // Visual feedback for skipped stone
+            stone.element.style.opacity = '0.5';
+            stone.element.style.border = '2px dashed #a0aec0';
+            
+            const message = currentLanguage === 'or' 
+                ? `ପଥର ${stone.number} ଛାଡିଦେଲେ! -${config.skipPenalty} ପଏଣ୍ଟ୍` 
+                : `Skipped stone ${stone.number}! -${config.skipPenalty} points`;
+            showFeedback(message, 'error');
+            
+            // Move to next stone
+            gameState.currentStoneIndex++;
+            
+            // Skip any already skipped stones
+            while (gameState.currentStoneIndex < gameState.totalStones && 
+                   gameState.skippedStones.includes(gameState.currentStoneIndex)) {
+                gameState.currentStoneIndex++;
+            }
+            
+            updateStoneAvailability();
+            updateProgress();
+            updateUI();
+            
+            // Check if level completed
+            if (gameState.currentStoneIndex >= gameState.totalStones) {
+                completeLevel();
+            }
+        }
+
+        // Update Stone Availability
+        function updateStoneAvailability() {
+            gameState.stones.forEach((stone, index) => {
+                if (index === gameState.currentStoneIndex && gameState.isActive && 
+                    !gameState.skippedStones.includes(index)) {
+                    stone.element.classList.remove('unavailable');
+                    stone.element.classList.add('available');
+                } else {
+                    stone.element.classList.remove('available');
+                    stone.element.classList.add('unavailable');
+                }
+            });
+            
+            // Update skip button state
+            const skipBtn = document.getElementById('skipBtn');
+            skipBtn.disabled = !gameState.isActive || gameState.currentStoneIndex >= gameState.totalStones;
+        }
+
+        // Update Progress
+        function updateProgress() {
+            const totalProcessed = gameState.currentStoneIndex + gameState.skippedStones.length;
+            const progress = (totalProcessed / gameState.totalStones) * 100;
+            document.getElementById('trailProgress').style.width = `${progress}%`;
+            document.getElementById('progressValue').textContent = `${Math.round(progress)}%`;
+        }
+
+        // Start Game
+        function startGame() {
+            if (gameState.isActive) return;
+            
+            gameState.isActive = true;
+            gameState.currentStoneIndex = 0;
+            gameState.correctSteps = 0;
+            gameState.timeLeft = config.timePerLevel;
+            gameState.skippedStones = [];
+            
+            // Reset character
+            const character = document.getElementById('character');
+            character.classList.remove('falling');
+            character.style.left = '50px';
+            
+            // Reset stones
+            gameState.stones.forEach(stone => {
+                stone.element.classList.remove('selected');
+                stone.element.style.opacity = '';
+                stone.element.style.border = '';
+                stone.isSelected = false;
+            });
+            
+            // Clear feedback
+            document.getElementById('feedbackMessage').className = 'feedback-message';
+            
+            // Start timer
+            clearInterval(gameState.timer);
+            gameState.timer = setInterval(updateTimer, 1000);
+            
+            updateUI();
+            updateStoneAvailability();
+            updateProgress();
+        }
+
+        // Reset Game
+        function resetGame() {
+            clearInterval(gameState.timer);
+            gameState.isActive = false;
+            gameState.currentStoneIndex = 0;
+            gameState.correctSteps = 0;
+            gameState.timeLeft = config.timePerLevel;
+            gameState.skippedStones = [];
+            
+            // Reset character
+            const character = document.getElementById('character');
+            character.classList.remove('falling');
+            character.style.left = '50px';
+            
+            // Reset stones
+            gameState.stones.forEach(stone => {
+                stone.element.classList.remove('selected', 'available');
+                stone.element.classList.add('unavailable');
+                stone.element.style.opacity = '';
+                stone.element.style.border = '';
+                stone.isSelected = false;
+            });
+            
+            // Clear feedback
+            document.getElementById('feedbackMessage').className = 'feedback-message';
+            
+            updateUI();
+            updateProgress();
+        }
+
+        // Next Level
+        function nextLevel() {
+            if (gameState.level < config.maxLevel) {
+                gameState.level++;
+                gameState.currentStoneIndex = 0;
+                gameState.correctSteps = 0;
+                gameState.timeLeft = config.timePerLevel;
+                gameState.isActive = false;
+                gameState.skippedStones = [];
+                
+                clearInterval(gameState.timer);
+                
+                document.getElementById('feedbackMessage').className = 'feedback-message';
+                
+                updateUI();
+                generateStones();
+                updateProgress();
+                
+                // Reset character position
+                document.getElementById('character').style.left = '50px';
+                
+                const message = currentLanguage === 'or' 
+                    ? `ସ୍ତର ${gameState.level}! ଚାଲ ଆରମ୍ଭ କରିବା!` 
+                    : `Level ${gameState.level}! Let's go!`;
+                showFeedback(message, 'success');
+            } else {
+                const message = currentLanguage === 'or' 
+                    ? 'ଆପଣ ସମସ୍ତ ସ୍ତର ଶେଷ କରିଛନ୍ତି! ଆପଣ ପ୍ରାକୃତିକ ସଂଖ୍ୟାର ମାଷ୍ଟର ହୋଇଛନ୍ତି!' 
+                    : 'You completed all levels! You are a master of natural numbers!';
+                showFeedback(message, 'success');
+            }
+        }
+
+        // Complete Level
+        function completeLevel() {
+            clearInterval(gameState.timer);
+            gameState.isActive = false;
+            
+            // Add level completion bonus
+            let bonus = config.scorePerLevel;
+            if (gameState.timeLeft > 30) {
+                bonus += config.timeBonus;
+            }
+            
+            gameState.score += bonus;
+            
+            const message = currentLanguage === 'or' 
+                ? `ସ୍ତର ସମାପ୍ତ! +${bonus} ପଏଣ୍ଟ୍!` 
+                : `Level Complete! +${bonus} points!`;
+            showFeedback(message, 'success');
+            
+            updateUI();
+            
+            // Enable next level button
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        // End Game
+        function endGame() {
+            clearInterval(gameState.timer);
+            gameState.isActive = false;
+            updateUI();
+            updateStoneAvailability();
+        }
+
+        // Update Timer
+        function updateTimer() {
+            if (gameState.timeLeft > 0) {
+                gameState.timeLeft--;
+                updateUI();
+                
+                // Update timer display color
+                const timerDisplay = document.getElementById('timerDisplay');
+                if (gameState.timeLeft <= 10) {
+                    timerDisplay.style.color = '#e53e3e';
+                } else if (gameState.timeLeft <= 30) {
+                    timerDisplay.style.color = '#d69e2e';
+                } else {
+                    timerDisplay.style.color = '#3182ce';
+                }
+            } else {
+                clearInterval(gameState.timer);
+                const message = currentLanguage === 'or' 
+                    ? 'ସମୟ ଶେଷ! ପୁନର୍ବାର ଚେଷ୍ଟା କରନ୍ତୁ!' 
+                    : 'Time\'s up! Try again!';
+                showFeedback(message, 'error');
+                endGame();
+            }
+        }
+
+        // Show Feedback
+        function showFeedback(message, type) {
+            const feedback = document.getElementById('feedbackMessage');
+            feedback.textContent = message;
+            feedback.className = `feedback-message feedback-${type}`;
+            
+            // Auto-hide after 3 seconds
+            setTimeout(() => {
+                if (feedback.className.includes('feedback-')) {
+                    feedback.className = 'feedback-message';
+                }
+            }, 3000);
+        }
+
+        // Update UI
+        function updateUI() {
+            document.getElementById('scoreValue').textContent = gameState.score;
+            document.getElementById('levelValue').textContent = gameState.level;
+            document.getElementById('correctValue').textContent = gameState.correctSteps;
+            document.getElementById('timeValue').textContent = gameState.timeLeft;
+            document.getElementById('timerDisplay').textContent = gameState.timeLeft;
+            document.getElementById('currentLevel').textContent = gameState.level;
+            document.getElementById('currentScore').textContent = gameState.score;
+            
+            // Update button states
+            document.getElementById('startBtn').disabled = gameState.isActive;
+            document.getElementById('resetBtn').disabled = !gameState.isActive && gameState.currentStoneIndex === 0;
+            document.getElementById('nextBtn').disabled = gameState.level >= config.maxLevel || 
+                gameState.isActive || gameState.currentStoneIndex < gameState.totalStones;
+        }
+
+        // Switch Language
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            const map = translations[lang] || translations.en;
+            
+            // Update all text content
+            Object.keys(map).forEach(key => {
+                const elements = document.querySelectorAll(`[data-translate="${key}"]`);
+                elements.forEach(element => {
+                    element.textContent = map[key];
+                });
+            });
+            
+            // Add Odia font class for Odia text
+            if (lang === 'or') {
+                document.body.classList.add('odia-text');
+            } else {
+                document.body.classList.remove('odia-text');
+            }
+        }
+
+        // Setup Event Listeners
+        function setupEventListeners() {
+            // Game buttons
+            document.getElementById('startBtn').addEventListener('click', startGame);
+            document.getElementById('resetBtn').addEventListener('click', resetGame);
+            document.getElementById('skipBtn').addEventListener('click', skipCurrentStone);
+            document.getElementById('nextBtn').addEventListener('click', nextLevel);
+            
+            // Language toggle
+            document.getElementById('languageToggle').addEventListener('click', function() {
+                document.getElementById('languageOptions').classList.toggle('show');
+            });
+            
+            // Language selection
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    switchLanguage(lang);
+                    document.getElementById('languageOptions').classList.remove('show');
+                });
+            });
+            
+            // Profile toggle
+            document.getElementById('profileToggle').addEventListener('click', function() {
+                document.getElementById('profileDropdown').classList.toggle('show');
+            });
+            
+            // Navigation
+            document.getElementById('dropdownLogout').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Logged out successfully!');
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#languageToggle') && !e.target.closest('#languageOptions')) {
+                    document.getElementById('languageOptions').classList.remove('show');
+                }
+               
+                if (!e.target.closest('#profileToggle') && !e.target.closest('#profileDropdown')) {
+                    document.getElementById('profileDropdown').classList.remove('show');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

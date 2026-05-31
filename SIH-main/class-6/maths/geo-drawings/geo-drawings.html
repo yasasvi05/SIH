@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometric Drawing - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles with Profile Controls */
+        header {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #2a69ac;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text h1 span {
+            color: #38b2ac;
+            font-weight: 800;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-pic {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 180px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f7fa;
+        }
+
+        .dropdown-item i {
+            color: #3182ce;
+            width: 20px;
+        }
+
+        /* Language Options */
+        .language-options {
+            position: absolute;
+            top: 60px;
+            right: 120px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 120px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .language-options.show {
+            display: block;
+        }
+
+        .language-option {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .language-option:last-child {
+            border-bottom: none;
+        }
+
+        .language-option:hover {
+            background: #f5f7fa;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(14, 42, 71, 0.85), rgba(26, 54, 93, 0.9)), url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .breadcrumb-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .breadcrumb a {
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #3182ce;
+        }
+
+        .breadcrumb span {
+            color: #64748b;
+        }
+
+        /* Interactive Content */
+        .interactive-content {
+            padding: 50px 0;
+        }
+
+        .learning-path {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .learning-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .path-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .path-card {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .path-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-color: #3182ce;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .card-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+            flex-grow: 1;
+        }
+
+        /* Popup Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-section {
+            margin-bottom: 30px;
+        }
+
+        .modal-section h3 {
+            color: #1a365d;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .modal-section p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .modal-section ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .modal-section li {
+            margin-bottom: 8px;
+        }
+
+        /* Progress Tracking */
+        .progress-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .progress-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .progress-bars {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .progress-item {
+            margin-bottom: 15px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        .progress-bar-container {
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #3182ce;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        /* Games Section */
+        .games-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .game-level {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .game-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .game-desc {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .game-body {
+            padding: 20px;
+        }
+
+        .game-features {
+            margin-bottom: 20px;
+        }
+
+        .game-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .game-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .game-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Resources Section */
+        .resources-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .resource-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .resource-icon {
+            font-size: 2.5rem;
+            color: #3182ce;
+            margin-bottom: 15px;
+        }
+
+        .resource-title {
+            font-size: 1.1rem;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+
+        .resource-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .download-btn:hover {
+            background: #2c9a94;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about {
+            padding-right: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.8rem;
+            background: #38b2ac;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 20px;
+            color: #38b2ac;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2d3748;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .social-links a:hover {
+            background: #38b2ac;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .games-grid, .resources-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .path-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+           
+            nav ul {
+                gap: 15px;
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* Odia font support */
+        .odia-text {
+            font-family: 'Kalinga', 'Nirmala UI', 'Segoe UI', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-atom"></i>
+            </div>
+            <div class="logo-text">
+                <h1>STEM Learn Odisha</h1>
+                <p>Gamified Learning Platform</p>
+            </div>
+        </div>
+       
+        <nav>
+            <ul>
+                <li><a href="student-dashboard.html" id="navDashboard">Dashboard</a></li>
+                <li><a href="mathematics.html" id="navMathematics">Mathematics</a></li>
+                <li><a href="scienceidx.html" id="navCurriculum">Curriculum</a></li>
+                <li><a href="geometric-drawing.html" class="active" id="navGeometry">Geometric Drawing</a></li>
+            </ul>
+        </nav>
+       
+        <div class="header-controls">
+            <button class="control-btn" id="languageToggle">
+                <i class="fas fa-globe"></i>
+            </button>
+           
+            <div class="profile-container">
+                <button class="profile-btn" id="profileToggle">
+                    <img src="" alt="Profile" class="profile-pic" id="headerProfilePic">
+                    <span id="headerUserName">Student</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+               
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" class="dropdown-item" id="dropdownProfile">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownSettings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="dropdownLogout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Language Options -->
+    <div class="language-options" id="languageOptions">
+        <div class="language-option" data-lang="en">English</div>
+        <div class="language-option" data-lang="or">ଓଡ଼ିଆ</div>
+    </div>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 data-translate="geometry-title">Geometric Drawing: Tools and Construction</h1>
+            <p data-translate="geometry-desc">Learn to use geometric tools and construct accurate shapes through interactive activities</p>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <a href="student-dashboard.html" data-translate="breadcrumb-home">Home</a>
+                <span>/</span>
+                <a href="mathematics.html" data-translate="breadcrumb-math">Mathematics</a>
+                <span>/</span>
+                <span data-translate="breadcrumb-topic">Geometric Drawing</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Content -->
+    <section class="interactive-content">
+        <div class="container">
+            <!-- Learning Path -->
+            <div class="learning-path">
+                <h2 class="learning-title">
+                    <i class="fas fa-road"></i>
+                    <span data-translate="learning-path-title">Your Learning Path</span>
+                </h2>
+                <div class="path-cards">
+                    <div class="path-card" data-card="tools">
+                        <div class="card-icon">
+                            <i class="fas fa-ruler-combined"></i>
+                        </div>
+                        <div class="card-title" data-translate="card1-title">Using Geometric Tools</div>
+                        <div class="card-desc" data-translate="card1-desc">Learn to use ruler, compass, protractor, and other geometric tools</div>
+                    </div>
+                    <div class="path-card" data-card="construction">
+                        <div class="card-icon">
+                            <i class="fas fa-shapes"></i>
+                        </div>
+                        <div class="card-title" data-translate="card2-title">Construction of Shapes</div>
+                        <div class="card-desc" data-translate="card2-desc">Construct basic geometric shapes like triangles, circles, and quadrilaterals</div>
+                    </div>
+                    <div class="path-card" data-card="accuracy">
+                        <div class="card-icon">
+                            <i class="fas fa-drafting-compass"></i>
+                        </div>
+                        <div class="card-title" data-translate="card3-title">Accurate Drawings</div>
+                        <div class="card-desc" data-translate="card3-desc">Master techniques for creating precise geometric drawings</div>
+                    </div>
+                    <div class="path-card" data-card="review">
+                        <div class="card-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="card-title" data-translate="card4-title">Review and Practice</div>
+                        <div class="card-desc" data-translate="card4-desc">Test your skills with construction challenges and accuracy tests</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Games Section -->
+            <div class="games-section">
+                <h2 class="section-title">
+                    <i class="fas fa-gamepad"></i>
+                    <span data-translate="games-title">Interactive Learning Game</span>
+                </h2>
+
+                <div class="games-grid">
+                    <div class="game-card">
+                        <div class="game-header">
+                            <div class="game-level" data-translate="level-interactive">Interactive</div>
+                            <h3 class="game-title" data-translate="game1-title">Geometry Constructor</h3>
+                            <p class="game-desc" data-translate="game1-desc">Construct geometric shapes using virtual tools</p>
+                        </div>
+                        <div class="game-body">
+                            <div class="game-features">
+                                <div class="game-feature">
+                                    <i class="fas fa-star"></i>
+                                    <span data-translate="game1-feature1">Virtual ruler, compass, and protractor</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-clock"></i>
+                                    <span data-translate="game1-feature2">20-25 minutes gameplay</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-trophy"></i>
+                                    <span data-translate="game1-feature3">Earn up to 150 points</span>
+                                </div>
+                                <div class="game-feature">
+                                    <i class="fas fa-layer-group"></i>
+                                    <span data-translate="game1-feature4">Step-by-step construction guides</span>
+                                </div>
+                            </div>
+                            <a href="game13.html" class="game-btn" data-translate="play-game">Play Game</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Section -->
+            <div class="resources-section">
+                <h2 class="section-title">
+                    <i class="fas fa-download"></i>
+                    <span data-translate="resources-title">Learning Resources</span>
+                </h2>
+
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <h3 class="resource-title" data-translate="resource1-title">Geometric Tools Guide</h3>
+                        <p class="resource-desc" data-translate="resource1-desc">Complete guide to using geometric instruments</p>
+                        <a href="#" class="download-btn">
+                            <i class="fas fa-download"></i>
+                            <span data-translate="download-english">Download (English)</span>
+                        </a>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3 class="resource-title" data-translate="resource2-title">ଜ୍ୟାମିତି ସାଧନ ଗାଇଡ୍</h3>
+                        <p class="resource-desc" data-translate="resource2-desc">ଜ୍ୟାମିତିୟ ଉପକରଣ ବ୍ୟବହାର ପାଇଁ ସମ୍ପୂର୍ଣ୍ଣ ଗାଇଡ୍</p>
+                        <a href="#" class="download-btn">
+                            <i class="fas fa-download"></i>
+                            <span data-translate="download-odia">Download (ଓଡ଼ିଆ)</span>
+                        </a>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <h3 class="resource-title" data-translate="resource3-title">Construction Worksheets</h3>
+                        <p class="resource-desc" data-translate="resource3-desc">Practice worksheets for geometric constructions</p>
+                        <a href="#" class="download-btn">
+                            <i class="fas fa-download"></i>
+                            <span data-translate="download-worksheets">Download Worksheets</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <div class="footer-logo-text">STEM Learn Odisha</div>
+                    </div>
+                    <p data-translate="footer-desc">Making Science and Mathematics education engaging and relevant for Class 6 students in Odisha through localized content and interactive learning.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h3 data-translate="quick-links">Quick Links</h3>
+                    <ul>
+                        <li><a href="student-dashboard.html"><i class="fas fa-tachometer-alt"></i> <span data-translate="nav-dashboard">Dashboard</span></a></li>
+                        <li><a href="mathematics.html"><i class="fas fa-calculator"></i> <span data-translate="nav-mathematics">Mathematics</span></a></li>
+                        <li><a href="geometric-drawing.html"><i class="fas fa-ruler-combined"></i> <span data-translate="nav-geometry">Geometric Drawing</span></a></li>
+                        <li><a href="scienceidx.html"><i class="fas fa-book"></i> <span data-translate="nav-curriculum">Curriculum</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h3 data-translate="contact-us">Contact Us</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> <span data-translate="footer-address">Department of Education, Bhubaneswar</span></a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +91 674 123 4567</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@stemlearnodisha.com</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p data-translate="copyright">© 2023 STEM Learn Odisha. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Popup -->
+    <div class="modal" id="content-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">Using Geometric Tools</h2>
+                <button class="close-modal" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+           
+            if (!user) {
+                // Redirect to login if not authenticated
+                window.location.href = 'student-login.html';
+                return;
+            }
+           
+            // Load user data
+            loadUserData(user);
+            
+            // Initialize the page
+            init();
+        });
+
+        // Load user data into the page
+        function loadUserData(user) {
+            document.getElementById('headerUserName').textContent = user.fullName;
+            document.getElementById('headerProfilePic').src = user.profilePicture ? `uploads/${user.profilePicture}` : 'default-profile.png';
+        }
+
+        // Content for modal popups
+        const contentData = {
+            'tools': {
+                'title': 'Using Geometric Tools',
+                'content': `
+                    <div class="modal-section">
+                        <h3>Essential Geometric Tools</h3>
+                        <p>Geometric drawing requires specific tools to create accurate shapes and measurements:</p>
+                        <ul>
+                            <li><strong>Ruler:</strong> For drawing straight lines and measuring lengths</li>
+                            <li><strong>Compass:</strong> For drawing circles and arcs</li>
+                            <li><strong>Protractor:</strong> For measuring and constructing angles</li>
+                            <li><strong>Set squares:</strong> For drawing perpendicular and parallel lines</li>
+                            <li><strong>Divider:</strong> For transferring measurements</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Using a Compass Correctly</h3>
+                        <p>Steps to use a compass properly:</p>
+                        <ol>
+                            <li>Hold the compass by the top knob between your thumb and forefinger</li>
+                            <li>Adjust the radius by loosening the hinge screw</li>
+                            <li>Place the pointed leg firmly on the paper as the center</li>
+                            <li>Rotate the compass smoothly, keeping the pencil leg at the same angle</li>
+                            <li>Draw complete circles without lifting the compass</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Measuring with Protractor</h3>
+                        <p>How to measure and construct angles:</p>
+                        <ul>
+                            <li>Place the protractor's center point on the vertex of the angle</li>
+                            <li>Align the baseline with one arm of the angle</li>
+                            <li>Read the measurement where the other arm crosses the scale</li>
+                            <li>For construction, mark the required angle and draw the second arm</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Safety and Maintenance</h3>
+                        <p>Important tips for using geometric tools:</p>
+                        <ul>
+                            <li>Keep compass points sharp for accurate circles</li>
+                            <li>Clean tools after use to prevent rust</li>
+                            <li>Store tools in a proper box to prevent damage</li>
+                            <li>Handle compass points carefully to avoid injuries</li>
+                            <li>Use a soft pencil (HB or 2B) for clear, erasable lines</li>
+                        </ul>
+                    </div>
+                `
+            },
+            'construction': {
+                'title': 'Construction of Shapes',
+                'content': `
+                    <div class="modal-section">
+                        <h3>Constructing Triangles</h3>
+                        <p>Different methods to construct triangles:</p>
+                        <ul>
+                            <li><strong>SSS:</strong> When three sides are given</li>
+                            <li><strong>SAS:</strong> When two sides and the included angle are given</li>
+                            <li><strong>ASA:</strong> When two angles and the included side are given</li>
+                            <li><strong>RHS:</strong> For right-angled triangles</li>
+                        </ul>
+                        <p>Example: To construct a triangle with sides 5cm, 6cm, and 7cm:
+                        <ol>
+                            <li>Draw base line 7cm</li>
+                            <li>Draw arc of radius 5cm from one end</li>
+                            <li>Draw arc of radius 6cm from other end</li>
+                            <li>Join intersection to both ends</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Constructing Circles</h3>
+                        <p>Circles can be constructed when:</p>
+                        <ul>
+                            <li>Center and radius are given</li>
+                            <li>Three points on the circle are given</li>
+                            <li>Diameter is given</li>
+                        </ul>
+                        <p>Steps to construct a circle with given center O and radius 4cm:</p>
+                        <ol>
+                            <li>Mark point O as center</li>
+                            <li>Open compass to 4cm radius</li>
+                            <li>Place compass point on O</li>
+                            <li>Rotate compass 360° smoothly</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Constructing Quadrilaterals</h3>
+                        <p>Common quadrilaterals to construct:</p>
+                        <ul>
+                            <li><strong>Square:</strong> All sides equal, all angles 90°</li>
+                            <li><strong>Rectangle:</strong> Opposite sides equal, all angles 90°</li>
+                            <li><strong>Parallelogram:</strong> Opposite sides parallel and equal</li>
+                            <li><strong>Rhombus:</strong> All sides equal, opposite angles equal</li>
+                        </ul>
+                        <p>To construct a square of side 5cm:
+                        <ol>
+                            <li>Draw base AB = 5cm</li>
+                            <li>Construct 90° at A and B</li>
+                            <li>Mark AD = 5cm and BC = 5cm</li>
+                            <li>Join D and C</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Construction Practice</h3>
+                        <p>Tips for successful constructions:</p>
+                        <ul>
+                            <li>Use sharp pencils for precise lines</li>
+                            <li>Make light construction lines first</li>
+                            <li>Keep compass setting consistent</li>
+                            <li>Check measurements twice</li>
+                            <li>Label all points clearly</li>
+                        </ul>
+                    </div>
+                `
+            },
+            'accuracy': {
+                'title': 'Accurate Drawings',
+                'content': `
+                    <div class="modal-section">
+                        <h3>Importance of Accuracy</h3>
+                        <p>Accurate geometric drawings are essential because:</p>
+                        <ul>
+                            <li>They help in understanding geometric concepts</li>
+                            <li>Accurate measurements lead to correct conclusions</li>
+                            <li>They develop precision and attention to detail</li>
+                            <li>Many real-world applications require precise drawings</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Techniques for Precision</h3>
+                        <p>Methods to improve drawing accuracy:</p>
+                        <ul>
+                            <li><strong>Proper Tool Handling:</strong> Hold tools correctly for better control</li>
+                            <li><strong>Consistent Pressure:</strong> Apply even pressure while drawing</li>
+                            <li><strong>Sharp Pencils:</strong> Use well-sharpened pencils for clean lines</li>
+                            <li><strong>Steady Hands:</strong> Rest your hand on the paper for stability</li>
+                            <li><strong>Checking Measurements:</strong> Verify all measurements before final lines</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Common Errors to Avoid</h3>
+                        <p>Mistakes that affect accuracy:</p>
+                        <ul>
+                            <li>Using blunt or worn-out tools</li>
+                            <li>Not aligning protractor properly</li>
+                            <li>Changing compass radius accidentally</li>
+                            <li>Drawing lines too thick or too light</li>
+                            <li>Rushing through constructions</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Practice Exercises</h3>
+                        <p>Activities to improve accuracy:</p>
+                        <ul>
+                            <li>Draw parallel lines at exact distances</li>
+                            <li>Construct angles within 1° accuracy</li>
+                            <li>Draw circles of specific radii</li>
+                            <li>Bisect lines and angles accurately</li>
+                            <li>Construct polygons with precise measurements</li>
+                        </ul>
+                    </div>
+                `
+            },
+            'review': {
+                'title': 'Review and Practice',
+                'content': `
+                    <div class="modal-section">
+                        <h3>Skills Assessment</h3>
+                        <p>Test your geometric drawing skills with these challenges:</p>
+                        <ul>
+                            <li>Construct a triangle with sides 6cm, 7cm, and 8cm</li>
+                            <li>Draw a circle with radius 4.5cm and mark its diameter</li>
+                            <li>Construct a rectangle with length 8cm and width 5cm</li>
+                            <li>Draw parallel lines 3cm apart</li>
+                            <li>Construct a 60° angle using compass only</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Quick Quiz</h3>
+                        <p><strong>Question 1:</strong> Which tool is used to draw circles?</p>
+                        <ul>
+                            <li>A) Ruler</li>
+                            <li>B) Protractor</li>
+                            <li>C) Compass</li>
+                            <li>D) Divider</li>
+                        </ul>
+                        <p><strong>Answer:</strong> C) Compass</p>
+                        
+                        <p><strong>Question 2:</strong> What does SSS stand for in triangle construction?</p>
+                        <ul>
+                            <li>A) Side-Side-Side</li>
+                            <li>B) Side-Angle-Side</li>
+                            <li>C) Angle-Side-Angle</li>
+                            <li>D) Right-Hypotenuse-Side</li>
+                        </ul>
+                        <p><strong>Answer:</strong> A) Side-Side-Side</p>
+                        
+                        <p><strong>Question 3:</strong> Which angle can be constructed using only a compass and ruler?</p>
+                        <ul>
+                            <li>A) 15°</li>
+                            <li>B) 30°</li>
+                            <li>C) 45°</li>
+                            <li>D) 60°</li>
+                        </ul>
+                        <p><strong>Answer:</strong> D) 60°</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Key Points to Remember</h3>
+                        <ul>
+                            <li>Always use sharp pencils and well-maintained tools</li>
+                            <li>Make light construction lines first, then darken final lines</li>
+                            <li>Check all measurements before drawing final lines</li>
+                            <li>Keep your work area clean and organized</li>
+                            <li>Practice regularly to improve accuracy</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Interactive Activities</h3>
+                        <p>Try these activities to reinforce your learning:</p>
+                        <ul>
+                            <li>Play the Geometry Constructor game</li>
+                            <li>Complete the construction worksheets</li>
+                            <li>Create geometric patterns using basic shapes</li>
+                            <li>Measure objects around you and draw them to scale</li>
+                            <li>Challenge friends to construction accuracy contests</li>
+                        </ul>
+                    </div>
+                `
+            }
+        };
+
+        // Translations
+        const translations = {
+            en: {
+                'nav-dashboard': 'Dashboard',
+                'nav-mathematics': 'Mathematics',
+                'nav-curriculum': 'Curriculum',
+                'nav-geometry': 'Geometric Drawing',
+                'geometry-title': 'Geometric Drawing: Tools and Construction',
+                'geometry-desc': 'Learn to use geometric tools and construct accurate shapes through interactive activities',
+                'breadcrumb-home': 'Home',
+                'breadcrumb-math': 'Mathematics',
+                'breadcrumb-topic': 'Geometric Drawing',
+                'learning-path-title': 'Your Learning Path',
+                'card1-title': 'Using Geometric Tools',
+                'card1-desc': 'Learn to use ruler, compass, protractor, and other geometric tools',
+                'card2-title': 'Construction of Shapes',
+                'card2-desc': 'Construct basic geometric shapes like triangles, circles, and quadrilaterals',
+                'card3-title': 'Accurate Drawings',
+                'card3-desc': 'Master techniques for creating precise geometric drawings',
+                'card4-title': 'Review and Practice',
+                'card4-desc': 'Test your skills with construction challenges and accuracy tests',
+                'progress-title': 'Your Progress',
+                'progress-tools': 'Using Geometric Tools',
+                'progress-construction': 'Construction of Shapes',
+                'progress-accuracy': 'Accurate Drawings',
+                'progress-overall': 'Overall Mastery',
+                'games-title': 'Interactive Learning Game',
+                'level-interactive': 'Interactive',
+                'game1-title': 'Geometry Constructor',
+                'game1-desc': 'Construct geometric shapes using virtual tools',
+                'game1-feature1': 'Virtual ruler, compass, and protractor',
+                'game1-feature2': '20-25 minutes gameplay',
+                'game1-feature3': 'Earn up to 150 points',
+                'game1-feature4': 'Step-by-step construction guides',
+                'play-game': 'Play Game',
+                'resources-title': 'Learning Resources',
+                'resource1-title': 'Geometric Tools Guide',
+                'resource1-desc': 'Complete guide to using geometric instruments',
+                'download-english': 'Download (English)',
+                'resource2-title': 'Geometric Tools Guide',
+                'resource2-desc': 'Complete guide to using geometric instruments',
+                'download-odia': 'Download (Odia)',
+                'resource3-title': 'Construction Worksheets',
+                'resource3-desc': 'Practice worksheets for geometric constructions',
+                'download-worksheets': 'Download Worksheets',
+                'footer-desc': 'Making Science and Mathematics education engaging and relevant for Class 6 students in Odisha through localized content and interactive learning.',
+                'quick-links': 'Quick Links',
+                'contact-us': 'Contact Us',
+                'footer-address': 'Department of Education, Bhubaneswar',
+                'copyright': '© 2023 STEM Learn Odisha. All rights reserved.'
+            },
+            or: {
+                'nav-dashboard': 'ଡ୍ୟାସବୋର୍ଡ',
+                'nav-mathematics': 'ଗଣିତ',
+                'nav-curriculum': 'ପାଠ୍ୟକ୍ରମ',
+                'nav-geometry': 'ଜ୍ୟାମିତି ଚିତ୍ର',
+                'geometry-title': 'ଜ୍ୟାମିତି ଚିତ୍ର: ସାଧନ ଏବଂ ଗଠନ',
+                'geometry-desc': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ କାର୍ଯ୍ୟକଳାପ ମାଧ୍ୟମରେ ଜ୍ୟାମିତିୟ ସାଧନ ବ୍ୟବହାର କରିବା ଏବଂ ସଠିକ୍ ଆକୃତି ଗଠନ କରିବା ଶିଖନ୍ତୁ',
+                'breadcrumb-home': 'ମୁଖ୍ୟ ପୃଷ୍ଠା',
+                'breadcrumb-math': 'ଗଣିତ',
+                'breadcrumb-topic': 'ଜ୍ୟାମିତି ଚିତ୍ର',
+                'learning-path-title': 'ଆପଣଙ୍କର ଶିକ୍ଷଣ ପଥ',
+                'card1-title': 'ଜ୍ୟାମିତିୟ ସାଧନ ବ୍ୟବହାର',
+                'card1-desc': 'ଶାସକ, କମ୍ପାସ, ପ୍ରୋଟ୍ରାକ୍ଟର, ଏବଂ ଅନ୍ୟାନ୍ୟ ଜ୍ୟାମିତିୟ ସାଧନ ବ୍ୟବହାର କରିବା ଶିଖନ୍ତୁ',
+                'card2-title': 'ଆକୃତି ଗଠନ',
+                'card2-desc': 'ତ୍ରିଭୁଜ, ବୃତ୍ତ, ଏବଂ ଚତୁର୍ଭୁଜ ପରି ମୌଳିକ ଜ୍ୟାମିତିୟ ଆକୃତି ଗଠନ କରନ୍ତୁ',
+                'card3-title': 'ସଠିକ୍ ଚିତ୍ର',
+                'card3-desc': 'ପରିଶୁଦ୍ଧ ଜ୍ୟାମିତିୟ ଚିତ୍ର ସୃଷ୍ଟି ପାଇଁ କୌଶଳ ଆୟତ୍ତ କରନ୍ତୁ',
+                'card4-title': 'ସମୀକ୍ଷା ଏବଂ ଅଭ୍ୟାସ',
+                'card4-desc': 'ଗଠନ ଚ୍ୟାଲେଞ୍ଜ୍ ଏବଂ ସଠିକତା ପରୀକ୍ଷା ସହିତ ଆପଣଙ୍କର ଦକ୍ଷତା ପରୀକ୍ଷା କରନ୍ତୁ',
+                'progress-title': 'ଆପଣଙ୍କର ପ୍ରଗତି',
+                'progress-tools': 'ଜ୍ୟାମିତିୟ ସାଧନ ବ୍ୟବହାର',
+                'progress-construction': 'ଆକୃତି ଗଠନ',
+                'progress-accuracy': 'ସଠିକ୍ ଚିତ୍ର',
+                'progress-overall': 'ସର୍ବମୋଟ ଦକ୍ଷତା',
+                'games-title': 'ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ଖେଳ',
+                'level-interactive': 'ଇଣ୍ଟରାକ୍ଟିଭ୍',
+                'game1-title': 'ଜ୍ୟାମିତି ଗଠନକାରୀ',
+                'game1-desc': 'ଭର୍ଚୁଆଲ୍ ସାଧନ ବ୍ୟବହାର କରି ଜ୍ୟାମିତିୟ ଆକୃତି ଗଠନ କରନ୍ତୁ',
+                'game1-feature1': 'ଭର୍ଚୁଆଲ୍ ଶାସକ, କମ୍ପାସ, ଏବଂ ପ୍ରୋଟ୍ରାକ୍ଟର',
+                'game1-feature2': '20-25 ମିନିଟ୍ ଖେଳପଣ',
+                'game1-feature3': '150 ପଏଣ୍ଟ୍ ପର୍ଯ୍ୟନ୍ତ ଅର୍ଜନ କରନ୍ତୁ',
+                'game1-feature4': 'ପଦକ୍ଷେପ ଅନୁସାରେ ଗଠନ ଗାଇଡ୍',
+                'play-game': 'ଖେଳନ୍ତୁ',
+                'resources-title': 'ଶିକ୍ଷଣ ସମ୍ବଳ',
+                'resource1-title': 'ଜ୍ୟାମିତିୟ ସାଧନ ଗାଇଡ୍',
+                'resource1-desc': 'ଜ୍ୟାମିତିୟ ଉପକରଣ ବ୍ୟବହାର ପାଇଁ ସମ୍ପୂର୍ଣ୍ଣ ଗାଇଡ୍',
+                'download-english': 'ଡାଉନଲୋଡ୍ (ଇଂରାଜୀ)',
+                'resource2-title': 'ଜ୍ୟାମିତିୟ ସାଧନ ଗାଇଡ୍',
+                'resource2-desc': 'ଜ୍ୟାମିତିୟ ଉପକରଣ ବ୍ୟବହାର ପାଇଁ ସମ୍ପୂର୍ଣ୍ଣ ଗାଇଡ୍',
+                'download-odia': 'ଡାଉନଲୋଡ୍ (ଓଡ଼ିଆ)',
+                'resource3-title': 'ଗଠନ କାର୍ଯ୍ୟପତ୍ର',
+                'resource3-desc': 'ଜ୍ୟାମିତିୟ ଗଠନ ପାଇଁ ଅଭ୍ୟାସ କାର୍ଯ୍ୟପତ୍ର',
+                'download-worksheets': 'କାର୍ଯ୍ୟପତ୍ର ଡାଉନଲୋଡ୍ କରନ୍ତୁ',
+                'footer-desc': 'ଓଡ଼ିଶାର ଷଷ୍ଠ ଶ୍ରେଣୀର ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କ ପାଇଁ ସ୍ଥାନୀୟ ବିଷୟବସ୍ତୁ ଏବଂ ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶିକ୍ଷଣ ମାଧ୍ୟମରେ ବିଜ୍ଞାନ ଏବଂ ଗଣିତ ଶିକ୍ଷାକୁ ଆକର୍ଷଣୀୟ ଏବଂ ପ୍ରାସଙ୍ଗିକ କରିବା',
+                'quick-links': 'ଶୀଘ୍ର ଲିଙ୍କ୍',
+                'contact-us': 'ଆମ ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ',
+                'footer-address': 'ଶିକ୍ଷା ବିଭାଗ, ଭୁବନେଶ୍ୱର',
+                'copyright': '© 2023 STEM ଲର୍ନ ଓଡ଼ିଶା। ସମସ୍ତ ଅଧିକାର ସଂରକ୍ଷିତ।'
+            }
+        };
+
+        let currentLanguage = 'en';
+
+        // Initialize the page
+        function init() {
+            // Set up language options
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    switchLanguage(lang);
+                    document.getElementById('languageOptions').classList.remove('show');
+                });
+            });
+
+            // Set up path cards
+            const pathCards = document.querySelectorAll('.path-card');
+            pathCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const cardType = this.getAttribute('data-card');
+                    openModal(cardType);
+                });
+            });
+
+            // Set up modal close button
+            document.getElementById('close-modal').addEventListener('click', closeModalFunc);
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === document.getElementById('content-modal')) {
+                    closeModalFunc();
+                }
+            });
+
+            // Dashboard integration event listeners
+            const profileToggle = document.getElementById('profileToggle');
+            const profileDropdown = document.getElementById('profileDropdown');
+            const languageToggle = document.getElementById('languageToggle');
+            const languageOptions = document.getElementById('languageOptions');
+            const dropdownProfile = document.getElementById('dropdownProfile');
+            const dropdownSettings = document.getElementById('dropdownSettings');
+            const dropdownLogout = document.getElementById('dropdownLogout');
+            const navDashboard = document.getElementById('navDashboard');
+            const navMathematics = document.getElementById('navMathematics');
+            const navCurriculum = document.getElementById('navCurriculum');
+            const navGeometry = document.getElementById('navGeometry');
+
+            // Profile dropdown toggle
+            profileToggle.addEventListener('click', function() {
+                profileDropdown.classList.toggle('show');
+            });
+
+            // Language toggle
+            languageToggle.addEventListener('click', function() {
+                languageOptions.classList.toggle('show');
+            });
+
+            // Navigation between pages
+            dropdownProfile.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#profile';
+            });
+
+            dropdownSettings.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html#settings';
+            });
+
+            dropdownLogout.addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('user');
+                window.location.href = 'student-login.html';
+            });
+
+            // Navigation menu items
+            navDashboard.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'student-dashboard.html';
+            });
+
+            navMathematics.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'mathematics.html';
+            });
+
+            navCurriculum.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'scienceidx.html';
+            });
+
+            navGeometry.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'geometric-drawing.html';
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#languageToggle') && !e.target.closest('#languageOptions')) {
+                    languageOptions.classList.remove('show');
+                }
+               
+                if (!e.target.closest('#profileToggle') && !e.target.closest('#profileDropdown')) {
+                    profileDropdown.classList.remove('show');
+                }
+            });
+
+            // Initialize with default language
+            switchLanguage('en');
+        }
+
+        // Switch language function
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            const map = translations[lang] || translations.en;
+            
+            // Update all text content
+            Object.keys(map).forEach(key => {
+                const elements = document.querySelectorAll(`[data-translate="${key}"]`);
+                elements.forEach(element => {
+                    element.textContent = map[key];
+                });
+            });
+            
+            // Add Odia font class for Odia text
+            if (lang === 'or') {
+                document.body.classList.add('odia-text');
+            } else {
+                document.body.classList.remove('odia-text');
+            }
+        }
+
+        // Open modal with content
+        function openModal(cardType) {
+            const content = contentData[cardType];
+            if (content) {
+                document.getElementById('modal-title').textContent = content.title;
+                document.getElementById('modal-body').innerHTML = content.content;
+                document.getElementById('content-modal').style.display = 'flex';
+            }
+        }
+
+        // Close modal function
+        function closeModalFunc() {
+            document.getElementById('content-modal').style.display = 'none';
+        }
+
+        // Progress tracking
+        function updateProgress(category, points) {
+            const progressBars = {
+                'tools': document.getElementById('tools-progress'),
+                'construction': document.getElementById('construction-progress'),
+                'accuracy': document.getElementById('accuracy-progress'),
+                'overall': document.getElementById('overall-progress')
+            };
+            
+            const progressValues = {
+                'tools': document.getElementById('tools-progress-value'),
+                'construction': document.getElementById('construction-progress-value'),
+                'accuracy': document.getElementById('accuracy-progress-value'),
+                'overall': document.getElementById('overall-progress-value')
+            };
+            
+            // Update specific category
+            let currentWidth = parseInt(progressBars[category].style.width);
+            if (currentWidth + points <= 100) {
+                progressBars[category].style.width = (currentWidth + points) + '%';
+                progressValues[category].textContent = (currentWidth + points) + '%';
+            } else {
+                progressBars[category].style.width = '100%';
+                progressValues[category].textContent = '100%';
+            }
+            
+            // Update overall progress
+            let overallWidth = (
+                parseInt(progressBars['tools'].style.width) +
+                parseInt(progressBars['construction'].style.width) +
+                parseInt(progressBars['accuracy'].style.width)
+            ) / 3;
+            
+            progressBars['overall'].style.width = overallWidth + '%';
+            progressValues['overall'].textContent = Math.round(overallWidth) + '%';
+        }
+    </script>
+</body>
+</html>

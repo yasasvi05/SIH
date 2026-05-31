@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Habitat Explorer - STEM Learn Odisha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin:0; padding:0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: #f0f7ff; color:#1e293b; line-height:1.6; overflow-x:hidden; }
+        .container { width:100%; max-width:1200px; margin:0 auto; padding:0 20px; }
+
+        /* Language Switcher */
+        .language-switcher { position:absolute; top:20px; right:20px; background: rgba(255,255,255,0.15); border-radius:25px; padding:8px; backdrop-filter: blur(6px); z-index:1000; display:flex; gap:6px; }
+        .lang-btn { padding:8px 12px; border:none; background:transparent; border-radius:16px; cursor:pointer; font-size:0.9rem; font-weight:600; color:white; }
+        .lang-btn.active { background: rgba(255,255,255,0.25); color:white; }
+        
+        /* Header */
+        header { background: linear-gradient(135deg,#0e2a47 0%,#1a365d 100%); color:white; padding:15px 0; position:sticky; top:0; z-index:100; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+        .header-content { display:flex; justify-content:space-between; align-items:center; position:relative; }
+        .logo { display:flex; gap:12px; align-items:center; }
+        .logo-icon { font-size:2.2rem; background:white; color:#2a69ac; width:55px; height:55px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+        .logo-text { font-size:1.6rem; font-weight:700; }
+        .logo-text span { color:#38b2ac; font-weight:800; }
+        nav ul { display:flex; gap:18px; list-style:none; }
+        nav a { color:white; text-decoration:none; font-weight:500; padding:8px 12px; border-radius:8px; }
+        
+        /* Instructions Modal */
+        .instructions-modal { display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 2000; align-items: center; justify-content: center; }
+        .instructions-content { background: white; border-radius: 20px; width: 90%; max-width: 700px; padding: 30px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); position: relative; text-align: center; }
+        .instructions-title { font-size: 2rem; margin-bottom: 20px; color: #1a365d; font-weight: 700; }
+        .instructions-text { color: #64748b; margin-bottom: 25px; line-height: 1.6; text-align: left; font-size: 1.1rem; }
+        .instructions-list { margin-left: 20px; margin-bottom: 25px; }
+        .instructions-list li { margin-bottom: 10px; }
+        .start-game-btn { padding: 15px 40px; background: linear-gradient(135deg, #38b2ac 0%, #2c9a94 100%); color: white; border: none; border-radius: 10px; font-size: 1.2rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 20px; }
+        .start-game-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(56, 178, 172, 0.3); }
+
+        /* Game Header */
+        .game-header { background: linear-gradient(rgba(14,42,71,0.85),rgba(26,54,93,0.9)), url('https://images.unsplash.com/photo-1588392382834-a891154bca4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'); background-size:cover; background-position:center; color:white; padding:50px 0; text-align:center; }
+        .game-header h1 { font-size:2.8rem; margin-bottom:12px; font-weight:700; text-shadow:0 2px 4px rgba(0,0,0,0.2); }
+        .game-header p { font-size:1.1rem; max-width:800px; margin:0 auto; font-weight:300; opacity:0.95; }
+
+        /* Game Stats */
+        .game-stats { display:flex; justify-content:space-between; align-items:center; background:white; padding:15px 25px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.08); margin:20px auto; max-width:1000px; gap:12px; flex-wrap:wrap; }
+        .timer, .score, .hints { display:flex; align-items:center; gap:10px; font-size:1.1rem; font-weight:600; color:#1a365d; }
+        .timer i { color:#e53e3e; }
+        .score i { color:#38a169; }
+        .hints i { color:#d69e2e; }
+        .progress-container { width:200px; height:12px; background:#e2e8f0; border-radius:10px; overflow:hidden; }
+        .progress-bar { height:100%; background:#3182ce; border-radius:10px; transition: width 0.5s ease; }
+
+        /* Game Area */
+        .game-area { padding:40px 0 60px; }
+        
+        /* Habitat Selection */
+        .habitat-selection { display:grid; grid-template-columns:repeat(2, 1fr); gap:25px; max-width:1000px; margin:0 auto 40px auto; }
+        
+        .habitat-card { background: rgba(255,255,255,0.95); border-radius:25px; padding:25px; box-shadow:0 10px 30px rgba(0,0,0,0.08); display:flex; flex-direction:column; border:3px solid #cbd5e0; transition: all 0.3s ease; position:relative; cursor:pointer; height:220px; }
+        .habitat-card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
+        .habitat-card.active { border-color:#4299e1; background: rgba(235,248,255,0.95); }
+        .habitat-card.completed { border-color:#38b2ac; background: rgba(230, 255, 250, 0.95); }
+        .habitat-header { display:flex; align-items:center; gap:15px; margin-bottom:15px; }
+        .habitat-icon { width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.6rem; color:white; }
+        .forest-icon { background: linear-gradient(45deg,#48bb78,#38a169); }
+        .desert-icon { background: linear-gradient(45deg,#ed8936,#dd6b20); }
+        .ocean-icon { background: linear-gradient(45deg,#4299e1,#3182ce); }
+        .arctic-icon { background: linear-gradient(45deg,#90cdf4,#63b3ed); }
+        .habitat-title { font-size:1.4rem; font-weight:700; color:#1a365d; }
+        .habitat-desc { color:#4a5568; margin-bottom:15px; flex-grow:1; font-size:0.95rem; }
+        .habitat-status { display:flex; justify-content:space-between; margin-top:auto; padding-top:15px; border-top:2px dashed #e2e8f0; }
+        .status-badge { padding:6px 12px; border-radius:20px; font-size:0.9rem; font-weight:600; }
+        .status-locked { background:#fed7d7; color:#c53030; }
+        .status-unlocked { background:#c6f6d5; color:#22543d; }
+        .status-current { background:#bee3f8; color:#2c5282; }
+        .status-explore { background:#c6f6d5; color:#22543d; }
+        .status-completed { background:#c6f6d5; color:#22543d; }
+        
+        /* Interactive Game Area */
+        .interactive-area { background: rgba(255,255,255,0.95); border-radius:25px; padding:30px; box-shadow:0 10px 30px rgba(0,0,0,0.08); margin-top:30px; max-width:1000px; margin:30px auto; }
+        .interactive-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:25px; }
+        .interactive-title { font-size:1.8rem; font-weight:700; color:#1a365d; }
+        .close-btn { background:none; border:none; font-size:1.5rem; cursor:pointer; color:#718096; }
+        
+        /* Drag & Drop Game */
+        .drag-game { display:block; }
+        .drag-instructions { text-align:center; margin-bottom:25px; color:#4a5568; font-size:1.1rem; }
+        .drag-containers { display:grid; grid-template-columns:1fr 1fr; gap:25px; margin-bottom:30px; }
+        .drag-zone { background:#f7fafc; border-radius:15px; padding:25px; min-height:200px; border:3px dashed #cbd5e0; }
+        .drag-zone h3 { text-align:center; margin-bottom:15px; color:#2d3748; }
+        .zone-items { display:flex; flex-wrap:wrap; gap:12px; min-height:140px; align-items:flex-start; }
+        .drag-items { display:flex; flex-wrap:wrap; gap:18px; justify-content:center; padding:22px; background: #e6fffa; border-radius:16px; }
+        .drag-item { width:100px; height:100px; background: linear-gradient(145deg,#ffffff,#f0f4f8); border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:grab; box-shadow:0 8px 20px rgba(0,0,0,0.06); transition:all 0.25s ease; user-select:none; border:2px solid #cbd5e0; }
+        .drag-item:hover { transform:translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.15); }
+        .drag-item.dragging { opacity:0.85; transform:scale(1.08) rotate(8deg); z-index:1200; box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+        .drag-icon { font-size:2.6rem; margin-bottom:8px; }
+        .drag-name { font-size:0.9rem; font-weight:700; color:#2d3748; text-align:center; }
+        
+        /* Memory Game */
+        .memory-game { display: none; }
+        .memory-board { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin: 25px 0; }
+        .memory-card { height: 120px; border-radius: 15px; cursor: pointer; transform-style: preserve-3d; transition: transform 0.6s; position: relative; }
+        .memory-card .memory-front, .memory-card .memory-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; display: flex; align-items: center; justify-content: center; }
+        .memory-card .memory-front { background: linear-gradient(145deg, #4299e1, #3182ce); color: white; font-size: 2rem; }
+        .memory-card .memory-back { background: white; transform: rotateY(180deg); border: 3px solid #e2e8f0; }
+        .memory-card.flipped { transform: rotateY(180deg); }
+        .memory-card.matched { transform: rotateY(180deg); cursor: default; box-shadow: 0 0 20px rgba(72, 187, 120, 0.5); }
+        .memory-back-content { padding: 10px; text-align: center; }
+        .memory-back-icon { font-size: 2.5rem; margin-bottom: 8px; }
+        .memory-back-name { font-size: 0.9rem; font-weight: 700; color: #2d3748; }
+        
+        /* Action Buttons */
+        .action-buttons { display:flex; gap:15px; margin-top:25px; justify-content:center; }
+        .action-btn { padding:12px 24px; border:none; border-radius:10px; font-weight:600; cursor:pointer; transition: all 0.3s ease; font-size:1rem; }
+        .action-btn.check { background:linear-gradient(45deg,#38b2ac,#2c9a94); color:white; }
+        .action-btn.next { background:linear-gradient(45deg,#4299e1,#3182ce); color:white; }
+        .action-btn.hint { background:linear-gradient(45deg,#d69e2e,#b7791f); color:white; }
+        .action-btn.continue { background:linear-gradient(45deg,#38b2ac,#2c9a94); color:white; }
+        .action-btn.explore-next { background:linear-gradient(45deg,#ed8936,#dd6b20); color:white; }
+        .action-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        
+        /* Scoreboard Styles */
+        .scoreboard { background: linear-gradient(145deg, #ffffff, #f0f8ff); border-radius: 20px; padding: 30px; margin: 20px auto; max-width: 700px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; }
+        .scoreboard-title { font-size: 2rem; font-weight: 700; color: #1a365d; margin-bottom: 20px; }
+        .scoreboard-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 30px; }
+        .scoreboard-stat { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .stat-value { font-size: 2.5rem; font-weight: 800; color: #4299e1; margin-bottom: 5px; }
+        .stat-label { font-size: 1rem; color: #4a5568; font-weight: 600; }
+        .scoreboard-facts { background: #e6fffa; border-radius: 15px; padding: 20px; margin-top: 20px; border-left: 5px solid #38b2ac; }
+        .scoreboard-facts h4 { color: #22543d; margin-bottom: 10px; }
+        .scoreboard-buttons { display: flex; gap: 15px; justify-content: center; margin-top: 25px; }
+        
+        /* Modal */
+        .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.75); z-index:2000; align-items:center; justify-content:center; }
+        .modal-content { background:linear-gradient(145deg,#ffffff,#f0f8ff); border-radius:24px; width:90%; max-width:500px; padding:36px; text-align:center; position:relative; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+        .modal-close { position:absolute; top:16px; right:16px; background:rgba(0,0,0,0.06); border:none; font-size:1.4rem; width:44px; height:44px; border-radius:50%; cursor:pointer; transition: all 0.3s ease; }
+        .modal-close:hover { background:rgba(0,0,0,0.12); transform: rotate(90deg); }
+        .modal-icon { font-size:3.6rem; margin-bottom:12px; }
+        .modal-title { font-size:2rem; font-weight:800; color:#1a365d; margin-bottom:8px; }
+        .modal-text { color:#4a5568; margin-bottom:18px; font-size:1rem; line-height:1.6; }
+        .modal-action { padding:12px 22px; background:linear-gradient(45deg,#4facfe,#00f2fe); color:white; border:none; border-radius:14px; font-weight:800; cursor:pointer; transition: all 0.3s ease; }
+        .modal-action:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(79, 172, 254, 0.4); }
+
+        /* Final Completion Dialog */
+        .final-completion-dialog { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center; }
+        .final-completion-content { background: linear-gradient(145deg, #ffffff, #f0f8ff); border-radius: 24px; width: 90%; max-width: 600px; padding: 36px; text-align: center; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+        .final-completion-icon { font-size: 4rem; color: #48bb78; margin-bottom: 20px; }
+        .final-completion-title { font-size: 2rem; font-weight: 800; color: #1a365d; margin-bottom: 15px; }
+        .final-completion-text { color: #4a5568; margin-bottom: 25px; font-size: 1.1rem; line-height: 1.6; }
+        .final-completion-buttons { display: flex; gap: 15px; justify-content: center; margin-top: 25px; }
+        .final-completion-btn { padding: 12px 30px; background: linear-gradient(45deg, #38b2ac, #2c9a94); color: white; border: none; border-radius: 14px; font-weight: 800; cursor: pointer; transition: all 0.3s ease; font-size: 1.1rem; }
+        .final-completion-btn.next-habitat { background: linear-gradient(45deg, #ed8936, #dd6b20); }
+        .final-completion-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(56, 178, 172, 0.4); }
+        .final-completion-btn.next-habitat:hover { box-shadow: 0 6px 15px rgba(237, 137, 54, 0.4); }
+
+        .particles { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-1; }
+        .particle { position:absolute; width:4px; height:4px; background:rgba(255,255,255,0.5); border-radius:50%; animation: float-particle 18s infinite linear; }
+
+        @keyframes float-particle { 0% { transform: translateY(100vh) translateX(0px); opacity:0; } 10%{opacity:1;} 90%{opacity:1;} 100%{transform:translateY(-100px) translateX(100px); opacity:0;} }
+        
+        /* Animations for new animals */
+        @keyframes newAnimalAppear {
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+            70% { transform: scale(1.1) rotate(10deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0); opacity: 1; }
+        }
+        
+        .new-animal { animation: newAnimalAppear 0.6s ease-out; }
+        
+        /* Match animation */
+        @keyframes matchSuccess {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        .match-animation { animation: matchSuccess 0.6s ease; }
+
+        @media (max-width:768px) {
+            .habitat-selection { grid-template-columns:1fr; }
+            .drag-containers { grid-template-columns:1fr; }
+            .memory-board { grid-template-columns:repeat(2, 1fr); }
+            .game-stats { flex-direction:column; gap:10px; align-items:flex-start; }
+            .language-switcher { right:12px; top:12px; }
+            .game-header h1 { font-size:2rem; }
+            .habitat-card { height:200px; }
+            .scoreboard-stats { grid-template-columns: 1fr; }
+            .final-completion-buttons { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+
+    <!-- Final Completion Dialog -->
+    <div class="final-completion-dialog" id="final-completion-dialog">
+        <div class="final-completion-content">
+            <div class="final-completion-icon">🎉</div>
+            <h2 class="final-completion-title" id="final-completion-title">Congratulations!</h2>
+            <p class="final-completion-text" id="final-completion-text">You've completed all habitats!</p>
+            <div class="final-completion-buttons">
+                <button class="final-completion-btn" id="play-again-btn">Play Again</button>
+                <button class="final-completion-btn next-habitat" id="view-scores-btn">View Scores</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="language-switcher">
+        <button class="lang-btn active" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+        <button class="lang-btn" data-lang="hi">हिन्दी</button>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon"><i class="fas fa-globe-asia"></i></div>
+                    <div class="logo-text">Habitat <span>Explorer</span></div>
+                </div>
+
+                <nav>
+                    <ul>
+                        <li><a href="#" data-translate="nav-dashboard">Dashboard</a></li>
+                        <li><a href="#" data-translate="nav-about">About</a></li>
+                        <li><a href="#" data-translate="nav-contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Instructions modal -->
+    <div class="instructions-modal" id="instructions-modal">
+        <div class="instructions-content">
+            <div class="language-switcher" style="position: relative; top: 0; right: 0; margin: 0 auto 20px auto; width: fit-content; background: rgba(26, 54, 93, 0.1);">
+                <button class="lang-btn active" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+                <button class="lang-btn" data-lang="hi">हिन्दी</button>
+            </div>
+            
+            <h2 class="instructions-title" id="instructions-title">Welcome to Habitat Explorer!</h2>
+            <div class="instructions-text" id="instructions-text">
+                <p id="instructions-intro">Learn about different habitats through fun games!</p>
+                <ul class="instructions-list" id="instructions-list">
+                    <li id="instruction-1">Choose a habitat: Forest, Desert, Ocean, or Arctic</li>
+                    <li id="instruction-2">Play 2 different games for each habitat</li>
+                    <li id="instruction-3">Drag & Drop: Match animals to their habitats</li>
+                    <li id="instruction-4">Memory Game: Match animals with their names</li>
+                    <li id="instruction-5">Learn fun facts about each habitat and animals</li>
+                    <li id="instruction-6">Discover DIFFERENT animals every new game!</li>
+                </ul>
+                <p id="instructions-outro">Have fun exploring and learning!</p>
+            </div>
+            <button class="start-game-btn" id="start-game-btn">Start Exploring</button>
+        </div>
+    </div>
+
+    <!-- Game header -->
+    <section class="game-header" style="display:none;" id="game-header">
+        <div class="container">
+            <h1 data-translate="game-title">Habitat Explorer</h1>
+            <p data-translate="game-desc">Explore 4 different habitats. Play games and learn how animals survive!</p>
+        </div>
+    </section>
+
+    <!-- Game stats -->
+    <div class="container" style="display:none;" id="game-stats-container">
+        <div class="game-stats">
+            <div class="timer">
+                <i class="fas fa-clock"></i>
+                <span id="time-text">Time: <span id="time">15:00</span></span>
+            </div>
+
+            <div class="score">
+                <i class="fas fa-star"></i>
+                <span id="score-text">Score: <span id="score-value">0</span></span>
+            </div>
+
+            <div class="hints">
+                <i class="fas fa-fire"></i>
+                <span id="streak-text-display">Streak: <span id="streak-value">0</span></span>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar" id="progress" style="width:0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game area -->
+    <section class="game-area" style="display:none;" id="game-area">
+        <div class="container">
+            <div class="habitat-selection" id="habitat-selection">
+                <!-- Habitat cards will be inserted here -->
+            </div>
+
+            <div class="interactive-area" id="interactive-area" style="display:none;">
+                <!-- Interactive games will be inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback modal -->
+    <div class="modal" id="feedback-modal" style="display:none;">
+        <div class="modal-content" id="modal-content">
+            <button class="modal-close" id="modal-close"><i class="fas fa-times"></i></button>
+            <div class="modal-icon" id="modal-icon"><i class="fas fa-check-circle"></i></div>
+            <h2 class="modal-title" id="modal-title" data-translate="correct-title">Excellent!</h2>
+            <p class="modal-text" id="modal-text">Your answer is correct!</p>
+            <p class="modal-text" id="modal-funfact" style="font-style: italic; color: #38b2ac; margin-top: 10px;"></p>
+            <button class="modal-action" id="modal-action" data-translate="continue-btn">Continue</button>
+        </div>
+    </div>
+
+    <!-- Fun Fact Modal -->
+    <div class="modal" id="funfact-modal" style="display:none;">
+        <div class="modal-content">
+            <button class="modal-close" id="funfact-close"><i class="fas fa-times"></i></button>
+            <div class="modal-icon"><i class="fas fa-lightbulb" style="color:#d69e2e;"></i></div>
+            <h2 class="modal-title" id="funfact-title">Fun Fact!</h2>
+            <p class="modal-text" id="funfact-text">Did you know?</p>
+            <button class="modal-action" id="funfact-continue">Continue</button>
+        </div>
+    </div>
+
+    <!-- Habitat Understood Modal -->
+    <div class="modal" id="habitat-understood-modal" style="display:none;">
+        <div class="modal-content">
+            <button class="modal-close" id="habitat-understood-close"><i class="fas fa-times"></i></button>
+            <div class="modal-icon"><i class="fas fa-check-circle" style="color:#48bb78;"></i></div>
+            <h2 class="modal-title" id="habitat-understood-title">Habitat Understood!</h2>
+            <p class="modal-text" id="habitat-understood-text">Great! You've learned about this habitat.</p>
+            <button class="modal-action" id="next-habitat-btn">Next Habitat</button>
+        </div>
+    </div>
+
+    <script>
+        // ========== GAME DATA ==========
+        const animalPools = {
+            forest: {
+                correct: [
+                    { name: { en: "Monkey", or: "ବାନର", hi: "बंदर" }, icon: "🐒", 
+                      fact: { en: "Monkeys use their tails as a fifth limb to swing through trees!", 
+                             or: "ବାନରମାନେ ଗଛ ମଧ୍ୟରେ ଝୁଲିବା ପାଇଁ ତାଙ୍କର ଲାଞ୍ଜକୁ ପଞ୍ଚମ ଅଙ୍ଗ ଭାବରେ ବ୍ୟବହାର କରନ୍ତି!", 
+                             hi: "बंदर पेड़ों के बीच झूलने के लिए अपनी पूंछ का पांचवें अंग के रूप में उपयोग करते हैं!" } },
+                    { name: { en: "Elephant", or: "ହାତୀ", hi: "हाथी" }, icon: "🐘", 
+                      fact: { en: "Elephants can remember paths and watering holes for years!", 
+                             or: "ହାତୀମାନେ ବର୍ଷ ଧରି ପଥ ଏବଂ ପାଣି ପୋଖରୀ ମନେ ରଖିପାରନ୍ତି!", 
+                             hi: "हाथी सालों तक रास्ते और पानी के छेद याद रख सकते हैं!" } },
+                    { name: { en: "Parrot", or: "ଚଢ଼େଇ", hi: "तोता" }, icon: "🦜", 
+                      fact: { en: "Parrots can mimic human speech and other sounds!", 
+                             or: "ଚଢ଼େଇମାନେ ମନୁଷ୍ୟ କଥା ଏବଂ ଅନ୍ୟ ଶବ୍ଦ ଅନୁକରଣ କରିପାରନ୍ତି!", 
+                             hi: "तोते मानव भाषण और अन्य ध्वनियों की नकल कर सकते हैं!" } },
+                    { name: { en: "Tiger", or: "ବାଘ", hi: "बाघ" }, icon: "🐅", 
+                      fact: { en: "Tigers have striped fur that acts as camouflage in tall grass!", 
+                             or: "ବାଘମାନଙ୍କର ଡୋରାଯୁକ୍ତ ଲୋମ ଅଛି ଯାହା ଉଚ୍ଚ ଘାସରେ ଛଦ୍ମବେଶ ଭାବରେ କାମ କରେ!", 
+                             hi: "बाघों की धारीदार खाल होती है जो लंबी घास में छद्मावरण का काम करती है!" } }
+                ],
+                wrong: [
+                    { name: { en: "Penguin", or: "ପେଙ୍ଗୁଇନ୍", hi: "पेंगुइन" }, icon: "🐧" },
+                    { name: { en: "Shark", or: "ହାଙ୍ଗର", hi: "शार्क" }, icon: "🦈" },
+                    { name: { en: "Camel", or: "ଓଟ", hi: "ऊंट" }, icon: "🐫" },
+                    { name: { en: "Polar Bear", or: "ଧ୍ରୁବୀୟ ଭାଲୁ", hi: "ध्रुवीय भालू" }, icon: "🐻‍❄️" }
+                ]
+            },
+            desert: {
+                correct: [
+                    { name: { en: "Camel", or: "ଓଟ", hi: "ऊंट" }, icon: "🐫", 
+                      fact: { en: "Camels can close their nostrils during sandstorms!", 
+                             or: "ଓଟମାନେ ବାଲିଝଡ଼ରେ ନାସାରନ୍ଧ୍ର ବନ୍ଦ କରିପାରନ୍ତି!", 
+                             hi: "ऊंट रेत के तूफान के दौरान अपने नथुने बंद कर सकते हैं!" } },
+                    { name: { en: "Scorpion", or: "ବିଛା", hi: "बिच्छू" }, icon: "🦂", 
+                      fact: { en: "Scorpions glow under UV light!", 
+                             or: "ବିଛାମାନେ UV ଆଲୋକରେ ଜଳନ୍ତି!", 
+                             hi: "बिच्छू यूवी लाइट के तहत चमकते हैं!" } },
+                    { name: { en: "Fennec Fox", or: "ଫେନେକ୍ ଶିଆଳ", hi: "फेनेक लोमड़ी" }, icon: "🦊", 
+                      fact: { en: "Fennec foxes have huge ears to cool their body!", 
+                             or: "ଫେନେକ୍ ଶିଆଳଙ୍କର ଶରୀର ଥଣ୍ଡା କରିବା ପାଇଁ ବଡ଼ କାନ ଅଛି!", 
+                             hi: "फेनेक लोमड़ियों के शरीर को ठंडा करने के लिए विशाल कान होते हैं!" } },
+                    { name: { en: "Lizard", or: "ଟିକିଟିକି", hi: "छिपकली" }, icon: "🦎", 
+                      fact: { en: "Desert lizards can run on hot sand without burning their feet!", 
+                             or: "ମରୁଭୂମିର ଟିକିଟିକି ଗରମ ବାଲିରେ ପାଦ ପୋଡିବା ବିନା ଦୌଡିପାରେ!", 
+                             hi: "रेगिस्तानी छिपकलियां अपने पैर जलाए बिना गर्म रेत पर दौड़ सकती हैं!" } }
+                ],
+                wrong: [
+                    { name: { en: "Penguin", or: "ପେଙ୍ଗୁଇନ୍", hi: "पेंगुइन" }, icon: "🐧" },
+                    { name: { en: "Whale", or: "ତିମି", hi: "व्हेल" }, icon: "🐋" },
+                    { name: { en: "Seal", or: "ସିଲ୍", hi: "सील" }, icon: "🦭" },
+                    { name: { en: "Fish", or: "ମାଛ", hi: "मछली" }, icon: "🐠" }
+                ]
+            },
+            ocean: {
+                correct: [
+                    { name: { en: "Dolphin", or: "ଡଲ୍ଫିନ୍", hi: "डॉल्फिन" }, icon: "🐬", 
+                      fact: { en: "Dolphins use echolocation to find food in dark water!", 
+                             or: "ଡଲ୍ଫିନ୍ ମାନେ ଅନ୍ଧାର ଜଳରେ ଖାଦ୍ୟ ଖୋଜିବା ପାଇଁ ଇକୋଲୋକେସନ୍ ବ୍ୟବହାର କରନ୍ତି!", 
+                             hi: "डॉल्फ़िन अंधेरे पानी में भोजन ढूंढने के लिए इकोलोकेशन का उपयोग करती हैं!" } },
+                    { name: { en: "Octopus", or: "ଅକ୍ଟୋପସ୍", hi: "ऑक्टोपस" }, icon: "🐙", 
+                      fact: { en: "Octopuses can change color and texture to hide from predators!", 
+                             or: "ଅକ୍ଟୋପସ୍ ମାନେ ଶିକାରୀଙ୍କଠାରୁ ଲୁଚିବା ପାଇଁ ରଙ୍ଗ ଏବଂ ବସ୍ତୁ ପରିବର୍ତ୍ତନ କରିପାରନ୍ତି!", 
+                             hi: "ऑक्टोपस शिकारियों से छिपने के लिए रंग और बनावट बदल सकते हैं!" } },
+                    { name: { en: "Shark", or: "ହାଙ୍ଗର", hi: "शार्क" }, icon: "🦈", 
+                      fact: { en: "Sharks can detect electricity from other animals!", 
+                             or: "ହାଙ୍ଗରମାନେ ଅନ୍ୟ ପ୍ରାଣୀଙ୍କଠାରୁ ବିଦ୍ୟୁତ୍ ସନ୍ଧାନ କରିପାରନ୍ତି!", 
+                             hi: "शार्क अन्य जानवरों से बिजली का पता लगा सकती हैं!" } },
+                    { name: { en: "Turtle", or: "କଇଁଛ", hi: "कछुआ" }, icon: "🐢", 
+                      fact: { en: "Sea turtles can live for over 100 years!", 
+                             or: "ସମୁଦ୍ର କଇଁଛ 100 ବର୍ଷରୁ ଅଧିକ ସମୟ ପାଇଁ ବଞ୍ଚିପାରେ!", 
+                             hi: "समुद्री कछुए 100 साल से अधिक जीवित रह सकते हैं!" } }
+                ],
+                wrong: [
+                    { name: { en: "Lion", or: "ସିଂହ", hi: "शेर" }, icon: "🦁" },
+                    { name: { en: "Eagle", or: "ଇଗଲ୍", hi: "ईगल" }, icon: "🦅" },
+                    { name: { en: "Elephant", or: "ହାତୀ", hi: "हाथी" }, icon: "🐘" },
+                    { name: { en: "Giraffe", or: "ଜିରାଫ୍", hi: "जिराफ़" }, icon: "🦒" }
+                ]
+            },
+            arctic: {
+                correct: [
+                    { name: { en: "Polar Bear", or: "ଧ୍ରୁବୀୟ ଭାଲୁ", hi: "ध्रुवीय भालू" }, icon: "🐻‍❄️", 
+                      fact: { en: "Polar bears have black skin under their white fur!", 
+                             or: "ଧ୍ରୁବୀୟ ଭାଲୁଙ୍କର ସେମାନଙ୍କ ଧଳା ଲୋମ ତଳେ କଳା ଚର୍ମ ଅଛି!", 
+                             hi: "ध्रुवीय भालुओं के सफेद फर के नीचे काली त्वचा होती है!" } },
+                    { name: { en: "Penguin", or: "ପେଙ୍ଗୁଇନ୍", hi: "पेंगुइन" }, icon: "🐧", 
+                      fact: { en: "Penguins keep eggs warm on their feet!", 
+                             or: "ପେଙ୍ଗୁଇନ୍ ମାନେ ଅଣ୍ଡାକୁ ନିଜ ପାଦ ଉପରେ ଗରମ ରଖନ୍ତି!", 
+                             hi: "पेंगुइन अपने पैरों पर अंडे को गर्म रखते हैं!" } },
+                    { name: { en: "Seal", or: "ସିଲ୍", hi: "सील" }, icon: "🦭", 
+                      fact: { en: "Seals have a thick layer of blubber to stay warm!", 
+                             or: "ସିଲ୍ ମାନଙ୍କର ଗରମ ରହିବା ପାଇଁ ଚର୍ବିର ଏକ ମୋଟା ସ୍ତର ଅଛି!", 
+                             hi: "सील के पास गर्म रहने के लिए चर्बी की एक मोटी परत होती है!" } },
+                    { name: { en: "Arctic Fox", or: "ଆର୍କଟିକ୍ ଶିଆଳ", hi: "आर्कटिक लोमड़ी" }, icon: "🦊", 
+                      fact: { en: "Arctic foxes change color with seasons - white in winter!", 
+                             or: "ଆର୍କଟିକ୍ ଶିଆଳମାନେ ଋତୁ ସହିତ ରଙ୍ଗ ବଦଳାନ୍ତି - ଶୀତରେ ଧଳା!", 
+                             hi: "आर्कटिक लोमड़ियाँ मौसम के साथ रंग बदलती हैं - सर्दियों में सफेद!" } }
+                ],
+                wrong: [
+                    { name: { en: "Lion", or: "ସିଂହ", hi: "शेर" }, icon: "🦁" },
+                    { name: { en: "Scorpion", or: "ବିଛା", hi: "बिच्छू" }, icon: "🦂" },
+                    { name: { en: "Parrot", or: "ଚଢ଼େଇ", hi: "तोता" }, icon: "🦜" },
+                    { name: { en: "Giraffe", or: "ଜିରାଫ୍", hi: "जिराफ़" }, icon: "🦒" }
+                ]
+            }
+        };
+
+        const habitats = [
+            {
+                id: 1,
+                name: { en: "Forest Habitat", or: "ଜଙ୍ଗଲ ଆବାସ", hi: "वन आवास" },
+                icon: "fas fa-tree",
+                type: "forest",
+                color: "forest-icon",
+                description: { 
+                    en: "Rainy area with many trees and animals. Animals hide using camouflage.",
+                    or: "ଅନେକ ଗଛ ଏବଂ ପ୍ରାଣୀ ଥିବା ବର୍ଷାବନ। ପ୍ରାଣୀମାନେ ଛଦ୍ମବେଶ ବ୍ୟବହାର କରି ଲୁଚନ୍ତି।",
+                    hi: "कई पेड़ों और जानवरों वाला बरसाती क्षेत्र। जानवर छद्मावरण का उपयोग करके छिपते हैं।"
+                }
+            },
+            {
+                id: 2,
+                name: { en: "Desert Habitat", or: "ମରୁଭୂମି ଆବାସ", hi: "मरुस्थल आवास" },
+                icon: "fas fa-sun",
+                type: "desert",
+                color: "desert-icon",
+                description: { 
+                    en: "Very hot and dry place. Animals save water to survive.",
+                    or: "ବହୁତ ଗରମ ଏବଂ ଶୁଷ୍କ ସ୍ଥାନ। ପ୍ରାଣୀମାନେ ବଞ୍ଚିବା ପାଇଁ ଜଳ ସଂରକ୍ଷଣ କରନ୍ତି।",
+                    hi: "बहुत गर्म और शुष्क जगह। जानवर जीवित रहने के लिए पानी बचाते हैं।"
+                }
+            },
+            {
+                id: 3,
+                name: { en: "Ocean Habitat", or: "ସମୁଦ୍ର ଆବାସ", hi: "समुद्र आवास" },
+                icon: "fas fa-water",
+                type: "ocean",
+                color: "ocean-icon",
+                description: { 
+                    en: "Water world with fish and whales. Animals swim using fins.",
+                    or: "ମାଛ ଏବଂ ତିମି ସହିତ ଜଳ ବିଶ୍ୱ। ପ୍ରାଣୀମାନେ ପରଦେଶୀ ବ୍ୟବହାର କରି ପହଁରନ୍ତି।",
+                    hi: "मछली और व्हेल वाली पानी की दुनिया। जानवर पंखों का उपयोग करके तैरते हैं।"
+                }
+            },
+            {
+                id: 4,
+                name: { en: "Arctic Habitat", or: "ଆର୍କଟିକ୍ ଆବାସ", hi: "आर्कटिक आवास" },
+                icon: "fas fa-snowflake",
+                type: "arctic",
+                color: "arctic-icon",
+                description: { 
+                    en: "Very cold and snowy place. Animals have thick fur to stay warm.",
+                    or: "ବହୁତ ଥଣ୍ଡା ଏବଂ ତୁଷାରମୟ ସ୍ଥାନ। ପ୍ରାଣୀମାନେ ଗରମ ରହିବା ପାଇଁ ମୋଟା ଲୋମ ରଖନ୍ତି।",
+                    hi: "बहुत ठंडी और बर्फीली जगह। जानवरों के पास गर्म रहने के लिए मोटी फर होती है।"
+                }
+            }
+        ];
+
+        // ========== GAME STATE ==========
+        let currentLanguage = 'en';
+        let score = 0;
+        let streak = 0;
+        let timeLeft = 900;
+        let timerInterval = null;
+        let currentHabitat = null;
+        let completedHabitats = [];
+        let currentGame = 0;
+        let gameSessionId = Date.now();
+        let sessionAnimals = {};
+        let lastCorrectAnimals = [];
+
+        // ========== ELEMENTS ==========
+        const instructionsModal = document.getElementById('instructions-modal');
+        const gameHeader = document.getElementById('game-header');
+        const gameStatsContainer = document.getElementById('game-stats-container');
+        const gameArea = document.getElementById('game-area');
+        const habitatSelection = document.getElementById('habitat-selection');
+        const interactiveArea = document.getElementById('interactive-area');
+        const finalCompletionDialog = document.getElementById('final-completion-dialog');
+
+        // ========== TRANSLATIONS ==========
+        const translations = {
+            en: {
+                'nav-dashboard': 'Dashboard','nav-about':'About','nav-contact':'Contact',
+                'game-title':'Habitat Explorer','game-desc':'Explore 4 different habitats. Play games and learn how animals survive!',
+                'correct-title':'Excellent!','incorrect-title':'Try Again!',
+                'continue-btn':'Continue','level-title':'Habitat Complete!',
+                'level-text':'Great job! You discovered new animals!',
+                'instructions-title':'Welcome to Habitat Explorer!',
+                'instructions-intro':'Learn about different habitats through fun games!',
+                'instruction-1':'Choose a habitat: Forest, Desert, Ocean, or Arctic',
+                'instruction-2':'Play 2 different games for each habitat',
+                'instruction-3':'Drag & Drop: Match animals to their habitats',
+                'instruction-4':'Memory Game: Match animals with their names',
+                'instruction-5':'Learn fun facts about each habitat and animals',
+                'instruction-6':'Discover DIFFERENT animals every new game!',
+                'instructions-outro':'Have fun exploring and learning!',
+                'start-game-btn':'Start Exploring',
+                'drag-instructions': 'Drag animals to their correct habitat!',
+                'forest-animals': 'Forest Animals',
+                'wrong-animals': 'Wrong Habitat',
+                'check-answers': 'Check Answers',
+                'next-game': 'Next Game',
+                'show-knowledge': 'Show Fun Fact',
+                'matching-instructions': 'Click cards to match animals with their names!',
+                'continue-exploring': 'Continue Exploring',
+                'explore-next-habitat': 'Explore Next Habitat',
+                'score-label': 'Score:',
+                'streak-label': 'Streak:',
+                'timer-label': 'Time:',
+                'time-up': "Time's Up!",
+                'time-up-text': 'Time finished! You earned {score} points, explored {habitats} habitats in this session!',
+                'new-game': 'New Game',
+                'habitat-understood': 'Habitat Understood!',
+                'habitat-understood-text': 'Great! You have learned about {habitat}. Ready for the next habitat?',
+                'all-habitats-completed': 'All Habitats Completed!',
+                'all-habitats-text': 'Congratulations! You have explored all habitats and learned about different animals!',
+                'play-again': 'Play Again',
+                'view-scores': 'View Scores',
+                'score-text': 'Score:',
+                'streak-text-display': 'Streak:',
+                'time-text': 'Time:'
+            },
+            or: {
+                'nav-dashboard':'ଡ୍ୟାସବୋର୍ଡ','nav-about':'ବିଷୟରେ','nav-contact':'ଯୋଗାଯୋଗ',
+                'game-title':'ଆବାସ ଅନ୍ୱେଷକ','game-desc':'4 ଟି ଭିନ୍ନ ଆବାସ ଅନ୍ୱେଷଣ କରନ୍ତୁ। ଖେଳିବା ଏବଂ ଶିଖନ୍ତୁ କିପରି ପ୍ରାଣୀମାନେ ବଞ୍ଚନ୍ତି!',
+                'correct-title':'ଉତ୍ତମ!','incorrect-title':'ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ!',
+                'continue-btn':'ଜାରି ରଖନ୍ତୁ','level-title':'ଆବାସ ସମ୍ପୂର୍ଣ୍ଣ!',
+                'level-text':'ବହୁତ ଭଲ! ଆପଣ ନୂଆ ପ୍ରାଣୀ ଆବିଷ୍କାର କଲେ!',
+                'instructions-title':'ଆବାସ ଅନ୍ୱେଷକକୁ ସ୍ୱାଗତ!',
+                'instructions-intro':'ମଜାଦାର ଖେଳ ମାଧ୍ୟମରେ ବିଭିନ୍ନ ଆବାସ ବିଷୟରେ ଶିଖନ୍ତୁ!',
+                'instruction-1':'ଏକ ଆବାସ ଚୟନ କରନ୍ତୁ: ଜଙ୍ଗଲ, ମରୁଭୂମି, ସମୁଦ୍ର, କିମ୍ବା ଆର୍କଟିକ୍',
+                'instruction-2':'ପ୍ରତ୍ୟେକ ଆବାସ ପାଇଁ 2 ଟି ଭିନ୍ନ ଖେଳ ଖେଳନ୍ତୁ',
+                'instruction-3':'ଟାଣନ୍ତୁ ଏବଂ ଛାଡ଼ନ୍ତୁ: ପ୍ରାଣୀଙ୍କୁ ସେମାନଙ୍କ ଆବାସ ସହିତ ମେଳ କରାନ୍ତୁ',
+                'instruction-4':'ସ୍ମୃତି ଖେଳ: ପ୍ରାଣୀଙ୍କୁ ସେମାନଙ୍କ ନାମ ସହିତ ମେଳ କରାନ୍ତୁ',
+                'instruction-5':'ପ୍ରତ୍ୟେକ ଆବାସ ଏବଂ ପ୍ରାଣୀଙ୍କ ବିଷୟରେ ମଜାଦାର ତଥ୍ୟ ଶିଖନ୍ତୁ',
+                'instruction-6':'ପ୍ରତ୍ୟେକ ନୂଆ ଖେଳରେ ଭିନ୍ନ ପ୍ରାଣୀ ଆବିଷ୍କାର କରନ୍ତୁ!',
+                'instructions-outro':'ଅନ୍ୱେଷଣ ଏବଂ ଶିଖିବାରେ ମଜା କରନ୍ତୁ!',
+                'start-game-btn':'ଅନ୍ୱେଷଣ ଆରମ୍ଭ କରନ୍ତୁ',
+                'drag-instructions': 'ପ୍ରାଣୀଙ୍କୁ ସେମାନଙ୍କ ସଠିକ ଆବାସକୁ ଟାଣନ୍ତୁ!',
+                'forest-animals': 'ଜଙ୍ଗଲୀ ପ୍ରାଣୀ',
+                'wrong-animals': 'ଭୁଲ ଆବାସ',
+                'check-answers': 'ଉତ୍ତର ଯାଞ୍ଚ କରନ୍ତୁ',
+                'next-game': 'ପରବର୍ତ୍ତୀ ଖେଳ',
+                'show-knowledge': 'ମଜାଦାର ତଥ୍ୟ ଦେଖାନ୍ତୁ',
+                'matching-instructions': 'ପ୍ରାଣୀଙ୍କୁ ସେମାନଙ୍କ ନାମ ସହିତ ମେଳ କରିବା ପାଇଁ କାର୍ଡଗୁଡିକ କ୍ଲିକ୍ କରନ୍ତୁ!',
+                'continue-exploring': 'ଅନ୍ୱେଷଣ ଜାରି ରଖନ୍ତୁ',
+                'explore-next-habitat': 'ପରବର୍ତ୍ତୀ ଆବାସ ଅନ୍ୱେଷଣ କରନ୍ତୁ',
+                'score-label': 'ସ୍କୋର:',
+                'streak-label': 'ସ୍ତର:',
+                'timer-label': 'ସମୟ:',
+                'time-up': 'ସମୟ ସରିଗଲା!',
+                'time-up-text': 'ସମୟ ସମାପ୍ତ! ଆପଣ ଏହି ସେସନ୍ରେ {score} ପଏଣ୍ଟ ପାଇଛନ୍ତି ଏବଂ {habitats} ଆବାସ ଅନ୍ୱେଷଣ କରିଛନ୍ତି!',
+                'new-game': 'ନୂଆ ଖେଳ',
+                'habitat-understood': 'ଆବାସ ବୁଝିଲେ!',
+                'habitat-understood-text': 'ବହୁତ ଭଲ! ଆପଣ {habitat} ବିଷୟରେ ଶିଖିଲେ। ପରବର୍ତ୍ତୀ ଆବାସ ପାଇଁ ପ୍ରସ୍ତୁତ କି?',
+                'all-habitats-completed': 'ସମସ୍ତ ଆବାସ ସମ୍ପୂର୍ଣ୍ଣ!',
+                'all-habitats-text': 'ଅଭିନନ୍ଦନ! ଆପଣ ସମସ୍ତ ଆବାସ ଅନ୍ୱେଷଣ କରିଛନ୍ତି ଏବଂ ବିଭିନ୍ନ ପ୍ରାଣୀଙ୍କ ବିଷୟରେ ଶିଖିଛନ୍ତି!',
+                'play-again': 'ପୁଣି ଖେଳନ୍ତୁ',
+                'view-scores': 'ସ୍କୋର ଦେଖନ୍ତୁ',
+                'score-text': 'ସ୍କୋର:',
+                'streak-text-display': 'ସ୍ତର:',
+                'time-text': 'ସମୟ:'
+            },
+            hi: {
+                'nav-dashboard':'डैशबोर्ड','nav-about':'हमारे बारे में','nav-contact':'संपर्क करें',
+                'game-title':'आवास अन्वेषक','game-desc':'4 विभिन्न आवासों का अन्वेषण करें। खेलें और जानें कि जानवर कैसे जीवित रहते हैं!',
+                'correct-title':'उत्कृष्ट!','incorrect-title':'फिर से कोशिश करें!',
+                'continue-btn':'जारी रखें','level-title':'आवास पूर्ण!',
+                'level-text':'बहुत बढ़िया! आपने नए जानवरों की खोज की!',
+                'instructions-title':'आवास अन्वेषक में आपका स्वागत है!',
+                'instructions-intro':'मजेदार खेलों के माध्यम से विभिन्न आवासों के बारे में जानें!',
+                'instruction-1':'एक आवास चुनें: वन, मरुस्थल, महासागर, या आर्कटिक',
+                'instruction-2':'प्रत्येक आवास के लिए 2 अलग-अलग खेल खेलें',
+                'instruction-3':'खींचें और छोड़ें: जानवरों को उनके आवास से मिलाएं',
+                'instruction-4':'मेमोरी गेम: जानवरों को उनके नामों से मिलाएं',
+                'instruction-5':'प्रत्येक आवास और जानवरों के बारे में रोचक तथ्य जानें',
+                'instruction-6':'हर नए खेल में अलग-अलग जानवरों की खोज करें!',
+                'instructions-outro':'अन्वेषण और सीखने में मजा करें!',
+                'start-game-btn':'अन्वेषण शुरू करें',
+                'drag-instructions': 'जानवरों को उनके सही आवास में खींचें!',
+                'forest-animals': 'वन्य जानवर',
+                'wrong-animals': 'गलत आवास',
+                'check-answers': 'उत्तर जांचें',
+                'next-game': 'अगला खेल',
+                'show-knowledge': 'रोचक तथ्य दिखाएं',
+                'matching-instructions': 'जानवरों को उनके नामों से मिलाने के लिए कार्ड्स पर क्लिक करें!',
+                'continue-exploring': 'अन्वेषण जारी रखें',
+                'explore-next-habitat': 'अगला आवास अन्वेषण करें',
+                'score-label': 'स्कोर:',
+                'streak-label': 'लगातार:',
+                'timer-label': 'समय:',
+                'time-up': 'समय समाप्त!',
+                'time-up-text': 'समय समाप्त! आपने इस सत्र में {score} अंक अर्जित किए और {habitats} आवासों का अन्वेषण किया!',
+                'new-game': 'नया खेल',
+                'habitat-understood': 'आवास समझ गया!',
+                'habitat-understood-text': 'बहुत अच्छा! आपने {habitat} के बारे में सीख लिया है। अगले आवास के लिए तैयार हैं?',
+                'all-habitats-completed': 'सभी आवास पूर्ण!',
+                'all-habitats-text': 'बधाई हो! आपने सभी आवासों का अन्वेषण कर लिया है और विभिन्न जानवरों के बारे में सीख लिया है!',
+                'play-again': 'फिर से खेलें',
+                'view-scores': 'स्कोर देखें',
+                'score-text': 'स्कोर:',
+                'streak-text-display': 'लगातार:',
+                'time-text': 'समय:'
+            }
+        };
+
+        // ========== INITIALIZATION ==========
+        function init() {
+            createParticles();
+            loadProgress();
+            
+            // Initialize session data
+            habitats.forEach(habitat => {
+                sessionAnimals[habitat.type] = new Set();
+            });
+            
+            // Language switcher
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', function() { 
+                    const lang = this.getAttribute('data-lang'); 
+                    switchLanguage(lang); 
+                    saveProgress();
+                });
+            });
+
+            // Start game button
+            document.getElementById('start-game-btn').addEventListener('click', startGame);
+            
+            // Modal buttons
+            document.getElementById('modal-close').addEventListener('click', closeModal);
+            document.getElementById('modal-action').addEventListener('click', closeModal);
+            
+            // Fun fact modal buttons
+            document.getElementById('funfact-close').addEventListener('click', () => {
+                document.getElementById('funfact-modal').style.display = 'none';
+            });
+            
+            document.getElementById('funfact-continue').addEventListener('click', () => {
+                document.getElementById('funfact-modal').style.display = 'none';
+                if (currentGame === 0) {
+                    // After drag & drop, go to memory game
+                    showMemoryGame();
+                }
+            });
+            
+            // Habitat understood modal buttons
+            document.getElementById('habitat-understood-close').addEventListener('click', () => {
+                document.getElementById('habitat-understood-modal').style.display = 'none';
+            });
+            
+            document.getElementById('next-habitat-btn').addEventListener('click', () => {
+                document.getElementById('habitat-understood-modal').style.display = 'none';
+                
+                // Mark habitat as completed
+                if (currentHabitat && !completedHabitats.includes(currentHabitat.id)) {
+                    completedHabitats.push(currentHabitat.id);
+                    saveProgress();
+                }
+                
+                // Get next habitat
+                const nextHabitat = getNextHabitat();
+                
+                if (nextHabitat) {
+                    // If there's a next habitat, open it directly
+                    currentHabitat = nextHabitat;
+                    currentGame = 0;
+                    showDragGame();
+                } else {
+                    // If no next habitat (completed all), show final completion dialog
+                    showFinalCompletionDialog();
+                }
+            });
+            
+            // Final completion dialog buttons
+            document.getElementById('play-again-btn').addEventListener('click', () => {
+                document.getElementById('final-completion-dialog').style.display = 'none';
+                startGame(); // Restart from beginning
+            });
+            
+            document.getElementById('view-scores-btn').addEventListener('click', () => {
+                document.getElementById('final-completion-dialog').style.display = 'none';
+                showScoreboard();
+            });
+
+            renderHabitats();
+            updateGameStatsText();
+        }
+
+        function createParticles() {
+            const container = document.getElementById('particles');
+            container.innerHTML = '';
+            for (let i=0;i<18;i++){
+                const p = document.createElement('div'); 
+                p.className='particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.top = Math.random() * 100 + '%';
+                p.style.animationDelay = `${Math.random()*10}s`;
+                container.appendChild(p);
+            }
+        }
+
+        // ========== PROGRESS SAVE/LOAD ==========
+        function saveProgress() {
+            const progress = {
+                completedHabitats: completedHabitats,
+                score: score,
+                gameSessionId: gameSessionId,
+                currentLanguage: currentLanguage
+            };
+            localStorage.setItem('habitatExplorerProgress', JSON.stringify(progress));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('habitatExplorerProgress');
+            if (saved) {
+                try {
+                    const progress = JSON.parse(saved);
+                    completedHabitats = progress.completedHabitats || [];
+                    score = progress.score || 0;
+                    gameSessionId = progress.gameSessionId || Date.now();
+                    if (progress.currentLanguage) {
+                        switchLanguage(progress.currentLanguage);
+                    } else {
+                        updateGameStatsText();
+                    }
+                } catch (e) {
+                    console.error('Error loading progress:', e);
+                }
+            }
+        }
+
+        // ========== UPDATE GAME STATS TEXT ==========
+        function updateGameStatsText() {
+            // Update score text
+            const scoreText = document.getElementById('score-text');
+            const streakTextDisplay = document.getElementById('streak-text-display');
+            const timeText = document.getElementById('time-text');
+            
+            if (scoreText && streakTextDisplay && timeText) {
+                scoreText.innerHTML = `<i class="fas fa-star"></i> ${translations[currentLanguage]['score-text']} <span id="score-value">${score}</span>`;
+                streakTextDisplay.innerHTML = `<i class="fas fa-fire"></i> ${translations[currentLanguage]['streak-text-display']} <span id="streak-value">${streak}</span>`;
+                timeText.innerHTML = `<i class="fas fa-clock"></i> ${translations[currentLanguage]['time-text']} <span id="time">${Math.floor(timeLeft/60).toString().padStart(2,'0')}:${(timeLeft % 60).toString().padStart(2,'0')}</span>`;
+            }
+            
+            // Update progress bar
+            const maxPossible = habitats.length * 100;
+            const pct = Math.min(100, Math.round((score / (maxPossible || 1)) * 100));
+            const progressBar = document.getElementById('progress');
+            if (progressBar) {
+                progressBar.style.width = `${pct}%`;
+            }
+            
+            saveProgress();
+        }
+
+        // ========== UPDATE STREAK DISPLAY ==========
+        function updateStreak() {
+            // Update streak value in game stats
+            const streakValue = document.getElementById('streak-value');
+            if (streakValue) {
+                streakValue.textContent = streak;
+            }
+            
+            // Update progress bar
+            const maxPossible = habitats.length * 100;
+            const pct = Math.min(100, Math.round((score / (maxPossible || 1)) * 100));
+            const progressBar = document.getElementById('progress');
+            if (progressBar) {
+                progressBar.style.width = `${pct}%`;
+            }
+            
+            saveProgress();
+        }
+
+        // ========== UPDATE SCORE ==========
+        function updateScore() {
+            const scoreValue = document.getElementById('score-value');
+            if (scoreValue) {
+                scoreValue.textContent = score;
+            }
+            
+            // Update progress bar
+            const maxPossible = habitats.length * 100;
+            const pct = Math.min(100, Math.round((score / (maxPossible || 1)) * 100));
+            const progressBar = document.getElementById('progress');
+            if (progressBar) {
+                progressBar.style.width = `${pct}%`;
+            }
+            
+            saveProgress();
+        }
+
+        // ========== RANDOM ANIMAL SELECTION ==========
+        function getRandomAnimals(habitatType, count = 3, isCorrect = true) {
+            const pool = isCorrect ? animalPools[habitatType].correct : animalPools[habitatType].wrong;
+            const available = pool.filter(animal => !sessionAnimals[habitatType].has(animal.name.en));
+            
+            // If we run out of animals, reset the session for this habitat
+            if (available.length < count) {
+                sessionAnimals[habitatType] = new Set();
+                return getRandomAnimals(habitatType, count, isCorrect);
+            }
+            
+            const selected = [];
+            while (selected.length < count && available.length > 0) {
+                const randomIndex = Math.floor(Math.random() * available.length);
+                const animal = available.splice(randomIndex, 1)[0];
+                selected.push(animal);
+                sessionAnimals[habitatType].add(animal.name.en);
+            }
+            
+            return selected;
+        }
+
+        // ========== HABITAT RENDERING ==========
+        function renderHabitats() {
+            habitatSelection.innerHTML = '';
+            habitats.forEach(habitat => {
+                const isCompleted = completedHabitats.includes(habitat.id);
+                
+                const card = document.createElement('div');
+                card.className = `habitat-card ${isCompleted ? 'completed' : ''} ${currentHabitat && currentHabitat.id === habitat.id ? 'active' : ''}`;
+                card.dataset.id = habitat.id;
+                
+                let statusText = '';
+                let statusClass = '';
+                
+                if (isCompleted) {
+                    statusText = currentLanguage === 'en' ? 'Completed' : currentLanguage === 'or' ? 'ସମ୍ପୂର୍ଣ୍ଣ' : 'पूर्ण';
+                    statusClass = 'status-completed';
+                } else {
+                    statusText = currentLanguage === 'en' ? 'Explore' : currentLanguage === 'or' ? 'ଅନ୍ୱେଷଣ' : 'अन्वेषण';
+                    statusClass = 'status-explore';
+                }
+                
+                card.innerHTML = `
+                    <div class="habitat-header">
+                        <div class="habitat-icon ${habitat.color}">
+                            <i class="${habitat.icon}"></i>
+                        </div>
+                        <h2 class="habitat-title">${habitat.name[currentLanguage]}</h2>
+                    </div>
+                    <p class="habitat-desc">${habitat.description[currentLanguage]}</p>
+                    <div class="habitat-status">
+                        <span class="status-badge ${statusClass}">${statusText}</span>
+                        ${isCompleted ? `<i class="fas fa-check-circle" style="color:#48bb78;"></i>` : 
+                         `<i class="fas fa-play-circle" style="color:#4299e1;"></i>`}
+                    </div>
+                `;
+                
+                card.addEventListener('click', () => selectHabitat(habitat));
+                
+                habitatSelection.appendChild(card);
+            });
+        }
+
+        // ========== HABITAT SELECTION ==========
+        function selectHabitat(habitat) {
+            currentHabitat = habitat;
+            currentGame = 0;
+            renderHabitats();
+            showDragGame();
+        }
+
+        // ========== DRAG & DROP GAME ==========
+        function showDragGame() {
+            const correctAnimals = getRandomAnimals(currentHabitat.type, 3, true);
+            const wrongAnimals = getRandomAnimals(currentHabitat.type, 3, false);
+            
+            // Store correct animals for fun facts
+            lastCorrectAnimals = [...correctAnimals];
+            
+            interactiveArea.style.display = 'block';
+            interactiveArea.innerHTML = `
+                <div class="interactive-header">
+                    <h2 class="interactive-title">${currentHabitat.name[currentLanguage]} - ${currentLanguage === 'en' ? 'Drag & Drop Game' : currentLanguage === 'or' ? 'ଟାଣନ୍ତୁ ଏବଂ ଛାଡ଼ନ୍ତୁ ଖେଳ' : 'खींचें और छोड़ें खेल'}</h2>
+                    <button class="close-btn" id="close-btn"><i class="fas fa-times"></i></button>
+                </div>
+                
+                <div class="drag-game">
+                    <p class="drag-instructions">${translations[currentLanguage]['drag-instructions']}</p>
+                    
+                    <div class="drag-containers">
+                        <div class="drag-zone" id="habitat-zone">
+                            <h3>${currentHabitat.name[currentLanguage]}</h3>
+                            <div class="zone-items" id="habitat-items"></div>
+                        </div>
+                        <div class="drag-zone" id="wrong-zone">
+                            <h3>${translations[currentLanguage]['wrong-animals']}</h3>
+                            <div class="zone-items" id="wrong-items"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="drag-items" id="drag-items-container">
+                        ${[...correctAnimals, ...wrongAnimals].map((item, index) => `
+                            <div class="drag-item new-animal" 
+                                 draggable="true" 
+                                 data-name="${item.name.en}" 
+                                 data-correct="${index < correctAnimals.length ? currentHabitat.type + '-animals' : 'wrong-animals'}">
+                                <div class="drag-icon">${item.icon}</div>
+                                <div class="drag-name">${item.name[currentLanguage]}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="action-btn check" id="check-btn">${translations[currentLanguage]['check-answers']}</button>
+                    </div>
+                </div>
+            `;
+            
+            // Event listeners
+            document.getElementById('close-btn').addEventListener('click', closeInteractive);
+            document.getElementById('check-btn').addEventListener('click', checkDragAnswers);
+            
+            setupDragAndDrop();
+        }
+
+        function setupDragAndDrop() {
+            const dragItems = document.querySelectorAll('.drag-item');
+            const dropZones = document.querySelectorAll('.drag-zone');
+            
+            dragItems.forEach(item => {
+                item.addEventListener('dragstart', dragStart);
+                item.addEventListener('dragend', dragEnd);
+            });
+            
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', dragOver);
+                zone.addEventListener('dragenter', dragEnter);
+                zone.addEventListener('dragleave', dragLeave);
+                zone.addEventListener('drop', drop);
+            });
+        }
+
+        function dragStart(e) {
+            this.classList.add('dragging');
+            e.dataTransfer.setData('text', this.dataset.name);
+        }
+
+        function dragEnd() {
+            this.classList.remove('dragging');
+        }
+
+        function dragOver(e) {
+            e.preventDefault();
+        }
+
+        function dragEnter(e) {
+            e.preventDefault();
+            this.style.backgroundColor = '#ebf8ff';
+        }
+
+        function dragLeave() {
+            this.style.backgroundColor = '';
+        }
+
+        function drop(e) {
+            e.preventDefault();
+            this.style.backgroundColor = '';
+            const name = e.dataTransfer.getData('text');
+            const draggedItem = document.querySelector(`[data-name="${name}"]`);
+            
+            if (draggedItem && this.querySelector('.zone-items')) {
+                this.querySelector('.zone-items').appendChild(draggedItem);
+            }
+        }
+
+        function checkDragAnswers() {
+            const habitatItems = document.getElementById('habitat-items');
+            const wrongItems = document.getElementById('wrong-items');
+            
+            let correct = 0;
+            const totalItems = 6; // 3 correct + 3 wrong
+            
+            // Check habitat zone
+            if (habitatItems) {
+                habitatItems.querySelectorAll('.drag-item').forEach(item => {
+                    if (item.dataset.correct === currentHabitat.type + '-animals') {
+                        item.style.border = '3px solid #48bb78';
+                        item.style.boxShadow = '0 0 15px rgba(72, 187, 120, 0.3)';
+                        correct++;
+                    } else {
+                        item.style.border = '3px solid #f56565';
+                    }
+                });
+            }
+            
+            // Check wrong zone
+            if (wrongItems) {
+                wrongItems.querySelectorAll('.drag-item').forEach(item => {
+                    if (item.dataset.correct === 'wrong-animals') {
+                        item.style.border = '3px solid #48bb78';
+                        item.style.boxShadow = '0 0 15px rgba(72, 187, 120, 0.3)';
+                        correct++;
+                    } else {
+                        item.style.border = '3px solid #f56565';
+                    }
+                });
+            }
+            
+            if (correct === totalItems) {
+                score += 30;
+                streak++;
+                updateScore();
+                updateStreak();
+                
+                // Disable dragging
+                document.querySelectorAll('.drag-item').forEach(item => {
+                    item.draggable = false;
+                    item.style.cursor = 'default';
+                });
+                
+                // Show success message with fun fact
+                showFunFactAfterDragDrop();
+                createConfetti();
+            } else {
+                streak = 0;
+                updateStreak();
+                showModal(
+                    currentLanguage === 'en' ? `You placed ${correct} out of ${totalItems} correctly. Try again!` :
+                    currentLanguage === 'or' ? `ଆପଣ ${totalItems} ରୁ ${correct} ଟି ସଠିକ ଭାବରେ ରଖିଛନ୍ତି। ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ!` :
+                    `आपने ${totalItems} में से ${correct} को सही ढंग से रखा। फिर से कोशिश करें!`,
+                    'info'
+                );
+            }
+        }
+
+        function showFunFactAfterDragDrop() {
+            // Pick a random correct animal for fun fact
+            const randomAnimal = lastCorrectAnimals[Math.floor(Math.random() * lastCorrectAnimals.length)];
+            
+            document.getElementById('funfact-title').textContent = translations[currentLanguage]['correct-title'];
+            document.getElementById('funfact-text').textContent = randomAnimal.fact[currentLanguage];
+            document.getElementById('funfact-modal').style.display = 'flex';
+        }
+
+        // ========== MEMORY GAME ==========
+        function showMemoryGame() {
+            currentGame = 1;
+            
+            // Get random animals for memory game
+            const memoryAnimals = getRandomAnimals(currentHabitat.type, 4, true);
+            
+            // Create card pairs (icon and name)
+            const memoryCards = [];
+            memoryAnimals.forEach((animal, index) => {
+                // Create icon card
+                memoryCards.push({
+                    type: 'icon',
+                    content: animal.icon,
+                    name: animal.name[currentLanguage],
+                    fact: animal.fact[currentLanguage],
+                    id: index,
+                    matched: false
+                });
+                // Create name card
+                memoryCards.push({
+                    type: 'name',
+                    content: animal.name[currentLanguage],
+                    icon: animal.icon,
+                    fact: animal.fact[currentLanguage],
+                    id: index,
+                    matched: false
+                });
+            });
+            
+            // Shuffle cards
+            const shuffledCards = memoryCards.sort(() => Math.random() - 0.5);
+            
+            interactiveArea.innerHTML = `
+                <div class="interactive-header">
+                    <h2 class="interactive-title">${currentHabitat.name[currentLanguage]} - ${currentLanguage === 'en' ? 'Memory Game' : currentLanguage === 'or' ? 'ସ୍ମୃତି ଖେଳ' : 'मेमोरी गेम'}</h2>
+                    <button class="close-btn" id="close-btn"><i class="fas fa-times"></i></button>
+                </div>
+                
+                <div class="memory-game" style="display: block;">
+                    <p class="drag-instructions">${translations[currentLanguage]['matching-instructions']}</p>
+                    
+                    <div class="memory-board" id="memory-board">
+                        ${shuffledCards.map((card, index) => `
+                            <div class="memory-card" data-index="${index}" data-id="${card.id}" data-type="${card.type}" data-matched="false">
+                                <div class="memory-front">
+                                    <i class="fas fa-question" style="font-size: 2rem;"></i>
+                                </div>
+                                <div class="memory-back">
+                                    <div class="memory-back-content">
+                                        ${card.type === 'icon' ? 
+                                            `<div class="memory-back-icon">${card.content}</div>
+                                             <div class="memory-back-name">${currentLanguage === 'en' ? 'Find my name!' : currentLanguage === 'or' ? 'ମୋର ନାମ ଖୋଜ!' : 'मेरा नाम ढूंढो!'}</div>` : 
+                                            `<div class="memory-back-name" style="font-size: 1.2rem; font-weight: bold;">${card.content}</div>
+                                             <div style="font-size: 0.8rem; color: #718096; margin-top: 5px;">${currentLanguage === 'en' ? 'Match with my icon!' : currentLanguage === 'or' ? 'ମୋ ଆଇକନ୍ ସହିତ ମେଳ କର!' : 'मेरे आइकन से मिलान करें!'}</div>`}
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('close-btn').addEventListener('click', closeInteractive);
+            
+            let firstCard = null;
+            let secondCard = null;
+            let lockBoard = false;
+            let matchedPairs = 0;
+            const totalPairs = memoryAnimals.length;
+            let lastMatchedAnimal = null;
+            
+            const cardElements = document.querySelectorAll('.memory-card');
+            
+            function flipCard() {
+                if (lockBoard || this === firstCard || this.dataset.matched === 'true') return;
+                
+                this.classList.add('flipped');
+                
+                if (!firstCard) {
+                    firstCard = this;
+                    return;
+                }
+                
+                secondCard = this;
+                lockBoard = true;
+                
+                checkForMatch();
+            }
+            
+            function checkForMatch() {
+                const isMatch = firstCard.dataset.id === secondCard.dataset.id && 
+                               firstCard.dataset.type !== secondCard.dataset.type;
+                
+                if (isMatch) {
+                    disableCards();
+                    matchedPairs++;
+                    
+                    // Store the matched animal for fun fact
+                    const matchedIndex = parseInt(firstCard.dataset.id);
+                    lastMatchedAnimal = memoryAnimals[matchedIndex];
+                    
+                    // Add match animation
+                    firstCard.classList.add('match-animation');
+                    secondCard.classList.add('match-animation');
+                    
+                    if (matchedPairs === totalPairs) {
+                        setTimeout(() => {
+                            score += 50;
+                            streak++;
+                            updateScore();
+                            updateStreak();
+                            
+                            // Show habitat understood modal
+                            showHabitatUnderstoodModal();
+                            
+                            createConfetti();
+                        }, 800);
+                    } else {
+                        // Show fun fact for matched pair
+                        setTimeout(() => {
+                            showFunFactForMemoryMatch();
+                        }, 500);
+                    }
+                } else {
+                    unflipCards();
+                }
+            }
+            
+            function disableCards() {
+                firstCard.dataset.matched = 'true';
+                secondCard.dataset.matched = 'true';
+                firstCard.classList.add('matched');
+                secondCard.classList.add('matched');
+                resetBoard();
+            }
+            
+            function unflipCards() {
+                setTimeout(() => {
+                    firstCard.classList.remove('flipped');
+                    secondCard.classList.remove('flipped');
+                    resetBoard();
+                }, 1000);
+            }
+            
+            function resetBoard() {
+                [firstCard, secondCard, lockBoard] = [null, null, false];
+            }
+            
+            function showFunFactForMemoryMatch() {
+                if (lastMatchedAnimal) {
+                    document.getElementById('funfact-title').textContent = translations[currentLanguage]['correct-title'];
+                    document.getElementById('funfact-text').textContent = lastMatchedAnimal.fact[currentLanguage];
+                    document.getElementById('funfact-modal').style.display = 'flex';
+                    lastMatchedAnimal = null;
+                }
+            }
+            
+            cardElements.forEach(card => {
+                card.addEventListener('click', flipCard);
+            });
+        }
+
+        function showHabitatUnderstoodModal() {
+            document.getElementById('habitat-understood-title').textContent = translations[currentLanguage]['habitat-understood'];
+            document.getElementById('habitat-understood-text').textContent = 
+                translations[currentLanguage]['habitat-understood-text'].replace('{habitat}', currentHabitat.name[currentLanguage]);
+            document.getElementById('habitat-understood-modal').style.display = 'flex';
+        }
+
+        function showFinalCompletionDialog() {
+            document.getElementById('final-completion-title').textContent = translations[currentLanguage]['all-habitats-completed'];
+            document.getElementById('final-completion-text').textContent = translations[currentLanguage]['all-habitats-text'];
+            document.getElementById('play-again-btn').textContent = translations[currentLanguage]['play-again'];
+            document.getElementById('view-scores-btn').textContent = translations[currentLanguage]['view-scores'];
+            finalCompletionDialog.style.display = 'flex';
+            createConfetti();
+        }
+
+        // ========== SHOW SCOREBOARD ==========
+        function showScoreboard() {
+            interactiveArea.style.display = 'block';
+            interactiveArea.innerHTML = `
+                <div class="interactive-header">
+                    <h2 class="interactive-title">${translations[currentLanguage]['game-title']} - ${translations[currentLanguage]['all-habitats-completed']}</h2>
+                    <button class="close-btn" id="close-btn"><i class="fas fa-times"></i></button>
+                </div>
+                
+                <div class="scoreboard">
+                    <h2 class="scoreboard-title">🏆 ${currentLanguage === 'en' ? 'Congratulations!' : currentLanguage === 'or' ? 'ଅଭିନନ୍ଦନ!' : 'बधाई हो!'}</h2>
+                    
+                    <div class="scoreboard-stats">
+                        <div class="scoreboard-stat">
+                            <div class="stat-value">${score}</div>
+                            <div class="stat-label">${currentLanguage === 'en' ? 'Total Score' : currentLanguage === 'or' ? 'ସମୁଦାୟ ସ୍କୋର' : 'कुल स्कोर'}</div>
+                        </div>
+                        
+                        <div class="scoreboard-stat">
+                            <div class="stat-value">${completedHabitats.length}/4</div>
+                            <div class="stat-label">${currentLanguage === 'en' ? 'Habitats Completed' : currentLanguage === 'or' ? 'ସମ୍ପୂର୍ଣ୍ଣ ଆବାସ' : 'पूर्ण आवास'}</div>
+                        </div>
+                        
+                        <div class="scoreboard-stat">
+                            <div class="stat-value">${completedHabitats.length * 2}</div>
+                            <div class="stat-label">${currentLanguage === 'en' ? 'Games Played' : currentLanguage === 'or' ? 'ଖେଳାଯାଇଥିବା ଖେଳ' : 'खेले गए खेल'}</div>
+                        </div>
+                        
+                        <div class="scoreboard-stat">
+                            <div class="stat-value">${Math.floor(timeLeft/60)}:${(timeLeft % 60).toString().padStart(2,'0')}</div>
+                            <div class="stat-label">${currentLanguage === 'en' ? 'Time Remaining' : currentLanguage === 'or' ? 'ବାକି ସମୟ' : 'शेष समय'}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="scoreboard-facts">
+                        <h4>${currentLanguage === 'en' ? 'You have explored all habitats!' : currentLanguage === 'or' ? 'ଆପଣ ସମସ୍ତ ଆବାସ ଅନ୍ୱେଷଣ କରିଛନ୍ତି!' : 'आपने सभी आवासों का अन्वेषण कर लिया है!'}</h4>
+                        <p>${currentLanguage === 'en' ? 'Great job learning about different habitats and how animals survive!' : currentLanguage === 'or' ? 'ବିଭିନ୍ନ ଆବାସ ଏବଂ ପ୍ରାଣୀମାନେ କିପରି ବଞ୍ଚନ୍ତି ତାହା ଶିଖିବା ପାଇଁ ବହୁତ ଭଲ!' : 'विभिन्न आवासों और जानवरों के जीवित रहने के तरीकों के बारे में सीखने का बहुत अच्छा काम!'}</p>
+                    </div>
+                    
+                    <div class="scoreboard-buttons">
+                        <button class="action-btn continue" id="continue-exploring-btn">
+                            ${currentLanguage === 'en' ? 'Play Again' : currentLanguage === 'or' ? 'ପୁଣି ଖେଳନ୍ତୁ' : 'फिर से खेलें'}
+                        </button>
+                        <button class="action-btn next" id="back-to-habitats-btn">
+                            ${currentLanguage === 'en' ? 'Back to Habitats' : currentLanguage === 'or' ? 'ଆବାସକୁ ଫେରନ୍ତୁ' : 'आवास पर वापस जाएं'}
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('close-btn').addEventListener('click', closeInteractive);
+            
+            document.getElementById('continue-exploring-btn').addEventListener('click', () => {
+                interactiveArea.style.display = 'none';
+                startGame(); // Restart game
+            });
+            
+            document.getElementById('back-to-habitats-btn').addEventListener('click', () => {
+                interactiveArea.style.display = 'none';
+                currentHabitat = null;
+                renderHabitats();
+            });
+            
+            createConfetti();
+        }
+
+        // ========== GET NEXT HABITAT ==========
+        function getNextHabitat() {
+            if (!currentHabitat) return habitats[0];
+            
+            const currentIndex = habitats.findIndex(h => h.id === currentHabitat.id);
+            if (currentIndex < habitats.length - 1) {
+                return habitats[currentIndex + 1];
+            } else {
+                return null; // No next habitat
+            }
+        }
+
+        // ========== TIMER ==========
+        function startTimer() {
+            clearInterval(timerInterval);
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    showTimeUpModal();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timeLeft/60);
+            const s = timeLeft % 60;
+            const timeElement = document.getElementById('time');
+            if (timeElement) {
+                timeElement.textContent = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+            }
+        }
+
+        // ========== MODAL FUNCTIONS ==========
+        function showModal(message, type) {
+            const modal = document.getElementById('feedback-modal');
+            const icon = document.getElementById('modal-icon');
+            const title = document.getElementById('modal-title');
+            
+            if (type === 'success') {
+                icon.innerHTML = '<i class="fas fa-check-circle" style="color:#48bb78;"></i>';
+                title.textContent = translations[currentLanguage]['correct-title'];
+            } else if (type === 'info') {
+                icon.innerHTML = '<i class="fas fa-info-circle" style="color:#4299e1;"></i>';
+                title.textContent = currentLanguage === 'en' ? 'Information' : currentLanguage === 'or' ? 'ସୂଚନା' : 'जानकारी';
+            }
+            
+            document.getElementById('modal-text').textContent = message;
+            document.getElementById('modal-action').textContent = translations[currentLanguage]['continue-btn'];
+            modal.style.display = 'flex';
+        }
+
+        function showTimeUpModal() {
+            const modal = document.getElementById('feedback-modal');
+            const icon = document.getElementById('modal-icon');
+            const title = document.getElementById('modal-title');
+            const text = document.getElementById('modal-text');
+            const action = document.getElementById('modal-action');
+            
+            icon.innerHTML = '<i class="fas fa-clock" style="color:#f56565;"></i>';
+            title.textContent = translations[currentLanguage]['time-up'];
+            text.textContent = translations[currentLanguage]['time-up-text']
+                .replace('{score}', score)
+                .replace('{habitats}', completedHabitats.length);
+            action.textContent = translations[currentLanguage]['new-game'];
+            action.onclick = startGame;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('feedback-modal').style.display = 'none';
+        }
+
+        function closeInteractive() {
+            interactiveArea.style.display = 'none';
+            currentHabitat = null;
+            renderHabitats();
+        }
+
+        // ========== VISUAL EFFECTS ==========
+        function createConfetti() {
+            for (let i=0;i<20;i++){
+                const c = document.createElement('div');
+                c.style.position='fixed';
+                c.style.left = Math.random()*100 + 'vw';
+                c.style.top = '-10px';
+                c.style.width='10px'; c.style.height='10px';
+                const colors = ['#ff6b6b','#4ecdc4','#45b7d1','#96ceb4','#ffeaa7','#ff9ff3','#54a0ff'];
+                c.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+                c.style.zIndex = 1500;
+                c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                c.style.transform = `rotate(${Math.random()*360}deg)`;
+                c.style.animation = `confetti-fall ${2 + Math.random()*2}s ease-out forwards`;
+                document.body.appendChild(c);
+                setTimeout(()=> { if (document.body.contains(c)) document.body.removeChild(c); }, 4000);
+            }
+        }
+
+        // ========== START GAME ==========
+        function startGame() {
+            instructionsModal.style.display = 'none';
+            gameHeader.style.display = 'block';
+            gameStatsContainer.style.display = 'block';
+            gameArea.style.display = 'block';
+            interactiveArea.style.display = 'none';
+            
+            // Reset game state for new session
+            score = 0;
+            streak = 0;
+            timeLeft = 900;
+            currentHabitat = null;
+            gameSessionId = Date.now();
+            completedHabitats = [];
+            
+            // Reset session data (fresh start every new game)
+            habitats.forEach(habitat => {
+                sessionAnimals[habitat.type] = new Set();
+            });
+            
+            // Close all modals
+            document.getElementById('feedback-modal').style.display = 'none';
+            document.getElementById('funfact-modal').style.display = 'none';
+            document.getElementById('habitat-understood-modal').style.display = 'none';
+            document.getElementById('final-completion-dialog').style.display = 'none';
+            
+            renderHabitats();
+            startTimer();
+            updateScore();
+            updateStreak();
+            saveProgress();
+        }
+
+        // ========== LANGUAGE SWITCH ==========
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-lang')===lang);
+            });
+            
+            const map = translations[lang];
+            Object.keys(map).forEach(key => {
+                document.querySelectorAll(`[data-translate="${key}"]`).forEach(el => {
+                    el.textContent = map[key];
+                });
+            });
+            
+            // Update instructions
+            document.getElementById('instructions-title').textContent = map['instructions-title'];
+            document.getElementById('instructions-intro').textContent = map['instructions-intro'];
+            document.getElementById('instruction-1').textContent = map['instruction-1'];
+            document.getElementById('instruction-2').textContent = map['instruction-2'];
+            document.getElementById('instruction-3').textContent = map['instruction-3'];
+            document.getElementById('instruction-4').textContent = map['instruction-4'];
+            document.getElementById('instruction-5').textContent = map['instruction-5'];
+            document.getElementById('instruction-6').textContent = map['instruction-6'];
+            document.getElementById('instructions-outro').textContent = map['instructions-outro'];
+            document.getElementById('start-game-btn').textContent = map['start-game-btn'];
+            
+            // Update game stats text
+            updateGameStatsText();
+            
+            if (habitatSelection) {
+                renderHabitats();
+            }
+            
+            if (currentHabitat && interactiveArea.style.display === 'block') {
+                if (currentGame === 0) {
+                    showDragGame();
+                } else if (currentGame === 1) {
+                    showMemoryGame();
+                }
+            }
+        }
+
+        // ========== EVENT LISTENERS ==========
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+                document.getElementById('funfact-modal').style.display = 'none';
+                document.getElementById('habitat-understood-modal').style.display = 'none';
+                document.getElementById('final-completion-dialog').style.display = 'none';
+                if (interactiveArea.style.display === 'block') {
+                    closeInteractive();
+                }
+            }
+            if ((e.key === 'r' || e.key === 'R') && e.ctrlKey) { 
+                e.preventDefault(); 
+                startGame(); 
+            }
+            if (e.key === '1') switchLanguage('en'); 
+            if (e.key === '2') switchLanguage('or'); 
+            if (e.key === '3') switchLanguage('hi');
+        });
+
+        document.getElementById('feedback-modal').addEventListener('click', (ev)=> { 
+            if (ev.target === document.getElementById('feedback-modal')) closeModal(); 
+        });
+
+        document.getElementById('funfact-modal').addEventListener('click', (ev)=> { 
+            if (ev.target === document.getElementById('funfact-modal')) {
+                document.getElementById('funfact-modal').style.display = 'none';
+            }
+        });
+
+        document.getElementById('habitat-understood-modal').addEventListener('click', (ev)=> { 
+            if (ev.target === document.getElementById('habitat-understood-modal')) {
+                document.getElementById('habitat-understood-modal').style.display = 'none';
+            }
+        });
+
+        document.getElementById('final-completion-dialog').addEventListener('click', (ev)=> { 
+            if (ev.target === document.getElementById('final-completion-dialog')) {
+                document.getElementById('final-completion-dialog').style.display = 'none';
+            }
+        });
+
+        // Initialize game
+        document.addEventListener('DOMContentLoaded', init);
+
+        // Add CSS for confetti animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes confetti-fall {
+                0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+                100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

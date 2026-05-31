@@ -1,0 +1,2115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Matter Mission — Save the Three Kingdoms</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Poppins',sans-serif}
+  body{background:#f0f7ff;color:#0f1724;overflow-x:hidden}
+  .container{max-width:1100px;margin:0 auto;padding:0 18px}
+  
+  /* Header Styles with Profile Integration */
+  header {
+    background: linear-gradient(135deg, #0e2a47 0%, #1a365d 100%);
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .logo {
+    width: 50px;
+    height: 50px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo i {
+    font-size: 1.8rem;
+    color: #2a69ac;
+  }
+
+  .logo-text h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .logo-text h1 span {
+    color: #38b2ac;
+    font-weight: 800;
+  }
+
+  .logo-text p {
+    font-size: 0.8rem;
+    opacity: 0.9;
+  }
+
+  nav ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+  }
+
+  nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 8px 12px;
+    border-radius: 6px;
+  }
+
+  nav a:hover, nav a.active {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .header-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  /* Horizontal Language Selector */
+  .language-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: 15px;
+  }
+
+  .language-option-btn {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 60px;
+    text-align: center;
+  }
+
+  .language-option-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+  }
+
+  .language-option-btn.active {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+  }
+
+  .profile-container {
+    position: relative;
+  }
+
+  .profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 30px;
+    padding: 8px 15px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .profile-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .profile-pic {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+  }
+
+  .profile-dropdown {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    width: 180px;
+    display: none;
+    z-index: 1001;
+    overflow: hidden;
+  }
+
+  .profile-dropdown.show {
+    display: block;
+  }
+
+  .dropdown-item {
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .dropdown-item:last-child {
+    border-bottom: none;
+  }
+
+  .dropdown-item:hover {
+    background: #f5f7fa;
+  }
+
+  .dropdown-item i {
+    color: #3182ce;
+    width: 20px;
+  }
+  
+  /* header hero */
+  .game-header{background:linear-gradient(rgba(14,42,71,0.85),rgba(26,54,93,0.9)),url('https://images.unsplash.com/photo-1541976076758-0d0b0a2b9a5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80');background-size:cover;padding:34px 0;color:white;text-align:center;margin-bottom:14px}
+  .game-header h1{font-size:2rem;margin-bottom:6px}
+  .game-header p{opacity:0.95}
+  
+  /* stats */
+  .game-stats{display:flex;align-items:center;justify-content:space-between;background:white;padding:12px 18px;border-radius:12px;box-shadow:0 10px 30px rgba(2,6,23,0.06);gap:12px;margin:12px auto;max-width:1000px}
+  .stat{display:flex;align-items:center;gap:10px;font-weight:700;color:#0f1724}
+  .progress-container{width:220px;height:12px;background:#e6eef9;border-radius:10px;overflow:hidden}
+  .progress-bar{height:100%;background:#3182ce;width:0%;transition:width .45s ease}
+  .streak-counter{position:fixed;right:18px;top:45%;transform:translateY(-50%);background:linear-gradient(45deg,#ff7a7a,#ff9a6b);color:white;padding:12px 18px;border-radius:32px;font-weight:800;display:none;z-index:900}
+  
+  /* worlds */
+  .worlds{max-width:1000px;margin:18px auto 80px;display:flex;flex-direction:column;gap:18px;padding-bottom:24px}
+  .world{background:white;border-radius:16px;padding:14px;box-shadow:0 12px 30px rgba(2,6,23,0.06);border:2px solid rgba(16,24,40,0.03)}
+  .world-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+  .world-title{font-weight:800;color:#0f1724;display:flex;gap:10px;align-items:center}
+  .cards-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .card{background:linear-gradient(145deg,#fff,#f6fbff);border-radius:12px;padding:12px;min-height:110px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;transition:all .22s;box-shadow:0 8px 18px rgba(2,6,23,0.04)}
+  .card:hover{transform:translateY(-8px);box-shadow:0 18px 38px rgba(2,6,23,0.06)}
+  .card.disabled{opacity:0.36;cursor:not-allowed;transform:none;box-shadow:none}
+  .card-icon{font-size:2.4rem;margin-bottom:8px}
+  .card-title{font-weight:700;color:#0f1724}
+  .card-sub{font-size:0.9rem;color:#475569;margin-top:6px}
+  .badge-small{background:#eef8ff;color:#075985;padding:6px 10px;border-radius:999px;font-weight:800}
+  
+  /* modal */
+  .modal{display:none;position:fixed;inset:0;background:rgba(2,6,23,0.6);z-index:2000;align-items:center;justify-content:center;padding:18px}
+  .modal-content{background:linear-gradient(145deg,#ffffff,#f6fbff);border-radius:14px;padding:18px;max-width:760px;width:100%;box-shadow:0 30px 60px rgba(2,6,23,0.14);position:relative;text-align:center}
+  .modal-close{position:absolute;right:12px;top:12px;background:rgba(0,0,0,0.05);border:none;width:40px;height:40px;border-radius:50%;cursor:pointer}
+  .modal-icon{width:86px;height:86px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:2.4rem;background:rgba(255,255,255,0.9);box-shadow:0 8px 18px rgba(2,6,23,0.06)}
+  .modal-question{font-weight:800;font-size:1.15rem;color:#0f1724;margin-bottom:10px}
+  .options{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+  .opt-btn{min-width:140px;padding:10px 14px;border-radius:10px;border:1px solid rgba(49,130,206,0.08);background:linear-gradient(145deg,#fff,#eef7ff);cursor:pointer;font-weight:800}
+  .opt-btn:hover{transform:translateY(-4px)}
+  .opt-btn.correct{background:linear-gradient(135deg,#d4f7e6,#b7f0d4);border-color:#48bb78}
+  .opt-btn.wrong{background:linear-gradient(135deg,#ffdede,#ffc9c9);border-color:#f56565}
+  .modal-hint{margin-top:10px;color:#475569}
+  .start-game-btn{padding:12px 20px;border-radius:12px;border:none;background:linear-gradient(135deg,#38b2ac,#2c9a94);color:white;font-weight:800;cursor:pointer}
+  .next-level-btn{padding:10px 16px;border-radius:12px;border:none;background:linear-gradient(45deg,#4facfe,#00f2fe);color:white;font-weight:800;cursor:pointer}
+  
+  /* Page System */
+  .page {display: none;}
+  .page.active {display: block;}
+  
+  /* Instructions Modal - WITH LANGUAGE SWITCHER */
+  .instructions-modal {display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 2000; align-items: center; justify-content: center;}
+  .instructions-content {background: white; border-radius: 20px; width: 90%; max-width: 700px; padding: 30px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); position: relative; text-align: center;}
+  .instructions-title {font-size: 2rem; margin-bottom: 20px; color: #1a365d; font-weight: 700;}
+  .instructions-text {color: #64748b; margin-bottom: 25px; line-height: 1.6; text-align: left; font-size: 1.1rem;}
+  .instructions-list {margin-left: 20px; margin-bottom: 25px;}
+  .instructions-list li {margin-bottom: 10px;}
+  
+  /* Level Complete with Ranking */
+  .level-complete {display:none; text-align:center; padding:28px; background:linear-gradient(145deg,#ffffff,#f7fafc); border-radius:20px; box-shadow:0 20px 40px rgba(0,0,0,0.08); max-width:700px; margin:24px auto;}
+  .level-complete .badge {font-size: 4rem; margin-bottom: 20px;}
+  .level-title {font-size:2.2rem; font-weight:800; color:#1a365d; margin-bottom:15px;}
+  .level-text {color:#4a5568; margin-bottom:20px; font-size:1.1rem; line-height:1.6;}
+ 
+  /* Score and Rank Display */
+  .score-rank-container {display: flex; justify-content: center; gap: 30px; margin: 25px 0; flex-wrap: wrap;}
+  .score-box, .rank-box {background: white; padding: 20px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); min-width: 180px;}
+  .score-box {border-left: 5px solid #38b2ac;}
+  .rank-box {border-left: 5px solid #f59e0b;}
+  .score-label, .rank-label {font-size: 0.9rem; color: #64748b; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;}
+  .score-value {font-size: 2.5rem; font-weight: 800; color: #1a365d;}
+  .rank-value {font-size: 2.5rem; font-weight: 800; color: #d97706;}
+  .rank-suffix {font-size: 1rem; color: #6b7280;}
+ 
+  /* Leaderboard Preview */
+  .leaderboard-preview {margin: 25px 0; padding: 20px; background: #f8fafc; border-radius: 15px;}
+  .leaderboard-title {font-size: 1.2rem; font-weight: 700; color: #1e293b; margin-bottom: 15px; text-align: center;}
+  .leaderboard-list {max-height: 200px; overflow-y: auto;}
+  .leaderboard-item {display: flex; align-items: center; justify-content: space-between; padding: 10px 15px; margin-bottom: 8px; background: white; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
+  .leaderboard-item.current-user {background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border: 2px solid #0ea5e9;}
+  .leaderboard-rank {font-weight: 700; color: #475569; width: 30px; text-align: center;}
+  .leaderboard-name {flex-grow: 1; margin: 0 15px; font-weight: 600;}
+  .leaderboard-score {font-weight: 700; color: #059669; min-width: 60px; text-align: right;}
+ 
+  .next-level-btn {padding:12px 24px; background:linear-gradient(45deg,#38b2ac,#2c9a94); color:white; border:none; border-radius:12px; font-size:1.1rem; font-weight:800; cursor:pointer; transition: all 0.3s ease; margin-top:15px;}
+  .next-level-btn:hover {transform: translateY(-3px); box-shadow: 0 6px 15px rgba(56, 178, 172, 0.4);}
+
+  .particles {position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-1;}
+  .particle {position:absolute; width:4px; height:4px; background:rgba(255,255,255,0.5); border-radius:50%; animation: float-particle 18s infinite linear;}
+
+  @keyframes float-particle {0% {transform: translateY(100vh) translateX(0px); opacity:0;} 10%{opacity:1;} 90%{opacity:1;} 100%{transform:translateY(-100px) translateX(100px); opacity:0;}}
+
+  /* Streak Counter */
+  .streak-counter {position: fixed; top: 50%; right: 20px; transform: translateY(-50%); background: linear-gradient(45deg, #ff6b6b, #ee5a24); color: white; padding: 18px 24px; border-radius: 50px; font-weight: 800; font-size: 1.2rem; box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5); z-index: 500; animation: streak-bounce 2s infinite; display: none;}
+  @keyframes streak-bounce {
+    0%, 100% {transform: translateY(-50%) scale(1);}
+    50% {transform: translateY(-55%) scale(1.1);}
+  }
+
+  /* Language-specific text styles */
+  .odia-text {font-family: 'Kalinga', 'Nirmala UI', 'Segoe UI', sans-serif; font-weight:600;}
+  .hindi-text {font-family: 'Nirmala UI', 'Segoe UI', sans-serif; font-weight:600;}
+
+  /* Fun Fact Modal */
+  .funfact-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+  }
+  .funfact-content {
+    background: white;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+    text-align: center;
+  }
+  .funfact-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+  }
+  .funfact-title {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #1a365d;
+    font-weight: 700;
+  }
+  .funfact-text {
+    color: #64748b;
+    margin-bottom: 25px;
+    line-height: 1.6;
+    font-size: 1.1rem;
+  }
+  .continue-btn {
+    padding: 12px 30px;
+    background: #38b2ac;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+  }
+  .continue-btn:hover {
+    background: #2c9a94;
+    transform: translateY(-2px);
+  }
+  
+  /* Kingdom Unlock Page */
+  .kingdom-unlock-page {text-align: center; padding: 40px 20px;}
+  .kingdom-unlock-content {background: white; border-radius: 20px; padding: 40px; max-width: 700px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.1);}
+  .kingdom-icon-large {font-size: 5rem; margin-bottom: 20px;}
+  .kingdom-unlock-title {font-size: 2.2rem; margin-bottom: 15px; color: #1a365d;}
+  .kingdom-unlock-text {color: #64748b; margin-bottom: 30px; line-height: 1.6;}
+  
+  /* Final Boss */
+  .final-boss-page {text-align: center; padding: 40px 20px;}
+  .boss-container {background: white; border-radius: 20px; padding: 40px; max-width: 700px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.1);}
+  
+  /* small screens */
+  @media(max-width:980px){.cards-grid{grid-template-columns:repeat(2,1fr)}.game-header h1{font-size:1.6rem}
+    .game-stats {flex-direction:column; gap:10px; align-items:flex-start;}
+    .streak-counter {display: none !important;}
+    .score-rank-container {gap: 15px;}
+    .score-box, .rank-box {min-width: 150px; padding: 15px;}
+    .language-selector {
+      margin-right: 5px;
+    }
+    .language-option-btn {
+      padding: 4px 8px;
+      font-size: 0.7rem;
+      min-width: 50px;
+    }
+  }
+  
+  @media(max-width:768px){
+    header {
+      padding: 15px 20px;
+      flex-direction: column;
+      gap: 15px;
+    }
+   
+    nav ul {
+      gap: 15px;
+    }
+   
+    .score-value, .rank-value {font-size: 2rem;}
+    .header-controls {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .language-selector {
+      margin-right: 0;
+      order: 1;
+      width: 100%;
+      justify-content: center;
+      margin-top: 10px;
+    }
+  }
+  
+  @media(max-width:480px){
+    .language-selector {
+      gap: 5px;
+    }
+    .language-option-btn {
+      padding: 3px 6px;
+      font-size: 0.65rem;
+      min-width: 45px;
+    }
+  }
+  
+  /* Animations */
+  .pulse {animation: pulse 1.5s infinite;}
+  @keyframes pulse {
+    0% {transform: scale(1);}
+    50% {transform: scale(1.05);}
+    100% {transform: scale(1);}
+  }
+  .shake {animation: shake 0.5s;}
+  @keyframes shake {
+    0%, 100% {transform: translateX(0);}
+    10%, 30%, 50%, 70%, 90% {transform: translateX(-5px);}
+    20%, 40%, 60%, 80% {transform: translateX(5px);}
+  }
+  .confetti {position: absolute; pointer-events: none; z-index: 10;}
+</style>
+</head>
+<body>
+  <!-- Particles -->
+  <div class="particles" id="particles"></div>
+  <div class="streak-counter" id="streak-counter">🔥 <span id="streak-count">0</span> Streak!</div>
+
+  <!-- Header with Profile Integration -->
+  <header>
+    <div class="logo-container">
+      <div class="logo">
+        <i class="fas fa-vial"></i>
+      </div>
+      <div class="logo-text">
+        <h1>STEM Learn Odisha</h1>
+        <p>Gamified Learning Platform</p>
+      </div>
+    </div>
+   
+    <nav>
+      <ul>
+        <li><a href="student-dashboard.html" id="navHome" data-translate="nav-dashboard">Dashboard</a></li>
+        <li><a href="science.html" id="navScience" data-translate="nav-science">Science</a></li>
+        <li><a href="about.html" id="navAbout" data-translate="nav-about">About</a></li>
+        <li><a href="contact.html" id="navContact" data-translate="nav-contact">Contact</a></li>
+      </ul>
+    </nav>
+   
+    <div class="header-controls">
+      <!-- Horizontal Language Selector -->
+      <div class="language-selector">
+        <button class="language-option-btn active" data-lang="en">English</button>
+        <button class="language-option-btn" data-lang="or">ଓଡ଼ିଆ</button>
+        <button class="language-option-btn" data-lang="hi">हिन्दी</button>
+      </div>
+     
+      <div class="profile-container">
+        <button class="profile-btn" id="profileToggle">
+          <img src="" alt="Profile" class="profile-pic" id="headerProfilePic">
+          <span id="headerUserName">Student</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+       
+        <div class="profile-dropdown" id="profileDropdown">
+          <a href="#" class="dropdown-item" id="dropdownProfile">
+            <i class="fas fa-user"></i>
+            <span data-translate="dropdown-profile">Profile</span>
+          </a>
+          <a href="#" class="dropdown-item" id="dropdownSettings">
+            <i class="fas fa-cog"></i>
+            <span data-translate="dropdown-settings">Settings</span>
+          </a>
+          <a href="#" class="dropdown-item" id="dropdownLogout">
+            <i class="fas fa-sign-out-alt"></i>
+            <span data-translate="dropdown-logout">Logout</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Instructions Modal with Language Switcher -->
+  <div class="instructions-modal" id="instructions-modal">
+    <div class="instructions-content">
+      <div class="language-switcher" style="position: relative; top: 0; right: 0; margin: 0 auto 20px auto; width: fit-content; background: rgba(26, 54, 93, 0.1);">
+        <button class="lang-btn active" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+        <button class="lang-btn" data-lang="hi">हिन्दी</button>
+      </div>
+      
+      <h2 class="instructions-title" id="instructions-title">How to Play Matter Mission</h2>
+      <div class="instructions-text" id="instructions-text">
+        <p id="instructions-intro">Welcome to Matter Mission! Here's how to save the three kingdoms:</p>
+        <ul class="instructions-list" id="instructions-list">
+          <li id="instruction-1">Complete challenges in each kingdom (Solidia, Liquida, Gasia) to unlock the next one.</li>
+          <li id="instruction-2">Answer questions about physical and chemical changes to earn points.</li>
+          <li id="instruction-3">Build streaks for bonus points - the longer your streak, the more points you earn!</li>
+          <li id="instruction-4">Watch the timer - complete challenges before time runs out for bonus points.</li>
+          <li id="instruction-5">Complete all three kingdoms to face the final boss challenge.</li>
+          <li id="instruction-6">Defeat the final boss to save all three kingdoms!</li>
+        </ul>
+        <p id="instructions-outro">Good luck on your mission to save the kingdoms of matter!</p>
+      </div>
+      <button class="start-game-btn" id="start-game-btn">Start Mission</button>
+    </div>
+  </div>
+
+  <!-- Fun Fact Modal -->
+  <div class="funfact-modal" id="funfact-modal">
+    <div class="funfact-content">
+      <div class="funfact-icon" id="funfact-icon">🎉</div>
+      <h2 class="funfact-title" id="funfact-title">Great Job!</h2>
+      <p class="funfact-text" id="funfact-text"></p>
+      <button class="continue-btn" id="continue-btn">Continue</button>
+    </div>
+  </div>
+
+  <!-- Kingdom Unlock Pages -->
+  <div class="page kingdom-unlock-page" id="solidia-unlock-page">
+    <div class="container">
+      <div class="kingdom-unlock-content">
+        <div class="kingdom-icon-large">🧊</div>
+        <h2 class="kingdom-unlock-title" id="solidia-unlock-title">Welcome to Solidia Kingdom!</h2>
+        <p class="kingdom-unlock-text" id="solidia-unlock-text">The kingdom of solids awaits you! Complete challenges about solid matter to restore balance.</p>
+        <button class="start-game-btn pulse" id="start-solidia-btn">Start Solidia Kingdom</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Solidia Game Page -->
+  <div class="page" id="solidia-page">
+    <section class="game-header">
+      <div class="container">
+        <h1 id="solidia-header">Solidia Kingdom - Solids</h1>
+        <p id="solidia-desc">Help restore balance to Solidia by identifying physical and chemical changes!</p>
+      </div>
+    </section>
+
+    <div class="container" id="game-stats">
+      <div class="game-stats">
+        <div class="stat"><i class="fas fa-clock" style="color:#ef4444"></i> <span id="time">04:00</span></div>
+        <div class="stat"><i class="fas fa-star" style="color:#16a34a"></i> <span id="score">Score: 0</span></div>
+        <div class="stat"><i class="fas fa-fire" style="color:#f59e0b"></i> <span id="streak">Streak: 0</span></div>
+        <div class="progress-container"><div class="progress-bar" id="progress" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="container worlds">
+      <div class="world" id="w-solidia">
+        <div class="world-header">
+          <div class="world-title"><i class="fas fa-cube"></i> <span>Solidia - Solids</span></div>
+          <div><span class="badge-small" id="status-solidia">0/6</span></div>
+        </div>
+        <div class="cards-grid" id="cards-solidia"></div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="level-complete" id="level-complete-solidia">
+        <div class="badge">🏅</div>
+        <h3 id="level-complete-title-solidia">Solidia Kingdom Complete!</h3>
+        <p id="level-complete-text-solidia">You restored balance to Solidia! Ready for the next kingdom?</p>
+       
+        <!-- Score and Rank Display -->
+        <div class="score-rank-container">
+          <div class="score-box pop-in">
+            <div class="score-label">Your Score</div>
+            <div class="score-value" id="final-score-solidia">0</div>
+          </div>
+          <div class="rank-box pop-in">
+            <div class="rank-label">Your Rank</div>
+            <div class="rank-value" id="final-rank-solidia">0</div>
+            <div class="rank-suffix" id="rank-suffix-solidia">th</div>
+          </div>
+        </div>
+       
+        <!-- Leaderboard Preview -->
+        <div class="leaderboard-preview" id="leaderboard-preview-solidia">
+          <div class="leaderboard-title">Top Players</div>
+          <div class="leaderboard-list" id="leaderboard-list-solidia">
+            <!-- Leaderboard items will be inserted here -->
+          </div>
+        </div>
+       
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:10px">
+          <button class="next-level-btn" id="next-kingdom-solidia">Next Kingdom</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page kingdom-unlock-page" id="liquida-unlock-page">
+    <div class="container">
+      <div class="kingdom-unlock-content">
+        <div class="kingdom-icon-large">💧</div>
+        <h2 class="kingdom-unlock-title" id="liquida-unlock-title">Liquida Kingdom Unlocked!</h2>
+        <p class="kingdom-unlock-text" id="liquida-unlock-text">You've mastered solids! Now face the challenges of liquids in the Liquida kingdom.</p>
+        <button class="start-game-btn pulse" id="start-liquida-btn">Start Liquida Kingdom</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Liquida Game Page -->
+  <div class="page" id="liquida-page">
+    <section class="game-header">
+      <div class="container">
+        <h1 id="liquida-header">Liquida Kingdom - Liquids</h1>
+        <p id="liquida-desc">Help restore balance to Liquida by identifying physical and chemical changes!</p>
+      </div>
+    </section>
+
+    <div class="container" id="game-stats">
+      <div class="game-stats">
+        <div class="stat"><i class="fas fa-clock" style="color:#ef4444"></i> <span id="time-liquida">04:00</span></div>
+        <div class="stat"><i class="fas fa-star" style="color:#16a34a"></i> <span id="score-liquida">Score: 0</span></div>
+        <div class="stat"><i class="fas fa-fire" style="color:#f59e0b"></i> <span id="streak-liquida">Streak: 0</span></div>
+        <div class="progress-container"><div class="progress-bar" id="progress-liquida" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="container worlds">
+      <div class="world" id="w-liquida">
+        <div class="world-header">
+          <div class="world-title"><i class="fas fa-tint"></i> <span>Liquida - Liquids</span></div>
+          <div><span class="badge-small" id="status-liquida">0/6</span></div>
+        </div>
+        <div class="cards-grid" id="cards-liquida"></div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="level-complete" id="level-complete-liquida">
+        <div class="badge">🏅</div>
+        <h3 id="level-complete-title-liquida">Liquida Kingdom Complete!</h3>
+        <p id="level-complete-text-liquida">You restored balance to Liquida! Ready for the next kingdom?</p>
+       
+        <!-- Score and Rank Display -->
+        <div class="score-rank-container">
+          <div class="score-box pop-in">
+            <div class="score-label">Your Score</div>
+            <div class="score-value" id="final-score-liquida">0</div>
+          </div>
+          <div class="rank-box pop-in">
+            <div class="rank-label">Your Rank</div>
+            <div class="rank-value" id="final-rank-liquida">0</div>
+            <div class="rank-suffix" id="rank-suffix-liquida">th</div>
+          </div>
+        </div>
+       
+        <!-- Leaderboard Preview -->
+        <div class="leaderboard-preview" id="leaderboard-preview-liquida">
+          <div class="leaderboard-title">Top Players</div>
+          <div class="leaderboard-list" id="leaderboard-list-liquida">
+            <!-- Leaderboard items will be inserted here -->
+          </div>
+        </div>
+       
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:10px">
+          <button class="next-level-btn" id="next-kingdom-liquida">Next Kingdom</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page kingdom-unlock-page" id="gasia-unlock-page">
+    <div class="container">
+      <div class="kingdom-unlock-content">
+        <div class="kingdom-icon-large">💨</div>
+        <h2 class="kingdom-unlock-title" id="gasia-unlock-title">Gasia Kingdom Unlocked!</h2>
+        <p class="kingdom-unlock-text" id="gasia-unlock-text">You've mastered liquids! Now face the challenges of gases in the Gasia kingdom.</p>
+        <button class="start-game-btn pulse" id="start-gasia-btn">Start Gasia Kingdom</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gasia Game Page -->
+  <div class="page" id="gasia-page">
+    <section class="game-header">
+      <div class="container">
+        <h1 id="gasia-header">Gasia Kingdom - Gases</h1>
+        <p id="gasia-desc">Help restore balance to Gasia by identifying physical and chemical changes!</p>
+      </div>
+    </section>
+
+    <div class="container" id="game-stats">
+      <div class="game-stats">
+        <div class="stat"><i class="fas fa-clock" style="color:#ef4444"></i> <span id="time-gasia">04:00</span></div>
+        <div class="stat"><i class="fas fa-star" style="color:#16a34a"></i> <span id="score-gasia">Score: 0</span></div>
+        <div class="stat"><i class="fas fa-fire" style="color:#f59e0b"></i> <span id="streak-gasia">Streak: 0</span></div>
+        <div class="progress-container"><div class="progress-bar" id="progress-gasia" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="container worlds">
+      <div class="world" id="w-gasia">
+        <div class="world-header">
+          <div class="world-title"><i class="fas fa-wind"></i> <span>Gasia - Gases</span></div>
+          <div><span class="badge-small" id="status-gasia">0/6</span></div>
+        </div>
+        <div class="cards-grid" id="cards-gasia"></div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="level-complete" id="level-complete-gasia">
+        <div class="badge">🏅</div>
+        <h3 id="level-complete-title-gasia">Gasia Kingdom Complete!</h3>
+        <p id="level-complete-text-gasia">You restored balance to Gasia! Congratulations on saving all three kingdoms!</p>
+       
+        <!-- Score and Rank Display -->
+        <div class="score-rank-container">
+          <div class="score-box pop-in">
+            <div class="score-label">Your Score</div>
+            <div class="score-value" id="final-score-gasia">0</div>
+          </div>
+          <div class="rank-box pop-in">
+            <div class="rank-label">Your Rank</div>
+            <div class="rank-value" id="final-rank-gasia">0</div>
+            <div class="rank-suffix" id="rank-suffix-gasia">th</div>
+          </div>
+        </div>
+       
+        <!-- Leaderboard Preview -->
+        <div class="leaderboard-preview" id="leaderboard-preview-gasia">
+          <div class="leaderboard-title">Top Players</div>
+          <div class="leaderboard-list" id="leaderboard-list-gasia">
+            <!-- Leaderboard items will be inserted here -->
+          </div>
+        </div>
+       
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:10px">
+          <button class="next-level-btn" id="final-boss-btn">Final Boss Battle</button>
+          <button class="next-level-btn" id="play-again-final">Play Again</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final Boss Page -->
+  <div class="page final-boss-page" id="final-boss-page">
+    <section class="game-header">
+      <div class="container">
+        <h1 id="boss-header">Final Boss Battle!</h1>
+        <p id="boss-desc">Face the ultimate challenge to prove your mastery of matter changes!</p>
+      </div>
+    </section>
+    
+    <div class="container">
+      <div class="boss-container">
+        <div class="kingdom-icon-large">👑</div>
+        <h2 class="kingdom-unlock-title" id="boss-title">Chaotron - The Matter Mixer</h2>
+        <p class="kingdom-unlock-text" id="boss-text">The final boss has mixed all states of matter! Answer 6 rapid-fire questions to prove your knowledge and save all three kingdoms!</p>
+        
+        <div style="margin: 30px 0;">
+          <div class="game-stats" style="max-width: 500px; margin: 0 auto;">
+            <div class="stat"><i class="fas fa-star" style="color:#16a34a"></i> <span id="boss-score">Score: 0</span></div>
+            <div class="stat"><i class="fas fa-fire" style="color:#f59e0b"></i> <span id="boss-streak">Streak: 0</span></div>
+          </div>
+        </div>
+        
+        <div id="boss-questions-container" style="margin: 30px 0;"></div>
+        
+        <div style="display: flex; justify-content: center; gap: 15px; margin-top: 30px;">
+          <button class="start-game-btn" id="start-boss-btn">Start Boss Battle</button>
+          <button class="next-level-btn" id="back-to-game-btn">Back to Game</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Question Modal -->
+  <div class="modal" id="question-modal">
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close"><i class="fas fa-times"></i></button>
+      <div class="modal-icon" id="modal-icon">🔬</div>
+      <div class="modal-question" id="modal-question">Question text</div>
+      <div class="options" id="modal-options"></div>
+      <div class="modal-hint" id="modal-hint" style="display:none"></div>
+      <div style="margin-top:12px">
+        <button class="next-level-btn" id="modal-continue" style="display:none">Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Result Modal -->
+  <div class="modal" id="result-modal">
+    <div class="modal-content">
+      <button class="modal-close" id="result-close"><i class="fas fa-times"></i></button>
+      <div style="font-size:3rem" id="result-emoji">🎉</div>
+      <h2 id="result-title">Mission Complete!</h2>
+      <p id="result-text">You saved all three kingdoms!</p>
+      <p>Final Score: <strong id="final-score">0</strong> points</p>
+      <div style="margin-top:12px">
+        <button class="next-level-btn" id="result-retry">Play Again</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+// Authentication Check
+document.addEventListener('DOMContentLoaded', function() {
+    const user = JSON.parse(localStorage.getItem('user'));
+   
+    if (!user) {
+        // Redirect to login if not authenticated
+        window.location.href = 'student-login.html';
+        return;
+    }
+   
+    // Load user data
+    loadUserData(user);
+   
+    // Initialize the game
+    init();
+});
+
+// Load user data into the page
+function loadUserData(user) {
+    document.getElementById('headerUserName').textContent = user.fullName;
+    document.getElementById('headerProfilePic').src = user.profilePicture ? `uploads/${user.profilePicture}` : 'default-profile.png';
+}
+
+/* ========= GAME CONFIG ========= */
+const CONFIG = {
+  perWorldPick: 6,
+  bossQuestions: 6,
+  sessionTime: 240,
+  basePoints: 10,
+  streakBonus: 2
+};
+
+/* ========= QUESTION POOLS ========= */
+const worldPools = {
+  solidia: [
+    { id:'s1', icon:'🧊', title:{en:'Ice Melting', or:'ବରଫ ଗଳିବା', hi:'बर्फ पिघलना'},
+      prompt:{en:'Ice melting in sun — physical or chemical?', or:'ସୂର୍ଜ୍ୟ ରଶ୍ମିରେ ବରଫ ଗଳିବା — ଭୌତିକ କି ରାସାୟନିକ?', hi:'धूप में बर्फ पिघलना — भौतिक या रासायनिक?'},
+      type:'mcq', answers:[
+        {k:'a',txt:{en:'Physical',or:'ଭୌତିକ',hi:'भौतिक'},correct:true},
+        {k:'b',txt:{en:'Chemical',or:'ରାସାୟନିକ',hi:'रासायनिक'},correct:false}
+      ], hint:{en:'Melting changes state but not substance', or:'ଅବସ୍ଥା ପରିବର୍ତ୍ତନ', hi:'अवस्था परिवर्तन'},
+      fun:{en:'Ice cream melts faster on hot days!', or:'ଗରମ ଦିନେ ଆଇସ୍କ୍ରିମ ଶୀଘ୍ର ଗଳେ', hi:'गर्म दिन में आइसक्रीम जल्दी पिघलती है!'}},
+    
+    { id:'s2', icon:'🔨', title:{en:'Breaking Glass', or:'କାଚ ଭାଙ୍ଗିବା', hi:'कांच तोड़ना'},
+      prompt:{en:'Breaking a glass window — reversible?', or:'କାଚ ଖିଡ଼କି ଭାଙ୍ଗିବା — ପୁନର୍ବାର ସମ୍ଭବ?', hi:'कांच की खिड़की तोड़ना — क्या यह उलटा हो सकता है?'},
+      type:'mcq', answers:[
+        {k:'a',txt:{en:'No, irreversible',or:'ନାହିଁ, ଅପରିବର୍ତ୍ତନୀୟ',hi:'नहीं, अपरिवर्तनीय'},correct:true},
+        {k:'b',txt:{en:'Yes, reversible',or:'ହଁ, ପୁନର୍ବାର ସମ୍ଭବ',hi:'हाँ, प्रतिवर्ती'},correct:false}
+      ], hint:{en:'Broken pieces cannot become whole glass again', or:'ଭାଙ୍ଗି ଯାଇଥିବା କାଚ ପୁଣି ସମ୍ପୂର୍ଣ୍ଣ ହୋଇପାରିବ ନାହିଁ', hi:'टूटे हुए टुकड़े फिर से पूरे कांच नहीं बन सकते'},
+      fun:{en:'Glass can be recycled but not unbroken!', or:'କାଚ ରିସାଇକଲ୍ କରାଯାଇପାରେ କିନ୍ତୁ ଅଭଙ୍ଗ ନୁହେଁ!', hi:'कांच को रिसाइकल किया जा सकता है लेकिन अनब्रोकन नहीं!'}},
+    
+    { id:'s3', icon:'🍫', title:{en:'Chocolate Melting', or:'ଚକୋଲେଟ୍ ଗଳିବା', hi:'चॉकलेट पिघलना'},
+      prompt:{en:'Chocolate melting in hand — physical change?', or:'ହାତରେ ଚକୋଲେଟ୍ ଗଳିବା — ଭୌତିକ ପରିବର୍ତ୍ତନ?', hi:'हाथ में चॉकलेट पिघलना — क्या यह भौतिक परिवर्तन है?'},
+      type:'tf', answers:[
+        {k:'yes',txt:{en:'Yes',or:'ହଁ',hi:'हाँ'},correct:true},
+        {k:'no',txt:{en:'No',or:'ନାହିଁ',hi:'नहीं'},correct:false}
+      ], hint:{en:'Melting changes state, not composition', or:'ଅବସ୍ଥା ପରିବର୍ତ୍ତନ, ଗଠନ ନୁହେଁ', hi:'अवस्था परिवर्तन, संरचना नहीं'},
+      fun:{en:'White chocolate melts fastest!', or:'ଧଳା ଚକୋଲେଟ୍ ସବୁଠାରୁ ଶୀଘ୍ର ଗଳେ!', hi:'सफेद चॉकलेट सबसे तेजी से पिघलती है!'}},
+    
+    { id:'s4', icon:'✏️', title:{en:'Sharpening Pencil', or:'ପେନ୍ସିଲ୍ ଶାର୍ପ କରିବା', hi:'पेंसिल तेज करना'},
+      prompt:{en:'Sharpening a pencil — new substance formed?', or:'ପେନ୍ସିଲ୍ ଶାର୍ପ କରିବା — ନୂଆ ପଦାର୍ଥ ସୃଷ୍ଟି ହେଉଛି?', hi:'पेंसिल तेज करना — क्या नया पदार्थ बनता है?'},
+      type:'tf', answers:[
+        {k:'yes',txt:{en:'Yes',or:'ହଁ',hi:'हाँ'},correct:false},
+        {k:'no',txt:{en:'No',or:'ନାହିଁ',hi:'नहीं'},correct:true}
+      ], hint:{en:'Only shape changes, material remains same', or:'କେବଳ ଆକୃତି ବଦଳେ, ପଦାର୍ଥ ସମାନ ରହେ', hi:'केवल आकार बदलता है, पदार्थ वही रहता है'},
+      fun:{en:'Pencil shavings can be used in art!', or:'ପେନ୍ସିଲ୍ ଛିଲା କଳାରେ ବ୍ୟବହାର ହୋଇପାରେ!', hi:'पेंसिल के छिलके कला में उपयोग हो सकते हैं!'}},
+    
+    { id:'s5', icon:'🪨', title:{en:'Crushing Stone', or:'ପଥର ଚୂର୍ଣ୍ଣ କରିବା', hi:'पत्थर को कुचलना'},
+      prompt:{en:'Crushing stone into powder — chemical change?', or:'ପଥରକୁ ଚୂର୍ଣ୍ଣ କରିବା — ରାସାୟନିକ ପରିବର୍ତ୍ତନ?', hi:'पत्थर को चूर्ण में कुचलना — क्या यह रासायनिक परिवर्तन है?'},
+      type:'mcq', answers:[
+        {k:'a',txt:{en:'Physical',or:'ଭୌତିକ',hi:'भौतिक'},correct:true},
+        {k:'b',txt:{en:'Chemical',or:'ରାସାୟନିକ',hi:'रासायनिक'},correct:false}
+      ], hint:{en:'Size changes, but stone remains stone', or:'ଆକାର ବଦଳେ, କିନ୍ତୁ ପଥର ପଥର ହିଁ ରହେ', hi:'आकार बदलता है, लेकिन पत्थर पत्थर ही रहता है'},
+      fun:{en:'Stone powder is used in construction!', or:'ପଥର ଚୂର୍ଣ୍ଣ ନିର୍ମାଣ କାର୍ଯ୍ୟରେ ବ୍ୟବହୃତ ହୁଏ!', hi:'पत्थर का चूर्ण निर्माण कार्य में प्रयुक्त होता है!'}},
+    
+    { id:'s6', icon:'📄', title:{en:'Tearing Paper', or:'କାଗଜ ଛିଣ୍ଡାଇବା', hi:'कागज फाड़ना'},
+      prompt:{en:'Tearing paper into pieces — reversible change?', or:'କାଗଜକୁ ଟୁକୁଡ଼ା ଛିଣ୍ଡାଇବା — ପ୍ରତ୍ୟାବର୍ତ୍ତନୀୟ ପରିବର୍ତ୍ତନ?', hi:'कागज को टुकड़ों में फाड़ना — क्या यह प्रतिवर्ती परिवर्तन है?'},
+      type:'mcq', answers:[
+        {k:'a',txt:{en:'Irreversible',or:'ଅପ୍ରତ୍ୟାବର୍ତ୍ତନୀୟ',hi:'अप्रतिवर्ती'},correct:true},
+        {k:'b',txt:{en:'Reversible',or:'ପ୍ରତ୍ୟାବର୍ତ୍ତନୀୟ',hi:'प्रतिवर्ती'},correct:false}
+      ], hint:{en:'Torn paper cannot be perfectly restored', or:'ଛିଣ୍ଡାଯାଇଥିବା କାଗଜ ସମ୍ପୂର୍ଣ୍ଣ ଭାବେ ପୁନରୁଦ୍ଧାର କରାଯାଇପାରିବ ନାହିଁ', hi:'फटा हुआ कागज पूर्णतः पुनर्स्थापित नहीं किया जा सकता'},
+      fun:{en:'Recycled paper saves trees!', or:'ରିସାଇକଲ୍ କାଗଜ ଗଛ ବଞ୍ଚାଏ!', hi:'रीसाइकिल किया गया कागज पेड़ों को बचाता है!'}}
+  ],
+  
+  liquida: [
+    { id:'l1', icon:'🧂', title:{en:'Salt in Water', or:'ପାଣିରେ ଲୁଣ', hi:'पानी में नमक'},
+      prompt:{en:'Salt dissolving in water — physical change?', or:'ପାଣିରେ ଲୁଣ ଦ୍ରବୀଭୂତ ହେବା — ଭୌତିକ ପରିବର୍ତ୍ତନ?', hi:'पानी में नमक घुलना — क्या यह भौतिक परिवर्तन है?'},
+      type:'mcq', answers:[
+        {k:'a',txt:{en:'Yes, physical',or:'ହଁ, ଭୌତିକ',hi:'हाँ, भौतिक'},correct:true},
+        {k:'b',txt:{en:'No, chemical',or:'ନାହିଁ, ରାସାୟନିକ',hi:'नहीं, रासायनिक'},correct:false}
+      ], hint:{en:'Salt can be recovered by evaporation', or:'ବାଷ୍ପୀଭବନ ଦ୍ୱାରା ଲୁଣ ପୁନରୁଦ୍ଧାର କରାଯାଇପାରେ', hi:'वाष्पीकरण द्वारा नमक पुनः प्राप्त किया जा सकता है'},
+      fun:{en:'Sea water contains dissolved salts!', or:'ସମୁଦ୍ର ଜଳରେ ଦ୍ରବୀଭୂତ ଲୁଣ ଥାଏ!', hi:'समुद्री जल में घुला हुआ नमक होता है!'}},
+    
+    { id:'l2', icon:'🛢️', title:{en:'Oil and Water', or:'ତେଲ ଓ ପାଣି', hi:'तेल और पानी'},
+      prompt:{en:'Oil not mixing with water — physical property?', or:'ତେଲ ପାଣି ସହିତ ମିଶୁନଥିବା — ଭୌତିକ ଗୁଣ?', hi:'तेल पानी के साथ नहीं मिलता — क्या यह भौतिक गुण है?'},
+      type:'mcq', answers:[
+        {k:'a',txt:{en:'Yes',or:'ହଁ',hi:'हाँ'},correct:true},
+        {k:'b',txt:{en:'No',or:'ନାହିଁ',hi:'नहीं'},correct:false}
+      ], hint:{en:'Different densities prevent mixing', or:'ଭିନ୍ନ ଘନତା ମିଶ୍ରଣକୁ ପ୍ରତିରୋଧ କରେ', hi:'विभिन्न घनत्व मिश्रण को रोकते हैं'},
+      fun:{en:'Soap helps oil and water mix!', or:'ସାବୁନ ତେଲ ଏବଂ ପାଣି ମିଶିବାରେ ସାହାଯ୍ୟ କରେ!', hi:'साबुन तेल और पानी को मिलाने में मदद करता है!'}},
+    
+    { id:'l3', icon:'🥛', title:{en:'Milk to Curd', or:'ଦୁଧରୁ ଦହି', hi:'दूध से दही'},
+      prompt:{en:'Milk turning into curd — chemical change?', or:'ଦୁଧ ଦହିରେ ପରିଣତ ହେବା — ରାସୟନିକ ପରିବର୍ତ୍ତନ?', hi:'दूध का दही में बदलना — क्या यह रासायनिक परिवर्तन है?'},
+      type:'tf', answers:[
+        {k:'yes',txt:{en:'Yes',or:'ହଁ',hi:'हाँ'},correct:true},
+        {k:'no',txt:{en:'No',or:'ନାହିଁ',hi:'नहीं'},correct:false}
+      ], hint:{en:'Bacteria produce acid, changing composition', or:'ଜୀବାଣୁ ଅମ୍ଳ ଉତ୍ପାଦନ କରି ସଂରଚନା ବଦଳାଏ', hi:'जीवाणु अम्ल उत्पन्न करते हैं, संरचना बदल जाती है'},
+      fun:{en:'Curd contains probiotics good for digestion!', or:'ଦହିରେ ପାଚନ ପାଇଁ ଉତ୍କୃଷ୍ଟ ପ୍ରୋବାୟୋଟିକ୍‌ସ୍ ଥାଏ!', hi:'दही में पाचन के लिए उत्कृष्ट प्रोबायोटिक्स होते हैं!'}},
+    
+    { id:'l4', icon:'🍬', title:{en:'Sugar Dissolving', or:'ଚିନି ଦ୍ରବୀଭୂତ ହେବା', hi:'चीनी घुलना'},
+      prompt:{en:'Sugar dissolving in tea — reversible?', or:'ଚାହାରେ ଚିନି ଦ୍ରବୀଭୂତ ହେବା — ପ୍ରତ୍ୟାବର୍ତ୍ତନୀୟ?', hi:'चाय में चीनी घुलना — क्या यह प्रतिवर्ती है?'},
+      type:'mcq', answers:[
+        {k:'a',txt:{en:'Yes',or:'ହଁ',hi:'हाँ'},correct:true},
+        {k:'b',txt:{en:'No',or:'ନାହିଁ',hi:'नहीं'},correct:false}
+      ], hint:{en:'Evaporate water to get sugar back', or:'ଚିନି ଫେରିପାଇବା ପାଇଁ ପାଣି ବାଷ୍ପୀଭୂତ କରନ୍ତୁ', hi:'चीनी वापस पाने के लिए पानी को वाष्पित करें'},
+      fun:{en:'Hot water dissolves sugar faster!', or:'ଗରମ ପାଣି ଚିନି ଦ୍ରୁତ ଦ୍ରବୀଭୂତ କରେ!', hi:'गर्म पानी चीनी को तेजी से घोलता है!'}}
+  ],
+  
+  gasia: [
+    { id:'g1', icon:'🕯️', title:{en:'Candle Burning', or:'ମୋମବତି ଜଳିବା', hi:'मोमबत्ती जलना'},
+      prompt:{en:'Candle burning — chemical change?', or:'ମୋମବତି ଜଳିବା — ରାସୟନିକ ପରିବର୍ତ୍ତନ?', hi:'मोमबत्ती जलना — क्या यह रासायनिक परिवर्तन है?'},
+      type:'mcq', answers:[
+        {k:'a',txt:{en:'Yes',or:'ହଁ',hi:'हाँ'},correct:true},
+        {k:'b',txt:{en:'No',or:'ନାହିଁ',hi:'नहीं'},correct:false}
+      ], hint:{en:'Wax reacts with oxygen, produces new substances', or:'ମହମ ଅମ୍ଳଜାନ ସହିତ ପ୍ରତିକ୍ରିୟା କରେ, ନୂତନ ପଦାର୍ଥ ଉତ୍ପନ୍ନ କରେ', hi:'मोम ऑक्सीजन के साथ अभिक्रिया करता है, नए पदार्थ बनाता है'},
+      fun:{en:'Candle flame has different temperature zones!', or:'ମୋମବତି ଶିଖା ର ଭିନ୍ନ ଭିନ୍ନ ତାପମାତ୍ରା ଅଞ୍ଚଳ ଅଛି!', hi:'मोमबत्ती की लौ के विभिन्न तापमान क्षेत्र होते हैं!'}},
+    
+    { id:'g2', icon:'🤢', title:{en:'Food Rotting', or:'ଖାଦ୍ୟ ପଚିବା', hi:'भोजन सड़ना'},
+      prompt:{en:'Food rotting and smelling — chemical change?', or:'ଖାଦ୍ୟ ପଚି ଗନ୍ଧ ହେବା — ରାସୟନିକ ପରିବର୍ତ୍ତନ?', hi:'भोजन का सड़कर गंध आना — क्या यह रासायनिक परिवर्तन है?'},
+      type:'tf', answers:[
+        {k:'yes',txt:{en:'Yes',or:'ହଁ',hi:'हाँ'},correct:true},
+        {k:'no',txt:{en:'No',or:'ନାହିଁ',hi:'नहीं'},correct:false}
+      ], hint:{en:'Bacteria break down food, new compounds form', or:'ଜୀବାଣୁ ଖାଦ୍ୟ ଭାଙ୍ଗନ୍ତି, ନୂତନ ଯୌଗିକ ଗଠନ ହୁଏ', hi:'जीवाणु भोजन को तोड़ते हैं, नए यौगिक बनते हैं'},
+      fun:{en:'Some smells warn us not to eat rotten food!', or:'କେତେକ ଗନ୍ଧ ଆମକୁ ପଚା ଖାଦ୍ୟ ଖାଇବାକୁ ନିଷେଧ କରେ!', hi:'कुछ गंध हमें सड़ा हुआ भोजन न खाने की चेतावनी देती हैं!'}},
+    
+    { id:'g3', icon:'🎆', title:{en:'Fireworks', or:'ଆତସବାଜୀ', hi:'पटाखे'},
+      prompt:{en:'Fireworks exploding — chemical change?', or:'ଆତସବାଜୀ ଫୁଟିବା — ରାସयानिक ପରିବର୍ତ୍ତନ?', hi:'पटाखे फटना — क्या यह रासायनिक परिवर्तन है?'},
+      type:'mcq', answers:[
+        {k:'a',txt:{en:'Yes',or:'ହଁ',hi:'हाँ'},correct:true},
+        {k:'b',txt:{en:'No',or:'ନାହିଁ',hi:'नहीं'},correct:false}
+      ], hint:{en:'Rapid chemical reactions produce light and sound', or:'ଦ୍ରୁତ ରାସୟନିକ ପ୍ରତିକ୍ରିୟା ଆଲୋକ ଏବଂ ଧ୍ୱନି ଉତ୍ପନ୍ନ କରେ', hi:'तेज रासायनिक अभिक्रियाएं प्रकाश और ध्वनि उत्पन्न करती हैं'},
+      fun:{en:'Different metals create different firework colors!', or:'ଭିନ୍ନ ଭିନ୍ନ ଧାତୁ ଭିନ୍ନ ଭିନ୍ନ ଆତସବାଜୀ ରଙ୍ଗ ସୃଷ୍ଟି କରେ!', hi:'विभिन्न धातुएं अलग-अलग पटाखों के रंग बनाती हैं!'}},
+    
+    { id:'g4', icon:'🍰', title:{en:'Baking Cake', or:'କେକ୍ ବେକିଂ', hi:'केक बेक करना'},
+      prompt:{en:'Baking cake — chemical change?', or:'କେକ୍ ବେକିଂ — ରାସयानିକ ପରିବର୍ତ୍ତନ?', hi:'केक बेक करना — क्या यह रासायनिक परिवर्तन है?'},
+      type:'tf', answers:[
+        {k:'yes',txt:{en:'Yes',or:'ହଁ',hi:'हाँ'},correct:true},
+        {k:'no',txt:{en:'No',or:'ନାହିଁ',hi:'नहीं'},correct:false}
+      ], hint:{en:'Heat causes chemical reactions in ingredients', or:'ତାପ ଉପାଦାନରେ ରାସयानିକ ପ୍ରତିକ୍ରିୟା ସୃଷ୍ଟି କରେ', hi:'गर्मी सामग्री में रासायनिक अभिक्रियाएं कराती है'},
+      fun:{en:'Baking powder makes cakes rise with gas bubbles!', or:'ବେକିଂ ପାଉଡର ଗ୍ୟାସ୍ ବୁଦ୍ବୁଦ୍ ସହିତ କେକ୍‌କୁ ଉଠାଇଥାଏ!', hi:'बेकिंग पाउडर गैस के बुलबुलों से केक को फुलाता है!'}}
+  ]
+};
+
+// Combined pool for boss questions
+const bossPool = [...worldPools.solidia, ...worldPools.liquida, ...worldPools.gasia];
+
+/* ========= GAME STATE ========= */
+let LANG = 'en'; // This controls the ENTIRE GAME language
+let selectedCards = { solidia: [], liquida: [], gasia: [] };
+let completedCards = { solidia: [], liquida: [], gasia: [] };
+let score = { solidia: 0, liquida: 0, gasia: 0 };
+let totalScore = 0;
+let streak = { solidia: 0, liquida: 0, gasia: 0 };
+let timeLeft = CONFIG.sessionTime;
+let timerInterval = null;
+let currentCard = null;
+let currentKingdom = 'solidia';
+let finalScore = 0;
+let userRank = 0;
+let gameName = 'Matter Mission';
+
+/* ========= TRANSLATIONS ========= */
+const UI_STRINGS = {
+  en: {
+    'nav-dashboard':'Dashboard',
+    'nav-science':'Science',
+    'nav-about':'About',
+    'nav-contact':'Contact',
+    'dropdown-profile':'Profile',
+    'dropdown-settings':'Settings',
+    'dropdown-logout':'Logout',
+    'game-title':'Matter Mission — Save the Three Kingdoms',
+    'game-desc':'Help restore balance to the kingdoms of matter by identifying physical and chemical changes!',
+    'instructions-title':'How to Play Matter Mission',
+    'instructions-intro':'Welcome to Matter Mission! Here\'s how to save the three kingdoms:',
+    'instruction-1':'Complete challenges in each kingdom (Solidia, Liquida, Gasia) to unlock the next one.',
+    'instruction-2':'Answer questions about physical and chemical changes to earn points.',
+    'instruction-3':'Build streaks for bonus points - the longer your streak, the more points you earn!',
+    'instruction-4':'Watch the timer - complete challenges before time runs out for bonus points.',
+    'instruction-5':'Complete all three kingdoms to face the final boss challenge.',
+    'instruction-6':'Defeat the final boss to save all three kingdoms!',
+    'instructions-outro':'Good luck on your mission to save the kingdoms of matter!',
+    'start-game-btn':'Start Mission',
+    'solidia-unlock-title':'Welcome to Solidia Kingdom!',
+    'solidia-unlock-text':'The kingdom of solids awaits you! Complete challenges about solid matter to restore balance.',
+    'liquida-unlock-title':'Liquida Kingdom Unlocked!',
+    'liquida-unlock-text':'You\'ve mastered solids! Now face the challenges of liquids in the Liquida kingdom.',
+    'gasia-unlock-title':'Gasia Kingdom Unlocked!',
+    'gasia-unlock-text':'You\'ve mastered liquids! Now face the challenges of gases in the Gasia kingdom.',
+    'continue':'Continue',
+    'score':'Score',
+    'streak':'Streak',
+    'solidia-kingdom':'Solidia Kingdom - Solids',
+    'liquida-kingdom':'Liquida Kingdom - Liquids',
+    'gasia-kingdom':'Gasia Kingdom - Gases',
+    'solidia-desc':'Help restore balance to Solidia by identifying physical and chemical changes!',
+    'liquida-desc':'Help restore balance to Liquida by identifying physical and chemical changes!',
+    'gasia-desc':'Help restore balance to Gasia by identifying physical and chemical changes!',
+    'next-kingdom':'Next Kingdom',
+    'final-boss':'Final Boss Battle',
+    'play-again':'Play Again',
+    'boss-header':'Final Boss Battle!',
+    'boss-desc':'Face the ultimate challenge to prove your mastery of matter changes!',
+    'boss-title':'Chaotron - The Matter Mixer',
+    'boss-text':'The final boss has mixed all states of matter! Answer 6 rapid-fire questions to prove your knowledge and save all three kingdoms!',
+    'start-boss':'Start Boss Battle',
+    'back-game':'Back to Game',
+    'funfact-title':'Great Job!',
+    'continue-btn':'Continue',
+    'level-complete-solidia':'Solidia Kingdom Complete!',
+    'level-complete-liquida':'Liquida Kingdom Complete!',
+    'level-complete-gasia':'Gasia Kingdom Complete!',
+    'level-text-solidia':'You restored balance to Solidia! Ready for the next kingdom?',
+    'level-text-liquida':'You restored balance to Liquida! Ready for the next kingdom?',
+    'level-text-gasia':'You restored balance to Gasia! Congratulations on saving all three kingdoms!'
+  },
+  or: {
+    'nav-dashboard':'ଡ୍ୟାସବୋର୍ଡ',
+    'nav-science':'ବିଜ୍ଞାନ',
+    'nav-about':'ବିଷୟରେ',
+    'nav-contact':'ଯୋଗାଯୋଗ',
+    'dropdown-profile':'ପ୍ରୋଫାଇଲ୍',
+    'dropdown-settings':'ସେଟିଂସ୍',
+    'dropdown-logout':'ଲଗଆଉଟ୍',
+    'game-title':'ମ୍ୟାଟର ମିଶନ — ତିନୋଟି ରାଜ୍ୟକୁ ରକ୍ଷା କରନ୍ତୁ',
+    'game-desc':'ଭୌତିକ ଏବଂ ରାସୟନିକ ପରିବର୍ତ୍ତନ ଚିହ୍ନଟ କରି ପଦାର୍ଥର ରାଜ୍ୟଗୁଡ଼ିକର ସନ୍ତୁଳନ ପୁନରୁଦ୍ଧାର କରିବାରେ ସାହାଯ୍ୟ କରନ୍ତୁ |',
+    'instructions-title':'ମ୍ୟାଟର ମିଶନ କିପରି ଖେଳିବେ',
+    'instructions-intro':'ମ୍ୟାଟର ମିଶନକୁ ସ୍ୱାଗତ! ତିନୋଟି ରାଜ୍ୟ ବଞ୍ଚାଇବା ପାଇଁ ନିର୍ଦ୍ଦେଶାବଳୀ:',
+    'instruction-1':'ପ୍ରତ୍ୟେକ ରାଜ୍ୟରେ ଚ୍ୟାଲେଞ୍ଜଗୁଡ଼ିକ ସମ୍ପୂର୍ଣ୍ଣ କରନ୍ତୁ (Solidia, Liquida, Gasia) ପରବର୍ତ୍ତୀ ରାଜ୍ୟ ଅନଲକ୍ କରିବା ପାଇଁ।',
+    'instruction-2':'ଭୌତିକ ଏବଂ ରାସୟନିକ ପରିବର୍ତ୍ତନ ବିଷୟରେ ପ୍ରଶ୍ନଗୁଡ଼ିକର ଉତ୍ତର ଦେଇ ପଏଣ୍ଟ ଅର୍ଜନ କରନ୍ତୁ।',
+    'instruction-3':'ବୋନସ ପଏଣ୍ଟ ପାଇଁ ଷ୍ଟ୍ରିକ୍ ତିଆରି କରନ୍ତୁ - ଆପଣଙ୍କ ଷ୍ଟ୍ରିକ୍ ଯେତେ ଦୀର୍ଘ, ତେତେ ଅଧିକ ପଏଣ୍ଟ ପାଆନ୍ତୁ!',
+    'instruction-4':'ଟାଇମର ଦେଖନ୍ତୁ - ବୋନସ ପଏଣ୍ଟ ପାଇଁ ସମୟ ଶେଷ ହେବା ପୂର୍ବରୁ ଚ୍ୟାଲେଞ୍ଜଗୁଡ଼ିକ ସମ୍ପୂର୍ଣ୍ଣ କରନ୍ତୁ।',
+    'instruction-5':'ଚୂଡାନ୍ତ ବୋସ୍ ଚ୍ୟାଲେଞ୍ଜ ସାମ୍ନା କରିବା ପାଇଁ ସମସ୍ତ ତିନୋଟି ରାଜ୍ୟ ସମ୍ପୂର୍ଣ୍ଣ କରନ୍ତୁ।',
+    'instruction-6':'ସମସ୍ତ ତିନୋଟି ରାଜ୍ୟ ବଞ୍ଚାଇବା ପାଇଁ ଅନ୍ତିମ ବୋସକୁ ପରାସ୍ତ କରନ୍ତୁ!',
+    'instructions-outro':'ପଦାର୍ଥର ରାଜ୍ୟଗୁଡ଼ିକୁ ବଞ୍ଚାଇବା ପାଇଁ ଆପଣଙ୍କ ମିଶନରେ ଶୁଭକାମନା!',
+    'start-game-btn':'ମିଶନ ଆରମ୍ଭ କରନ୍ତୁ',
+    'solidia-unlock-title':'ସୋଲିଡିଆ ରାଜ୍ୟକୁ ସ୍ୱାଗତ!',
+    'solidia-unlock-text':'ଠୋସ ପଦାର୍ଥର ରାଜ୍ୟ ଆପଣଙ୍କ ପାଇଁ ଅପେକ୍ଷା କରୁଛି! ସନ୍ତୁଳନ ପୁନରୁଦ୍ଧାର କରିବା ପାଇଁ ଠୋସ ପଦାର୍ଥ ସମ୍ବନ୍ଧୀୟ ଚ୍ୟାଲେଞ୍ଜଗୁଡ଼ିକ ସମ୍ପୂର୍ଣ୍ଣ କରନ୍ତୁ |',
+    'liquida-unlock-title':'ଲିକ୍ୱିଡା ରାଜ୍ୟ ଅନଲକ୍!',
+    'liquida-unlock-text':'ଆପଣ ଠୋସ ପଦାର୍ଥରେ ଦକ୍ଷତା ହାସଲ କରିଛନ୍ତି! ଏବେ ଲିକ୍ୱିଡା ରାଜ୍ୟରେ ତରଳ ପଦାର୍ଥର ଚ୍ୟାଲେଞ୍ଜଗୁଡ଼ିକର ସମ୍ମୁଖୀନ ହୁଅନ୍ତୁ |',
+    'gasia-unlock-title':'ଗେସିଆ ରାଜ୍ୟ ଅନଲକ୍!',
+    'gasia-unlock-text':'ଆପଣ ତରଳ ପଦାର୍ଥରେ ଦକ୍ଷତା ହାସଲ କରିଛନ୍ତି! ଏବେ ଗେସିଆ ରାଜ୍ୟରେ ଗ୍ୟାସ୍ର ଚ୍ୟାଲେଞ୍ଜଗୁଡ଼ିକର ସମ୍ମୁଖୀନ ହୁଅନ୍ତୁ |',
+    'continue':'ଆଗକୁ',
+    'score':'ସ୍କୋର',
+    'streak':'ଷ୍ଟ୍ରିକ୍',
+    'solidia-kingdom':'ସୋଲିଡିଆ ରାଜ୍ୟ - ଠୋସ',
+    'liquida-kingdom':'ଲିକ୍ୱିଡା ରାଜ୍ୟ - ତରଳ',
+    'gasia-kingdom':'ଗେସିଆ ରାଜ୍ୟ - ଗ୍ୟାସ୍',
+    'solidia-desc':'ଭୌତିକ ଏବଂ ରାସୟନିକ ପରିବର୍ତ୍ତନ ଚିହ୍ନଟ କରି ସୋଲିଡିଆର ସନ୍ତୁଳନ ପୁନରୁଦ୍ଧାର କରିବାରେ ସାହାଯ୍ୟ କରନ୍ତୁ!',
+    'liquida-desc':'ଭୌତିକ ଏବଂ ରାସୟନିକ ପରିବର୍ତ୍ତନ ଚିହ୍ନଟ କରି ଲିକ୍ୱିଡାର ସନ୍ତୁଳନ ପୁନରୁଦ୍ଧାର କରିବାରେ ସାହାଯ୍ୟ କରନ୍ତୁ!',
+    'gasia-desc':'ଭୌତିକ ଏବଂ ରାସୟନିକ ପରିବର୍ତ୍ତନ ଚିହ୍ନଟ କରି ଗେସିଆର ସନ୍ତୁଳନ ପୁନରୁଦ୍ଧାର କରିବାରେ ସାହାଯ୍ୟ କରନ୍ତୁ!',
+    'next-kingdom':'ପରବର୍ତ୍ତୀ ରାଜ୍ୟ',
+    'final-boss':'ଅନ୍ତିମ ବୋସ୍ ଯୁଦ୍ଧ',
+    'play-again':'ପୁଣି ଖେଳନ୍ତୁ',
+    'boss-header':'ଅନ୍ତିମ ବୋସ୍ ଯୁଦ୍ଧ!',
+    'boss-desc':'ପଦାର୍ଥ ପରିବର୍ତ୍ତନର ଆପଣଙ୍କର ଦକ୍ଷତା ପ୍ରମାଣ କରିବା ପାଇଁ ଚରମ ଚ୍ୟାଲେଞ୍ଜର ସମ୍ମୁଖୀନ ହୁଅନ୍ତୁ!',
+    'boss-title':'ଚାଓଟ୍ରନ୍ - ପଦାର୍ଥ ମିଶ୍ରକ',
+    'boss-text':'ଅନ୍ତିମ ବୋସ୍ ସମସ୍ତ ପଦାର୍ଥର ଅବସ୍ଥା ମିଶ୍ରଣ କରିଛନ୍ତି! ଆପଣଙ୍କର ଜ୍ଞାନ ପ୍ରମାଣ କରିବା ଏବଂ ତିନୋଟି ରାଜ୍ୟ ବଞ୍ଚାଇବା ପାଇଁ ୬ଟି ଦ୍ରୁତ ଅଗ୍ନି ପ୍ରଶ୍ନର ଉତ୍ତର ଦିଅନ୍ତୁ!',
+    'start-boss':'ବୋସ୍ ଯୁଦ୍ଧ ଆରମ୍ଭ କରନ୍ତୁ',
+    'back-game':'ଖେଳକୁ ଫେରିଯାନ୍ତୁ',
+    'funfact-title':'ବହୁତ ଭଲ!',
+    'continue-btn':'ଜାରି ରଖନ୍ତୁ',
+    'level-complete-solidia':'ସୋଲିଡିଆ ରାଜ୍ୟ ସମ୍ପୂର୍ଣ୍ଣ!',
+    'level-complete-liquida':'ଲିକ୍ୱିଡା ରାଜ୍ୟ ସମ୍ପୂର୍ଣ୍ଣ!',
+    'level-complete-gasia':'ଗେସିଆ ରାଜ୍ୟ ସମ୍ପୂର୍ଣ୍ଣ!',
+    'level-text-solidia':'ଆପଣ ସୋଲିଡିଆର ସନ୍ତୁଳନ ପୁନରୁଦ୍ଧାର କରିଛନ୍ତି! ପରବର୍ତ୍ତୀ ରାଜ୍ୟ ପାଇଁ ପ୍ରସ୍ତୁତ କି?',
+    'level-text-liquida':'ଆପଣ ଲିକ୍ୱିଡାର ସନ୍ତୁଳନ ପୁନରୁଦ୍ଧାର କରିଛନ୍ତି! ପରବର୍ତ୍ତୀ ରାଜ୍ୟ ପାଇଁ ପ୍ରସ୍ତୁତ କି?',
+    'level-text-gasia':'ଆପଣ ଗେସିଆର ସନ୍ତୁଳନ ପୁନରୁଦ୍ଧାର କରିଛନ୍ତି! ତିନୋଟି ରାଜ୍ୟ ବଞ୍ଚାଇବା ପାଇଁ ଅଭିନନ୍ଦନ!'
+  },
+  hi: {
+    'nav-dashboard':'डैशबोर्ड',
+    'nav-science':'विज्ञान',
+    'nav-about':'हमारे बारे में',
+    'nav-contact':'संपर्क करें',
+    'dropdown-profile':'प्रोफाइल',
+    'dropdown-settings':'सेटिंग्स',
+    'dropdown-logout':'लॉगआउट',
+    'game-title':'मैटर मिशन — तीन राज्य बचाओ',
+    'game-desc':'भौतिक और रासायनिक परिवर्तनों की पहचान करके पदार्थ के राज्यों में संतुलन बहाल करने में मदद करें।',
+    'instructions-title':'मैटर मिशन कैसे खेलें',
+    'instructions-intro':'मैटर मिशन में आपका स्वागत है! तीन राज्यों को बचाने के लिए निर्देश:',
+    'instruction-1':'अगला राज्य अनलॉक करने के लिए प्रत्येक राज्य (Solidia, Liquida, Gasia) में चुनौतियाँ पूरी करें।',
+    'instruction-2':'अंक अर्जित करने के लिए भौतिक और रासायनिक परिवर्तनों के बारे में प्रश्नों के उत्तर दें।',
+    'instruction-3':'बोनस अंकों के लिए स्ट्रीक बनाएँ - आपका स्ट्रीक जितना लंबा होगा, उतने अधिक अंक आप अर्जित करेंगे!',
+    'instruction-4':'टाइमर देखें - बोनस अंकों के लिए समय समाप्त होने से पहले चुनौतियाँ पूरी करें।',
+    'instruction-5':'अंतिम बॉस चुनौती का सामना करने के लिए सभी तीन राज्यों को पूरा करें।',
+    'instruction-6':'तीनों राज्यों को बचाने के लिए अंतिम बॉस को हराएं!',
+    'instructions-outro':'पदार्थ के राज्यों को बचाने के अपने मिशन पर शुभकामनाएँ!',
+    'start-game-btn':'मिशन शुरू करें',
+    'solidia-unlock-title':'सोलिडिया राज्य में आपका स्वागत है!',
+    'solidia-unlock-text':'ठोस पदार्थों का राज्य आपकी प्रतीक्षा कर रहा है! संतुलन बहाल करने के लिए ठोस पदार्थ से संबंधित चुनौतियाँ पूरी करें।',
+    'liquida-unlock-title':'लिक्विडा राज्य अनलॉक!',
+    'liquida-unlock-text':'आपने ठोस पदार्थों में महारत हासिल कर ली है! अब लिक्विडा राज्य में तरल पदार्थों की चुनौतियों का सामना करें।',
+    'gasia-unlock-title':'गेसिया राज्य अनलॉक!',
+    'gasia-unlock-text':'आपने तरल पदार्थों में महारत हासिल कर ली है! अब गेसिया राज्य में गैसों की चुनौतियों का सामना करें।',
+    'continue':'जारी रखें',
+    'score':'स्कोर',
+    'streak':'स्ट्रीक',
+    'solidia-kingdom':'सोलिडिया राज्य - ठोस',
+    'liquida-kingdom':'लिक्विडा राज्य - तरल',
+    'gasia-kingdom':'गेसिया राज्य - गैस',
+    'solidia-desc':'भौतिक और रासायनिक परिवर्तनों की पहचान करके सोलिडिया में संतुलन बहाल करने में मदद करें!',
+    'liquida-desc':'भौतिक और रासायनिक परिवर्तनों की पहचान करके लिक्विडा में संतुलन बहाल करने में मदद करें!',
+    'gasia-desc':'भौतिक और रासायनिक परिवर्तनों की पहचान करके गेसिया में संतुलन बहाल करने में मदद करें!',
+    'next-kingdom':'अगला राज्य',
+    'final-boss':'अंतिम बॉस लड़ाई',
+    'play-again':'फिर से खेलें',
+    'boss-header':'अंतिम बॉस लड़ाई!',
+    'boss-desc':'पदार्थ परिवर्तनों में अपनी महारत साबित करने के लिए अंतिम चुनौती का सामना करें!',
+    'boss-title':'चाओट्रॉन - मैटर मिक्सर',
+    'boss-text':'अंतिम बॉस ने पदार्थ की सभी अवस्थाओं को मिला दिया है! अपना ज्ञान साबित करने और तीनों राज्यों को बचाने के लिए 6 तेज-तर्रार प्रश्नों के उत्तर दें!',
+    'start-boss':'बॉस लड़ाई शुरू करें',
+    'back-game':'खेल पर वापस जाएं',
+    'funfact-title':'बहुत बढ़िया!',
+    'continue-btn':'जारी रखें',
+    'level-complete-solidia':'सोलिडिया राज्य पूर्ण!',
+    'level-complete-liquida':'लिक्विडा राज्य पूर्ण!',
+    'level-complete-gasia':'गेसिया राज्य पूर्ण!',
+    'level-text-solidia':'आपने सोलिडिया में संतुलन बहाल कर दिया! क्या आप अगले राज्य के लिए तैयार हैं?',
+    'level-text-liquida':'आपने लिक्विडा में संतुलन बहाल कर दिया! क्या आप अगले राज्य के लिए तैयार हैं?',
+    'level-text-gasia':'आपने गेसिया में संतुलन बहाल कर दिया! तीनों राज्यों को बचाने के लिए बधाई!'
+  }
+};
+
+/* ========= DOM ELEMENTS ========= */
+const dom = {
+  // Header elements
+  profileToggle: document.getElementById('profileToggle'),
+  profileDropdown: document.getElementById('profileDropdown'),
+  dropdownProfile: document.getElementById('dropdownProfile'),
+  dropdownSettings: document.getElementById('dropdownSettings'),
+  dropdownLogout: document.getElementById('dropdownLogout'),
+  navHome: document.getElementById('navHome'),
+  navScience: document.getElementById('navScience'),
+  navAbout: document.getElementById('navAbout'),
+  navContact: document.getElementById('navContact'),
+  
+  // Language selector elements
+  languageOptionBtns: document.querySelectorAll('.language-option-btn'),
+  
+  // Game elements
+  instructionsModal: document.getElementById('instructions-modal'),
+  instructionsLangBtns: document.querySelectorAll('#instructions-modal .lang-btn'),
+  pages: document.querySelectorAll('.page'),
+  
+  // Instructions
+  startGameBtn: document.getElementById('start-game-btn'),
+  
+  // Kingdom unlock pages
+  startSolidiaBtn: document.getElementById('start-solidia-btn'),
+  startLiquidaBtn: document.getElementById('start-liquida-btn'),
+  startGasiaBtn: document.getElementById('start-gasia-btn'),
+  
+  // Solidia page
+  cardsSolidia: document.getElementById('cards-solidia'),
+  statusSolidia: document.getElementById('status-solidia'),
+  nextKingdomSolidiaBtn: document.getElementById('next-kingdom-solidia'),
+  levelCompleteSolidia: document.getElementById('level-complete-solidia'),
+  
+  // Liquida page
+  cardsLiquida: document.getElementById('cards-liquida'),
+  statusLiquida: document.getElementById('status-liquida'),
+  nextKingdomLiquidaBtn: document.getElementById('next-kingdom-liquida'),
+  levelCompleteLiquida: document.getElementById('level-complete-liquida'),
+  
+  // Gasia page
+  cardsGasia: document.getElementById('cards-gasia'),
+  statusGasia: document.getElementById('status-gasia'),
+  finalBossBtn: document.getElementById('final-boss-btn'),
+  playAgainFinalBtn: document.getElementById('play-again-final'),
+  levelCompleteGasia: document.getElementById('level-complete-gasia'),
+  
+  // Modal
+  questionModal: document.getElementById('question-modal'),
+  modalClose: document.getElementById('modal-close'),
+  modalIcon: document.getElementById('modal-icon'),
+  modalQuestion: document.getElementById('modal-question'),
+  modalOptions: document.getElementById('modal-options'),
+  modalHint: document.getElementById('modal-hint'),
+  modalContinue: document.getElementById('modal-continue'),
+  
+  // Result
+  resultModal: document.getElementById('result-modal'),
+  resultClose: document.getElementById('result-close'),
+  resultRetry: document.getElementById('result-retry'),
+  finalScore: document.getElementById('final-score'),
+  
+  // Boss
+  startBossBtn: document.getElementById('start-boss-btn'),
+  backToGameBtn: document.getElementById('back-to-game-btn'),
+  bossQuestionsContainer: document.getElementById('boss-questions-container'),
+  bossScore: document.getElementById('boss-score'),
+  bossStreak: document.getElementById('boss-streak'),
+  
+  // Fun Fact Modal
+  funfactModal: document.getElementById('funfact-modal'),
+  funfactIcon: document.getElementById('funfact-icon'),
+  funfactTitle: document.getElementById('funfact-title'),
+  funfactText: document.getElementById('funfact-text'),
+  continueBtn: document.getElementById('continue-btn'),
+  
+  // Streak Counter
+  streakCounter: document.getElementById('streak-counter'),
+  streakCountDisplay: document.getElementById('streak-count')
+};
+
+/* ========= UTILITIES ========= */
+function randShuffle(arr){ return arr.map(a=>({v:a,r:Math.random()})).sort((a,b)=>a.r-b.r).map(x=>x.v); }
+
+function pickRandomUnique(pool, count){
+  const shuffled = randShuffle(pool);
+  return shuffled.slice(0, Math.min(count, shuffled.length));
+}
+
+function t(key){ return UI_STRINGS[LANG][key] || UI_STRINGS['en'][key] || key; }
+function safeText(obj){ return (obj && (obj[LANG]||obj['en'])) || ''; }
+
+function showPage(pageId){
+  dom.pages.forEach(page => {
+    page.classList.remove('active');
+  });
+  document.getElementById(pageId).classList.add('active');
+}
+
+function updateKingdomStats(kingdom){
+  const completed = completedCards[kingdom].length;
+  const total = selectedCards[kingdom].length;
+  
+  const statusEl = kingdom === 'solidia' ? dom.statusSolidia :
+                  kingdom === 'liquida' ? dom.statusLiquida :
+                  dom.statusGasia;
+  statusEl.textContent = `${completed}/${total}`;
+  
+  const scoreEl = document.getElementById(`score${kingdom === 'solidia' ? '' : '-' + kingdom}`);
+  if(scoreEl) scoreEl.textContent = `${t('score')}: ${score[kingdom]}`;
+  
+  const streakEl = document.getElementById(`streak${kingdom === 'solidia' ? '' : '-' + kingdom}`);
+  if(streakEl) streakEl.textContent = `${t('streak')}: ${streak[kingdom]}`;
+  
+  const progressEl = document.getElementById(`progress${kingdom === 'solidia' ? '' : '-' + kingdom}`);
+  if(progressEl){
+    const progress = Math.round((completed / total) * 100);
+    progressEl.style.width = `${progress}%`;
+  }
+  
+  // Update streak counter
+  dom.streakCountDisplay.textContent = streak[kingdom];
+  if(streak[kingdom] >= 3) {
+    dom.streakCounter.style.display = 'block';
+  } else {
+    dom.streakCounter.style.display = 'none';
+  }
+}
+
+/* ========= INITIALIZATION ========= */
+function init() {
+  createParticles();
+  
+  // Dashboard integration event listeners
+  dom.profileToggle.addEventListener('click', function() {
+    dom.profileDropdown.classList.toggle('show');
+  });
+
+  // Navigation between pages
+  dom.dropdownProfile.addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = 'student-dashboard.html#profile';
+  });
+
+  dom.dropdownSettings.addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = 'student-dashboard.html#settings';
+  });
+
+  dom.dropdownLogout.addEventListener('click', function(e) {
+    e.preventDefault();
+    localStorage.removeItem('user');
+    window.location.href = 'student-login.html';
+  });
+
+  // Navigation menu items
+  dom.navHome.addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = 'student-dashboard.html';
+  });
+
+  dom.navScience.addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = 'science.html';
+  });
+
+  dom.navAbout.addEventListener('click', function(e) {
+    e.preventDefault();
+    alert('About page would open here');
+  });
+
+  dom.navContact.addEventListener('click', function(e) {
+    e.preventDefault();
+    alert('Contact page would open here');
+  });
+
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('#profileToggle') && !e.target.closest('#profileDropdown')) {
+      dom.profileDropdown.classList.remove('show');
+    }
+  });
+
+  // Language selector buttons
+  dom.languageOptionBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const lang = this.getAttribute('data-lang');
+      switchLanguage(lang);
+    });
+  });
+  
+  // Instructions language buttons - ONLY changes instructions text
+  dom.instructionsLangBtns.forEach(btn=>{
+    btn.addEventListener('click', (e)=> {
+      e.stopPropagation();
+      switchInstructionsLanguage(btn.dataset.lang);
+    });
+  });
+  
+  // Start buttons
+  dom.startGameBtn.addEventListener('click', startNewGame);
+  dom.startSolidiaBtn.addEventListener('click', ()=> startKingdom('solidia'));
+  dom.startLiquidaBtn.addEventListener('click', ()=> startKingdom('liquida'));
+  dom.startGasiaBtn.addEventListener('click', ()=> startKingdom('gasia'));
+  
+  // Next kingdom buttons
+  dom.nextKingdomSolidiaBtn.addEventListener('click', ()=> showUnlockPage('liquida'));
+  dom.nextKingdomLiquidaBtn.addEventListener('click', ()=> showUnlockPage('gasia'));
+  
+  // Final buttons
+  dom.finalBossBtn.addEventListener('click', startFinalBoss);
+  dom.playAgainFinalBtn.addEventListener('click', startNewGame);
+  
+  // Boss page buttons
+  dom.startBossBtn.addEventListener('click', startBossBattle);
+  dom.backToGameBtn.addEventListener('click', ()=> showPage('gasia-page'));
+  
+  // Modal buttons
+  dom.modalClose.addEventListener('click', closeModal);
+  dom.modalContinue.addEventListener('click', closeModal);
+  dom.resultClose.addEventListener('click', ()=> dom.resultModal.style.display='none');
+  dom.resultRetry.addEventListener('click', startNewGame);
+  
+  // Fun fact modal button
+  dom.continueBtn.addEventListener('click', () => {
+    dom.funfactModal.style.display = 'none';
+  });
+  
+  // Show instructions modal initially
+  dom.instructionsModal.style.display = 'flex';
+  
+  // Set initial language
+  switchLanguage('en');
+  switchInstructionsLanguage('en');
+  
+  // Create particles
+  createParticles();
+}
+
+function createParticles() {
+  const container = document.getElementById('particles');
+  container.innerHTML = '';
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.top = Math.random() * 100 + '%';
+    p.style.animationDelay = `${Math.random() * 10}s`;
+    container.appendChild(p);
+  }
+}
+
+/* ========= LANGUAGE SWITCHING ========= */
+function switchLanguage(lang){
+  LANG = lang; // This changes the ENTIRE GAME language
+  
+  // Update language selector buttons
+  dom.languageOptionBtns.forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-lang')===lang);
+  });
+  
+  // Update all translatable elements
+  document.querySelectorAll('[data-translate]').forEach(el=>{
+    const key = el.getAttribute('data-translate');
+    el.textContent = t(key);
+  });
+  
+  // Update game headers and descriptions
+  document.getElementById('solidia-header').textContent = t('solidia-kingdom');
+  document.getElementById('solidia-desc').textContent = t('solidia-desc');
+  document.getElementById('liquida-header').textContent = t('liquida-kingdom');
+  document.getElementById('liquida-desc').textContent = t('liquida-desc');
+  document.getElementById('gasia-header').textContent = t('gasia-kingdom');
+  document.getElementById('gasia-desc').textContent = t('gasia-desc');
+  
+  // Update boss page
+  document.getElementById('boss-header').textContent = t('boss-header');
+  document.getElementById('boss-desc').textContent = t('boss-desc');
+  document.getElementById('boss-title').textContent = t('boss-title');
+  document.getElementById('boss-text').textContent = t('boss-text');
+  
+  // Update buttons
+  document.getElementById('next-kingdom-solidia').textContent = t('next-kingdom');
+  document.getElementById('next-kingdom-liquida').textContent = t('next-kingdom');
+  document.getElementById('final-boss-btn').textContent = t('final-boss');
+  document.getElementById('play-again-final').textContent = t('play-again');
+  document.getElementById('start-boss-btn').textContent = t('start-boss');
+  document.getElementById('back-to-game-btn').textContent = t('back-game');
+  
+  // UPDATE ALL START BUTTONS
+  document.getElementById('start-game-btn').textContent = t('start-game-btn');
+  document.getElementById('start-solidia-btn').textContent = t('start-game-btn');
+  document.getElementById('start-liquida-btn').textContent = t('start-game-btn');
+  document.getElementById('start-gasia-btn').textContent = t('start-game-btn');
+  
+  // Update level complete texts
+  document.getElementById('level-complete-title-solidia').textContent = t('level-complete-solidia');
+  document.getElementById('level-complete-text-solidia').textContent = t('level-text-solidia');
+  document.getElementById('level-complete-title-liquida').textContent = t('level-complete-liquida');
+  document.getElementById('level-complete-text-liquida').textContent = t('level-text-liquida');
+  document.getElementById('level-complete-title-gasia').textContent = t('level-complete-gasia');
+  document.getElementById('level-complete-text-gasia').textContent = t('level-text-gasia');
+  
+  // Update fun fact modal
+  dom.funfactTitle.textContent = t('funfact-title');
+  dom.continueBtn.textContent = t('continue-btn');
+  
+  // Update unlock pages
+  document.getElementById('solidia-unlock-title').textContent = t('solidia-unlock-title');
+  document.getElementById('solidia-unlock-text').textContent = t('solidia-unlock-text');
+  document.getElementById('liquida-unlock-title').textContent = t('liquida-unlock-title');
+  document.getElementById('liquida-unlock-text').textContent = t('liquida-unlock-text');
+  document.getElementById('gasia-unlock-title').textContent = t('gasia-unlock-title');
+  document.getElementById('gasia-unlock-text').textContent = t('gasia-unlock-text');
+  
+  // Update score and streak labels
+  updateKingdomStats('solidia');
+  updateKingdomStats('liquida');
+  updateKingdomStats('gasia');
+  
+  // Update boss labels
+  dom.bossScore.textContent = `${t('score')}: 0`;
+  dom.bossStreak.textContent = `${t('streak')}: 0`;
+  
+  // UPDATE CARD TITLES ON THE BOARD
+  updateCardTitles();
+}
+
+function switchInstructionsLanguage(lang){
+  // Only update instruction modal, NOT the game language
+  dom.instructionsLangBtns.forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+  
+  // Save the temp language for instructions
+  const tempLang = LANG;
+  LANG = lang;
+  
+  // Update instruction text
+  document.getElementById('instructions-title').textContent = t('instructions-title');
+  document.getElementById('instructions-intro').textContent = t('instructions-intro');
+  document.getElementById('instruction-1').textContent = t('instruction-1');
+  document.getElementById('instruction-2').textContent = t('instruction-2');
+  document.getElementById('instruction-3').textContent = t('instruction-3');
+  document.getElementById('instruction-4').textContent = t('instruction-4');
+  document.getElementById('instruction-5').textContent = t('instruction-5');
+  document.getElementById('instruction-6').textContent = t('instruction-6');
+  document.getElementById('instructions-outro').textContent = t('instructions-outro');
+  document.getElementById('start-game-btn').textContent = t('start-game-btn');
+  
+  // Restore game language
+  LANG = tempLang;
+}
+
+/* ========= UPDATE CARD TITLES ========= */
+function updateCardTitles() {
+  // Update cards for each kingdom if they exist on the page
+  const kingdoms = ['solidia', 'liquida', 'gasia'];
+  
+  kingdoms.forEach(kingdom => {
+    const cardElements = document.querySelectorAll(`#cards-${kingdom} .card`);
+    if (cardElements.length > 0) {
+      cardElements.forEach(cardEl => {
+        const cardId = cardEl.dataset.cardId;
+        // Find the card in our selectedCards array
+        const card = selectedCards[kingdom].find(c => c.id === cardId);
+        if (card) {
+          // Update the title
+          const titleEl = cardEl.querySelector('.card-title');
+          if (titleEl) {
+            titleEl.textContent = safeText(card.title);
+          }
+          
+          // Update the subtitle (preview of the question)
+          const subEl = cardEl.querySelector('.card-sub');
+          if (subEl) {
+            subEl.textContent = safeText(card.prompt).substring(0, 40) + '...';
+          }
+        }
+      });
+    }
+  });
+}
+
+/* ========= START NEW GAME ========= */
+function startNewGame(){
+  // ALWAYS get fresh random questions
+  selectedCards.solidia = pickRandomUnique(worldPools.solidia, CONFIG.perWorldPick);
+  selectedCards.liquida = pickRandomUnique(worldPools.liquida, CONFIG.perWorldPick);
+  selectedCards.gasia = pickRandomUnique(worldPools.gasia, CONFIG.perWorldPick);
+  
+  completedCards = { solidia: [], liquida: [], gasia: [] };
+  score = { solidia: 0, liquida: 0, gasia: 0 };
+  totalScore = 0;
+  streak = { solidia: 0, liquida: 0, gasia: 0 };
+  
+  dom.instructionsModal.style.display = 'none';
+  dom.resultModal.style.display = 'none';
+  dom.questionModal.style.display = 'none';
+  dom.funfactModal.style.display = 'none';
+  
+  showPage('solidia-unlock-page');
+}
+
+function showUnlockPage(kingdom){
+  if(kingdom === 'liquida'){
+    showPage('liquida-unlock-page');
+  } else if(kingdom === 'gasia'){
+    showPage('gasia-unlock-page');
+  }
+}
+
+/* ========= START KINGDOM ========= */
+function startKingdom(kingdom){
+  currentKingdom = kingdom;
+  timeLeft = CONFIG.sessionTime;
+  
+  renderKingdomCards(kingdom);
+  updateKingdomStats(kingdom);
+  
+  showPage(`${kingdom}-page`);
+  startTimer(kingdom);
+}
+
+function renderKingdomCards(kingdom){
+  const container = kingdom === 'solidia' ? dom.cardsSolidia :
+                   kingdom === 'liquida' ? dom.cardsLiquida :
+                   dom.cardsGasia;
+  
+  container.innerHTML = '';
+  
+  selectedCards[kingdom].forEach(card => {
+    const cardEl = document.createElement('div');
+    cardEl.className = 'card';
+    if(completedCards[kingdom].includes(card.id)){
+      cardEl.classList.add('disabled');
+    }
+    cardEl.dataset.cardId = card.id;
+    cardEl.innerHTML = `
+      <div class="card-icon">${card.icon}</div>
+      <div class="card-title">${safeText(card.title)}</div>
+      <div class="card-sub">${safeText(card.prompt).substring(0, 40)}...</div>
+    `;
+    cardEl.addEventListener('click', ()=> openCard(kingdom, card.id));
+    container.appendChild(cardEl);
+  });
+}
+
+/* ========= CARD CLICK ========= */
+function openCard(kingdom, cardId){
+  if(completedCards[kingdom].includes(cardId)){
+    showToast(safeText({en:'Already completed!', or:'ପୂର୍ବରୁ ସମ୍ପୂର୍ଣ୍ଣ!', hi:'पहले से पूर्ण!'}));
+    return;
+  }
+  
+  const card = selectedCards[kingdom].find(c => c.id === cardId);
+  if(!card) return;
+  
+  currentCard = { kingdom, card };
+  showQuestionModal(card);
+}
+
+/* ========= QUESTION MODAL ========= */
+function showQuestionModal(card){
+  dom.modalIcon.textContent = card.icon || '🔬';
+  dom.modalQuestion.textContent = safeText(card.prompt);
+  dom.modalOptions.innerHTML = '';
+  dom.modalHint.style.display = 'none';
+  dom.modalHint.textContent = '';
+  dom.modalContinue.style.display = 'none';
+  
+  if(card.type === 'tf' || card.type === 'mcq'){
+    card.answers.forEach(ans => {
+      const btn = document.createElement('button');
+      btn.className = 'opt-btn';
+      btn.textContent = safeText(ans.txt);
+      btn.dataset.key = ans.k;
+      btn.addEventListener('click', ()=> evaluateAnswer(ans));
+      dom.modalOptions.appendChild(btn);
+    });
+  }
+  
+  if(card.hint){
+    dom.modalHint.style.display = 'block';
+    dom.modalHint.textContent = safeText(card.hint);
+  }
+  
+  dom.questionModal.style.display = 'flex';
+}
+
+function evaluateAnswer(answer){
+  const correct = answer.correct;
+  const kingdom = currentCard.kingdom;
+  const card = currentCard.card;
+  
+  if(correct){
+    handleCorrectAnswer(kingdom, card);
+  } else {
+    handleWrongAnswer(kingdom);
+  }
+  
+  Array.from(dom.modalOptions.children).forEach(btn => {
+    btn.disabled = true;
+    const isThisAnswer = btn.dataset.key === answer.k;
+    if(isThisAnswer){
+      btn.classList.add(correct ? 'correct' : 'wrong');
+    }
+  });
+  
+  dom.modalContinue.style.display = 'inline-block';
+  dom.modalContinue.textContent = t('continue');
+  
+  if(correct){
+    completedCards[kingdom].push(currentCard.card.id);
+    const cardEl = document.querySelector(`.card[data-card-id="${currentCard.card.id}"]`);
+    if(cardEl){
+      cardEl.classList.add('disabled');
+    }
+    
+    updateKingdomStats(kingdom);
+    
+    if(completedCards[kingdom].length >= selectedCards[kingdom].length){
+      setTimeout(()=> {
+        showLevelComplete(kingdom);
+      }, 500);
+    }
+  }
+}
+
+async function handleCorrectAnswer(kingdom, card){
+  const basePoints = CONFIG.basePoints;
+  const streakBonus = Math.min(streak[kingdom] * CONFIG.streakBonus, 20);
+  const pointsEarned = basePoints + streakBonus;
+  
+  score[kingdom] += pointsEarned;
+  totalScore += pointsEarned;
+  streak[kingdom]++;
+  
+  // Show fun fact modal
+  if(card.fun){
+    dom.funfactText.textContent = safeText(card.fun);
+    dom.funfactModal.style.display = 'flex';
+  }
+  
+  showToast(safeText({en:`Correct! +${pointsEarned}`, or:`ଠିକ୍! +${pointsEarned}`, hi:`सही! +${pointsEarned}`}));
+  createConfetti();
+}
+
+function handleWrongAnswer(kingdom){
+  streak[kingdom] = 0;
+  score[kingdom] = Math.max(0, score[kingdom] - 5);
+  
+  showToast(safeText({en:'Try again!', or:'ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ!', hi:'फिर से कोशिश करें!'}));
+}
+
+/* ========= TIMER ========= */
+function startTimer(kingdom){
+  clearInterval(timerInterval);
+  
+  updateTimerDisplay(kingdom);
+  
+  timerInterval = setInterval(()=> {
+    timeLeft--;
+    updateTimerDisplay(kingdom);
+    
+    if(timeLeft <= 0){
+      clearInterval(timerInterval);
+      showTimeUp(kingdom);
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay(kingdom){
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
+  const timeStr = `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+  
+  const timeEl = document.getElementById(`time${kingdom === 'solidia' ? '' : '-' + kingdom}`);
+  if(timeEl) timeEl.textContent = timeStr;
+}
+
+function showTimeUp(kingdom){
+  showToast(safeText({en:'Time\'s up!', or:'ସମୟ ସରିଗଲା!', hi:'समय समाप्त!'}));
+}
+
+/* ========= LEVEL COMPLETE ========= */
+async function showLevelComplete(kingdom){
+  const levelCompleteBox = document.getElementById(`level-complete-${kingdom}`);
+  if(levelCompleteBox){
+    levelCompleteBox.style.display = 'block';
+  }
+  
+  const timeBonus = Math.floor(timeLeft / 10) * 5;
+  if(timeBonus > 0){
+    score[kingdom] += timeBonus;
+    totalScore += timeBonus;
+    updateKingdomStats(kingdom);
+    showToast(safeText({en:`Time bonus! +${timeBonus}`, or:`ସମୟ ବୋନସ! +${timeBonus}`, hi:`समय बोनस! +${timeBonus}`}));
+  }
+  
+  clearInterval(timerInterval);
+  
+  // Save score and get rank
+  try {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user && user.id) {
+      const result = await saveGameResult(user.id, score[kingdom], kingdom);
+     
+      if (result && result.rank) {
+        // Get leaderboard data
+        const leaderboardData = await getGameLeaderboard(gameName, kingdom);
+       
+        // Display final results
+        displayFinalResults(score[kingdom], result.rank, leaderboardData, kingdom);
+      } else {
+        displayFinalResults(score[kingdom], result?.rank || 1, [], kingdom);
+      }
+    } else {
+      // Fallback if no user logged in
+      displayFinalResults(score[kingdom], 1, [], kingdom);
+    }
+  } catch (error) {
+    console.error('Error saving game result:', error);
+    displayFinalResults(score[kingdom], 1, [], kingdom);
+  }
+}
+
+/* ========= FINAL BOSS ========= */
+function startFinalBoss(){
+  showPage('final-boss-page');
+}
+
+function startBossBattle(){
+  const bossQuestions = pickRandomUnique(bossPool, CONFIG.bossQuestions);
+  let currentQuestion = 0;
+  let bossScore = 0;
+  let bossStreak = 0;
+  
+  dom.bossQuestionsContainer.innerHTML = '';
+  
+  function showNextQuestion(){
+    if(currentQuestion >= bossQuestions.length){
+      // Boss battle complete
+      showBossComplete();
+      return;
+    }
+    
+    const question = bossQuestions[currentQuestion];
+    const questionEl = document.createElement('div');
+    questionEl.className = 'instruction-card';
+    questionEl.innerHTML = `
+      <div class="instruction-icon">${question.icon}</div>
+      <h4>Question ${currentQuestion + 1} of ${CONFIG.bossQuestions}</h4>
+      <p>${safeText(question.prompt)}</p>
+      <div class="options" style="margin-top: 15px;">
+        ${question.answers.map((ans, idx) => `
+          <button class="opt-btn boss-answer" data-correct="${ans.correct}" data-index="${idx}">
+            ${safeText(ans.txt)}
+          </button>
+        `).join('')}
+      </div>
+    `;
+    
+    dom.bossQuestionsContainer.appendChild(questionEl);
+    
+    questionEl.querySelectorAll('.boss-answer').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const isCorrect = this.dataset.correct === 'true';
+        
+        if(isCorrect){
+          bossScore += 15;
+          bossStreak++;
+          this.classList.add('correct');
+          showToast(safeText({en:'Correct! +15', or:'ଠିକ୍! +15', hi:'सही! +15'}));
+          
+          // Show fun fact if available
+          if(question.fun){
+            dom.funfactText.textContent = safeText(question.fun);
+            dom.funfactModal.style.display = 'flex';
+          }
+        } else {
+          bossStreak = 0;
+          this.classList.add('wrong');
+          showToast(safeText({en:'Wrong!', or:'ଭୁଲ୍!', hi:'गलत!'}));
+        }
+        
+        dom.bossScore.textContent = `${t('score')}: ${bossScore}`;
+        dom.bossStreak.textContent = `${t('streak')}: ${bossStreak}`;
+        
+        questionEl.querySelectorAll('.boss-answer').forEach(b => {
+          b.disabled = true;
+          if(b.dataset.correct === 'true'){
+            b.classList.add('correct');
+          }
+        });
+        
+        setTimeout(() => {
+          questionEl.remove();
+          currentQuestion++;
+          showNextQuestion();
+        }, 1500);
+      });
+    });
+  }
+  
+  showNextQuestion();
+}
+
+async function showBossComplete(){
+  const finalBossScore = totalScore;
+  
+  // Save final boss score
+  try {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user && user.id) {
+      await saveGameResult(user.id, finalBossScore, 'final-boss');
+    }
+  } catch (error) {
+    console.error('Error saving boss score:', error);
+  }
+  
+  dom.bossQuestionsContainer.innerHTML = `
+    <div class="instruction-card">
+      <div class="instruction-icon">🏆</div>
+      <h3>Boss Defeated!</h3>
+      <p>Congratulations! You have successfully defeated Chaotron and saved all three kingdoms!</p>
+      <p>Your final score: <strong>${totalScore}</strong></p>
+      <div style="margin-top: 20px;">
+        <button class="start-game-btn" id="play-again-boss">${t('play-again')}</button>
+      </div>
+    </div>
+  `;
+  
+  document.getElementById('play-again-boss').addEventListener('click', startNewGame);
+}
+
+/* ========= SERVER COMMUNICATION ========= */
+async function saveGameResult(userId, gameScore, kingdom) {
+  try {
+    const timeTaken = CONFIG.sessionTime - timeLeft;
+   
+    const response = await fetch('/api/game/save-result-with-rank', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId: userId,
+        gameName: `${gameName} - ${kingdom}`,
+        score: gameScore,
+        timeTaken: timeTaken,
+        completed: true
+      })
+    });
+   
+    if (!response.ok) {
+      throw new Error('Failed to save game result');
+    }
+   
+    return await response.json();
+  } catch (error) {
+    console.error('Error saving game result:', error);
+    throw error;
+  }
+}
+
+async function getGameLeaderboard(gameName, kingdom) {
+  try {
+    const response = await fetch(`/api/game/leaderboard/${encodeURIComponent(gameName + ' - ' + kingdom)}`);
+   
+    if (!response.ok) {
+      throw new Error('Failed to fetch leaderboard');
+    }
+   
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching leaderboard:', error);
+    return [];
+  }
+}
+
+/* ========= DISPLAY FINAL RESULTS ========= */
+function displayFinalResults(finalScore, rank, leaderboardData, kingdom) {
+  // Update score and rank display
+  const finalScoreElement = document.getElementById(`final-score-${kingdom}`);
+  const finalRankElement = document.getElementById(`final-rank-${kingdom}`);
+  const rankSuffixElement = document.getElementById(`rank-suffix-${kingdom}`);
+  
+  if (finalScoreElement) finalScoreElement.textContent = finalScore;
+  if (finalRankElement) finalRankElement.textContent = rank;
+ 
+  // Add proper suffix to rank
+  const suffix = getRankSuffix(rank);
+  if (rankSuffixElement) rankSuffixElement.textContent = suffix;
+ 
+  // Display leaderboard
+  const leaderboardPreview = document.getElementById(`leaderboard-preview-${kingdom}`);
+  const leaderboardList = document.getElementById(`leaderboard-list-${kingdom}`);
+  
+  if (leaderboardData && leaderboardData.length > 0 && leaderboardPreview && leaderboardList) {
+    displayLeaderboard(leaderboardData, leaderboardList);
+    leaderboardPreview.style.display = 'block';
+  } else if (leaderboardPreview) {
+    leaderboardPreview.style.display = 'none';
+  }
+ 
+  // Add celebration effects based on rank
+  if (rank <= 3) {
+    celebrateTopRank(rank);
+  }
+}
+
+function getRankSuffix(rank) {
+  if (rank % 100 >= 11 && rank % 100 <= 13) {
+    return 'th';
+  }
+  switch (rank % 10) {
+    case 1: return 'st';
+    case 2: return 'nd';
+    case 3: return 'rd';
+    default: return 'th';
+  }
+}
+
+function displayLeaderboard(leaderboardData, leaderboardListElement) {
+  leaderboardListElement.innerHTML = '';
+ 
+  const user = JSON.parse(localStorage.getItem('user'));
+  const currentUserId = user ? user.id : null;
+ 
+  // Sort by score descending
+  leaderboardData.sort((a, b) => b.score - a.score);
+ 
+  // Display top 5 or less
+  const displayCount = Math.min(5, leaderboardData.length);
+  for (let i = 0; i < displayCount; i++) {
+    const player = leaderboardData[i];
+    const item = document.createElement('div');
+    item.className = 'leaderboard-item';
+   
+    // Highlight current user
+    if (player.user_id == currentUserId) {
+      item.classList.add('current-user');
+    }
+   
+    // Format rank (starting from 1)
+    const rank = i + 1;
+    const rankSuffix = getRankSuffix(rank);
+   
+    item.innerHTML = `
+      <div class="leaderboard-rank">${rank}${rankSuffix}</div>
+      <div class="leaderboard-name">${player.fullName}</div>
+      <div class="leaderboard-score">${player.score}</div>
+    `;
+   
+    leaderboardListElement.appendChild(item);
+  }
+}
+
+function celebrateTopRank(rank) {
+  // Add special effects for top 3 ranks
+  const medalColors = ['#FFD700', '#C0C0C0', '#CD7F32']; // Gold, Silver, Bronze
+ 
+  if (rank <= 3) {
+    // Add special confetti for top ranks
+    createSpecialConfetti(rank);
+   
+    // Play victory sound if available
+    if (rank === 1) {
+      // First place special celebration
+      setTimeout(() => {
+        createConfetti();
+        setTimeout(() => createConfetti(), 300);
+        setTimeout(() => createConfetti(), 600);
+      }, 500);
+    }
+  }
+}
+
+function createSpecialConfetti(rank) {
+  const colors = rank === 1 ? ['#FFD700', '#FFED4E', '#FFF9C4'] :
+                rank === 2 ? ['#C0C0C0', '#E5E4E2', '#D3D3D3'] :
+                ['#CD7F32', '#B87333', '#8B4513'];
+ 
+  for (let i = 0; i < 15; i++) {
+    const c = document.createElement('div');
+    c.style.position = 'fixed';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.top = '-10px';
+    c.style.width = '12px';
+    c.style.height = '12px';
+    c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    c.style.zIndex = 1500;
+    c.style.borderRadius = '50%';
+    c.style.animation = `confetti-fall ${2 + Math.random()}s ease-out forwards`;
+    document.body.appendChild(c);
+    setTimeout(() => { if (document.body.contains(c)) document.body.removeChild(c); }, 3000);
+  }
+}
+
+/* ========= UI HELPERS ========= */
+function closeModal(){
+  dom.questionModal.style.display = 'none';
+}
+
+function showToast(text){
+  const toast = document.createElement('div');
+  toast.style.position = 'fixed';
+  toast.style.bottom = '20px';
+  toast.style.left = '50%';
+  toast.style.transform = 'translateX(-50%)';
+  toast.style.background = 'rgba(0,0,0,0.8)';
+  toast.style.color = 'white';
+  toast.style.padding = '12px 24px';
+  toast.style.borderRadius = '8px';
+  toast.style.fontWeight = '600';
+  toast.style.zIndex = '3000';
+  toast.style.textAlign = 'center';
+  toast.style.maxWidth = '80%';
+  toast.textContent = text;
+  
+  document.body.appendChild(toast);
+  
+  setTimeout(()=> {
+    if(toast.parentNode){
+      toast.parentNode.removeChild(toast);
+    }
+  }, 3000);
+}
+
+function createConfetti(){
+  const colors = ['#ff6b6b','#4ecdc4','#45b7d1','#96ceb4','#ffeaa7','#ffd166'];
+  for(let i=0;i<12;i++){
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.left = Math.random() * 100 + 'vw';
+    confetti.style.top = '-10px';
+    confetti.style.width = '10px';
+    confetti.style.height = '10px';
+    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.zIndex = '2000';
+    confetti.style.borderRadius = '2px';
+    confetti.style.animation = 'confetti-fall 2s ease-out forwards';
+    
+    document.body.appendChild(confetti);
+    
+    setTimeout(()=> {
+      if(confetti.parentNode){
+        confetti.parentNode.removeChild(confetti);
+      }
+    }, 2000);
+  }
+}
+
+// Add confetti animation
+const style = document.createElement('style');
+style.textContent = `
+@keyframes confetti-fall {
+  0% {transform: translateY(0) rotate(0deg); opacity: 1;}
+  100% {transform: translateY(100vh) rotate(360deg); opacity: 0;}
+}
+`;
+document.head.appendChild(style);
+
+/* ========= KEYBOARD SHORTCUTS ========= */
+document.addEventListener('keydown', (e)=> {
+  if(e.key === 'Escape'){
+    closeModal();
+    dom.resultModal.style.display = 'none';
+    dom.funfactModal.style.display = 'none';
+  }
+  if(e.key === '1') switchLanguage('en');
+  if(e.key === '2') switchLanguage('or');
+  if(e.key === '3') switchLanguage('hi');
+});
+</script>
+</body>
+</html>
