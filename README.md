@@ -3,6 +3,9 @@
 An interactive STEM (Science, Technology, Engineering, and Mathematics) learning platform designed to make education engaging through educational games, quizzes, assignments, and doubt-solving features.
 
 
+## Demo Video
+
+[Watch the Demo Video](https://youtu.be/oJTqxn68VPk?si=nAFVHcWq9AzKOqCb)
 
 ---
 
